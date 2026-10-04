@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fiches rapides — RadiologicHub</title>
+  <meta name="description" content="Fiches rapides RadiologicHub par spécialité : l'essentiel de l'imagerie d'urgence, en un coup d'œil.">
+  <link rel="icon" type="image/svg+xml" href="assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="fiche.css">
+</head>
+<body>
+
+  <header class="site-header is-scrolled" id="top">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="RadiologicHub — accueil">
+        <img src="assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+        <a href="index.html#masterclass">Masterclass</a>
+        <a href="fiches-rapides.html" class="is-current">Fiches rapides</a>
+        <a href="index.html#cas-du-jour">Cas du jour</a>
+        <a href="index.html#tarifs">Tarifs</a>
+        <a href="index.html#inscription" class="btn btn-ink btn-sm">S'inscrire</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="fiche-hero sec-down">
+      <div class="container">
+        <p class="marker-tag">Révisions express</p>
+        <h1>Fiches <span class="hl-navy">rapides</span></h1>
+        <p class="fiche-sub">L'essentiel de l'imagerie d'urgence, spécialité par spécialité : <span class="hl-navy">techniques</span>, <span class="hl-red">signes clés</span> et pièges.</p>
+      </div>
+    </section>
+
+    <section class="section sec-up fiches-index">
+      <div class="container">
+        <div class="spe-tabs" role="tablist" aria-label="Spécialités">
+          <button class="spe-tab" role="tab" data-spe="digestif" style="--c: var(--amber)">Digestif</button>
+          <button class="spe-tab" role="tab" data-spe="neuro" style="--c: var(--purple)">Neuro</button>
+          <button class="spe-tab" role="tab" data-spe="thorax" style="--c: var(--blue)">Thorax</button>
+          <button class="spe-tab" role="tab" data-spe="trauma" style="--c: var(--rose)">Traumato</button>
+          <button class="spe-tab" role="tab" data-spe="vasculaire" style="--c: var(--teal)">Vasculaire</button>
+          <button class="spe-tab" role="tab" data-spe="pediatrie" style="--c: var(--green)">Pédiatrie</button>
+        </div>
+
+        <!-- Ajouter une fiche : copier un <a class="fiche-card"> et changer data-spe, lien, titre, résumé. -->
+        <div class="fiche-grid" id="fiche-grid">
+          <a class="fiche-card" data-spe="digestif" href="fiches/adenocarcinome-pancreas.html" style="--c: var(--amber)">
+            <span class="fiche-card-badge">Pancréas</span>
+            <h2>Adénocarcinome canalaire du pancréas</h2>
+            <p>Moyens d'exploration, protocoles TDM / IRM, sémiologie, bilan d'extension et <span class="hl-red">résécabilité</span>.</p>
+            <ul class="fiche-tags"><li>TDM</li><li>IRM</li><li>Résécabilité</li></ul>
+            <span class="fiche-open">Ouvrir la fiche →</span>
+          </a>
+        </div>
+
+        <div class="empty" id="empty" hidden>
+          <div class="blob blob-violet empty-blob" aria-hidden="true"></div>
+          <p class="empty-title">Bientôt disponible</p>
+          <p>Les fiches de cette spécialité arrivent très vite.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="index.html" class="brand">
+        <img src="assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav aria-label="Liens de pied de page">
+        <a href="index.html#masterclass">Masterclass</a>
+        <a href="fiches-rapides.html">Fiches rapides</a>
+        <a href="index.html#cas-du-jour">Cas du jour</a>
+        <a href="index.html#inscription">Contact</a>
+      </nav>
+      <p class="copyright">© <span id="year"></span> RadiologicHub · Formation en radiologie d'urgence</p>
+    </div>
+  </footer>
+
+  <script src="fiche.js"></script>
+</body>
+</html>

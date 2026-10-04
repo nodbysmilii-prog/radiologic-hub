@@ -20,3 +20,9 @@ Montserrat (capitales, mots-clés marine `#2b2a74` / rouge `#a8172d`), Permanent
 - **Masterclass, cas du quiz, fiche flash** : tableaux `COURSES`, `CASES` et `FLASH` dans `script.js`.
 - **Tarifs, programme, FAQ** : textes indicatifs dans `index.html`.
 - **Formulaire** : l'envoi n'est pas encore branché (voir le `TODO` dans `script.js`) — à connecter à Formspree, Netlify Forms ou un back-end.
+
+## Fiches rapides
+
+- `fiches-rapides.html` : index des fiches, avec un onglet par spécialité. Pour ajouter une fiche, copier un bloc `<a class="fiche-card">` et changer `data-spe`, le lien, le titre et le résumé.
+- `fiches/` : une page par fiche (ex. `fiches/adenocarcinome-pancreas.html`), styles dans `fiche.css`, interactions dans `fiche.js`.
+- Code couleur des surlignages : `k-tech` (technique), `k-sign` (signe discriminant), `k-grave` (non-résécabilité / gravité), `k-ddx` (diagnostic différentiel / syndrome), `k-key` (à retenir).
