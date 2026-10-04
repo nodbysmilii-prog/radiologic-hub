@@ -8,11 +8,15 @@ Site statique (HTML / CSS / JS, sans dépendance) : ouvrez `index.html` dans un 
 
 - `index.html` : contenu des sections (hero, masterclass, format, programme, tarifs, FAQ, inscription)
 - `styles.css` : styles, couleurs reprises du logo (variables dans `:root`)
-- `script.js` : liste des masterclass (tableau `COURSES`), filtres, fenêtre de détail, menu mobile, formulaire
-- `assets/` : logo original (`logo-radiologichub.png`) et emblème vectoriel (`emblem.svg`, `emblem-light.svg` pour fond sombre)
+- `script.js` : masterclass (`COURSES`), quiz « Cas du jour » (`CASES`), fiche flash (`FLASH`), filtres, menu mobile, formulaire
+- `assets/` : logo original, emblème vectoriel (`emblem.svg`, `emblem-light.svg`) et fiches RadiologicHub (`assets/posts/`)
+
+## Charte
+
+Montserrat (capitales, mots-clés marine `#2b2a74` / rouge `#a8172d`), Permanent Marker pour les titres soulignés, Michroma pour le logo. Fonds gris dégradés, cartes colorées (ambre, bleu, violet, sarcelle…), blobs dégradés : variables dans `:root` de `styles.css`.
 
 ## À personnaliser
 
-- **Masterclass** : modifier ou ajouter des entrées dans `COURSES` (`script.js`).
+- **Masterclass, cas du quiz, fiche flash** : tableaux `COURSES`, `CASES` et `FLASH` dans `script.js`.
 - **Tarifs, programme, FAQ** : textes indicatifs dans `index.html`.
 - **Formulaire** : l'envoi n'est pas encore branché (voir le `TODO` dans `script.js`) — à connecter à Formspree, Netlify Forms ou un back-end.

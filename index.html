@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>RadiologicHub — Masterclass de radiologie d'urgence</title>
-  <meta name="description" content="RadiologicHub : masterclass de radiologie d'urgence par spécialité — neuro, digestif, thorax, traumatologie, vasculaire, pédiatrie. Cas cliniques réels, lecture guidée, comptes rendus structurés.">
+  <meta name="description" content="RadiologicHub : masterclass de radiologie d'urgence par spécialité — neuro, digestif, thorax, traumatologie, vasculaire, pédiatrie. Cas cliniques, quiz et fiches flash.">
   <meta property="og:title" content="RadiologicHub — Masterclass de radiologie d'urgence">
-  <meta property="og:description" content="Maîtrisez l'imagerie des urgences, une spécialité à la fois.">
+  <meta property="og:description" content="La radiologie d'urgence, cas par cas.">
   <meta property="og:image" content="assets/logo-radiologichub.png">
   <link rel="icon" type="image/svg+xml" href="assets/emblem.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -20,17 +20,16 @@
   <header class="site-header" id="top">
     <div class="container header-inner">
       <a href="#top" class="brand" aria-label="RadiologicHub — accueil">
-        <img src="assets/emblem-light.svg" alt="" class="brand-mark brand-mark--light" width="44" height="40">
-        <img src="assets/emblem.svg" alt="" class="brand-mark brand-mark--dark" width="44" height="40">
-        <span class="brand-name">Radiologic<span>Hub</span></span>
+        <img src="assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
       </a>
       <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
         <a href="#masterclass">Masterclass</a>
+        <a href="#cas-du-jour">Cas du jour</a>
+        <a href="#fiche-flash">Fiche flash</a>
         <a href="#format">Format</a>
-        <a href="#programme">Programme</a>
         <a href="#tarifs">Tarifs</a>
-        <a href="#faq">FAQ</a>
-        <a href="#inscription" class="btn btn-primary btn-sm">S'inscrire</a>
+        <a href="#inscription" class="btn btn-ink btn-sm">S'inscrire</a>
       </nav>
       <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
         <span></span><span></span><span></span>
@@ -40,44 +39,50 @@
 
   <main>
     <!-- ============ HERO ============ -->
-    <section class="hero">
-      <div class="hero-grid" aria-hidden="true"></div>
+    <section class="hero sec-down">
       <div class="container hero-inner">
         <div class="hero-text reveal">
-          <p class="eyebrow">Masterclass · Radiologie d'urgence</p>
-          <h1>Lire vite.<br>Lire juste.<br><span class="accent">Sauver du temps.</span></h1>
+          <p class="marker-tag">Masterclass · Urgences</p>
+          <h1>La radiologie d'urgence, <span class="hl-navy">cas par cas</span>.</h1>
           <p class="lead">
-            RadiologicHub propose des masterclass intensives en imagerie des urgences,
-            organisées par spécialité&nbsp;: neuro, digestif, thorax, traumatologie, vasculaire, pédiatrie.
-            Des cas réels, une lecture guidée et des comptes rendus structurés pour gagner en assurance devant chaque garde.
+            Des masterclass par spécialité — <strong class="hl-navy">neuro</strong>, <strong class="hl-navy">digestif</strong>,
+            <strong class="hl-navy">thorax</strong>, traumato, vasculaire, pédiatrie — pour lire <strong class="hl-red">vite</strong>
+            et <strong class="hl-red">juste</strong> pendant vos gardes.
           </p>
           <div class="hero-cta">
-            <a href="#masterclass" class="btn btn-primary">Découvrir les masterclass</a>
-            <a href="#programme" class="btn btn-ghost">Voir un programme type</a>
+            <a href="#masterclass" class="btn btn-ink">Voir les masterclass</a>
+            <a href="#cas-du-jour" class="btn btn-outline">Tester un cas →</a>
           </div>
           <ul class="hero-stats">
-            <li><strong data-count="6">0</strong><span>spécialités</span></li>
-            <li><strong data-count="120" data-suffix="+">0</strong><span>cas cliniques</span></li>
-            <li><strong data-count="24" data-suffix="/7">0</strong><span>accès replay</span></li>
+            <li style="--c: var(--amber)"><strong data-count="6">0</strong><span>spécialités</span></li>
+            <li style="--c: var(--blue)"><strong data-count="120" data-suffix="+">0</strong><span>cas cliniques</span></li>
+            <li style="--c: var(--purple)"><strong data-count="24" data-suffix="/7">0</strong><span>replay</span></li>
           </ul>
         </div>
-        <div class="hero-visual reveal" aria-hidden="true">
-          <div class="scan">
-            <div class="scan-rings"></div>
-            <img src="assets/emblem-light.svg" alt="" class="scan-emblem">
-            <div class="scan-line"></div>
-          </div>
+
+        <div class="hero-visual reveal">
+          <div class="blob blob-violet hero-blob" aria-hidden="true"></div>
+          <article class="teaser">
+            <p class="teaser-label">Cas express</p>
+            <p class="teaser-text">
+              Homme de 56 ans, <span class="hl-navy">diabète de type 2 mal équilibré</span>, consulte pour des
+              <span class="hl-red">mouvements involontaires et brusques</span> du bras et de la jambe droits.
+            </p>
+            <a href="#cas-du-jour" class="teaser-btn">Votre diagnostic ?</a>
+          </article>
+          <svg class="hand-arrow" viewBox="0 0 160 120" aria-hidden="true">
+            <path d="M150 10 C 110 20, 60 30, 40 80 M40 80 L 30 55 M40 80 L 62 68" />
+          </svg>
         </div>
       </div>
     </section>
 
-    <!-- ============ SPÉCIALITÉS ============ -->
-    <section class="section" id="masterclass">
+    <!-- ============ MASTERCLASS ============ -->
+    <section class="section sec-up" id="masterclass">
       <div class="container">
         <div class="section-head reveal">
-          <p class="eyebrow">Nos masterclass</p>
-          <h2>Une spécialité, une masterclass</h2>
-          <p>Chaque module couvre les urgences vitales et fréquentes de son territoire, des signes clés aux pièges diagnostiques.</p>
+          <h2 class="marker-title">Nos masterclass</h2>
+          <p>Une spécialité, une journée, les urgences qu'il ne faut <span class="hl-red">jamais</span> manquer.</p>
         </div>
 
         <div class="filters reveal" role="tablist" aria-label="Filtrer par niveau">
@@ -90,170 +95,181 @@
       </div>
     </section>
 
-    <!-- ============ FORMAT ============ -->
-    <section class="section section-alt" id="format">
+    <!-- ============ CAS DU JOUR ============ -->
+    <section class="section sec-down" id="cas-du-jour">
       <div class="container">
         <div class="section-head reveal">
-          <p class="eyebrow">Le format</p>
-          <h2>Pensé pour la réalité des gardes</h2>
-          <p>Une pédagogie centrée sur la pratique : on lit les images ensemble, on raisonne, on rédige.</p>
+          <h2 class="marker-title">Cas du jour</h2>
+          <p>Un aperçu de nos masterclass : lisez la vignette, choisissez, apprenez.</p>
         </div>
-        <div class="features">
-          <article class="feature reveal">
-            <div class="feature-icon">
-              <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/><circle cx="12" cy="11" r="3.5"/></svg>
-            </div>
-            <h3>Cas réels en DICOM</h3>
-            <p>Navigation dans les séries complètes, comme sur votre console : fenêtrage, reconstructions, comparaison.</p>
+
+        <div class="quiz reveal">
+          <div class="blob blob-peach quiz-blob" aria-hidden="true"></div>
+          <div class="quiz-tabs" role="tablist" aria-label="Choisir un cas"></div>
+          <div class="quiz-card" id="quiz-card"><!-- généré par script.js --></div>
+          <p class="quiz-score" id="quiz-score"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FICHE FLASH ============ -->
+    <section class="section sec-up" id="fiche-flash">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="marker-tag">Fiche flash · Neuro</p>
+          <h2>Hypersignal T1 des noyaux gris centraux</h2>
+          <p>Retournez les cartes pour réviser les 4 grandes causes.</p>
+        </div>
+        <div class="flash" id="flash"><!-- généré par script.js --></div>
+      </div>
+    </section>
+
+    <!-- ============ FORMAT ============ -->
+    <section class="section sec-down" id="format">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 class="marker-title">Le format</h2>
+          <p>Pensé pour la réalité des gardes : on lit, on raisonne, on rédige.</p>
+        </div>
+        <div class="blobs">
+          <article class="blob-card reveal" style="--g: var(--g-pink)">
+            <span class="num">1.</span><h3>Cas réels en DICOM</h3>
+            <p>Séries complètes, fenêtrage, reconstructions : comme sur votre console.</p>
           </article>
-          <article class="feature reveal">
-            <div class="feature-icon">
-              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-            </div>
-            <h3>Lecture chronométrée</h3>
-            <p>Entraînement en conditions de garde, puis correction commentée pas à pas par le formateur.</p>
+          <article class="blob-card reveal" style="--g: var(--g-violet)">
+            <span class="num">2.</span><h3>Lecture chronométrée</h3>
+            <p>Entraînement en conditions de garde, puis correction commentée.</p>
           </article>
-          <article class="feature reveal">
-            <div class="feature-icon">
-              <svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg>
-            </div>
-            <h3>Comptes rendus structurés</h3>
-            <p>Des modèles de CR prêts à l'emploi et une checklist de lecture systématique pour chaque situation.</p>
+          <article class="blob-card reveal" style="--g: var(--g-sky)">
+            <span class="num">3.</span><h3>Comptes rendus structurés</h3>
+            <p>Modèles de CR et checklist de lecture prêts à l'emploi.</p>
           </article>
-          <article class="feature reveal">
-            <div class="feature-icon">
-              <svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16"/><path d="M8 15l3-4 3 2 5-6"/></svg>
-            </div>
-            <h3>Quiz &amp; progression</h3>
-            <p>Auto-évaluation avant et après chaque module pour mesurer votre progression et cibler vos révisions.</p>
+          <article class="blob-card reveal" style="--g: var(--g-peach)">
+            <span class="num">4.</span><h3>Quiz &amp; progression</h3>
+            <p>Avant / après chaque module pour mesurer vos progrès.</p>
           </article>
-          <article class="feature reveal">
-            <div class="feature-icon">
-              <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 14.5c3 0 6 1.8 6 5"/></svg>
-            </div>
-            <h3>Petits groupes</h3>
-            <p>Sessions live interactives en effectif réduit pour poser toutes vos questions.</p>
+          <article class="blob-card reveal" style="--g: var(--g-mint)">
+            <span class="num">5.</span><h3>Petits groupes</h3>
+            <p>Sessions live interactives en effectif réduit.</p>
           </article>
-          <article class="feature reveal">
-            <div class="feature-icon">
-              <svg viewBox="0 0 24 24"><path d="M5 4l14 8-14 8z"/></svg>
-            </div>
-            <h3>Replay illimité</h3>
-            <p>Toutes les sessions sont enregistrées et accessibles en replay, à revoir avant une garde.</p>
+          <article class="blob-card reveal" style="--g: var(--g-sun)">
+            <span class="num">6.</span><h3>Replay illimité</h3>
+            <p>Toutes les sessions à revoir avant une garde.</p>
           </article>
         </div>
       </div>
     </section>
 
     <!-- ============ PROGRAMME ============ -->
-    <section class="section" id="programme">
-      <div class="container program">
+    <section class="section sec-up" id="programme">
+      <div class="container">
         <div class="section-head reveal">
-          <p class="eyebrow">Programme type</p>
-          <h2>Une journée de masterclass</h2>
-          <p>Exemple : <strong>Masterclass Neuro-urgences</strong>. Chaque spécialité suit la même structure.</p>
+          <h2 class="marker-title">Une journée type</h2>
+          <p>Exemple : <strong class="hl-navy">Masterclass Neuro-urgences</strong>. Chaque spécialité suit la même structure.</p>
         </div>
         <ol class="timeline">
-          <li class="reveal"><time>08:30</time><div><h3>Quiz d'entrée</h3><p>10 cas flash pour faire le point sur vos réflexes.</p></div></li>
-          <li class="reveal"><time>09:00</time><div><h3>AVC ischémique &amp; thrombectomie</h3><p>Score ASPECTS, angio-scanner, perfusion, occlusions proximales : ce qui change la prise en charge.</p></div></li>
-          <li class="reveal"><time>10:45</time><div><h3>Hémorragies intracrâniennes</h3><p>HSA, hématomes, signes de gravité et étiologies à ne pas manquer.</p></div></li>
-          <li class="reveal"><time>13:30</time><div><h3>Traumatisme crânien &amp; rachis</h3><p>Lésions axiales, fractures, critères d'instabilité.</p></div></li>
-          <li class="reveal"><time>15:15</time><div><h3>Atelier de lecture en conditions de garde</h3><p>Cas chronométrés sur console, puis correction collective.</p></div></li>
-          <li class="reveal"><time>17:00</time><div><h3>Comptes rendus &amp; quiz de sortie</h3><p>Rédaction structurée et évaluation finale.</p></div></li>
+          <li class="reveal" style="--c: var(--amber)"><time>08:30</time><div><h3>Quiz d'entrée</h3><p>10 cas flash pour faire le point sur vos réflexes.</p></div></li>
+          <li class="reveal" style="--c: var(--blue)"><time>09:00</time><div><h3>AVC ischémique &amp; thrombectomie</h3><p>ASPECTS, angioscanner, perfusion, occlusions proximales.</p></div></li>
+          <li class="reveal" style="--c: var(--purple)"><time>10:45</time><div><h3>Hémorragies intracrâniennes</h3><p>HSA, hématomes, signes de gravité, étiologies à ne pas manquer.</p></div></li>
+          <li class="reveal" style="--c: var(--teal)"><time>13:30</time><div><h3>Traumatisme crânien &amp; rachis</h3><p>Lésions axiales, fractures, critères d'instabilité.</p></div></li>
+          <li class="reveal" style="--c: var(--red)"><time>15:15</time><div><h3>Atelier lecture en conditions de garde</h3><p>Cas chronométrés sur console, correction collective.</p></div></li>
+          <li class="reveal" style="--c: var(--green)"><time>17:00</time><div><h3>Comptes rendus &amp; quiz de sortie</h3><p>Rédaction structurée et évaluation finale.</p></div></li>
         </ol>
       </div>
     </section>
 
-    <!-- ============ TARIFS ============ -->
-    <section class="section section-alt" id="tarifs">
+    <!-- ============ NOS FICHES ============ -->
+    <section class="section sec-down" id="fiches">
       <div class="container">
         <div class="section-head reveal">
-          <p class="eyebrow">Tarifs</p>
-          <h2>Choisissez votre formule</h2>
-          <p>Tarifs indicatifs, à adapter. Tarif réduit pour les internes et étudiants sur justificatif.</p>
+          <h2 class="marker-title">Nos fiches</h2>
+          <p>Le style RadiologicHub : des visuels clairs, des mots-clés, l'essentiel à retenir.</p>
+        </div>
+      </div>
+      <div class="gallery reveal" tabindex="0" aria-label="Galerie de fiches">
+        <figure><img src="assets/posts/hypersignal-t1.png" alt="Fiche : hypersignal T1 des noyaux gris centraux" loading="lazy"></figure>
+        <figure><img src="assets/posts/cas-striatopathie.png" alt="Cas clinique : homme de 56 ans diabétique avec mouvements involontaires" loading="lazy"></figure>
+        <figure><img src="assets/posts/striatopathie.png" alt="Fiche : striatopathie diabétique" loading="lazy"></figure>
+        <figure><img src="assets/posts/hernie-appendice.png" alt="Cas : appendice inflammatoire dans une hernie inguinale" loading="lazy"></figure>
+      </div>
+    </section>
+
+    <!-- ============ TARIFS ============ -->
+    <section class="section sec-up" id="tarifs">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 class="marker-title">Tarifs</h2>
+          <p>Tarifs indicatifs. Réduction pour les internes et étudiants sur justificatif.</p>
         </div>
         <div class="pricing">
-          <article class="plan reveal">
+          <article class="plan reveal" style="--c: var(--blue)">
             <h3>Module unique</h3>
-            <p class="price"><span>190</span> €</p>
+            <p class="price">190<span>€</span></p>
             <p class="plan-sub">Une masterclass au choix</p>
-            <ul>
-              <li>1 journée live</li>
-              <li>Replay 12 mois</li>
-              <li>Supports &amp; modèles de CR</li>
-              <li>Attestation de formation</li>
-            </ul>
-            <a href="#inscription" class="btn btn-ghost-dark" data-plan="Module unique">Choisir</a>
+            <ul><li>1 journée live</li><li>Replay 12 mois</li><li>Supports &amp; modèles de CR</li><li>Attestation</li></ul>
+            <a href="#inscription" class="btn btn-outline" data-plan="Module unique">Choisir</a>
           </article>
-          <article class="plan plan-featured reveal">
+          <article class="plan plan-featured reveal" style="--c: var(--amber)">
             <p class="plan-badge">Le plus choisi</p>
             <h3>Pack 3 modules</h3>
-            <p class="price"><span>490</span> €</p>
+            <p class="price">490<span>€</span></p>
             <p class="plan-sub">Trois masterclass au choix</p>
-            <ul>
-              <li>3 journées live</li>
-              <li>Replay 12 mois</li>
-              <li>Banque de cas d'entraînement</li>
-              <li>Quiz de progression</li>
-            </ul>
-            <a href="#inscription" class="btn btn-primary" data-plan="Pack 3 modules">Choisir</a>
+            <ul><li>3 journées live</li><li>Replay 12 mois</li><li>Banque de cas d'entraînement</li><li>Quiz de progression</li></ul>
+            <a href="#inscription" class="btn btn-ink" data-plan="Pack 3 modules">Choisir</a>
           </article>
-          <article class="plan reveal">
+          <article class="plan reveal" style="--c: var(--purple)">
             <h3>Cursus complet</h3>
-            <p class="price"><span>890</span> €</p>
+            <p class="price">890<span>€</span></p>
             <p class="plan-sub">Toutes les spécialités</p>
-            <ul>
-              <li>6 masterclass live</li>
-              <li>Replay illimité</li>
-              <li>Sessions questions-réponses</li>
-              <li>Nouveaux cas chaque mois</li>
-            </ul>
-            <a href="#inscription" class="btn btn-ghost-dark" data-plan="Cursus complet">Choisir</a>
+            <ul><li>6 masterclass live</li><li>Replay illimité</li><li>Sessions questions-réponses</li><li>Nouveaux cas chaque mois</li></ul>
+            <a href="#inscription" class="btn btn-outline" data-plan="Cursus complet">Choisir</a>
           </article>
         </div>
       </div>
     </section>
 
     <!-- ============ FAQ ============ -->
-    <section class="section" id="faq">
+    <section class="section sec-down" id="faq">
       <div class="container narrow">
         <div class="section-head reveal">
-          <p class="eyebrow">FAQ</p>
-          <h2>Questions fréquentes</h2>
+          <h2 class="marker-title">FAQ</h2>
         </div>
         <div class="faq">
-          <details class="reveal">
+          <details class="reveal" style="--c: var(--amber)">
             <summary>À qui s'adressent les masterclass ?</summary>
-            <p>Aux internes et jeunes radiologues, aux radiologues qui prennent des gardes, ainsi qu'aux urgentistes souhaitant renforcer leur lecture de l'imagerie en urgence.</p>
+            <p>Aux internes et jeunes radiologues, aux radiologues qui prennent des gardes, et aux urgentistes qui veulent renforcer leur lecture de l'imagerie.</p>
           </details>
-          <details class="reveal">
-            <summary>Les sessions sont-elles en ligne ou en présentiel ?</summary>
-            <p>Les masterclass se déroulent en live en ligne, avec un replay disponible. Des sessions en présentiel peuvent être organisées ponctuellement.</p>
+          <details class="reveal" style="--c: var(--blue)">
+            <summary>En ligne ou en présentiel ?</summary>
+            <p>En live en ligne, avec replay. Des sessions en présentiel peuvent être organisées ponctuellement.</p>
           </details>
-          <details class="reveal">
+          <details class="reveal" style="--c: var(--purple)">
             <summary>Faut-il un logiciel particulier ?</summary>
-            <p>Non. Les cas sont consultables directement dans le navigateur via une visionneuse DICOM intégrée.</p>
+            <p>Non : les cas s'ouvrent directement dans le navigateur grâce à une visionneuse DICOM intégrée.</p>
           </details>
-          <details class="reveal">
+          <details class="reveal" style="--c: var(--teal)">
             <summary>Recevrai-je une attestation ?</summary>
-            <p>Oui, une attestation de participation est délivrée à l'issue de chaque masterclass.</p>
+            <p>Oui, une attestation de participation est délivrée après chaque masterclass.</p>
           </details>
-          <details class="reveal">
+          <details class="reveal" style="--c: var(--red)">
             <summary>Puis-je m'inscrire à un seul module ?</summary>
-            <p>Bien sûr. Chaque masterclass est indépendante ; les packs permettent simplement de bénéficier d'un tarif dégressif.</p>
+            <p>Bien sûr. Chaque masterclass est indépendante ; les packs offrent un tarif dégressif.</p>
           </details>
         </div>
       </div>
     </section>
 
     <!-- ============ INSCRIPTION ============ -->
-    <section class="section section-dark" id="inscription">
+    <section class="section sec-up" id="inscription">
       <div class="container signup">
         <div class="signup-text reveal">
-          <p class="eyebrow">Inscription</p>
-          <h2>Réservez votre place</h2>
-          <p>Les groupes sont volontairement réduits. Laissez-nous vos coordonnées et la masterclass qui vous intéresse : nous revenons vers vous avec les prochaines dates.</p>
-          <img src="assets/emblem-light.svg" alt="" class="signup-emblem" aria-hidden="true">
+          <div class="ring-circle" aria-hidden="true"></div>
+          <h2 class="marker-title">Réservez votre place</h2>
+          <ul class="signup-points">
+            <li><span class="hl-navy">Groupes réduits</span> pour un vrai échange.</li>
+            <li><span class="hl-red">Places limitées</span> à chaque session.</li>
+            <li>Réponse sous <span class="hl-navy">48 h</span> avec les prochaines dates.</li>
+          </ul>
         </div>
         <form class="signup-form reveal" id="signup-form" novalidate>
           <div class="field">
@@ -295,7 +311,7 @@
             <label for="message">Message (facultatif)</label>
             <textarea id="message" name="message" rows="3"></textarea>
           </div>
-          <button type="submit" class="btn btn-primary btn-block">Envoyer ma demande</button>
+          <button type="submit" class="btn btn-ink btn-block">Envoyer ma demande</button>
           <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -306,17 +322,17 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <a href="#top" class="brand">
-        <img src="assets/emblem-light.svg" alt="" class="brand-mark" width="40" height="36">
-        <span class="brand-name">Radiologic<span>Hub</span></span>
+        <img src="assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+        <span class="brand-name">Radiologic<br>Hub</span>
       </a>
       <nav aria-label="Liens de pied de page">
         <a href="#masterclass">Masterclass</a>
+        <a href="#cas-du-jour">Cas du jour</a>
         <a href="#format">Format</a>
         <a href="#tarifs">Tarifs</a>
-        <a href="#faq">FAQ</a>
         <a href="#inscription">Contact</a>
       </nav>
-      <p class="copyright">© <span id="year"></span> RadiologicHub. Formation médicale continue en radiologie d'urgence.</p>
+      <p class="copyright">© <span id="year"></span> RadiologicHub · Formation en radiologie d'urgence</p>
     </div>
   </footer>
 
