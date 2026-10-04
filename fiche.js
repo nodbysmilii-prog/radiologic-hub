@@ -102,6 +102,33 @@ if (body) {
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
+
+  /* Exemples en imagerie : masquer les images absentes, zoom au clic */
+  const syncGallery = g => { g.hidden = $$('.ex-fig', g).every(f => f.hidden); };
+  $$('.ex-gallery').forEach(g => {
+    $$('.ex-fig img', g).forEach(img => {
+      const fig = img.closest('.ex-fig');
+      const fail = () => { fig.hidden = true; syncGallery(g); };
+      img.addEventListener('error', fail);
+      img.loading = 'eager'; // pour détecter tout de suite les images manquantes
+      if (img.complete && !img.naturalWidth) fail();
+    });
+  });
+  const lightbox = $('#lightbox');
+  if (lightbox) {
+    $$('.ex-img').forEach(btn => btn.addEventListener('click', () => {
+      const img = $('img', btn);
+      const cap = btn.closest('.ex-fig').querySelector('figcaption');
+      $('img', lightbox).src = img.src;
+      $('img', lightbox).alt = img.alt;
+      $('.lightbox-cap', lightbox).innerHTML = cap.innerHTML;
+      lightbox.showModal();
+    }));
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox || e.target.closest('.modal-close') || e.target.tagName === 'IMG') lightbox.close();
+    });
+  }
+
   /* Impression */
   const printBtn = $('#print-btn');
   if (printBtn) printBtn.addEventListener('click', () => {

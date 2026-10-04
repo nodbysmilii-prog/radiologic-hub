@@ -348,3 +348,46 @@ mark[class^="k-"], .chip {
   .reveal { opacity: 1 !important; transform: none !important; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
+
+/* ---------- Exemples en imagerie ---------- */
+.ex-gallery { margin: 36px 0 10px; }
+.ex-gallery[hidden], .ex-fig[hidden] { display: none; }
+.ex-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 26px; }
+.ex-fig {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius);
+  background: var(--card);
+  border: 4px solid var(--c);
+  overflow: hidden;
+  box-shadow: 8px 8px 0 color-mix(in srgb, var(--c) 45%, transparent);
+  transition: transform .3s, box-shadow .3s;
+}
+.ex-fig:hover { transform: translate(-3px, -3px); box-shadow: 12px 12px 0 color-mix(in srgb, var(--c) 45%, transparent); }
+.ex-img { position: relative; display: block; width: 100%; padding: 0; border: 0; background: #000; cursor: zoom-in; }
+.ex-img img { width: 100%; aspect-ratio: 1; object-fit: contain; }
+.ex-mod {
+  position: absolute;
+  top: 10px; left: 10px;
+  padding: .25em .8em;
+  border-radius: 999px;
+  background: var(--c);
+  color: #fff;
+  font: 900 .66rem var(--font);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.ex-fig figcaption { padding: 16px 18px 18px; font-size: .88rem; line-height: 1.55; }
+.ex-fig figcaption strong { display: block; margin-bottom: 6px; font-weight: 900; font-size: .85rem; letter-spacing: .05em; text-transform: uppercase; color: var(--ink); }
+
+.lightbox { width: min(980px, 100% - 24px); max-height: 94vh; padding: 0; border: 4px solid var(--ink); border-radius: var(--radius); background: #000; overflow: hidden; }
+.lightbox::backdrop { background: rgba(0, 0, 0, .85); }
+.lightbox img { width: 100%; max-height: 78vh; object-fit: contain; }
+.lightbox-cap { margin: 0; padding: 14px 20px; background: var(--card); font-size: .92rem; }
+.lightbox-cap strong { text-transform: uppercase; letter-spacing: .05em; margin-right: 6px; }
+
+@media print {
+  .ex-fig { box-shadow: none !important; break-inside: avoid; }
+  .ex-img img { aspect-ratio: auto; max-height: 220px; }
+}
