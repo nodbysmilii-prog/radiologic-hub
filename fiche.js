@@ -162,6 +162,63 @@ if (body) {
   }
 
 
+
+  /* Annexe repliable */
+  $$('.annex-toggle').forEach(btn => {
+    const panel = document.getElementById(btn.getAttribute('aria-controls'));
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') !== 'true';
+      btn.setAttribute('aria-expanded', open);
+      panel.hidden = !open;
+      if (open) panel.querySelectorAll('img[loading="lazy"]').forEach(i => { i.loading = 'eager'; });
+    });
+  });
+  // Lien direct vers #annexe : ouvrir automatiquement
+  if (location.hash === '#annexe') { const t = $('.annex-toggle'); if (t) t.click(); }
+
+  /* Carrousel d'images */
+  $$('.carousel').forEach(car => {
+    const track = $('.car-track', car);
+    const slides = $$('.car-slide', car);
+    const prev = $('.car-prev', car), next = $('.car-next', car);
+    const count = $('.car-count', car), dotsBox = $('.car-dots', car);
+    let idx = 0;
+    const dots = slides.map((_, i) => {
+      const d = document.createElement('button');
+      d.type = 'button';
+      d.setAttribute('aria-label', 'Image ' + (i + 1));
+      d.addEventListener('click', () => go(i));
+      dotsBox.appendChild(d);
+      return d;
+    });
+    const render = () => {
+      count.textContent = (idx + 1) + ' / ' + slides.length;
+      dots.forEach((d, i) => d.setAttribute('aria-current', i === idx));
+      prev.disabled = idx === 0;
+      next.disabled = idx === slides.length - 1;
+    };
+    const go = i => {
+      idx = Math.max(0, Math.min(slides.length - 1, i));
+      track.scrollTo({ left: slides[idx].offsetLeft - track.offsetLeft - 4, behavior: 'smooth' });
+      render();
+    };
+    prev.addEventListener('click', () => go(idx - 1));
+    next.addEventListener('click', () => go(idx + 1));
+    track.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(idx + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); go(idx - 1); }
+    });
+    let t;
+    track.addEventListener('scroll', () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        const i = Math.round(track.scrollLeft / (slides[0].offsetWidth + 20));
+        if (i !== idx) { idx = i; render(); }
+      }, 80);
+    }, { passive: true });
+    render();
+  });
+
   /* Annexe : survol de la légende → repère l'annotation sur les images */
   $$('.case-legend li').forEach(li => {
     li.tabIndex = 0;

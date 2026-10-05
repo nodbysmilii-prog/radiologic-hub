@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../styles.css?v=202610050058">
-  <link rel="stylesheet" href="../fiche.css?v=202610050058">
+  <link rel="stylesheet" href="../styles.css?v=202610050103">
+  <link rel="stylesheet" href="../fiche.css?v=202610050103">
 </head>
 <body class="fiche-page" style="--spe: var(--amber)">
 
@@ -393,14 +393,16 @@
         <!-- Annexe -->
         <section class="fsec" id="annexe" style="--c: var(--cornflower)">
           <h2 class="fsec-title"><span class="fnum">A</span>Annexe · Cas clinique</h2>
+          <div class="case-vignette"><p class="teaser-label">Cas clinique</p><p>Homme de 63 ans, <span class="hl-navy">adénocarcinome canalaire du pancréas</span>.</p><p class="annex-sub">2 coupes TDM annotées · légende · évolution</p></div>
+          <button class="btn btn-ink annex-toggle" type="button" aria-expanded="false" aria-controls="annex-body">
+            <span class="annex-open">Voir le cas clinique ↓</span><span class="annex-close">Masquer le cas clinique ↑</span>
+          </button>
+          <div class="annex-body" id="annex-body" hidden>
 
-          <div class="case-vignette">
-            <p class="teaser-label">Cas clinique</p>
-            <p>Homme de 63 ans, <span class="hl-navy">adénocarcinome canalaire du pancréas</span>.</p>
-          </div>
 
-          <div class="case-panels">
-            <figure class="case-fig">
+          <div class="carousel" aria-roledescription="carrousel" aria-label="Images du cas clinique">
+            <div class="car-track" tabindex="0">
+            <figure class="case-fig car-slide">
               <div class="case-img" style="position:relative">
                 <img style="display:block;width:100%" src="../assets/fiches/pancreas/cas-annexe-tdm-1.png" alt="TDM axiale en phase pancréatique, coupe 1" loading="lazy">
                 <svg class="annot" style="position:absolute;top:0;left:0;width:100%;height:100%" viewBox="0 0 317 326" aria-hidden="true">
@@ -412,7 +414,7 @@
               </div>
               <figcaption><b>Coupe 1</b> · TDM axiale, phase pancréatique</figcaption>
             </figure>
-            <figure class="case-fig">
+            <figure class="case-fig car-slide">
               <div class="case-img" style="position:relative">
                 <img style="display:block;width:100%" src="../assets/fiches/pancreas/cas-annexe-tdm-2.png" alt="TDM axiale en phase pancréatique, coupe 2" loading="lazy">
                 <svg class="annot" style="position:absolute;top:0;left:0;width:100%;height:100%" viewBox="0 0 321 326" aria-hidden="true">
@@ -424,6 +426,10 @@
               </div>
               <figcaption><b>Coupe 2</b> · TDM axiale, phase pancréatique</figcaption>
             </figure>
+            </div>
+            <button class="car-btn car-prev" type="button" aria-label="Image précédente">‹</button>
+            <button class="car-btn car-next" type="button" aria-label="Image suivante">›</button>
+            <div class="car-nav"><span class="car-count">1 / 2</span><span class="car-dots"></span></div>
           </div>
 
           <ul class="case-legend" aria-label="Légende des annotations">
@@ -444,6 +450,7 @@
             <span>Liens avec la fiche :</span>
             <a href="#extension">V. Extension vasculaire</a>
             <a href="#variantes">VII. Artère hépatique droite issue de l'AMS</a>
+          </div>
           </div>
         </section>
 
@@ -514,6 +521,6 @@
     </div>
   </footer>
 
-  <script src="../fiche.js?v=202610050058"></script>
+  <script src="../fiche.js?v=202610050103"></script>
 </body>
 </html>

@@ -624,3 +624,50 @@ mark[class^="k-"], .chip {
 .case-links a:hover { transform: translateY(-2px); background: var(--cornflower); color: #fff; }
 @media (max-width: 760px) { .case-panels { grid-template-columns: 1fr; } }
 @media print { .case-fig, .case-vignette { box-shadow: none !important; } }
+
+/* ---------- Annexe repliable + carrousel ---------- */
+.annex-toggle .annex-close { display: none; }
+.annex-toggle[aria-expanded="true"] .annex-open { display: none; }
+.annex-toggle[aria-expanded="true"] .annex-close { display: inline; }
+.case-vignette .annex-sub { margin-top: 8px !important; font-family: var(--font-marker); font-weight: 400 !important; text-transform: none !important; color: var(--muted) !important; }
+.annex-body { margin-top: 30px; animation: fade-up .4s ease; }
+.annex-body[hidden] { display: none; }
+
+.carousel { position: relative; max-width: 560px; margin: 0 auto; }
+.car-track { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; padding: 4px 4px 14px; }
+.car-track::-webkit-scrollbar { display: none; }
+.car-slide { flex: 0 0 100%; scroll-snap-align: center; }
+.car-btn {
+  position: absolute;
+  top: calc(50% - 40px);
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: 3px solid var(--ink);
+  background: var(--amber);
+  color: var(--ink);
+  font: 900 1.8rem/1 var(--font);
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform .2s, opacity .2s;
+  z-index: 2;
+}
+.car-btn:hover { transform: scale(1.08); }
+.car-btn:disabled { opacity: .3; cursor: default; transform: none; }
+.car-prev { left: -24px; }
+.car-next { right: -24px; }
+.car-nav { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 8px; }
+.car-count { font-weight: 900; letter-spacing: .08em; }
+.car-dots { display: flex; gap: 8px; }
+.car-dots button { width: 14px; height: 14px; padding: 0; border-radius: 50%; border: 2px solid var(--ink); background: var(--card); cursor: pointer; }
+.car-dots button[aria-current="true"] { background: var(--cornflower); transform: scale(1.2); }
+@media (max-width: 640px) {
+  .car-prev { left: 6px; }
+  .car-next { right: 6px; }
+  .car-btn { width: 40px; height: 40px; font-size: 1.5rem; top: calc(50% - 34px); }
+}
+@media print {
+  .annex-body[hidden] { display: block !important; }
+  .annex-toggle, .car-btn, .car-nav { display: none !important; }
+  .car-track { display: block; overflow: visible; }
+  .car-slide { margin-bottom: 14px; }
+}
