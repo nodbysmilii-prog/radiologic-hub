@@ -122,6 +122,12 @@ if (body) {
       $('img', lightbox).src = img.src;
       $('img', lightbox).alt = img.alt;
       $('.lightbox-cap', lightbox).innerHTML = cap.innerHTML;
+      const lbWrap = $('.lb-wrap', lightbox);
+      if (lbWrap) {
+        $$('.annot', lbWrap).forEach(s => s.remove());
+        const ov = $('.annot', btn);
+        if (ov) lbWrap.appendChild(ov.cloneNode(true));
+      }
       lightbox.showModal();
     }));
     lightbox.addEventListener('click', e => {
@@ -232,6 +238,50 @@ if (body) {
     li.addEventListener('mouseleave', () => on(false));
     li.addEventListener('focus', () => on(true));
     li.addEventListener('blur', () => on(false));
+  });
+
+
+  /* Tableau comparatif : mettre une colonne en avant */
+  $$('.cmp-switch').forEach(sw => {
+    const table = document.getElementById(sw.getAttribute('aria-controls'));
+    if (!table) return;
+    $$('button', sw).forEach(btn => btn.addEventListener('click', () => {
+      $$('button', sw).forEach(b => {
+        b.classList.toggle('is-active', b === btn);
+        b.setAttribute('aria-pressed', b === btn);
+      });
+      table.dataset.show = btn.dataset.col;
+    }));
+  });
+
+  /* Quiz « Quel germe ? » */
+  $$('.germ-quiz').forEach(quiz => {
+    const items = $$('.gq-item', quiz);
+    const score = $('.gq-score', quiz);
+    const update = () => {
+      const done = items.filter(i => i.dataset.result);
+      const good = done.filter(i => i.dataset.result === 'ok').length;
+      if (!done.length) { score.textContent = ''; return; }
+      score.textContent = `Score : ${good} / ${done.length}` + (done.length === items.length ? (good === items.length ? ' — sans faute, bravo !' : ' — relisez le tableau comparatif !') : '');
+    };
+    items.forEach(item => {
+      const answer = item.dataset.answer;
+      const fb = $('.gq-fb', item);
+      $$('[data-pick]', item).forEach(btn => btn.addEventListener('click', () => {
+        if (item.dataset.result) return;
+        const ok = btn.dataset.pick === answer;
+        item.dataset.result = ok ? 'ok' : 'ko';
+        $$('[data-pick]', item).forEach(b => {
+          b.disabled = true;
+          b.classList.toggle('is-right', b.dataset.pick === answer);
+          if (b === btn && !ok) b.classList.add('is-wrong');
+        });
+        fb.hidden = false;
+        fb.classList.toggle('is-ok', ok);
+        $('.gq-verdict', fb).textContent = ok ? 'Bien vu !' : 'Presque…';
+        update();
+      }));
+    });
   });
 
   /* Impression */

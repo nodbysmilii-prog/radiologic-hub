@@ -41,7 +41,7 @@
 
 ### Fiches rapides (`fiches-rapides.html`)
 
-Index des fiches avec **un onglet par spécialité** (Digestif, Neuro, Thorax, Traumato, Vasculaire, Pédiatrie). Les spécialités sans fiche affichent « Bientôt disponible ».
+Index des fiches avec **un onglet par spécialité** (Digestif, Neuro, Thorax, Traumato, Ostéo-articulaire, Vasculaire, Pédiatrie). Les spécialités sans fiche affichent « Bientôt disponible ».
 
 Chaque fiche (`fiches/…html`) propose :
 
@@ -61,6 +61,7 @@ Chaque fiche (`fiches/…html`) propose :
 | Digestif | **Adénocarcinome canalaire du pancréas** | `fiches/adenocarcinome-pancreas.html` | Tableau vasculaire filtrable, feu tricolore de résécabilité, **annexe « Cas & images »** repliable avec 2 carrousels annotés (cas d'extension vasculaire, signes typiques A–D, variante : sténose athéromateuse du tronc cœliaque A–B, diagnostics différentiels : métastases pancréatiques, tumeur neuroendocrine, pancréatite auto-immune) |
 | Digestif | **Imagerie de la maladie de Crohn** | `fiches/maladie-de-crohn.html` | Objectifs numérotés, préparation de l'entéro-IRM en frise, activité vs chronicité, phénotypes B1–B3 |
 | Digestif | **IRM pelvienne dans le cancer du rectum** | `fiches/irm-cancer-rectum.html` | 13 images du cours, onglets T1–T4, jauge EMS, échelle mrTRG, **checklist du compte rendu** mémorisée dans le navigateur |
+| Ostéo-articulaire | **Spondylodiscite infectieuse** | `fiches/spondylodiscite.html` | Fusion de deux cours ; tableaux comparatifs pyogènes / tuberculose / brucellose filtrables, onglets par germe, quiz « Quel germe ? », formes rares, diagnostic différentiel, annexe avec 2 cas annotés (tuberculose, *Bacillus cereus*) |
 
 ---
 
@@ -154,6 +155,7 @@ Site 100 % statique (HTML / CSS / JavaScript, aucune installation).
 
 | Date | Modification |
 |---|---|
+| 05/10/2026 | Nouvel onglet « Ostéo-articulaire » + fiche spondylodiscite infectieuse (fusion de deux cours, 30 images dont 13 annotées, quiz « Quel germe ? ») |
 | 05/10/2026 | Fiche pancréas : DDx 3 — pancréatite auto-immune pseudo-tumorale (formes diffuse/focale, arguments en faveur, atteintes IgG4, coupes A–C annotées) |
 | 05/10/2026 | Fiche pancréas : DDx 2 — tumeur neuroendocrine pancréatique (coupes A, B, C annotées + comparatif avec l'ADK) |
 | 05/10/2026 | Fiche pancréas : annexe « Diagnostics différentiels » — DDx 1 : métastases pancréatiques d'un carcinome papillaire de la thyroïde (comparatif avec l'ADK typique) |
