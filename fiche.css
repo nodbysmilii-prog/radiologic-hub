@@ -680,3 +680,5 @@ mark[class^="k-"], .chip {
 .lg-canal { height: 12px; border-radius: 6px; border: 2px solid var(--ink); background: #1f8a5b; position: relative; }
 .lg-canal::after { content: ""; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); border: 8px solid transparent; border-left: 10px solid var(--ink); }
 .car-track { align-items: flex-start; }
+.lg-suppl { width: 26px; height: 22px; border-radius: 50% 0 0 50%; border: 5px solid #6b0d8c; border-right: 0; outline: none; box-shadow: -2px 0 0 var(--ink); }
+#annexe-variante { scroll-margin-top: calc(var(--header-h) + 20px); }

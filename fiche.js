@@ -174,7 +174,9 @@ if (body) {
     });
   });
   // Lien direct vers #annexe : ouvrir automatiquement
-  if (location.hash === '#annexe') { const t = $('.annex-toggle'); if (t) t.click(); }
+  const openAnnex = () => { const t = $('.annex-toggle'); if (t && t.getAttribute('aria-expanded') !== 'true') t.click(); };
+  if (location.hash.startsWith('#annexe')) { openAnnex(); const el = document.querySelector(location.hash); if (el) setTimeout(() => el.scrollIntoView(), 50); }
+  $$('[data-open-annex]').forEach(a => a.addEventListener('click', openAnnex));
 
   /* Carrousel d'images */
   $$('.carousel').forEach(car => {
