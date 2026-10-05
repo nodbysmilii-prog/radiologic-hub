@@ -24,3 +24,5 @@ Les légendes se modifient dans `fiches/adenocarcinome-pancreas.html` (balises `
 `variante-tc-sagittal.png` (A) et `variante-tc-axial.png` (B) : sténose athéromateuse de l'origine du tronc cœliaque (annexe, partie « Variante vasculaire »).
 
 `ddx-metastases-thyroide.png` : DDx 1, métastases pancréatiques d'un carcinome papillaire thyroïdien (annexe, partie « Diagnostics différentiels »).
+
+`ddx-tne-a.png`, `ddx-tne-b.png`, `ddx-tne-c.png` : DDx 2, tumeur neuroendocrine pancréatique de la tête (temps artériel puis portal).
