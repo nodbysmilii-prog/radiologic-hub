@@ -26,3 +26,5 @@ Les légendes se modifient dans `fiches/adenocarcinome-pancreas.html` (balises `
 `ddx-metastases-thyroide.png` : DDx 1, métastases pancréatiques d'un carcinome papillaire thyroïdien (annexe, partie « Diagnostics différentiels »).
 
 `ddx-tne-a.png`, `ddx-tne-b.png`, `ddx-tne-c.png` : DDx 2, tumeur neuroendocrine pancréatique de la tête (temps artériel puis portal).
+
+`ddx-pai-a.png`, `ddx-pai-b.png`, `ddx-pai-c.png` : DDx 3, pancréatite auto-immune pseudo-tumorale avec fibrose rétropéritonéale IgG4.

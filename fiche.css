@@ -686,3 +686,12 @@ mark[class^="k-"], .chip {
 .ddx-versus { margin-top: 24px; }
 .ddx-versus .fl { margin: 0; }
 #annexe-ddx { scroll-margin-top: calc(var(--header-h) + 20px); }
+.pai-forms { margin: 26px 0 30px; padding: 14px 10px 0 14px; }
+.pai-pro .crit { grid-template-columns: 1fr 1fr; }
+.lg-frp { width: 0; height: 0; border: 9px solid transparent; border-left: 14px solid #6b0d8c; filter: drop-shadow(0 0 1px #111); }
+@media (max-width: 760px) { .pai-pro .crit { grid-template-columns: 1fr; } }
+.crit { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.crit li { display: block; position: relative; padding-left: 54px; min-height: 50px; line-height: 1.5; }
+.crit li::before { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); }
+@media (max-width: 760px) { .crit, .pai-pro .crit { grid-template-columns: minmax(0, 1fr); } }
+.n-crit .crit { grid-template-columns: minmax(0, 1fr); }
