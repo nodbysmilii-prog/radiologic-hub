@@ -22,3 +22,5 @@ Les légendes se modifient dans `fiches/adenocarcinome-pancreas.html` (balises `
 `cas-annexe-tdm-1.png` et `cas-annexe-tdm-2.png` : coupes TDM du cas clinique (annexe). Les flèches, l'astérisque et les numéros sont dessinés en SVG par-dessus l'image dans `fiches/adenocarcinome-pancreas.html` (classe `annot`).
 
 `variante-tc-sagittal.png` (A) et `variante-tc-axial.png` (B) : sténose athéromateuse de l'origine du tronc cœliaque (annexe, partie « Variante vasculaire »).
+
+`ddx-metastases-thyroide.png` : DDx 1, métastases pancréatiques d'un carcinome papillaire thyroïdien (annexe, partie « Diagnostics différentiels »).

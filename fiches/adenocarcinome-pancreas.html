@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../styles.css?v=202610051400">
-  <link rel="stylesheet" href="../fiche.css?v=202610051400">
+  <link rel="stylesheet" href="../styles.css?v=202610051420">
+  <link rel="stylesheet" href="../fiche.css?v=202610051420">
 </head>
 <body class="fiche-page" style="--spe: var(--amber)">
 
@@ -394,7 +394,7 @@
         <!-- Annexe -->
         <section class="fsec" id="annexe" style="--c: var(--cornflower)">
           <h2 class="fsec-title"><span class="fnum">A</span>Annexe · Cas &amp; images</h2>
-          <div class="case-vignette"><p class="teaser-label">Cas clinique</p><p>Homme de 63 ans, <span class="hl-navy">adénocarcinome canalaire du pancréas</span>.</p><p class="annex-sub">Cas annoté · 4 signes typiques en TDM et IRM · variante vasculaire du tronc cœliaque</p></div>
+          <div class="case-vignette"><p class="teaser-label">Cas clinique</p><p>Homme de 63 ans, <span class="hl-navy">adénocarcinome canalaire du pancréas</span>.</p><p class="annex-sub">Cas annoté · 4 signes typiques en TDM et IRM · variante du tronc cœliaque · diagnostics différentiels</p></div>
           <button class="btn btn-ink annex-toggle" type="button" aria-expanded="false" aria-controls="annex-body">
             <span class="annex-open">Voir les cas et images ↓</span><span class="annex-close">Masquer les cas et images ↑</span>
           </button>
@@ -517,6 +517,29 @@
             <li data-mk="suppl"><span class="lg lg-suppl" aria-hidden="true"></span><span><b>Violet (courbe)</b> · <mark class="k-ddx">voie de suppléance</mark> (AMS → AGD).</span></li>
           </ul>
 
+                    <h3 class="marker-sub annex-sub-title" id="annexe-ddx">Diagnostics différentiels</h3>
+          <div class="ddx-case">
+            <div class="case-vignette"><p class="teaser-label">DDx 1</p><p>Homme de 72 ans, <span class="hl-navy">métastases pancréatiques d'un carcinome papillaire de la thyroïde</span>.</p></div>
+            <div class="carousel" aria-roledescription="carrousel" aria-label="Diagnostics différentiels">
+              <div class="car-track" tabindex="0">
+                <figure class="case-fig car-slide">
+                  <div class="case-img" style="position:relative">
+                    <img style="display:block;width:100%" src="../assets/fiches/pancreas/ddx-metastases-thyroide.png" alt="TDM axiale en phase pancréatique — métastases pancréatiques multiples" loading="lazy">
+                    <svg class="annot" style="position:absolute;top:0;left:0;width:100%;height:100%" viewBox="0 0 515 513" aria-hidden="true"><g class="mk" data-mk="meta"><path d="M154.0 201.0 L154.0 223.0 M144.5 206.5 L163.5 217.5 M144.5 217.5 L163.5 206.5" fill="none" stroke="#111114" stroke-width="10" stroke-linecap="round"/><path d="M154.0 201.0 L154.0 223.0 M144.5 206.5 L163.5 217.5 M144.5 217.5 L163.5 206.5" fill="none" stroke="#f2ab2f" stroke-width="5.5" stroke-linecap="round"/></g><g class="mk" data-mk="meta"><path d="M322.0 187.0 L322.0 209.0 M312.5 192.5 L331.5 203.5 M312.5 203.5 L331.5 192.5" fill="none" stroke="#111114" stroke-width="10" stroke-linecap="round"/><path d="M322.0 187.0 L322.0 209.0 M312.5 192.5 L331.5 203.5 M312.5 203.5 L331.5 192.5" fill="none" stroke="#f2ab2f" stroke-width="5.5" stroke-linecap="round"/></g><g class="mk" data-mk="meta"><path d="M462.0 254.0 L462.0 276.0 M452.5 259.5 L471.5 270.5 M452.5 270.5 L471.5 259.5" fill="none" stroke="#111114" stroke-width="10" stroke-linecap="round"/><path d="M462.0 254.0 L462.0 276.0 M452.5 259.5 L471.5 270.5 M452.5 270.5 L471.5 259.5" fill="none" stroke="#f2ab2f" stroke-width="5.5" stroke-linecap="round"/></g></svg>
+                  </div>
+                  <figcaption class="sig-cap"><b>Métastases pancréatiques</b> <span class="sig-mod">TDM axiale · phase pancréatique</span><br><mark class="k-signo">Multiples masses rehaussées</mark> (astérisques) intéressant <b>l'ensemble du pancréas</b> (tête, corps et queue).</figcaption>
+                </figure>
+              </div>
+              <button class="car-btn car-prev" type="button" aria-label="Image précédente">‹</button>
+              <button class="car-btn car-next" type="button" aria-label="Image suivante">›</button>
+              <div class="car-nav"><span class="car-count">1 / 1</span><span class="car-dots"></span></div>
+            </div>
+            <div class="versus ddx-versus">
+              <div class="vs-ko"><p class="nodes-title">Ici : métastases</p><ul class="fl"><li><mark class="k-signo">Lésions multiples</mark>, dispersées dans tout le pancréas.</li><li><mark class="k-signo">Hyperrehaussement</mark> au temps pancréatique.</li><li>Contexte de <mark class="k-ddx">cancer primitif connu</mark> (thyroïde).</li></ul></div>
+              <div class="vs-ok"><p class="nodes-title">ADK canalaire typique</p><ul class="fl"><li><mark class="k-sign">Masse unique</mark>, le plus souvent céphalique.</li><li><mark class="k-sign">Hypodense</mark> au temps pancréatique.</li><li>Signes indirects : <mark class="k-sign">double canal</mark>, atrophie d'amont.</li></ul></div>
+            </div>
+          </div>
+
           <div class="case-links">
             <span>Liens avec la fiche :</span>
             <a href="#extension">V. Extension vasculaire</a>
@@ -592,6 +615,6 @@
     </div>
   </footer>
 
-  <script src="../fiche.js?v=202610051400"></script>
+  <script src="../fiche.js?v=202610051420"></script>
 </body>
 </html>

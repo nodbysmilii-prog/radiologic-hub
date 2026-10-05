@@ -682,3 +682,7 @@ mark[class^="k-"], .chip {
 .car-track { align-items: flex-start; }
 .lg-suppl { width: 26px; height: 22px; border-radius: 50% 0 0 50%; border: 5px solid #6b0d8c; border-right: 0; outline: none; box-shadow: -2px 0 0 var(--ink); }
 #annexe-variante { scroll-margin-top: calc(var(--header-h) + 20px); }
+.ddx-case { margin-bottom: 40px; }
+.ddx-versus { margin-top: 24px; }
+.ddx-versus .fl { margin: 0; }
+#annexe-ddx { scroll-margin-top: calc(var(--header-h) + 20px); }
