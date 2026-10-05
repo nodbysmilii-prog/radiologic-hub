@@ -671,3 +671,12 @@ mark[class^="k-"], .chip {
   .car-track { display: block; overflow: visible; }
   .car-slide { margin-bottom: 14px; }
 }
+.annex-sub-title { margin-top: 10px; }
+.case-links { margin-top: 30px; }
+.case-legend + .annex-sub-title, .case-timeline + .annex-sub-title { margin-top: 50px; }
+.sig-cap { line-height: 1.6; }
+.sig-mod { display: inline-block; margin-left: 6px; padding: .1em .7em; border-radius: 999px; background: var(--ink); color: #fff; font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.lg-tum { height: 14px; border-radius: 7px; border: 3px dashed var(--amber); outline: 2px solid var(--ink); }
+.lg-canal { height: 12px; border-radius: 6px; border: 2px solid var(--ink); background: #1f8a5b; position: relative; }
+.lg-canal::after { content: ""; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); border: 8px solid transparent; border-left: 10px solid var(--ink); }
+.car-track { align-items: flex-start; }

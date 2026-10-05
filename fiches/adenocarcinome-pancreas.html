@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../styles.css?v=202610050103">
-  <link rel="stylesheet" href="../fiche.css?v=202610050103">
+  <link rel="stylesheet" href="../styles.css?v=202610051326">
+  <link rel="stylesheet" href="../fiche.css?v=202610051326">
 </head>
 <body class="fiche-page" style="--spe: var(--amber)">
 
@@ -75,7 +75,7 @@
           <li><a href="#extension" style="--c: var(--rose)"><b>V</b>Bilan d'extension</a></li>
           <li><a href="#resecabilite" style="--c: var(--green)"><b>VI</b>Résécabilité</a></li>
           <li><a href="#variantes" style="--c: var(--plum)"><b>VII</b>Variantes vasculaires</a></li>
-          <li><a href="#annexe" style="--c: var(--cornflower)"><b>A</b>Annexe · Cas clinique</a></li>
+          <li><a href="#annexe" style="--c: var(--cornflower)"><b>A</b>Annexe · Cas &amp; images</a></li>
           <li><a href="#testez-vous" style="--c: var(--ink)"><b>?</b>Testez-vous</a></li>
         </ol>
       </aside>
@@ -392,12 +392,13 @@
 
         <!-- Annexe -->
         <section class="fsec" id="annexe" style="--c: var(--cornflower)">
-          <h2 class="fsec-title"><span class="fnum">A</span>Annexe · Cas clinique</h2>
-          <div class="case-vignette"><p class="teaser-label">Cas clinique</p><p>Homme de 63 ans, <span class="hl-navy">adénocarcinome canalaire du pancréas</span>.</p><p class="annex-sub">2 coupes TDM annotées · légende · évolution</p></div>
+          <h2 class="fsec-title"><span class="fnum">A</span>Annexe · Cas &amp; images</h2>
+          <div class="case-vignette"><p class="teaser-label">Cas clinique</p><p>Homme de 63 ans, <span class="hl-navy">adénocarcinome canalaire du pancréas</span>.</p><p class="annex-sub">Cas annoté · extension vasculaire + 4 signes typiques en TDM et IRM</p></div>
           <button class="btn btn-ink annex-toggle" type="button" aria-expanded="false" aria-controls="annex-body">
-            <span class="annex-open">Voir le cas clinique ↓</span><span class="annex-close">Masquer le cas clinique ↑</span>
+            <span class="annex-open">Voir les cas et images ↓</span><span class="annex-close">Masquer les cas et images ↑</span>
           </button>
           <div class="annex-body" id="annex-body" hidden>
+          <h3 class="marker-sub annex-sub-title">Cas 1 · Extension vasculaire</h3>
 
 
           <div class="carousel" aria-roledescription="carrousel" aria-label="Images du cas clinique">
@@ -445,6 +446,47 @@
             <li style="--c: var(--green)"><span class="phase-time">Chirurgie</span><div><mark class="k-sign">Pancréatectomie totale avec reconstruction vasculaire</mark>.</div></li>
             <li style="--c: var(--k-grave)"><span class="phase-time">+ 1 an</span><div><mark class="k-grave">Apparition de métastases hépatiques</mark>.</div></li>
           </ol>
+
+                    <h3 class="marker-sub annex-sub-title">Signes typiques de l'ADKP</h3>
+          <div class="carousel" aria-roledescription="carrousel" aria-label="Signes typiques de l'adénocarcinome canalaire">
+            <div class="car-track" tabindex="0">
+              <figure class="case-fig car-slide">
+                <div class="case-img" style="position:relative">
+                  <img style="display:block;width:100%" src="../assets/fiches/pancreas/signes-adkp-a.png" alt="TDM axiale — Signe du double canal" loading="lazy">
+                  <svg class="annot" style="position:absolute;top:0;left:0;width:100%;height:100%" viewBox="0 0 256 264" aria-hidden="true"><g class="mk-num"><circle fill="#f2ab2f" stroke="#111114" stroke-width="3" cx="20" cy="20" r="17"/><text x="20" y="26.5" text-anchor="middle" font-weight="900" font-size="18" fill="#111114">A</text></g><g class="mk" data-mk="tumeur"><path d="M101 117 L109 112 L118 113 L126 106 L130 111 L141 111 L147 116 L139 124 L131 128 L118 128 L105 125 L100 121 Z" fill="none" stroke="#111114" stroke-width="8" stroke-linejoin="round"/><path d="M101 117 L109 112 L118 113 L126 106 L130 111 L141 111 L147 116 L139 124 L131 128 L118 128 L105 125 L100 121 Z" fill="rgba(242,171,47,.32)" stroke="#f2ab2f" stroke-width="3.5" stroke-dasharray="6 4" stroke-linejoin="round"/></g><g class="mk" data-mk="canal"><path fill="#1f8a5b" stroke="#111114" stroke-width="2.5" stroke-linejoin="round" d="M100.0 62.0 L88.8 84.3 L80.3 80.1 L83.0 106.0 L105.4 92.6 L96.9 88.3 L108.0 66.0 Z"/></g><g class="mk" data-mk="canal"><path fill="#1f8a5b" stroke="#111114" stroke-width="2.5" stroke-linejoin="round" d="M111.1 62.3 L123.8 83.5 L115.7 88.3 L139.0 100.0 L139.7 73.9 L131.5 78.8 L118.9 57.7 Z"/></g></svg>
+                </div>
+                <figcaption class="sig-cap"><b>A · Signe du double canal</b> <span class="sig-mod">TDM axiale</span><br>Dilatation conjointe du <mark class="k-sign">canal pancréatique principal</mark> et des <mark class="k-sign">voies biliaires</mark> (flèches vertes), en amont d'une <mark class="k-grave">tumeur obstructive de la tête</mark> (contour pointillé).</figcaption>
+              </figure>
+              <figure class="case-fig car-slide">
+                <div class="case-img" style="position:relative">
+                  <img style="display:block;width:100%" src="../assets/fiches/pancreas/signes-adkp-b.png" alt="TDM axiale — Atrophie d'amont" loading="lazy">
+                  <svg class="annot" style="position:absolute;top:0;left:0;width:100%;height:100%" viewBox="0 0 256 264" aria-hidden="true"><g class="mk-num"><circle fill="#f2ab2f" stroke="#111114" stroke-width="3" cx="20" cy="20" r="17"/><text x="20" y="26.5" text-anchor="middle" font-weight="900" font-size="18" fill="#111114">B</text></g><g class="mk" data-mk="tumeur"><path d="M122 118 L125 112 L132 107 L138 101 L148 100 L157 107 L165 108 L170 113 L168 124 L157 127 L148 123 L140 126 L130 121 Z" fill="none" stroke="#111114" stroke-width="8" stroke-linejoin="round"/><path d="M122 118 L125 112 L132 107 L138 101 L148 100 L157 107 L165 108 L170 113 L168 124 L157 127 L148 123 L140 126 L130 121 Z" fill="rgba(242,171,47,.32)" stroke="#f2ab2f" stroke-width="3.5" stroke-dasharray="6 4" stroke-linejoin="round"/></g><g class="mk" data-mk="canal"><path fill="#1f8a5b" stroke="#111114" stroke-width="2.5" stroke-linejoin="round" d="M208.5 92.5 L199.4 101.5 L192.4 94.4 L186.0 122.0 L213.6 115.6 L206.5 108.6 L215.5 99.5 Z"/></g></svg>
+                </div>
+                <figcaption class="sig-cap"><b>B · Atrophie d'amont</b> <span class="sig-mod">TDM axiale</span><br><mark class="k-key">Atrophie parenchymateuse de la queue</mark> du pancréas (flèche verte), en amont d'une <mark class="k-grave">tumeur obstructive du corps</mark> (contour pointillé).</figcaption>
+              </figure>
+              <figure class="case-fig car-slide">
+                <div class="case-img" style="position:relative">
+                  <img style="display:block;width:100%" src="../assets/fiches/pancreas/signes-adkp-c.png" alt="Cholangio-IRM — Double canal en cholangio-IRM" loading="lazy">
+                  <svg class="annot" style="position:absolute;top:0;left:0;width:100%;height:100%" viewBox="0 0 256 264" aria-hidden="true"><g class="mk-num"><circle fill="#f2ab2f" stroke="#111114" stroke-width="3" cx="20" cy="20" r="17"/><text x="20" y="26.5" text-anchor="middle" font-weight="900" font-size="18" fill="#111114">C</text></g><g class="mk" data-mk="canal"><path fill="#1f8a5b" stroke="#111114" stroke-width="2.5" stroke-linejoin="round" d="M160.8 99.8 L145.3 115.2 L138.9 108.8 L134.0 135.0 L160.2 130.1 L153.8 123.7 L169.2 108.2 Z"/></g><g class="mk" data-mk="canal"><path fill="#1f8a5b" stroke="#111114" stroke-width="2.5" stroke-linejoin="round" d="M153.6 106.6 L164.0 127.9 L155.9 131.8 L179.0 145.0 L182.8 118.7 L174.7 122.6 L164.4 101.4 Z"/></g><g class="mk" data-mk="tumeur"><path fill="#f2ab2f" stroke="#111114" stroke-width="2.5" stroke-linejoin="round" d="M124.4 202.5 L131.6 189.6 L140.3 194.5 L138.0 168.0 L114.1 179.8 L122.9 184.7 L115.6 197.5 Z"/></g></svg>
+                </div>
+                <figcaption class="sig-cap"><b>C · Double canal en cholangio-IRM</b> <span class="sig-mod">Cholangio-IRM</span><br><mark class="k-tech">Cholangio-wirsungo-IRM</mark> : <mark class="k-sign">signe du double canal</mark> (flèches vertes), en rapport avec une <mark class="k-grave">lésion présumée obstructive</mark> (flèche orange).</figcaption>
+              </figure>
+              <figure class="case-fig car-slide">
+                <div class="case-img" style="position:relative">
+                  <img style="display:block;width:100%" src="../assets/fiches/pancreas/signes-adkp-d.png" alt="IRM T2 — Tumeur céphalique obstructive" loading="lazy">
+                  <svg class="annot" style="position:absolute;top:0;left:0;width:100%;height:100%" viewBox="0 0 256 264" aria-hidden="true"><g class="mk-num"><circle fill="#f2ab2f" stroke="#111114" stroke-width="3" cx="20" cy="20" r="17"/><text x="20" y="26.5" text-anchor="middle" font-weight="900" font-size="18" fill="#111114">D</text></g><g class="mk" data-mk="canal"><path fill="#1f8a5b" stroke="#111114" stroke-width="2.5" stroke-linejoin="round" d="M170.9 86.1 L153.6 100.1 L147.3 92.3 L138.0 119.0 L166.1 115.6 L159.8 107.8 L177.1 93.9 Z"/></g><g class="mk" data-mk="tumeur"><path fill="#f2ab2f" stroke="#111114" stroke-width="2.5" stroke-linejoin="round" d="M131.9 218.2 L141.8 206.1 L149.5 212.5 L152.0 186.0 L126.4 193.4 L134.1 199.8 L124.1 211.8 Z"/></g></svg>
+                </div>
+                <figcaption class="sig-cap"><b>D · Tumeur céphalique obstructive</b> <span class="sig-mod">IRM T2</span><br>Séquence <mark class="k-tech">pondérée T2</mark> : <mark class="k-grave">tumeur obstructive de la tête</mark> (flèche orange), responsable d'une <mark class="k-sign">obstruction canalaire</mark> d'amont (flèche verte).</figcaption>
+              </figure>
+            </div>
+            <button class="car-btn car-prev" type="button" aria-label="Image précédente">‹</button>
+            <button class="car-btn car-next" type="button" aria-label="Image suivante">›</button>
+            <div class="car-nav"><span class="car-count">1 / 4</span><span class="car-dots"></span></div>
+          </div>
+          <ul class="case-legend" aria-label="Code des annotations">
+            <li data-mk="tumeur"><span class="lg lg-tum" aria-hidden="true"></span><span><b>Orange</b> · contour pointillé ou flèche : <mark class="k-grave">la tumeur obstructive</mark>.</span></li>
+            <li data-mk="canal"><span class="lg lg-canal" aria-hidden="true"></span><span><b>Vert</b> · flèches : <mark class="k-sign">signes indirects</mark> (double canal, atrophie, obstruction d'amont).</span></li>
+          </ul>
 
           <div class="case-links">
             <span>Liens avec la fiche :</span>
@@ -521,6 +563,6 @@
     </div>
   </footer>
 
-  <script src="../fiche.js?v=202610050103"></script>
+  <script src="../fiche.js?v=202610051326"></script>
 </body>
 </html>
