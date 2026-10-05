@@ -129,6 +129,38 @@ if (body) {
     });
   }
 
+
+  /* Staging T : onglets */
+  $$('.t-btn').forEach(btn => btn.addEventListener('click', () => {
+    $$('.t-btn').forEach(b => {
+      b.classList.toggle('is-active', b === btn);
+      b.setAttribute('aria-selected', b === btn);
+    });
+    $$('.t-panel').forEach(p => p.classList.toggle('is-active', p.dataset.t === btn.dataset.t));
+  }));
+
+  /* Checklist du compte rendu (mémorisée dans le navigateur) */
+  const boxes = $$('.checklist input[type="checkbox"]');
+  if (boxes.length) {
+    const key = 'rh-checklist-' + location.pathname;
+    const count = $('.check-count');
+    const save = () => {
+      try { localStorage.setItem(key, JSON.stringify(boxes.map(b => b.checked))); } catch (e) {}
+    };
+    const update = () => {
+      const n = boxes.filter(b => b.checked).length;
+      count.textContent = n === boxes.length ? 'CR complet, bravo !' : `${n} / ${boxes.length} éléments vérifiés`;
+    };
+    try {
+      const saved = JSON.parse(localStorage.getItem(key) || '[]');
+      boxes.forEach((b, i) => { b.checked = !!saved[i]; });
+    } catch (e) {}
+    boxes.forEach(b => b.addEventListener('change', () => { save(); update(); }));
+    const reset = $('.check-reset');
+    if (reset) reset.addEventListener('click', () => { boxes.forEach(b => { b.checked = false; }); save(); update(); });
+    update();
+  }
+
   /* Impression */
   const printBtn = $('#print-btn');
   if (printBtn) printBtn.addEventListener('click', () => {
