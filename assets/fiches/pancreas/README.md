@@ -16,3 +16,7 @@ Une image absente est simplement masquée sur le site.
 | `irm-metastases-hepatiques.jpg` | V. Extension à distance | IRM : métastases hépatiques (diffusion) |
 
 Les légendes se modifient dans `fiches/adenocarcinome-pancreas.html` (balises `<figcaption>`).
+
+## Annexe · Cas clinique
+
+`cas-annexe-tdm-1.png` et `cas-annexe-tdm-2.png` : coupes TDM du cas clinique (annexe). Les flèches, l'astérisque et les numéros sont dessinés en SVG par-dessus l'image dans `fiches/adenocarcinome-pancreas.html` (classe `annot`).

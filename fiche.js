@@ -161,6 +161,20 @@ if (body) {
     update();
   }
 
+
+  /* Annexe : survol de la légende → repère l'annotation sur les images */
+  $$('.case-legend li').forEach(li => {
+    li.tabIndex = 0;
+    const on = state => $$('.annot').forEach(svg => {
+      svg.classList.toggle('is-focus', state);
+      $$('.mk', svg).forEach(m => m.classList.toggle('is-on', state && m.dataset.mk === li.dataset.mk));
+    });
+    li.addEventListener('mouseenter', () => on(true));
+    li.addEventListener('mouseleave', () => on(false));
+    li.addEventListener('focus', () => on(true));
+    li.addEventListener('blur', () => on(false));
+  });
+
   /* Impression */
   const printBtn = $('#print-btn');
   if (printBtn) printBtn.addEventListener('click', () => {
