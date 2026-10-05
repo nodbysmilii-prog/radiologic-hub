@@ -10,6 +10,7 @@
   --k-grave: #a8172d;     /* Non-résécabilité / gravité */
   --k-ddx: #6b0d8c;       /* Diagnostic différentiel / syndrome */
   --k-key: #b77800;       /* À retenir */
+  --k-signo: #c4560f;     /* Signe radiologique (fiche Crohn) */
 }
 
 mark { background: none; color: inherit; }
@@ -26,6 +27,7 @@ mark[class^="k-"], .chip {
 .k-grave { color: var(--k-grave); background: rgba(168, 23, 45, .13); }
 .k-ddx { color: var(--k-ddx); background: rgba(107, 13, 140, .12); }
 .k-key { color: #7a5000; background: rgba(242, 171, 47, .32); }
+.k-signo { color: var(--k-signo); background: rgba(241, 141, 37, .2); }
 
 /* Filtre : une catégorie isolée → les autres s'estompent */
 .fiche-body[data-focus] mark[class^="k-"] { opacity: .25; filter: grayscale(1); }
@@ -33,7 +35,8 @@ mark[class^="k-"], .chip {
 .fiche-body[data-focus="sign"] mark.k-sign,
 .fiche-body[data-focus="grave"] mark.k-grave,
 .fiche-body[data-focus="ddx"] mark.k-ddx,
-.fiche-body[data-focus="key"] mark.k-key { opacity: 1; filter: none; box-shadow: 0 0 0 2px currentColor; }
+.fiche-body[data-focus="key"] mark.k-key,
+.fiche-body[data-focus="signo"] mark.k-signo { opacity: 1; filter: none; box-shadow: 0 0 0 2px currentColor; }
 
 /* ---------- Barre de lecture ---------- */
 .read-progress { position: fixed; top: 0; left: 0; right: 0; height: 5px; z-index: 60; }
@@ -67,6 +70,7 @@ mark[class^="k-"], .chip {
 .chip.k-grave[aria-pressed="true"] { background: var(--k-grave); border-color: var(--k-grave); }
 .chip.k-ddx[aria-pressed="true"] { background: var(--k-ddx); border-color: var(--k-ddx); }
 .chip.k-key[aria-pressed="true"] { background: var(--k-key); border-color: var(--k-key); }
+.chip.k-signo[aria-pressed="true"] { background: var(--k-signo); border-color: var(--k-signo); color: #fff; }
 .legend-hint { margin: 10px 0 0; font-family: var(--font-marker); color: var(--muted); font-size: .9rem; }
 .fiche-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
 
@@ -390,4 +394,85 @@ mark[class^="k-"], .chip {
 @media print {
   .ex-fig { box-shadow: none !important; break-inside: avoid; }
   .ex-img img { aspect-ratio: auto; max-height: 220px; }
+}
+
+/* ---------- Composants supplémentaires (fiche Crohn) ---------- */
+.goals { list-style: none; counter-reset: g; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+.goals li {
+  counter-increment: g;
+  position: relative;
+  padding: 14px 16px 14px 62px;
+  border-radius: 999px 22px 22px 999px;
+  background: var(--card);
+  border: 3px solid var(--c);
+  font-size: .9rem;
+  min-height: 62px;
+  display: block;
+  line-height: 1.6;
+  transition: transform .2s;
+}
+.goals li:hover { transform: translateY(-3px) rotate(-.4deg); }
+.goals li::before {
+  content: counter(g);
+  position: absolute;
+  left: 8px; top: 50%;
+  width: 42px; height: 42px;
+  margin-top: -21px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--c);
+  color: #fff;
+  font-weight: 900;
+}
+.jump { font-family: var(--font-marker); color: var(--royal); text-decoration: none; }
+.jump:hover { text-decoration: underline; }
+.tiles + .marker-sub, .fcard + .marker-sub { margin-top: 44px; }
+#prep-irm, #tdm-protocoles { scroll-margin-top: calc(var(--header-h) + 20px); }
+
+.seq { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.seq li { padding: .45em .9em; border-radius: 999px; background: #fff; border: 2px solid rgba(60, 103, 184, .3); font-size: .85rem; font-weight: 600; }
+.seq mark { padding: 0; background: none; }
+
+.activity { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; margin-bottom: 26px; }
+.act-col { padding: 24px; border-radius: var(--radius); background: var(--card); border: 4px solid var(--c); font-size: .92rem; }
+.act-active { --c: var(--orange); }
+.act-chronic { --c: var(--slate); }
+.act-label { display: inline-block; margin: 0 0 12px; padding: .35em 1em; border-radius: 999px; background: var(--c); color: #fff; font-weight: 900; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
+.act-col h4 { margin: 14px 0 4px; font-weight: 900; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; }
+.act-col .fl li::marker { color: var(--c); }
+
+.enh { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.enh-item { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px 10px; border-radius: 18px; background: #fff; text-align: center; font-size: .85rem; }
+.enh-item b { display: block; }
+.enh-ring { width: 64px; height: 64px; border-radius: 50%; }
+.enh-1 .enh-ring { background: radial-gradient(circle, #fff 0 24%, #f18d25 25% 40%, #fde3c4 41% 62%, #f18d25 63% 78%, transparent 79%); }
+.enh-2 .enh-ring { background: radial-gradient(circle, #fff 0 30%, #f18d25 31% 48%, #f4d9bd 49% 78%, transparent 79%); }
+.enh-3 .enh-ring { background: radial-gradient(circle, #fff 0 30%, #f18d25 31% 78%, transparent 79%); }
+
+.bubbles-grid { grid-template-columns: 1fr 1fr; }
+.traffic + .fcard { margin-top: 34px; }
+.compl .bubbles li { border-color: rgba(214, 63, 76, .35); }
+.compl .bubbles li::before { border-right-color: rgba(214, 63, 76, .35); }
+
+.ddx-pills { display: flex; flex-wrap: wrap; gap: 14px 22px; }
+.ddx-pill {
+  position: relative;
+  padding: .9em 1.4em;
+  border-radius: 999px;
+  border: 3px solid #fff;
+  outline: 3px solid var(--c);
+  background: var(--c);
+  color: #fff;
+  font-weight: 800;
+  font-size: .85rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.ddx-pill mark { color: #fff; background: rgba(255, 255, 255, .18); }
+.fiche-body[data-focus] .ddx-pill mark { box-shadow: none; }
+
+@media (max-width: 760px) {
+  .activity, .bubbles-grid { grid-template-columns: 1fr; }
+  .enh { grid-template-columns: 1fr; }
+  .enh-item { flex-direction: row; text-align: left; }
 }

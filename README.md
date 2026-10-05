@@ -25,4 +25,4 @@ Montserrat (capitales, mots-clés marine `#2b2a74` / rouge `#a8172d`), Permanent
 
 - `fiches-rapides.html` : index des fiches, avec un onglet par spécialité. Pour ajouter une fiche, copier un bloc `<a class="fiche-card">` et changer `data-spe`, le lien, le titre et le résumé.
 - `fiches/` : une page par fiche (ex. `fiches/adenocarcinome-pancreas.html`), styles dans `fiche.css`, interactions dans `fiche.js`.
-- Code couleur des surlignages : `k-tech` (technique), `k-sign` (signe discriminant), `k-grave` (non-résécabilité / gravité), `k-ddx` (diagnostic différentiel / syndrome), `k-key` (à retenir).
+- Code couleur des surlignages : `k-tech` (technique), `k-sign` (signe discriminant), `k-grave` (non-résécabilité / gravité), `k-ddx` (diagnostic différentiel / syndrome), `k-key` (à retenir), `k-signo` (signe radiologique, orange). Les libellés de la légende se changent dans chaque fiche.
