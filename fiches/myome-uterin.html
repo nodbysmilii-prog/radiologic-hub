@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../styles.css?v=20261008190000">
-  <link rel="stylesheet" href="../fiche.css?v=20261008190000">
+  <link rel="stylesheet" href="../styles.css?v=20261008200000">
+  <link rel="stylesheet" href="../fiche.css?v=20261008200000">
 </head>
 <body class="fiche-page">
 
@@ -216,7 +216,7 @@
           </div>
           <div class="t-panels">
             <article class="t-panel is-active" data-t="hya" style="--c: var(--blue)">
-              <h4>Dégénérescence hyaline</h4>
+              <h4>Dégéné&shy;rescence hyaline</h4>
               <ul class="fl">
                 <li>La <mark class="k-key">plus fréquente</mark> : jusqu'à <b>60 %</b> des myomes.</li>
                 <li>IRM : <mark class="k-signo">hyposignal T2</mark>, <mark class="k-signo">absence de rehaussement</mark> après injection.</li>
@@ -226,14 +226,14 @@
               </div>
             </article>
             <article class="t-panel" data-t="kys" style="--c: var(--teal)">
-              <h4>Dégénérescence kystique</h4>
+              <h4>Dégéné&shy;rescence kystique</h4>
               <ul class="fl">
                 <li>Échographie : myome hétérogène avec <mark class="k-signo">portions anéchogènes</mark>.</li>
                 <li>IRM : <mark class="k-signo">hypersignal T2</mark>, <mark class="k-signo">pas de rehaussement</mark> des portions kystiques.</li>
               </ul>
             </article>
             <article class="t-panel" data-t="myx" style="--c: var(--orange)">
-              <h4>Dégénérescence myxoïde</h4>
+              <h4>Dégéné&shy;rescence myxoïde</h4>
               <ul class="fl">
                 <li><b>Rare</b>.</li>
                 <li>IRM : hétérogène, <mark class="k-signo">isosignal T1</mark>, portions en <mark class="k-signo">hypersignal T2</mark> qui se <mark class="k-signo">rehaussent</mark> après injection, <mark class="k-sign">pas de restriction de la diffusion</mark>.</li>
@@ -316,21 +316,57 @@
         <!-- VIII -->
         <section class="fsec" id="arbre" style="--c: var(--purple)">
           <h2 class="fsec-title"><span class="fnum">VIII</span>Arbre décisionnel et messages à retenir</h2>
-          <p class="fintro">Signal T2, puis rehaussement ou signal complémentaire, puis ADC (× 10⁻³ mm²/s).</p>
-          <div class="ftable-wrap">
-            <table class="ftable">
-              <thead><tr><th>Signal T2</th><th>Rehaussement / signal complémentaire</th><th class="c">ADC</th><th>Diagnostic</th></tr></thead>
-              <tbody>
-                <tr><td class="rh" rowspan="2">Hyposignal T2</td><td>Rehaussement homogène</td><td class="c">—</td><td><mark class="k-sign">Myome simple</mark></td></tr>
-                <tr><td>Pas de rehaussement</td><td class="c">—</td><td>Dégénérescence hyaline</td></tr>
-                <tr><td class="rh" rowspan="2">Hypersignal T2</td><td>Rehaussement hétérogène</td><td class="c">—</td><td><mark class="k-ddx">Dégénérescence myxoïde</mark></td></tr>
-                <tr><td>Pas de rehaussement</td><td class="c">—</td><td>Dégénérescence kystique</td></tr>
-                <tr><td class="rh" rowspan="4">Signal T2 intermédiaire</td><td>Hypersignal T1 (périphérique ou diffus)</td><td class="c">—</td><td>Nécrobiose</td></tr>
-                <tr><td rowspan="3">Pas d'hypersignal T1</td><td class="sc dark" style="--c: #cfe8d6">&gt; 1,2</td><td>Myome cellulaire</td></tr>
-                <tr><td class="sc dark" style="--c: #f6e7c3">0,8 – 1,2</td><td><mark class="k-ddx">Myome indéterminé</mark></td></tr>
-                <tr><td class="sc" style="--c: var(--k-grave)">&lt; 0,8</td><td><mark class="k-grave">Sarcome utérin</mark></td></tr>
-              </tbody>
-            </table>
+          <p class="fintro">On part du <mark class="k-key">signal T2</mark> du myome, puis du <mark class="k-key">rehaussement</mark> ou du <mark class="k-key">signal T1</mark>, et en signal T2 intermédiaire de l'<mark class="k-key">ADC</mark>. Survolez une case pour suivre son chemin ; un clic mène à la partie de la fiche.</p>
+          <div class="dtree" data-dtree role="figure" aria-label="Arbre décisionnel des myomes utérins en IRM : signal T2, rehaussement ou signal T1, ADC">
+            <ul class="dt">
+              <li>
+                <span class="dt-n dt-root" tabindex="0">Signal T2 du myome</span>
+                <ul>
+                  <li style="--w: 2; --c: var(--slate)">
+                    <span class="dt-n dt-t2" tabindex="0"><i class="dt-sw" style="--g: #26252e" aria-hidden="true"></i>Hyposignal T2</span>
+                    <ul>
+                      <li class="dt-cond"><span class="dt-n dt-if" tabindex="0">Rehaussement homogène</span>
+                        <ul><li><a class="dt-n dt-leaf is-ok" href="#simple">Myome simple</a></li></ul></li>
+                      <li class="dt-cond"><span class="dt-n dt-if" tabindex="0">Pas de rehaussement</span>
+                        <ul><li><a class="dt-n dt-leaf is-ok" href="#degenerescences" data-tab="hya"><small class="dt-kicker">Dégénérescence </small>Hyaline<small>aussi après embolisation</small></a></li></ul></li>
+                    </ul>
+                  </li>
+                  <li style="--w: 2; --c: var(--cornflower)">
+                    <span class="dt-n dt-t2" tabindex="0"><i class="dt-sw" style="--g: #ffffff" aria-hidden="true"></i>Hypersignal T2</span>
+                    <ul>
+                      <li class="dt-cond"><span class="dt-n dt-if" tabindex="0">Rehaussement hétérogène</span>
+                        <ul><li><a class="dt-n dt-leaf is-warn" href="#degenerescences" data-tab="myx"><small class="dt-kicker">Dégénérescence </small>Myxoïde<small>éliminer un sarcome</small></a></li></ul></li>
+                      <li class="dt-cond"><span class="dt-n dt-if" tabindex="0">Pas de rehaussement</span>
+                        <ul><li><a class="dt-n dt-leaf is-ok" href="#degenerescences" data-tab="kys"><small class="dt-kicker">Dégénérescence </small>Kystique</a></li></ul></li>
+                    </ul>
+                  </li>
+                  <li style="--w: 3.2; --c: var(--purple)">
+                    <span class="dt-n dt-t2" tabindex="0"><i class="dt-sw" style="--g: #8d8c97" aria-hidden="true"></i>Signal T2 intermédiaire</span>
+                    <ul>
+                      <li class="dt-cond"><span class="dt-n dt-if" tabindex="0">Hypersignal T1 périphérique ou diffus</span>
+                        <ul><li><a class="dt-n dt-leaf is-ok" href="#degenerescences" data-tab="nec">Nécrobiose<small>douleurs pelviennes</small></a></li></ul></li>
+                      <li class="dt-cond" style="--w: 2.2"><span class="dt-n dt-if" tabindex="0">Pas d'hypersignal T1</span>
+                        <ul><li>
+                          <div class="dt-n dt-gauge">
+                            <p class="dt-gauge-t">ADC <small>× 10⁻³ mm²/s</small></p>
+                            <div class="dt-scale" aria-hidden="true"><span style="--x: 33.333%">0,8</span><span style="--x: 66.667%">1,2</span></div>
+                            <div class="dt-bar">
+                              <a class="dt-seg is-bad" href="#sarcome"><span class="sr-only">ADC inférieur à 0,8 : </span>Sarcome utérin</a>
+                              <a class="dt-seg is-warn" href="#sarcome"><span class="sr-only">ADC entre 0,8 et 1,2 : </span>Myome indéterminé</a>
+                              <a class="dt-seg is-warn" href="#sarcome"><span class="sr-only">ADC supérieur à 1,2 : </span>Myome cellulaire</a>
+                            </div>
+                          </div>
+                        </li></ul></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <div class="dt-legend" aria-label="Légende">
+              <span style="--lc: var(--green)">Bénin</span>
+              <span style="--lc: var(--amber)">Prudence : éliminer un sarcome</span>
+              <span style="--lc: var(--k-grave)">Suspect de sarcome</span>
+            </div>
           </div>
           <h3 class="marker-sub">Take home messages</h3>
           <ol class="trg">
@@ -389,14 +425,14 @@
               <span class="flip-tab">3</span>
               <span class="flip-inner">
                 <span class="flip-face flip-front"><strong>Hyposignal T2 sans rehaussement ?</strong><small>cliquez pour retourner</small></span>
-                <span class="flip-face flip-back"><p><b>Dégénérescence hyaline</b>Même aspect après embolisation.</p></span>
+                <span class="flip-face flip-back"><p><b>Dégéné&shy;rescence hyaline</b>Même aspect après embolisation.</p></span>
               </span>
             </button>
             <button class="flip" aria-pressed="false" style="--c: var(--orange)">
               <span class="flip-tab">4</span>
               <span class="flip-inner">
                 <span class="flip-face flip-front"><strong>Hypersignal T2 à rehaussement hétérogène ?</strong><small>cliquez pour retourner</small></span>
-                <span class="flip-face flip-back"><p><b>Dégénérescence myxoïde</b>Vérifier l'absence de signe de malignité (léiomyosarcome).</p></span>
+                <span class="flip-face flip-back"><p><b>Dégéné&shy;rescence myxoïde</b>Vérifier l'absence de signe de malignité (léiomyosarcome).</p></span>
               </span>
             </button>
             <button class="flip" aria-pressed="false" style="--c: var(--k-grave)">
@@ -441,8 +477,8 @@
       <p class="copyright">© <span id="year"></span> RadiologicHub · Formation en radiologie d'urgence</p>
     </div>
   </footer>
-  <script src="../regles/myome.js?v=20261008190000"></script>
-  <script src="../schemas/uterus.js?v=20261008190000"></script>
-  <script src="../fiche.js?v=20261008190000"></script>
+  <script src="../regles/myome.js?v=20261008200000"></script>
+  <script src="../schemas/uterus.js?v=20261008200000"></script>
+  <script src="../fiche.js?v=20261008200000"></script>
 </body>
 </html>

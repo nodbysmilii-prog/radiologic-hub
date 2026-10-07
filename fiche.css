@@ -839,3 +839,89 @@ mark[class^="k-"], .chip {
 @media print {
   .ftable-wrap, .pr-schema, .svg-fig { box-shadow: none !important; }
 }
+
+/* ---------- Arbre décisionnel dessiné (fiche myome) ----------
+   Arborescence de haut en bas sur grand écran ; arbre vertical indenté
+   quand la place manque (requête de conteneur). */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.dtree { --line: #3f3d56; --gap: 24px; container-type: inline-size; margin: 0 0 34px; padding: 28px 8px 18px; border: 4px solid var(--ink); border-radius: var(--radius); background: #fff; box-shadow: 10px 10px 0 color-mix(in srgb, var(--purple) 45%, transparent); }
+.dt, .dt ul { list-style: none; margin: 0; padding: 0; }
+.dt ul { position: relative; display: flex; align-self: stretch; padding-top: var(--gap); }
+.dt li { --w: 1; position: relative; flex: var(--w) 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; padding: var(--gap) 4px 0; text-align: center; }
+.dt > li { padding-top: 0; }
+/* Connecteurs : chaque enfant trace sa moitié de barre horizontale et sa descente */
+.dt li::before, .dt li::after { content: ""; position: absolute; top: 0; height: var(--gap); border-top: 3px solid var(--line); }
+.dt li::before { left: 0; right: calc(50% - 1.5px); }
+.dt li::after { left: calc(50% - 1.5px); right: 0; border-left: 3px solid var(--line); }
+.dt li:first-child::before, .dt li:last-child::after { border: 0; }
+.dt li:last-child::before { border-right: 3px solid var(--line); border-radius: 0 14px 0 0; }
+.dt li:first-child::after { border-radius: 14px 0 0 0; }
+.dt li:only-child::after { border-top: 0; border-radius: 0; }
+.dt li:only-child::before { display: none; }
+.dt ul::before { content: ""; position: absolute; top: 0; left: calc(50% - 1.5px); height: var(--gap); border-left: 3px solid var(--line); }
+.dt > li::before, .dt > li::after { display: none; }
+
+/* Cases */
+.dt-n { position: relative; z-index: 1; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; max-width: 100%; color: var(--ink); text-decoration: none; overflow-wrap: break-word; hyphens: auto; transition: opacity .2s, transform .2s, box-shadow .2s; }
+.dt-root { padding: 11px 26px; border-radius: 999px; background: var(--ink); color: #fff; font-size: .82rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; box-shadow: 5px 5px 0 color-mix(in srgb, var(--purple) 55%, transparent); }
+.dt-t2 { flex-direction: row; gap: 9px; padding: 9px 16px 9px 10px; border: 3px solid var(--c); border-radius: 14px; background: color-mix(in srgb, var(--c) 10%, #fff); font-size: .84rem; font-weight: 900; box-shadow: 4px 4px 0 var(--c); }
+.dt-sw { flex: 0 0 auto; width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--ink); background: var(--g); }
+.dt-if { padding: 6px 12px; border: 2px dashed color-mix(in srgb, var(--c, var(--line)) 70%, #fff); border-radius: 999px; background: #fff; font-size: .74rem; font-weight: 700; line-height: 1.3; }
+.dt-leaf { --lc: var(--green); width: 100%; max-width: 170px; min-height: 56px; padding: 9px 8px; border: 3px solid var(--ink); border-radius: 16px; background: var(--lc); color: #fff; font-size: .8rem; font-weight: 900; line-height: 1.2; box-shadow: 4px 4px 0 rgba(17, 17, 20, .85); }
+.dt-leaf small { font-size: .66rem; font-weight: 600; opacity: .92; }
+.dt-leaf .dt-kicker { order: -1; font-size: .56rem; font-weight: 900; letter-spacing: .03em; text-transform: uppercase; opacity: .85; }
+.dt-leaf.is-warn { --lc: var(--amber); color: var(--ink); }
+.dt-leaf.is-bad { --lc: var(--k-grave); }
+/* Pointe de flèche à l'arrivée sur un diagnostic */
+.dt-leaf::before, .dt-gauge::before { content: ""; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); border: 7px solid transparent; border-bottom: 0; border-top: 9px solid var(--line); }
+a.dt-leaf:hover, a.dt-leaf:focus-visible { transform: translateY(-3px); box-shadow: 6px 7px 0 rgba(17, 17, 20, .85); }
+
+/* Réglette d'ADC */
+.dt-gauge { width: 100%; max-width: 330px; padding: 8px 10px 10px; border: 3px solid var(--ink); border-radius: 16px; background: #fff; box-shadow: 4px 4px 0 rgba(17, 17, 20, .85); }
+.dt-gauge-t { margin: 0; font-size: .8rem; font-weight: 900; }
+.dt-gauge-t small { font-size: .66rem; font-weight: 700; color: var(--muted); }
+.dt-scale { position: relative; align-self: stretch; height: 17px; }
+.dt-scale span { position: absolute; bottom: 0; left: var(--x); transform: translateX(-50%); font-size: .74rem; font-weight: 900; }
+.dt-bar { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-self: stretch; }
+.dt-seg { --lc: var(--amber); position: relative; display: flex; flex-direction: column; gap: 6px; padding: 0 3px; color: var(--ink); font-size: .7rem; font-weight: 800; line-height: 1.2; text-decoration: none; overflow-wrap: normal; hyphens: manual; transition: transform .2s; }
+.dt-seg::before { content: ""; height: 16px; margin: 0 -3px; background: var(--lc); border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+.dt-seg:first-child::before { border-left: 2px solid var(--ink); border-radius: 9px 0 0 9px; }
+.dt-seg:last-child::before { border-right: 2px solid var(--ink); border-radius: 0 9px 9px 0; }
+.dt-seg + .dt-seg::after { content: ""; position: absolute; top: -5px; left: -1px; height: 26px; border-left: 2px solid var(--ink); }
+.dt-seg.is-bad { --lc: var(--k-grave); color: var(--k-grave); }
+.dt-seg.is-warn + .dt-seg.is-warn { --lc: #f7cf72; }
+.dt-seg:hover, .dt-seg:focus-visible { transform: translateY(-2px); }
+
+/* Survol : le chemin depuis la racine reste net, le reste s'estompe */
+.dtree.has-path .dt-n { opacity: .3; }
+.dtree.has-path li.on > .dt-n, .dtree.has-path li.tip .dt-n { opacity: 1; }
+
+.dt-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 18px; margin-top: 22px; font-size: .74rem; font-weight: 700; }
+.dt-legend span { display: inline-flex; align-items: center; gap: 7px; }
+.dt-legend span::before { content: ""; width: 16px; height: 16px; border-radius: 5px; border: 2px solid var(--ink); background: var(--lc); }
+
+/* Peu de place : arbre vertical indenté */
+@container (max-width: 820px) {
+  .dt ul { display: block; padding: 0 0 0 10px; }
+  .dt ul::before { display: none; }
+  .dt li { display: block; padding: 12px 0 0 22px; text-align: left; }
+  .dt > li { padding: 0; }
+  .dt li::before { top: 0; bottom: 0; left: 0; right: auto; height: auto; border: 0; border-left: 3px solid var(--line); border-radius: 0; }
+  .dt li::after { top: 30px; left: 0; right: auto; width: 16px; height: 0; border: 0; border-top: 3px solid var(--line); border-radius: 0; }
+  .dt li:last-child::before { bottom: auto; height: 31.5px; width: 16px; border-left: 3px solid var(--line); border-bottom: 3px solid var(--line); border-right: 0; border-radius: 0 0 0 12px; }
+  .dt li:last-child::after { display: none; }
+  .dt li:first-child::before { border-left: 3px solid var(--line); }
+  .dt li:first-child:not(:last-child)::after { border-top: 3px solid var(--line); }
+  /* condition et diagnostic l'un sous l'autre, sans niveau supplémentaire */
+  .dt li.dt-cond > ul { padding: 0; }
+  .dt li.dt-cond > ul > li { padding: 12px 0 0; }
+  .dt li.dt-cond > ul > li::before, .dt li.dt-cond > ul > li::after { display: none; }
+  .dt-n { align-items: flex-start; }
+  .dt-root { padding: 9px 18px; }
+  .dt-if { margin-top: 6px; }
+  .dt-leaf { max-width: 300px; min-height: 0; align-items: flex-start; text-align: left; padding: 9px 12px; }
+  .dt-leaf::before, .dt-gauge::before { left: 22px; }
+  .dt-gauge { align-items: stretch; text-align: center; }
+  .dt-legend { justify-content: flex-start; }
+}
+@media print { .dtree, .dt-n { box-shadow: none !important; } .dtree.has-path .dt-n { opacity: 1; } }

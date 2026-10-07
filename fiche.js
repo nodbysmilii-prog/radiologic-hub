@@ -311,6 +311,33 @@ if (body) {
     });
   }
 
+  /* Arbre décisionnel dessiné : le chemin depuis la racine reste net au survol ;
+     un diagnostic mène à sa partie de la fiche (et ouvre l'onglet voulu) */
+  $$('[data-dtree]').forEach(tree => {
+    const clear = () => {
+      tree.classList.remove('has-path');
+      $$('li.on, li.tip', tree).forEach(li => li.classList.remove('on', 'tip'));
+    };
+    const mark = e => {
+      const n = e.target.closest('.dt-n');
+      if (!n) return;
+      clear();
+      tree.classList.add('has-path');
+      let li = n.closest('li');
+      if (li) li.classList.add('tip');
+      for (; li && tree.contains(li); li = li.parentElement.closest('li')) li.classList.add('on');
+    };
+    tree.addEventListener('pointerover', mark);
+    tree.addEventListener('pointerleave', clear);
+    tree.addEventListener('focusin', mark);
+    tree.addEventListener('focusout', clear);
+    tree.addEventListener('click', e => {
+      const a = e.target.closest('a[data-tab]');
+      const btn = a && $(`.t-btn[data-t="${a.dataset.tab}"]`);
+      if (btn) btn.click();
+    });
+  });
+
   /* Impression */
   const printBtn = $('#print-btn');
   if (printBtn) printBtn.addEventListener('click', () => {
