@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Comptes rendus types — RadiologicHub</title>
+  <meta name="description" content="Comptes rendus types de radiologie d'urgence et phrases automatiques : tapez « angiome », la description apparaît. Éditeur en ligne, champs à compléter, phrases personnelles.">
+  <link rel="icon" type="image/svg+xml" href="assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261007120000">
+  <link rel="stylesheet" href="fiche.css?v=20261007120000">
+  <link rel="stylesheet" href="cr.css?v=20261007120000">
+</head>
+<body>
+
+  <header class="site-header is-scrolled" id="top">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="RadiologicHub — accueil">
+        <img src="assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+        <a href="index.html#masterclass">Masterclass</a>
+        <a href="fiches-rapides.html">Fiches rapides</a>
+        <a href="comptes-rendus.html" class="is-current">Comptes rendus</a>
+        <a href="index.html#cas-du-jour">Cas du jour</a>
+        <a href="index.html#tarifs">Tarifs</a>
+        <a href="index.html#inscription" class="btn btn-ink btn-sm">S'inscrire</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="fiche-hero sec-down cr-hero">
+      <div class="container">
+        <p class="marker-tag">Outil du radiologue</p>
+        <h1>Comptes rendus <span class="hl-navy">types</span></h1>
+        <p class="fiche-sub">Partez d'un <span class="hl-navy">modèle</span>, tapez un <span class="hl-red">mot-clé</span> : la description de la lésion apparaît et s'insère dans votre compte rendu.</p>
+        <ol class="cr-steps">
+          <li style="--c: var(--blue)"><b>1</b><span>Choisissez un <strong>modèle</strong> dans la bibliothèque.</span></li>
+          <li style="--c: var(--orange)"><b>2</b><span>Tapez un mot-clé, par exemple <mark class="k-sign">angiome</mark> : la description apparaît, <kbd>Tab</kbd> l'insère.</span></li>
+          <li style="--c: var(--green)"><b>3</b><span><kbd>Tab</kbd> passe d'un champ <code>[ … ]</code> au suivant. Puis <strong>Copier</strong>.</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="sec-up cr-app" aria-label="Éditeur de compte rendu">
+      <div class="container cr-layout">
+
+        <!-- ============ Bibliothèque ============ -->
+        <aside class="cr-side" aria-label="Bibliothèque">
+          <div class="cr-side-tabs" role="tablist">
+            <button class="cr-side-tab is-active" role="tab" id="tab-tpl" aria-selected="true" aria-controls="panel-tpl">Modèles</button>
+            <button class="cr-side-tab" role="tab" id="tab-phr" aria-selected="false" aria-controls="panel-phr">Phrases</button>
+          </div>
+
+          <div class="cr-panel" id="panel-tpl" role="tabpanel" aria-labelledby="tab-tpl">
+            <div class="cr-chips" id="tpl-filters" aria-label="Filtrer par spécialité"></div>
+            <ul class="cr-tpl-list" id="tpl-list"></ul>
+            <p class="cr-empty" id="tpl-empty" hidden>Aucun modèle personnel pour l'instant : écrivez ou modifiez un compte rendu puis cliquez sur <strong>Enregistrer comme modèle</strong>.</p>
+          </div>
+
+          <div class="cr-panel" id="panel-phr" role="tabpanel" aria-labelledby="tab-phr" hidden>
+            <label class="cr-search">
+              <span class="visually-hidden">Rechercher une phrase</span>
+              <input type="search" id="phr-search" placeholder="Rechercher : angiome, kyste, EP…" autocomplete="off">
+            </label>
+            <div class="cr-chips" id="phr-filters" aria-label="Filtrer par type"></div>
+            <p class="cr-hint">Cliquez pour insérer à l'emplacement du curseur.</p>
+            <div id="phr-list"></div>
+            <p class="cr-empty" id="phr-empty" hidden>Aucune phrase ne correspond.</p>
+          </div>
+        </aside>
+
+        <!-- ============ Éditeur ============ -->
+        <div class="cr-main">
+          <div class="cr-toolbar" role="toolbar" aria-label="Actions sur le compte rendu">
+            <button class="btn btn-ink btn-sm" type="button" id="cr-copy">Copier</button>
+            <button class="btn btn-outline btn-sm" type="button" id="cr-next" title="Sélectionner le champ [ … ] suivant (touche Tab)">Champ suivant ⇥</button>
+            <button class="btn btn-outline btn-sm" type="button" id="cr-download">Télécharger .txt</button>
+            <button class="btn btn-outline btn-sm" type="button" id="cr-print-btn">Imprimer</button>
+            <button class="btn btn-outline btn-sm" type="button" id="cr-save-tpl">Enregistrer comme modèle</button>
+            <button class="btn btn-outline btn-sm" type="button" id="cr-sel-phrase" title="Créer une phrase personnelle à partir du texte sélectionné">Sélection → phrase</button>
+            <button class="btn btn-outline btn-sm cr-danger" type="button" id="cr-clear">Effacer</button>
+          </div>
+
+          <div class="cr-editor-wrap">
+            <label for="cr-editor" class="visually-hidden">Compte rendu</label>
+            <textarea id="cr-editor" class="cr-editor" spellcheck="true" lang="fr"
+              aria-autocomplete="list" aria-controls="cr-sug-list" aria-expanded="false"
+              aria-describedby="cr-status-text"
+              placeholder="Choisissez un modèle à gauche, ou commencez à écrire…&#10;&#10;Astuce : tapez « angiome », « kyste », « hsd », « ep », « appendicite »… la description apparaît, Tab l'insère."></textarea>
+            <div class="cr-pop" id="cr-pop" hidden>
+              <ul role="listbox" id="cr-sug-list" aria-label="Phrases proposées"></ul>
+              <p class="cr-pop-help"><kbd>Tab</kbd> insérer · <kbd>↑</kbd><kbd>↓</kbd> choisir · <kbd>Échap</kbd> fermer</p>
+            </div>
+          </div>
+
+          <div class="cr-status">
+            <p id="cr-status-text" aria-live="polite"></p>
+            <label class="cr-switch">
+              <input type="checkbox" id="cr-auto">
+              <span>Insertion automatique <small>(mot-clé en début de ligne + espace)</small></span>
+            </label>
+          </div>
+          <p class="cr-flash" id="cr-flash" role="status" aria-live="polite"></p>
+
+          <p class="cr-note">
+            <strong>Confidentialité :</strong> tout reste dans votre navigateur, rien n'est envoyé. N'y saisissez pas d'informations permettant d'identifier un patient.
+            Les modèles sont indicatifs : adaptez-les à chaque patient, aux recommandations en vigueur et aux usages de votre service.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Mes phrases ============ -->
+    <section class="section sec-down cr-mine-sec" id="mes-phrases">
+      <div class="container">
+        <div class="section-head">
+          <p class="marker-tag">À vous de programmer</p>
+          <h2 class="marker-title">Mes phrases</h2>
+          <p>Créez vos propres descriptions : un <strong>mot-clé</strong> et un <strong>texte</strong>. Dès que vous tapez le mot-clé dans l'éditeur, votre texte vous est proposé.</p>
+        </div>
+
+        <div class="cr-mine">
+          <form class="cr-form" id="ph-form" novalidate>
+            <h3 class="cr-form-title" id="ph-form-title">Nouvelle phrase</h3>
+            <div class="field-row">
+              <div class="field">
+                <label for="ph-key">Mot-clé</label>
+                <input id="ph-key" type="text" autocomplete="off" placeholder="ex. kystefoie" required>
+              </div>
+              <div class="field">
+                <label for="ph-organ">Rubrique <small>(facultatif)</small></label>
+                <input id="ph-organ" type="text" autocomplete="off" placeholder="ex. Foie">
+              </div>
+            </div>
+            <div class="field">
+              <label for="ph-label">Intitulé</label>
+              <input id="ph-label" type="text" autocomplete="off" placeholder="ex. Kyste biliaire — ma formulation" required>
+            </div>
+            <div class="field">
+              <label for="ph-text">Texte inséré</label>
+              <textarea id="ph-text" rows="6" required placeholder="Formation kystique du segment [x] de [x] mm…"></textarea>
+            </div>
+            <p class="cr-form-help">Mot-clé sans espace (les accents et majuscules sont ignorés). Mettez les éléments variables entre crochets : <code>[x] mm</code>, <code>[droit / gauche]</code>. La touche <kbd>Tab</kbd> passera de l'un à l'autre.</p>
+            <div class="cr-form-actions">
+              <button class="btn btn-ink btn-sm" type="submit" id="ph-submit">Enregistrer la phrase</button>
+              <button class="btn btn-outline btn-sm" type="button" id="ph-cancel" hidden>Annuler</button>
+            </div>
+            <p class="form-status" id="ph-status" role="status"></p>
+          </form>
+
+          <div class="cr-mine-list">
+            <div class="cr-mine-head">
+              <h3>Mes phrases <span class="cr-count" id="ph-count">0</span></h3>
+              <div class="cr-mine-io">
+                <button class="btn btn-outline btn-sm" type="button" id="io-export">Exporter</button>
+                <label class="btn btn-outline btn-sm" for="io-import">Importer</label>
+                <input type="file" id="io-import" accept=".json,application/json" class="visually-hidden">
+              </div>
+            </div>
+            <p class="form-status cr-io-status" id="io-status" role="status"></p>
+            <ul class="cr-mine-ul" id="ph-list"></ul>
+            <p class="cr-empty" id="ph-empty">Aucune phrase personnelle pour l'instant. Créez-en une avec le formulaire, ou sélectionnez du texte dans l'éditeur puis cliquez sur <strong>Sélection → phrase</strong>.</p>
+            <p class="cr-note">Vos phrases et vos modèles sont enregistrés <strong>dans ce navigateur</strong>. Utilisez <strong>Exporter</strong> puis <strong>Importer</strong> pour les retrouver sur un autre ordinateur.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="index.html" class="brand">
+        <img src="assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav aria-label="Liens de pied de page">
+        <a href="index.html#masterclass">Masterclass</a>
+        <a href="fiches-rapides.html">Fiches rapides</a>
+        <a href="comptes-rendus.html">Comptes rendus</a>
+        <a href="index.html#cas-du-jour">Cas du jour</a>
+        <a href="index.html#inscription">Contact</a>
+      </nav>
+      <p class="copyright">© <span id="year"></span> RadiologicHub · Formation en radiologie d'urgence</p>
+    </div>
+  </footer>
+
+  <!-- Version imprimable du compte rendu -->
+  <div class="cr-print" id="cr-print" aria-hidden="true"></div>
+
+  <script src="fiche.js?v=20261007120000"></script>
+  <script src="cr-data.js?v=20261007120000"></script>
+  <script src="cr.js?v=20261007120000"></script>
+</body>
+</html>

@@ -1,10 +1,10 @@
 # RadiologicHub
 
-**RadiologicHub** est le site des masterclass de **radiologie d'urgence** : des formations par spécialité (neuro, digestif, thorax, polytraumatisé, vasculaire, pédiatrie), des **fiches rapides** de révision et des **cas cliniques annotés**.
+**RadiologicHub** est le site des masterclass de **radiologie d'urgence** : des formations par spécialité (neuro, digestif, thorax, polytraumatisé, vasculaire, pédiatrie), des **fiches rapides** de révision, des **cas cliniques annotés** et un outil de **comptes rendus types** avec phrases automatiques.
 
 🌐 **Site en ligne :** https://nodbysmilii-prog.github.io/radiologic-hub/
 
-> Dernière mise à jour du README : 5 octobre 2026
+> Dernière mise à jour du README : 7 octobre 2026
 
 ---
 
@@ -12,13 +12,14 @@
 
 1. [Ce que contient le site](#ce-que-contient-le-site)
 2. [Fiches rapides disponibles](#fiches-rapides-disponibles)
-3. [Charte graphique](#charte-graphique)
-4. [Code couleur des fiches](#code-couleur-des-fiches)
-5. [Organisation des fichiers](#organisation-des-fichiers)
-6. [Ajouter ou modifier du contenu](#ajouter-ou-modifier-du-contenu)
-7. [Mise en ligne](#mise-en-ligne)
-8. [À faire / points en attente](#à-faire--points-en-attente)
-9. [Historique des modifications](#historique-des-modifications)
+3. [Comptes rendus types et phrases automatiques](#comptes-rendus-types-et-phrases-automatiques)
+4. [Charte graphique](#charte-graphique)
+5. [Code couleur des fiches](#code-couleur-des-fiches)
+6. [Organisation des fichiers](#organisation-des-fichiers)
+7. [Ajouter ou modifier du contenu](#ajouter-ou-modifier-du-contenu)
+8. [Mise en ligne](#mise-en-ligne)
+9. [À faire / points en attente](#à-faire--points-en-attente)
+10. [Historique des modifications](#historique-des-modifications)
 
 ---
 
@@ -52,6 +53,12 @@ Chaque fiche (`fiches/…html`) propose :
 - des cartes **« Testez-vous »** à retourner ;
 - un bouton **Imprimer / PDF**.
 
+Les fiches pancréas, rectum et spondylodiscite ont en bas un bouton **« Compte rendu type → »** qui ouvre le modèle correspondant dans l'éditeur.
+
+### Comptes rendus types (`comptes-rendus.html`)
+
+Éditeur de compte rendu avec bibliothèque de modèles et **phrases automatiques** — voir la [section dédiée](#comptes-rendus-types-et-phrases-automatiques).
+
 ---
 
 ## Fiches rapides disponibles
@@ -62,6 +69,47 @@ Chaque fiche (`fiches/…html`) propose :
 | Digestif | **Imagerie de la maladie de Crohn** | `fiches/maladie-de-crohn.html` | Objectifs numérotés, préparation de l'entéro-IRM en frise, activité vs chronicité, phénotypes B1–B3 |
 | Digestif | **IRM pelvienne dans le cancer du rectum** | `fiches/irm-cancer-rectum.html` | 13 images du cours, onglets T1–T4, jauge EMS, échelle mrTRG, **checklist du compte rendu** mémorisée dans le navigateur |
 | Ostéo-articulaire | **Spondylodiscite infectieuse** | `fiches/spondylodiscite.html` | Fusion de deux cours ; tableaux comparatifs pyogènes / tuberculose / brucellose filtrables, onglets par germe, quiz « Quel germe ? », formes rares, diagnostic différentiel, annexe avec 2 cas annotés (tuberculose, *Bacillus cereus*) |
+
+---
+
+## Comptes rendus types et phrases automatiques
+
+Page `comptes-rendus.html` (lien « Comptes rendus » dans le menu de toutes les pages).
+
+**Fonctionnement**
+
+1. **Modèles** (colonne de gauche, onglet « Modèles ») : un clic charge le compte rendu type dans l'éditeur. Filtre par spécialité.
+2. **Phrases automatiques** : en tapant un mot-clé (ex. `angiome`), une bulle propose aussitôt la ou les descriptions correspondantes (TDM / écho / IRM…). **Tab** (ou clic) insère la description, **↑ ↓** choisit une variante, **Échap** ferme. Les suggestions apparaissent dès le mot-clé exact ou dès 4 lettres du début du mot-clé. **Ctrl + Z** annule une insertion.
+3. **Champs à compléter** : les éléments variables sont entre crochets (`[x] mm`, `[droit / gauche]`). Le premier champ est sélectionné après chaque insertion ; **Tab** (ou le bouton « Champ suivant ») passe au suivant. Le nombre de champs restants est affiché sous l'éditeur, et un avertissement s'affiche à la copie s'il en reste.
+4. **Insertion automatique** (interrupteur sous l'éditeur, désactivé par défaut) : un mot-clé tapé **en début de ligne** suivi d'un espace, d'une ponctuation ou d'Entrée est remplacé directement par la première description.
+5. Onglet **« Phrases »** : toute la bibliothèque, avec recherche et filtre par type ; un clic insère la phrase au curseur.
+6. Boutons : **Copier**, **Télécharger .txt**, **Imprimer** (le compte rendu seul), **Enregistrer comme modèle**, **Sélection → phrase** (crée une phrase perso à partir du texte sélectionné), **Effacer**.
+7. **Mes phrases** (bas de page) : formulaire pour programmer ses propres mots-clés et descriptions ; modifier / supprimer ; **Exporter / Importer** (fichier `.json`) pour les transférer sur un autre ordinateur. Les phrases perso sont proposées en premier.
+
+**Stockage** : le brouillon, les phrases et les modèles perso sont enregistrés **dans le navigateur** (localStorage), rien n'est envoyé. Message de confidentialité sur la page : ne pas saisir de données identifiantes.
+
+**Contenu fourni (`cr-data.js`)**
+
+| Spécialité | Comptes rendus types |
+|---|---|
+| Neuro | Scanner cérébral sans injection normal · Alerte AVC (scanner + angio-scanner TSA et Willis, ASPECTS) |
+| Thorax | Radiographie du thorax normale · Angio-scanner thoracique (recherche d'EP) |
+| Digestif | Scanner abdomino-pelvien normal · Échographie abdominale normale · Adénocarcinome du pancréas (résécabilité, repris de la fiche) · IRM rectum bilan initial (mrT, EMS, CRM, EMVI, repris de la fiche) |
+| Uro-gynéco | Scanner sans injection — colique néphrétique |
+| Traumato | Body-scanner du polytraumatisé |
+| Ostéo-articulaire | IRM du rachis — spondylodiscite (repris de la fiche) |
+| Vasculaire | Angio-scanner aortique — syndrome aortique aigu |
+| Pédiatrie | Échographie — suspicion d'appendicite |
+
+**56 phrases**, classées par type (couleur du mot-clé) :
+
+| Couleur | Classe | Type | Exemples de mots-clés |
+|---|---|---|---|
+| 🔵 Bleu | `k-tech` | Normal | `foienormal`, `pancreasnormal`, `reinsnormaux`, `cerveaunormal`, `poumonsnormaux` |
+| 🟢 Vert | `k-sign` | Lésion / incidentalome | `angiome` (foie TDM / écho / IRM, vertèbre), `kyste` (foie, rein Bosniak I, ovaire), `steatose`, `hnf`, `adenome`, `meningiome`, `nodule`, `lipome`, `enostose` |
+| 🔴 Rouge | `k-grave` | Pathologie aiguë | `appendicite`, `diverticulite`, `occlusion`, `pneumoperitoine`, `cholecystite`, `pancreatite`, `lithiase`, `pyelonephrite`, `hsd`, `hed`, `hsa`, `avc`, `ep`, `pneumothorax`, `dissection`, `aaa` |
+| 🟡 Jaune | `k-key` | Conclusion / formule | `conclusionnormale`, `transmis`, `comparatif`, `controle` |
+| 🟣 Violet | `k-ddx` | Mes phrases (perso) | — |
 
 ---
 
@@ -92,6 +140,8 @@ Toutes les couleurs sont des variables dans `:root` de `styles.css` (site) et `f
 
 Dans le HTML : `<mark class="k-grave">contact &gt; 180°</mark>`. Les libellés de la légende peuvent être adaptés dans chaque fiche.
 
+La page **Comptes rendus** réutilise ces couleurs pour les types de phrases (voir [tableau ci-dessus](#comptes-rendus-types-et-phrases-automatiques)).
+
 ---
 
 ## Organisation des fichiers
@@ -103,8 +153,12 @@ radiologic-hub/
 ├── script.js               Données et interactions de l'accueil
 ├── fiches-rapides.html     Index des fiches rapides
 ├── fiche.css               Styles communs à toutes les fiches
-├── fiche.js                Interactions des fiches (légende, carrousels, checklist…)
+├── fiche.js                Interactions des fiches (légende, carrousels, checklist…) + menu mobile
 ├── fiches/                 Une page HTML par fiche
+├── comptes-rendus.html     Comptes rendus types : éditeur, bibliothèque, mes phrases
+├── cr-data.js              Données : modèles de CR (CR_TEMPLATES) et phrases automatiques (CR_PHRASES)
+├── cr.js                   Éditeur : suggestions, champs [ … ], insertion auto, mes phrases, export/import
+├── cr.css                  Styles de la page Comptes rendus
 └── assets/
     ├── logo-radiologichub.png, emblem.svg, emblem-light.svg
     ├── posts/              Visuels RadiologicHub (galerie de l'accueil)
@@ -123,10 +177,13 @@ radiologic-hub/
 | Changer tarifs, programme, FAQ | Directement dans `index.html` |
 | Ajouter une fiche rapide | Créer `fiches/ma-fiche.html` (copier une fiche existante) + ajouter une carte `<a class="fiche-card" data-spe="…">` dans `fiches-rapides.html` |
 | Ajouter une image à une fiche | La déposer dans `assets/fiches/<fiche>/` avec le nom indiqué dans le README du dossier |
+| Ajouter un compte rendu type | Ajouter un objet `{ id, spe, mod, title, text }` dans `CR_TEMPLATES` (`cr-data.js`) ; lien direct possible : `comptes-rendus.html#modele=<id>` |
+| Ajouter une phrase automatique | Ajouter un objet `{ k, alias, organ, mod, type, label, text }` dans `CR_PHRASES` (`cr-data.js`). Mot-clé sans espace ni accent ; éviter les mots courants (« foie », « normal »…) qui ouvriraient la bulle en pleine rédaction |
+| Champs à compléter | Les écrire entre crochets `[x]`, `[droit / gauche]` ; **pas de crochets imbriqués** (utiliser « … » à l'intérieur d'un choix) |
 
 **Images médicales :** toujours **anonymisées** (aucun nom, date, n° de dossier, ni texte incrusté). Le site et le dépôt sont publics.
 
-**Cache :** après une modification de `styles.css`, `fiche.css`, `script.js` ou `fiche.js`, changer le numéro `?v=…` dans les liens des pages HTML pour forcer les navigateurs à recharger les fichiers.
+**Cache :** après une modification de `styles.css`, `fiche.css`, `script.js`, `fiche.js`, `cr.css`, `cr.js` ou `cr-data.js`, changer le numéro `?v=…` dans les liens des pages HTML pour forcer les navigateurs à recharger les fichiers.
 
 ---
 
@@ -148,6 +205,8 @@ Site 100 % statique (HTML / CSS / JavaScript, aucune installation).
 - [ ] **Fiche rectum** : préciser les légendes des images « formes tumorales » et « mesure axiale 1,57 cm ».
 - [ ] **Fiches des autres spécialités** : Neuro, Thorax, Traumato, Vasculaire, Pédiatrie.
 - [ ] **Lecteur de séries** (défilement dans un scanner / IRM) : en attente d'une série anonymisée exportée en JPG.
+- [ ] **Comptes rendus types** : relire et valider médicalement les 13 modèles et les 56 phrases (`cr-data.js`), les adapter aux habitudes du service ; ajouter d'autres modèles (IRM cérébrale, échographie pelvienne, TDM thoracique…).
+- [ ] **Nom de domaine** `www.radiologichub.com` : à acheter et configurer (DNS + réglages GitHub Pages), puis mettre à jour le lien « Site en ligne » ci-dessus.
 
 ---
 
@@ -155,6 +214,7 @@ Site 100 % statique (HTML / CSS / JavaScript, aucune installation).
 
 | Date | Modification |
 |---|---|
+| 07/10/2026 | Nouvelle page « Comptes rendus » : 13 CR types, 56 phrases automatiques (mot-clé → description, Tab pour insérer, champs [ … ]), mes phrases / modèles perso avec export-import ; lien dans le menu et depuis les fiches pancréas, rectum, spondylodiscite ; menu de l'en-tête resserré (hamburger sous 960 px) |
 | 05/10/2026 | Nouvel onglet « Ostéo-articulaire » + fiche spondylodiscite infectieuse (fusion de deux cours, 30 images dont 13 annotées, quiz « Quel germe ? ») |
 | 05/10/2026 | Fiche pancréas : DDx 3 — pancréatite auto-immune pseudo-tumorale (formes diffuse/focale, arguments en faveur, atteintes IgG4, coupes A–C annotées) |
 | 05/10/2026 | Fiche pancréas : DDx 2 — tumeur neuroendocrine pancréatique (coupes A, B, C annotées + comparatif avec l'ADK) |
