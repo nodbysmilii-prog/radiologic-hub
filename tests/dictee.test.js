@@ -182,3 +182,50 @@ test('alerte identité', () => {
   assert.equal(T.identite('monsieur le docteur').length, 0);
   assert.equal(T.identite('foie normal').length, 0);
 });
+
+test('vocabulaire du service : termes mal reconnus par la dictée', () => {
+  assert.equal(T.corriger('spontanément iso dense'), 'spontanément isodense');
+  assert.equal(T.corriger('lésion hypo dense'), 'lésion hypodense');
+  assert.equal(T.corriger('lésion hippo dense'), 'lésion hypodense');
+  assert.equal(T.corriger('Hypo-dense'), 'Hypodense');
+  assert.equal(T.corriger('en iso signal T1'), 'en isosignal T1');
+  assert.equal(T.corriger('en hypo signal T1 et en hyper signal T2'), 'en hyposignal T1 et en hypersignal T2');
+  assert.equal(T.corriger('en hippo signal'), 'en hyposignal');
+  assert.equal(T.corriger('aspect cérébri forme'), 'aspect cérébriforme');
+  assert.equal(T.corriger('aspect cérébral forme'), 'aspect cérébriforme');
+  assert.equal(T.corriger('rehaussement centri pète en mode'), 'rehaussement centripète en mottes');
+  assert.equal(T.corriger('rehaussement centripète en motte'), 'rehaussement centripète en mottes');
+  assert.equal(T.corriger('ma gamme ganglionnaire'), 'magma ganglionnaire');
+  assert.equal(T.corriger('perméabilité conservée du tronc céliaque et des artères mesenteriques'),
+    'perméabilité conservée du tronc cœliaque et des artères mésentériques');
+});
+
+test('familles de mots : hypo / hyper / iso, préfixes savants, intra / péri…', () => {
+  assert.equal(T.corriger('hyper échogène'), 'hyperéchogène');
+  assert.equal(T.corriger('hypo échogène'), 'hypoéchogène');
+  assert.equal(T.corriger('an échogène'), 'anéchogène');
+  assert.equal(T.corriger('hyper vascularisée'), 'hypervascularisée');
+  assert.equal(T.corriger('ostéo phytes'), 'ostéophytes');
+  assert.equal(T.corriger('micro nodules'), 'micronodules');
+  assert.equal(T.corriger('hépato mégalie'), 'hépatomégalie');
+  assert.equal(T.corriger('pneumo péritoine'), 'pneumopéritoine');
+  assert.equal(T.corriger('hydro néphrose'), 'hydronéphrose');
+  assert.equal(T.corriger('intra hépatique'), 'intrahépatique');
+  assert.equal(T.corriger('extra prostatique'), 'extraprostatique');
+  assert.equal(T.corriger('rétro péritonéal'), 'rétropéritonéal');
+  assert.equal(T.corriger('péri vésiculaire'), 'périvésiculaire');
+  assert.equal(T.corriger('intra articulaire'), 'intra-articulaire', 'trait d\'union devant une voyelle');
+  assert.equal(T.corriger('lombo sacré'), 'lombo-sacré');
+  assert.equal(T.corriger('sacro iliaques'), 'sacro-iliaques');
+  assert.equal(T.corriger('cortico sous cortical'), 'cortico-sous-cortical');
+  assert.equal(T.corriger('hémorragie sous arachnoïdienne'), 'hémorragie sous-arachnoïdienne');
+});
+
+test('vocabulaire : pas de fausse correction', () => {
+  assert.equal(T.corriger('hippocampe gauche'), 'hippocampe gauche');
+  assert.equal(T.corriger('radio du genou'), 'radio du genou');
+  assert.equal(T.corriger('échographie en mode B'), 'échographie en mode B');
+  assert.equal(T.corriger('intra et extra hépatique'), 'intra et extrahépatique');
+  assert.equal(T.corriger('eu tirads 4'), 'EU-TIRADS 4');
+  assert.equal(T.corriger('danse'), 'danse');
+});

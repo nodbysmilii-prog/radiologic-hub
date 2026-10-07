@@ -40,9 +40,13 @@
 
   /* ---------- Dictionnaire compilé ---------- */
   const parLongueur = (a, b) => norm(b[0]).length - norm(a[0]).length;
-  // Une seule passe (un texte déjà corrigé n'est pas re-corrigé : « EU-TIRADS » ne devient pas « EU-TI-RADS »)
-  const REMPL_LISTE = [...(DICO.remplacements || [])].sort(parLongueur);
-  const RE_REMPL = REMPL_LISTE.length ? new RegExp(REMPL_LISTE.map(([dit]) => `(${AV}${motif(dit)}${AP})`).join('|'), 'giu') : null;
+  // Une seule passe par liste (un texte déjà corrigé n'est pas re-corrigé : « EU-TIRADS » ne devient pas « EU-TI-RADS »)
+  const passe = liste => {
+    const l = [...(liste || [])].sort(parLongueur);
+    const re = l.length ? new RegExp(l.map(([dit]) => `(${AV}${motif(dit)}${AP})`).join('|'), 'giu') : null;
+    return t => (re ? t.replace(re, (...m) => l[m.slice(1, l.length + 1).findIndex(Boolean)][1]) : t);
+  };
+  const remplacer = passe(DICO.remplacements), expressions = passe(DICO.expressions);
   const UNITES = [...(DICO.unites || [])].sort(parLongueur)
     .map(([dit, ecrit]) => ({ re: new RegExp(`(\\d)\\s*${motif(dit)}${AP}`, 'giu'), ecrit }));
   const REGLES = (DICO.regles || []).map(([m, f, r]) => ({ re: new RegExp(m, f), r }));
@@ -75,7 +79,7 @@
     t = t.replace(/(\d)\s*virgule\s*(\d)/giu, '$1,$2');           // 12 virgule 5 → 12,5
     t = dimensions(t);
     UNITES.forEach(({ re, ecrit }) => { t = t.replace(re, `$1 ${ecrit}`); });
-    if (RE_REMPL) t = t.replace(RE_REMPL, (...m) => REMPL_LISTE[m.slice(1, REMPL_LISTE.length + 1).findIndex(Boolean)][1]);
+    t = expressions(remplacer(t));
     REGLES.forEach(({ re, r }) => { t = t.replace(re, r); });
     return t.replace(/[ \t]{2,}/g, ' ').replace(/ +([.,])/g, '$1').trim();
   }
