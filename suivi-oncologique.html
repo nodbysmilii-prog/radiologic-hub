@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Suivi oncologique — RadiologicHub</title>
+  <meta name="description" content="Suivi oncologique RECIST 1.1 et Lugano : registre des lésions identifiées d'un examen à l'autre, tableau comparatif baseline / nadir / précédent / actuel.">
+  <link rel="icon" type="image/svg+xml" href="assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261008100000">
+  <link rel="stylesheet" href="fiche.css?v=20261008100000">
+  <link rel="stylesheet" href="suivi.css?v=20261008100000">
+</head>
+<body>
+
+  <header class="site-header is-scrolled" id="top">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="RadiologicHub — accueil">
+        <img src="assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+        <a href="index.html#masterclass">Masterclass</a>
+        <a href="fiches-rapides.html">Fiches rapides</a>
+        <a href="comptes-rendus.html" class="is-current">Comptes rendus</a>
+        <a href="index.html#cas-du-jour">Cas du jour</a>
+        <a href="index.html#tarifs">Tarifs</a>
+        <a href="index.html#inscription" class="btn btn-ink btn-sm">S'inscrire</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="fiche-hero sec-down so-hero">
+      <div class="container">
+        <p class="crumbs"><a href="comptes-rendus.html">Comptes rendus</a> › <span>Suivi oncologique</span></p>
+        <p class="marker-tag">Oncologie</p>
+        <h1>Suivi <span class="hl-navy">oncologique</span></h1>
+        <p class="fiche-sub">Chaque lésion garde son identifiant d'un examen à l'autre (<strong>C1</strong> cibles, <strong>NC1</strong> non-cibles, <strong>N1</strong> nouvelles) : au contrôle suivant, il ne reste qu'à saisir la nouvelle mesure. Critères <span class="hl-red">RECIST 1.1</span> et Lugano.</p>
+      </div>
+    </section>
+
+    <p class="so-banner" role="note"><strong>Aide au calcul</strong> — résultat à valider par le radiologue.</p>
+
+    <section class="sec-up so-app" id="so-app">
+      <div class="container so-layout">
+
+        <!-- ============ Mes suivis ============ -->
+        <aside class="so-side" aria-label="Mes suivis">
+          <h2 class="so-h">Mes suivis</h2>
+          <button type="button" class="btn btn-ink btn-sm so-full" data-act="show-new-suivi">+ Nouveau suivi</button>
+
+          <form class="so-card so-new" id="so-new-suivi" hidden novalidate>
+            <label class="tf"><span>Identifiant pseudonymisé</span><input id="ns-pseudo" autocomplete="off" placeholder="ex. TN-ONCO-0142"></label>
+            <p class="so-hint">Jamais le nom du patient : un code (numéro de dossier pseudonymisé, numéro d'inclusion…).</p>
+            <label class="tf"><span>Critères</span>
+              <select id="ns-criteres">
+                <option value="recist11">RECIST 1.1 (tumeurs solides)</option>
+                <option value="lugano2014" disabled>Lugano 2014 (lymphomes) — bientôt</option>
+              </select>
+            </label>
+            <div class="so-row">
+              <button type="submit" class="btn btn-ink btn-sm">Créer</button>
+              <button type="button" class="btn btn-outline btn-sm" data-act="hide-new-suivi">Annuler</button>
+            </div>
+          </form>
+
+          <ul class="so-list" id="so-list"></ul>
+          <p class="so-empty" id="so-empty">Aucun suivi pour l'instant.</p>
+
+          <div class="so-row so-io">
+            <label class="btn btn-outline btn-sm" for="so-import">Importer un suivi (JSON)</label>
+            <input type="file" id="so-import" accept=".json,application/json" class="visually-hidden">
+          </div>
+
+          <label class="so-switch">
+            <input type="checkbox" id="so-ephemere">
+            <span>Mode éphémère <small>(rien n'est gardé sur cet ordinateur)</small></span>
+          </label>
+          <p class="so-hint">Les suivis restent <strong>dans ce navigateur</strong> ; rien n'est envoyé sur un serveur. Pour les transmettre ou les sauvegarder : <strong>Exporter (JSON)</strong>.</p>
+        </aside>
+
+        <!-- ============ Suivi ouvert ============ -->
+        <div class="so-main">
+          <div class="so-card so-placeholder" id="so-placeholder">
+            <p class="so-h">Ouvrez ou créez un suivi</p>
+            <p>Un suivi regroupe les examens d'un même patient (identifiant pseudonymisé) : la baseline puis les contrôles. Les lésions définies à la baseline sont reportées automatiquement à chaque nouvel examen.</p>
+          </div>
+
+          <div id="so-detail" hidden>
+            <div class="so-card so-head" id="so-head"></div>
+
+            <div class="so-card">
+              <h2 class="so-h">Examens</h2>
+              <div class="so-exams" id="so-exams"></div>
+              <form class="so-new-exam" id="so-new-exam" hidden novalidate>
+                <div class="tf-row">
+                  <label class="tf tf-small"><span>Date</span><input type="date" id="ne-date" required></label>
+                  <label class="tf"><span>Modalité</span><select id="ne-modalite"></select></label>
+                  <label class="tf"><span>Phase</span><select id="ne-phase"></select></label>
+                  <label class="tf tf-small"><span>Épaisseur (mm)</span><input id="ne-epaisseur" inputmode="decimal" autocomplete="off"></label>
+                  <label class="tf-check"><input type="checkbox" id="ne-baseline"> Examen de baseline</label>
+                </div>
+                <p class="so-hint">Les lésions du suivi seront reportées avec leurs mesures antérieures ; la technique et les repères série / image sont repris de l'examen précédent.</p>
+                <div class="so-row">
+                  <button type="submit" class="btn btn-ink btn-sm">Ajouter l'examen</button>
+                  <button type="button" class="btn btn-outline btn-sm" data-act="hide-new-exam">Annuler</button>
+                </div>
+              </form>
+              <div class="so-tech" id="so-tech"></div>
+            </div>
+
+            <div class="so-card">
+              <h2 class="so-h">Tableau comparatif</h2>
+              <div class="so-table-wrap" id="so-table"></div>
+              <div class="so-add" id="so-add"></div>
+            </div>
+
+            <div class="so-card so-verdict" id="so-verdict"></div>
+          </div>
+          <p class="so-msg" id="so-msg" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="index.html" class="brand">
+        <img src="assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav aria-label="Liens de pied de page">
+        <a href="index.html#masterclass">Masterclass</a>
+        <a href="fiches-rapides.html">Fiches rapides</a>
+        <a href="comptes-rendus.html">Comptes rendus</a>
+        <a href="suivi-oncologique.html">Suivi oncologique</a>
+        <a href="index.html#inscription">Contact</a>
+      </nav>
+      <p class="copyright">© <span id="year"></span> RadiologicHub · Formation en radiologie d'urgence</p>
+    </div>
+  </footer>
+
+  <!-- Fiche d'une lésion (ajout / modification) -->
+  <dialog class="so-dialog" id="so-lesion" aria-labelledby="sl-title">
+    <form class="so-dialog-inner" method="dialog" id="sl-form" novalidate>
+      <div class="so-dialog-head">
+        <h2 id="sl-title">Lésion</h2>
+        <button type="button" class="modal-close" data-act="close-lesion" aria-label="Fermer">&times;</button>
+      </div>
+      <div class="tf-row">
+        <label class="tf"><span>Type</span>
+          <select id="sl-type">
+            <option value="cible">Cible (C)</option>
+            <option value="non-cible">Non-cible (NC)</option>
+            <option value="nouvelle">Nouvelle (N)</option>
+          </select>
+        </label>
+        <label class="tf"><span>Organe</span><input id="sl-organe" list="sl-organes" autocomplete="off" placeholder="ex. foie"></label>
+        <label class="tf"><span>Segment / territoire</span><input id="sl-territoire" autocomplete="off" placeholder="ex. segment VII"></label>
+      </div>
+      <datalist id="sl-organes">
+        <option value="Foie"><option value="Poumon droit"><option value="Poumon gauche"><option value="Ganglion">
+        <option value="Surrénale droite"><option value="Surrénale gauche"><option value="Rein droit"><option value="Rein gauche">
+        <option value="Pancréas"><option value="Rate"><option value="Péritoine"><option value="Plèvre"><option value="Os">
+        <option value="Encéphale"><option value="Sein"><option value="Tissus mous">
+      </datalist>
+      <label class="tf-check"><input type="checkbox" id="sl-ganglion"> Ganglion (mesuré en <strong>petit axe</strong>)</label>
+      <p class="so-hint" id="sl-ganglion-hint">Ganglion : cible si petit axe ≥ 15 mm, non-cible si 10 à 15 mm, normal (non suivi) si &lt; 10 mm.</p>
+      <label class="tf tf-wide"><span>Commentaire</span><input id="sl-commentaire" autocomplete="off" placeholder="ex. hypodense, mal limitée"></label>
+      <p class="so-hint">Le repère série / image se saisit dans le tableau, pour chaque examen (la numérotation change d'un examen à l'autre).</p>
+      <div class="so-row">
+        <button type="submit" class="btn btn-ink btn-sm" id="sl-save">Enregistrer</button>
+        <button type="button" class="btn btn-outline btn-sm so-danger" id="sl-delete" data-act="delete-lesion" hidden>Supprimer la lésion</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="fiche.js?v=20261008100000"></script>
+  <script src="suivi/seuils.js?v=20261008100000"></script>
+  <script src="suivi/registre.js?v=20261008100000"></script>
+  <script src="suivi.js?v=20261008100000"></script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+/* =========================================================
+   RadiologicHub — Suivi oncologique (suivi-oncologique.html)
+   S'appuie sur styles.css (variables, boutons) et fiche.css (en-tête).
+   ========================================================= */
+
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+.so-hero { padding-bottom: 40px; }
+
+/* Mention toujours visible */
+.so-banner {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 30;
+  margin: 0;
+  padding: 9px 16px;
+  background: var(--amber);
+  border-top: 3px solid var(--ink);
+  border-bottom: 3px solid var(--ink);
+  text-align: center;
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.so-app { padding: 36px 0 90px; }
+.so-layout { display: grid; grid-template-columns: 255px minmax(0, 1fr); gap: 22px; align-items: start; }
+.so-main { min-width: 0; display: grid; gap: 22px; }
+#so-detail { display: grid; gap: 22px; min-width: 0; }
+#so-detail[hidden] { display: none; }
+
+.so-card {
+  padding: 20px 22px;
+  border-radius: var(--radius);
+  background: var(--card);
+  border: 4px solid var(--ink);
+  box-shadow: 8px 8px 0 color-mix(in srgb, var(--plum) 55%, transparent);
+  min-width: 0;
+}
+.so-card[hidden] { display: none; }
+.so-h { margin: 0 0 14px; font-size: .9rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
+.so-sub { margin: 14px 0 8px; font-size: .68rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.so-hint { margin: 8px 0 0; font-size: .76rem; line-height: 1.5; color: var(--muted); }
+.so-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.so-full { width: 100%; }
+.so-placeholder p:not(.so-h) { margin: 0; color: var(--muted); font-size: .9rem; }
+.so-msg { min-height: 1.4em; margin: 0; font-size: .85rem; font-weight: 800; color: var(--green); }
+.so-msg.is-warn { color: var(--red); }
+.so-danger:hover { background: var(--red); border-color: var(--red); color: #fff; box-shadow: 4px 4px 0 var(--ink); }
+
+/* Champs */
+.tf-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px 12px; }
+.tf { display: flex; flex-direction: column; gap: 4px; flex: 1 1 140px; min-width: 0; }
+.tf-small { flex: 0 1 140px; }
+.tf-wide { flex: 2 1 260px; }
+.tf > span { font-size: .62rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); }
+.tf input, .tf select {
+  width: 100%;
+  padding: .5em .7em;
+  border-radius: 10px;
+  border: 2px solid #cfcfd6;
+  background: #fff;
+  font: 600 .86rem var(--font);
+  color: var(--ink);
+}
+.tf input:focus, .tf select:focus, .so-table input:focus, .so-table select:focus { outline: none; border-color: var(--cornflower); box-shadow: 0 0 0 3px rgba(82, 115, 191, .22); }
+.tf-check { display: inline-flex; align-items: center; gap: 8px; padding-bottom: 8px; font-size: .8rem; font-weight: 700; color: var(--ink); cursor: pointer; }
+.tf-check input { width: 18px; height: 18px; accent-color: var(--plum); }
+
+/* ---------- Mes suivis ---------- */
+.so-side {
+  position: sticky;
+  top: calc(var(--header-h) + 60px);
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border-radius: var(--radius);
+  background: var(--card);
+  border: 4px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--cornflower);
+}
+.so-new { padding: 14px; box-shadow: none; border-width: 2px; display: grid; gap: 8px; }
+.so-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; max-height: 40vh; overflow-y: auto; }
+.so-item {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 2px solid rgba(0, 0, 0, .14);
+  background: #fff;
+  font: inherit;
+  text-align: left;
+  color: var(--ink);
+  cursor: pointer;
+}
+.so-item:hover { border-color: var(--ink); }
+.so-item.is-active { border-color: var(--plum); box-shadow: inset 6px 0 0 var(--plum); }
+.so-item-name { display: block; font-weight: 800; font-size: .86rem; }
+.so-item-meta { display: block; font-size: .7rem; color: var(--muted); }
+.so-empty { margin: 0; font-size: .82rem; color: var(--muted); }
+.so-io .btn { font-size: .64rem; }
+.so-io label.btn:focus-within { outline: 3px solid var(--amber); outline-offset: 3px; }
+.so-switch { display: flex; align-items: center; gap: 10px; font-size: .74rem; font-weight: 800; color: var(--ink); cursor: pointer; }
+.so-switch small { display: block; font-weight: 600; color: var(--muted); }
+.so-switch input {
+  appearance: none; -webkit-appearance: none;
+  flex: 0 0 auto; position: relative;
+  width: 44px; height: 26px; margin: 0;
+  border-radius: 999px; border: 3px solid var(--ink); background: #fff; cursor: pointer;
+}
+.so-switch input::after { content: ""; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: var(--ink); transition: transform .2s; }
+.so-switch input:checked { background: var(--amber); }
+.so-switch input:checked::after { transform: translateX(18px); }
+
+/* ---------- En-tête du suivi ---------- */
+.so-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 14px; }
+.so-head-main { flex: 1 1 280px; display: grid; gap: 6px; }
+.so-head-main .tf { max-width: 360px; }
+.so-meta { margin: 0; font-size: .74rem; color: var(--muted); }
+.so-chip { display: inline-block; margin-right: 8px; padding: .2em .7em; border-radius: 999px; background: var(--plum); color: #fff; font-size: .66rem; font-weight: 900; letter-spacing: .05em; }
+.so-warn { margin: 0; padding: 8px 12px; border-radius: 10px; background: rgba(168, 23, 45, .1); color: var(--red); font-size: .78rem; font-weight: 700; }
+.so-warn[hidden] { display: none; }
+
+/* ---------- Examens ---------- */
+.so-exams { display: flex; flex-wrap: wrap; gap: 8px; }
+.so-exam {
+  position: relative;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 1px;
+  padding: 8px 14px;
+  border-radius: 14px;
+  border: 3px solid var(--ink);
+  background: #fff;
+  font: inherit;
+  color: var(--ink);
+  cursor: pointer;
+}
+.so-exam b { font-size: .84rem; }
+.so-exam span { font-size: .66rem; color: var(--muted); }
+.so-exam.is-active { background: var(--ink); color: #fff; }
+.so-exam.is-active span { color: rgba(255, 255, 255, .75); }
+.so-exam-add { justify-content: center; border-style: dashed; font-weight: 800; font-size: .74rem; }
+.so-badge { margin-top: 3px; padding: 0 7px; border-radius: 999px; background: var(--amber); color: var(--ink); font-style: normal; font-size: .58rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+.so-new-exam { margin-top: 14px; padding: 14px; border-radius: 14px; border: 2px dashed var(--plum); background: #fff; display: grid; gap: 10px; }
+.so-new-exam[hidden] { display: none; }
+.so-link { padding: 0 0 8px; border: 0; background: none; font: 800 .7rem var(--font); letter-spacing: .04em; text-transform: uppercase; color: var(--royal); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.so-link-danger:hover { color: var(--red); }
+
+/* ---------- Tableau comparatif ---------- */
+.so-table-wrap { overflow-x: auto; margin: 0 -6px; padding: 0 6px 4px; }
+.so-table { width: 100%; min-width: 760px; border-collapse: separate; border-spacing: 0; font-size: .8rem; }
+.so-table thead th {
+  position: sticky; top: 0;
+  padding: 8px 8px 10px;
+  border-bottom: 3px solid var(--ink);
+  background: var(--card);
+  text-align: left;
+  font-size: .62rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: var(--ink);
+  vertical-align: bottom;
+}
+.so-table thead small { display: block; margin-top: 2px; font-weight: 700; letter-spacing: 0; text-transform: none; color: var(--muted); font-size: .68rem; }
+.so-table td, .so-table tbody th { padding: 8px 6px; border-bottom: 1px solid rgba(0, 0, 0, .08); vertical-align: middle; text-align: left; font-weight: 600; }
+.so-sec th { padding: 14px 8px 6px !important; border-bottom: 0 !important; font-size: .7rem; font-weight: 900 !important; letter-spacing: .08em; text-transform: uppercase; color: var(--plum); }
+.so-sec small { text-transform: none; letter-spacing: 0; font-weight: 600; color: var(--muted); }
+.so-none td { color: var(--muted); font-style: italic; }
+.so-lesion { display: flex; align-items: flex-start; gap: 8px; padding: 0; border: 0; background: none; font: inherit; text-align: left; color: var(--ink); cursor: pointer; }
+.so-lesion:hover span { text-decoration: underline; }
+.so-lesion span { display: grid; gap: 2px; font-weight: 700; line-height: 1.3; }
+.so-lesion small { font-weight: 500; color: var(--muted); }
+.so-id { flex: 0 0 auto; min-width: 36px; padding: 2px 6px; border-radius: 8px; background: var(--ink); color: #fff; text-align: center; font-size: .74rem; }
+.so-id-cible { background: var(--plum); }
+.so-id-non-cible { background: var(--steel); }
+.so-id-nouvelle { background: var(--red); }
+.so-tag { width: max-content; padding: 0 6px; border-radius: 999px; background: rgba(39, 106, 140, .14); color: var(--steel); font-style: normal; font-size: .62rem; font-weight: 800; }
+.so-loc { white-space: nowrap; }
+.so-loc label { display: inline-flex; align-items: center; gap: 4px; margin-right: 6px; font-size: .68rem; font-weight: 800; color: var(--muted); }
+.so-loc input { width: 40px; padding: 4px 6px; border-radius: 8px; border: 2px solid #cfcfd6; font: 600 .8rem var(--font); }
+.so-d { white-space: nowrap; }
+.so-num small, .so-d small { display: block; font-size: .66rem; font-weight: 600; color: var(--muted); }
+.so-act { width: 140px; }
+.so-act input, .so-act select { padding: 6px 8px; border-radius: 10px; border: 2px solid #cfcfd6; background: #fff; font: 700 .84rem var(--font); color: var(--ink); vertical-align: middle; }
+.so-act .so-val { display: block; width: 90px; margin-bottom: 4px; border-color: var(--plum); }
+.so-act .so-val:disabled { border-color: #e1e1e6; background: #f4f4f6; }
+.so-act .so-val.is-bad { border-color: var(--red); background: rgba(168, 23, 45, .06); }
+.so-act select { display: block; width: 140px; font-size: .72rem; }
+.so-act .so-motif { display: block; width: 100%; margin-top: 6px; border-color: var(--red); font-weight: 600; font-size: .72rem; }
+.so-na { color: #9a99a6; font-weight: 600; }
+.so-ne { padding: 1px 6px; border-radius: 6px; background: rgba(168, 23, 45, .12); color: var(--red); font-weight: 800; }
+.so-q { font-weight: 700; }
+.so-q-progression { color: var(--red); }
+.so-q-disparue { color: var(--green); }
+.so-q-non-evaluable { color: var(--red); }
+.so-incomplet { color: var(--orange); font-weight: 800; }
+.so-down { color: var(--green); font-weight: 800; }
+.so-up { color: var(--red); font-weight: 800; }
+.so-up-soft { color: #b4561a; font-weight: 800; }
+.so-sum th, .so-sum td { border-top: 3px solid var(--ink); border-bottom: 0; background: rgba(255, 255, 255, .6); }
+.so-sum th { font-size: .72rem; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; }
+.so-add { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 16px; }
+.so-add .so-hint { flex-basis: 100%; margin: 0; }
+
+/* ---------- Verdict ---------- */
+.so-verdict p { margin: 0 0 6px; }
+
+/* ---------- Fiche lésion ---------- */
+.so-dialog { width: min(640px, 100% - 24px); padding: 0; border-radius: var(--radius); border: 5px solid var(--ink); background: var(--card); box-shadow: 10px 10px 0 var(--plum); }
+.so-dialog::backdrop { background: rgba(17, 17, 20, .55); backdrop-filter: blur(3px); }
+.so-dialog-inner { display: grid; gap: 12px; padding: 22px 24px; }
+.so-dialog-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.so-dialog-head h2 { margin: 0; font-size: 1.15rem; }
+.so-dialog .modal-close { position: static; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1000px) {
+  .so-layout { grid-template-columns: minmax(0, 1fr); }
+  .so-side { position: static; }
+}
+@media (max-width: 640px) {
+  .so-card { padding: 16px 14px; box-shadow: 5px 5px 0 color-mix(in srgb, var(--plum) 55%, transparent); }
+  .so-banner { font-size: .74rem; }
+}

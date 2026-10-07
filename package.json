@@ -1,0 +1,8 @@
+{
+  "name": "radiologic-hub",
+  "private": true,
+  "description": "Site RadiologicHub (statique) — les tests couvrent les règles de calcul du suivi oncologique.",
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  }
+}
