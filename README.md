@@ -53,8 +53,6 @@ Chaque fiche (`fiches/…html`) propose :
 - des cartes **« Testez-vous »** à retourner ;
 - un bouton **Imprimer / PDF**.
 
-Les fiches pancréas, rectum et spondylodiscite ont en bas un bouton **« Compte rendu type → »** qui ouvre le modèle correspondant dans l'éditeur.
-
 ### Comptes rendus types (`comptes-rendus.html`)
 
 Éditeur de compte rendu avec bibliothèque de modèles et **phrases automatiques** — voir la [section dédiée](#comptes-rendus-types-et-phrases-automatiques).
@@ -92,26 +90,22 @@ Page `comptes-rendus.html` (lien « Comptes rendus » dans le menu de toutes les
 
 **Contenu fourni (`cr-data.js`)**
 
-18 comptes rendus types, **tous au format du service** : titre en capitales, `INDICATION :` (seulement quand elle porte des données utiles : AVC, pancréas, rectum, colique néphrétique, polytraumatisé, appendicite de l'enfant), `TECHNIQUE :`, `RÉSULTAT :` avec intertitres et une constatation par ligne précédée de « • », `AU TOTAL :` ; les radiographies utilisent `COMPTE-RENDU :`.
+**8 comptes rendus types, uniquement les formules normales du service** (fournies en PDF le 07/10/2026 ; les modèles rédigés au départ par Claude ont été retirés à la demande de l'utilisateur). Reprises mot pour mot avec leurs puces « • » ; seules corrections : accents sur les majuscules, accords et coquilles (« constitutionnelle », « contenant-contenu », « 4e », « polygone de Willis », « selon différentes pondérations », « intra- ou extra-axial »), points finaux, titre de la radio du bassin (le document indiquait « IRM du bassin de face »), intertitres « Au niveau dorsal » et « Au niveau du bassin » ajoutés dans les IRM du rachis, et quelques champs `[ … ]` (côté, compartiment, conclusion, `[Absence d'arthrose / Arthrose]` interapophysaire à chaque étage).
 
-Ceux marqués ★ sont les **formules normales du service** (fournies en PDF le 07/10/2026), reprises mot pour mot ; seules corrections : accents sur les majuscules, accords (« constitutionnelle », « contenant-contenu », « 4e »), points finaux, intertitres « Au niveau dorsal » et « Au niveau du bassin » ajoutés dans l'IRM médullaire, et quelques champs `[ … ]` (côté, compartiment, conclusion, `[Absence d'arthrose / Arthrose]` interapophysaire à chaque étage de l'IRM médullaire).
+| Examen | Spécialité | Comptes rendus types |
+|---|---|---|
+| TDM | Neuro | TDM cérébrale sans injection — normale |
+| TDM | Thorax | TDM thoracique sans injection — normale |
+| IRM | Neuro | IRM cérébrale et médullaire — normale (encéphale avec injection et angiographie + rachis étage par étage + bassin) |
+| IRM | Ostéo-articulaire | IRM médullaire (rachis entier) — normale |
+| Radiographie standard | Ostéo-articulaire | Rachis lombaire (F + P) — normal · Bassin (F) — normal · Genou (F + P) — normal · Genou (F + P) — gonarthrose |
+| Échographie | — | aucun pour l'instant (bouton grisé) |
 
-| Spécialité | Comptes rendus types |
-|---|---|
-| Neuro | ★ TDM cérébrale sans injection normale · Alerte AVC (TDM + angio-TDM TSA et Willis, ASPECTS) |
-| Thorax | Radiographie du thorax normale · ★ TDM thoracique sans injection normale · Angio-TDM thoracique (recherche d'EP) |
-| Digestif | TDM abdomino-pelvienne normale · Échographie abdominale normale · Adénocarcinome du pancréas (résécabilité, repris de la fiche) · IRM rectum bilan initial (mrT, EMS, CRM, EMVI, repris de la fiche) |
-| Uro-gynéco | TDM sans injection — colique néphrétique |
-| Traumato | Body-scanner du polytraumatisé |
-| Ostéo-articulaire | IRM du rachis — spondylodiscite (repris de la fiche) · ★ IRM médullaire (rachis entier, étage par étage, bassin) · ★ Radiographie du rachis lombaire (F + P) normale · ★ Radiographie du genou (F + P) normale · ★ Radiographie du genou — gonarthrose |
-| Vasculaire | Angio-TDM aortique — syndrome aortique aigu |
-| Pédiatrie | Échographie — suspicion d'appendicite |
-
-**71 phrases**, classées par type (couleur du mot-clé). Les phrases « normales » reprennent les formules du service (★) :
+**73 phrases**, classées par type (couleur du mot-clé). ★ = phrases tirées des formules du service ; les autres ont été rédigées par Claude (à relire) :
 
 | Couleur | Classe | Type | Exemples de mots-clés |
 |---|---|---|---|
-| 🔵 Bleu | `k-tech` | Normal | ★ `cerveaunormal`, `fossepost`, `sustentoriel`, `poumonsnormaux`, `mediastinnormal`, `osnormal`, `mineralisation`, `rachislombnormal`, `etagecervical`, `etagelombaire`, `dorsalnormal`, `conenormal`, `bassinnormal`, `genounormal` · `foienormal`, `pancreasnormal`, `reinsnormaux`… |
+| 🔵 Bleu | `k-tech` | Normal | ★ `cerveaunormal`, `encephaleirm`, `fossepost`, `sustentoriel`, `poumonsnormaux`, `mediastinnormal`, `osnormal`, `mineralisation`, `rachislombnormal`, `etagecervical`, `etagelombaire`, `dorsalnormal`, `conenormal`, `bassinnormal`, `rxbassinnormal`, `genounormal` · `foienormal`, `pancreasnormal`, `reinsnormaux`… |
 | 🟢 Vert | `k-sign` | Lésion / incidentalome | ★ `gonarthrose` (fémoro-tibiale, fémoro-patellaire), `demineralisation` · `angiome` (foie TDM / écho / IRM, vertèbre), `kyste` (foie, rein Bosniak I, ovaire), `steatose`, `hnf`, `adenome`, `meningiome`, `nodule`, `lipome`, `enostose` |
 | 🔴 Rouge | `k-grave` | Pathologie aiguë | `appendicite`, `diverticulite`, `occlusion`, `pneumoperitoine`, `cholecystite`, `pancreatite`, `lithiase`, `pyelonephrite`, `hsd`, `hed`, `hsa`, `avc`, `ep`, `pneumothorax`, `dissection`, `aaa` |
 | 🟡 Jaune | `k-key` | Conclusion / formule | `conclusionnormale`, `transmis`, `comparatif`, `controle`, `cordialement` (signature : créer une phrase perso `cordialement` avec son nom pour la remplacer) |
@@ -212,8 +206,8 @@ Site 100 % statique (HTML / CSS / JavaScript, aucune installation).
 - [ ] **Fiche rectum** : préciser les légendes des images « formes tumorales » et « mesure axiale 1,57 cm ».
 - [ ] **Fiches des autres spécialités** : Neuro, Thorax, Traumato, Vasculaire, Pédiatrie.
 - [ ] **Lecteur de séries** (défilement dans un scanner / IRM) : en attente d'une série anonymisée exportée en JPG.
-- [ ] **Comptes rendus types** : relire et valider médicalement les modèles et phrases rédigés au départ (13 modèles, ~55 phrases de `cr-data.js`) ; continuer à intégrer les formules normales du service (5 reçues le 07/10/2026) ; les premiers modèles ont été alignés sur le style du service le 07/10/2026.
-- [ ] **IRM médullaire** : la technique cite des coupes transversales sur « les 3 derniers étages lombaires » mais le CR décrit L1-L2 à L5-S1, et les coupes coronales T2 FatSat du bassin ne sont pas citées dans la technique — à vérifier.
+- [ ] **Comptes rendus types** : continuer à intégrer les formules normales du service (7 reçues le 07/10/2026 ; aucune en échographie pour l'instant) ; relire et valider médicalement les ~55 phrases automatiques rédigées par Claude (`cr-data.js`).
+- [ ] **IRM médullaire / IRM cérébrale et médullaire** : la technique cite des coupes axiales sur « les 3 derniers étages lombaires » (ou « les derniers étages lombaires ») mais le CR décrit L1-L2 à L5-S1, et les coupes coronales T2 FatSat du bassin ne sont pas citées dans la technique — à vérifier.
 - [ ] **Nom de domaine** `www.radiologichub.com` : à acheter et configurer (DNS + réglages GitHub Pages), puis mettre à jour le lien « Site en ligne » ci-dessus.
 
 ---
@@ -222,6 +216,7 @@ Site 100 % statique (HTML / CSS / JavaScript, aucune installation).
 
 | Date | Modification |
 |---|---|
+| 07/10/2026 | Comptes rendus : seuls les modèles du service sont conservés (12 modèles rédigés par Claude retirés, ainsi que les boutons « Compte rendu type » des fiches) ; ajout de la radio du bassin et de l'IRM cérébrale et médullaire (+ phrases `rxbassinnormal`, `encephaleirm`) |
 | 07/10/2026 | Comptes rendus : choix des modèles en deux étapes — 1 · examen (Échographie, Radiographie standard, IRM, TDM), 2 · spécialité |
 | 07/10/2026 | Comptes rendus : choix de la messagerie pour l'envoi (Gmail par défaut, Outlook 365, Outlook.com, application Mail) — l'application Mail du Mac sans compte configuré bloquait l'envoi |
 | 07/10/2026 | Comptes rendus : boutons ↶ Retour / ↷ Rétablir (historique propre à l'éditeur, Ctrl + Z / Ctrl + Y) et envoi par e-mail en un clic (ouvre la messagerie avec le CR pré-rempli, adresse mémorisée) |
