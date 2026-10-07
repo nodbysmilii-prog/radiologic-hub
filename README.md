@@ -81,34 +81,37 @@ Page `comptes-rendus.html` (lien « Comptes rendus » dans le menu de toutes les
 1. **Modèles** (colonne de gauche, onglet « Modèles ») : un clic charge le compte rendu type dans l'éditeur. Filtre par spécialité.
 2. **Phrases automatiques** : en tapant un mot-clé (ex. `angiome`), une bulle propose aussitôt la ou les descriptions correspondantes (TDM / écho / IRM…). **Tab** (ou clic) insère la description, **↑ ↓** choisit une variante, **Échap** ferme. Les suggestions apparaissent dès le mot-clé exact ou dès 4 lettres du début du mot-clé. **Ctrl + Z** annule une insertion.
 3. **Champs à compléter** : les éléments variables sont entre crochets (`[x] mm`, `[droit / gauche]`). Le premier champ est sélectionné après chaque insertion ; **Tab** (ou le bouton « Champ suivant ») passe au suivant. Le nombre de champs restants est affiché sous l'éditeur, et un avertissement s'affiche à la copie s'il en reste.
-4. **Insertion automatique** (interrupteur sous l'éditeur, désactivé par défaut) : un mot-clé tapé **en début de ligne** suivi d'un espace, d'une ponctuation ou d'Entrée est remplacé directement par la première description.
-5. Onglet **« Phrases »** : toute la bibliothèque, avec recherche et filtre par type ; un clic insère la phrase au curseur.
-6. Boutons : **Copier**, **Télécharger .txt**, **Imprimer** (le compte rendu seul), **Enregistrer comme modèle**, **Sélection → phrase** (crée une phrase perso à partir du texte sélectionné), **Effacer**.
-7. **Mes phrases** (bas de page) : formulaire pour programmer ses propres mots-clés et descriptions ; modifier / supprimer ; **Exporter / Importer** (fichier `.json`) pour les transférer sur un autre ordinateur. Les phrases perso sont proposées en premier.
+4. **Insertion automatique** (interrupteur sous l'éditeur, désactivé par défaut) : un mot-clé tapé **en début de ligne** (éventuellement après une puce « • ») suivi d'un espace, d'une ponctuation ou d'Entrée est remplacé directement par la première description.
+5. **Puces** (style des formules du service) : **Entrée** sur une ligne « • … » crée la puce suivante ; Entrée sur une puce vide termine la liste. Une phrase à puces insérée sur une ligne qui a déjà sa puce ne la double pas.
+6. Onglet **« Phrases »** : toute la bibliothèque, avec recherche et filtre par type ; un clic insère la phrase au curseur.
+7. Boutons : **Copier**, **Télécharger .txt**, **Imprimer** (le compte rendu seul), **Enregistrer comme modèle**, **Sélection → phrase** (crée une phrase perso à partir du texte sélectionné), **Effacer**.
+8. **Mes phrases** (bas de page) : formulaire pour programmer ses propres mots-clés et descriptions ; modifier / supprimer ; **Exporter / Importer** (fichier `.json`) pour les transférer sur un autre ordinateur. Les phrases perso sont proposées en premier.
 
 **Stockage** : le brouillon, les phrases et les modèles perso sont enregistrés **dans le navigateur** (localStorage), rien n'est envoyé. Message de confidentialité sur la page : ne pas saisir de données identifiantes.
 
 **Contenu fourni (`cr-data.js`)**
 
+18 comptes rendus types. Ceux marqués ★ sont les **formules normales du service** (fournies en PDF le 07/10/2026), reprises mot pour mot avec leurs puces ; seules corrections : accents sur les majuscules, accords (« constitutionnelle », « contenant-contenu », « 4e »), points finaux, intertitres « Au niveau dorsal » et « Au niveau du bassin » ajoutés dans l'IRM médullaire, et quelques champs `[ … ]` (côté, compartiment, conclusion).
+
 | Spécialité | Comptes rendus types |
 |---|---|
-| Neuro | Scanner cérébral sans injection normal · Alerte AVC (scanner + angio-scanner TSA et Willis, ASPECTS) |
-| Thorax | Radiographie du thorax normale · Angio-scanner thoracique (recherche d'EP) |
+| Neuro | ★ TDM cérébrale sans injection normale · Alerte AVC (scanner + angio-scanner TSA et Willis, ASPECTS) |
+| Thorax | Radiographie du thorax normale · ★ TDM thoracique sans injection normale · Angio-scanner thoracique (recherche d'EP) |
 | Digestif | Scanner abdomino-pelvien normal · Échographie abdominale normale · Adénocarcinome du pancréas (résécabilité, repris de la fiche) · IRM rectum bilan initial (mrT, EMS, CRM, EMVI, repris de la fiche) |
 | Uro-gynéco | Scanner sans injection — colique néphrétique |
 | Traumato | Body-scanner du polytraumatisé |
-| Ostéo-articulaire | IRM du rachis — spondylodiscite (repris de la fiche) |
+| Ostéo-articulaire | IRM du rachis — spondylodiscite (repris de la fiche) · ★ IRM médullaire (rachis entier, étage par étage, bassin) · ★ Radiographie du rachis lombaire (F + P) normale · ★ Radiographie du genou (F + P) normale · ★ Radiographie du genou — gonarthrose |
 | Vasculaire | Angio-scanner aortique — syndrome aortique aigu |
 | Pédiatrie | Échographie — suspicion d'appendicite |
 
-**56 phrases**, classées par type (couleur du mot-clé) :
+**71 phrases**, classées par type (couleur du mot-clé). Les phrases « normales » reprennent les formules du service (★) :
 
 | Couleur | Classe | Type | Exemples de mots-clés |
 |---|---|---|---|
-| 🔵 Bleu | `k-tech` | Normal | `foienormal`, `pancreasnormal`, `reinsnormaux`, `cerveaunormal`, `poumonsnormaux` |
-| 🟢 Vert | `k-sign` | Lésion / incidentalome | `angiome` (foie TDM / écho / IRM, vertèbre), `kyste` (foie, rein Bosniak I, ovaire), `steatose`, `hnf`, `adenome`, `meningiome`, `nodule`, `lipome`, `enostose` |
+| 🔵 Bleu | `k-tech` | Normal | ★ `cerveaunormal`, `fossepost`, `sustentoriel`, `poumonsnormaux`, `mediastinnormal`, `osnormal`, `mineralisation`, `rachislombnormal`, `etagecervical`, `etagelombaire`, `dorsalnormal`, `conenormal`, `bassinnormal`, `genounormal` · `foienormal`, `pancreasnormal`, `reinsnormaux`… |
+| 🟢 Vert | `k-sign` | Lésion / incidentalome | ★ `gonarthrose` (fémoro-tibiale, fémoro-patellaire), `demineralisation` · `angiome` (foie TDM / écho / IRM, vertèbre), `kyste` (foie, rein Bosniak I, ovaire), `steatose`, `hnf`, `adenome`, `meningiome`, `nodule`, `lipome`, `enostose` |
 | 🔴 Rouge | `k-grave` | Pathologie aiguë | `appendicite`, `diverticulite`, `occlusion`, `pneumoperitoine`, `cholecystite`, `pancreatite`, `lithiase`, `pyelonephrite`, `hsd`, `hed`, `hsa`, `avc`, `ep`, `pneumothorax`, `dissection`, `aaa` |
-| 🟡 Jaune | `k-key` | Conclusion / formule | `conclusionnormale`, `transmis`, `comparatif`, `controle` |
+| 🟡 Jaune | `k-key` | Conclusion / formule | `conclusionnormale`, `transmis`, `comparatif`, `controle`, `cordialement` (signature : créer une phrase perso `cordialement` avec son nom pour la remplacer) |
 | 🟣 Violet | `k-ddx` | Mes phrases (perso) | — |
 
 ---
@@ -180,6 +183,7 @@ radiologic-hub/
 | Ajouter un compte rendu type | Ajouter un objet `{ id, spe, mod, title, text }` dans `CR_TEMPLATES` (`cr-data.js`) ; lien direct possible : `comptes-rendus.html#modele=<id>` |
 | Ajouter une phrase automatique | Ajouter un objet `{ k, alias, organ, mod, type, label, text }` dans `CR_PHRASES` (`cr-data.js`). Mot-clé sans espace ni accent ; éviter les mots courants (« foie », « normal »…) qui ouvriraient la bulle en pleine rédaction |
 | Champs à compléter | Les écrire entre crochets `[x]`, `[droit / gauche]` ; **pas de crochets imbriqués** (utiliser « … » à l'intérieur d'un choix) |
+| Style des formules du service | Titre en capitales, `TECHNIQUE :`, `RÉSULTAT :` (ou `COMPTE-RENDU :`), une constatation par ligne précédée de `• `, `AU TOTAL :` / `CONCLUSION :` |
 
 **Images médicales :** toujours **anonymisées** (aucun nom, date, n° de dossier, ni texte incrusté). Le site et le dépôt sont publics.
 
@@ -205,7 +209,8 @@ Site 100 % statique (HTML / CSS / JavaScript, aucune installation).
 - [ ] **Fiche rectum** : préciser les légendes des images « formes tumorales » et « mesure axiale 1,57 cm ».
 - [ ] **Fiches des autres spécialités** : Neuro, Thorax, Traumato, Vasculaire, Pédiatrie.
 - [ ] **Lecteur de séries** (défilement dans un scanner / IRM) : en attente d'une série anonymisée exportée en JPG.
-- [ ] **Comptes rendus types** : relire et valider médicalement les 13 modèles et les 56 phrases (`cr-data.js`), les adapter aux habitudes du service ; ajouter d'autres modèles (IRM cérébrale, échographie pelvienne, TDM thoracique…).
+- [ ] **Comptes rendus types** : relire et valider médicalement les modèles et phrases rédigés au départ (13 modèles, ~55 phrases de `cr-data.js`) ; continuer à intégrer les formules normales du service (5 reçues le 07/10/2026) ; décider s'il faut aligner les premiers modèles sur le style du service (titres, puces).
+- [ ] **IRM médullaire** : la technique cite des coupes transversales sur « les 3 derniers étages lombaires » mais le CR décrit L1-L2 à L5-S1, et les coupes coronales T2 FatSat du bassin ne sont pas citées dans la technique — à vérifier.
 - [ ] **Nom de domaine** `www.radiologichub.com` : à acheter et configurer (DNS + réglages GitHub Pages), puis mettre à jour le lien « Site en ligne » ci-dessus.
 
 ---
@@ -214,6 +219,7 @@ Site 100 % statique (HTML / CSS / JavaScript, aucune installation).
 
 | Date | Modification |
 |---|---|
+| 07/10/2026 | Comptes rendus : intégration des 5 formules normales du service (TDM cérébrale, TDM thoracique, IRM médullaire, radio rachis lombaire, radio genou normale + gonarthrose) en modèles et en 17 phrases ; puces « • » automatiques à l'Entrée |
 | 07/10/2026 | Nouvelle page « Comptes rendus » : 13 CR types, 56 phrases automatiques (mot-clé → description, Tab pour insérer, champs [ … ]), mes phrases / modèles perso avec export-import ; lien dans le menu et depuis les fiches pancréas, rectum, spondylodiscite ; menu de l'en-tête resserré (hamburger sous 960 px) |
 | 05/10/2026 | Nouvel onglet « Ostéo-articulaire » + fiche spondylodiscite infectieuse (fusion de deux cours, 30 images dont 13 annotées, quiz « Quel germe ? ») |
 | 05/10/2026 | Fiche pancréas : DDx 3 — pancréatite auto-immune pseudo-tumorale (formes diffuse/focale, arguments en faveur, atteintes IgG4, coupes A–C annotées) |

@@ -7,6 +7,7 @@
    Les éléments à compléter s'écrivent entre crochets : [x] mm,
    [droit / gauche]… La touche Tab passe d'un champ au suivant.
    Pas de crochets imbriqués : utiliser « … » à l'intérieur d'un choix.
+   Formules du service : une constatation par ligne, précédée de « • ».
    ========================================================= */
 
 /* Spécialités (mêmes couleurs que les fiches rapides) */
@@ -38,26 +39,28 @@ const CR_TYPES = {
 const CR_TEMPLATES = [
   {
     id: 'tdm-cerebrale', spe: 'neuro', mod: 'TDM',
-    title: 'Scanner cérébral sans injection — normal',
-    text: `SCANNER CÉRÉBRAL SANS INJECTION
+    title: 'TDM cérébrale sans injection — normale',
+    text: `TDM CÉRÉBRALE
 
-Indication : [indication]
+TECHNIQUE :
+Acquisition hélicoïdale centrée sur l'encéphale sans injection de produit de contraste.
 
-Technique :
-Acquisition hélicoïdale de l'encéphale sans injection de produit de contraste. Reconstructions multiplanaires en fenêtres parenchymateuse et osseuse.
+RÉSULTAT :
+Au niveau de la fosse postérieure :
+• Absence d'anomalie de la densité spontanée du parenchyme cérébelleux et du tronc cérébral.
+• Le 4e ventricule est en place, non dilaté.
+• Les citernes de la base sont libres.
 
-Résultats :
-Pas d'hémorragie intra- ou extra-axiale.
-Pas d'anomalie de densité du parenchyme cérébral et cérébelleux ; différenciation substance blanche / substance grise conservée.
-Pas d'hyperdensité spontanée artérielle.
-Pas d'effet de masse ; ligne médiane en place.
-Système ventriculaire de taille et de morphologie normales, sans signe d'hydrocéphalie.
-Citernes de la base libres.
-Pas de lésion osseuse de la voûte ni de la base du crâne.
-Sinus de la face et cellules mastoïdiennes normalement aérés.
+À l'étage sus-tentoriel :
+• Absence d'anomalie de la densité spontanée du parenchyme cérébral.
+• Les structures médianes sont en place.
+• Absence d'hydrocéphalie.
 
-Conclusion :
-Scanner cérébral sans injection sans anomalie décelable, en particulier pas de saignement intracrânien ni d'effet de masse.`,
+Étude osseuse :
+• Absence de lésion osseuse suspecte.
+
+AU TOTAL :
+TDM cérébrale sans anomalie significative en contraste spontané.`,
   },
   {
     id: 'alerte-avc', spe: 'neuro', mod: 'TDM',
@@ -105,6 +108,28 @@ Cadre osseux sans particularité.
 
 Conclusion :
 Radiographie thoracique sans anomalie décelable.`,
+  },
+  {
+    id: 'tdm-thorax', spe: 'thorax', mod: 'TDM',
+    title: 'TDM thoracique sans injection — normale',
+    text: `TDM THORACIQUE
+
+TECHNIQUE :
+Acquisition hélicoïdale depuis les apex pulmonaires jusqu'aux bases sans injection de produit de contraste.
+
+RÉSULTAT :
+*Étude parenchymateuse et pleuro-pariétale :
+• La trachée et les bronches sont libres.
+• Absence de lésion parenchymateuse d'allure évolutive.
+• Absence d'épanchement pleural.
+• Absence de lésion osseuse suspecte.
+
+*Étude médiastinale :
+• Absence d'adénomégalie médiastinale.
+• Absence d'épanchement péricardique.
+
+CONCLUSION :
+[TDM thoracique sans anomalie significative / …]`,
   },
   {
     id: 'angio-ep', spe: 'thorax', mod: 'TDM',
@@ -339,6 +364,152 @@ Aspect de spondylodiscite [étage] [sans / avec] abcès paravertébral ou épidu
 Orientation : [pyogène / tuberculeuse / brucellienne]. Ponction-biopsie discovertébrale à discuter selon le contexte et les hémocultures.`,
   },
   {
+    id: 'irm-medullaire', spe: 'osteo', mod: 'IRM',
+    title: 'IRM médullaire (rachis entier) — normale',
+    text: `IRM MÉDULLAIRE
+
+TECHNIQUE :
+Exploration du rachis par des coupes sagittales T1, T2 STIR et par des coupes transversales de C3 à C7 et sur les 3 derniers étages lombaires.
+
+RÉSULTAT :
+Au niveau cervico-dorsal :
+• Absence d'anomalie osseuse ou nerveuse de la charnière cervico-occipitale.
+• Absence de sténose canalaire constitutionnelle.
+• Absence de spondylolisthésis.
+• Absence d'anomalie de hauteur ni de morphologie des corps vertébraux.
+• Absence de lésion osseuse focale lytique ou condensante d'allure rapidement évolutive.
+• Absence d'anomalie de signal T1 ou STIR en regard des enthèses.
+• Absence d'épaississement ni de masse épidurale.
+• Absence d'anomalie de signal du cordon médullaire.
+• Absence d'anomalie des parties molles péri-vertébrales.
+
+C2-C3 :
+• Absence de saillie discale.
+• Arthrose interapophysaire postérieure.
+• Absence de plicature des ligaments jaunes.
+• Absence de rétrécissement foraminal.
+
+C3-C4 :
+• Absence de saillie discale.
+• Arthrose interapophysaire postérieure.
+• Absence de plicature des ligaments jaunes.
+• Absence de rétrécissement foraminal.
+
+C4-C5 :
+• Absence de saillie discale.
+• Arthrose interapophysaire postérieure.
+• Absence de plicature des ligaments jaunes.
+• Absence de rétrécissement foraminal.
+
+C5-C6 :
+• Absence de saillie discale.
+• Arthrose interapophysaire postérieure.
+• Absence de plicature des ligaments jaunes.
+• Absence de rétrécissement foraminal.
+
+C6-C7 :
+• Absence de saillie discale.
+• Arthrose interapophysaire postérieure.
+• Absence de plicature des ligaments jaunes.
+• Absence de rétrécissement foraminal.
+
+Au niveau dorsal :
+• Pas de conflit contenant-contenu à l'étage dorsal.
+• La moelle dorsale est de morphologie et de signal normaux.
+• Pas d'anomalie suspecte du signal osseux à l'étage dorsal.
+• Pas de signe d'épidurite ni de masse épidurale.
+• Absence d'anomalie des parties molles péri-vertébrales.
+
+Au niveau lombaire :
+• Absence de sténose canalaire constitutionnelle.
+• Cône terminal à la hauteur de L1, de signal et de morphologie normaux.
+• Absence de spondylolisthésis.
+• Absence d'anomalie transitionnelle.
+• Absence d'anomalie de hauteur ou de morphologie des corps vertébraux.
+• Absence d'anomalie suspecte du signal osseux.
+• Absence de signe d'épidurite ni de masse épidurale.
+• Absence d'anomalie des parties molles péri-vertébrales.
+
+L1-L2 :
+• Absence de saillie discale.
+• Arthrose interapophysaire postérieure.
+• Absence d'hypertrophie des ligaments jaunes.
+• Absence de rétrécissement foraminal.
+
+L2-L3 :
+• Absence de saillie discale.
+• Arthrose interapophysaire postérieure.
+• Absence d'hypertrophie des ligaments jaunes.
+• Absence de rétrécissement foraminal.
+
+L3-L4 :
+• Absence de saillie discale.
+• Arthrose interapophysaire postérieure.
+• Absence d'hypertrophie des ligaments jaunes.
+• Absence de rétrécissement foraminal.
+
+L4-L5 :
+• Absence de saillie discale.
+• Arthrose interapophysaire postérieure.
+• Absence d'hypertrophie des ligaments jaunes.
+• Absence de rétrécissement foraminal.
+
+L5-S1 :
+• Absence de saillie discale.
+• Arthrose interapophysaire postérieure.
+• Absence d'hypertrophie des ligaments jaunes.
+• Absence de rétrécissement foraminal.
+
+Au niveau du bassin :
+• Les coupes coronales en pondération T2 avec saturation du signal de la graisse ne montrent pas d'anomalie de signal en regard des enthèses des fessiers et des ischio-jambiers.
+• Absence d'anomalie de signal des berges articulaires des coxo-fémorales et des sacro-iliaques.
+• Absence d'épanchement intra-articulaire.
+• Absence d'épaississement synovial.
+
+AU TOTAL :
+[conclusion]`,
+  },
+  {
+    id: 'rx-rachis-lombaire', spe: 'osteo', mod: 'Radio',
+    title: 'Radiographie du rachis lombaire (F + P) — normale',
+    text: `RADIOGRAPHIE DU RACHIS LOMBAIRE DE FACE ET DE PROFIL
+
+COMPTE-RENDU :
+• Minéralisation osseuse normale.
+• Absence de lésion lytique ou condensante suspecte.
+• Lordose vertébrale conservée.
+• Canal lombaire de dimension normale.
+• Hauteur vertébrale et des espaces intersomatiques conservée.
+• Intégrité du mur postérieur.
+• Absence d'arthrose interapophysaire postérieure.
+• Absence d'anomalie des parties molles.`,
+  },
+  {
+    id: 'rx-genou', spe: 'osteo', mod: 'Radio',
+    title: 'Radiographie du genou (F + P) — normale',
+    text: `RADIOGRAPHIE [DU GENOU / DES GENOUX] DE FACE ET DE PROFIL
+
+COMPTE-RENDU :
+• Minéralisation osseuse conservée.
+• Absence de lésion lytique ou condensante suspecte.
+• Intégrité des interlignes articulaires.
+• Absence d'épanchement intra-articulaire.
+• Intégrité des parties molles.`,
+  },
+  {
+    id: 'rx-genou-gonarthrose', spe: 'osteo', mod: 'Radio',
+    title: 'Radiographie du genou (F + P) — gonarthrose',
+    text: `RADIOGRAPHIE [DU GENOU / DES GENOUX] DE FACE ET DE PROFIL
+
+COMPTE-RENDU :
+• Déminéralisation osseuse diffuse.
+• Absence de lésion lytique ou condensante suspecte.
+• Gonarthrose fémoro-tibiale [bilatérale / droite / gauche] plus marquée au compartiment [médial / latéral] avec pincement de l'interligne articulaire, condensation de l'os sous-chondral et ostéophytes.
+• Gonarthrose fémoro-patellaire [bilatérale / droite / gauche] avec pincement de l'interligne articulaire, condensation de l'os sous-chondral et ostéophytes.
+• Absence d'épanchement intra-articulaire.
+• Intégrité des parties molles.`,
+  },
+  {
     id: 'angio-aorte', spe: 'vasculaire', mod: 'TDM',
     title: 'Angio-scanner aortique — suspicion de syndrome aortique aigu',
     text: `ANGIO-SCANNER DE L'AORTE THORACO-ABDOMINALE — SUSPICION DE SYNDROME AORTIQUE AIGU
@@ -410,12 +581,75 @@ const CR_PHRASES = [
     text: 'Reins de taille normale, bien différenciés, sans lésion focale ni dilatation des cavités pyélocalicielles.' },
   { k: 'surrenalesnormales', alias: [], organ: 'Surrénales', mod: 'TDM', type: 'normal', label: 'Surrénales normales',
     text: 'Surrénales fines, sans nodule.' },
-  { k: 'cerveaunormal', alias: ['encephalenormal'], organ: 'Encéphale', mod: 'TDM', type: 'normal', label: 'Encéphale normal',
-    text: 'Pas d\'hémorragie intra- ou extra-axiale. Pas d\'anomalie de densité parenchymateuse. Pas d\'effet de masse ; ligne médiane en place. Système ventriculaire de taille normale.' },
-  { k: 'poumonsnormaux', alias: [], organ: 'Thorax', mod: 'TDM', type: 'normal', label: 'Poumons et plèvre normaux',
-    text: 'Pas de condensation parenchymateuse, pas de nodule suspect. Pas d\'épanchement pleural ni péricardique.' },
-  { k: 'osnormal', alias: [], organ: 'Squelette', mod: 'TDM', type: 'normal', label: 'Cadre osseux normal',
-    text: 'Pas de lésion osseuse lytique ou condensante suspecte. Pas de fracture.' },
+  { k: 'cerveaunormal', alias: ['encephalenormal'], organ: 'Encéphale', mod: 'TDM', type: 'normal', label: 'Encéphale normal (fosse postérieure + sus-tentoriel)',
+    text: `Au niveau de la fosse postérieure :
+• Absence d'anomalie de la densité spontanée du parenchyme cérébelleux et du tronc cérébral.
+• Le 4e ventricule est en place, non dilaté.
+• Les citernes de la base sont libres.
+
+À l'étage sus-tentoriel :
+• Absence d'anomalie de la densité spontanée du parenchyme cérébral.
+• Les structures médianes sont en place.
+• Absence d'hydrocéphalie.` },
+  { k: 'fossepost', alias: ['fossenormale'], organ: 'Encéphale', mod: 'TDM', type: 'normal', label: 'Fosse postérieure normale',
+    text: `• Absence d'anomalie de la densité spontanée du parenchyme cérébelleux et du tronc cérébral.
+• Le 4e ventricule est en place, non dilaté.
+• Les citernes de la base sont libres.` },
+  { k: 'sustentoriel', alias: ['sustentorielnormal'], organ: 'Encéphale', mod: 'TDM', type: 'normal', label: 'Étage sus-tentoriel normal',
+    text: `• Absence d'anomalie de la densité spontanée du parenchyme cérébral.
+• Les structures médianes sont en place.
+• Absence d'hydrocéphalie.` },
+  { k: 'poumonsnormaux', alias: ['parenchymenormal'], organ: 'Thorax', mod: 'TDM', type: 'normal', label: 'Parenchyme et plèvre normaux',
+    text: `• La trachée et les bronches sont libres.
+• Absence de lésion parenchymateuse d'allure évolutive.
+• Absence d'épanchement pleural.` },
+  { k: 'mediastinnormal', alias: [], organ: 'Thorax', mod: 'TDM', type: 'normal', label: 'Médiastin normal',
+    text: `• Absence d'adénomégalie médiastinale.
+• Absence d'épanchement péricardique.` },
+  { k: 'osnormal', alias: ['lesionosseuse'], organ: 'Squelette', mod: 'Tous', type: 'normal', label: 'Pas de lésion osseuse suspecte',
+    text: `Absence de lésion lytique ou condensante suspecte.` },
+  { k: 'mineralisation', alias: [], organ: 'Squelette', mod: 'Radio', type: 'normal', label: 'Minéralisation osseuse conservée',
+    text: `Minéralisation osseuse conservée.` },
+  { k: 'rachislombnormal', alias: ['rxlombaire'], organ: 'Rachis', mod: 'Radio', type: 'normal', label: 'Rachis lombaire normal (radio F + P)',
+    text: `• Minéralisation osseuse normale.
+• Absence de lésion lytique ou condensante suspecte.
+• Lordose vertébrale conservée.
+• Canal lombaire de dimension normale.
+• Hauteur vertébrale et des espaces intersomatiques conservée.
+• Intégrité du mur postérieur.
+• Absence d'arthrose interapophysaire postérieure.
+• Absence d'anomalie des parties molles.` },
+  { k: 'etagecervical', alias: ['etagec'], organ: 'Rachis', mod: 'IRM', type: 'normal', label: 'Étage cervical (C2-C3…C6-C7)',
+    text: `[étage] :
+• Absence de saillie discale.
+• Arthrose interapophysaire postérieure.
+• Absence de plicature des ligaments jaunes.
+• Absence de rétrécissement foraminal.` },
+  { k: 'etagelombaire', alias: ['etagel'], organ: 'Rachis', mod: 'IRM', type: 'normal', label: 'Étage lombaire (L1-L2…L5-S1)',
+    text: `[étage] :
+• Absence de saillie discale.
+• Arthrose interapophysaire postérieure.
+• Absence d'hypertrophie des ligaments jaunes.
+• Absence de rétrécissement foraminal.` },
+  { k: 'dorsalnormal', alias: [], organ: 'Rachis', mod: 'IRM', type: 'normal', label: 'Étage dorsal normal',
+    text: `• Pas de conflit contenant-contenu à l'étage dorsal.
+• La moelle dorsale est de morphologie et de signal normaux.
+• Pas d'anomalie suspecte du signal osseux à l'étage dorsal.
+• Pas de signe d'épidurite ni de masse épidurale.
+• Absence d'anomalie des parties molles péri-vertébrales.` },
+  { k: 'conenormal', alias: [], organ: 'Rachis', mod: 'IRM', type: 'normal', label: 'Cône terminal normal',
+    text: `Cône terminal à la hauteur de L1, de signal et de morphologie normaux.` },
+  { k: 'bassinnormal', alias: ['sacroiliaques', 'enthesesnormales'], organ: 'Rachis', mod: 'IRM', type: 'normal', label: 'Bassin : enthèses, coxo-fémorales et sacro-iliaques normales',
+    text: `• Les coupes coronales en pondération T2 avec saturation du signal de la graisse ne montrent pas d'anomalie de signal en regard des enthèses des fessiers et des ischio-jambiers.
+• Absence d'anomalie de signal des berges articulaires des coxo-fémorales et des sacro-iliaques.
+• Absence d'épanchement intra-articulaire.
+• Absence d'épaississement synovial.` },
+  { k: 'genounormal', alias: [], organ: 'Genou', mod: 'Radio', type: 'normal', label: 'Genou normal (radio F + P)',
+    text: `• Minéralisation osseuse conservée.
+• Absence de lésion lytique ou condensante suspecte.
+• Intégrité des interlignes articulaires.
+• Absence d'épanchement intra-articulaire.
+• Intégrité des parties molles.` },
 
   /* ----- Foie ----- */
   { k: 'angiome', alias: ['hemangiome'], organ: 'Foie', mod: 'TDM', type: 'lesion', label: 'Angiome hépatique typique',
@@ -508,6 +742,12 @@ const CR_PHRASES = [
     text: 'Anévrisme fusiforme de l\'aorte abdominale sous-rénale de [x] mm de diamètre maximal (mesuré perpendiculairement à l\'axe du vaisseau), [avec thrombus mural], collet de [x] mm sous les artères rénales. [Pas de signe de fissuration ni de rupture / Hématome rétropéritonéal témoignant d\'une rupture].' },
 
   /* ----- Os et parties molles ----- */
+  { k: 'gonarthrose', alias: ['arthrosegenou'], organ: 'Genou', mod: 'Radio', type: 'lesion', label: 'Gonarthrose fémoro-tibiale',
+    text: `Gonarthrose fémoro-tibiale [bilatérale / droite / gauche] plus marquée au compartiment [médial / latéral] avec pincement de l'interligne articulaire, condensation de l'os sous-chondral et ostéophytes.` },
+  { k: 'gonarthrose', alias: ['arthrosegenou'], organ: 'Genou', mod: 'Radio', type: 'lesion', label: 'Gonarthrose fémoro-patellaire',
+    text: `Gonarthrose fémoro-patellaire [bilatérale / droite / gauche] avec pincement de l'interligne articulaire, condensation de l'os sous-chondral et ostéophytes.` },
+  { k: 'demineralisation', alias: [], organ: 'Squelette', mod: 'Radio', type: 'lesion', label: 'Déminéralisation osseuse diffuse',
+    text: `Déminéralisation osseuse diffuse.` },
   { k: 'angiome', alias: ['hemangiome', 'angiomevertebral'], organ: 'Squelette', mod: 'TDM / IRM', type: 'lesion', label: 'Hémangiome vertébral typique',
     text: 'Lésion du corps vertébral de [x] présentant des travées verticales épaissies (aspect « en pois » en coupe axiale, « en velours côtelé » en coupe sagittale), en hypersignal T1 et T2, sans extension aux parties molles ni à l\'espace épidural, en faveur d\'un hémangiome vertébral typique.' },
   { k: 'enostose', alias: ['ilot', 'ilotcondensant'], organ: 'Squelette', mod: 'TDM', type: 'lesion', label: 'Îlot condensant bénin (énostose)',
@@ -526,4 +766,7 @@ const CR_PHRASES = [
     text: 'Comparaison avec l\'examen du [date] : [stabilité / majoration / régression] de [lésion].' },
   { k: 'controle', alias: [], organ: 'Formules', mod: 'Tous', type: 'conclusion', label: 'Contrôle à prévoir',
     text: 'Contrôle par [examen] à [délai], à discuter selon le contexte clinique.' },
+  { k: 'cordialement', alias: ['signature'], organ: 'Formules', mod: 'Tous', type: 'conclusion', label: 'Formule de politesse et signature',
+    text: `Cordialement.
+Dr [nom]` },
 ];

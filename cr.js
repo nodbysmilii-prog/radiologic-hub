@@ -137,11 +137,13 @@
   const replaceRange = (start, end, text) => {
     busy = true;
     const before = editor.value;
+    const expected = before.slice(0, start) + text + before.slice(end);
     editor.focus({ preventScroll: true });
     editor.setSelectionRange(start, end);
     let ok = false;
     try { ok = document.execCommand('insertText', false, text); } catch (e) { ok = false; }
-    if (!ok || editor.value === before) editor.setRangeText(text, start, end, 'end');
+    if (!ok || editor.value !== expected) editor.value = expected;
+    editor.setSelectionRange(start + text.length, start + text.length);
     busy = false;
     changed();
   };
@@ -165,7 +167,10 @@
   };
 
   const insertPhrase = (p, start, end, prefix = '') => {
-    const text = prefix + p.text;
+    // Ligne déjà commencée par « • » : ne pas doubler la puce de la phrase
+    const lineStart = editor.value.lastIndexOf('\n', start - 1) + 1;
+    const onBullet = /^[ \t]*•[ \t]*$/.test(editor.value.slice(lineStart, start));
+    const text = prefix + (onBullet && p.text.startsWith('• ') ? p.text.slice(2) : p.text);
     replaceRange(start, end, text);
     if (!selectField(start, start + text.length)) editor.setSelectionRange(start + text.length, start + text.length);
     revealCaret();
@@ -242,12 +247,30 @@
   const autoBox = $('#cr-auto');
   const autoExpand = () => {
     const pos = editor.selectionStart - 1; // juste avant le caractère tapé
-    const m = editor.value.slice(0, pos).match(/(?:^|\n)[ \t]*([\p{L}\p{N}_-]+)$/u);
+    const m = editor.value.slice(0, pos).match(/(?:^|\n)[ \t]*(?:•[ \t]*)?([\p{L}\p{N}_-]+)$/u);
     if (!m) return false;
     const p = findExact(m[1]);
     if (!p) return false;
     closePop();
     insertPhrase(p, pos - m[1].length, pos);
+    return true;
+  };
+
+  /* Entrée sur une ligne « • … » : nouvelle puce ; sur une puce vide : fin de la liste */
+  const bulletEnter = () => {
+    const pos = editor.selectionStart;
+    if (pos !== editor.selectionEnd) return false;
+    const v = editor.value;
+    const lineStart = v.lastIndexOf('\n', pos - 1) + 1;
+    const m = v.slice(lineStart, pos).match(/^([ \t]*•[ \t]+)(.*)$/);
+    if (!m) return false;
+    // en mode automatique, un mot-clé seul sur la ligne est d'abord remplacé (géré à la saisie)
+    if (autoBox.checked && /^[\p{L}\p{N}_-]+$/u.test(m[2]) && findExact(m[2])) return false;
+    closePop();
+    const lineEnd = v.indexOf('\n', pos);
+    const rest = v.slice(pos, lineEnd < 0 ? v.length : lineEnd);
+    if (!m[2].trim() && !rest.trim()) replaceRange(lineStart, pos, '');
+    else replaceRange(pos, pos, '\n' + m[1]);
     return true;
   };
 
@@ -284,6 +307,10 @@
         return;
       }
       if (['ArrowLeft', 'ArrowRight', 'Home', 'End', 'PageUp', 'PageDown'].includes(e.key)) closePop();
+    }
+    if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey && bulletEnter()) {
+      e.preventDefault();
+      return;
     }
     // Tab : champ [ … ] suivant (s'il n'y en a plus, Tab quitte l'éditeur normalement)
     if (e.key === 'Tab' && !e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey && nextField()) e.preventDefault();
