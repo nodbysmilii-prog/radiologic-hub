@@ -955,13 +955,15 @@
     svg(st, live) {
       return UT.svg({
         interactif: live,
+        portrait: live && window.matchMedia('(max-width: 640px)').matches,   // petit écran : vue coronale sous la vue sagittale
         myomes: st.myomes.map((m, i) => ({ ...m, n: i + 1, color: myColor(m), active: i === st.active })),
         legende: [...Object.values(MY.CATEGORIES).map(c => [c.label, c.c]), ['Type à préciser', MY_SANS_TYPE]],
       });
     },
     click(st, e, pt) {
       if (!e.target.closest('[data-u]')) return false;
-      const z = UT.zone(pt.x, pt.y);
+      const svg = e.target.closest('svg');
+      const z = UT.zone(pt.x, pt.y, !!svg && svg.viewBox.baseVal.width < 700);
       if (!z) return false;
       if (!st.myomes.length) { st.myomes.push(newMyome()); st.active = 0; }
       const m = st.myomes[st.active];

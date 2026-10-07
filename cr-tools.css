@@ -192,8 +192,6 @@
   /* Prostate : schéma plus grand, défilement horizontal pour viser les secteurs au doigt */
   .tool-dialog[data-tool="pirads"] .tool-schema { overflow-x: auto; }
   .tool-dialog[data-tool="pirads"] .tool-schema svg { min-width: 640px; }
-  .tool-dialog[data-tool="figo"] .tool-schema { overflow-x: auto; }
-  .tool-dialog[data-tool="figo"] .tool-schema svg { min-width: 600px; }
   .tl-table { font-size: .7rem; }
   .tl-table th:nth-child(3), .tl-table td:nth-child(3) { width: 34px; }
 }

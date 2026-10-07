@@ -24,7 +24,7 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
-  const W = 820, H = 496;
+  const W = 820, H = 496;                              // mise en page « paysage » (voir MISES)
   const FONT = 'Montserrat, Arial, sans-serif', INK = '#111114', MUTED = '#55545f';
   const CHAIR = { haut: '#c06c8f', bas: '#a24f73', bord: '#7d2d52', lisere: '#e3a3bf', cavite: '#3d0f27', endo: '#e7a3bf' };
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -126,37 +126,55 @@
     };
     /* Repères de niveau : segments perpendiculaires à l'axe, de séreuse à séreuse */
     const repere = u => { const a = at(u); return [touche(extP, a.p, a.n).map(f1), touche(extP, a.p, [-a.n[0], -a.n[1]]).map(f1)]; };
-    return { s, at, paroi, fond, projeter, repere, contour: lisse(ext, true), cavite: lisse(cav, true), canal: lisse(FORME.canal.map(T), false), col: T(FORME.col).map(f1) };
+    const xs = extP.map(p => p[0]), ys = extP.map(p => p[1]);
+    return { s, at, paroi, fond, projeter, repere, contour: lisse(ext, true), cavite: lisse(cav, true), canal: lisse(FORME.canal.map(T), false), col: T(FORME.col).map(f1), boite: [Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)] };
   }
 
   /* ---------- Vue coronale (médaillon) : géométrie d'origine, réduite ---------- */
-  const COR = { k: 0.58, dx: 574, dy: 30 };
-  const cor = ([x, y]) => [f1(COR.dx + x * COR.k), f1(COR.dy + y * COR.k)];
-  const corInv = (x, y) => [(x - COR.dx) / COR.k, (y - COR.dy) / COR.k];
   const C_COR = 200, NIV_Y = { fundus: 106, corps: 160, isthme: 222 };
   const CORONALE = {
     contour: 'M200 58 C280 58 330 82 332 132 C334 182 300 220 262 246 L242 262 L240 322 C240 332 232 338 224 338 L176 338 C168 338 160 332 160 322 L158 262 L138 246 C100 220 66 182 68 132 C70 82 120 58 200 58 Z',
     cavite: 'M152 104 Q200 118 248 104 Q236 172 204 238 L196 238 Q164 172 152 104 Z',
   };
-  const P = (inn, cav, out) => ({ inn: cor(inn), cav: cor(cav), out: cor(out) });
 
-  /* Vue principale de l'outil */
+  /* Vue principale de l'outil (la même dans les deux mises en page) */
   const SAG = vue(1, 42, 12);
-  const POS = {
-    cor: {
-      'laterale-droite': { fundus: P([160, 112], [184, 116], [86, 96]), corps: P([172, 160], [197, 160], [70, 160]), isthme: P([192, 220], [199, 222], [124, 228]) },
-      'laterale-gauche': { fundus: P([240, 112], [216, 116], [314, 96]), corps: P([228, 160], [203, 160], [330, 160]), isthme: P([208, 220], [201, 222], [276, 228]) },
-      fundique: { fundus: P([200, 112], [200, 128], [200, 58]) },
-    },
-    sag: {
-      anterieure: { fundus: SAG.paroi(-1, U_NIV.fundus), corps: SAG.paroi(-1, U_NIV.corps), isthme: SAG.paroi(-1, U_NIV.isthme) },
-      posterieure: { fundus: SAG.paroi(1, U_NIV.fundus), corps: SAG.paroi(1, U_NIV.corps), isthme: SAG.paroi(1, U_NIV.isthme) },
-      fundique: { fundus: SAG.fond() },
-    },
+  const POS_SAG = {
+    anterieure: { fundus: SAG.paroi(-1, U_NIV.fundus), corps: SAG.paroi(-1, U_NIV.corps), isthme: SAG.paroi(-1, U_NIV.isthme) },
+    posterieure: { fundus: SAG.paroi(1, U_NIV.fundus), corps: SAG.paroi(1, U_NIV.corps), isthme: SAG.paroi(1, U_NIV.isthme) },
+    fundique: { fundus: SAG.fond() },
   };
-  const SPECIAL = { col: { cor: cor([222, 298]), sag: SAG.col }, 'ligament-droit': { cor: cor([34, 196]) }, 'ligament-gauche': { cor: cor([366, 196]) }, parasite: { cor: cor([60, 372]) } };
-  const ECHELLE = { cor: COR.k, sag: 1 };
-  const centre = (v, niveau) => (v === 'cor' ? cor([C_COR, NIV_Y[niveau] || NIV_Y.corps]) : SAG.at(U_NIV[niveau] ?? U_NIV.corps).p.map(f1));
+
+  /* ---------- Mises en page de l'outil ----------
+     paysage (défaut, image exportée) : médaillon coronal à droite de la vue sagittale ;
+     portrait (petit écran) : médaillon coronal sous la vue sagittale, tout tient en largeur. */
+  const MISES = {
+    paysage: { W: 820, H: 496, cor: { k: 0.58, dx: 574, dy: 30 }, cadre: [566, 14, 244, 290], titreSag: 432, legende: 468 },
+    portrait: { W: 560, H: 858, cor: { k: 0.8, dx: 120, dy: 436 }, cadre: [118, 444, 324, 336], titreSag: 408, legende: 806 },
+  };
+  const geo = {};
+  function mise(portrait) {
+    const nom = portrait ? 'portrait' : 'paysage';
+    if (geo[nom]) return geo[nom];
+    const L = MISES[nom], C = L.cor;
+    const cor = ([x, y]) => [f1(C.dx + x * C.k), f1(C.dy + y * C.k)];
+    const P = (inn, cav, out) => ({ inn: cor(inn), cav: cor(cav), out: cor(out) });
+    return (geo[nom] = {
+      ...L, portrait: !!portrait,
+      corInv: (x, y) => [(x - C.dx) / C.k, (y - C.dy) / C.k],
+      POS: {
+        cor: {
+          'laterale-droite': { fundus: P([160, 112], [184, 116], [86, 96]), corps: P([172, 160], [197, 160], [70, 160]), isthme: P([192, 220], [199, 222], [124, 228]) },
+          'laterale-gauche': { fundus: P([240, 112], [216, 116], [314, 96]), corps: P([228, 160], [203, 160], [330, 160]), isthme: P([208, 220], [201, 222], [276, 228]) },
+          fundique: { fundus: P([200, 112], [200, 128], [200, 58]) },
+        },
+        sag: POS_SAG,
+      },
+      SPECIAL: { col: { cor: cor([222, 298]), sag: SAG.col }, 'ligament-droit': { cor: cor([34, 196]) }, 'ligament-gauche': { cor: cor([366, 196]) }, parasite: { cor: cor([60, 372]) } },
+      ECHELLE: { cor: C.k, sag: 1 },
+      centre: (v, niveau) => (v === 'cor' ? cor([C_COR, NIV_Y[niveau] || NIV_Y.corps]) : SAG.at(U_NIV[niveau] ?? U_NIV.corps).p.map(f1)),
+    });
+  }
 
   const TF = { 2: 0.12, 3: 0.3, 4: 0.5, 5: 0.86, 6: 1.12, 7: 1.6, '2-5': 0.5 };
   const rayon = m => {
@@ -177,18 +195,18 @@
   }
 
   /* Position d'un myome dans une vue : { x, y, r, projete, pedicule: [x, y] | null } ou null */
-  function position(m, v) {
-    const k = ECHELLE[v], r = Math.max(6, rayon(m) * k);
+  function position(m, v, portrait) {
+    const M = mise(portrait), k = M.ECHELLE[v], r = Math.max(6, rayon(m) * k);
     if (m.type === '8') {
-      const s = SPECIAL[m.special] || SPECIAL.col;
+      const s = M.SPECIAL[m.special] || M.SPECIAL.col;
       return s[v] ? { x: s[v][0], y: s[v][1], r: f1(Math.min(r, 22 * k)), projete: false, pedicule: null } : null;
     }
     const niveau = m.paroi === 'fundique' ? 'fundus' : (m.niveau || 'corps');
-    const table = POS[v][m.paroi];
+    const table = M.POS[v][m.paroi];
     if (!table) {
       // paroi non visible dans cette vue : projection en pointillés
       if (!m.paroi) return null;
-      const [x, y] = centre(v, niveau);
+      const [x, y] = M.centre(v, niveau);
       return { x, y, r: f1(Math.min(r, 26 * k)), projete: true, pedicule: null };
     }
     const p = table[niveau] || table.corps || table.fundus;
@@ -196,9 +214,10 @@
   }
 
   /* Zone cliquée → { paroi, niveau } (ou { special: 'col' }) */
-  function zone(x, y) {
-    if (x > 560) {
-      const [cx, cy] = corInv(x, y);
+  function zone(x, y, portrait) {
+    const M = mise(portrait);
+    if (M.portrait ? y > M.cadre[1] - 4 : x > M.cadre[0] - 6) {
+      const [cx, cy] = M.corInv(x, y);
       if (Math.abs(cx - C_COR) > 150 || cy < 40 || cy > 350) return null;
       if (cy > 254) return { special: 'col' };
       const niveau = cy < 128 ? 'fundus' : cy < 198 ? 'corps' : 'isthme';
@@ -271,35 +290,36 @@
 
   /*
    * svg(o) — o.myomes : [{ n, label?, type, paroi, niveau, special, d1, d2, d3, color, active }]
-   * o.interactif : zones cliquables ; o.legende : [[libellé, couleur], …] ; o.projections (défaut true)
+   * o.interactif : zones cliquables ; o.legende : [[libellé, couleur], …] ; o.projections (défaut true) ;
+   * o.portrait : mise en page pour petit écran
    */
   function svg(o = {}) {
-    const myomes = o.myomes || [];
-    let g = `${DEFS}<rect width="${W}" height="${H}" fill="#fff"/>`;
+    const myomes = o.myomes || [], M = mise(o.portrait), C = M.cor, [bx, by, bw, bh] = M.cadre, mx = bx + bw / 2;
+    let g = `${DEFS}<rect width="${M.W}" height="${M.H}" fill="#fff"/>`;
     // --- Vue principale (sagittale)
     g += corps(SAG, { interactif: o.interactif });
     Object.entries(U_NIV).forEach(([k, u]) => { const [a] = SAG.repere(u); g += txt(a[0], f1(a[1] - 8), k, { size: 10, weight: 700, fill: MUTED }); });
     g += txt(f1(SAG.col[0] + 14), f1(SAG.col[1] - 66), 'col', { size: 10, weight: 700, fill: MUTED });
     g += txt(14, 24, '◂ antérieur', { size: 10.5, weight: 800, fill: MUTED, anchor: 'start' });
-    g += txt(282, 432, 'VUE SAGITTALE', { size: 12, weight: 900, ls: 1 });
-    g += txt(282, 447, 'utérus antéversé : paroi postérieure en haut, antérieure en bas', { size: 9.5, weight: 600, fill: MUTED });
+    g += txt(282, M.titreSag, 'VUE SAGITTALE', { size: 12, weight: 900, ls: 1 });
+    g += txt(282, M.titreSag + 15, 'utérus antéversé : paroi postérieure en haut, antérieure en bas', { size: 9.5, weight: 600, fill: MUTED });
     // --- Vue coronale (médaillon)
-    g += '<rect x="566" y="14" width="244" height="290" rx="14" fill="#faf7f9" stroke="#e6dbe2" stroke-width="1.5"/>';
-    g += `<g transform="translate(${COR.dx} ${COR.dy}) scale(${COR.k})">`;
+    g += `<rect x="${bx}" y="${by}" width="${bw}" height="${bh}" rx="14" fill="#faf7f9" stroke="#e6dbe2" stroke-width="1.5"/>`;
+    g += `<g transform="translate(${C.dx} ${C.dy}) scale(${C.k})">`;
     g += `<path d="M70 118 C44 104 26 112 14 132 M330 118 C356 104 374 112 386 132" fill="none" stroke="${CHAIR.endo}" stroke-width="6" stroke-linecap="round"/>`;
     g += `<path d="${CORONALE.contour}" fill="url(#rhu-chair)" stroke="${CHAIR.bord}" stroke-width="3.6" stroke-linejoin="round"${o.interactif ? ' data-u="cor" style="cursor:crosshair"' : ''}/>`;
     g += `<path d="${CORONALE.cavite}" fill="${CHAIR.cavite}" stroke="${CHAIR.endo}" stroke-width="3" pointer-events="none"/>`;
     g += `<line x1="200" y1="238" x2="200" y2="336" stroke="${CHAIR.cavite}" stroke-width="6" stroke-linecap="round" pointer-events="none"/>`;
     g += '<g stroke="#fff" stroke-opacity=".75" stroke-width="2" stroke-dasharray="6 6" pointer-events="none"><line x1="72" y1="128" x2="328" y2="128"/><line x1="96" y1="198" x2="304" y2="198"/><line x1="150" y1="254" x2="250" y2="254"/></g>';
     g += '</g>';
-    g += txt(580, 34, 'D', { size: 12, weight: 900, anchor: 'start' }) + txt(796, 34, 'G', { size: 12, weight: 900, anchor: 'end' });
-    g += txt(688, 278, 'VUE CORONALE', { size: 11, weight: 900, ls: 1 });
-    g += txt(688, 293, 'droite de la patiente à gauche', { size: 8.5, weight: 600, fill: MUTED });
+    g += txt(bx + 14, by + 20, 'D', { size: 12, weight: 900, anchor: 'start' }) + txt(bx + bw - 14, by + 20, 'G', { size: 12, weight: 900, anchor: 'end' });
+    g += txt(mx, by + bh - 26, 'VUE CORONALE', { size: 11, weight: 900, ls: 1 });
+    g += txt(mx, by + bh - 11, 'droite de la patiente à gauche', { size: 8.5, weight: 600, fill: MUTED });
 
     // --- Myomes
     const dessiner = v => {
       const pts = disperser(myomes.map(m => {
-        const p = position(m, v);
+        const p = position(m, v, o.portrait);
         if (!p || (p.projete && o.projections === false)) return null;
         return { ...p, m };
       }));
@@ -310,15 +330,15 @@
 
     // --- Légende
     if (o.legende && o.legende.length) {
-      let x = 20, y = 468;
+      let x = 20, y = M.legende;
       o.legende.forEach(([lab, c]) => {
         const w = lab.length * 6.6 + 32;
-        if (x + w > W - 10) { x = 20; y += 18; }
+        if (x + w > M.W - 10) { x = 20; y += 18; }
         g += `<circle cx="${x + 7}" cy="${y - 4}" r="7" fill="${c}" stroke="${clair(c) ? INK : pale(c)}" stroke-width="1.6"/>` + txt(x + 18, y, lab, { size: 11, anchor: 'start' });
         x += w;
       });
     }
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" font-family="${FONT}">${g}</svg>`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${M.W} ${M.H}" font-family="${FONT}">${g}</svg>`;
   }
 
   /* ---------- Planche de la classification FIGO (fiche) ----------
@@ -340,6 +360,8 @@
     { type: '7', cote: -1, u: 0.3, t: 1.55, r: 25, texte: ['Sous-séreux pédiculé'], lab: [33, 6, 'start'] },
     { type: '8', col: true, r: 21, texte: ['Col, ligament large…'], lab: [30, 6, 'start'] },
   ];
+  /* o.compact (petit écran) : dessin seul, recadré, numéros agrandis ; les légendes sont alors
+     affichées à part (legendePlanche) */
   function planche(o = {}) {
     const couleur = o.couleur || (() => '#2f5fb3');
     let g = `${DEFS}<defs><radialGradient id="rhu-fond" cx="45%" cy="40%" r="75%"><stop offset="0" stop-color="#2a2933"/><stop offset="1" stop-color="#0d0d10"/></radialGradient></defs>`;
@@ -360,7 +382,13 @@
       return { ...it, p: c };
     });
     // les plus gros d'abord (le transmural ne masque pas les autres)
-    [...items].sort((a, b) => b.p.r - a.p.r).forEach(it => { g += bulle(it.p, couleur(it.type), it.type, { k: 1.3, size: it.type === '2-5' ? 22 : 18 }); });
+    [...items].sort((a, b) => b.p.r - a.p.r).forEach(it => { g += bulle(it.p, couleur(it.type), it.type, { k: 1.3, size: (it.type === '2-5' ? 22 : 18) * (o.compact ? 1.25 : 1) }); });
+    if (o.compact) {
+      const b = PG.boite.slice();
+      items.forEach(({ p }) => { b[0] = Math.min(b[0], p.x - p.r); b[1] = Math.min(b[1], p.y - p.r); b[2] = Math.max(b[2], p.x + p.r); b[3] = Math.max(b[3], p.y + p.r); });
+      const m = 18, vb = [b[0] - m, b[1] - m, b[2] - b[0] + 2 * m, b[3] - b[1] + 2 * m].map(f1);
+      return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vb.join(' ')}" font-family="${FONT}">${g}</svg>`;
+    }
     items.forEach(it => {
       const [dx, dy, anchor] = it.lab, x = f1(it.p.x + dx), y = f1(it.p.y + dy);
       it.texte.forEach((l, i) => { g += txt(x, f1(y + i * 18), l, { size: 15, weight: i ? 600 : 700, fill: '#fff', anchor, ombre: true }); });
@@ -379,5 +407,8 @@
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${PW} ${PH}" font-family="${FONT}">${g}</svg>`;
   }
 
-  return { W, H, position, zone, svg, planche };
+  /* Légendes de la planche, dans l'ordre des types : [{ type, texte }] */
+  const legendePlanche = () => PLANCHE.map(it => ({ type: it.type, texte: it.texte.join(' ') }));
+
+  return { W, H, position, zone, svg, planche, legendePlanche };
 });

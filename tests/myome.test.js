@@ -86,6 +86,12 @@ test('schéma : clic → paroi et niveau', () => {
   const cc = U.position({ type: '8', special: 'col' }, 'cor');
   assert.deepEqual(U.zone(cc.x, cc.y), { special: 'col' });
   assert.equal(U.zone(300, 5), null, 'hors du schéma');
+  // mise en page « portrait » (petit écran) : médaillon coronal sous la vue sagittale
+  for (const [paroi, v] of [['laterale-gauche', 'cor'], ['laterale-droite', 'cor'], ['anterieure', 'sag'], ['posterieure', 'sag']]) {
+    const p = U.position({ type: '4', paroi, niveau: 'isthme' }, v, true);
+    assert.deepEqual(U.zone(p.x, p.y, true), { paroi, niveau: 'isthme' }, `portrait : ${paroi}`);
+  }
+  assert.match(U.svg({ portrait: true }), /viewBox="0 0 560 858"/);
   // vue sagittale : un clic à l'emplacement d'un myome redonne sa paroi et son niveau
   for (const paroi of ['anterieure', 'posterieure']) for (const niveau of ['fundus', 'corps', 'isthme']) {
     const p = U.position({ type: '4', paroi, niveau }, 'sag');

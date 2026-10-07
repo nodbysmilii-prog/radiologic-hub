@@ -301,12 +301,27 @@ if (body) {
 
   /* Planche de la classification FIGO (schemas/uterus.js + regles/myome.js) : un myome par type */
   const MY = window.RHRegles && window.RHRegles.myome;
+  // Petit écran : dessin seul, à la largeur de l'écran, et légendes en liste dessous
   if (window.RHUterus && MY) {
+    const U = window.RHUterus;
+    const leg = U.legendePlanche().sort((a, b) => MY.TYPES.indexOf(a.type) - MY.TYPES.indexOf(b.type));
+    const liste = `<ol class="figo-leg">${leg.map(l => {
+      const cat = MY.categorie(l.type);
+      return `<li style="--c: ${MY.couleur(l.type)}"><b>${l.type}</b><span>${l.texte.replace(/&/g, '&amp;').replace(/</g, '&lt;')}<small>${cat.charAt(0).toUpperCase() + cat.slice(1)}</small></span></li>`;
+    }).join('')}</ol>`;
     $$('[data-uterus-schema]').forEach(el => {
-      el.innerHTML = window.RHUterus.planche({
-        couleur: MY.couleur,
-        categories: { interstitiel: 'Interstitiel', 'sous-muqueux': 'Sous-muqueux', 'sous-séreux': 'Sous-séreux' },
-      });
+      const rendre = () => {
+        const compact = el.clientWidth < 600;
+        if (el.dataset.compact === String(compact)) return;
+        el.dataset.compact = compact;
+        el.innerHTML = U.planche({
+          couleur: MY.couleur, compact,
+          categories: { interstitiel: 'Interstitiel', 'sous-muqueux': 'Sous-muqueux', 'sous-séreux': 'Sous-séreux' },
+        }) + (compact ? liste : '');
+      };
+      rendre();
+      if (window.ResizeObserver) new ResizeObserver(rendre).observe(el);
+      else window.addEventListener('resize', rendre);
     });
   }
 
