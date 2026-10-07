@@ -84,10 +84,11 @@ Page `comptes-rendus.html` (lien « Comptes rendus » dans le menu de toutes les
 4. **Insertion automatique** (interrupteur sous l'éditeur, désactivé par défaut) : un mot-clé tapé **en début de ligne** (éventuellement après une puce « • ») suivi d'un espace, d'une ponctuation ou d'Entrée est remplacé directement par la première description.
 5. **Puces** (style des formules du service) : **Entrée** sur une ligne « • … » crée la puce suivante ; Entrée sur une puce vide termine la liste. Une phrase à puces insérée sur une ligne qui a déjà sa puce ne la double pas.
 6. Onglet **« Phrases »** : toute la bibliothèque, avec recherche et filtre par type ; un clic insère la phrase au curseur.
-7. Boutons : **Copier**, **Télécharger .txt**, **Imprimer** (le compte rendu seul), **Enregistrer comme modèle**, **Sélection → phrase** (crée une phrase perso à partir du texte sélectionné), **Effacer**.
-8. **Mes phrases** (bas de page) : formulaire pour programmer ses propres mots-clés et descriptions ; modifier / supprimer ; **Exporter / Importer** (fichier `.json`) pour les transférer sur un autre ordinateur. Les phrases perso sont proposées en premier.
+7. Boutons : **↶ Retour** / **↷ Rétablir** (aussi Ctrl + Z / Ctrl + Y ; une étape par mot tapé, par phrase insérée, par modèle chargé ou par collage), **Copier**, **Champ suivant**, **Télécharger .txt**, **Imprimer** (le compte rendu seul), **Enregistrer comme modèle**, **Sélection → phrase** (crée une phrase perso à partir du texte sélectionné), **Effacer**.
+8. **Envoyer par e-mail** (sous l'éditeur) : saisir une ou plusieurs adresses (mémorisées), puis un clic ouvre la messagerie de l'utilisateur (lien `mailto:`) avec l'objet « Compte rendu — titre » et le texte déjà rédigé ; il ne reste qu'à cliquer sur « Envoyer ». Le texte est aussi copié dans le presse-papiers (si la messagerie tronque un long compte rendu, coller avec Ctrl + V). Avertissement s'il reste des champs `[ … ]`. Le site n'envoie rien lui-même : pas de serveur, et rappel d'utiliser une messagerie sécurisée de santé (MSSanté) pour un patient identifiable.
+9. **Mes phrases** (bas de page) : formulaire pour programmer ses propres mots-clés et descriptions ; modifier / supprimer ; **Exporter / Importer** (fichier `.json`) pour les transférer sur un autre ordinateur. Les phrases perso sont proposées en premier.
 
-**Stockage** : le brouillon, les phrases et les modèles perso sont enregistrés **dans le navigateur** (localStorage), rien n'est envoyé. Message de confidentialité sur la page : ne pas saisir de données identifiantes.
+**Stockage** : le brouillon, les phrases, les modèles perso et l'adresse e-mail sont enregistrés **dans le navigateur** (localStorage), rien n'est envoyé. Message de confidentialité sur la page : ne pas saisir de données identifiantes.
 
 **Contenu fourni (`cr-data.js`)**
 
@@ -221,6 +222,7 @@ Site 100 % statique (HTML / CSS / JavaScript, aucune installation).
 
 | Date | Modification |
 |---|---|
+| 07/10/2026 | Comptes rendus : boutons ↶ Retour / ↷ Rétablir (historique propre à l'éditeur, Ctrl + Z / Ctrl + Y) et envoi par e-mail en un clic (ouvre la messagerie avec le CR pré-rempli, adresse mémorisée) |
 | 07/10/2026 | Comptes rendus : les 13 premiers modèles passent au format du service (TECHNIQUE / RÉSULTAT / AU TOTAL, puces « • », « TDM » au lieu de « scanner ») ; arthrose interapophysaire en choix `[Absence d'arthrose / Arthrose]` à chaque étage de l'IRM médullaire |
 | 07/10/2026 | Comptes rendus : intégration des 5 formules normales du service (TDM cérébrale, TDM thoracique, IRM médullaire, radio rachis lombaire, radio genou normale + gonarthrose) en modèles et en 17 phrases ; puces « • » automatiques à l'Entrée |
 | 07/10/2026 | Nouvelle page « Comptes rendus » : 13 CR types, 56 phrases automatiques (mot-clé → description, Tab pour insérer, champs [ … ]), mes phrases / modèles perso avec export-import ; lien dans le menu et depuis les fiches pancréas, rectum, spondylodiscite ; menu de l'en-tête resserré (hamburger sous 960 px) |

@@ -214,6 +214,7 @@ kbd {
 .cr-toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
 .cr-toolbar .btn { padding: .65em 1.05em; font-size: .66rem; }
 .cr-danger:hover { background: var(--red); border-color: var(--red); color: #fff; box-shadow: 4px 4px 0 var(--ink); }
+.cr-toolbar .btn:disabled, .cr-toolbar .btn:disabled:hover { opacity: .35; cursor: default; transform: none; box-shadow: none; background: transparent; }
 
 /* ---------- Éditeur ---------- */
 .cr-editor-wrap { position: relative; }
@@ -294,6 +295,31 @@ kbd {
 .cr-switch input:checked { background: var(--green); }
 .cr-switch input:checked::after { transform: translateX(18px); background: #fff; }
 .cr-switch input:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+/* ---------- Envoi par e-mail ---------- */
+.cr-send {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: var(--card);
+  border: 3px solid var(--ink);
+}
+.cr-send label { font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
+.cr-send input {
+  flex: 1 1 240px;
+  min-width: 0;
+  padding: .6em 1em;
+  border-radius: 999px;
+  border: 3px solid #cfcfd6;
+  background: #fff;
+  font: 600 .86rem var(--font);
+  color: var(--ink);
+}
+.cr-send input:focus { outline: none; border-color: var(--cornflower); box-shadow: 0 0 0 4px rgba(82, 115, 191, .2); }
+.cr-send-note { flex-basis: 100%; margin: 0; font-size: .74rem; line-height: 1.5; color: var(--muted); }
 .cr-flash { min-height: 1.5em; margin: 8px 0 0; font-size: .85rem; font-weight: 800; color: var(--green); }
 .cr-flash.is-warn { color: var(--red); }
 .cr-note { margin: 14px 0 0; font-size: .78rem; line-height: 1.55; color: var(--muted); }

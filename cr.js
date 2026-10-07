@@ -28,7 +28,7 @@
       try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
     },
   };
-  const KEY = { draft: 'rh-cr-draft', auto: 'rh-cr-auto', phrases: 'rh-cr-phrases', templates: 'rh-cr-templates' };
+  const KEY = { draft: 'rh-cr-draft', auto: 'rh-cr-auto', phrases: 'rh-cr-phrases', templates: 'rh-cr-templates', email: 'rh-cr-email' };
 
   const isPhrase = p => p && typeof p.k === 'string' && typeof p.label === 'string' && typeof p.text === 'string';
   const isTemplate = t => t && typeof t.title === 'string' && typeof t.text === 'string';
@@ -132,18 +132,72 @@
     if (y < header + 20 || y > window.innerHeight - 80) window.scrollBy({ top: y - window.innerHeight / 3, behavior: 'smooth' });
   };
 
-  /* ---------- Insertion (garde l'historique : Ctrl + Z annule) ---------- */
+  /* ---------- Historique : Retour / Rétablir (boutons, Ctrl + Z, Ctrl + Y) ----------
+     Une étape par mot tapé (espace, Entrée ou pause d'une seconde),
+     par phrase insérée, par modèle chargé, par collage. */
   let busy = false;
-  const replaceRange = (start, end, text) => {
+  const undoBtn = $('#cr-undo'), redoBtn = $('#cr-redo');
+  const hist = { undo: [], redo: [], last: 0, kind: '' };
+  const snapshot = () => ({ v: editor.value, s: editor.selectionStart, e: editor.selectionEnd });
+  const syncHistory = () => {
+    undoBtn.disabled = !hist.undo.length;
+    redoBtn.disabled = !hist.redo.length;
+  };
+  const record = (kind = 'edit', newStep = true) => {
+    const now = Date.now();
+    const sameStep = !newStep && kind === hist.kind && now - hist.last < 1000;
+    hist.last = now;
+    hist.kind = kind;
+    if (sameStep) return;
+    hist.undo.push(snapshot());
+    if (hist.undo.length > 300) hist.undo.shift();
+    hist.redo = [];
+    syncHistory();
+  };
+  const restore = snap => {
     busy = true;
-    const before = editor.value;
-    const expected = before.slice(0, start) + text + before.slice(end);
+    editor.value = snap.v;
     editor.focus({ preventScroll: true });
-    editor.setSelectionRange(start, end);
-    let ok = false;
-    try { ok = document.execCommand('insertText', false, text); } catch (e) { ok = false; }
-    if (!ok || editor.value !== expected) editor.value = expected;
-    editor.setSelectionRange(start + text.length, start + text.length);
+    editor.setSelectionRange(snap.s, snap.e);
+    busy = false;
+    hist.kind = '';
+    closePop();
+    changed();
+    syncHistory();
+    revealCaret();
+  };
+  const undo = () => {
+    if (!hist.undo.length) return flash('Rien à annuler.');
+    hist.redo.push(snapshot());
+    restore(hist.undo.pop());
+  };
+  const redo = () => {
+    if (!hist.redo.length) return flash('Rien à rétablir.');
+    hist.undo.push(snapshot());
+    restore(hist.redo.pop());
+  };
+  undoBtn.addEventListener('click', undo);
+  redoBtn.addEventListener('click', redo);
+
+  editor.addEventListener('beforeinput', e => {
+    if (e.inputType === 'historyUndo' || e.inputType === 'historyRedo') {
+      e.preventDefault();
+      (e.inputType === 'historyUndo' ? undo : redo)();
+      return;
+    }
+    if (busy) return;
+    const kind = e.inputType.startsWith('delete') ? 'delete' : 'insert';
+    const wordEnd = e.inputType === 'insertLineBreak' || e.inputType === 'insertParagraph' || /^\s$/.test(e.data || '');
+    const block = /Paste|Drop|Cut|Replacement/.test(e.inputType);
+    record(kind, wordEnd || block);
+  });
+
+  /* ---------- Insertion ---------- */
+  const replaceRange = (start, end, text) => {
+    record();
+    busy = true;
+    editor.focus({ preventScroll: true });
+    editor.setRangeText(text, start, end, 'end');
     busy = false;
     changed();
   };
@@ -286,6 +340,14 @@
 
   editor.addEventListener('keydown', e => {
     if (e.isComposing) return;
+    if ((e.ctrlKey || e.metaKey) && !e.altKey) {
+      const k = e.key.toLowerCase();
+      if (k === 'z' || k === 'y') {
+        e.preventDefault();
+        (k === 'y' || e.shiftKey ? redo : undo)();
+        return;
+      }
+    }
     if (!pop.hidden && sug.items.length) {
       const n = sug.items.length;
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
@@ -477,19 +539,24 @@
     return true;
   };
 
-  $('#cr-copy').addEventListener('click', async () => {
-    if (isEmpty()) return;
-    let ok = false;
+  const copyText = async () => {
     try {
       await navigator.clipboard.writeText(editor.value);
-      ok = true;
+      return true;
     } catch (e) {
       const s = editor.selectionStart, end = editor.selectionEnd;
       editor.focus();
       editor.select();
+      let ok = false;
       try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
       editor.setSelectionRange(s, end);
+      return ok;
     }
+  };
+
+  $('#cr-copy').addEventListener('click', async () => {
+    if (isEmpty()) return;
+    const ok = await copyText();
     const n = fieldsIn().length;
     if (!ok) flash('Copie impossible : sélectionnez le texte puis Ctrl + C.', true);
     else if (n) flash(`Copié — attention : ${n} champ${n > 1 ? 's' : ''} [ … ] ${n > 1 ? 'restent' : 'reste'} à compléter.`, true);
@@ -517,7 +584,7 @@
     replaceRange(0, editor.value.length, '');
     currentTpl = null;
     renderTplList();
-    flash('Éditeur effacé (Ctrl + Z pour annuler).');
+    flash('Éditeur effacé (↶ Retour pour annuler).');
   });
 
   $('#cr-save-tpl').addEventListener('click', () => {
@@ -534,6 +601,37 @@
     renderTplFilters();
     renderTplList();
     flash(`Modèle « ${t.title} » enregistré dans « Mes modèles ».`);
+  });
+
+  /* ---------- Envoi par e-mail : ouvre la messagerie de l'utilisateur (mailto), le site n'envoie rien ---------- */
+  const mailInput = $('#cr-email');
+  const EMAIL = /^[^\s@,;]+@[^\s@,;]+\.[^\s@,;]+$/;
+  mailInput.value = store.get(KEY.email, '') || '';
+  $('#cr-send').addEventListener('submit', async e => {
+    e.preventDefault();
+    if (isEmpty()) return;
+    const to = mailInput.value.split(/[\s,;]+/).filter(Boolean);
+    if (!to.length || !to.every(a => EMAIL.test(a))) {
+      mailInput.focus();
+      flash('Indiquez une adresse e-mail valide (plusieurs : séparées par une virgule).', true);
+      return;
+    }
+    store.set(KEY.email, to.join(', '));
+    const n = fieldsIn().length;
+    if (n && !confirm(`Il reste ${n} champ${n > 1 ? 's' : ''} [ … ] à compléter. Envoyer quand même ?`)) return;
+    const text = editor.value.trim();
+    const copied = await copyText();
+    const head = `mailto:${to.join(',')}?subject=${encodeURIComponent('Compte rendu — ' + text.split('\n')[0].trim().slice(0, 100))}`;
+    let url = `${head}&body=${encodeURIComponent(text.replace(/\n/g, '\r\n'))}`;
+    // Certaines messageries refusent les liens trop longs : on colle alors le texte (déjà copié)
+    const tooLong = url.length > 8000;
+    if (tooLong) url = `${head}&body=${encodeURIComponent(copied ? 'Collez ici le compte rendu (Ctrl + V).' : '')}`;
+    const a = document.createElement('a');
+    a.href = url;
+    a.click();
+    flash(tooLong
+      ? 'Votre messagerie s\'ouvre. Compte rendu trop long pour être pré-rempli : il est copié, collez-le dans le message (Ctrl + V).'
+      : `Votre messagerie s'ouvre avec le compte rendu prêt à envoyer${copied ? ' (il est aussi copié, au cas où)' : ''}.`);
   });
 
   /* ---------- Mes phrases ---------- */
@@ -686,6 +784,7 @@
   const draft = store.get(KEY.draft, '');
   if (typeof draft === 'string') editor.value = draft;
   updateStatus();
+  syncHistory();
 
   // Lien direct vers un modèle : comptes-rendus.html#modele=irm-rectum
   const openFromHash = () => {

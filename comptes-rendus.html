@@ -9,9 +9,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261007180000">
-  <link rel="stylesheet" href="fiche.css?v=20261007180000">
-  <link rel="stylesheet" href="cr.css?v=20261007180000">
+  <link rel="stylesheet" href="styles.css?v=20261007200000">
+  <link rel="stylesheet" href="fiche.css?v=20261007200000">
+  <link rel="stylesheet" href="cr.css?v=20261007200000">
 </head>
 <body>
 
@@ -44,7 +44,7 @@
         <ol class="cr-steps">
           <li style="--c: var(--blue)"><b>1</b><span>Choisissez un <strong>modèle</strong> dans la bibliothèque.</span></li>
           <li style="--c: var(--orange)"><b>2</b><span>Tapez un mot-clé, par exemple <mark class="k-sign">angiome</mark> : la description apparaît, <kbd>Tab</kbd> l'insère.</span></li>
-          <li style="--c: var(--green)"><b>3</b><span><kbd>Tab</kbd> passe d'un champ <code>[ … ]</code> au suivant. Puis <strong>Copier</strong>.</span></li>
+          <li style="--c: var(--green)"><b>3</b><span><kbd>Tab</kbd> passe d'un champ <code>[ … ]</code> au suivant. Puis <strong>Copier</strong> ou <strong>Envoyer par e-mail</strong>.</span></li>
         </ol>
       </div>
     </section>
@@ -80,6 +80,8 @@
         <!-- ============ Éditeur ============ -->
         <div class="cr-main">
           <div class="cr-toolbar" role="toolbar" aria-label="Actions sur le compte rendu">
+            <button class="btn btn-outline btn-sm" type="button" id="cr-undo" title="Retour : annuler la dernière modification (Ctrl + Z)" disabled>↶ Retour</button>
+            <button class="btn btn-outline btn-sm" type="button" id="cr-redo" title="Rétablir la modification annulée (Ctrl + Y)" disabled>↷ Rétablir</button>
             <button class="btn btn-ink btn-sm" type="button" id="cr-copy">Copier</button>
             <button class="btn btn-outline btn-sm" type="button" id="cr-next" title="Sélectionner le champ [ … ] suivant (touche Tab)">Champ suivant ⇥</button>
             <button class="btn btn-outline btn-sm" type="button" id="cr-download">Télécharger .txt</button>
@@ -108,10 +110,17 @@
               <span>Insertion automatique <small>(mot-clé en début de ligne + espace)</small></span>
             </label>
           </div>
+          <form class="cr-send" id="cr-send" novalidate>
+            <label for="cr-email">Envoyer à</label>
+            <input type="email" id="cr-email" multiple autocomplete="email" placeholder="adresse@exemple.fr (plusieurs : séparées par une virgule)">
+            <button class="btn btn-ink btn-sm" type="submit">Envoyer par e-mail ✉</button>
+            <p class="cr-send-note">Ouvre votre messagerie avec le compte rendu déjà rédigé : il ne reste qu'à cliquer sur « Envoyer ». L'adresse est mémorisée. E-mail ordinaire non sécurisé : pour un patient identifiable, utilisez une messagerie sécurisée de santé (MSSanté).</p>
+          </form>
+
           <p class="cr-flash" id="cr-flash" role="status" aria-live="polite"></p>
 
           <p class="cr-note">
-            <strong>Confidentialité :</strong> tout reste dans votre navigateur, rien n'est envoyé. N'y saisissez pas d'informations permettant d'identifier un patient.
+            <strong>Confidentialité :</strong> tout reste dans votre navigateur, le site n'envoie rien. N'y saisissez pas d'informations permettant d'identifier un patient.
             Les modèles sont indicatifs : adaptez-les à chaque patient, aux recommandations en vigueur et aux usages de votre service.
           </p>
         </div>
@@ -195,8 +204,8 @@
   <!-- Version imprimable du compte rendu -->
   <div class="cr-print" id="cr-print" aria-hidden="true"></div>
 
-  <script src="fiche.js?v=20261007180000"></script>
-  <script src="cr-data.js?v=20261007180000"></script>
-  <script src="cr.js?v=20261007180000"></script>
+  <script src="fiche.js?v=20261007200000"></script>
+  <script src="cr-data.js?v=20261007200000"></script>
+  <script src="cr.js?v=20261007200000"></script>
 </body>
 </html>
