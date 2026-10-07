@@ -30,9 +30,9 @@
   };
   const TYPES = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '2-5'];
   const CATEGORIES = {
-    'sous-muqueux': { label: 'Sous-muqueux (0–2)', c: '#d63f4c' },
-    interstitiel: { label: 'Interstitiel (3–4)', c: '#f2ab2f' },
-    'sous-séreux': { label: 'Sous-séreux (5–7)', c: '#3c67b8' },
+    'sous-muqueux': { label: 'Sous-muqueux (0–2)', c: '#e0822a' },
+    interstitiel: { label: 'Interstitiel (3–4)', c: '#2a9d8f' },
+    'sous-séreux': { label: 'Sous-séreux (5–7)', c: '#2f5fb3' },
     transmural: { label: 'Transmural (2-5)', c: '#6b0d8c' },
     autre: { label: 'Autre (8)', c: '#8b8a96' },
   };

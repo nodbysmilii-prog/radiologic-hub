@@ -299,14 +299,13 @@ if (body) {
     });
   }
 
-  /* Schéma FIGO de l'utérus (schemas/uterus.js + regles/myome.js) : un myome par type */
+  /* Planche de la classification FIGO (schemas/uterus.js + regles/myome.js) : un myome par type */
   const MY = window.RHRegles && window.RHRegles.myome;
   if (window.RHUterus && MY) {
     $$('[data-uterus-schema]').forEach(el => {
-      el.innerHTML = window.RHUterus.svg({
-        myomes: window.RHUterus.DEMO.map(m => ({ ...m, color: MY.couleur(m.type) })),
-        legende: Object.values(MY.CATEGORIES).map(c => [c.label, c.c]),
-        projections: false,
+      el.innerHTML = window.RHUterus.planche({
+        couleur: MY.couleur,
+        categories: Object.values(MY.CATEGORIES).map(c => [c.label, c.c]),
       });
     });
   }

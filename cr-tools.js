@@ -919,8 +919,9 @@
      ======================================================= */
   const MY = window.RHRegles && window.RHRegles.myome;
   const UT = window.RHUterus;
-  const MY_SANS_TYPE = '#2a9d8f';                 // myome placé, type FIGO à préciser
+  const MY_SANS_TYPE = '#ffffff';                 // myome placé, type FIGO à préciser (bulle blanche sur le schéma)
   const myColor = m => (m.type && MY.FIGO[m.type] ? MY.couleur(m.type) : MY_SANS_TYPE);
+  const myTabColor = m => (m.type && MY.FIGO[m.type] ? MY.couleur(m.type) : '#55545f');
   const MY_PAROIS = [['anterieure', 'Antérieure'], ['posterieure', 'Postérieure'], ['fundique', 'Fundique'], ['laterale-droite', 'Latérale droite'], ['laterale-gauche', 'Latérale gauche']];
   const MY_NIVEAUX = [['fundus', 'Fundus'], ['corps', 'Corps'], ['isthme', 'Isthme']];
   const MY_SIEGES = [['col', 'Col utérin'], ['ligament-droit', 'Ligament large droit'], ['ligament-gauche', 'Ligament large gauche'], ['parasite', 'Parasite (à distance)']];
@@ -948,7 +949,7 @@
   const MYOMES = {
     title: 'Myomes utérins — cartographie FIGO', chip: 'FIGO', sub: 'myomes',
     keys: ['figo', 'myomes', 'myome'], suggest: /myom|fibrom|figo/,
-    hint: 'Cliquez sur l\'une des deux vues pour placer le myome actif (paroi et niveau) ; sa profondeur suit le type FIGO. Une paroi absente de la vue (antérieure ou postérieure en coronal, latérale en sagittal) y est projetée en pointillés.',
+    hint: 'Cliquez sur l\'une des deux vues pour placer le myome actif (paroi et niveau) ; sa profondeur suit le type FIGO. Vue sagittale d\'un utérus antéversé : paroi antérieure en bas (vessie), postérieure en haut. Une paroi absente de la vue y est projetée en pointillés.',
     init: () => ({ position: '', l: '', w: '', h: '', autres: false, adenomyose: false, endometriose: false, myomes: [newMyome()], active: 0 }),
     newItem: () => newMyome(), max: 8,
     svg(st, live) {
@@ -977,7 +978,7 @@
           ${chk('adenomyose', 'Adénomyose associée', st.adenomyose)}
           ${chk('endometriose', 'Endométriose associée', st.endometriose)}
         </div></fieldset>`;
-      h += tabs(st.myomes.map(x => ({ color: myColor(x), badge: x.type ? 'FIGO ' + x.type : '' })), st.active, 'Myome', this.max, 'myomes');
+      h += tabs(st.myomes.map(x => ({ color: myTabColor(x), badge: x.type ? 'FIGO ' + x.type : '' })), st.active, 'Myome', this.max, 'myomes');
       const m = st.myomes[st.active];
       if (!m) return h + '<p class="tl-note">Aucun myome : cliquez sur le schéma ou sur « + Ajouter ».</p>';
       const p = `myomes.${st.active}.`;
@@ -1027,7 +1028,7 @@
       let h = st.myomes.map((m, i) => {
         const c = myCarac(m);
         const t = m.type ? `FIGO ${m.type}` : 'type à préciser';
-        return badge(`Myome ${i + 1} : ${t}${c.diagnostic ? ' · ' + c.diagnostic : ''}`, c.niveau === 'suspect' ? C.red : myColor(m));
+        return badge(`Myome ${i + 1} : ${t}${c.diagnostic ? ' · ' + c.diagnostic : ''}`, c.niveau === 'suspect' ? C.red : myTabColor(m));
       }).join('');
       const n = st.myomes.length;
       if (n > 1 || st.autres) h += badge('Utérus polymyomateux', C.grey);

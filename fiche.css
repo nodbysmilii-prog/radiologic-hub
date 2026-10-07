@@ -817,6 +817,7 @@ mark[class^="k-"], .chip {
 .trg.trg-letters li > b { width: 42px; font-size: 1.1rem; }
 .pr-schema { margin: 0 0 14px; padding: 12px; border-radius: var(--radius); border: 4px solid var(--ink); background: #fff; box-shadow: 10px 10px 0 color-mix(in srgb, var(--c, var(--steel)) 50%, transparent); }
 .pr-schema svg { display: block; width: 100%; height: auto; }
+.pr-schema.figo-planche { padding: 0; overflow: hidden; background: #111114; }
 /* Onglets nombreux (fiche myome) : retour à la ligne sur petit écran */
 .t-stepper.t-wrap { flex-wrap: wrap; }
 .t-stepper.t-wrap .t-btn { flex: 1 1 0; min-width: 0; font-size: .95rem; }

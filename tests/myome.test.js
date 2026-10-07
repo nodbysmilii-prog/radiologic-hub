@@ -64,22 +64,42 @@ test('schéma : profondeur croissante de la muqueuse vers la séreuse selon le t
   assert.ok(U.position({ type: '7', paroi: 'fundique' }, 'cor').pedicule, 'type 7 : pédicule');
   const ant = U.position({ type: '4', paroi: 'anterieure', niveau: 'corps' }, 'sag');
   const post = U.position({ type: '4', paroi: 'posterieure', niveau: 'corps' }, 'sag');
-  assert.ok(ant.x < 560 && post.x > 560, 'antérieur à gauche, postérieur à droite');
+  assert.ok(ant.y > post.y, 'utérus antéversé : paroi antérieure en bas, postérieure en haut');
+  const prof = type => U.position({ type, paroi: 'posterieure', niveau: 'corps', d1: 20 }, 'sag').y;
+  const enHaut = ['1', '2', '3', '4', '5', '6', '7'].map(prof);
+  enHaut.slice(1).forEach((v, i) => assert.ok(v < enHaut[i], `sagittal : type ${i + 2} plus près de la séreuse que le type ${i + 1}`));
   assert.equal(U.position({ type: '4', paroi: 'anterieure', niveau: 'corps' }, 'cor').projete, true, 'paroi antérieure projetée sur la vue coronale');
   assert.equal(U.position({ type: '8', special: 'ligament-droit' }, 'sag'), null, 'ligament large : vue coronale seulement');
   const tr = U.position({ type: '2-5', paroi: 'posterieure', niveau: 'corps', d1: 10 }, 'sag');
-  assert.ok(tr.r > 50, 'transmural : de la muqueuse à la séreuse');
+  const t4 = U.position({ type: '4', paroi: 'posterieure', niveau: 'corps', d1: 10 }, 'sag');
+  assert.ok(tr.r > 25 && tr.r > t4.r * 2, 'transmural : de la muqueuse à la séreuse');
 });
 
 test('schéma : clic → paroi et niveau', () => {
   assert.deepEqual(U.zone(120, 160), { paroi: 'laterale-droite', niveau: 'corps' });
   assert.deepEqual(U.zone(300, 220), { paroi: 'laterale-gauche', niveau: 'isthme' });
   assert.deepEqual(U.zone(200, 80), { paroi: 'fundique', niveau: 'fundus' });
-  assert.deepEqual(U.zone(500, 160), { paroi: 'anterieure', niveau: 'corps' });
-  assert.deepEqual(U.zone(620, 110), { paroi: 'posterieure', niveau: 'fundus' });
   assert.deepEqual(U.zone(200, 300), { special: 'col' });
-  assert.equal(U.zone(420, 160), null);
+  assert.equal(U.zone(380, 160), null, 'entre les deux vues');
+  // vue sagittale : un clic à l'emplacement d'un myome redonne sa paroi et son niveau
+  for (const paroi of ['anterieure', 'posterieure']) for (const niveau of ['fundus', 'corps', 'isthme']) {
+    const p = U.position({ type: '4', paroi, niveau }, 'sag');
+    assert.deepEqual(U.zone(p.x, p.y), { paroi, niveau }, `${paroi} ${niveau}`);
+  }
+  const f = U.position({ type: '4', paroi: 'fundique' }, 'sag');
+  assert.deepEqual(U.zone(f.x, f.y), { paroi: 'fundique', niveau: 'fundus' });
+  const col = U.position({ type: '8', special: 'col' }, 'sag');
+  assert.deepEqual(U.zone(col.x, col.y), { special: 'col' });
   const svg = U.svg({ interactif: true, myomes: [{ n: 1, type: '2', paroi: 'anterieure', niveau: 'corps', color: '#d63f4c' }] });
   assert.match(svg, /data-u="cor"/);
   assert.match(svg, /VUE SAGITTALE/);
+  assert.match(svg, /data-u="sag"/);
+});
+
+test('planche de la classification FIGO : un myome légendé par type', () => {
+  const svg = U.planche({ couleur: M.couleur, categories: Object.values(M.CATEGORIES).map(c => [c.label, c.c]) });
+  for (const t of M.TYPES) assert.match(svg, new RegExp(`>${t}</text>`), `type ${t}`);
+  assert.match(svg, /Intracavitaire/);
+  assert.match(svg, /Sous-séreux pédiculé/);
+  assert.match(svg, /Sous-muqueux \(0–2\)/);
 });
