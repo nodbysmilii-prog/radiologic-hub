@@ -64,30 +64,31 @@ TDM cérébrale sans anomalie significative en contraste spontané.`,
   },
   {
     id: 'alerte-avc', spe: 'neuro', mod: 'TDM',
-    title: 'Alerte AVC — scanner + angio-scanner TSA et Willis',
-    text: `SCANNER CÉRÉBRAL ET ANGIO-SCANNER DES TRONCS SUPRA-AORTIQUES ET DU POLYGONE DE WILLIS — ALERTE AVC
+    title: 'Alerte AVC — TDM + angio-TDM TSA et Willis',
+    text: `TDM CÉRÉBRALE ET ANGIO-TDM DES TRONCS SUPRA-AORTIQUES ET DU POLYGONE DE WILLIS — ALERTE AVC
 
-Indication : déficit neurologique brutal [type de déficit], début des symptômes à [heure], NIHSS [x].
+INDICATION :
+Déficit neurologique brutal [type de déficit], début des symptômes à [heure], NIHSS [x].
 
-Technique :
-Acquisition de l'encéphale sans injection, puis acquisition angiographique de la crosse aortique au vertex après injection intraveineuse de produit de contraste iodé. Perfusion : [non réalisée / réalisée].
+TECHNIQUE :
+Acquisition hélicoïdale centrée sur l'encéphale sans injection, puis acquisition angiographique de la crosse aortique au vertex après injection intraveineuse de produit de contraste iodé. Perfusion : [non réalisée / réalisée].
 
-Résultats :
+RÉSULTAT :
 Parenchyme :
-Pas d'hémorragie intracrânienne.
-[Pas d'hypodensité parenchymateuse récente / Hypodensité du territoire …], score ASPECTS [x]/10.
-[Pas d'hyperdensité spontanée artérielle / Hyperdensité spontanée de l'artère …].
+• Absence d'hémorragie intracrânienne.
+• [Absence d'hypodensité parenchymateuse récente / Hypodensité du territoire …], score ASPECTS [x]/10.
+• [Absence d'hyperdensité spontanée artérielle / Hyperdensité spontanée de l'artère …].
 
-Angio-scanner :
-Circulation intracrânienne : [pas d'occlusion artérielle proximale / occlusion de …].
-Collatéralité : [bonne / intermédiaire / pauvre].
-Bifurcations carotidiennes : [pas de sténose significative / sténose de … % (NASCET) de la carotide interne …].
-Artères vertébrales et tronc basilaire : [perméables / …].
-Crosse aortique et origine des troncs supra-aortiques : [sans particularité / …].
+Angio-TDM :
+• Circulation intracrânienne : [absence d'occlusion artérielle proximale / occlusion de …].
+• Collatéralité : [bonne / intermédiaire / pauvre].
+• Bifurcations carotidiennes : [absence de sténose significative / sténose de … % (NASCET) de la carotide interne …].
+• Artères vertébrales et tronc basilaire : [perméables / …].
+• Crosse aortique et origine des troncs supra-aortiques : [sans particularité / …].
 
-Conclusion :
-Pas d'hémorragie intracrânienne. ASPECTS [x]/10.
-[Pas d'occlusion artérielle proximale / Occlusion de … accessible à une thrombectomie].
+AU TOTAL :
+Absence d'hémorragie intracrânienne. ASPECTS [x]/10.
+[Absence d'occlusion artérielle proximale / Occlusion de … accessible à une thrombectomie].
 Résultats transmis à l'équipe neurovasculaire à [heure].`,
   },
   {
@@ -95,19 +96,14 @@ Résultats transmis à l'équipe neurovasculaire à [heure].`,
     title: 'Radiographie du thorax — normale',
     text: `RADIOGRAPHIE DU THORAX DE FACE
 
-Indication : [indication]
-
-Résultats :
-Cliché de face [debout / couché], de qualité satisfaisante.
-Pas de foyer de condensation parenchymateuse.
-Pas d'épanchement pleural liquidien ni gazeux ; culs-de-sac pleuraux libres.
-Médiastin de largeur normale. Silhouette cardiaque de taille normale.
-Hiles de taille et de densité normales.
-Pas de pneumopéritoine visible sous les coupoles.
-Cadre osseux sans particularité.
-
-Conclusion :
-Radiographie thoracique sans anomalie décelable.`,
+COMPTE-RENDU :
+• Cliché de face [debout / couché], de qualité satisfaisante.
+• Absence de foyer de condensation parenchymateuse.
+• Absence d'épanchement pleural liquidien ou gazeux ; culs-de-sac pleuraux libres.
+• Médiastin de largeur normale. Silhouette cardiaque de taille normale.
+• Hiles de taille et de densité normales.
+• Absence de pneumopéritoine visible sous les coupoles.
+• Absence de lésion osseuse suspecte.`,
   },
   {
     id: 'tdm-thorax', spe: 'thorax', mod: 'TDM',
@@ -133,121 +129,125 @@ CONCLUSION :
   },
   {
     id: 'angio-ep', spe: 'thorax', mod: 'TDM',
-    title: 'Angio-scanner thoracique — recherche d\'embolie pulmonaire',
-    text: `ANGIO-SCANNER THORACIQUE — RECHERCHE D'EMBOLIE PULMONAIRE
+    title: 'Angio-TDM thoracique — recherche d\'embolie pulmonaire',
+    text: `ANGIO-TDM THORACIQUE — RECHERCHE D'EMBOLIE PULMONAIRE
 
-Indication : [suspicion d'embolie pulmonaire, contexte]
+TECHNIQUE :
+Acquisition hélicoïdale depuis les apex pulmonaires jusqu'aux bases au temps artériel pulmonaire après injection intraveineuse de produit de contraste iodé. Opacification des artères pulmonaires : [bonne / satisfaisante / limitée].
 
-Technique :
-Acquisition thoracique hélicoïdale au temps artériel pulmonaire après injection intraveineuse de produit de contraste iodé.
-Opacification des artères pulmonaires : [bonne / satisfaisante / limitée].
+RÉSULTAT :
+*Étude vasculaire :
+• Absence de défect endoluminal des artères pulmonaires jusqu'à l'étage [segmentaire / sous-segmentaire].
+• Tronc de l'artère pulmonaire de calibre normal ([x] mm).
+• Cavités cardiaques droites non dilatées (rapport VD/VG < 1).
+• Aorte thoracique de calibre normal.
 
-Résultats :
-Artères pulmonaires :
-Pas de défect endoluminal des artères pulmonaires jusqu'à l'étage [segmentaire / sous-segmentaire].
-Tronc de l'artère pulmonaire de calibre normal ([x] mm).
-Cavités cardiaques droites non dilatées (rapport VD/VG < 1).
+*Étude parenchymateuse et pleuro-pariétale :
+• La trachée et les bronches sont libres.
+• Absence de condensation parenchymateuse.
+• Absence de lésion parenchymateuse d'allure évolutive.
+• Absence d'épanchement pleural.
+• Absence de lésion osseuse suspecte.
 
-Parenchyme pulmonaire :
-Pas de condensation parenchymateuse. Pas de nodule suspect.
-Pas d'épanchement pleural ni péricardique.
+*Étude médiastinale :
+• Absence d'adénomégalie médiastinale.
+• Absence d'épanchement péricardique.
+• Coupes passant par l'abdomen supérieur sans anomalie notable.
 
-Médiastin :
-Pas d'adénomégalie médiastinale ni hilaire.
-Aorte thoracique de calibre normal.
-
-Coupes passant par l'abdomen supérieur : pas d'anomalie notable.
-Cadre osseux : pas de lésion suspecte.
-
-Conclusion :
-Pas d'embolie pulmonaire jusqu'à l'étage [segmentaire / sous-segmentaire].
-Pas d'autre anomalie pouvant expliquer la symptomatologie.`,
+AU TOTAL :
+Absence d'embolie pulmonaire jusqu'à l'étage [segmentaire / sous-segmentaire].
+Absence d'autre anomalie pouvant expliquer la symptomatologie.`,
   },
   {
     id: 'tdm-abdo', spe: 'digestif', mod: 'TDM',
-    title: 'Scanner abdomino-pelvien avec injection — normal',
-    text: `SCANNER ABDOMINO-PELVIEN AVEC INJECTION
+    title: 'TDM abdomino-pelvienne avec injection — normale',
+    text: `TDM ABDOMINO-PELVIENNE
 
-Indication : [douleur abdominale, contexte]
+TECHNIQUE :
+Acquisition hélicoïdale abdomino-pelvienne au temps portal après injection intraveineuse de produit de contraste iodé.
 
-Technique :
-Acquisition abdomino-pelvienne au temps portal après injection intraveineuse de produit de contraste iodé.
+RÉSULTAT :
+*Étude des organes pleins :
+• Foie de taille normale, de contours réguliers et de densité homogène, sans lésion focale décelable. Veine porte et veines sus-hépatiques perméables.
+• Vésicule biliaire alithiasique à paroi fine. Absence de dilatation des voies biliaires intra- ou extra-hépatiques.
+• Pancréas de taille et de densité normales, sans dilatation du canal de Wirsung.
+• Rate homogène, de taille normale.
+• Surrénales fines.
+• Reins de taille normale, sans lésion focale ni dilatation des cavités pyélocalicielles. Néphrographie symétrique.
 
-Résultats :
-Foie de taille normale, de contours réguliers et de densité homogène, sans lésion focale décelable. Veine porte et veines sus-hépatiques perméables.
-Vésicule biliaire alithiasique à paroi fine. Pas de dilatation des voies biliaires intra- ou extra-hépatiques.
-Pancréas de taille et de densité normales, sans dilatation du canal de Wirsung.
-Rate homogène, de taille normale.
-Surrénales fines.
-Reins de taille normale, sans lésion focale ni dilatation des cavités pyélocalicielles. Néphrographie symétrique.
-Vessie en réplétion partielle, sans anomalie pariétale.
-[Utérus et régions annexielles / Prostate] sans particularité.
-Tube digestif : pas de distension ni d'épaississement pariétal. Appendice [visualisé, de calibre normal / non visualisé, sans infiltration de la fosse iliaque droite].
-Pas de pneumopéritoine. Pas d'épanchement intrapéritonéal.
-Pas d'adénomégalie abdomino-pelvienne.
-Aorte abdominale de calibre normal.
-Bases pulmonaires : pas d'anomalie.
-Cadre osseux : pas de lésion suspecte.
+*Étude du pelvis :
+• Vessie en réplétion partielle, sans anomalie pariétale.
+• [Utérus et régions annexielles / Prostate] sans particularité.
 
-Conclusion :
-Scanner abdomino-pelvien sans anomalie décelable, en particulier pas d'appendicite, pas d'occlusion et pas de pneumopéritoine.`,
+*Étude digestive et péritonéale :
+• Absence de distension ni d'épaississement pariétal digestif.
+• Appendice [visualisé, de calibre normal / non visualisé, sans infiltration de la fosse iliaque droite].
+• Absence de pneumopéritoine. Absence d'épanchement intrapéritonéal.
+• Absence d'adénomégalie abdomino-pelvienne.
+• Aorte abdominale de calibre normal.
+
+*Étude des bases pulmonaires et osseuse :
+• Bases pulmonaires sans anomalie.
+• Absence de lésion osseuse suspecte.
+
+AU TOTAL :
+TDM abdomino-pelvienne sans anomalie significative, en particulier absence d'appendicite, d'occlusion et de pneumopéritoine.`,
   },
   {
     id: 'echo-abdo', spe: 'digestif', mod: 'Écho',
     title: 'Échographie abdominale — normale',
     text: `ÉCHOGRAPHIE ABDOMINALE
 
-Indication : [indication]
+RÉSULTAT :
+• Foie de taille normale (flèche hépatique de [x] cm sur la ligne médioclaviculaire), de contours réguliers, d'échostructure homogène, sans lésion focale décelable.
+• Tronc porte perméable, de calibre normal, à flux hépatopète.
+• Vésicule biliaire alithiasique, non distendue, à paroi fine. Signe de Murphy échographique négatif.
+• Voie biliaire principale non dilatée ([x] mm). Absence de dilatation des voies biliaires intra-hépatiques.
+• Pancréas [d'échostructure homogène / partiellement masqué par les gaz digestifs].
+• Rate homogène, de taille normale ([x] cm).
+• Reins de taille normale (droit [x] cm, gauche [x] cm), bien différenciés, sans dilatation des cavités pyélocalicielles ni lithiase visible.
+• Aorte abdominale de calibre normal.
+• Absence d'épanchement intrapéritonéal.
 
-Résultats :
-Foie de taille normale (flèche hépatique de [x] cm sur la ligne médioclaviculaire), de contours réguliers, d'échostructure homogène, sans lésion focale décelable.
-Tronc porte perméable, de calibre normal, à flux hépatopète.
-Vésicule biliaire alithiasique, non distendue, à paroi fine. Signe de Murphy échographique négatif.
-Voie biliaire principale non dilatée ([x] mm). Pas de dilatation des voies biliaires intra-hépatiques.
-Pancréas [d'échostructure homogène / partiellement masqué par les gaz digestifs].
-Rate homogène, de taille normale ([x] cm).
-Reins de taille normale (droit [x] cm, gauche [x] cm), bien différenciés, sans dilatation des cavités pyélocalicielles ni lithiase visible.
-Aorte abdominale de calibre normal.
-Pas d'épanchement intrapéritonéal.
-
-Conclusion :
-Échographie abdominale sans anomalie décelable.`,
+AU TOTAL :
+Échographie abdominale sans anomalie significative.`,
   },
   {
     id: 'tdm-pancreas', spe: 'digestif', mod: 'TDM',
     title: 'Adénocarcinome du pancréas — bilan d\'extension et résécabilité',
-    text: `SCANNER THORACO-ABDOMINO-PELVIEN — BILAN D'UN ADÉNOCARCINOME DU PANCRÉAS
+    text: `TDM THORACO-ABDOMINO-PELVIENNE — BILAN D'UN ADÉNOCARCINOME DU PANCRÉAS
 
-Indication : [masse pancréatique / adénocarcinome prouvé], bilan d'extension et de résécabilité.
+INDICATION :
+[Masse pancréatique / Adénocarcinome prouvé], bilan d'extension et de résécabilité.
 
-Technique :
+TECHNIQUE :
 Acquisition abdominale au temps pancréatique (≈ 45 s) et au temps portal, en coupes fines, avec reconstructions multiplanaires et MIP. Acquisition thoracique au temps portal.
 
-Résultats :
+RÉSULTAT :
 Tumeur :
-Lésion [hypodense] de la [tête / isthme / corps / queue] du pancréas, mesurant [x] × [x] mm.
-Canal de Wirsung : [non dilaté / dilaté en amont, … mm], [avec / sans] atrophie du parenchyme d'amont.
-Voie biliaire principale : [non dilatée / dilatée, … mm] [prothèse biliaire : non / oui].
+• Lésion [hypodense] de la [tête / isthme / corps / queue] du pancréas, mesurant [x] × [x] mm.
+• Canal de Wirsung : [non dilaté / dilaté en amont, … mm], [avec / sans] atrophie du parenchyme d'amont.
+• Voie biliaire principale : [non dilatée / dilatée, … mm] [prothèse biliaire : non / oui].
 
 Rapports artériels :
-Artère mésentérique supérieure : [pas de contact / contact ≤ 180° / contact > 180°].
-Tronc cœliaque : [pas de contact / contact ≤ 180° / contact > 180°].
-Artère hépatique commune : [pas de contact / contact sans extension au tronc cœliaque ni à la bifurcation / contact étendu].
-Lame rétro-porte : [non infiltrée / infiltrée].
+• Artère mésentérique supérieure : [absence de contact / contact ≤ 180° / contact > 180°].
+• Tronc cœliaque : [absence de contact / contact ≤ 180° / contact > 180°].
+• Artère hépatique commune : [absence de contact / contact sans extension au tronc cœliaque ni à la bifurcation / contact étendu].
+• Lame rétro-porte : [non infiltrée / infiltrée].
 
 Rapports veineux :
-Veine mésentérique supérieure / tronc porte : [pas de contact / contact ≤ 180° sans déformation / contact > 180° ou déformation / thrombose], reconstruction [possible / non possible].
+• Veine mésentérique supérieure / tronc porte : [absence de contact / contact ≤ 180° sans déformation / contact > 180° ou déformation / thrombose], reconstruction [possible / non possible].
 
 Variantes vasculaires :
-[Pas de variante / Artère hépatique droite issue de l'AMS / Sténose ostiale du tronc cœliaque (ligament arqué ou athérome)].
+• [Absence de variante / Artère hépatique droite issue de l'AMS / Sténose ostiale du tronc cœliaque (ligament arqué ou athérome)].
 
 Extension :
-Foie : [pas de lésion suspecte / lésion(s) suspecte(s) …].
-Péritoine : [pas de nodule de carcinose ni d'ascite / …].
-Ganglions : [pas d'adénomégalie / …], en particulier pas d'adénomégalie lombo-aortique.
-Thorax : [pas de nodule pulmonaire suspect / …].
+• Foie : [absence de lésion suspecte / lésion(s) suspecte(s) …].
+• Péritoine : [absence de nodule de carcinose ni d'ascite / …].
+• Ganglions : [absence d'adénomégalie / …], en particulier absence d'adénomégalie lombo-aortique.
+• Thorax : [absence de nodule pulmonaire suspect / …].
 
-Conclusion :
+AU TOTAL :
 Tumeur de la [tête] du pancréas de [x] mm, [résécable / borderline / localement avancée], [sans / avec] lésion secondaire à distance.
 [Variante vasculaire à signaler au chirurgien : …]`,
   },
@@ -256,87 +256,92 @@ Tumeur de la [tête] du pancréas de [x] mm, [résécable / borderline / localem
     title: 'IRM pelvienne — bilan initial d\'un cancer du rectum',
     text: `IRM PELVIENNE — BILAN D'EXTENSION D'UN ADÉNOCARCINOME DU RECTUM
 
-Indication : adénocarcinome du rectum [prouvé histologiquement], bilan initial.
+INDICATION :
+Adénocarcinome du rectum [prouvé histologiquement], bilan initial.
 
-Technique :
+TECHNIQUE :
 IRM [1,5 / 3] T, antenne en réseau phasé. Séquences T2 haute résolution sagittale, axiale et coronale obliques (perpendiculaire et parallèle à l'axe de la tumeur), diffusion.
 
-Résultats :
+RÉSULTAT :
 Tumeur :
-Localisation : [bas / moyen / haut] rectum ; pôle inférieur à [x] cm de la marge anale et à [x] cm de la jonction anorectale.
-Hauteur tumorale : [x] cm. Extension circonférentielle : de [x] h à [x] h.
-Position par rapport à la réflexion péritonéale : [au-dessous / au niveau / au-dessus].
-Composante mucineuse : [non / oui].
+• Localisation : [bas / moyen / haut] rectum ; pôle inférieur à [x] cm de la marge anale et à [x] cm de la jonction anorectale.
+• Hauteur tumorale : [x] cm. Extension circonférentielle : de [x] h à [x] h.
+• Position par rapport à la réflexion péritonéale : [au-dessous / au niveau / au-dessus].
+• Composante mucineuse : [non / oui].
 
-Stade T : mrT[x]. Extension extramurale (EMS) : [x] mm.
-Marge circonférentielle (CRM) : [x] mm à [x] h, [libre (> 1 mm) / envahie (< 1 mm)].
-Invasion veineuse extramurale (EMVI) : [négative / positive].
-Sphincters et releveurs (tumeurs du bas rectum) : [respectés / envahis …].
+Extension locale :
+• Stade T : mrT[x]. Extension extramurale (EMS) : [x] mm.
+• Marge circonférentielle (CRM) : [x] mm à [x] h, [libre (> 1 mm) / envahie (< 1 mm)].
+• Invasion veineuse extramurale (EMVI) : [négative / positive].
+• Sphincters et releveurs (tumeurs du bas rectum) : [respectés / envahis …].
 
 Ganglions :
-Mésorectum : [pas de ganglion suspect / … ganglion(s) suspect(s) (contours irréguliers, signal hétérogène)] ; mrN[x].
-Dépôts tumoraux : [non / oui].
-Ganglions latéraux (iliaques internes, obturateurs) : [non suspects / suspects, petit axe … mm].
+• Mésorectum : [absence de ganglion suspect / … ganglion(s) suspect(s) (contours irréguliers, signal hétérogène)] ; mrN[x].
+• Dépôts tumoraux : [non / oui].
+• Ganglions latéraux (iliaques internes, obturateurs) : [non suspects / suspects, petit axe … mm].
 
-Conclusion :
+AU TOTAL :
 Adénocarcinome du [bas / moyen / haut] rectum classé mrT[x] N[x], CRM [libre / envahie], EMVI [négative / positive].`,
   },
   {
     id: 'colique-nephretique', spe: 'uro', mod: 'TDM',
-    title: 'Scanner sans injection — colique néphrétique',
-    text: `SCANNER ABDOMINO-PELVIEN SANS INJECTION (FAIBLE DOSE) — COLIQUE NÉPHRÉTIQUE
+    title: 'TDM sans injection — colique néphrétique',
+    text: `TDM ABDOMINO-PELVIENNE SANS INJECTION (FAIBLE DOSE) — COLIQUE NÉPHRÉTIQUE
 
-Indication : douleur lombaire [droite / gauche], suspicion de colique néphrétique.
+INDICATION :
+Douleur lombaire [droite / gauche], suspicion de colique néphrétique.
 
-Technique :
-Acquisition abdomino-pelvienne sans injection de produit de contraste, protocole faible dose.
+TECHNIQUE :
+Acquisition hélicoïdale abdomino-pelvienne sans injection de produit de contraste, protocole faible dose.
 
-Résultats :
-Rein droit : [pas de dilatation des cavités pyélocalicielles / dilatation pyélocalicielle, pyélon de … mm]. [Pas de lithiase / Lithiase(s) de … mm].
-Rein gauche : [pas de dilatation des cavités pyélocalicielles / dilatation pyélocalicielle, pyélon de … mm]. [Pas de lithiase / Lithiase(s) de … mm].
-Uretères : [pas de lithiase urétérale visible / lithiase de … mm de l'uretère … droit / gauche, de densité … UH, à … cm de la jonction urétéro-vésicale].
-Infiltration de la graisse périrénale : [non / oui].
-Vessie : [pas de lithiase / …].
-Pas d'autre anomalie notable sur cet examen sans injection ; appendice [normal / non visualisé].
+RÉSULTAT :
+• Rein droit : [absence de dilatation des cavités pyélocalicielles / dilatation pyélocalicielle, pyélon de … mm]. [Absence de lithiase / Lithiase(s) de … mm].
+• Rein gauche : [absence de dilatation des cavités pyélocalicielles / dilatation pyélocalicielle, pyélon de … mm]. [Absence de lithiase / Lithiase(s) de … mm].
+• Uretères : [absence de lithiase urétérale visible / lithiase de … mm de l'uretère … droit / gauche, de densité … UH, à … cm de la jonction urétéro-vésicale].
+• Infiltration de la graisse périrénale : [non / oui].
+• Vessie : [absence de lithiase / …].
+• Absence d'autre anomalie notable sur cet examen sans injection ; appendice [normal / non visualisé].
 
-Conclusion :
-[Lithiase de … mm de l'uretère …, responsable d'une dilatation des cavités pyélocalicielles d'amont / Pas de lithiase urinaire ni de dilatation des cavités excrétrices].`,
+AU TOTAL :
+[Lithiase de … mm de l'uretère …, responsable d'une dilatation des cavités pyélocalicielles d'amont / Absence de lithiase urinaire ni de dilatation des cavités excrétrices].`,
   },
   {
     id: 'body-scanner', spe: 'trauma', mod: 'TDM',
     title: 'Body-scanner du polytraumatisé',
     text: `BODY-SCANNER — POLYTRAUMATISÉ
 
-Indication : polytraumatisme [mécanisme], patient [stable / instable].
+INDICATION :
+Polytraumatisme [mécanisme], patient [stable / instable].
 
-Technique :
-Acquisition de l'encéphale et du rachis cervical sans injection, puis acquisition thoraco-abdomino-pelvienne après injection intraveineuse de produit de contraste iodé (temps artériel et portal). Reconstructions multiplanaires de l'ensemble du rachis et du bassin.
+TECHNIQUE :
+Acquisition hélicoïdale de l'encéphale et du rachis cervical sans injection, puis acquisition thoraco-abdomino-pelvienne après injection intraveineuse de produit de contraste iodé (temps artériel et portal). Reconstructions multiplanaires de l'ensemble du rachis et du bassin.
 
-Résultats :
-Encéphale : [pas de lésion traumatique intracrânienne / …].
-Massif facial : [pas de fracture / …].
-Rachis cervical : [pas de fracture ni de trouble de l'alignement / …].
+RÉSULTAT :
+Encéphale, face et rachis cervical :
+• Encéphale : [absence de lésion traumatique intracrânienne / …].
+• Massif facial : [absence de fracture / …].
+• Rachis cervical : [absence de fracture ni de trouble de l'alignement / …].
 
 Thorax :
-Pas de pneumothorax ni d'hémothorax.
-Pas de contusion pulmonaire.
-Pas d'hémomédiastin ; aorte thoracique sans lésion traumatique ; pas d'épanchement péricardique.
-Paroi : [pas de fracture costale / fractures des arcs … des côtes …]. Sternum et clavicules intacts.
+• Absence de pneumothorax ni d'hémothorax.
+• Absence de contusion pulmonaire.
+• Absence d'hémomédiastin ; aorte thoracique sans lésion traumatique ; absence d'épanchement péricardique.
+• Paroi : [absence de fracture costale / fractures des arcs … des côtes …]. Sternum et clavicules intacts.
 
 Abdomen et pelvis :
-Foie : [pas de lésion traumatique / lacération de … cm du segment …, grade AAST …].
-Rate : [pas de lésion traumatique / …].
-Reins, pancréas et surrénales : [pas de lésion traumatique / …].
-Tube digestif et mésentère : pas de pneumopéritoine, pas d'infiltration mésentérique, pas d'épaississement pariétal.
-Pas d'hémopéritoine. Pas d'extravasation de produit de contraste.
-Vessie : [sans particularité / …].
+• Foie : [absence de lésion traumatique / lacération de … cm du segment …, grade AAST …].
+• Rate : [absence de lésion traumatique / …].
+• Reins, pancréas et surrénales : [absence de lésion traumatique / …].
+• Tube digestif et mésentère : absence de pneumopéritoine, d'infiltration mésentérique ou d'épaississement pariétal.
+• Absence d'hémopéritoine. Absence d'extravasation de produit de contraste.
+• Vessie : [sans particularité / …].
 
 Squelette :
-Rachis thoracique et lombaire : [pas de fracture / …].
-Bassin : [pas de fracture / …].
+• Rachis thoracique et lombaire : [absence de fracture / …].
+• Bassin : [absence de fracture / …].
 
-Conclusion :
-[Pas de lésion traumatique décelable / Lésions par ordre de gravité : …].
+AU TOTAL :
+[Absence de lésion traumatique décelable / Lésions par ordre de gravité : …].
 Résultats transmis à [l'équipe du déchocage] à [heure].`,
   },
   {
@@ -344,22 +349,20 @@ Résultats transmis à [l'équipe du déchocage] à [heure].`,
     title: 'IRM du rachis — suspicion de spondylodiscite',
     text: `IRM DU RACHIS [CERVICAL / DORSAL / LOMBAIRE] — SUSPICION DE SPONDYLODISCITE
 
-Indication : [rachialgies inflammatoires fébriles, contexte]
-
-Technique :
+TECHNIQUE :
 Séquences sagittales T1, T2 Dixon (ou STIR) et T1 avec suppression de graisse après injection de gadolinium ; coupes axiales T2 et T1 injectées centrées sur l'étage pathologique.
 
-Résultats :
-Étage atteint : [x].
-Disque : [hypersignal T2, pincement, rehaussement après injection].
-Plateaux vertébraux adjacents : [érosions / irrégularités], œdème osseux des corps vertébraux (hyposignal T1, hypersignal T2/STIR) avec rehaussement après injection.
-Parties molles paravertébrales : [infiltration sans abcès / abcès de … mm (psoas droit / gauche, …)].
-Espace épidural : [pas d'épidurite / épidurite / abcès épidural de … mm de hauteur].
-Canal rachidien : [pas de compression médullaire ou radiculaire / compression de …].
-Alignement : [conservé / cyphose / recul du mur postérieur].
-Autres étages : [pas d'autre localisation / atteinte multifocale : …].
+RÉSULTAT :
+• Étage atteint : [x].
+• Disque : [hypersignal T2, pincement, rehaussement après injection].
+• Plateaux vertébraux adjacents : [érosions / irrégularités], œdème osseux des corps vertébraux (hyposignal T1, hypersignal T2/STIR) avec rehaussement après injection.
+• Parties molles paravertébrales : [infiltration sans abcès / abcès de … mm (psoas droit / gauche, …)].
+• Espace épidural : [absence d'épidurite / épidurite / abcès épidural de … mm de hauteur].
+• Canal rachidien : [absence de compression médullaire ou radiculaire / compression de …].
+• Alignement : [conservé / cyphose / recul du mur postérieur].
+• Autres étages : [absence d'autre localisation / atteinte multifocale : …].
 
-Conclusion :
+AU TOTAL :
 Aspect de spondylodiscite [étage] [sans / avec] abcès paravertébral ou épidural, [sans / avec] compression neurologique.
 Orientation : [pyogène / tuberculeuse / brucellienne]. Ponction-biopsie discovertébrale à discuter selon le contexte et les hémocultures.`,
   },
@@ -385,31 +388,31 @@ Au niveau cervico-dorsal :
 
 C2-C3 :
 • Absence de saillie discale.
-• Arthrose interapophysaire postérieure.
+• [Absence d'arthrose / Arthrose] interapophysaire postérieure.
 • Absence de plicature des ligaments jaunes.
 • Absence de rétrécissement foraminal.
 
 C3-C4 :
 • Absence de saillie discale.
-• Arthrose interapophysaire postérieure.
+• [Absence d'arthrose / Arthrose] interapophysaire postérieure.
 • Absence de plicature des ligaments jaunes.
 • Absence de rétrécissement foraminal.
 
 C4-C5 :
 • Absence de saillie discale.
-• Arthrose interapophysaire postérieure.
+• [Absence d'arthrose / Arthrose] interapophysaire postérieure.
 • Absence de plicature des ligaments jaunes.
 • Absence de rétrécissement foraminal.
 
 C5-C6 :
 • Absence de saillie discale.
-• Arthrose interapophysaire postérieure.
+• [Absence d'arthrose / Arthrose] interapophysaire postérieure.
 • Absence de plicature des ligaments jaunes.
 • Absence de rétrécissement foraminal.
 
 C6-C7 :
 • Absence de saillie discale.
-• Arthrose interapophysaire postérieure.
+• [Absence d'arthrose / Arthrose] interapophysaire postérieure.
 • Absence de plicature des ligaments jaunes.
 • Absence de rétrécissement foraminal.
 
@@ -432,31 +435,31 @@ Au niveau lombaire :
 
 L1-L2 :
 • Absence de saillie discale.
-• Arthrose interapophysaire postérieure.
+• [Absence d'arthrose / Arthrose] interapophysaire postérieure.
 • Absence d'hypertrophie des ligaments jaunes.
 • Absence de rétrécissement foraminal.
 
 L2-L3 :
 • Absence de saillie discale.
-• Arthrose interapophysaire postérieure.
+• [Absence d'arthrose / Arthrose] interapophysaire postérieure.
 • Absence d'hypertrophie des ligaments jaunes.
 • Absence de rétrécissement foraminal.
 
 L3-L4 :
 • Absence de saillie discale.
-• Arthrose interapophysaire postérieure.
+• [Absence d'arthrose / Arthrose] interapophysaire postérieure.
 • Absence d'hypertrophie des ligaments jaunes.
 • Absence de rétrécissement foraminal.
 
 L4-L5 :
 • Absence de saillie discale.
-• Arthrose interapophysaire postérieure.
+• [Absence d'arthrose / Arthrose] interapophysaire postérieure.
 • Absence d'hypertrophie des ligaments jaunes.
 • Absence de rétrécissement foraminal.
 
 L5-S1 :
 • Absence de saillie discale.
-• Arthrose interapophysaire postérieure.
+• [Absence d'arthrose / Arthrose] interapophysaire postérieure.
 • Absence d'hypertrophie des ligaments jaunes.
 • Absence de rétrécissement foraminal.
 
@@ -511,50 +514,51 @@ COMPTE-RENDU :
   },
   {
     id: 'angio-aorte', spe: 'vasculaire', mod: 'TDM',
-    title: 'Angio-scanner aortique — suspicion de syndrome aortique aigu',
-    text: `ANGIO-SCANNER DE L'AORTE THORACO-ABDOMINALE — SUSPICION DE SYNDROME AORTIQUE AIGU
+    title: 'Angio-TDM aortique — suspicion de syndrome aortique aigu',
+    text: `ANGIO-TDM DE L'AORTE THORACO-ABDOMINALE — SUSPICION DE SYNDROME AORTIQUE AIGU
 
-Indication : [douleur thoracique, contexte], suspicion de dissection aortique.
+TECHNIQUE :
+Acquisition hélicoïdale thoracique sans injection, puis acquisition angiographique de la crosse aortique aux artères fémorales après injection intraveineuse de produit de contraste iodé [avec synchronisation cardiaque].
 
-Technique :
-Acquisition thoracique sans injection, puis acquisition angiographique de la crosse aortique aux artères fémorales après injection intraveineuse de produit de contraste iodé [avec synchronisation cardiaque].
+RÉSULTAT :
+Sans injection :
+• Absence d'hyperdensité spontanée en croissant de la paroi aortique (absence d'hématome de paroi).
 
-Résultats :
-Sans injection : pas d'hyperdensité spontanée en croissant de la paroi aortique (pas d'hématome de paroi).
 Après injection :
-Pas de flap intimal. Pas d'ulcère pénétrant.
-Calibres aortiques : sinus de Valsalva [x] mm, aorte ascendante [x] mm, crosse [x] mm, aorte descendante [x] mm, aorte abdominale sous-rénale [x] mm.
-Troncs supra-aortiques, tronc cœliaque, artère mésentérique supérieure, artères rénales et axes iliaques perméables.
-Pas d'hémomédiastin. Pas d'épanchement péricardique ni pleural.
+• Absence de flap intimal. Absence d'ulcère pénétrant.
+• Calibres aortiques : sinus de Valsalva [x] mm, aorte ascendante [x] mm, crosse [x] mm, aorte descendante [x] mm, aorte abdominale sous-rénale [x] mm.
+• Troncs supra-aortiques, tronc cœliaque, artère mésentérique supérieure, artères rénales et axes iliaques perméables.
+• Absence d'hémomédiastin. Absence d'épanchement péricardique ou pleural.
 
-Conclusion :
-Pas de syndrome aortique aigu : pas de dissection, pas d'hématome de paroi, pas d'ulcère pénétrant.`,
+AU TOTAL :
+Absence de syndrome aortique aigu : absence de dissection, d'hématome de paroi ou d'ulcère pénétrant.`,
   },
   {
     id: 'echo-appendicite', spe: 'pediatrie', mod: 'Écho',
     title: 'Échographie — suspicion d\'appendicite (enfant)',
     text: `ÉCHOGRAPHIE ABDOMINALE — SUSPICION D'APPENDICITE
 
-Indication : douleur de la fosse iliaque droite [fébrile], enfant de [x] ans.
+INDICATION :
+Douleur de la fosse iliaque droite [fébrile], enfant de [x] ans.
 
-Technique :
+TECHNIQUE :
 Exploration abdominale à la sonde convexe, puis de la fosse iliaque droite à la sonde linéaire haute fréquence avec compression dosée.
 
-Résultats :
-Appendice [visualisé, en position … / non visualisé].
-Diamètre maximal : [x] mm, [compressible / non compressible].
-Paroi : [fine / épaissie, avec perte de la différenciation des couches].
-Hyperhémie pariétale au Doppler couleur : [non / oui].
-Stercolithe : [non / oui].
-Graisse périappendiculaire : [normale / hyperéchogène, infiltrée].
-Épanchement ou collection : [non / épanchement de faible abondance / collection de … mm].
-Adénopathies mésentériques : [non / oui].
-Dernière anse iléale : [normale / épaissie].
-Pas d'image d'invagination intestinale.
-Ovaires (fille) : [normaux / non concerné].
+RÉSULTAT :
+• Appendice [visualisé, en position … / non visualisé].
+• Diamètre maximal : [x] mm, [compressible / non compressible].
+• Paroi : [fine / épaissie, avec perte de la différenciation des couches].
+• Hyperhémie pariétale au Doppler couleur : [non / oui].
+• Stercolithe : [non / oui].
+• Graisse périappendiculaire : [normale / hyperéchogène, infiltrée].
+• Épanchement ou collection : [non / épanchement de faible abondance / collection de … mm].
+• Adénopathies mésentériques : [non / oui].
+• Dernière anse iléale : [normale / épaissie].
+• Absence d'image d'invagination intestinale.
+• Ovaires (fille) : [normaux / non concerné].
 
-Conclusion :
-[Appendice fin et compressible : pas d'argument échographique pour une appendicite / Aspect d'appendicite aiguë (… non compliquée / compliquée : …)].`,
+AU TOTAL :
+[Appendice fin et compressible : absence d'argument échographique pour une appendicite / Aspect d'appendicite aiguë (… non compliquée / compliquée : …)].`,
   },
 ];
 
@@ -622,13 +626,13 @@ const CR_PHRASES = [
   { k: 'etagecervical', alias: ['etagec'], organ: 'Rachis', mod: 'IRM', type: 'normal', label: 'Étage cervical (C2-C3…C6-C7)',
     text: `[étage] :
 • Absence de saillie discale.
-• Arthrose interapophysaire postérieure.
+• [Absence d'arthrose / Arthrose] interapophysaire postérieure.
 • Absence de plicature des ligaments jaunes.
 • Absence de rétrécissement foraminal.` },
   { k: 'etagelombaire', alias: ['etagel'], organ: 'Rachis', mod: 'IRM', type: 'normal', label: 'Étage lombaire (L1-L2…L5-S1)',
     text: `[étage] :
 • Absence de saillie discale.
-• Arthrose interapophysaire postérieure.
+• [Absence d'arthrose / Arthrose] interapophysaire postérieure.
 • Absence d'hypertrophie des ligaments jaunes.
 • Absence de rétrécissement foraminal.` },
   { k: 'dorsalnormal', alias: [], organ: 'Rachis', mod: 'IRM', type: 'normal', label: 'Étage dorsal normal',

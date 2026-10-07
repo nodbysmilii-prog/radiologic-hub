@@ -91,17 +91,19 @@ Page `comptes-rendus.html` (lien « Comptes rendus » dans le menu de toutes les
 
 **Contenu fourni (`cr-data.js`)**
 
-18 comptes rendus types. Ceux marqués ★ sont les **formules normales du service** (fournies en PDF le 07/10/2026), reprises mot pour mot avec leurs puces ; seules corrections : accents sur les majuscules, accords (« constitutionnelle », « contenant-contenu », « 4e »), points finaux, intertitres « Au niveau dorsal » et « Au niveau du bassin » ajoutés dans l'IRM médullaire, et quelques champs `[ … ]` (côté, compartiment, conclusion).
+18 comptes rendus types, **tous au format du service** : titre en capitales, `INDICATION :` (seulement quand elle porte des données utiles : AVC, pancréas, rectum, colique néphrétique, polytraumatisé, appendicite de l'enfant), `TECHNIQUE :`, `RÉSULTAT :` avec intertitres et une constatation par ligne précédée de « • », `AU TOTAL :` ; les radiographies utilisent `COMPTE-RENDU :`.
+
+Ceux marqués ★ sont les **formules normales du service** (fournies en PDF le 07/10/2026), reprises mot pour mot ; seules corrections : accents sur les majuscules, accords (« constitutionnelle », « contenant-contenu », « 4e »), points finaux, intertitres « Au niveau dorsal » et « Au niveau du bassin » ajoutés dans l'IRM médullaire, et quelques champs `[ … ]` (côté, compartiment, conclusion, `[Absence d'arthrose / Arthrose]` interapophysaire à chaque étage de l'IRM médullaire).
 
 | Spécialité | Comptes rendus types |
 |---|---|
-| Neuro | ★ TDM cérébrale sans injection normale · Alerte AVC (scanner + angio-scanner TSA et Willis, ASPECTS) |
-| Thorax | Radiographie du thorax normale · ★ TDM thoracique sans injection normale · Angio-scanner thoracique (recherche d'EP) |
-| Digestif | Scanner abdomino-pelvien normal · Échographie abdominale normale · Adénocarcinome du pancréas (résécabilité, repris de la fiche) · IRM rectum bilan initial (mrT, EMS, CRM, EMVI, repris de la fiche) |
-| Uro-gynéco | Scanner sans injection — colique néphrétique |
+| Neuro | ★ TDM cérébrale sans injection normale · Alerte AVC (TDM + angio-TDM TSA et Willis, ASPECTS) |
+| Thorax | Radiographie du thorax normale · ★ TDM thoracique sans injection normale · Angio-TDM thoracique (recherche d'EP) |
+| Digestif | TDM abdomino-pelvienne normale · Échographie abdominale normale · Adénocarcinome du pancréas (résécabilité, repris de la fiche) · IRM rectum bilan initial (mrT, EMS, CRM, EMVI, repris de la fiche) |
+| Uro-gynéco | TDM sans injection — colique néphrétique |
 | Traumato | Body-scanner du polytraumatisé |
 | Ostéo-articulaire | IRM du rachis — spondylodiscite (repris de la fiche) · ★ IRM médullaire (rachis entier, étage par étage, bassin) · ★ Radiographie du rachis lombaire (F + P) normale · ★ Radiographie du genou (F + P) normale · ★ Radiographie du genou — gonarthrose |
-| Vasculaire | Angio-scanner aortique — syndrome aortique aigu |
+| Vasculaire | Angio-TDM aortique — syndrome aortique aigu |
 | Pédiatrie | Échographie — suspicion d'appendicite |
 
 **71 phrases**, classées par type (couleur du mot-clé). Les phrases « normales » reprennent les formules du service (★) :
@@ -209,7 +211,7 @@ Site 100 % statique (HTML / CSS / JavaScript, aucune installation).
 - [ ] **Fiche rectum** : préciser les légendes des images « formes tumorales » et « mesure axiale 1,57 cm ».
 - [ ] **Fiches des autres spécialités** : Neuro, Thorax, Traumato, Vasculaire, Pédiatrie.
 - [ ] **Lecteur de séries** (défilement dans un scanner / IRM) : en attente d'une série anonymisée exportée en JPG.
-- [ ] **Comptes rendus types** : relire et valider médicalement les modèles et phrases rédigés au départ (13 modèles, ~55 phrases de `cr-data.js`) ; continuer à intégrer les formules normales du service (5 reçues le 07/10/2026) ; décider s'il faut aligner les premiers modèles sur le style du service (titres, puces).
+- [ ] **Comptes rendus types** : relire et valider médicalement les modèles et phrases rédigés au départ (13 modèles, ~55 phrases de `cr-data.js`) ; continuer à intégrer les formules normales du service (5 reçues le 07/10/2026) ; les premiers modèles ont été alignés sur le style du service le 07/10/2026.
 - [ ] **IRM médullaire** : la technique cite des coupes transversales sur « les 3 derniers étages lombaires » mais le CR décrit L1-L2 à L5-S1, et les coupes coronales T2 FatSat du bassin ne sont pas citées dans la technique — à vérifier.
 - [ ] **Nom de domaine** `www.radiologichub.com` : à acheter et configurer (DNS + réglages GitHub Pages), puis mettre à jour le lien « Site en ligne » ci-dessus.
 
@@ -219,6 +221,7 @@ Site 100 % statique (HTML / CSS / JavaScript, aucune installation).
 
 | Date | Modification |
 |---|---|
+| 07/10/2026 | Comptes rendus : les 13 premiers modèles passent au format du service (TECHNIQUE / RÉSULTAT / AU TOTAL, puces « • », « TDM » au lieu de « scanner ») ; arthrose interapophysaire en choix `[Absence d'arthrose / Arthrose]` à chaque étage de l'IRM médullaire |
 | 07/10/2026 | Comptes rendus : intégration des 5 formules normales du service (TDM cérébrale, TDM thoracique, IRM médullaire, radio rachis lombaire, radio genou normale + gonarthrose) en modèles et en 17 phrases ; puces « • » automatiques à l'Entrée |
 | 07/10/2026 | Nouvelle page « Comptes rendus » : 13 CR types, 56 phrases automatiques (mot-clé → description, Tab pour insérer, champs [ … ]), mes phrases / modèles perso avec export-import ; lien dans le menu et depuis les fiches pancréas, rectum, spondylodiscite ; menu de l'en-tête resserré (hamburger sous 960 px) |
 | 05/10/2026 | Nouvel onglet « Ostéo-articulaire » + fiche spondylodiscite infectieuse (fusion de deux cours, 30 images dont 13 annotées, quiz « Quel germe ? ») |
