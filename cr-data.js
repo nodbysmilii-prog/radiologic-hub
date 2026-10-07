@@ -577,7 +577,7 @@ const CR_PHRASES = [
     text: 'Condensation parenchymateuse alvéolaire [systématisée] du [lobe / segment …], avec bronchogramme aérique, en faveur d\'une pneumopathie infectieuse dans ce contexte. [Pas d\'épanchement pleural / Épanchement pleural réactionnel de faible abondance].' },
   { k: 'epanchement', alias: ['pleuresie'], organ: 'Thorax', mod: 'TDM', type: 'aigu', label: 'Épanchement pleural',
     text: 'Épanchement pleural liquidien [droit / gauche / bilatéral] de [faible / moyenne / grande] abondance, [de densité liquidienne homogène / avec épaississement et rehaussement des feuillets pleuraux, évocateur d\'empyème], [avec atélectasie passive du parenchyme adjacent].' },
-  { k: 'nodule', alias: ['fleischner'], organ: 'Thorax', mod: 'TDM', type: 'lesion', label: 'Nodule pulmonaire',
+  { k: 'nodule', organ: 'Thorax', mod: 'TDM', type: 'lesion', label: 'Nodule pulmonaire',
     text: 'Nodule pulmonaire [solide / en verre dépoli / partiellement solide] du [lobe], mesurant [x] mm (diamètre moyen), [à contours réguliers / spiculés], [non calcifié]. Conduite à tenir selon les recommandations de la Fleischner Society (2017), en fonction du terrain.' },
 
   /* ----- Vaisseaux ----- */

@@ -3,6 +3,8 @@
    • PI-RADS v2.1 (prostate) : carte des secteurs + score
    • BI-RADS (sein) : schéma en cadran horaire + catégories ACR
    • EU-TIRADS (thyroïde) : schéma des lobes + score + cytoponction
+   • Fleischner 2017 : nodules pulmonaires fortuits (schéma des lobes,
+     règles dans regles/fleischner.js)
    • RECIST 1.1 : réponse des tumeurs solides
    • Lugano 2014 (Cheson) : réponse des lymphomes (TEP ou TDM)
    Chaque outil rédige le texte à insérer dans le compte rendu ;
@@ -799,9 +801,168 @@
   };
 
   /* =======================================================
+     Fleischner 2017 — nodules pulmonaires de découverte fortuite
+     Règles : regles/fleischner.js (testées sous Node)
+     ======================================================= */
+  const FL = window.RHRegles && window.RHRegles.fleischner;
+  const flColor = r => (r == null ? C.blue : r <= 1 ? C.green : r === 2 ? C.amber : r === 3 ? C.orange : C.red);
+  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+  const FL_LOBE_NOM = { LSD: 'lobe supérieur droit', LM: 'lobe moyen', LID: 'lobe inférieur droit', LSG: 'lobe supérieur gauche', lingula: 'lingula', LIG: 'lobe inférieur gauche' };
+  // Régions cliquables (vue de face, poumon droit à gauche de l'image), découpées par la silhouette des poumons
+  const FL_ZONES = {
+    LSD: '0,0 260,0 260,170 109,170 92,140 0,140', LM: '109,170 260,170 260,340 206,340', LID: '0,140 92,140 206,340 0,340',
+    LSG: '260,0 520,0 520,120 430,120 383,215 260,215', lingula: '260,215 383,215 322,340 260,340', LIG: '430,120 520,120 520,340 322,340',
+  };
+  const FL_POS = { LSD: [150, 118], LM: [186, 262], LID: [118, 262], LSG: [368, 128], lingula: [328, 262], LIG: [402, 262] };
+  const FL_LUNG = {
+    R: 'M205 42 C160 44 112 78 92 140 C76 192 70 262 74 330 C120 316 176 316 228 334 C222 296 214 262 218 232 C222 200 210 170 214 140 C220 100 222 62 205 42 Z',
+    L: 'M315 42 C360 44 408 78 428 140 C444 192 450 262 446 330 C400 316 352 316 318 330 C300 312 290 286 296 262 C304 232 302 200 306 140 C300 100 298 62 315 42 Z',
+  };
+  const FL_DECALAGE = [[0, 0], [0, -24], [0, 24], [-20, -12], [-20, 12], [20, 0]];   // nodules sans clic dans un même lobe
+  const F_TYPE_COURT = { solide: 'solide', 'verre-depoli': 'VD', 'part-solide': 'PS' };
+  const newFlNodule = () => ({ type: 'solide', lobe: '', grandAxe: '', petitAxe: '', volume: '', composanteSolide: '', perisScissural: false, suspect: false, benin: false, pos: null });
+  const flPos = (st, i) => {
+    const n = st.nodules[i];
+    if (n.pos && n.pos.lobe === n.lobe) return [n.pos.x, n.pos.y];
+    if (!n.lobe) return null;
+    const k = st.nodules.slice(0, i).filter(m => m.lobe === n.lobe && !(m.pos && m.pos.lobe === m.lobe)).length;
+    const [x, y] = FL_POS[n.lobe], [dx, dy] = FL_DECALAGE[k % FL_DECALAGE.length];
+    return [x + dx, y + dy];
+  };
+
+  const FLEISCHNER = {
+    title: 'Fleischner 2017 — nodule pulmonaire de découverte fortuite', chip: 'Fleischner', sub: 'nodule pulmonaire',
+    keys: ['fleischner', 'nodulepulm'],
+    suggest: /fleischner|micronodul|nodules? pulmonaires?|verre depoli|nodules?\b[^.\n]{0,40}\b(lobe (superieur|moyen|inferieur)|lingula|lsd|lid|lsg|lig)\b/,
+    hint: 'Cliquez sur le schéma pour placer le nodule actif (poumon droit à gauche de l\'image). Taille = moyenne du grand et du petit axe mesurés sur la même coupe, arrondie au millimètre.',
+    init: () => ({ contexte: 'fortuit', risque: '', autresNodules: false, nodules: [], active: 0 }),
+    newItem: () => newFlNodule(), max: 6,
+    svg(st, live) {
+      const r = FL.evaluer(st);
+      let g = '<rect width="520" height="380" fill="#fff"/>';
+      g += `<defs>${['R', 'L'].map(s => `<clipPath id="fl-poumon-${s}"><path d="${FL_LUNG[s]}"/></clipPath>`).join('')}</defs>`;
+      // trachée et bronches souches
+      g += '<path d="M252 14 L268 14 L268 104 L292 150 L284 156 L260 116 L236 156 L228 150 L252 104 Z" fill="#f2f2f4" stroke="#c9c9d1" pointer-events="none"/>';
+      Object.entries(FL_ZONES).forEach(([k, pts]) => {
+        const s = /^(LSD|LM|LID)$/.test(k) ? 'R' : 'L';
+        g += `<polygon points="${pts}" fill="${k === 'LM' || k === 'lingula' ? '#f3f6fb' : '#fbfbfb'}" clip-path="url(#fl-poumon-${s})"${live ? ` data-z="${k}"` : ''}><title>${esc(cap(FL_LOBE_NOM[k]))}</title></polygon>`;
+      });
+      // scissures
+      g += `<g fill="none" stroke="#9a99a6" stroke-width="1.6" stroke-dasharray="6 5" pointer-events="none">
+        <line x1="109" y1="170" x2="240" y2="170" clip-path="url(#fl-poumon-R)"/><line x1="92" y1="140" x2="206" y2="340" clip-path="url(#fl-poumon-R)"/>
+        <line x1="430" y1="120" x2="322" y2="340" clip-path="url(#fl-poumon-L)"/></g>`;
+      g += `<line x1="280" y1="215" x2="383" y2="215" stroke="#c9c9d1" stroke-width="1.2" stroke-dasharray="2 4" clip-path="url(#fl-poumon-L)" pointer-events="none"/>`;
+      g += ['R', 'L'].map(s => `<path d="${FL_LUNG[s]}" fill="none" stroke="${INK}" stroke-width="2.2" pointer-events="none"/>`).join('');
+      [['LSD', 150, 78], ['LM', 190, 214], ['LID', 112, 314], ['LSG', 372, 84], ['lingula', 340, 236], ['LIG', 412, 314]].forEach(([k, x, y]) => {
+        g += txt(x, y, k === 'lingula' ? 'Lingula' : k, { size: 10, weight: 800, fill: '#8b8a96' });
+      });
+      g += txt(22, 30, 'D', { size: 13, weight: 900 }) + txt(498, 30, 'G', { size: 13, weight: 900 });
+      g += txt(260, 372, 'Vue de face — poumon droit à gauche de l\'image', { size: 9, weight: 600, fill: '#55545f' });
+      st.nodules.forEach((n, i) => {
+        const p = flPos(st, i);
+        if (p) g += pin(p[0], p[1], i + 1, flColor(r.nodules[i] && r.nodules[i].rang), i === st.active);
+      });
+      return svgWrap(520, 380, g);
+    },
+    click(st, e, pt) {
+      const z = e.target.closest('[data-z]');
+      if (!z) return false;
+      if (!st.nodules.length) { st.nodules.push(newFlNodule()); st.active = 0; }
+      const n = st.nodules[st.active];
+      n.lobe = z.dataset.z;
+      n.pos = { lobe: n.lobe, x: +pt.x.toFixed(1), y: +pt.y.toFixed(1) };
+      return true;
+    },
+    form(st) {
+      const r = FL.evaluer(st);
+      let h = `<fieldset class="tl-box"><legend>Contexte</legend>
+        <div class="tf-row">
+          ${sel('contexte', 'Situation', Object.entries(FL.CONTEXTES), st.contexte, { wide: 1 })}
+          ${sel('risque', 'Risque de cancer bronchique', [['', 'Non précisé (les deux conduites)'], ['faible', 'Faible'], ['eleve', 'Élevé']], st.risque)}
+        </div>
+        <p class="tl-note">Haut risque : tabagisme (actuel ou ancien), exposition professionnelle (amiante, radon, uranium), antécédent familial de cancer bronchique, âge avancé, emphysème, fibrose pulmonaire. Faible risque : tabagisme absent ou minime et aucun autre facteur. Le risque ne module que les nodules solides.</p>
+        ${chk('autresNodules', 'Autres nodules non détaillés ici (nodules multiples)', st.autresNodules)}
+      </fieldset>`;
+      if (!r.applicable) h += `<p class="tl-warn">Recommandations Fleischner non applicables : ${esc(r.motif)}.</p>`;
+      h += tabs(st.nodules.map((x, i) => ({ color: flColor(r.nodules[i].rang), badge: F_TYPE_COURT[x.type] + (r.nodules[i].taille.mm ? ` ${r.nodules[i].taille.mm} mm` : '') })), st.active, 'Nodule', this.max, 'nodules');
+      const n = st.nodules[st.active];
+      if (!n) return h + '<p class="tl-note">Aucun nodule : cliquez sur le schéma ou sur « + Ajouter ».</p>';
+      const p = `nodules.${st.active}.`;
+      h += `<div class="tf-row">
+          ${sel(p + 'type', 'Type', [['solide', 'Solide'], ['verre-depoli', 'Verre dépoli pur'], ['part-solide', 'Partiellement solide']], n.type)}
+          ${sel(p + 'lobe', 'Localisation', [['', '—'], ...Object.entries(FL_LOBE_NOM).map(([k, v]) => [k, cap(v)])], n.lobe)}
+        </div>
+        <div class="tf-row">
+          ${inp(p + 'grandAxe', 'Grand axe (mm)', n.grandAxe, { small: 1 })}${inp(p + 'petitAxe', 'Petit axe (mm)', n.petitAxe, { small: 1 })}
+          ${n.type === 'solide' ? inp(p + 'volume', 'Volume (mm³, facultatif)', n.volume, { small: 1 }) : ''}
+          ${n.type === 'part-solide' ? inp(p + 'composanteSolide', 'Composante solide (mm)', n.composanteSolide, { small: 1 }) : ''}
+        </div>
+        <div class="tf-row">
+          ${n.type === 'solide' ? chk(p + 'perisScissural', 'Périscissural, d\'aspect typique de ganglion intrapulmonaire', n.perisScissural) : ''}
+          ${chk(p + 'suspect', 'Morphologie suspecte (spicules…)', n.suspect)}
+          ${chk(p + 'benin', 'Calcification de type bénin ou graisse', n.benin)}
+        </div>`;
+      return h;
+    },
+    warn(st) {
+      const w = [];
+      st.nodules.forEach((n, i) => {
+        const t = FL.taille(n);
+        if (t.note) w.push(`Nodule ${i + 1} : un seul diamètre renseigné — la moyenne du grand et du petit axe est recommandée.`);
+        if ((t.grand || 0) > 30 || (t.petit || 0) > 30) w.push(`Nodule ${i + 1} : plus de 30 mm, il s'agit d'une masse (hors du champ des recommandations Fleischner).`);
+        if (n.type === 'part-solide' && t.mm >= FL.SEUILS.petitMm && num(n.composanteSolide) == null) w.push(`Nodule ${i + 1} : mesurez la composante solide.`);
+        if (n.type === 'part-solide' && num(n.composanteSolide) != null && t.grand != null && num(n.composanteSolide) > t.grand) w.push(`Nodule ${i + 1} : la composante solide dépasse le grand axe du nodule.`);
+      });
+      return w;
+    },
+    result(st) {
+      const r = FL.evaluer(st);
+      if (!st.nodules.length) return badge('Ajoutez un nodule (clic sur le schéma)', C.grey);
+      if (!r.applicable) return badge('Fleischner non applicable', C.grey);
+      let h = st.nodules.map((n, i) => {
+        const x = r.nodules[i];
+        return badge(`Nodule ${i + 1} : ${x.rang == null ? `à compléter (${x.manque || 'données'})` : x.court}`, flColor(x.rang));
+      }).join('');
+      if (r.rang != null) h += badge(`Conduite${st.nodules.length > 1 ? ` (nodule ${r.guide + 1}, le plus suspect)` : ''} : ${r.texte}`, flColor(r.rang));
+      return h;
+    },
+    text(st) {
+      const r = FL.evaluer(st), out = [];
+      const plusieurs = st.nodules.length > 1;
+      st.nodules.forEach((n, i) => {
+        const t = FL.taille(n);
+        let s = `${plusieurs ? `Nodule pulmonaire n°${i + 1}` : 'Nodule pulmonaire'} ${FL.TYPES[n.type] || ''} ${n.lobe ? FL.LOBES[n.lobe] : '[localisation]'}`;
+        const dims = [t.grand, t.petit].filter(x => x != null);
+        if (dims.length) s += `, mesurant ${dims.map(x => fr(x, 1)).join(' × ')} mm${dims.length === 2 ? ` (diamètre moyen ${fr(t.mm, 0)} mm)` : ''}`;
+        else s += ', [taille]';
+        if (n.type === 'solide' && t.volume != null) s += `, volume ${fr(t.volume, 0)} mm³`;
+        if (n.type === 'part-solide') s += num(n.composanteSolide) != null ? `, dont une composante solide de ${fr(num(n.composanteSolide), 1)} mm` : ', composante solide [taille]';
+        const d = [];
+        if (n.type === 'solide' && n.perisScissural) d.push('périscissural, d\'aspect typique de ganglion intrapulmonaire');
+        if (n.suspect) d.push('de morphologie suspecte');
+        if (n.benin) d.push('présentant des critères de bénignité (calcification de type bénin ou graisse)');
+        if (d.length) s += ', ' + d.join(', ');
+        out.push(s + '.');
+      });
+      if (!st.nodules.length) out.push('Nodule pulmonaire [à décrire].');
+      if (!r.applicable) {
+        out.push(`Recommandations de la Société Fleischner non applicables : ${r.motif}.`);
+        return out.join('\n');
+      }
+      if (r.rang == null) { out.push('Recommandations de la Société Fleischner (2017) : [à compléter].'); return out.join('\n'); }
+      const g = r.nodules[r.guide];
+      // le niveau de risque ne module que les nodules solides
+      const risque = g.n.type === 'solide' && !g.deuxRisques ? ({ faible: ', patient à faible risque', eleve: ', patient à haut risque' }[st.risque] || '') : '';
+      const ligne = plusieurs ? g.ligne.replace('le plus suspect', `le plus suspect (n°${r.guide + 1})`) : g.ligne;
+      out.push(`Selon les recommandations de la Société Fleischner (2017) pour les nodules de découverte fortuite${ligne ? ` — ${ligne}` : ''}${risque} : ${r.texte}.`);
+      if (r.rang > 0 && FL.proposeTdm(r.texte)) out.push('Contrôle par TDM thoracique à faible dose, sans injection, en coupes fines jointives (1 mm, au plus 1,5 mm).');
+      return out.join('\n');
+    },
+  };
+  /* =======================================================
      Fenêtre des outils
      ======================================================= */
-  const TOOLS = { pirads: PIRADS, birads: BIRADS, tirads: TIRADS, recist: RECIST, lugano: LUGANO };
+  const TOOLS = { pirads: PIRADS, birads: BIRADS, tirads: TIRADS, ...(FL ? { fleischner: FLEISCHNER } : {}), recist: RECIST, lugano: LUGANO };
   const states = {};
   let cur = null;
   const titleEl = $('#tool-title', dlg), hintEl = $('#tool-hint', dlg), schemaEl = $('#tool-schema', dlg), formEl = $('#tool-form', dlg);
