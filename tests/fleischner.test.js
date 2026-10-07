@@ -103,10 +103,19 @@ test('risque non précisé : les deux conduites quand elles diffèrent', () => {
 
 test('cas particuliers : bénin, périscissural typique, type ou taille manquants', () => {
   assert.match(un(nod('solide', 9, 8, { benin: true })).texte, /critères de bénignité/);
-  const p = un(nod('solide', 8, 7, { perisScissural: true }), 'eleve');
-  assert.equal(p.rang, 0);
-  assert.match(p.texte, /périscissural/);
-  assert.equal(un(nod('solide', 14, 12, { perisScissural: true })).rang, 4, 'au-delà de 10 mm : règles habituelles');
+  const pfn = { pfnContact: true, pfnForme: true, pfnContours: true };
+  const p = un(nod('solide', 8, 7, pfn), 'eleve');
+  assert.equal(p.rang, 0, 'ganglion typique : pas de surveillance même > 6 mm et haut risque');
+  assert.match(p.texte, /ganglion intrapulmonaire/);
+  assert.equal(un(nod('solide', 8, 7, { ...pfn, pfnCarene: false, pfnSeptale: false })).rang, 0, 'carène et ligne septale non exigées');
+  assert.equal(un(nod('solide', 14, 12, pfn)).rang, 4, '≥ 10 mm : règles habituelles');
+  assert.equal(un(nod('solide', 8, 7, { ...pfn, pfnForme: false })).rang, 2, 'un critère manquant : règles habituelles');
+  assert.equal(un(nod('solide', 8, 7, { ...pfn, suspect: true })).rang, 2, 'signe suspect : règles habituelles');
+  assert.equal(un(nod('verre-depoli', 8, 7, pfn)).rang, 2, 'nodule non solide : jamais un ganglion typique');
+  const g = F.ganglionTypique(nod('solide', 8, 7, { pfnContact: true, pfnCarene: true }));
+  assert.equal(g.ok, false);
+  assert.equal(g.evoque, true);
+  assert.deepEqual(g.manque, ['de forme ovale, lenticulaire ou triangulaire', 'homogène à contours lisses']);
   assert.equal(un(nod('', 7, 6)).rang, null);
   assert.equal(un(nod('solide', '', '')).nodules[0].manque, 'taille du nodule');
 });

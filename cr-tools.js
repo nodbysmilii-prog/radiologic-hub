@@ -820,7 +820,7 @@
   };
   const FL_DECALAGE = [[0, 0], [0, -24], [0, 24], [-20, -12], [-20, 12], [20, 0]];   // nodules sans clic dans un même lobe
   const F_TYPE_COURT = { solide: 'solide', 'verre-depoli': 'VD', 'part-solide': 'PS' };
-  const newFlNodule = () => ({ type: 'solide', lobe: '', grandAxe: '', petitAxe: '', volume: '', composanteSolide: '', perisScissural: false, suspect: false, benin: false, pos: null });
+  const newFlNodule = () => ({ type: 'solide', lobe: '', grandAxe: '', petitAxe: '', volume: '', composanteSolide: '', suspect: false, benin: false, pfnContact: false, pfnForme: false, pfnContours: false, pfnSeptale: false, pfnCarene: false, pos: null });
   const flPos = (st, i) => {
     const n = st.nodules[i];
     if (n.pos && n.pos.lobe === n.lobe) return [n.pos.x, n.pos.y];
@@ -898,10 +898,24 @@
           ${n.type === 'part-solide' ? inp(p + 'composanteSolide', 'Composante solide (mm)', n.composanteSolide, { small: 1 }) : ''}
         </div>
         <div class="tf-row">
-          ${n.type === 'solide' ? chk(p + 'perisScissural', 'Périscissural, d\'aspect typique de ganglion intrapulmonaire', n.perisScissural) : ''}
           ${chk(p + 'suspect', 'Morphologie suspecte (spicules…)', n.suspect)}
           ${chk(p + 'benin', 'Calcification de type bénin ou graisse', n.benin)}
         </div>`;
+      if (n.type === 'solide') {
+        h += `<fieldset class="tl-box"><legend>Ganglion intrapulmonaire ? (Fleischner 2017)</legend>
+          <p class="tl-note">Nodule périscissural ou juxtapleural d'aspect typique : pas de surveillance, même au-delà de 6 mm. <strong>Les trois critères sont exigés</strong>, sans signe suspect (diamètre moyen &lt; 10 mm) :</p>
+          <div class="tf-row">
+            ${chk(p + 'pfnContact', 'Au contact d\'une scissure ou de la plèvre', n.pfnContact)}
+            ${chk(p + 'pfnForme', 'Forme ovale, lenticulaire ou triangulaire', n.pfnForme)}
+            ${chk(p + 'pfnContours', 'Homogène, contours lisses', n.pfnContours)}
+          </div>
+          <p class="tl-note">Arguments en plus, fréquents mais <strong>non exigés</strong> par la recommandation :</p>
+          <div class="tf-row">
+            ${chk(p + 'pfnSeptale', 'Ligne septale vers la plèvre', n.pfnSeptale)}
+            ${chk(p + 'pfnCarene', 'Sous le niveau de la carène', n.pfnCarene)}
+          </div>
+        </fieldset>`;
+      }
       return h;
     },
     warn(st) {
@@ -912,6 +926,14 @@
         if ((t.grand || 0) > 30 || (t.petit || 0) > 30) w.push(`Nodule ${i + 1} : plus de 30 mm, il s'agit d'une masse (hors du champ des recommandations Fleischner).`);
         if (n.type === 'part-solide' && t.mm >= FL.SEUILS.petitMm && num(n.composanteSolide) == null) w.push(`Nodule ${i + 1} : mesurez la composante solide.`);
         if (n.type === 'part-solide' && num(n.composanteSolide) != null && t.grand != null && num(n.composanteSolide) > t.grand) w.push(`Nodule ${i + 1} : la composante solide dépasse le grand axe du nodule.`);
+        const g = FL.ganglionTypique(n);
+        if (g.solide && g.evoque && !g.ok) {
+          const pourquoi = [];
+          if (g.manque.length) pourquoi.push(`critère manquant : ${g.manque.join(', ')}`);
+          if (g.suspect) pourquoi.push('morphologie suspecte');
+          if (g.tropGros) pourquoi.push('diamètre moyen de 10 mm ou plus');
+          w.push(`Nodule ${i + 1} : ganglion intrapulmonaire non retenu (${pourquoi.join(' ; ')}) — règles habituelles.`);
+        }
       });
       return w;
     },
@@ -938,7 +960,13 @@
         if (n.type === 'solide' && t.volume != null) s += `, volume ${fr(t.volume, 0)} mm³`;
         if (n.type === 'part-solide') s += num(n.composanteSolide) != null ? `, dont une composante solide de ${fr(num(n.composanteSolide), 1)} mm` : ', composante solide [taille]';
         const d = [];
-        if (n.type === 'solide' && n.perisScissural) d.push('périscissural, d\'aspect typique de ganglion intrapulmonaire');
+        if (n.type === 'solide') {
+          const g = FL.ganglionTypique(n);
+          const signes = [...Object.keys(FL.CRITERES_GANGLION), ...Object.keys(FL.ARGUMENTS_GANGLION)].filter(k => n[k])
+            .map(k => FL.CRITERES_GANGLION[k] || FL.ARGUMENTS_GANGLION[k]);
+          if (g.ok) d.push(`d'aspect typique de ganglion intrapulmonaire (${signes.join(', ')})`);
+          else d.push(...signes);
+        }
         if (n.suspect) d.push('de morphologie suspecte');
         if (n.benin) d.push('présentant des critères de bénignité (calcification de type bénin ou graisse)');
         if (d.length) s += ', ' + d.join(', ');
@@ -952,7 +980,7 @@
       if (r.rang == null) { out.push('Recommandations de la Société Fleischner (2017) : [à compléter].'); return out.join('\n'); }
       const g = r.nodules[r.guide];
       // le niveau de risque ne module que les nodules solides
-      const risque = g.n.type === 'solide' && !g.deuxRisques ? ({ faible: ', patient à faible risque', eleve: ', patient à haut risque' }[st.risque] || '') : '';
+      const risque = g.n.type === 'solide' && g.ligne && !g.deuxRisques ? ({ faible: ', patient à faible risque', eleve: ', patient à haut risque' }[st.risque] || '') : '';
       const ligne = plusieurs ? g.ligne.replace('le plus suspect', `le plus suspect (n°${r.guide + 1})`) : g.ligne;
       out.push(`Selon les recommandations de la Société Fleischner (2017) pour les nodules de découverte fortuite${ligne ? ` — ${ligne}` : ''}${risque} : ${r.texte}.`);
       if (r.rang > 0 && FL.proposeTdm(r.texte)) out.push('Contrôle par TDM thoracique à faible dose, sans injection, en coupes fines jointives (1 mm, au plus 1,5 mm).');

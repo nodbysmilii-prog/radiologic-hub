@@ -30,7 +30,7 @@
     volPetitMm3: 100,        // < 100 mm³ (équivalent de < 6 mm)
     volMoyenMaxMm3: 250,     // 100 à 250 mm³ (6 à 8 mm) ; > 250 mm³ (> 8 mm)
     composanteSuspecteMm: 6, // partiellement solide : composante solide ≥ 6 mm = hautement suspect s'il persiste
-    perisScissuralMaxMm: 10, // nodule périscissural typique : pas de surveillance (données jusqu'à ~10 mm)
+    ganglionMaxMm: 10,       // ganglion intrapulmonaire typique retenu si diamètre moyen < 10 mm (voir ganglionTypique)
     ageMin: 35,              // recommandations applicables à partir de 35 ans
   });
 
@@ -52,6 +52,32 @@
     immunodep: 'patient immunodéprimé : conduite selon le contexte clinique (cause infectieuse possible)',
     jeune: 'patient de moins de 35 ans : conduite selon le contexte clinique',
   };
+
+  /*
+   * Nodule périscissural / juxtapleural d'aspect typique de ganglion intrapulmonaire (Fleischner 2017) :
+   * nodule SOLIDE, au contact d'une scissure ou de la plèvre, de forme ovale, lenticulaire ou triangulaire,
+   * homogène à contours lisses, sans signe suspect → pas de surveillance, même si le diamètre moyen dépasse 6 mm.
+   * Les trois critères sont exigés. La localisation sous le niveau de la carène et la ligne septale vers la plèvre
+   * sont des arguments fréquents mais NE SONT PAS exigés par la recommandation.
+   * Limite de taille : Fleischner 2017 n'en fixe pas ; les séries sur lesquelles elle s'appuie portent sur des
+   * nodules jusqu'à ~10 mm et la définition du nodule juxtapleural de Lung-RADS v2022 retient < 10 mm.
+   */
+  const CRITERES_GANGLION = {
+    pfnContact: 'au contact d\'une scissure ou de la plèvre',
+    pfnForme: 'de forme ovale, lenticulaire ou triangulaire',
+    pfnContours: 'homogène à contours lisses',
+  };
+  const ARGUMENTS_GANGLION = { pfnSeptale: 'avec une ligne septale vers la plèvre', pfnCarene: 'situé sous le niveau de la carène' };
+  function ganglionTypique(n) {
+    const manque = Object.keys(CRITERES_GANGLION).filter(k => !n[k]);
+    const evoque = Object.keys({ ...CRITERES_GANGLION, ...ARGUMENTS_GANGLION }).some(k => n[k]);
+    const t = taille(n);
+    const tropGros = t.mm != null && t.mm >= SEUILS.ganglionMaxMm;
+    return {
+      evoque, manque: manque.map(k => CRITERES_GANGLION[k]), suspect: !!n.suspect, tropGros, solide: n.type === 'solide',
+      ok: n.type === 'solide' && !manque.length && !n.suspect && !tropGros,
+    };
+  }
 
   /* Niveaux de conduite (du moins au plus intensif) — sert à désigner le nodule le plus suspect */
   const RANGS = ['pas de surveillance', 'TDM optionnelle à 12 mois', 'TDM à 6–12 mois', 'TDM à 3–6 mois', 'TDM à 3 mois, TEP-TDM ou prélèvement'];
@@ -94,8 +120,8 @@
     if (c.cle == null) return r(null, '', { manque: 'taille du nodule' });
 
     if (n.type === 'solide') {
-      if (n.perisScissural && (c.t.mm == null || c.t.mm <= SEUILS.perisScissuralMaxMm)) {
-        return r(0, 'pas de surveillance (nodule périscissural d\'aspect typique de ganglion intrapulmonaire)', { cas: 'perisscissural', court: 'pas de surveillance (ganglion intrapulmonaire)' });
+      if (ganglionTypique(n).ok) {
+        return r(0, 'pas de surveillance (nodule périscissural ou juxtapleural d\'aspect typique de ganglion intrapulmonaire)', { cas: 'ganglion', court: 'pas de surveillance (ganglion intrapulmonaire)' });
       }
       const eleve = risque === 'eleve';
       if (c.cle === 'petit') {
@@ -138,7 +164,7 @@
 
   /* Libellé de la ligne du tableau Fleischner utilisée */
   function ligneTableau(n, cd, multiple) {
-    if (cd.classe == null || cd.cas === 'benin' || cd.cas === 'perisscissural') return '';
+    if (cd.classe == null || cd.cas === 'benin' || cd.cas === 'ganglion') return '';
     const classeTxt = (n.type !== 'solide' ? LIB_CLASSE.sub : cd.par === 'volume' ? LIB_CLASSE.vol : LIB_CLASSE.solide)[cd.classe];
     return multiple
       ? `nodules multiples dont le plus suspect est ${TYPES[n.type]}, ${classeTxt}`
@@ -148,7 +174,7 @@
   /*
    * Évaluation complète.
    * st = { contexte, risque: '' | 'faible' | 'eleve', autresNodules: bool, nodules: [{ type, lobe, grandAxe, petitAxe,
-   *        volume, composanteSolide, perisScissural, benin, suspect }] }
+   *        volume, composanteSolide, benin, suspect, pfnContact, pfnForme, pfnContours, pfnSeptale, pfnCarene }] }
    * risque '' (non précisé) : les deux conduites sont données quand elles diffèrent.
    */
   function evaluer(st) {
@@ -189,5 +215,8 @@
   /* Une TDM de contrôle est-elle proposée ? (pour la mention de technique) */
   const proposeTdm = texte => /TDM/.test(texte || '');
 
-  return { SEUILS, TYPES, LOBES, CONTEXTES, NON_APPLICABLE, RANGS, taille, classe, conduite, evaluer, proposeTdm };
+  return {
+    SEUILS, TYPES, LOBES, CONTEXTES, NON_APPLICABLE, RANGS, CRITERES_GANGLION, ARGUMENTS_GANGLION,
+    taille, classe, ganglionTypique, conduite, evaluer, proposeTdm,
+  };
 });
