@@ -9,9 +9,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261007230000">
-  <link rel="stylesheet" href="fiche.css?v=20261007230000">
-  <link rel="stylesheet" href="cr.css?v=20261007230000">
+  <link rel="stylesheet" href="styles.css?v=20261008090000">
+  <link rel="stylesheet" href="fiche.css?v=20261008090000">
+  <link rel="stylesheet" href="cr.css?v=20261008090000">
+  <link rel="stylesheet" href="cr-tools.css?v=20261008090000">
 </head>
 <body>
 
@@ -94,6 +95,10 @@
             <button class="btn btn-outline btn-sm cr-danger" type="button" id="cr-clear">Effacer</button>
           </div>
 
+          <div class="cr-tools" id="cr-tools" aria-label="Schémas et calculateurs">
+            <span class="cr-tools-label">Schémas &amp; calculateurs</span>
+          </div>
+
           <div class="cr-editor-wrap">
             <label for="cr-editor" class="visually-hidden">Compte rendu</label>
             <textarea id="cr-editor" class="cr-editor" spellcheck="true" lang="fr"
@@ -113,6 +118,11 @@
               <span>Insertion automatique <small>(mot-clé en début de ligne + espace)</small></span>
             </label>
           </div>
+          <div class="cr-attach" id="cr-attach" hidden>
+            <p class="cr-attach-title">Schémas joints <small>(imprimés avec le compte rendu ; pour un e-mail ou votre logiciel, utilisez « Copier l'image » dans l'outil)</small></p>
+            <div class="cr-attach-list" id="cr-attach-list"></div>
+          </div>
+
           <form class="cr-send" id="cr-send" novalidate>
             <label for="cr-email">Envoyer à</label>
             <input type="email" id="cr-email" multiple autocomplete="email" placeholder="adresse@exemple.fr (plusieurs : séparées par une virgule)">
@@ -211,11 +221,39 @@
     </div>
   </footer>
 
+  <!-- Fenêtre des schémas et calculateurs (cr-tools.js) -->
+  <dialog class="tool-dialog" id="tool-dialog" aria-labelledby="tool-title">
+    <div class="tool-inner">
+      <div class="tool-head">
+        <h2 id="tool-title"></h2>
+        <button class="modal-close" type="button" data-act="close" aria-label="Fermer">&times;</button>
+      </div>
+      <p class="tool-hint" id="tool-hint"></p>
+      <div class="tool-main">
+        <div class="tool-schema" id="tool-schema"></div>
+        <div class="tool-form" id="tool-form"></div>
+      </div>
+      <div class="tool-result" id="tool-result" aria-live="polite"></div>
+      <p class="tool-preview-label">Texte qui sera inséré dans le compte rendu (à l'emplacement du curseur) :</p>
+      <pre class="tool-preview" id="tool-preview"></pre>
+      <div class="tool-actions">
+        <button class="btn btn-ink btn-sm" type="button" data-act="insert">Insérer dans le compte rendu</button>
+        <button class="btn btn-outline btn-sm" type="button" data-act="attach" data-schema>Joindre le schéma</button>
+        <button class="btn btn-outline btn-sm" type="button" data-act="copy-img" data-schema>Copier l'image</button>
+        <button class="btn btn-outline btn-sm" type="button" data-act="png" data-schema>Télécharger le schéma</button>
+        <button class="btn btn-outline btn-sm" type="button" data-act="reset">Réinitialiser</button>
+      </div>
+      <p class="tool-msg" id="tool-msg" role="status"></p>
+      <p class="tool-disclaimer">Aide à la rédaction : le score proposé découle des critères saisis et ne remplace pas l'appréciation du radiologue.</p>
+    </div>
+  </dialog>
+
   <!-- Version imprimable du compte rendu -->
   <div class="cr-print" id="cr-print" aria-hidden="true"></div>
 
-  <script src="fiche.js?v=20261007230000"></script>
-  <script src="cr-data.js?v=20261007230000"></script>
-  <script src="cr.js?v=20261007230000"></script>
+  <script src="fiche.js?v=20261008090000"></script>
+  <script src="cr-data.js?v=20261008090000"></script>
+  <script src="cr-tools.js?v=20261008090000"></script>
+  <script src="cr.js?v=20261008090000"></script>
 </body>
 </html>

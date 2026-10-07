@@ -40,6 +40,7 @@ const CR_TYPES = {
   aigu:       { label: 'Pathologie aiguë',       k: 'k-grave' },
   conclusion: { label: 'Conclusion',             k: 'k-key' },
   perso:      { label: 'Mes phrases',            k: 'k-ddx' },
+  outil:      { label: 'Schéma / calculateur',   k: 'k-signo' },
 };
 
 /* ---------------------------------------------------------

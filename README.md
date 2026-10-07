@@ -84,9 +84,20 @@ Page `comptes-rendus.html` (lien « Comptes rendus » dans le menu de toutes les
 6. Onglet **« Phrases »** : toute la bibliothèque, avec recherche et filtre par type ; un clic insère la phrase au curseur.
 7. Boutons : **↶ Retour** / **↷ Rétablir** (aussi Ctrl + Z / Ctrl + Y ; une étape par mot tapé, par phrase insérée, par modèle chargé ou par collage), **Copier**, **Champ suivant**, **Télécharger .txt**, **Imprimer** (le compte rendu seul), **Enregistrer comme modèle**, **Sélection → phrase** (crée une phrase perso à partir du texte sélectionné), **Effacer**.
 8. **Envoyer par e-mail** (sous l'éditeur) : saisir une ou plusieurs adresses et choisir la messagerie (**Gmail** par défaut, Outlook Microsoft 365, Outlook.com, ou application Mail de l'ordinateur via `mailto:`) — les deux sont mémorisés. Un clic ouvre un nouveau message (Gmail / Outlook dans un nouvel onglet) avec l'objet « Compte rendu — titre » et le texte déjà rédigé ; il ne reste qu'à cliquer sur « Envoyer ». Le texte est aussi copié dans le presse-papiers (si la messagerie tronque un long compte rendu, coller avec Ctrl + V). S'il reste des champs `[ … ]`, un premier clic avertit, un second clic envoie quand même. L'application Mail du Mac ne fonctionne que si un compte y est configuré. Le site n'envoie rien lui-même : pas de serveur, et rappel d'utiliser une messagerie sécurisée de santé (MSSanté) pour un patient identifiable.
-9. **Mes phrases** (bas de page) : formulaire pour programmer ses propres mots-clés et descriptions ; modifier / supprimer ; **Exporter / Importer** (fichier `.json`) pour les transférer sur un autre ordinateur. Les phrases perso sont proposées en premier.
+9. **Schémas & calculateurs** (boutons au-dessus de l'éditeur, voir ci-dessous).
+10. **Mes phrases** (bas de page) : formulaire pour programmer ses propres mots-clés et descriptions ; modifier / supprimer ; **Exporter / Importer** (fichier `.json`) pour les transférer sur un autre ordinateur. Les phrases perso sont proposées en premier.
 
-**Stockage** : le brouillon, les phrases, les modèles perso et l'adresse e-mail sont enregistrés **dans le navigateur** (localStorage), rien n'est envoyé. Message de confidentialité sur la page : ne pas saisir de données identifiantes.
+**Schémas & calculateurs** (`cr-tools.js`, `cr-tools.css`) — chaque outil s'ouvre dans une fenêtre : formulaire, calcul automatique, aperçu du texte, puis **Insérer dans le compte rendu** (au curseur). Pour les trois schémas : **Joindre le schéma** (vignette sous l'éditeur, imprimée avec le compte rendu), **Copier l'image** (à coller dans un logiciel ou un e-mail) et **Télécharger le schéma** (PNG).
+
+- **Ouverture** : boutons au-dessus de l'éditeur ; le bouton s'allume « suggéré » quand le texte du compte rendu en parle (prostate → PI-RADS, sein / mammographie → BI-RADS, thyroïde → EU-TIRADS, RECIST / lésions cibles → RECIST, lymphome / Hodgkin / Deauville → Lugano) ; ou en tapant le mot-clé dans l'éditeur (`pirads`, `birads`, `tirads`, `recist`, `lugano` / `cheson` / `deauville`) puis Tab.
+- **PI-RADS v2.1 (prostate)** : carte des secteurs en coupes axiales (base, tiers moyen, apex ; ZP antérieure / postérolatérale / postéromédiale, zone centrale à la base, ZT antérieure / postérieure, stroma fibromusculaire antérieur, vésicules séminales, sphincter) — un clic ajoute ou retire un secteur pour la lésion active (4 lésions max). Scores T2, diffusion, perfusion, extension extraprostatique ; catégorie calculée selon l'algorithme v2.1 (zone périphérique : diffusion dominante, diffusion 3 + perfusion positive → 4 ; zone de transition : T2 dominant, T2 2 + diffusion ≥ 4 → 3, T2 3 + diffusion 5 → 4) ; algorithme choisi automatiquement selon les secteurs (modifiable). Volume prostatique (ellipsoïde × 0,52) et densité de PSA. Lésion index et conclusion avec la définition officielle de la catégorie. Alertes : taille ≥ 15 mm, extension extraprostatique, perfusion ou diffusion manquante.
+- **BI-RADS (sein)** : deux seins en cadran horaire (vue de face, sein droit à gauche) ; un clic place la lésion et calcule le rayon horaire (à la demi-heure), la distance au mamelon et le quadrant (QSE, QSI, QIE, QII, unions, rétro-aréolaire). Densité ACR a–d, lexique (masse, kyste, microcalcifications, distorsion, asymétrie, rehaussement non masse, ganglion), catégorie 0–6 (4A/4B/4C) choisie par le radiologue ; catégorie par sein = la plus élevée ; conduite à tenir générique. Alerte si un descripteur suspect est associé à une catégorie ≤ 3.
+- **EU-TIRADS 2017 (thyroïde)** : schéma des lobes (tiers supérieur / moyen / inférieur, isthme) ; un clic place le nodule (6 max). Score calculé : kystique pur ou spongiforme → 2 ; forme non ovale, contours irréguliers, microcalcifications ou hypoéchogénicité marquée → 5 ; légèrement hypoéchogène → 4 ; iso- ou hyperéchogène → 3. Indication de cytoponction selon le plus grand diamètre (> 20 / 15 / 10 mm pour EU-TIRADS 3 / 4 / 5 ; 5–10 mm en EU-TIRADS 5 : surveillance active ou cytoponction à discuter). Volume thyroïdien facultatif, adénopathie suspecte.
+- **RECIST 1.1** : jusqu'à 5 lésions cibles (alerte si > 2 par organe), case « ganglion » (petit axe) ; sommes initiale / nadir / actuelle et variations ; réponse des cibles (RC : disparition et ganglions < 10 mm ; RP : ≥ 30 % de baisse / initial ; MP : ≥ 20 % et ≥ 5 mm de hausse / nadir ; sinon MS) ; lésions non cibles, nouvelles lésions et réponse globale selon le tableau RECIST 1.1.
+- **Lugano 2014 (Cheson)** : mode **TEP-TDM** (score de Deauville 1–5 avec définitions, évolution de la fixation, nouvelles lésions, moelle → RMC / RMP / ARM / MMP, mention intermédiaire / fin de traitement) ou mode **TDM** (jusqu'à 6 lésions LDi × SDi initial / nadir / actuel, SPD et variation, critères de progression par lésion, rate, lésions non mesurées → RC / RP / MS / MP).
+- Avertissement dans chaque fenêtre : aide à la rédaction, ne remplace pas l'appréciation du radiologue.
+
+**Stockage** : le brouillon, les phrases, les modèles perso, les schémas joints et l'adresse e-mail sont enregistrés **dans le navigateur** (localStorage), rien n'est envoyé. Message de confidentialité sur la page : ne pas saisir de données identifiantes.
 
 **Contenu fourni (`cr-data.js`)**
 
@@ -159,6 +170,8 @@ radiologic-hub/
 ├── cr-data.js              Données : modèles de CR (CR_TEMPLATES) et phrases automatiques (CR_PHRASES)
 ├── cr.js                   Éditeur : suggestions, champs [ … ], insertion auto, mes phrases, export/import
 ├── cr.css                  Styles de la page Comptes rendus
+├── cr-tools.js             Schémas et calculateurs : PI-RADS, BI-RADS, EU-TIRADS, RECIST 1.1, Lugano 2014
+├── cr-tools.css            Styles de la fenêtre des outils
 └── assets/
     ├── logo-radiologichub.png, emblem.svg, emblem-light.svg
     ├── posts/              Visuels RadiologicHub (galerie de l'accueil)
@@ -184,7 +197,7 @@ radiologic-hub/
 
 **Images médicales :** toujours **anonymisées** (aucun nom, date, n° de dossier, ni texte incrusté). Le site et le dépôt sont publics.
 
-**Cache :** après une modification de `styles.css`, `fiche.css`, `script.js`, `fiche.js`, `cr.css`, `cr.js` ou `cr-data.js`, changer le numéro `?v=…` dans les liens des pages HTML pour forcer les navigateurs à recharger les fichiers.
+**Cache :** après une modification de `styles.css`, `fiche.css`, `script.js`, `fiche.js`, `cr.css`, `cr.js`, `cr-data.js`, `cr-tools.js` ou `cr-tools.css`, changer le numéro `?v=…` dans les liens des pages HTML pour forcer les navigateurs à recharger les fichiers.
 
 ---
 
@@ -207,6 +220,7 @@ Site 100 % statique (HTML / CSS / JavaScript, aucune installation).
 - [ ] **Fiches des autres spécialités** : Neuro, Thorax, Traumato, Vasculaire, Pédiatrie.
 - [ ] **Lecteur de séries** (défilement dans un scanner / IRM) : en attente d'une série anonymisée exportée en JPG.
 - [ ] **Comptes rendus types** : continuer à intégrer les formules normales du service (7 reçues le 07/10/2026 ; aucune en échographie pour l'instant) ; relire et valider médicalement les ~55 phrases automatiques rédigées par Claude (`cr-data.js`).
+- [ ] **Schémas & calculateurs** : faire valider les règles et les textes (PI-RADS, BI-RADS, EU-TIRADS, RECIST, Lugano) ; PI-RADS : la zone centrale et le stroma antérieur suivent par défaut l'algorithme de la zone périphérique / de transition (modifiable) ; ajouter d'autres outils si besoin (LI-RADS, O-RADS, Bosniak…).
 - [ ] **IRM médullaire / IRM cérébrale et médullaire** : la technique cite des coupes axiales sur « les 3 derniers étages lombaires » (ou « les derniers étages lombaires ») mais le CR décrit L1-L2 à L5-S1, et les coupes coronales T2 FatSat du bassin ne sont pas citées dans la technique — à vérifier.
 - [ ] **Nom de domaine** `www.radiologichub.com` : à acheter et configurer (DNS + réglages GitHub Pages), puis mettre à jour le lien « Site en ligne » ci-dessus.
 
@@ -216,6 +230,7 @@ Site 100 % statique (HTML / CSS / JavaScript, aucune installation).
 
 | Date | Modification |
 |---|---|
+| 07/10/2026 | Comptes rendus : schémas et calculateurs intégrés — PI-RADS v2.1 (carte des secteurs prostatiques), BI-RADS (cadran horaire des seins), EU-TIRADS (schéma thyroïdien), RECIST 1.1 et Lugano 2014 ; texte inséré au curseur, schémas joints / copiés / téléchargés, outils suggérés selon le contenu du compte rendu |
 | 07/10/2026 | Comptes rendus : seuls les modèles du service sont conservés (12 modèles rédigés par Claude retirés, ainsi que les boutons « Compte rendu type » des fiches) ; ajout de la radio du bassin et de l'IRM cérébrale et médullaire (+ phrases `rxbassinnormal`, `encephaleirm`) |
 | 07/10/2026 | Comptes rendus : choix des modèles en deux étapes — 1 · examen (Échographie, Radiographie standard, IRM, TDM), 2 · spécialité |
 | 07/10/2026 | Comptes rendus : choix de la messagerie pour l'envoi (Gmail par défaut, Outlook 365, Outlook.com, application Mail) — l'application Mail du Mac sans compte configuré bloquait l'envoi |

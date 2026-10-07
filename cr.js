@@ -28,7 +28,7 @@
       try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
     },
   };
-  const KEY = { draft: 'rh-cr-draft', auto: 'rh-cr-auto', phrases: 'rh-cr-phrases', templates: 'rh-cr-templates', email: 'rh-cr-email', mailer: 'rh-cr-mailer', modality: 'rh-cr-modality' };
+  const KEY = { draft: 'rh-cr-draft', auto: 'rh-cr-auto', phrases: 'rh-cr-phrases', templates: 'rh-cr-templates', email: 'rh-cr-email', mailer: 'rh-cr-mailer', modality: 'rh-cr-modality', attach: 'rh-cr-attach' };
 
   const isPhrase = p => p && typeof p.k === 'string' && typeof p.label === 'string' && typeof p.text === 'string';
   const isTemplate = t => t && typeof t.title === 'string' && typeof t.text === 'string';
@@ -53,6 +53,11 @@
     phrases = [
       ...myPhrases.map((p, i) => ({ ...p, id: 'm' + i, type: 'perso', organ: p.organ || 'Mes phrases', mod: '' })),
       ...CR_PHRASES.map((p, i) => ({ ...p, id: 'b' + i })),
+      // Mots-clés qui ouvrent les schémas et calculateurs (cr-tools.js)
+      ...((window.RHTools && window.RHTools.entries) || []).map((t, i) => ({
+        ...t, id: 't' + i, type: 'outil', organ: 'Schémas et calculateurs', mod: '',
+        text: 'Ouvre l\'outil : schéma, score et texte prêt à insérer dans le compte rendu.',
+      })),
     ].map(p => ({ ...p, keys: [p.k, ...(p.alias || [])].map(norm).filter(Boolean) }));
   };
   const phraseById = id => phrases.find(p => p.id === id);
@@ -87,6 +92,7 @@
   let saveTimer;
   const changed = () => {
     updateStatus();
+    editor.dispatchEvent(new Event('cr:change'));
     clearTimeout(saveTimer);
     saveTimer = setTimeout(() => store.set(KEY.draft, editor.value), 300);
   };
@@ -221,6 +227,11 @@
   };
 
   const insertPhrase = (p, start, end, prefix = '') => {
+    if (p.tool) { // mot-clé d'un outil : on l'efface et on ouvre l'outil
+      replaceRange(start, end, '');
+      if (window.RHTools) window.RHTools.open(p.tool);
+      return;
+    }
     // Ligne déjà commencée par « • » : ne pas doubler la puce de la phrase
     const lineStart = editor.value.lastIndexOf('\n', start - 1) + 1;
     const onBullet = /^[ \t]*•[ \t]*$/.test(editor.value.slice(lineStart, start));
@@ -520,7 +531,7 @@
   let phrType = 'all';
 
   const renderPhrFilters = () => {
-    const types = ['all', ...Object.keys(CR_TYPES).filter(t => phrases.some(p => p.type === t))];
+    const types = ['all', ...Object.keys(CR_TYPES).filter(t => t !== 'outil' && phrases.some(p => p.type === t))];
     if (!types.includes(phrType)) phrType = 'all';
     phrFilters.innerHTML = types.map(t =>
       `<button type="button" class="cr-chip" data-type="${t}" aria-pressed="${t === phrType}"${t !== 'all' ? ` style="--c: var(--${CR_TYPES[t].k})"` : ''}>${t === 'all' ? 'Tous' : esc(CR_TYPES[t].label)}</button>`
@@ -529,7 +540,7 @@
 
   const renderPhrList = () => {
     const q = norm(phrSearch.value.trim());
-    const items = phrases.filter(p => (phrType === 'all' || p.type === phrType)
+    const items = phrases.filter(p => p.type !== 'outil' && (phrType === 'all' || p.type === phrType)
       && (!q || norm([p.k, ...(p.alias || []), p.label, p.organ, p.mod, p.text].join(' ')).includes(q)));
     const groups = new Map();
     items.forEach(p => {
@@ -608,16 +619,69 @@
     download(new Blob(['﻿' + editor.value.replace(/\n/g, '\r\n')], { type: 'text/plain;charset=utf-8' }), 'compte-rendu.txt');
   });
 
+  /* ---------- Schémas joints (outils PI-RADS, BI-RADS, EU-TIRADS) ---------- */
+  const attachBox = $('#cr-attach'), attachList = $('#cr-attach-list');
+  let attachments = store.get(KEY.attach, []);
+  attachments = Array.isArray(attachments)
+    ? attachments.filter(a => a && typeof a.title === 'string' && typeof a.svg === 'string' && a.svg.startsWith('<svg'))
+    : [];
+  const renderAttach = () => {
+    attachBox.hidden = !attachments.length;
+    attachList.innerHTML = attachments.map((a, i) => `
+      <figure class="cr-attach-item">
+        <div class="cr-attach-img">${a.svg}</div>
+        <figcaption>${esc(a.title)}</figcaption>
+        <button type="button" class="cr-attach-del" data-i="${i}" title="Retirer ce schéma" aria-label="Retirer le schéma ${esc(a.title)}">✕</button>
+      </figure>`).join('');
+  };
+  const saveAttach = () => { store.set(KEY.attach, attachments); renderAttach(); };
+  attachList.addEventListener('click', e => {
+    const b = e.target.closest('[data-i]');
+    if (!b) return;
+    attachments.splice(+b.dataset.i, 1);
+    saveAttach();
+  });
+  renderAttach();
+
+  // Liaison avec les outils (cr-tools.js)
+  window.RHEditor = {
+    insert(text) {
+      const s = editor.selectionStart, end = editor.selectionEnd;
+      const before = editor.value.slice(0, s);
+      insertPhrase({ text }, s, end, !before || before.endsWith('\n') ? '' : '\n');
+      flash('Texte de l\'outil inséré dans le compte rendu.');
+    },
+    attach(item) {
+      attachments.push(item);
+      saveAttach();
+      flash(`Schéma joint : ${item.title}`);
+    },
+  };
+
   $('#cr-print-btn').addEventListener('click', () => {
     if (isEmpty()) return;
-    $('#cr-print').textContent = editor.value;
+    const pr = $('#cr-print');
+    pr.textContent = '';
+    const t = document.createElement('div');
+    t.className = 'cr-print-text';
+    t.textContent = editor.value;
+    pr.appendChild(t);
+    attachments.forEach(a => {
+      const f = document.createElement('figure');
+      f.className = 'cr-print-fig';
+      f.innerHTML = `${a.svg}<figcaption>${esc(a.title)}</figcaption>`;
+      pr.appendChild(f);
+    });
     window.print();
   });
 
   $('#cr-clear').addEventListener('click', () => {
-    if (!editor.value || !confirm('Effacer tout le texte de l\'éditeur ?')) return;
+    if (!editor.value && !attachments.length) return;
+    if (!confirm(attachments.length ? 'Effacer tout le texte de l\'éditeur et les schémas joints ?' : 'Effacer tout le texte de l\'éditeur ?')) return;
     closePop();
     replaceRange(0, editor.value.length, '');
+    attachments = [];
+    saveAttach();
     currentTpl = null;
     renderTplList();
     flash('Éditeur effacé (↶ Retour pour annuler).');

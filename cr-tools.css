@@ -1,0 +1,193 @@
+/* =========================================================
+   RadiologicHub — schémas et calculateurs (cr-tools.js)
+   PI-RADS, BI-RADS, EU-TIRADS, RECIST 1.1, Lugano 2014
+   ========================================================= */
+
+/* ---------- Raccourcis au-dessus de l'éditeur ---------- */
+.cr-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 14px; }
+.cr-tools-label { font-size: .66rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+.cr-tool-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: .45em .95em;
+  border-radius: 999px;
+  border: 2px solid var(--plum);
+  background: #fff;
+  font: 900 .68rem var(--font);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform .2s, background .2s, color .2s, box-shadow .2s;
+}
+.cr-tool-chip small { font-size: .6rem; font-weight: 700; text-transform: none; letter-spacing: 0; color: var(--muted); }
+.cr-tool-chip:hover { transform: translateY(-2px); }
+.cr-tool-chip:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.cr-tool-chip.is-suggested { background: var(--plum); color: #fff; box-shadow: 0 0 0 4px rgba(132, 7, 94, .18); }
+.cr-tool-chip.is-suggested small { color: rgba(255, 255, 255, .85); }
+.cr-tool-chip.is-suggested::after {
+  content: "suggéré";
+  position: absolute;
+  top: -9px; right: -6px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--amber);
+  color: var(--ink);
+  font-size: .5rem;
+  letter-spacing: .04em;
+}
+
+/* ---------- Schémas joints ---------- */
+.cr-attach { margin-top: 16px; padding: 14px 16px; border-radius: 18px; border: 3px dashed var(--plum); background: #fff; }
+.cr-attach[hidden] { display: none; }
+.cr-attach-title { margin: 0 0 10px; font-size: .72rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
+.cr-attach-title small { text-transform: none; letter-spacing: 0; font-weight: 600; color: var(--muted); }
+.cr-attach-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
+.cr-attach-item { position: relative; margin: 0; padding: 8px; border-radius: 12px; border: 2px solid rgba(0, 0, 0, .12); background: #fff; }
+.cr-attach-img svg { display: block; width: 100%; height: auto; }
+.cr-attach-item figcaption { margin-top: 6px; font-size: .68rem; font-weight: 700; color: var(--muted); }
+.cr-attach-del {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background: #fff;
+  font: 800 .8rem/1 var(--font);
+  cursor: pointer;
+}
+.cr-attach-del:hover { background: var(--red); border-color: var(--red); color: #fff; }
+
+/* ---------- Fenêtre des outils ---------- */
+.tool-dialog {
+  width: min(1180px, 100% - 24px);
+  max-height: 94vh;
+  padding: 0;
+  border-radius: var(--radius);
+  border: 5px solid var(--ink);
+  background: var(--card);
+  color: var(--text);
+  box-shadow: 12px 12px 0 var(--plum);
+}
+.tool-dialog::backdrop { background: rgba(17, 17, 20, .6); backdrop-filter: blur(4px); }
+.tool-dialog[open] { animation: fade-up .25s ease-out; }
+.tool-inner { padding: 26px clamp(16px, 3vw, 34px) 22px; }
+.tool-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.tool-head h2 { margin: 0; font-size: clamp(1.1rem, 2.4vw, 1.5rem); }
+.tool-head .modal-close { position: static; flex: 0 0 auto; }
+.tool-hint { margin: 6px 0 18px; font-size: .84rem; color: var(--muted); }
+
+.tool-main { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; align-items: start; }
+.tool-dialog.has-schema .tool-main { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
+.tool-schema:empty { display: none; }
+.tool-schema svg { display: block; width: 100%; height: auto; border-radius: 16px; border: 3px solid var(--ink); background: #fff; }
+.tool-schema [data-s], .tool-schema [data-b], .tool-schema [data-z] { cursor: pointer; transition: opacity .15s; }
+.tool-schema [data-s]:hover, .tool-schema [data-z]:hover { opacity: .7; }
+
+/* Champs compacts */
+.tool-form { min-width: 0; }
+.tf-row { display: flex; flex-wrap: wrap; gap: 10px 12px; margin-bottom: 12px; }
+.tf { display: flex; flex-direction: column; gap: 4px; flex: 1 1 130px; min-width: 0; }
+.tf-small { flex: 0 1 110px; }
+.tf-wide { flex: 2 1 240px; }
+.tf > span { font-size: .62rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); }
+.tf input, .tf select, .tl-table input {
+  width: 100%;
+  min-width: 0;
+  padding: .5em .7em;
+  border-radius: 10px;
+  border: 2px solid #cfcfd6;
+  background: #fff;
+  font: 600 .84rem var(--font);
+  color: var(--ink);
+}
+.tf input:focus, .tf select:focus, .tl-table input:focus { outline: none; border-color: var(--cornflower); box-shadow: 0 0 0 3px rgba(82, 115, 191, .2); }
+.tf-check { display: inline-flex; align-items: center; gap: 8px; font-size: .8rem; font-weight: 700; color: var(--ink); cursor: pointer; }
+.tf-check input { width: 18px; height: 18px; accent-color: var(--plum); }
+.tl-box { margin: 0 0 14px; padding: 10px 14px 4px; border-radius: 14px; border: 2px solid rgba(0, 0, 0, .12); background: rgba(255, 255, 255, .6); }
+.tl-box legend { padding: 0 6px; font-size: .66rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+
+/* Onglets des lésions / nodules */
+.tl-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 12px; }
+.tl-tab {
+  --c: var(--ink);
+  padding: .45em .9em;
+  border-radius: 999px;
+  border: 2px solid var(--c);
+  background: #fff;
+  font: 800 .68rem var(--font);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--ink);
+  cursor: pointer;
+}
+.tl-tab b { margin-left: 4px; padding: 0 6px; border-radius: 999px; background: var(--c); color: #fff; font-size: .6rem; }
+.tl-tab.is-active { background: var(--c); color: #fff; box-shadow: 0 0 0 2px var(--ink); }
+.tl-tab.is-active b { background: #fff; color: var(--ink); }
+.tl-add { border-style: dashed; }
+.tl-del { margin-left: auto; border-color: #cfcfd6; color: var(--muted); }
+.tl-del:hover { border-color: var(--red); color: var(--red); }
+.tl-tab:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.tl-note { margin: 0 0 12px; font-size: .8rem; color: var(--muted); }
+.tl-note strong { color: var(--ink); }
+.tl-warn { margin: 0 0 10px; padding: 8px 12px; border-radius: 10px; background: rgba(168, 23, 45, .1); color: var(--red); font-size: .78rem; font-weight: 700; }
+
+/* Tableaux RECIST / Lugano */
+.tl-table { width: 100%; border-collapse: separate; border-spacing: 4px; margin: 0 0 8px; font-size: .78rem; }
+.tl-table th { padding: 0 2px; text-align: left; font-size: .6rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.tl-table td { padding: 0; vertical-align: middle; }
+.tl-c { text-align: center; }
+.tl-c input { width: 18px; height: 18px; accent-color: var(--plum); }
+.tl-pair { white-space: nowrap; }
+.tl-pair input { width: calc(50% - 2px); }
+.tl-pair input + input { margin-left: 4px; }
+.tl-x { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #cfcfd6; background: #fff; font: 800 .9rem/1 var(--font); color: var(--muted); cursor: pointer; }
+.tl-x:hover { border-color: var(--red); color: var(--red); }
+.tool-form > .tl-add { margin-bottom: 14px; }
+
+/* Résultat, aperçu du texte, actions */
+.tool-result { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 14px; }
+.tl-badge { display: inline-block; padding: .45em .9em; border-radius: 999px; background: var(--c); color: #fff; font-size: .74rem; font-weight: 900; letter-spacing: .03em; }
+.tool-preview-label { margin: 0 0 6px; font-size: .66rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.tool-preview {
+  max-height: 220px;
+  overflow: auto;
+  margin: 0 0 14px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 2px solid rgba(0, 0, 0, .12);
+  background: #fff;
+  white-space: pre-wrap;
+  font: 500 .84rem/1.6 var(--font);
+  color: var(--ink);
+}
+.tool-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.tool-actions [hidden] { display: none; }
+.tool-actions .btn { padding: .65em 1.05em; font-size: .66rem; }
+.tool-msg { min-height: 1.4em; margin: 10px 0 0; font-size: .8rem; font-weight: 800; color: var(--green); }
+.tool-msg.is-warn { color: var(--red); }
+.tool-disclaimer { margin: 6px 0 0; font-size: .7rem; color: var(--muted); }
+
+/* ---------- Impression : schémas joints sous le texte ---------- */
+.cr-print-fig { display: none; }
+@media print {
+  .cr-print-text { white-space: pre-wrap; }
+  .cr-print-fig { display: block; margin: 18pt 0 0; break-inside: avoid; }
+  .cr-print-fig svg { width: 100%; max-width: 16cm; height: auto; }
+  .cr-print-fig figcaption { font-size: 9pt; color: #444; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .tool-dialog.has-schema .tool-main { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 640px) {
+  .tool-dialog { width: calc(100% - 12px); max-height: 96vh; box-shadow: 6px 6px 0 var(--plum); }
+  /* Prostate : schéma plus grand, défilement horizontal pour viser les secteurs au doigt */
+  .tool-dialog[data-tool="pirads"] .tool-schema { overflow-x: auto; }
+  .tool-dialog[data-tool="pirads"] .tool-schema svg { min-width: 640px; }
+  .tl-table { font-size: .7rem; }
+  .tl-table th:nth-child(3), .tl-table td:nth-child(3) { width: 34px; }
+}
