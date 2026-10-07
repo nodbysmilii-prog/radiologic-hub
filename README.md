@@ -78,7 +78,7 @@ Page `comptes-rendus.html` (lien « Comptes rendus » dans le menu de toutes les
 
 **Fonctionnement**
 
-1. **Modèles** (colonne de gauche, onglet « Modèles ») : un clic charge le compte rendu type dans l'éditeur. Filtre par spécialité.
+1. **Modèles** (colonne de gauche, onglet « Modèles ») : choisir d'abord l'**examen** (Échographie, Radiographie standard, IRM, TDM, avec le nombre de modèles ; ou « Tous les examens »), puis la **spécialité** (seules celles qui ont des modèles pour cet examen sont proposées) ; un clic charge le compte rendu type dans l'éditeur. L'examen choisi est mémorisé. Les modèles perso sont classés d'après leur titre (« ÉCHOGRAPHIE… », « RADIOGRAPHIE… », « IRM… », « TDM… / SCANNER… ») ; sans examen reconnu, ils apparaissent pour tous les examens.
 2. **Phrases automatiques** : en tapant un mot-clé (ex. `angiome`), une bulle propose aussitôt la ou les descriptions correspondantes (TDM / écho / IRM…). **Tab** (ou clic) insère la description, **↑ ↓** choisit une variante, **Échap** ferme. Les suggestions apparaissent dès le mot-clé exact ou dès 4 lettres du début du mot-clé. **Ctrl + Z** annule une insertion.
 3. **Champs à compléter** : les éléments variables sont entre crochets (`[x] mm`, `[droit / gauche]`). Le premier champ est sélectionné après chaque insertion ; **Tab** (ou le bouton « Champ suivant ») passe au suivant. Le nombre de champs restants est affiché sous l'éditeur, et un avertissement s'affiche à la copie s'il en reste.
 4. **Insertion automatique** (interrupteur sous l'éditeur, désactivé par défaut) : un mot-clé tapé **en début de ligne** (éventuellement après une puce « • ») suivi d'un espace, d'une ponctuation ou d'Entrée est remplacé directement par la première description.
@@ -183,7 +183,7 @@ radiologic-hub/
 | Changer tarifs, programme, FAQ | Directement dans `index.html` |
 | Ajouter une fiche rapide | Créer `fiches/ma-fiche.html` (copier une fiche existante) + ajouter une carte `<a class="fiche-card" data-spe="…">` dans `fiches-rapides.html` |
 | Ajouter une image à une fiche | La déposer dans `assets/fiches/<fiche>/` avec le nom indiqué dans le README du dossier |
-| Ajouter un compte rendu type | Ajouter un objet `{ id, spe, mod, title, text }` dans `CR_TEMPLATES` (`cr-data.js`) ; lien direct possible : `comptes-rendus.html#modele=<id>` |
+| Ajouter un compte rendu type | Ajouter un objet `{ id, spe, mod, title, text }` dans `CR_TEMPLATES` (`cr-data.js`) ; `mod` = `'Écho'`, `'Radio'`, `'IRM'` ou `'TDM'` (liste `CR_MODALITIES`) ; lien direct possible : `comptes-rendus.html#modele=<id>` |
 | Ajouter une phrase automatique | Ajouter un objet `{ k, alias, organ, mod, type, label, text }` dans `CR_PHRASES` (`cr-data.js`). Mot-clé sans espace ni accent ; éviter les mots courants (« foie », « normal »…) qui ouvriraient la bulle en pleine rédaction |
 | Champs à compléter | Les écrire entre crochets `[x]`, `[droit / gauche]` ; **pas de crochets imbriqués** (utiliser « … » à l'intérieur d'un choix) |
 | Style des formules du service | Titre en capitales, `TECHNIQUE :`, `RÉSULTAT :` (ou `COMPTE-RENDU :`), une constatation par ligne précédée de `• `, `AU TOTAL :` / `CONCLUSION :` |
@@ -222,6 +222,7 @@ Site 100 % statique (HTML / CSS / JavaScript, aucune installation).
 
 | Date | Modification |
 |---|---|
+| 07/10/2026 | Comptes rendus : choix des modèles en deux étapes — 1 · examen (Échographie, Radiographie standard, IRM, TDM), 2 · spécialité |
 | 07/10/2026 | Comptes rendus : choix de la messagerie pour l'envoi (Gmail par défaut, Outlook 365, Outlook.com, application Mail) — l'application Mail du Mac sans compte configuré bloquait l'envoi |
 | 07/10/2026 | Comptes rendus : boutons ↶ Retour / ↷ Rétablir (historique propre à l'éditeur, Ctrl + Z / Ctrl + Y) et envoi par e-mail en un clic (ouvre la messagerie avec le CR pré-rempli, adresse mémorisée) |
 | 07/10/2026 | Comptes rendus : les 13 premiers modèles passent au format du service (TECHNIQUE / RÉSULTAT / AU TOTAL, puces « • », « TDM » au lieu de « scanner ») ; arthrose interapophysaire en choix `[Absence d'arthrose / Arthrose]` à chaque étage de l'IRM médullaire |

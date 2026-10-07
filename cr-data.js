@@ -23,6 +23,15 @@ const CR_SPECIALTIES = {
   perso:      { label: 'Mes modèles',       c: 'var(--orange)' },
 };
 
+/* Examens (1er niveau de choix des modèles), dans l'ordre d'affichage.
+   La clé correspond au champ « mod » des modèles. */
+const CR_MODALITIES = {
+  'Écho':  { label: 'Échographie' },
+  'Radio': { label: 'Radiographie standard' },
+  'IRM':   { label: 'IRM' },
+  'TDM':   { label: 'TDM' },
+};
+
 /* Types de phrases → code couleur k-* */
 const CR_TYPES = {
   normal:     { label: 'Normal',                 k: 'k-tech' },

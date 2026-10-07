@@ -9,9 +9,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261007210000">
-  <link rel="stylesheet" href="fiche.css?v=20261007210000">
-  <link rel="stylesheet" href="cr.css?v=20261007210000">
+  <link rel="stylesheet" href="styles.css?v=20261007220000">
+  <link rel="stylesheet" href="fiche.css?v=20261007220000">
+  <link rel="stylesheet" href="cr.css?v=20261007220000">
 </head>
 <body>
 
@@ -42,7 +42,7 @@
         <h1>Comptes rendus <span class="hl-navy">types</span></h1>
         <p class="fiche-sub">Partez d'un <span class="hl-navy">modèle</span>, tapez un <span class="hl-red">mot-clé</span> : la description de la lésion apparaît et s'insère dans votre compte rendu.</p>
         <ol class="cr-steps">
-          <li style="--c: var(--blue)"><b>1</b><span>Choisissez un <strong>modèle</strong> dans la bibliothèque.</span></li>
+          <li style="--c: var(--blue)"><b>1</b><span>Choisissez l'<strong>examen</strong>, la spécialité, puis le <strong>modèle</strong>.</span></li>
           <li style="--c: var(--orange)"><b>2</b><span>Tapez un mot-clé, par exemple <mark class="k-sign">angiome</mark> : la description apparaît, <kbd>Tab</kbd> l'insère.</span></li>
           <li style="--c: var(--green)"><b>3</b><span><kbd>Tab</kbd> passe d'un champ <code>[ … ]</code> au suivant. Puis <strong>Copier</strong> ou <strong>Envoyer par e-mail</strong>.</span></li>
         </ol>
@@ -60,7 +60,10 @@
           </div>
 
           <div class="cr-panel" id="panel-tpl" role="tabpanel" aria-labelledby="tab-tpl">
-            <div class="cr-chips" id="tpl-filters" aria-label="Filtrer par spécialité"></div>
+            <p class="cr-step-label">1 · Examen</p>
+            <div class="cr-mods" id="tpl-mods" aria-label="Choisir l'examen"></div>
+            <p class="cr-step-label">2 · Spécialité</p>
+            <div class="cr-chips" id="tpl-filters" aria-label="Choisir la spécialité"></div>
             <ul class="cr-tpl-list" id="tpl-list"></ul>
             <p class="cr-empty" id="tpl-empty" hidden>Aucun modèle personnel pour l'instant : écrivez ou modifiez un compte rendu puis cliquez sur <strong>Enregistrer comme modèle</strong>.</p>
           </div>
@@ -211,8 +214,8 @@
   <!-- Version imprimable du compte rendu -->
   <div class="cr-print" id="cr-print" aria-hidden="true"></div>
 
-  <script src="fiche.js?v=20261007210000"></script>
-  <script src="cr-data.js?v=20261007210000"></script>
-  <script src="cr.js?v=20261007210000"></script>
+  <script src="fiche.js?v=20261007220000"></script>
+  <script src="cr-data.js?v=20261007220000"></script>
+  <script src="cr.js?v=20261007220000"></script>
 </body>
 </html>

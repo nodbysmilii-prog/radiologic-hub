@@ -28,7 +28,7 @@
       try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
     },
   };
-  const KEY = { draft: 'rh-cr-draft', auto: 'rh-cr-auto', phrases: 'rh-cr-phrases', templates: 'rh-cr-templates', email: 'rh-cr-email', mailer: 'rh-cr-mailer' };
+  const KEY = { draft: 'rh-cr-draft', auto: 'rh-cr-auto', phrases: 'rh-cr-phrases', templates: 'rh-cr-templates', email: 'rh-cr-email', mailer: 'rh-cr-mailer', modality: 'rh-cr-modality' };
 
   const isPhrase = p => p && typeof p.k === 'string' && typeof p.label === 'string' && typeof p.text === 'string';
   const isTemplate = t => t && typeof t.title === 'string' && typeof t.text === 'string';
@@ -409,15 +409,42 @@
   $('#tab-tpl').addEventListener('click', () => showPanel('tpl'));
   $('#tab-phr').addEventListener('click', () => showPanel('phr'));
 
-  /* ---------- Modèles ---------- */
+  /* ---------- Modèles : 1 · examen, 2 · spécialité ---------- */
+  const tplMods = $('#tpl-mods');
   const tplFilters = $('#tpl-filters');
   const tplList = $('#tpl-list');
+  const MODS = typeof CR_MODALITIES !== 'undefined' ? CR_MODALITIES : {};
+  let modFilter = store.get(KEY.modality, 'all');
+  if (modFilter !== 'all' && !MODS[modFilter]) modFilter = 'all';
   let tplFilter = 'all';
   let currentTpl = null;
-  const allTemplates = () => [...CR_TEMPLATES, ...myTemplates.map(t => ({ ...t, spe: 'perso', mine: true }))];
+
+  // Examen d'un modèle perso deviné d'après son titre (1re ligne)
+  const guessMod = text => {
+    const t = norm(String(text).trim().split('\n')[0]);
+    if (/echo/.test(t)) return 'Écho';
+    if (/\birm\b/.test(t)) return 'IRM';
+    if (/tdm|scanner|tomodensit/.test(t)) return 'TDM';
+    if (/radio/.test(t)) return 'Radio';
+    return '';
+  };
+  const allTemplates = () => [...CR_TEMPLATES, ...myTemplates.map(t => ({ ...t, spe: 'perso', mine: true, mod: t.mod || guessMod(t.text) }))];
+  // Un modèle perso sans examen reconnu reste visible quel que soit l'examen choisi
+  const matchMod = t => modFilter === 'all' || t.mod === modFilter || (t.mine && !MODS[t.mod]);
+
+  const renderTplMods = () => {
+    const all = allTemplates();
+    tplMods.innerHTML = Object.entries(MODS).map(([k, m]) => {
+      const n = all.filter(t => t.mod === k || (t.mine && !MODS[t.mod])).length;
+      return `<button type="button" class="cr-mod-btn" data-mod="${esc(k)}" aria-pressed="${k === modFilter}"${n ? '' : ' disabled'}>${esc(m.label)}<span class="cr-mod-count">${n}</span></button>`;
+    }).join('') + `<button type="button" class="cr-mod-btn is-all" data-mod="all" aria-pressed="${modFilter === 'all'}">Tous les examens · ${all.length}</button>`;
+  };
 
   const renderTplFilters = () => {
-    const spes = ['all', ...Object.keys(CR_SPECIALTIES).filter(s => s === 'perso' || CR_TEMPLATES.some(t => t.spe === s))];
+    renderTplMods();
+    const pool = allTemplates().filter(matchMod);
+    const spes = ['all', ...Object.keys(CR_SPECIALTIES).filter(s => pool.some(t => t.spe === s) || (s === 'perso' && modFilter === 'all'))];
+    if (!spes.includes(tplFilter)) tplFilter = 'all';
     tplFilters.innerHTML = spes.map(s => {
       const sp = CR_SPECIALTIES[s];
       return `<button type="button" class="cr-chip" data-spe="${s}" aria-pressed="${s === tplFilter}"${sp ? ` style="--c: ${sp.c}"` : ''}>${s === 'all' ? 'Tous' : esc(sp.label)}</button>`;
@@ -425,12 +452,12 @@
   };
 
   const renderTplList = () => {
-    const items = allTemplates().filter(t => tplFilter === 'all' || t.spe === tplFilter);
+    const items = allTemplates().filter(t => matchMod(t) && (tplFilter === 'all' || t.spe === tplFilter));
     tplList.innerHTML = items.map(t => {
       const sp = CR_SPECIALTIES[t.spe] || CR_SPECIALTIES.perso;
       return `<li class="cr-tpl${t.mine ? ' is-mine' : ''}">
         <button type="button" class="cr-tpl-btn" data-id="${esc(t.id)}" style="--c: ${sp.c}" aria-current="${t.id === currentTpl}">
-          <span class="cr-tpl-meta">${esc(sp.label)}${t.mod ? ` <span class="cr-mod">${esc(t.mod)}</span>` : ''}</span>
+          <span class="cr-tpl-meta">${esc(sp.label)}${MODS[t.mod] ? ` <span class="cr-mod">${esc(t.mod)}</span>` : ''}</span>
           <span class="cr-tpl-title">${esc(t.title)}</span>
         </button>
         ${t.mine ? `<button type="button" class="cr-del" data-del="${esc(t.id)}" title="Supprimer ce modèle" aria-label="Supprimer le modèle ${esc(t.title)}">✕</button>` : ''}
@@ -455,6 +482,14 @@
     return true;
   };
 
+  tplMods.addEventListener('click', e => {
+    const b = e.target.closest('[data-mod]');
+    if (!b || b.disabled) return;
+    modFilter = b.dataset.mod;
+    store.set(KEY.modality, modFilter);
+    renderTplFilters();
+    renderTplList();
+  });
   tplFilters.addEventListener('click', e => {
     const b = e.target.closest('[data-spe]');
     if (!b) return;
@@ -469,6 +504,7 @@
       if (t && confirm(`Supprimer le modèle « ${t.title} » ?`)) {
         myTemplates = myTemplates.filter(x => x !== t);
         store.set(KEY.templates, myTemplates);
+        renderTplFilters();
         renderTplList();
       }
       return;
@@ -592,10 +628,12 @@
     const firstLine = editor.value.trim().split('\n')[0].trim().slice(0, 80);
     const title = prompt('Nom du modèle :', firstLine);
     if (title === null) return;
-    const t = { id: 'perso-' + Date.now().toString(36), title: title.trim() || firstLine, text: editor.value };
+    const t = { id: 'perso-' + Date.now().toString(36), title: title.trim() || firstLine, text: editor.value, mod: guessMod(editor.value) };
     myTemplates.push(t);
     store.set(KEY.templates, myTemplates);
     currentTpl = t.id;
+    modFilter = MODS[t.mod] ? t.mod : 'all';
+    store.set(KEY.modality, modFilter);
     tplFilter = 'perso';
     showPanel('tpl');
     renderTplFilters();
@@ -788,7 +826,7 @@
       });
       tp.forEach(t => {
         if (!myTemplates.some(q => q.title === t.title && q.text === t.text)) {
-          myTemplates.push({ id: 'perso-' + Math.random().toString(36).slice(2, 10), title: t.title, text: t.text });
+          myTemplates.push({ id: 'perso-' + Math.random().toString(36).slice(2, 10), title: t.title, text: t.text, mod: typeof t.mod === 'string' ? t.mod : '' });
         }
       });
       refreshPhrases();
@@ -820,6 +858,7 @@
     const linked = id && allTemplates().find(t => t.id === id);
     if (!linked) return;
     history.replaceState(null, '', location.pathname);
+    modFilter = MODS[linked.mod] ? linked.mod : 'all';
     tplFilter = linked.spe;
     renderTplFilters();
     renderTplList();
