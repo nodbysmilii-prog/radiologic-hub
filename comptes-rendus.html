@@ -9,10 +9,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261008160000">
-  <link rel="stylesheet" href="fiche.css?v=20261008160000">
-  <link rel="stylesheet" href="cr.css?v=20261008160000">
-  <link rel="stylesheet" href="cr-tools.css?v=20261008160000">
+  <link rel="stylesheet" href="styles.css?v=20261008170000">
+  <link rel="stylesheet" href="fiche.css?v=20261008170000">
+  <link rel="stylesheet" href="cr.css?v=20261008170000">
+  <link rel="stylesheet" href="cr-tools.css?v=20261008170000">
+  <link rel="stylesheet" href="dictee/dictee.css?v=20261008170000">
 </head>
 <body>
 
@@ -95,6 +96,53 @@
             <button class="btn btn-outline btn-sm cr-danger" type="button" id="cr-clear">Effacer</button>
           </div>
 
+          <!-- Dictée vocale (dictee/*.js) -->
+          <div class="dt-bar" id="dt-bar">
+            <button class="btn btn-sm dt-mic" type="button" id="dt-mic" aria-pressed="false"><svg class="dt-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M9 21h6" fill="none"/></svg><span class="dt-lab">Dicter</span><kbd class="dt-kbd" id="dt-kbd">F9</kbd></button>
+            <span class="dt-rec" id="dt-rec" hidden><i aria-hidden="true"></i>Dictée en cours <b id="dt-temps">0:00</b></span>
+            <span class="dt-live" id="dt-live" aria-live="polite"></span>
+            <span class="dt-bar-end">
+              <button class="dt-icon-btn" type="button" id="dt-aide-btn" aria-expanded="false" aria-controls="dt-aide" title="Commandes vocales">?</button>
+              <button class="dt-icon-btn" type="button" id="dt-reglages-btn" aria-expanded="false" aria-controls="dt-reglages" title="Réglages de la dictée">⚙</button>
+            </span>
+            <p class="dt-warn" id="dt-warn">La dictée passe par le service du navigateur : ne dictez pas d'identité patient.</p>
+            <p class="dt-unsupported" id="dt-unsupported" hidden></p>
+            <p class="dt-msg" id="dt-msg" role="status" aria-live="polite"></p>
+          </div>
+          <div class="dt-panel" id="dt-aide" hidden>
+            <p class="dt-panel-title">Commandes vocales</p>
+            <ul class="dt-cmds">
+              <li><b>« point »</b>, <b>« virgule »</b>, <b>« deux points »</b>, <b>« point-virgule »</b>, <b>« ouvrir / fermer la parenthèse »</b></li>
+              <li><b>« à la ligne »</b> (une ligne à puce continue la liste), <b>« nouvelle puce »</b>, <b>« nouveau paragraphe »</b></li>
+              <li><b>« effacer le dernier mot »</b></li>
+              <li><b>« conclusion »</b> (dit seul) : curseur dans AU TOTAL / CONCLUSION (créée si absente)</li>
+              <li><b>« aller à foie »</b>, « aller à la vésicule biliaire »… : curseur juste après le sous-titre (« Foie : ») ou dans la section</li>
+              <li><b>« insérer modèle scanner thoracique »</b> : examen complet (vide → chargé ; sinon « remplacer », « insérer » ou « annuler ») ; <b>« insérer la phrase foie normal »</b> : inséré au curseur</li>
+              <li><b>« arrêter la dictée »</b></li>
+            </ul>
+            <p class="dt-panel-note">Corrections automatiques : « pi rads » → PI-RADS, « 12 virgule 5 » → 12,5, « 12 sur 8 millimètres » → 12 x 8 mm, « 12 sur 8 sur 6 » → 12 x 8 x 6 mm, « 4 sur 5 » → 4/5… (dictionnaire : <code>dictee/corrections.js</code>). « Point » reste un mot dans « point de départ », « point d'appel »… Le texte dicté reste modifiable au clavier à tout moment.</p>
+          </div>
+          <div class="dt-panel" id="dt-reglages" hidden>
+            <p class="dt-panel-title">Réglages de la dictée</p>
+            <div class="dt-set">
+              <label for="dt-moteur">Moteur de transcription</label>
+              <select id="dt-moteur"></select>
+            </div>
+            <div class="dt-set">
+              <span>Touche démarrer / arrêter</span>
+              <button class="btn btn-outline btn-sm dt-key" type="button" data-touche="toucheBasculer"></button>
+            </div>
+            <div class="dt-set">
+              <span>Touche arrêter</span>
+              <button class="btn btn-outline btn-sm dt-key" type="button" data-touche="toucheArreter"></button>
+            </div>
+            <p class="dt-panel-note">Cliquez sur une touche puis appuyez sur la nouvelle touche (Échap annule). Une touche simple (F9, F10…) convient aussi à une <b>pédale de dictée USB</b>. Évitez Ctrl + Maj (changement de langue du clavier sous Windows).</p>
+            <button class="btn btn-outline btn-sm" type="button" id="dt-reset">Réglages par défaut</button>
+          </div>
+          <div class="dt-confirm" id="dt-confirm" hidden></div>
+          <div class="dt-alerte" id="dt-alerte" role="alert" hidden></div>
+          <div class="dt-sections" id="dt-sections" aria-label="Sections du compte rendu : cliquez pour y dicter" hidden></div>
+
           <div class="cr-tools" id="cr-tools" aria-label="Schémas et calculateurs">
             <span class="cr-tools-label">Schémas &amp; calculateurs</span>
             <a class="cr-tool-chip cr-tool-link" href="suivi-oncologique.html">Suivi oncologique<small>RECIST · Lugano →</small></a>
@@ -106,6 +154,8 @@
               aria-autocomplete="list" aria-controls="cr-sug-list" aria-expanded="false"
               aria-describedby="cr-status-text"
               placeholder="Choisissez un modèle à gauche, ou commencez à écrire…&#10;&#10;Astuce : tapez « angiome », « kyste », « hsd », « ep », « appendicite »… la description apparaît, Tab l'insère."></textarea>
+            <div class="dt-bulle" id="dt-bulle" aria-hidden="true" hidden></div>
+            <button class="dt-champ" id="dt-champ" type="button" hidden title="Dicter ce champ"><svg class="dt-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M9 21h6" fill="none"/></svg>Dicter</button>
             <div class="cr-pop" id="cr-pop" hidden>
               <ul role="listbox" id="cr-sug-list" aria-label="Phrases proposées"></ul>
               <p class="cr-pop-help"><kbd>Tab</kbd> insérer · <kbd>↑</kbd><kbd>↓</kbd> choisir · <kbd>Échap</kbd> fermer</p>
@@ -177,11 +227,11 @@
             </div>
             <div class="field">
               <label for="ph-label">Intitulé</label>
-              <input id="ph-label" type="text" autocomplete="off" placeholder="ex. Kyste biliaire — ma formulation" required>
+              <input id="ph-label" type="text" autocomplete="off" placeholder="ex. Kyste biliaire — ma formulation" required data-dictee>
             </div>
             <div class="field">
               <label for="ph-text">Texte inséré</label>
-              <textarea id="ph-text" rows="6" required placeholder="Formation kystique du segment [x] de [x] mm…"></textarea>
+              <textarea id="ph-text" rows="6" required placeholder="Formation kystique du segment [x] de [x] mm…" data-dictee></textarea>
             </div>
             <p class="cr-form-help">Mot-clé sans espace (les accents et majuscules sont ignorés). Mettez les éléments variables entre crochets : <code>[x] mm</code>, <code>[droit / gauche]</code>. La touche <kbd>Tab</kbd> passera de l'un à l'autre.</p>
             <div class="cr-form-actions">
@@ -258,11 +308,15 @@
   <!-- Version imprimable du compte rendu -->
   <div class="cr-print" id="cr-print" aria-hidden="true"></div>
 
-  <script src="fiche.js?v=20261008160000"></script>
-  <script src="cr-data.js?v=20261008160000"></script>
-  <script src="schemas/prostate.js?v=20261008160000"></script>
-  <script src="regles/fleischner.js?v=20261008160000"></script>
-  <script src="cr-tools.js?v=20261008160000"></script>
-  <script src="cr.js?v=20261008160000"></script>
+  <script src="fiche.js?v=20261008170000"></script>
+  <script src="cr-data.js?v=20261008170000"></script>
+  <script src="schemas/prostate.js?v=20261008170000"></script>
+  <script src="regles/fleischner.js?v=20261008170000"></script>
+  <script src="cr-tools.js?v=20261008170000"></script>
+  <script src="cr.js?v=20261008170000"></script>
+  <script src="dictee/corrections.js?v=20261008170000"></script>
+  <script src="dictee/traitement.js?v=20261008170000"></script>
+  <script src="dictee/moteurs.js?v=20261008170000"></script>
+  <script src="dictee/dictee.js?v=20261008170000"></script>
 </body>
 </html>

@@ -35,7 +35,7 @@
   const sel = (f, label, pairs, val, o = {}) =>
     `<label class="tf${o.wide ? ' tf-wide' : ''}"><span>${label}</span><select data-f="${f}"${o.re ? ' data-re' : ''}>${opt(pairs, val)}</select></label>`;
   const inp = (f, label, val, o = {}) =>
-    `<label class="tf${o.wide ? ' tf-wide' : ''}${o.small ? ' tf-small' : ''}"><span>${label}</span><input data-f="${f}" value="${esc(val)}" placeholder="${esc(o.ph || '')}"${o.text ? '' : ' inputmode="decimal"'} autocomplete="off"></label>`;
+    `<label class="tf${o.wide ? ' tf-wide' : ''}${o.small ? ' tf-small' : ''}"><span>${label}</span><input data-f="${f}" value="${esc(val)}" placeholder="${esc(o.ph || '')}"${o.text ? ' data-dictee' : ' inputmode="decimal"'} autocomplete="off"></label>`;
   const chk = (f, label, val, o = {}) =>
     `<label class="tf-check"><input type="checkbox" data-f="${f}"${val ? ' checked' : ''}${o.re ? ' data-re' : ''}> ${label}</label>`;
   const badge = (txt, color) => `<span class="tl-badge" style="--c:${color}">${esc(txt)}</span>`;

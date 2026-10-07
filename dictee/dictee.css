@@ -1,0 +1,81 @@
+/* =========================================================
+   RadiologicHub — Dictée vocale (page Comptes rendus)
+   ========================================================= */
+
+.dt-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 0 12px; padding: 10px 14px; border-radius: 16px; border: 3px solid var(--ink); background: var(--card); transition: border-color .2s, box-shadow .2s; }
+.dt-bar.is-rec { border-color: var(--red); box-shadow: 6px 6px 0 rgba(168, 23, 45, .35); }
+.dt-svg { width: 15px; height: 15px; flex: 0 0 auto; fill: currentColor; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.dt-svg path { fill: none; }
+.dt-mic { display: inline-flex; align-items: center; gap: 8px; padding: .6em 1.1em; font-size: .7rem; border: 3px solid var(--ink); background: #fff; color: var(--ink); }
+.dt-mic:hover { background: var(--ink); color: #fff; }
+.dt-mic.is-on { background: var(--red); border-color: var(--red); color: #fff; }
+.dt-mic.is-on .dt-svg { animation: dt-pulse 1.2s ease-in-out infinite; }
+.dt-kbd { padding: .1em .45em; border-radius: 6px; border: 1.5px solid currentColor; font: 800 .6rem var(--font); opacity: .75; }
+.dt-rec { display: inline-flex; align-items: center; gap: 8px; font-size: .74rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: var(--red); }
+.dt-rec[hidden] { display: none; }
+.dt-rec i { width: 11px; height: 11px; border-radius: 50%; background: var(--red); animation: dt-pulse 1.2s ease-in-out infinite; }
+.dt-rec b { font-variant-numeric: tabular-nums; }
+.dt-live { flex: 1 1 160px; min-width: 0; font-size: .8rem; font-style: italic; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dt-bar-end { display: inline-flex; gap: 6px; margin-left: auto; }
+.dt-icon-btn { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--ink); background: #fff; font: 900 .85rem var(--font); color: var(--ink); cursor: pointer; }
+.dt-icon-btn[aria-expanded="true"] { background: var(--ink); color: #fff; }
+.dt-warn { flex-basis: 100%; margin: 0; padding: 6px 12px; border-radius: 10px; border-left: 5px solid var(--amber); background: #fff4d6; font-size: .76rem; font-weight: 700; color: var(--ink); }
+.dt-unsupported { flex-basis: 100%; margin: 0; padding: 6px 12px; border-radius: 10px; background: rgba(168, 23, 45, .1); font-size: .78rem; font-weight: 800; color: var(--red); }
+.dt-unsupported[hidden] { display: none; }
+.dt-unsupported.is-flash { animation: dt-flash .9s ease-out; }
+@keyframes dt-flash { 0%, 40% { background: rgba(168, 23, 45, .3); } 100% { background: rgba(168, 23, 45, .1); } }
+.dt-msg { flex-basis: 100%; min-height: 0; margin: 0; font-size: .78rem; font-weight: 800; color: var(--green); }
+.dt-msg:empty { display: none; }
+.dt-msg.is-warn { color: var(--red); }
+.is-ko { opacity: .45; }
+.dt-mic.is-ko:hover { background: #fff; color: var(--ink); }
+@keyframes dt-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.25); opacity: .55; } }
+
+.dt-panel { margin: 0 0 12px; padding: 14px 18px; border-radius: 16px; border: 3px solid var(--ink); background: #fff; font-size: .82rem; }
+.dt-panel[hidden] { display: none; }
+.dt-panel-title { margin: 0 0 8px; font-size: .72rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
+.dt-panel-note { margin: 10px 0 0; font-size: .76rem; color: var(--muted); }
+.dt-cmds { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
+.dt-set { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 0 0 10px; }
+.dt-set > label, .dt-set > span { min-width: 190px; font-size: .7rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); }
+.dt-set select { padding: .45em .7em; border-radius: 10px; border: 2px solid #cfcfd6; font: 600 .82rem var(--font); max-width: 100%; }
+.dt-key { min-width: 110px; text-transform: none; letter-spacing: 0; }
+.dt-key.is-capture { background: var(--amber); border-color: var(--amber); color: var(--ink); }
+
+.dt-confirm, .dt-alerte { margin: 0 0 12px; padding: 12px 16px; border-radius: 16px; font-size: .84rem; }
+.dt-confirm { border: 3px solid var(--amber); background: #fff8e6; }
+.dt-alerte { border: 3px solid var(--red); background: #fde2e4; color: #7a1020; }
+.dt-confirm[hidden], .dt-alerte[hidden] { display: none; }
+.dt-confirm p, .dt-alerte p { margin: 0 0 8px; }
+.dt-confirm-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+.dt-confirm-hint { margin: 8px 0 0 !important; font-size: .74rem; font-style: italic; color: var(--muted); }
+
+.dt-sections { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 12px; }
+.dt-sections[hidden] { display: none; }
+.dt-sec-label { font-size: .66rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.dt-sec { display: inline-flex; align-items: center; gap: 6px; padding: .35em .8em; border-radius: 999px; border: 2px solid var(--ink); background: #fff; font: 800 .64rem var(--font); letter-spacing: .06em; text-transform: uppercase; color: var(--ink); cursor: pointer; }
+.dt-sec .dt-svg { width: 12px; height: 12px; }
+.dt-sec-sous { border-color: rgba(17, 17, 20, .25); font-size: .72rem; font-weight: 700; letter-spacing: 0; text-transform: none; }
+.dt-sec:hover { border-color: var(--red); color: var(--red); }
+
+.cr-editor.is-dictating, .cr-editor.is-dictating:focus { border-color: var(--red); box-shadow: 10px 10px 0 var(--red); }
+.dt-bulle { position: absolute; z-index: 6; max-width: min(520px, 80%); padding: 6px 12px; border-radius: 12px; background: rgba(17, 17, 20, .88); color: #fff; font-size: .85rem; font-style: italic; pointer-events: none; }
+.dt-bulle[hidden] { display: none; }
+.dt-champ { position: absolute; z-index: 6; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; border: 2px solid var(--red); background: #fff; font: 800 .62rem var(--font); letter-spacing: .06em; text-transform: uppercase; color: var(--red); cursor: pointer; box-shadow: 3px 3px 0 rgba(168, 23, 45, .3); }
+.dt-champ[hidden] { display: none; }
+.dt-champ:hover { background: var(--red); color: #fff; }
+
+.dt-host { position: relative; }
+.dt-host > input[data-dictee], .dt-host > textarea[data-dictee] { padding-right: 42px; }
+.dt-mini { position: absolute; right: 8px; bottom: 7px; width: 28px; height: 28px; display: grid; place-items: center; padding: 0; border-radius: 50%; border: 2px solid var(--ink); background: #fff; color: var(--ink); cursor: pointer; }
+.dt-mini .dt-svg { width: 13px; height: 13px; }
+.dt-mini:hover, .dt-mini.is-on { background: var(--red); border-color: var(--red); color: #fff; }
+.dt-zone-on { border-color: var(--red) !important; box-shadow: 0 0 0 3px rgba(168, 23, 45, .2); }
+
+@media (max-width: 640px) {
+  .dt-live { flex-basis: 100%; order: 5; }
+  .dt-set > label, .dt-set > span { min-width: 0; flex-basis: 100%; }
+}
+@media print {
+  .dt-bar, .dt-panel, .dt-confirm, .dt-alerte, .dt-sections, .dt-bulle, .dt-champ, .dt-mini { display: none !important; }
+}

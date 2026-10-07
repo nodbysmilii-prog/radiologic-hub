@@ -691,6 +691,25 @@
       saveAttach();
       flash(`Schéma joint : ${item.title}`);
     },
+    // ----- Dictée vocale (dictee/dictee.js) -----
+    el: editor,
+    /* Remplace [start, end] (une étape d'historique : « ↶ Retour » l'annule) */
+    remplacer(start, end, text) { closePop(); replaceRange(start, end, text); revealCaret(); },
+    placer(start, end = start) { closePop(); editor.focus({ preventScroll: true }); editor.setSelectionRange(start, end); revealCaret(); },
+    /* Position d'un caractère dans .cr-editor-wrap (bulle, bouton micro du champ) */
+    ancre(pos) {
+      const c = caretCoords(pos);
+      return { top: editor.offsetTop + c.top, bottom: editor.offsetTop + c.bottom, left: editor.offsetLeft + c.left, visible: c.bottom > 0 && c.top < editor.clientHeight };
+    },
+    modeles: () => allTemplates().map(t => ({ type: 'modele', id: t.id, titre: t.title, texte: t.text, mod: t.mod || '' })),
+    phrases: () => phrases.filter(p => !p.tool).map(p => ({ type: 'phrase', id: p.id, titre: p.label, cles: [p.k, ...(p.alias || [])], texte: p.text, mod: p.mod || '' })),
+    chargerModele: id => loadTemplate(id, false),
+    /* Bloc de texte (phrase, modèle) inséré au curseur, comme une phrase de la bibliothèque */
+    insererBloc(text) {
+      const s = editor.selectionStart, end = editor.selectionEnd;
+      const before = editor.value.slice(0, s);
+      insertPhrase({ text }, s, end, !before || before.endsWith('\n') ? '' : '\n');
+    },
   };
 
   $('#cr-print-btn').addEventListener('click', () => {
