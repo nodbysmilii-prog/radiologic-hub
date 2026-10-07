@@ -128,7 +128,7 @@ Page `comptes-rendus.html` (lien « Comptes rendus » dans le menu de toutes les
 
 ## Suivi oncologique (RECIST 1.1 / Lugano)
 
-Page `suivi-oncologique.html` (lien depuis la page Comptes rendus : bouton « Suivi oncologique » au-dessus de l'éditeur, et pied de page). Module développé par étapes ; **étape 1 livrée** : modèle de données, registre des lésions, tableau comparatif.
+Page `suivi-oncologique.html` (lien depuis la page Comptes rendus : bouton « Suivi oncologique » au-dessus de l'éditeur, et pied de page). Module développé par étapes ; **livré** : modèle de données, registre des lésions, tableau comparatif (étape 1) et **schéma anatomique de vue d'ensemble**.
 
 **Principe** : chaque lésion est un objet suivi d'un examen à l'autre, avec un identifiant fixe jamais réutilisé — `C1, C2…` (cibles), `NC1…` (non-cibles), `N1…` (nouvelles). Au nouvel examen, toutes les lésions sont reportées avec leurs mesures antérieures : seule la colonne « Actuel » est à saisir.
 
@@ -140,11 +140,12 @@ Page `suivi-oncologique.html` (lien depuis la page Comptes rendus : bouton « Su
 - **Tableau comparatif** : Lésion | Localisation (Se / Im) | Baseline | Nadir | Précédent | Actuel | Δ vs baseline | Δ vs nadir, groupé en cibles / non-cibles / nouvelles, avec la **somme des diamètres** (ligne « incomplète » si une cible n'est pas mesurée). Statuts d'une cible : mesurée, trop petite (5 mm), disparue (0 mm), non évaluable (motif obligatoire). Non-cibles : présente, disparue, progression non équivoque, non évaluable. Nouvelles : présente, disparue, non évaluable.
 - **Nadir** : plus petite somme complète depuis la baseline incluse jusqu'à l'examen précédent inclus (l'examen évalué est exclu ; à égalité, le plus ancien).
 - **Saisie** : virgule ou point, mm par défaut, « 1,8 cm » converti en 18 mm ; **Entrée** passe à la mesure suivante ; mesure invalide signalée en rouge.
+- **Vue d'ensemble (schéma anatomique)** : silhouette de face (droite du patient à gauche de l'image) où chaque lésion de l'examen affiché se place **automatiquement** d'après son organe et son segment / territoire : côté droit / gauche (« droit », « G », LSD, LIG, lingula…), segments hépatiques I à VIII, lobes pulmonaires, **stations ganglionnaires** (cervicale, sus-claviculaire, axillaire, médiastinale, hilaire, sous-carénaire, cœliaque, mésentérique, lombo-aortique, iliaque, inguinale — utiles aussi pour Lugano), niveaux vertébraux (C, D/T, L, S), os longs, organes abdominaux et pelviens. Forme selon le type (● cible, ■ non-cible, ▲ nouvelle) ; **couleur indicative** lésion par lésion : bleu baseline, vert baisse ≥ 30 % vs baseline / disparue / ganglion < 10 mm, ambre stable, rouge hausse ≥ 20 % **et** ≥ 5 mm vs nadir (ou réapparition), non-cible en progression, nouvelle lésion ; gris non évaluable ; blanc à saisir. Mise à jour en direct pendant la saisie ; survol d'une ligne du tableau = repère mis en évidence, clic sur un repère = ligne du tableau ; résumé par type et par état ; lésions non placées signalées (bouton pour préciser l'organe) ; **Télécharger l'image (PNG)** avec légende. Liste de territoires proposée dans la fiche lésion. La réponse RECIST se juge toujours sur la **somme** (les couleurs ne sont qu'un repère visuel).
 - **Mention permanente** : « Aide au calcul — résultat à valider par le radiologue ».
 
-**Fichiers** : `suivi/seuils.js` (tous les seuils RECIST 1.1, Lugano 2014 et contrôles, commentés avec les références, **à faire vérifier médicalement**), `suivi/registre.js` (modèle, report, sommes, nadir, comparatif, JSON — sans dépendance au navigateur, testé sous Node), `suivi-oncologique.html`, `suivi.js`, `suivi.css`.
+**Fichiers** : `suivi/seuils.js` (tous les seuils RECIST 1.1, Lugano 2014 et contrôles, commentés avec les références, **à faire vérifier médicalement**), `suivi/registre.js` (modèle, report, sommes, nadir, comparatif, JSON — sans dépendance au navigateur, testé sous Node), `suivi/schema.js` (placement des lésions, état / couleur, dessin SVG — testé sous Node), `suivi-oncologique.html`, `suivi.js`, `suivi.css`.
 
-**Étapes suivantes** : 2) moteur RECIST 1.1 et verdict justifié ; 3) texte du compte rendu ; 4) contrôles anti-erreur (checklist, valeurs incohérentes, technique différente) ; 5) mode Lugano ; 6) import de comptes rendus en texte libre ; 7) QR code, courbe, schéma anatomique, iRECIST.
+**Étapes suivantes** : 2) moteur RECIST 1.1 et verdict justifié ; 3) texte du compte rendu ; 4) contrôles anti-erreur (checklist, valeurs incohérentes, technique différente) ; 5) mode Lugano ; 6) import de comptes rendus en texte libre ; 7) QR code, courbe d'évolution, iRECIST. Les couleurs du schéma passeront aux règles Lugano (PPD / SPD) avec le mode Lugano.
 
 ---
 
@@ -196,11 +197,12 @@ radiologic-hub/
 ├── cr.css                  Styles de la page Comptes rendus
 ├── cr-tools.js             Schémas et calculateurs : PI-RADS, BI-RADS, EU-TIRADS, RECIST 1.1, Lugano 2014
 ├── cr-tools.css            Styles de la fenêtre des outils
-├── suivi-oncologique.html  Suivi oncologique : registre des lésions, examens, tableau comparatif
+├── suivi-oncologique.html  Suivi oncologique : registre des lésions, examens, tableau comparatif, schéma
 ├── suivi.js / suivi.css    Interface du suivi oncologique
 ├── suivi/                  Règles de calcul du suivi (sans interface, testées sous Node)
 │   ├── seuils.js           Seuils RECIST 1.1 / Lugano 2014 / contrôles, documentés (à vérifier médicalement)
-│   └── registre.js         Modèle de données, report des lésions, sommes, nadir, comparatif, JSON
+│   ├── registre.js         Modèle de données, report des lésions, sommes, nadir, comparatif, JSON
+│   └── schema.js           Schéma anatomique : placement automatique des lésions, couleurs, SVG
 ├── tests/                  Tests unitaires (node --test), cas fictifs uniquement
 ├── package.json            « npm test » (aucune dépendance)
 └── assets/
@@ -263,7 +265,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 - [ ] **Fiches des autres spécialités** : Neuro, Thorax, Traumato, Vasculaire, Pédiatrie.
 - [ ] **Lecteur de séries** (défilement dans un scanner / IRM) : en attente d'une série anonymisée exportée en JPG.
 - [ ] **Comptes rendus types** : continuer à intégrer les formules normales du service (7 reçues le 07/10/2026 ; aucune en échographie pour l'instant) ; relire et valider médicalement les ~55 phrases automatiques rédigées par Claude (`cr-data.js`).
-- [ ] **Suivi oncologique** : étapes 2 à 7 (moteur RECIST 1.1, texte, contrôles, Lugano, import texte libre, QR / courbe / schéma) ; faire vérifier `suivi/seuils.js` par un radiologue ; ajouter éventuellement le lien dans le menu principal (actuellement depuis la page Comptes rendus).
+- [ ] **Suivi oncologique** : étapes 2 à 7 (moteur RECIST 1.1, texte, contrôles, Lugano — y compris couleurs du schéma —, import texte libre, QR / courbe / iRECIST) ; faire vérifier `suivi/seuils.js` par un radiologue ; ajouter éventuellement le lien dans le menu principal (actuellement depuis la page Comptes rendus).
 - [ ] **Schémas & calculateurs** : faire valider les règles et les textes (PI-RADS, BI-RADS, EU-TIRADS, RECIST, Lugano) ; PI-RADS : la zone centrale et le stroma antérieur suivent par défaut l'algorithme de la zone périphérique / de transition (modifiable) ; ajouter d'autres outils si besoin (LI-RADS, O-RADS, Bosniak…).
 - [ ] **IRM médullaire / IRM cérébrale et médullaire** : la technique cite des coupes axiales sur « les 3 derniers étages lombaires » (ou « les derniers étages lombaires ») mais le CR décrit L1-L2 à L5-S1, et les coupes coronales T2 FatSat du bassin ne sont pas citées dans la technique — à vérifier.
 - [ ] **Nom de domaine** `www.radiologichub.com` : à acheter et configurer (DNS + réglages GitHub Pages), puis mettre à jour le lien « Site en ligne » ci-dessus.
@@ -274,6 +276,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 07/10/2026 | Suivi oncologique : schéma anatomique « Vue d'ensemble » — lésions placées automatiquement d'après l'organe et le territoire (côtés, segments hépatiques, lobes, stations ganglionnaires, vertèbres), couleur selon l'évolution (baisse / stable / hausse / non évaluable), forme selon le type, lien schéma ↔ tableau, export PNG ; nouveau fichier `suivi/schema.js` et ses tests |
 | 07/10/2026 | Suivi oncologique — étape 1 : nouvelle page `suivi-oncologique.html` (registre des lésions à identifiant fixe C/NC/N, examens avec report automatique, tableau comparatif baseline / nadir / précédent / actuel, sommes et nadir automatiques, export / import JSON, mode éphémère), seuils documentés (`suivi/seuils.js`), tests unitaires (`npm test`) |
 | 07/10/2026 | Comptes rendus : envoi par e-mail avec les schémas — image des schémas joints copiée automatiquement (à coller sous « Schéma : »), option Partager sur téléphone (pièce jointe), boutons Copier l'image / Télécharger sous les schémas joints |
 | 07/10/2026 | Comptes rendus : schémas et calculateurs intégrés — PI-RADS v2.1 (carte des secteurs prostatiques), BI-RADS (cadran horaire des seins), EU-TIRADS (schéma thyroïdien), RECIST 1.1 et Lugano 2014 ; texte inséré au curseur, schémas joints / copiés / téléchargés, outils suggérés selon le contenu du compte rendu |

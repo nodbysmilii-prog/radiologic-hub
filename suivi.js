@@ -1,11 +1,13 @@
 /* =========================================================
    RadiologicHub — Suivi oncologique (interface)
    Mes suivis, examens, registre des lésions, tableau comparatif.
-   Règles et calculs : suivi/registre.js ; seuils : suivi/seuils.js
+   Règles et calculs : suivi/registre.js ; seuils : suivi/seuils.js ;
+   schéma anatomique : suivi/schema.js
    ========================================================= */
 
 (() => {
   const R = window.RHSuivi && window.RHSuivi.registre;
+  const SCH = window.RHSuivi && window.RHSuivi.schema;
   const app = document.getElementById('so-app');
   if (!R || !app) return;
 
@@ -216,6 +218,7 @@
     set('sdB', deltaHtml(t.somme.dBaseline));
     set('sdN', deltaHtml(t.somme.dNadir, true));
     renderVerdict();
+    renderVue();
   };
 
   const renderAdd = e => {
@@ -240,6 +243,72 @@
       <p class="so-hint">Prochaine étape du module : verdict RECIST 1.1 (cibles, non-cibles, nouvelles lésions, réponse globale) avec sa justification chiffrée, puis le texte du compte rendu.</p>`;
   };
 
+  /* ---------- Vue d'ensemble : schéma anatomique ---------- */
+  const titreSchema = (s, e) => `${(s.pseudo || s.id).slice(0, 28)} — ${e.baseline ? 'baseline' : 'contrôle'} du ${R.dateFr(e.date)}`;
+  const renderVue = () => {
+    const s = suivi(), e = examen(), box = $('#so-vue-svg'), side = $('#so-vue-side');
+    if (!SCH || !box) return;
+    if (!s || !e) { box.innerHTML = ''; side.innerHTML = ''; return; }
+    const t = R.comparatif(s, e.id);
+    if (!t.lignes.length) {
+      box.innerHTML = '';
+      side.innerHTML = '<p class="so-hint">Les lésions apparaîtront ici dès qu\'elles seront ajoutées au tableau, placées d\'après leur organe et leur territoire.</p>';
+      return;
+    }
+    const { svg, horsSchema } = SCH.svgSchema(t, { titre: titreSchema(s, e), interactif: true });
+    box.innerHTML = svg;
+    // Lecture rapide : nombre de lésions par état
+    const groupes = [['cible', 'Cibles'], ['non-cible', 'Non cibles'], ['nouvelle', 'Nouvelles']];
+    const ordre = ['baseline', 'baisse', 'stable', 'hausse', 'ne', 'na'];
+    const lignes = groupes.map(([type, nom]) => {
+      const rows = t.lignes.filter(r => r.lesion.type === type);
+      if (!rows.length) return '';
+      const ids = {};
+      rows.forEach(r => { const k = SCH.etatLesion(r); (ids[k] = ids[k] || []).push(r.lesion.id); });
+      const libelle = (k, n) => (type === 'nouvelle' && k === 'hausse' ? `présente${n > 1 ? 's' : ''}` : SCH.ETATS[k].label.toLowerCase());
+      return `<li><b>${nom}</b>${ordre.filter(k => ids[k]).map(k => `<span class="so-vue-n"><i style="background:${SCH.ETATS[k].c}"></i>${ids[k].length} ${esc(libelle(k, ids[k].length))} <small>(${esc(ids[k].join(', '))})</small></span>`).join('')}</li>`;
+    }).join('');
+    side.innerHTML = `
+      <ul class="so-vue-list">${lignes}</ul>
+      ${horsSchema.length ? `<p class="so-warn">Non placée${horsSchema.length > 1 ? 's' : ''} sur le schéma (organe ou territoire à préciser) : ${horsSchema.map(id => `<button type="button" class="so-link" data-act="edit-lesion" data-l="${esc(id)}">${esc(id)}</button>`).join(' ')}</p>` : ''}
+      <button type="button" class="btn btn-outline btn-sm" data-act="schema-png">Télécharger l'image (PNG)</button>
+      <p class="so-hint">Placement automatique d'après l'organe et le segment / territoire de chaque lésion (droite du patient à gauche de l'image). Cliquez un repère pour retrouver la ligne du tableau ; survolez une ligne pour repérer la lésion.</p>
+      <p class="so-hint">Couleurs <strong>indicatives</strong>, lésion par lésion (cible : variation vs baseline et vs nadir ; non-cible : statut qualitatif). La réponse RECIST se juge sur la somme des diamètres.</p>`;
+  };
+
+  const surligner = id => $$('#so-vue-svg g[data-l]').forEach(g => g.classList.toggle('is-hl', g.dataset.l === id));
+
+  const telechargerPng = () => {
+    const s = suivi(), e = examen();
+    if (!s || !e || !SCH) return;
+    const { svg, largeur, hauteur } = SCH.svgSchema(R.comparatif(s, e.id), { titre: titreSchema(s, e) });
+    const img = new Image();
+    img.onload = () => {
+      const k = 2, c = document.createElement('canvas');
+      c.width = largeur * k; c.height = hauteur * k;
+      const ctx = c.getContext('2d');
+      ctx.scale(k, k);
+      ctx.drawImage(img, 0, 0, largeur, hauteur);
+      c.toBlob(b => {
+        if (!b) { dire('Image impossible à générer dans ce navigateur.', true); return; }
+        telecharger(b, `schema-${(s.pseudo || s.id).replace(/[^\w-]+/g, '_')}-${e.date}.png`);
+        dire('Schéma téléchargé (PNG).');
+      }, 'image/png');
+    };
+    img.onerror = () => dire('Image impossible à générer dans ce navigateur.', true);
+    img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+  };
+
+  const telecharger = (blob, nom) => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = nom;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  };
+
   /* ---------- Rendu général ---------- */
   const render = () => {
     renderList();
@@ -255,6 +324,7 @@
     renderTable();
     renderAdd(e);
     renderVerdict();
+    renderVue();
   };
 
   const ouvrirSuivi = id => { cur = id; ex = null; $('#so-new-exam').hidden = true; render(); sauver(); };
@@ -368,15 +438,10 @@
         sauver();
         break;
       }
+      case 'schema-png': telechargerPng(); break;
       case 'export': {
         const nom = (s.pseudo || s.id).replace(/[^\w-]+/g, '_');
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(new Blob([R.exporter(s)], { type: 'application/json' }));
-        a.download = `suivi-${nom}.json`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+        telecharger(new Blob([R.exporter(s)], { type: 'application/json' }), `suivi-${nom}.json`);
         dire('Suivi exporté (fichier JSON) : il ne contient que l\'identifiant pseudonymisé, les examens et les mesures.');
         break;
       }
@@ -452,6 +517,7 @@
       R.majMesure(suivi(), ex, c.id, patch);
       renderTable();
       renderVerdict();
+      renderVue();
       if (f.value === 'non-evaluable') { const mo = table.querySelector(`[data-l="${c.id}"] [data-k="motif"]`); if (mo) mo.focus(); }
     } else if (f.dataset.k === 'valeur') {
       const r = R.lireMm(f.value);
@@ -468,6 +534,24 @@
     const all = $$('.so-val:not([disabled])', table);
     const next = all[all.indexOf(e.target) + 1];
     if (next) next.focus(); else e.target.blur();
+  });
+
+  // Tableau ↔ schéma : survol d'une ligne = repère mis en évidence ; clic sur un repère = ligne du tableau
+  table.addEventListener('mouseover', e => { const tr = e.target.closest('tr[data-l]'); surligner(tr ? tr.dataset.l : null); });
+  table.addEventListener('mouseleave', () => surligner(null));
+  table.addEventListener('focusin', e => { const tr = e.target.closest('tr[data-l]'); surligner(tr ? tr.dataset.l : null); });
+  $('#so-vue-svg').addEventListener('click', e => {
+    const g = e.target.closest('g[data-l]');
+    if (!g) return;
+    const tr = table.querySelector(`tr[data-l="${g.dataset.l}"]`);
+    if (!tr) return;
+    surligner(g.dataset.l);
+    tr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    tr.classList.remove('is-flash');
+    void tr.offsetWidth;   // relance l'animation
+    tr.classList.add('is-flash');
+    const f = tr.querySelector('.so-val:not([disabled]), select');
+    if (f) f.focus({ preventScroll: true });
   });
 
   /* ---------- Import JSON ---------- */

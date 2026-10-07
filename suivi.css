@@ -200,6 +200,24 @@
 /* ---------- Verdict ---------- */
 .so-verdict p { margin: 0 0 6px; }
 
+/* ---------- Vue d'ensemble (schéma anatomique) ---------- */
+.so-vue-grid { display: grid; grid-template-columns: minmax(0, 330px) minmax(0, 1fr); gap: 22px; align-items: start; }
+.so-vue-svg svg { display: block; width: 100%; height: auto; border-radius: 14px; border: 2px solid rgba(0, 0, 0, .1); background: #fff; }
+.so-vue-svg g[data-l]:hover circle, .so-vue-svg g[data-l]:hover rect:not(.hit), .so-vue-svg g[data-l]:hover path,
+.so-vue-svg g.is-hl circle, .so-vue-svg g.is-hl rect:not(.hit), .so-vue-svg g.is-hl path { stroke-width: 3.6px; }
+.so-vue-svg g.is-hl text { font-size: 12px; }
+.so-vue-side { display: grid; gap: 12px; justify-items: start; }
+.so-vue-side .so-hint { margin: 0; }
+.so-vue-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.so-vue-list li { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; font-size: .8rem; }
+.so-vue-list b { min-width: 86px; font-size: .7rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: var(--plum); }
+.so-vue-n { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; }
+.so-vue-n small { font-weight: 600; color: var(--muted); }
+.so-vue-n i { width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid var(--ink); }
+.so-vue-side .so-link { padding: 0 2px; }
+.so-table tr.is-flash > * { animation: so-flash 1.6s ease-out; }
+@keyframes so-flash { 0%, 30% { background: rgba(240, 180, 40, .45); } 100% { background: transparent; } }
+
 /* ---------- Fiche lésion ---------- */
 .so-dialog { width: min(640px, 100% - 24px); padding: 0; border-radius: var(--radius); border: 5px solid var(--ink); background: var(--card); box-shadow: 10px 10px 0 var(--plum); }
 .so-dialog::backdrop { background: rgba(17, 17, 20, .55); backdrop-filter: blur(3px); }
@@ -212,6 +230,10 @@
 @media (max-width: 1000px) {
   .so-layout { grid-template-columns: minmax(0, 1fr); }
   .so-side { position: static; }
+}
+@media (max-width: 720px) {
+  .so-vue-grid { grid-template-columns: minmax(0, 1fr); }
+  .so-vue-svg { max-width: 360px; width: 100%; margin: 0 auto; }
 }
 @media (max-width: 640px) {
   .so-card { padding: 16px 14px; box-shadow: 5px 5px 0 color-mix(in srgb, var(--plum) 55%, transparent); }

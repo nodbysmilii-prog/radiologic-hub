@@ -9,9 +9,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261008100000">
-  <link rel="stylesheet" href="fiche.css?v=20261008100000">
-  <link rel="stylesheet" href="suivi.css?v=20261008100000">
+  <link rel="stylesheet" href="styles.css?v=20261008120000">
+  <link rel="stylesheet" href="fiche.css?v=20261008120000">
+  <link rel="stylesheet" href="suivi.css?v=20261008120000">
 </head>
 <body>
 
@@ -122,6 +122,14 @@
             </div>
 
             <div class="so-card so-verdict" id="so-verdict"></div>
+
+            <div class="so-card so-vue">
+              <h2 class="so-h">Vue d'ensemble</h2>
+              <div class="so-vue-grid">
+                <div class="so-vue-svg" id="so-vue-svg"></div>
+                <div class="so-vue-side" id="so-vue-side"></div>
+              </div>
+            </div>
           </div>
           <p class="so-msg" id="so-msg" role="status" aria-live="polite"></p>
         </div>
@@ -162,7 +170,7 @@
           </select>
         </label>
         <label class="tf"><span>Organe</span><input id="sl-organe" list="sl-organes" autocomplete="off" placeholder="ex. foie"></label>
-        <label class="tf"><span>Segment / territoire</span><input id="sl-territoire" autocomplete="off" placeholder="ex. segment VII"></label>
+        <label class="tf"><span>Segment / territoire</span><input id="sl-territoire" list="sl-territoires" autocomplete="off" placeholder="ex. segment VII"></label>
       </div>
       <datalist id="sl-organes">
         <option value="Foie"><option value="Poumon droit"><option value="Poumon gauche"><option value="Ganglion">
@@ -170,6 +178,17 @@
         <option value="Pancréas"><option value="Rate"><option value="Péritoine"><option value="Plèvre"><option value="Os">
         <option value="Encéphale"><option value="Sein"><option value="Tissus mous">
       </datalist>
+      <datalist id="sl-territoires">
+        <option value="segment I"><option value="segment II"><option value="segment III"><option value="segment IVa"><option value="segment IVb">
+        <option value="segment V"><option value="segment VI"><option value="segment VII"><option value="segment VIII">
+        <option value="LSD"><option value="lobe moyen"><option value="LID"><option value="LSG"><option value="lingula"><option value="LIG">
+        <option value="cervical droit"><option value="cervical gauche"><option value="sus-claviculaire droit"><option value="sus-claviculaire gauche">
+        <option value="axillaire droit"><option value="axillaire gauche"><option value="médiastinal"><option value="hilaire droit"><option value="hilaire gauche">
+        <option value="sous-carénaire"><option value="cœliaque"><option value="mésentérique"><option value="lombo-aortique">
+        <option value="iliaque droit"><option value="iliaque gauche"><option value="inguinal droit"><option value="inguinal gauche">
+        <option value="D12"><option value="L3"><option value="sacrum"><option value="aile iliaque droite"><option value="fémur gauche">
+      </datalist>
+      <p class="so-hint">Le schéma de la vue d'ensemble place la lésion d'après l'organe et le territoire (côté droit / gauche, segment, lobe, station ganglionnaire, vertèbre).</p>
       <label class="tf-check"><input type="checkbox" id="sl-ganglion"> Ganglion (mesuré en <strong>petit axe</strong>)</label>
       <p class="so-hint" id="sl-ganglion-hint">Ganglion : cible si petit axe ≥ 15 mm, non-cible si 10 à 15 mm, normal (non suivi) si &lt; 10 mm.</p>
       <label class="tf tf-wide"><span>Commentaire</span><input id="sl-commentaire" autocomplete="off" placeholder="ex. hypodense, mal limitée"></label>
@@ -181,9 +200,10 @@
     </form>
   </dialog>
 
-  <script src="fiche.js?v=20261008100000"></script>
-  <script src="suivi/seuils.js?v=20261008100000"></script>
-  <script src="suivi/registre.js?v=20261008100000"></script>
-  <script src="suivi.js?v=20261008100000"></script>
+  <script src="fiche.js?v=20261008120000"></script>
+  <script src="suivi/seuils.js?v=20261008120000"></script>
+  <script src="suivi/registre.js?v=20261008120000"></script>
+  <script src="suivi/schema.js?v=20261008120000"></script>
+  <script src="suivi.js?v=20261008120000"></script>
 </body>
 </html>
