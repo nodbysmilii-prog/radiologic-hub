@@ -28,7 +28,7 @@
       try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
     },
   };
-  const KEY = { draft: 'rh-cr-draft', auto: 'rh-cr-auto', phrases: 'rh-cr-phrases', templates: 'rh-cr-templates', email: 'rh-cr-email' };
+  const KEY = { draft: 'rh-cr-draft', auto: 'rh-cr-auto', phrases: 'rh-cr-phrases', templates: 'rh-cr-templates', email: 'rh-cr-email', mailer: 'rh-cr-mailer' };
 
   const isPhrase = p => p && typeof p.k === 'string' && typeof p.label === 'string' && typeof p.text === 'string';
   const isTemplate = t => t && typeof t.title === 'string' && typeof t.text === 'string';
@@ -603,10 +603,22 @@
     flash(`Modèle « ${t.title} » enregistré dans « Mes modèles ».`);
   });
 
-  /* ---------- Envoi par e-mail : ouvre la messagerie de l'utilisateur (mailto), le site n'envoie rien ---------- */
+  /* ---------- Envoi par e-mail : ouvre un nouveau message dans la messagerie choisie, le site n'envoie rien ---------- */
   const mailInput = $('#cr-email');
+  const mailer = $('#cr-mailer');
   const EMAIL = /^[^\s@,;]+@[^\s@,;]+\.[^\s@,;]+$/;
+  const MAILERS = {
+    gmail:      { name: 'Gmail',   url: (to, su, body) => `https://mail.google.com/mail/?view=cm&fs=1&to=${to}&su=${su}&body=${body}` },
+    outlook365: { name: 'Outlook', url: (to, su, body) => `https://outlook.office.com/mail/deeplink/compose?to=${to}&subject=${su}&body=${body}` },
+    outlookcom: { name: 'Outlook', url: (to, su, body) => `https://outlook.live.com/mail/0/deeplink/compose?to=${to}&subject=${su}&body=${body}` },
+    mailto:     { name: 'Votre messagerie', url: (to, su, body) => `mailto:${to}?subject=${su}&body=${body}` },
+  };
   mailInput.value = store.get(KEY.email, '') || '';
+  const savedMailer = store.get(KEY.mailer, 'gmail');
+  if (MAILERS[savedMailer]) mailer.value = savedMailer;
+  mailer.addEventListener('change', () => store.set(KEY.mailer, mailer.value));
+  let sendArmed = 0; // 2e clic pour envoyer malgré des champs [ … ] restants
+
   $('#cr-send').addEventListener('submit', async e => {
     e.preventDefault();
     if (isEmpty()) return;
@@ -618,20 +630,36 @@
     }
     store.set(KEY.email, to.join(', '));
     const n = fieldsIn().length;
-    if (n && !confirm(`Il reste ${n} champ${n > 1 ? 's' : ''} [ … ] à compléter. Envoyer quand même ?`)) return;
+    if (n && Date.now() - sendArmed > 15000) {
+      sendArmed = Date.now();
+      flash(`Il reste ${n} champ${n > 1 ? 's' : ''} [ … ] à compléter. Cliquez de nouveau sur « Envoyer par e-mail » pour envoyer quand même.`, true);
+      return;
+    }
+    sendArmed = 0;
+    const m = MAILERS[mailer.value] || MAILERS.gmail;
     const text = editor.value.trim();
-    const copied = await copyText();
-    const head = `mailto:${to.join(',')}?subject=${encodeURIComponent('Compte rendu — ' + text.split('\n')[0].trim().slice(0, 100))}`;
-    let url = `${head}&body=${encodeURIComponent(text.replace(/\n/g, '\r\n'))}`;
-    // Certaines messageries refusent les liens trop longs : on colle alors le texte (déjà copié)
+    const su = encodeURIComponent('Compte rendu — ' + text.split('\n')[0].trim().slice(0, 100));
+    const toParam = mailer.value === 'mailto' ? to.join(',') : encodeURIComponent(to.join(','));
+    const nl = mailer.value === 'mailto' ? '\r\n' : '\n';
+    let url = m.url(toParam, su, encodeURIComponent(text.replace(/\n/g, nl)));
+    // Liens trop longs refusés par certaines messageries : le texte (copié) sera collé à la main
     const tooLong = url.length > 8000;
-    if (tooLong) url = `${head}&body=${encodeURIComponent(copied ? 'Collez ici le compte rendu (Ctrl + V).' : '')}`;
-    const a = document.createElement('a');
-    a.href = url;
-    a.click();
+    if (tooLong) url = m.url(toParam, su, encodeURIComponent('Collez ici le compte rendu (Ctrl + V).'));
+    // Copie lancée avant d'ouvrir l'onglet (le presse-papiers exige que la page ait encore le focus)
+    const copying = copyText();
+    if (mailer.value === 'mailto') {
+      const a = document.createElement('a');
+      a.href = url;
+      a.click();
+    } else {
+      const win = window.open(url, '_blank');
+      if (win) win.opener = null;
+      else location.href = url; // bloqueur de fenêtres : ouvrir dans l'onglet courant
+    }
+    const copied = await copying;
     flash(tooLong
-      ? 'Votre messagerie s\'ouvre. Compte rendu trop long pour être pré-rempli : il est copié, collez-le dans le message (Ctrl + V).'
-      : `Votre messagerie s'ouvre avec le compte rendu prêt à envoyer${copied ? ' (il est aussi copié, au cas où)' : ''}.`);
+      ? `${m.name} s'ouvre. Compte rendu trop long pour être pré-rempli : ${copied ? 'il est copié, collez-le dans le message (Ctrl + V).' : 'copiez-le avec le bouton « Copier ».'}`
+      : `${m.name} s'ouvre avec le compte rendu prêt à envoyer${copied ? ' (il est aussi copié, au cas où)' : ''}.`);
   });
 
   /* ---------- Mes phrases ---------- */

@@ -9,9 +9,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261007200000">
-  <link rel="stylesheet" href="fiche.css?v=20261007200000">
-  <link rel="stylesheet" href="cr.css?v=20261007200000">
+  <link rel="stylesheet" href="styles.css?v=20261007210000">
+  <link rel="stylesheet" href="fiche.css?v=20261007210000">
+  <link rel="stylesheet" href="cr.css?v=20261007210000">
 </head>
 <body>
 
@@ -113,8 +113,15 @@
           <form class="cr-send" id="cr-send" novalidate>
             <label for="cr-email">Envoyer à</label>
             <input type="email" id="cr-email" multiple autocomplete="email" placeholder="adresse@exemple.fr (plusieurs : séparées par une virgule)">
+            <label for="cr-mailer">avec</label>
+            <select id="cr-mailer">
+              <option value="gmail">Gmail</option>
+              <option value="outlook365">Outlook (Microsoft 365)</option>
+              <option value="outlookcom">Outlook.com / Hotmail</option>
+              <option value="mailto">Application Mail de l'ordinateur</option>
+            </select>
             <button class="btn btn-ink btn-sm" type="submit">Envoyer par e-mail ✉</button>
-            <p class="cr-send-note">Ouvre votre messagerie avec le compte rendu déjà rédigé : il ne reste qu'à cliquer sur « Envoyer ». L'adresse est mémorisée. E-mail ordinaire non sécurisé : pour un patient identifiable, utilisez une messagerie sécurisée de santé (MSSanté).</p>
+            <p class="cr-send-note">Ouvre un nouveau message dans la messagerie choisie (Gmail ou Outlook dans un nouvel onglet, ou l'application Mail), avec le compte rendu déjà rédigé : il ne reste qu'à cliquer sur « Envoyer ». L'adresse et la messagerie sont mémorisées. E-mail ordinaire non sécurisé : pour un patient identifiable, utilisez une messagerie sécurisée de santé (MSSanté).</p>
           </form>
 
           <p class="cr-flash" id="cr-flash" role="status" aria-live="polite"></p>
@@ -204,8 +211,8 @@
   <!-- Version imprimable du compte rendu -->
   <div class="cr-print" id="cr-print" aria-hidden="true"></div>
 
-  <script src="fiche.js?v=20261007200000"></script>
-  <script src="cr-data.js?v=20261007200000"></script>
-  <script src="cr.js?v=20261007200000"></script>
+  <script src="fiche.js?v=20261007210000"></script>
+  <script src="cr-data.js?v=20261007210000"></script>
+  <script src="cr.js?v=20261007210000"></script>
 </body>
 </html>
