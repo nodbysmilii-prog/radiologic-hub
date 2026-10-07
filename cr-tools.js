@@ -6,6 +6,8 @@
    • EU-TIRADS (thyroïde) : schéma des lobes + score + cytoponction
    • Fleischner 2017 : nodules pulmonaires fortuits (schéma des lobes,
      règles dans regles/fleischner.js)
+   • FIGO : cartographie des myomes utérins (schéma coronal + sagittal :
+     schemas/uterus.js ; arbre décisionnel IRM : regles/myome.js)
    • RECIST 1.1 : réponse des tumeurs solides
    • Lugano 2014 (Cheson) : réponse des lymphomes (TEP ou TDM)
    Chaque outil rédige le texte à insérer dans le compte rendu ;
@@ -912,9 +914,184 @@
     },
   };
   /* =======================================================
+     Myomes utérins — cartographie FIGO et caractérisation IRM
+     Règles : regles/myome.js (testées sous Node) ; schéma : schemas/uterus.js
+     ======================================================= */
+  const MY = window.RHRegles && window.RHRegles.myome;
+  const UT = window.RHUterus;
+  const MY_SANS_TYPE = '#2a9d8f';                 // myome placé, type FIGO à préciser
+  const myColor = m => (m.type && MY.FIGO[m.type] ? MY.couleur(m.type) : MY_SANS_TYPE);
+  const MY_PAROIS = [['anterieure', 'Antérieure'], ['posterieure', 'Postérieure'], ['fundique', 'Fundique'], ['laterale-droite', 'Latérale droite'], ['laterale-gauche', 'Latérale gauche']];
+  const MY_NIVEAUX = [['fundus', 'Fundus'], ['corps', 'Corps'], ['isthme', 'Isthme']];
+  const MY_SIEGES = [['col', 'Col utérin'], ['ligament-droit', 'Ligament large droit'], ['ligament-gauche', 'Ligament large gauche'], ['parasite', 'Parasite (à distance)']];
+  const MY_T2 = { hypo: 'en hyposignal T2', intermediaire: 'en signal T2 intermédiaire', hyper: 'en hypersignal T2' };
+  const MY_T1 = { non: 'sans hypersignal T1', peripherique: 'avec un hypersignal T1 périphérique', diffus: 'avec un hypersignal T1 diffus' };
+  const MY_REH = { homogene: 'se rehaussant de façon homogène', heterogene: 'à rehaussement hétérogène', absent: 'sans rehaussement après injection' };
+  const MY_PLURIEL = { 'sous-muqueux': 'sous-muqueux', interstitiel: 'interstitiel|interstitiels', 'sous-séreux': 'sous-séreux', transmural: 'transmural|transmuraux', autre: 'FIGO 8', '': 'de type à préciser' };
+  const myAccord = (cat, n) => { const [s, p] = (MY_PLURIEL[cat] || cat).split('|'); return n > 1 && p ? p : s; };
+  const newMyome = () => ({ type: '', paroi: '', niveau: 'corps', special: 'col', d1: '', d2: '', d3: '', pedicule: '', encorbellement: false, t2: '', t1: '', rehaussement: '', adc: '', remaniement: '', contours: 'reguliers', necrose: false });
+  // « interstitiel FIGO 4 (intramural) de la paroi latérale droite du corps utérin »
+  const myNom = (m, court) => {
+    const loc = MY.localisation(m);
+    if (m.type === '8') return `${loc || '[siège]'} (FIGO 8)`;
+    const t = MY.FIGO[m.type];
+    const type = t ? `${t.cat} FIGO ${m.type}${court ? '' : ` (${t.desc})`}` : '[type FIGO]';
+    return `${type} ${m.paroi === 'fundique' ? 'fundique' : loc ? 'de la ' + loc : '[localisation]'}`;
+  };
+  const myCarac = m => MY.caracteriser(m);      // l'ADC n'intervient qu'en signal T2 intermédiaire
+  const myIndexMax = st => {
+    let best = -1;
+    st.myomes.forEach((m, i) => { if (MY.tailleMax(m) > (best < 0 ? 0 : MY.tailleMax(st.myomes[best]))) best = i; });
+    return best;
+  };
+
+  const MYOMES = {
+    title: 'Myomes utérins — cartographie FIGO', chip: 'FIGO', sub: 'myomes',
+    keys: ['figo', 'myomes', 'myome'], suggest: /myom|fibrom|figo/,
+    hint: 'Cliquez sur l\'une des deux vues pour placer le myome actif (paroi et niveau) ; sa profondeur suit le type FIGO. Une paroi absente de la vue (antérieure ou postérieure en coronal, latérale en sagittal) y est projetée en pointillés.',
+    init: () => ({ position: '', l: '', w: '', h: '', autres: false, adenomyose: false, endometriose: false, myomes: [newMyome()], active: 0 }),
+    newItem: () => newMyome(), max: 8,
+    svg(st, live) {
+      return UT.svg({
+        interactif: live,
+        myomes: st.myomes.map((m, i) => ({ ...m, n: i + 1, color: myColor(m), active: i === st.active })),
+        legende: [...Object.values(MY.CATEGORIES).map(c => [c.label, c.c]), ['Type à préciser', MY_SANS_TYPE]],
+      });
+    },
+    click(st, e, pt) {
+      if (!e.target.closest('[data-u]')) return false;
+      const z = UT.zone(pt.x, pt.y);
+      if (!z) return false;
+      if (!st.myomes.length) { st.myomes.push(newMyome()); st.active = 0; }
+      const m = st.myomes[st.active];
+      if (z.special) { m.type = '8'; m.special = z.special; }
+      else { m.paroi = z.paroi; m.niveau = z.niveau; if (m.type === '8') m.type = ''; }
+      return true;
+    },
+    form(st) {
+      let h = `<fieldset class="tl-box"><legend>Utérus</legend><div class="tf-row">
+          ${sel('position', 'Position', [['', '—'], ['antéversé', 'Antéversé'], ['rétroversé', 'Rétroversé'], ['intermédiaire', 'Intermédiaire']], st.position)}
+          ${inp('l', 'Longueur (mm)', st.l, { small: 1 })}${inp('w', 'Transverse (mm)', st.w, { small: 1 })}${inp('h', 'Antéro-post. (mm)', st.h, { small: 1 })}
+        </div><div class="tf-row">
+          ${chk('autres', 'Autres myomes non détaillés ici', st.autres)}
+          ${chk('adenomyose', 'Adénomyose associée', st.adenomyose)}
+          ${chk('endometriose', 'Endométriose associée', st.endometriose)}
+        </div></fieldset>`;
+      h += tabs(st.myomes.map(x => ({ color: myColor(x), badge: x.type ? 'FIGO ' + x.type : '' })), st.active, 'Myome', this.max, 'myomes');
+      const m = st.myomes[st.active];
+      if (!m) return h + '<p class="tl-note">Aucun myome : cliquez sur le schéma ou sur « + Ajouter ».</p>';
+      const p = `myomes.${st.active}.`;
+      const loc = MY.localisation(m);
+      h += `<p class="tl-note">${loc ? `<strong>Localisation :</strong> ${esc(loc)}` : 'Cliquez sur le schéma pour localiser ce myome.'}</p>
+        <div class="tf-row">
+          ${sel(p + 'type', 'Type FIGO', [['', '—'], ...MY.TYPES.map(t => [t, `${t} — ${MY.FIGO[t].cat} : ${MY.FIGO[t].desc}`])], m.type, { wide: 1 })}
+        </div>
+        <div class="tf-row">
+          ${m.type === '8' ? sel(p + 'special', 'Siège', MY_SIEGES, m.special, { wide: 1 })
+            : sel(p + 'paroi', 'Paroi', [['', '—'], ...MY_PAROIS], m.paroi) + (m.paroi === 'fundique' ? '' : sel(p + 'niveau', 'Niveau', MY_NIVEAUX, m.niveau))}
+        </div>
+        <div class="tf-row">
+          ${inp(p + 'd1', 'Grand axe (mm)', m.d1, { small: 1 })}${inp(p + 'd2', '2ᵉ axe (mm)', m.d2, { small: 1 })}${inp(p + 'd3', '3ᵉ axe (mm)', m.d3, { small: 1 })}
+          ${m.type === '7' ? inp(p + 'pedicule', 'Largeur du pédicule (mm)', m.pedicule, { small: 1 }) : ''}
+        </div>
+        ${m.type === '2-5' ? `<div class="tf-row">${chk(p + 'encorbellement', 'Encorbellement vasculaire autour du myome', m.encorbellement)}</div>` : ''}
+        <fieldset class="tl-box"><legend>Caractérisation IRM (arbre décisionnel)</legend><div class="tf-row">
+          ${sel(p + 't2', 'Signal T2', [['', '—'], ['hypo', 'Hyposignal'], ['intermediaire', 'Intermédiaire'], ['hyper', 'Hypersignal']], m.t2)}
+          ${m.t2 === 'intermediaire' ? sel(p + 't1', 'Hypersignal T1', [['', '—'], ['non', 'Non'], ['peripherique', 'Périphérique'], ['diffus', 'Diffus']], m.t1) : ''}
+          ${sel(p + 'rehaussement', 'Rehaussement', [['', '—'], ['homogene', 'Homogène'], ['heterogene', 'Hétérogène'], ['absent', 'Absent']], m.rehaussement)}
+          ${m.t2 === 'intermediaire' ? inp(p + 'adc', 'ADC (× 10⁻³ mm²/s)', m.adc, { small: 1 }) : ''}
+        </div><div class="tf-row">
+          ${sel(p + 'remaniement', 'Remaniement', [['', 'Aucun'], ['hemorragique', 'Hémorragique'], ['graisseux', 'Graisseux (lipoléiomyome)'], ['calcique', 'Calcifié']], m.remaniement)}
+          ${sel(p + 'contours', 'Contours', [['reguliers', 'Réguliers'], ['irreguliers', 'Irréguliers']], m.contours)}
+        </div><div class="tf-row">
+          ${chk(p + 'necrose', 'Remaniements nécrotico-hémorragiques', m.necrose)}
+        </div></fieldset>`;
+      return h;
+    },
+    warn(st) {
+      const w = [], plus = st.myomes.length > 1;
+      st.myomes.forEach((m, i) => {
+        const q = plus ? `Myome ${i + 1} : ` : '';
+        if (m.type === '7' && num(m.pedicule) == null) w.push(`${q}myome sous-séreux pédiculé (FIGO 7) — mesurez la largeur du pédicule (risque de torsion).`);
+        if (m.type === '2-5' && !m.encorbellement) w.push(`${q}myome transmural (FIGO 2-5) — noter l'encorbellement vasculaire autour du myome.`);
+        const c = myCarac(m);
+        if (m.t2 && !c.diagnostic && c.note) w.push(`${q}${c.note}.`);
+        if (c.niveau === 'attention') w.push(`${q}${c.diagnostic} — ${c.note}.`);
+        const a = MY.argumentsSarcome(m);
+        if (a.length) w.push(`${q}argument(s) en faveur d'un léiomyosarcome : ${a.join(', ')}.`);
+      });
+      return w;
+    },
+    result(st) {
+      if (!st.myomes.length) return badge('Aucun myome décrit', C.green);
+      let h = st.myomes.map((m, i) => {
+        const c = myCarac(m);
+        const t = m.type ? `FIGO ${m.type}` : 'type à préciser';
+        return badge(`Myome ${i + 1} : ${t}${c.diagnostic ? ' · ' + c.diagnostic : ''}`, c.niveau === 'suspect' ? C.red : myColor(m));
+      }).join('');
+      const n = st.myomes.length;
+      if (n > 1 || st.autres) h += badge('Utérus polymyomateux', C.grey);
+      return h;
+    },
+    text(st) {
+      const out = [], n = st.myomes.length, plus = n > 1;
+      const L = num(st.l), W = num(st.w), H = num(st.h);
+      let u = `Utérus${st.position ? ' ' + st.position : ''}`;
+      if (L && W && H) u += `, mesurant ${fr(L, 0)} × ${fr(W, 0)} × ${fr(H, 0)} mm (volume estimé à ${fr(MY.volume(L, W, H), 0)} mL)`;
+      u += n > 1 || st.autres ? ', polymyomateux.' : n ? ', siège d\'un myome.' : ', sans myome individualisé.';
+      out.push(u);
+      st.myomes.forEach((m, i) => {
+        let s = `${plus ? `Myome n°${i + 1}` : 'Myome'} ${myNom(m)}`;
+        const d = MY.dims(m);
+        s += d.length ? `, mesurant ${d.map(x => fr(x, 0)).join(' × ')} mm` : ', [taille]';
+        if (d.length === 3) s += ` (volume estimé à ${fr(MY.volume(m.d1, m.d2, m.d3), 1)} mL)`;
+        s += '.';
+        if (m.type === '7') s += num(m.pedicule) != null ? ` Pédicule de ${fr(num(m.pedicule), 0)} mm de largeur.` : ' Largeur du pédicule : [à mesurer].';
+        if (m.type === '2-5' && m.encorbellement) s += ' Encorbellement vasculaire autour du myome.';
+        const sig = [];
+        if (m.t2) sig.push(MY_T2[m.t2]);
+        if (m.t2 === 'intermediaire' && m.t1) sig.push(MY_T1[m.t1]);
+        if (m.rehaussement) sig.push(MY_REH[m.rehaussement]);
+        if (m.t2 === 'intermediaire' && num(m.adc) != null) sig.push(`ADC mesuré à ${fr(num(m.adc), 2)} × 10⁻³ mm²/s`);
+        if (m.contours === 'irreguliers') sig.push('à contours irréguliers');
+        if (m.necrose) sig.push('siège de remaniements nécrotico-hémorragiques');
+        const c = myCarac(m);
+        if (sig.length) s += ' ' + cap(sig.join(', ')) + (c.diagnostic ? ` : ${c.niveau === 'suspect' ? c.diagnostic : 'aspect de ' + c.diagnostic}` : '') + '.';
+        if (m.remaniement) s += ' ' + cap(MY.REMANIEMENTS[m.remaniement]) + '.';
+        out.push(s);
+      });
+      if (st.autres) out.push('Autres myomes, non détaillés.');
+      if (st.adenomyose) out.push('Adénomyose associée.');
+      if (st.endometriose) out.push('Lésions d\'endométriose associées.');
+
+      // Conclusion
+      if (!n) return out.join('\n');
+      const parCat = {};
+      st.myomes.forEach(m => { const k = MY.categorie(m.type) || ''; parCat[k] = (parCat[k] || 0) + 1; });
+      const ordre = ['sous-muqueux', 'interstitiel', 'sous-séreux', 'transmural', 'autre', ''];
+      const detail = ordre.filter(k => parCat[k]).map(k => `${parCat[k]} ${myAccord(k, parCat[k])}`);
+      const poly = plus || st.autres;
+      let conc = poly
+        ? `Conclusion : utérus polymyomateux (${n} myome${plus ? 's' : ''} décrit${plus ? 's' : ''}${detail.length ? ' : ' + listFr(detail) : ''})`
+        : `Conclusion : myome ${myNom(st.myomes[0])}`;
+      const iMax = myIndexMax(st);
+      if (iMax >= 0) {
+        const mm = fr(MY.tailleMax(st.myomes[iMax]), 0);
+        conc += poly ? `, le plus volumineux étant ${plus ? `le n°${iMax + 1}, ` : ''}${myNom(st.myomes[iMax], true)}, mesurant ${mm} mm` : ` mesurant ${mm} mm`;
+      }
+      out.push(conc + '.');
+      st.myomes.forEach((m, i) => {
+        const a = MY.argumentsSarcome(m);
+        if (a.length) out.push(`${plus ? `Myome n°${i + 1} : a` : 'A'}rguments en faveur d'un léiomyosarcome (${a.join(', ')}).`);
+      });
+      return out.join('\n');
+    },
+  };
+
+  /* =======================================================
      Fenêtre des outils
      ======================================================= */
-  const TOOLS = { ...(PR ? { pirads: PIRADS } : {}), birads: BIRADS, tirads: TIRADS, ...(FL ? { fleischner: FLEISCHNER } : {}), recist: RECIST, lugano: LUGANO };
+  const TOOLS = { ...(PR ? { pirads: PIRADS } : {}), birads: BIRADS, tirads: TIRADS, ...(FL ? { fleischner: FLEISCHNER } : {}), ...(MY && UT ? { figo: MYOMES } : {}), recist: RECIST, lugano: LUGANO };
   const states = {};
   let cur = null;
   const titleEl = $('#tool-title', dlg), hintEl = $('#tool-hint', dlg), schemaEl = $('#tool-schema', dlg), formEl = $('#tool-form', dlg);

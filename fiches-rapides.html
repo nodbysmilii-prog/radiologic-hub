@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261008180000">
-  <link rel="stylesheet" href="fiche.css?v=20261008180000">
+  <link rel="stylesheet" href="styles.css?v=20261008190000">
+  <link rel="stylesheet" href="fiche.css?v=20261008190000">
 </head>
 <body>
 
@@ -51,6 +51,7 @@
           <button class="spe-tab" role="tab" data-spe="thorax" style="--c: var(--blue)">Thorax</button>
           <button class="spe-tab" role="tab" data-spe="trauma" style="--c: var(--rose)">Traumato</button>
           <button class="spe-tab" role="tab" data-spe="uro" style="--c: var(--steel)">Uro</button>
+          <button class="spe-tab" role="tab" data-spe="femme" style="--c: var(--crimson)">Imagerie de la femme</button>
           <button class="spe-tab" role="tab" data-spe="osteo" style="--c: var(--plum)">Ostéo-articulaire</button>
           <button class="spe-tab" role="tab" data-spe="vasculaire" style="--c: var(--teal)">Vasculaire</button>
           <button class="spe-tab" role="tab" data-spe="pediatrie" style="--c: var(--green)">Pédiatrie</button>
@@ -93,6 +94,13 @@
             <ul class="fiche-tags"><li>IRM</li><li>Score EPE</li><li>TNM</li></ul>
             <span class="fiche-open">Ouvrir la fiche →</span>
           </a>
+          <a class="fiche-card" data-spe="femme" href="fiches/myome-uterin.html" style="--c: var(--crimson)">
+            <span class="fiche-card-badge">Utérus</span>
+            <h2>Le myome utérin dans tous ses états</h2>
+            <p>Protocole IRM, cartographie selon la <span class="hl-red">classification FIGO</span> (schéma), dégénérescences, remaniements et arguments en faveur d'un sarcome.</p>
+            <ul class="fiche-tags"><li>IRM</li><li>FIGO</li><li>ADC</li></ul>
+            <span class="fiche-open">Ouvrir la fiche →</span>
+          </a>
           <a class="fiche-card" data-spe="osteo" href="fiches/spondylodiscite.html" style="--c: var(--plum)">
             <span class="fiche-card-badge">Rachis</span>
             <h2>Spondylodiscite infectieuse</h2>
@@ -128,6 +136,6 @@
     </div>
   </footer>
 
-  <script src="fiche.js?v=20261008180000"></script>
+  <script src="fiche.js?v=20261008190000"></script>
 </body>
 </html>

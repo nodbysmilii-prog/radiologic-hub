@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Le myome utérin — Fiche rapide RadiologicHub</title>
+  <meta name="description" content="Fiche rapide RadiologicHub : le myome utérin dans tous ses états — protocole IRM, cartographie selon la classification FIGO, myome simple, dégénérescences, remaniements, myome cellulaire et léiomyosarcome, arbre décisionnel.">
+  <link rel="icon" type="image/svg+xml" href="../assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=20261008190000">
+  <link rel="stylesheet" href="../fiche.css?v=20261008190000">
+</head>
+<body class="fiche-page">
+
+  <div class="read-progress" aria-hidden="true"><span></span></div>
+
+  <header class="site-header is-scrolled" id="top">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="RadiologicHub — accueil">
+        <img src="../assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+        <a href="../index.html#masterclass">Masterclass</a>
+        <a href="../fiches-rapides.html" class="is-current">Fiches rapides</a>
+        <a href="../comptes-rendus.html">Comptes rendus</a>
+        <a href="../index.html#cas-du-jour">Cas du jour</a>
+        <a href="../index.html#tarifs">Tarifs</a>
+        <a href="../index.html#inscription" class="btn btn-ink btn-sm">S'inscrire</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ EN-TÊTE DE FICHE ============ -->
+    <section class="fiche-hero sec-down">
+      <div class="container">
+        <nav class="crumbs" aria-label="Fil d'Ariane">
+          <a href="../fiches-rapides.html">Fiches rapides</a> › <a href="../fiches-rapides.html#femme">Imagerie de la femme</a> › <span>Myome utérin</span>
+        </nav>
+        <p class="marker-tag">Fiche rapide · Imagerie de la femme</p>
+        <h1>Le myome utérin <span class="hl-navy">dans tous ses états</span></h1>
+        <p class="fiche-sub">Protocole IRM, cartographie selon la <span class="hl-red">classification FIGO</span>, caractérisation tissulaire et arguments en faveur d'un <span class="hl-red">sarcome utérin</span>.</p>
+
+        <div class="legend" role="group" aria-label="Code couleur — cliquez pour isoler une catégorie">
+          <span class="legend-label">Code couleur :</span>
+          <button class="chip k-tech" data-k="tech" aria-pressed="false">Technique / séquence</button>
+          <button class="chip k-signo" data-k="signo" aria-pressed="false">Signe radiologique</button>
+          <button class="chip k-grave" data-k="grave" aria-pressed="false">Gravité / suspicion forte</button>
+          <button class="chip k-sign" data-k="sign" aria-pressed="false">Avantage / conduite</button>
+          <button class="chip k-ddx" data-k="ddx" aria-pressed="false">Piège / limite</button>
+          <button class="chip k-key" data-k="key" aria-pressed="false">À retenir</button>
+        </div>
+        <p class="legend-hint">Astuce : cliquez sur une couleur pour n'afficher qu'elle.</p>
+
+        <div class="fiche-actions">
+          <button class="btn btn-outline btn-sm" id="print-btn">Imprimer / PDF</button>
+          <a href="#figo" class="btn btn-outline btn-sm">Classification FIGO</a>
+          <a href="#compte-rendu" class="btn btn-outline btn-sm">Checklist du CR</a>
+          <a href="#testez-vous" class="btn btn-ink btn-sm">Testez-vous →</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="container fiche-layout">
+      <!-- Sommaire -->
+      <aside class="toc" aria-label="Sommaire">
+        <p class="toc-title">Sommaire</p>
+        <ol>
+          <li><a href="#generalites" style="--c: var(--crimson)"><b>I</b>Généralités</a></li>
+          <li><a href="#protocole" style="--c: var(--steel)"><b>II</b>Écho, IRM et protocole</a></li>
+          <li><a href="#figo" style="--c: var(--amber)"><b>III</b>Classification FIGO</a></li>
+          <li><a href="#simple" style="--c: var(--green)"><b>IV</b>Myome simple</a></li>
+          <li><a href="#degenerescences" style="--c: var(--blue)"><b>V</b>Dégénérescences</a></li>
+          <li><a href="#remaniements" style="--c: var(--teal)"><b>VI</b>Remaniements</a></li>
+          <li><a href="#sarcome" style="--c: var(--k-grave)"><b>VII</b>Myome cellulaire et sarcome</a></li>
+          <li><a href="#arbre" style="--c: var(--purple)"><b>VIII</b>Arbre décisionnel</a></li>
+          <li><a href="#compte-rendu" style="--c: var(--plum)"><b>IX</b>Compte rendu</a></li>
+          <li><a href="#testez-vous" style="--c: var(--ink)"><b>?</b>Testez-vous</a></li>
+        </ol>
+      </aside>
+
+      <div class="fiche-body" id="fiche-body">
+
+        <!-- Objectifs -->
+        <div class="callout">
+          <p><b>Objectifs :</b> connaître le <mark class="k-tech">protocole IRM</mark> de cartographie et de caractérisation des myomes ; rappeler la <mark class="k-key">classification FIGO</mark> ; connaître la sémiologie IRM du <mark class="k-sign">myome simple</mark>, les <mark class="k-signo">dégénérescences et remaniements</mark>, et les <mark class="k-grave">arguments en faveur d'un sarcome utérin</mark>.</p>
+        </div>
+
+        <!-- I -->
+        <section class="fsec" id="generalites" style="--c: var(--crimson)">
+          <h2 class="fsec-title"><span class="fnum">I</span>Généralités</h2>
+          <div class="two-col" style="align-items: start">
+            <div class="fcard" style="--c: var(--crimson)">
+              <h3 class="marker-sub">Le myome</h3>
+              <ul class="fl">
+                <li><mark class="k-sign">Pathologie bénigne</mark> de l'utérus.</li>
+                <li>Tumeur faite de <mark class="k-key">cellules musculaires lisses</mark> et de <mark class="k-key">tissu fibreux conjonctif</mark>.</li>
+                <li>Fréquente : <mark class="k-key">25 % des femmes</mark> en période d'activité génitale.</li>
+                <li><mark class="k-key">Hormono-dépendante</mark> : augmente de taille pendant la grossesse, involue après la ménopause.</li>
+              </ul>
+            </div>
+            <div class="fcard" style="--c: var(--rose)">
+              <h3 class="marker-sub">Clinique</h3>
+              <ul class="fl">
+                <li>Souvent <mark class="k-sign">asymptomatique</mark>, de découverte fortuite.</li>
+                <li>Symptômes : <mark class="k-signo">douleurs pelviennes</mark>, <mark class="k-signo">métrorragies</mark>, <mark class="k-signo">infertilité</mark>.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- II -->
+        <section class="fsec" id="protocole" style="--c: var(--steel)">
+          <h2 class="fsec-title"><span class="fnum">II</span>Échographie, IRM et protocole</h2>
+          <p class="fintro">L'<mark class="k-tech">échographie par voie endovaginale</mark> reste l'examen de <mark class="k-key">première intention</mark>.</p>
+          <div class="two-col" style="align-items: start">
+            <div class="fcard" style="--c: var(--steel)">
+              <h3 class="marker-sub">Indications de l'IRM (cartographie)</h3>
+              <ul class="fl">
+                <li>Myomes <mark class="k-key">nombreux (&gt; 5)</mark>.</li>
+                <li>Myome <mark class="k-key">volumineux (&gt; 10 cm)</mark>.</li>
+                <li>Myome <mark class="k-ddx">difficilement explorable en échographie</mark> (ex. : sous-séreux).</li>
+                <li>Myome <mark class="k-ddx">atypique en échographie</mark>.</li>
+              </ul>
+            </div>
+            <div class="fcard" style="--c: var(--blue)">
+              <h3 class="marker-sub">Intérêts de l'IRM</h3>
+              <ul class="fl">
+                <li>Meilleure <mark class="k-key">cartographie</mark> : nombre, taille, localisation.</li>
+                <li><mark class="k-signo">Caractérisation tissulaire</mark> : myome simple, remanié, en dégénérescence.</li>
+                <li>Diagnostic différentiel : <mark class="k-grave">sarcome utérin</mark>.</li>
+                <li>Lésions associées : <mark class="k-ddx">adénomyose, endométriose</mark>…</li>
+                <li><mark class="k-sign">Bilan préthérapeutique</mark>.</li>
+              </ul>
+            </div>
+          </div>
+          <h3 class="marker-sub">Protocole IRM</h3>
+          <div class="ftable-wrap">
+            <table class="ftable">
+              <thead><tr><th>Séquences</th><th>Réalisation</th></tr></thead>
+              <tbody>
+                <tr><td class="rh">T2</td><td><mark class="k-tech">3 plans T2</mark>.</td></tr>
+                <tr><td class="rh">T1</td><td>T1 <mark class="k-tech">sans et avec suppression du signal de la graisse</mark>.</td></tr>
+                <tr><td class="rh">Diffusion</td><td>b0 et b1000, avec <mark class="k-tech">cartographie ADC</mark>.</td></tr>
+                <tr><td class="rh">Injection</td><td>± T1 après injection de chélates de gadolinium (<mark class="k-ddx">si myome atypique</mark>).</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- III -->
+        <section class="fsec" id="figo" style="--c: var(--amber)">
+          <h2 class="fsec-title"><span class="fnum">III</span>Cartographie : classification FIGO</h2>
+          <p class="fintro">Initialement décrite en échographie, la classification FIGO s'utilise aussi en IRM : elle décrit la <mark class="k-key">position du myome par rapport à la muqueuse et à la séreuse</mark>, ce qui oriente le <mark class="k-sign">choix thérapeutique</mark>.</p>
+          <div class="ftable-wrap">
+            <table class="ftable">
+              <thead><tr><th>Catégorie</th><th class="c">Type</th><th>Description</th></tr></thead>
+              <tbody>
+                <tr><td class="rh" rowspan="3">Sous-muqueux</td><td class="sc" style="--c: #d63f4c">0</td><td>Intracavitaire <mark class="k-key">pédiculé</mark></td></tr>
+                <tr><td class="sc" style="--c: #d63f4c">1</td><td>&lt; 50 % intramural</td></tr>
+                <tr><td class="sc" style="--c: #d63f4c">2</td><td>&gt; 50 % intramural</td></tr>
+                <tr><td class="rh" rowspan="2">Interstitiel</td><td class="sc dark" style="--c: #f2ab2f">3</td><td>Intramural <mark class="k-key">au contact de la muqueuse</mark></td></tr>
+                <tr><td class="sc dark" style="--c: #f2ab2f">4</td><td>Intramural</td></tr>
+                <tr><td class="rh" rowspan="3">Sous-séreux</td><td class="sc" style="--c: #3c67b8">5</td><td>&gt; 50 % intramural</td></tr>
+                <tr><td class="sc" style="--c: #3c67b8">6</td><td>&lt; 50 % intramural</td></tr>
+                <tr><td class="sc" style="--c: #3c67b8">7</td><td><mark class="k-key">Pédiculé</mark></td></tr>
+                <tr><td class="rh">Autres</td><td class="sc" style="--c: #8b8a96">8</td><td>Autres localisations : col (cervical), ligament large…</td></tr>
+                <tr><td class="rh">Mixte (transmural)</td><td class="sc" style="--c: #6b0d8c">2-5</td><td>Sous-muqueux type 2 <b>et</b> sous-séreux type 5</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pr-schema" data-uterus-schema role="img" aria-label="Schéma de l'utérus en vue coronale et sagittale : position de chaque type FIGO de myome entre la cavité et la séreuse"></div>
+          <p class="ftable-cap" style="margin-top: 0">Chaque cercle porte son type FIGO : plus le numéro augmente, plus le myome s'éloigne de la cavité vers la séreuse (le type 2-5 traverse toute la paroi).</p>
+          <div class="two-col" style="align-items: start">
+            <div class="callout callout-warn">
+              <p><b>Type 7 (sous-séreux pédiculé) :</b> <mark class="k-grave">mesurer la largeur du pédicule</mark> pour évaluer le <mark class="k-grave">risque de torsion</mark>.</p>
+            </div>
+            <div class="callout">
+              <p><b>Type 2-5 (transmural) :</b> noter l'<mark class="k-signo">encorbellement vasculaire</mark> autour du myome.</p>
+            </div>
+          </div>
+          <p class="fintro">L'outil <b>FIGO</b> de la page <a href="../comptes-rendus.html">Comptes rendus</a> place chaque myome sur ce schéma (paroi, niveau, profondeur selon le type), applique l'arbre décisionnel IRM et rédige le texte.</p>
+        </section>
+
+        <!-- IV -->
+        <section class="fsec" id="simple" style="--c: var(--green)">
+          <h2 class="fsec-title"><span class="fnum">IV</span>Myome utérin simple (non remanié)</h2>
+          <div class="ftable-wrap">
+            <table class="ftable">
+              <tbody>
+                <tr><td class="rh">Morphologie</td><td>Masse <mark class="k-signo">arrondie, aux contours circonscrits</mark>.</td></tr>
+                <tr><td class="rh">T2</td><td><mark class="k-key">Hyposignal T2</mark>.</td></tr>
+                <tr><td class="rh">T1</td><td><mark class="k-signo">Isosignal T1</mark> par rapport au myomètre.</td></tr>
+                <tr><td class="rh">Diffusion</td><td><mark class="k-signo">Hyposignal</mark> en diffusion b1000.</td></tr>
+                <tr><td class="rh">Après injection</td><td>Rehaussement <mark class="k-sign">homogène et parallèle au myomètre</mark>.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- V -->
+        <section class="fsec" id="degenerescences" style="--c: var(--blue)">
+          <h2 class="fsec-title"><span class="fnum">V</span>Dégénérescences des myomes</h2>
+          <p class="fintro">Quatre types : <mark class="k-key">hyaline, kystique, myxoïde</mark> et <mark class="k-key">nécrobiose aseptique</mark> (« red degeneration »).</p>
+          <div class="t-stepper t-wrap" role="tablist" aria-label="Dégénérescences">
+            <button class="t-btn is-active" data-t="hya" role="tab" aria-selected="true" style="--c: var(--blue)">Hyaline</button>
+            <button class="t-btn" data-t="kys" role="tab" aria-selected="false" style="--c: var(--teal)">Kystique</button>
+            <button class="t-btn" data-t="myx" role="tab" aria-selected="false" style="--c: var(--orange)">Myxoïde</button>
+            <button class="t-btn" data-t="nec" role="tab" aria-selected="false" style="--c: var(--k-grave)">Nécrobiose</button>
+          </div>
+          <div class="t-panels">
+            <article class="t-panel is-active" data-t="hya" style="--c: var(--blue)">
+              <h4>Dégénérescence hyaline</h4>
+              <ul class="fl">
+                <li>La <mark class="k-key">plus fréquente</mark> : jusqu'à <b>60 %</b> des myomes.</li>
+                <li>IRM : <mark class="k-signo">hyposignal T2</mark>, <mark class="k-signo">absence de rehaussement</mark> après injection.</li>
+              </ul>
+              <div class="callout">
+                <p><b>Après embolisation :</b> le myome est dévascularisé, ne se rehausse plus et prend l'<mark class="k-ddx">aspect d'une dégénérescence hyaline</mark>.</p>
+              </div>
+            </article>
+            <article class="t-panel" data-t="kys" style="--c: var(--teal)">
+              <h4>Dégénérescence kystique</h4>
+              <ul class="fl">
+                <li>Échographie : myome hétérogène avec <mark class="k-signo">portions anéchogènes</mark>.</li>
+                <li>IRM : <mark class="k-signo">hypersignal T2</mark>, <mark class="k-signo">pas de rehaussement</mark> des portions kystiques.</li>
+              </ul>
+            </article>
+            <article class="t-panel" data-t="myx" style="--c: var(--orange)">
+              <h4>Dégénérescence myxoïde</h4>
+              <ul class="fl">
+                <li><b>Rare</b>.</li>
+                <li>IRM : hétérogène, <mark class="k-signo">isosignal T1</mark>, portions en <mark class="k-signo">hypersignal T2</mark> qui se <mark class="k-signo">rehaussent</mark> après injection, <mark class="k-sign">pas de restriction de la diffusion</mark>.</li>
+              </ul>
+              <div class="callout callout-warn">
+                <p><b>Attention :</b> une dégénérescence myxoïde peut s'observer dans un <mark class="k-grave">léiomyosarcome</mark> : <mark class="k-key">vérifier l'absence de signe de malignité</mark>.</p>
+              </div>
+            </article>
+            <article class="t-panel" data-t="nec" style="--c: var(--k-grave)">
+              <h4>Nécrobiose aseptique</h4>
+              <ul class="fl">
+                <li>Contexte de <mark class="k-grave">douleurs pelviennes</mark>.</li>
+                <li>IRM : <mark class="k-key">hypersignal T1 diffus ou périphérique</mark>, signal T2 variable, <mark class="k-signo">pas de rehaussement</mark>.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <!-- VI -->
+        <section class="fsec" id="remaniements" style="--c: var(--teal)">
+          <h2 class="fsec-title"><span class="fnum">VI</span>Remaniements des myomes</h2>
+          <div class="tiles">
+            <article class="tile" style="--c: var(--k-grave)">
+              <span class="tile-badge">1</span>
+              <h3>Hémorragique</h3>
+              <ul class="fl">
+                <li>IRM : <mark class="k-signo">hypersignal T1</mark>, <mark class="k-key">persistant après suppression du signal de la graisse</mark>.</li>
+              </ul>
+            </article>
+            <article class="tile" style="--c: var(--amber)">
+              <span class="tile-badge">2</span>
+              <h3>Lipoléiomyome</h3>
+              <p>Remaniement graisseux, parfois considéré comme une variante histologique.</p>
+              <ul class="fl">
+                <li>Écho : <mark class="k-signo">hyperéchogène</mark>, atténuation postérieure, peu vascularisé en Doppler couleur.</li>
+                <li>TDM : masse bien limitée de <mark class="k-key">contenu graisseux</mark>.</li>
+                <li>IRM : <mark class="k-signo">hypersignal T1 et T2</mark>, <mark class="k-key">hyposignal T1 Fat Sat</mark>.</li>
+              </ul>
+            </article>
+            <article class="tile" style="--c: var(--slate)">
+              <span class="tile-badge">3</span>
+              <h3>Myome calcifié</h3>
+              <ul class="fl">
+                <li>TDM : <mark class="k-signo">calcifications périphériques</mark>.</li>
+                <li>IRM : <mark class="k-signo">absence de signal périphérique</mark> sur l'ensemble des séquences.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <!-- VII -->
+        <section class="fsec" id="sarcome" style="--c: var(--k-grave)">
+          <h2 class="fsec-title"><span class="fnum">VII</span>Myome cellulaire et léiomyosarcome</h2>
+          <div class="two-col" style="align-items: start">
+            <div class="fcard" style="--c: var(--orange)">
+              <h3 class="marker-sub">Myome cellulaire</h3>
+              <ul class="fl">
+                <li>IRM : <mark class="k-sign">contours réguliers</mark>, <mark class="k-signo">hypersignal T2</mark>, isosignal T1, <mark class="k-signo">rehaussement intense</mark>.</li>
+                <li><mark class="k-key">ADC &gt; 1,2 × 10⁻³ mm²/s</mark>.</li>
+                <li>Diagnostic différentiel : <mark class="k-grave">léiomyosarcome</mark>.</li>
+              </ul>
+            </div>
+            <div class="fcard" style="--c: var(--k-grave)">
+              <h3 class="marker-sub">Léiomyosarcome</h3>
+              <div class="ftable-wrap" style="margin-bottom: 0; box-shadow: none">
+                <table class="ftable">
+                  <tbody>
+                    <tr><td class="rh">Lésion</td><td><mark class="k-grave">Unique, volumineuse</mark>.</td></tr>
+                    <tr><td class="rh">Contours</td><td><mark class="k-grave">Irréguliers</mark>.</td></tr>
+                    <tr><td class="rh">Injection</td><td><mark class="k-grave">Fort rehaussement</mark>.</td></tr>
+                    <tr><td class="rh">Remaniements</td><td>Internes <mark class="k-grave">nécrotico-hémorragiques</mark>.</td></tr>
+                    <tr><td class="rh">Diffusion</td><td>Hypersignal, avec <mark class="k-grave">ADC &lt; 0,8 × 10⁻³ mm²/s</mark> <small>(signe non toujours présent)</small></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIII -->
+        <section class="fsec" id="arbre" style="--c: var(--purple)">
+          <h2 class="fsec-title"><span class="fnum">VIII</span>Arbre décisionnel et messages à retenir</h2>
+          <p class="fintro">Signal T2, puis rehaussement ou signal complémentaire, puis ADC (× 10⁻³ mm²/s).</p>
+          <div class="ftable-wrap">
+            <table class="ftable">
+              <thead><tr><th>Signal T2</th><th>Rehaussement / signal complémentaire</th><th class="c">ADC</th><th>Diagnostic</th></tr></thead>
+              <tbody>
+                <tr><td class="rh" rowspan="2">Hyposignal T2</td><td>Rehaussement homogène</td><td class="c">—</td><td><mark class="k-sign">Myome simple</mark></td></tr>
+                <tr><td>Pas de rehaussement</td><td class="c">—</td><td>Dégénérescence hyaline</td></tr>
+                <tr><td class="rh" rowspan="2">Hypersignal T2</td><td>Rehaussement hétérogène</td><td class="c">—</td><td><mark class="k-ddx">Dégénérescence myxoïde</mark></td></tr>
+                <tr><td>Pas de rehaussement</td><td class="c">—</td><td>Dégénérescence kystique</td></tr>
+                <tr><td class="rh" rowspan="4">Signal T2 intermédiaire</td><td>Hypersignal T1 (périphérique ou diffus)</td><td class="c">—</td><td>Nécrobiose</td></tr>
+                <tr><td rowspan="3">Pas d'hypersignal T1</td><td class="sc dark" style="--c: #cfe8d6">&gt; 1,2</td><td>Myome cellulaire</td></tr>
+                <tr><td class="sc dark" style="--c: #f6e7c3">0,8 – 1,2</td><td><mark class="k-ddx">Myome indéterminé</mark></td></tr>
+                <tr><td class="sc" style="--c: var(--k-grave)">&lt; 0,8</td><td><mark class="k-grave">Sarcome utérin</mark></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3 class="marker-sub">Take home messages</h3>
+          <ol class="trg">
+            <li style="--c: var(--steel)"><b>1</b><span>Protocole : <mark class="k-tech">3 plans T2</mark>, <mark class="k-tech">T1 multicontraste</mark> (graisse / eau), <mark class="k-tech">diffusion avec cartographie ADC</mark>, T1 après injection de gadolinium.</span></li>
+            <li style="--c: var(--amber)"><b>2</b><span>La <mark class="k-key">classification FIGO</mark> échographique décrit aussi en IRM la position du myome par rapport à la muqueuse et à la séreuse.</span></li>
+            <li style="--c: var(--green)"><b>3</b><span>Myome simple : <mark class="k-sign">hyposignal T2, isosignal T1, hyposignal b1000</mark>, rehaussement homogène.</span></li>
+            <li style="--c: var(--k-grave)"><b>4</b><span>Un des critères principaux pour distinguer un sarcome d'un myome : <mark class="k-grave">ADC &lt; 0,8 × 10⁻³ mm²/s</mark>.</span></li>
+          </ol>
+        </section>
+
+        <!-- IX -->
+        <section class="fsec" id="compte-rendu" style="--c: var(--plum)">
+          <h2 class="fsec-title"><span class="fnum">IX</span>Éléments à préciser au compte rendu</h2>
+          <p class="fintro">Cochez au fur et à mesure de votre lecture.</p>
+          <div class="fcard checklist" style="--c: var(--plum)">
+            <p class="nodes-title">Utérus</p>
+            <label><input type="checkbox"> Position et trois diamètres de l'utérus</label>
+            <label><input type="checkbox"> Nombre de myomes (utérus polymyomateux ?)</label>
+            <p class="nodes-title">Pour chaque myome</p>
+            <label><input type="checkbox"> Type FIGO (0 à 8, 2-5)</label>
+            <label><input type="checkbox"> Paroi et niveau (fundus, corps, isthme) ou siège (col, ligament large)</label>
+            <label><input type="checkbox"> Taille (trois diamètres)</label>
+            <label><input type="checkbox"> Type 7 : largeur du pédicule (risque de torsion)</label>
+            <label><input type="checkbox"> Type 2-5 : encorbellement vasculaire</label>
+            <label><input type="checkbox"> Signal T2, T1, rehaussement, ADC si signal T2 intermédiaire</label>
+            <label><input type="checkbox"> Dégénérescence ou remaniement</label>
+            <p class="nodes-title">Synthèse</p>
+            <label><input type="checkbox"> Arguments en faveur d'un sarcome (contours irréguliers, nécrose, ADC &lt; 0,8)</label>
+            <label><input type="checkbox"> Lésions associées : adénomyose, endométriose</label>
+            <label><input type="checkbox"> Schéma de cartographie joint</label>
+            <p class="check-count" aria-live="polite"></p>
+            <button class="btn btn-outline btn-sm check-reset" type="button">Tout décocher</button>
+          </div>
+        </section>
+
+        <!-- Testez-vous -->
+        <section class="fsec" id="testez-vous" style="--c: var(--ink)">
+          <h2 class="fsec-title"><span class="fnum">?</span>Testez-vous</h2>
+          <p class="fintro">Cliquez sur une carte pour voir la réponse.</p>
+          <div class="flash flash-3">
+            <button class="flip" aria-pressed="false" style="--c: var(--crimson)">
+              <span class="flip-tab">1</span>
+              <span class="flip-inner">
+                <span class="flip-face flip-front"><strong>Myome intramural au contact de la muqueuse : type FIGO ?</strong><small>cliquez pour retourner</small></span>
+                <span class="flip-face flip-back"><p><b>Type 3</b>Interstitiel (le type 4 est purement intramural).</p></span>
+              </span>
+            </button>
+            <button class="flip" aria-pressed="false" style="--c: var(--blue)">
+              <span class="flip-tab">2</span>
+              <span class="flip-inner">
+                <span class="flip-face flip-front"><strong>Myome sous-séreux pédiculé : que mesurer ?</strong><small>cliquez pour retourner</small></span>
+                <span class="flip-face flip-back"><p><b>La largeur du pédicule</b>Type 7 : risque de torsion.</p></span>
+              </span>
+            </button>
+            <button class="flip" aria-pressed="false" style="--c: var(--green)">
+              <span class="flip-tab">3</span>
+              <span class="flip-inner">
+                <span class="flip-face flip-front"><strong>Hyposignal T2 sans rehaussement ?</strong><small>cliquez pour retourner</small></span>
+                <span class="flip-face flip-back"><p><b>Dégénérescence hyaline</b>Même aspect après embolisation.</p></span>
+              </span>
+            </button>
+            <button class="flip" aria-pressed="false" style="--c: var(--orange)">
+              <span class="flip-tab">4</span>
+              <span class="flip-inner">
+                <span class="flip-face flip-front"><strong>Hypersignal T2 à rehaussement hétérogène ?</strong><small>cliquez pour retourner</small></span>
+                <span class="flip-face flip-back"><p><b>Dégénérescence myxoïde</b>Vérifier l'absence de signe de malignité (léiomyosarcome).</p></span>
+              </span>
+            </button>
+            <button class="flip" aria-pressed="false" style="--c: var(--k-grave)">
+              <span class="flip-tab">5</span>
+              <span class="flip-inner">
+                <span class="flip-face flip-front"><strong>Hypersignal T1 périphérique et douleurs pelviennes ?</strong><small>cliquez pour retourner</small></span>
+                <span class="flip-face flip-back"><p><b>Nécrobiose aseptique</b>Pas de rehaussement.</p></span>
+              </span>
+            </button>
+            <button class="flip" aria-pressed="false" style="--c: var(--purple)">
+              <span class="flip-tab">6</span>
+              <span class="flip-inner">
+                <span class="flip-face flip-front"><strong>Signal T2 intermédiaire, pas d'hypersignal T1, ADC 0,6 ?</strong><small>cliquez pour retourner</small></span>
+                <span class="flip-face flip-back"><p><b>Suspicion de sarcome</b>ADC &lt; 0,8 × 10⁻³ mm²/s.</p></span>
+              </span>
+            </button>
+          </div>
+        </section>
+
+        <div class="fiche-end">
+          <img src="../assets/emblem.svg" alt="" width="60" height="54">
+          <p>Synthèse du cours — RadiologicHub</p>
+          <a href="../fiches-rapides.html#femme" class="btn btn-outline btn-sm">← Toutes les fiches</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="../index.html" class="brand">
+        <img src="../assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav aria-label="Liens de pied de page">
+        <a href="../index.html#masterclass">Masterclass</a>
+        <a href="../fiches-rapides.html">Fiches rapides</a>
+        <a href="../comptes-rendus.html">Comptes rendus</a>
+        <a href="../index.html#cas-du-jour">Cas du jour</a>
+        <a href="../index.html#inscription">Contact</a>
+      </nav>
+      <p class="copyright">© <span id="year"></span> RadiologicHub · Formation en radiologie d'urgence</p>
+    </div>
+  </footer>
+  <script src="../regles/myome.js?v=20261008190000"></script>
+  <script src="../schemas/uterus.js?v=20261008190000"></script>
+  <script src="../fiche.js?v=20261008190000"></script>
+</body>
+</html>

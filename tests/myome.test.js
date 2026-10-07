@@ -1,0 +1,85 @@
+/* Tests des règles des myomes utérins (FIGO, arbre décisionnel) et du schéma de l'utérus — cas fictifs. */
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const M = require('../regles/myome.js');
+const U = require('../schemas/uterus.js');
+
+test('classification FIGO : catégories et libellés', () => {
+  assert.equal(M.categorie('0'), 'sous-muqueux');
+  assert.equal(M.categorie('2'), 'sous-muqueux');
+  assert.equal(M.categorie('3'), 'interstitiel');
+  assert.equal(M.categorie('4'), 'interstitiel');
+  assert.equal(M.categorie('6'), 'sous-séreux');
+  assert.equal(M.categorie('7'), 'sous-séreux');
+  assert.equal(M.categorie('8'), 'autre');
+  assert.equal(M.categorie('2-5'), 'transmural');
+  assert.equal(M.categorie('9'), null);
+  assert.equal(M.libelleType('7'), 'FIGO 7 (sous-séreux, pédiculé)');
+  assert.equal(M.TYPES.length, 10);
+});
+
+test('localisation en toutes lettres', () => {
+  assert.equal(M.localisation({ type: '2', paroi: 'anterieure', niveau: 'corps' }), 'paroi antérieure du corps utérin');
+  assert.equal(M.localisation({ type: '7', paroi: 'fundique', niveau: 'corps' }), 'fundique');
+  assert.equal(M.localisation({ type: '8', special: 'col' }), 'du col utérin');
+  assert.equal(M.localisation({ type: '4', paroi: 'laterale-gauche', niveau: 'isthme' }), 'paroi latérale gauche de l\'isthme');
+});
+
+test('volume (ellipsoïde) et taille maximale', () => {
+  assert.equal(Math.round(M.volume(80, 50, 40)), 83);
+  assert.equal(M.volume(80, '', 40), null);
+  assert.equal(M.tailleMax({ d1: '32', d2: '28,5', d3: '' }), 32);
+});
+
+test('arbre décisionnel : signal T2, rehaussement, T1, ADC', () => {
+  assert.equal(M.caracteriser({ t2: 'hypo', rehaussement: 'homogene' }).diagnostic, 'myome simple');
+  assert.equal(M.caracteriser({ t2: 'hypo', rehaussement: 'absent' }).diagnostic, 'dégénérescence hyaline');
+  const myx = M.caracteriser({ t2: 'hyper', rehaussement: 'heterogene' });
+  assert.equal(myx.diagnostic, 'dégénérescence myxoïde');
+  assert.equal(myx.niveau, 'attention');
+  assert.equal(M.caracteriser({ t2: 'hyper', rehaussement: 'absent' }).diagnostic, 'dégénérescence kystique');
+  assert.equal(M.caracteriser({ t2: 'intermediaire', t1: 'peripherique' }).diagnostic, 'nécrobiose aseptique');
+  assert.equal(M.caracteriser({ t2: 'intermediaire', t1: 'diffus', adc: '0,5' }).diagnostic, 'nécrobiose aseptique', 'l\'hypersignal T1 prime');
+  assert.equal(M.caracteriser({ t2: 'intermediaire', t1: 'non', adc: '1,5' }).diagnostic, 'myome cellulaire');
+  assert.equal(M.caracteriser({ t2: 'intermediaire', t1: 'non', adc: '1,2' }).diagnostic, 'myome indéterminé', '1,2 : borne incluse dans « indéterminé »');
+  assert.equal(M.caracteriser({ t2: 'intermediaire', t1: 'non', adc: '0,8' }).diagnostic, 'myome indéterminé');
+  const s = M.caracteriser({ t2: 'intermediaire', t1: 'non', adc: '0,7' });
+  assert.equal(s.diagnostic, 'suspicion de sarcome utérin');
+  assert.equal(s.niveau, 'suspect');
+  assert.equal(M.caracteriser({ t2: 'intermediaire', t1: 'non' }).diagnostic, null, 'ADC manquant');
+  assert.equal(M.caracteriser({}).diagnostic, null);
+});
+
+test('arguments en faveur d\'un léiomyosarcome', () => {
+  assert.deepEqual(M.argumentsSarcome({ contours: 'irreguliers', necrose: true, t2: 'intermediaire', t1: 'non', adc: '0,6' }),
+    ['contours irréguliers', 'remaniements nécrotico-hémorragiques', 'ADC < 0,8 × 10⁻³ mm²/s']);
+  assert.deepEqual(M.argumentsSarcome({ t2: 'hypo', rehaussement: 'homogene' }), []);
+});
+
+test('schéma : profondeur croissante de la muqueuse vers la séreuse selon le type FIGO', () => {
+  const x = type => U.position({ type, paroi: 'laterale-gauche', niveau: 'corps', d1: 20 }, 'cor').x;
+  const ordre = ['0', '1', '2', '3', '4', '5', '6', '7'].map(x);
+  ordre.slice(1).forEach((v, i) => assert.ok(v > ordre[i], `type ${i + 1} plus en dehors que le type ${i}`));
+  assert.ok(U.position({ type: '0', paroi: 'laterale-gauche', niveau: 'corps' }, 'cor').pedicule, 'type 0 : pédicule');
+  assert.ok(U.position({ type: '7', paroi: 'fundique' }, 'cor').pedicule, 'type 7 : pédicule');
+  const ant = U.position({ type: '4', paroi: 'anterieure', niveau: 'corps' }, 'sag');
+  const post = U.position({ type: '4', paroi: 'posterieure', niveau: 'corps' }, 'sag');
+  assert.ok(ant.x < 560 && post.x > 560, 'antérieur à gauche, postérieur à droite');
+  assert.equal(U.position({ type: '4', paroi: 'anterieure', niveau: 'corps' }, 'cor').projete, true, 'paroi antérieure projetée sur la vue coronale');
+  assert.equal(U.position({ type: '8', special: 'ligament-droit' }, 'sag'), null, 'ligament large : vue coronale seulement');
+  const tr = U.position({ type: '2-5', paroi: 'posterieure', niveau: 'corps', d1: 10 }, 'sag');
+  assert.ok(tr.r > 50, 'transmural : de la muqueuse à la séreuse');
+});
+
+test('schéma : clic → paroi et niveau', () => {
+  assert.deepEqual(U.zone(120, 160), { paroi: 'laterale-droite', niveau: 'corps' });
+  assert.deepEqual(U.zone(300, 220), { paroi: 'laterale-gauche', niveau: 'isthme' });
+  assert.deepEqual(U.zone(200, 80), { paroi: 'fundique', niveau: 'fundus' });
+  assert.deepEqual(U.zone(500, 160), { paroi: 'anterieure', niveau: 'corps' });
+  assert.deepEqual(U.zone(620, 110), { paroi: 'posterieure', niveau: 'fundus' });
+  assert.deepEqual(U.zone(200, 300), { special: 'col' });
+  assert.equal(U.zone(420, 160), null);
+  const svg = U.svg({ interactif: true, myomes: [{ n: 1, type: '2', paroi: 'anterieure', niveau: 'corps', color: '#d63f4c' }] });
+  assert.match(svg, /data-u="cor"/);
+  assert.match(svg, /VUE SAGITTALE/);
+});
