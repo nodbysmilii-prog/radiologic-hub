@@ -33,7 +33,7 @@
     'sous-muqueux': { label: 'Sous-muqueux (0–2)', c: '#e0822a' },
     interstitiel: { label: 'Interstitiel (3–4)', c: '#2a9d8f' },
     'sous-séreux': { label: 'Sous-séreux (5–7)', c: '#2f5fb3' },
-    transmural: { label: 'Transmural (2-5)', c: '#6b0d8c' },
+    transmural: { label: 'Transmural (2-5)', c: '#8c6bb1' },
     autre: { label: 'Autre (8)', c: '#8b8a96' },
   };
   const categorie = type => (FIGO[type] ? FIGO[type].cat : null);

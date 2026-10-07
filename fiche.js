@@ -305,7 +305,7 @@ if (body) {
     $$('[data-uterus-schema]').forEach(el => {
       el.innerHTML = window.RHUterus.planche({
         couleur: MY.couleur,
-        categories: Object.values(MY.CATEGORIES).map(c => [c.label, c.c]),
+        categories: { interstitiel: 'Interstitiel', 'sous-muqueux': 'Sous-muqueux', 'sous-séreux': 'Sous-séreux' },
       });
     });
   }

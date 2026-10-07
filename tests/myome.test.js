@@ -76,11 +76,16 @@ test('schéma : profondeur croissante de la muqueuse vers la séreuse selon le t
 });
 
 test('schéma : clic → paroi et niveau', () => {
-  assert.deepEqual(U.zone(120, 160), { paroi: 'laterale-droite', niveau: 'corps' });
-  assert.deepEqual(U.zone(300, 220), { paroi: 'laterale-gauche', niveau: 'isthme' });
-  assert.deepEqual(U.zone(200, 80), { paroi: 'fundique', niveau: 'fundus' });
-  assert.deepEqual(U.zone(200, 300), { special: 'col' });
-  assert.equal(U.zone(380, 160), null, 'entre les deux vues');
+  // vue coronale (médaillon) : idem pour les parois latérales
+  for (const paroi of ['laterale-droite', 'laterale-gauche']) for (const niveau of ['fundus', 'corps', 'isthme']) {
+    const p = U.position({ type: '4', paroi, niveau }, 'cor');
+    assert.deepEqual(U.zone(p.x, p.y), { paroi, niveau }, `${paroi} ${niveau}`);
+  }
+  const fc = U.position({ type: '4', paroi: 'fundique' }, 'cor');
+  assert.deepEqual(U.zone(fc.x, fc.y), { paroi: 'fundique', niveau: 'fundus' });
+  const cc = U.position({ type: '8', special: 'col' }, 'cor');
+  assert.deepEqual(U.zone(cc.x, cc.y), { special: 'col' });
+  assert.equal(U.zone(300, 5), null, 'hors du schéma');
   // vue sagittale : un clic à l'emplacement d'un myome redonne sa paroi et son niveau
   for (const paroi of ['anterieure', 'posterieure']) for (const niveau of ['fundus', 'corps', 'isthme']) {
     const p = U.position({ type: '4', paroi, niveau }, 'sag');
@@ -97,9 +102,9 @@ test('schéma : clic → paroi et niveau', () => {
 });
 
 test('planche de la classification FIGO : un myome légendé par type', () => {
-  const svg = U.planche({ couleur: M.couleur, categories: Object.values(M.CATEGORIES).map(c => [c.label, c.c]) });
+  const svg = U.planche({ couleur: M.couleur, categories: { interstitiel: 'Interstitiel', 'sous-muqueux': 'Sous-muqueux', 'sous-séreux': 'Sous-séreux' } });
   for (const t of M.TYPES) assert.match(svg, new RegExp(`>${t}</text>`), `type ${t}`);
   assert.match(svg, /Intracavitaire/);
   assert.match(svg, /Sous-séreux pédiculé/);
-  assert.match(svg, /Sous-muqueux \(0–2\)/);
+  assert.match(svg, />Sous-muqueux</);
 });
