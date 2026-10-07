@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261008150000">
-  <link rel="stylesheet" href="fiche.css?v=20261008150000">
+  <link rel="stylesheet" href="styles.css?v=20261008160000">
+  <link rel="stylesheet" href="fiche.css?v=20261008160000">
 </head>
 <body>
 
@@ -50,6 +50,7 @@
           <button class="spe-tab" role="tab" data-spe="neuro" style="--c: var(--purple)">Neuro</button>
           <button class="spe-tab" role="tab" data-spe="thorax" style="--c: var(--blue)">Thorax</button>
           <button class="spe-tab" role="tab" data-spe="trauma" style="--c: var(--rose)">Traumato</button>
+          <button class="spe-tab" role="tab" data-spe="uro" style="--c: var(--steel)">Uro</button>
           <button class="spe-tab" role="tab" data-spe="osteo" style="--c: var(--plum)">Ostéo-articulaire</button>
           <button class="spe-tab" role="tab" data-spe="vasculaire" style="--c: var(--teal)">Vasculaire</button>
           <button class="spe-tab" role="tab" data-spe="pediatrie" style="--c: var(--green)">Pédiatrie</button>
@@ -76,6 +77,20 @@
             <h2>IRM pelvienne dans le cancer du rectum</h2>
             <p>Technique, staging T et N, <span class="hl-red">CRM</span>, EMVI, réponse post-traitement et mrTRG. Avec images IRM et checklist du CR.</p>
             <ul class="fiche-tags"><li>IRM</li><li>Staging</li><li>mrTRG</li></ul>
+            <span class="fiche-open">Ouvrir la fiche →</span>
+          </a>
+          <a class="fiche-card" data-spe="uro" href="fiches/irm-prostate-diagnostic.html" style="--c: var(--steel)">
+            <span class="fiche-card-badge">Prostate</span>
+            <h2>IRM de la prostate : diagnostic du cancer</h2>
+            <p>Les 7 commandements, PI-QUAL, signal de fond, <span class="hl-red">PI-RADS v2.1</span> en zone périphérique et de transition, cartographie sectorielle.</p>
+            <ul class="fiche-tags"><li>IRM</li><li>PI-RADS</li><li>PI-QUAL</li></ul>
+            <span class="fiche-open">Ouvrir la fiche →</span>
+          </a>
+          <a class="fiche-card" data-spe="uro" href="fiches/irm-prostate-extension.html" style="--c: var(--cornflower)">
+            <span class="fiche-card-badge">Prostate</span>
+            <h2>IRM de la prostate : bilan d'extension</h2>
+            <p>TNM 2016, signes iT3a et <span class="hl-red">score EPE</span>, vésicules séminales (iT3b), iT4, ganglions (iN) et métastases (iM).</p>
+            <ul class="fiche-tags"><li>IRM</li><li>Score EPE</li><li>TNM</li></ul>
             <span class="fiche-open">Ouvrir la fiche →</span>
           </a>
           <a class="fiche-card" data-spe="osteo" href="fiches/spondylodiscite.html" style="--c: var(--plum)">
@@ -113,6 +128,6 @@
     </div>
   </footer>
 
-  <script src="fiche.js?v=20261008150000"></script>
+  <script src="fiche.js?v=20261008160000"></script>
 </body>
 </html>

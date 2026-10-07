@@ -549,7 +549,7 @@ mark[class^="k-"], .chip {
 .trg { list-style: none; padding: 0; margin: 0 0 30px; display: grid; gap: 10px; }
 .trg li { display: grid; grid-template-columns: 96px 1fr; align-items: center; gap: 14px; padding: 8px 18px 8px 8px; border-radius: 999px 20px 20px 999px; background: var(--card); border: 3px solid var(--c); font-size: .9rem; transition: transform .2s; }
 .trg li:hover { transform: translateX(6px); }
-.trg li b { display: grid; place-items: center; height: 42px; border-radius: 999px; background: var(--c); color: #fff; font-weight: 900; letter-spacing: .04em; }
+.trg li > b { display: grid; place-items: center; height: 42px; border-radius: 999px; background: var(--c); color: #fff; font-weight: 900; letter-spacing: .04em; }
 
 .checklist label { display: flex; gap: 10px; align-items: flex-start; padding: 8px 10px; margin: 0 -10px; border-radius: 12px; font-size: .9rem; cursor: pointer; transition: background .2s; }
 .checklist label:hover { background: rgba(0, 0, 0, .04); }
@@ -568,7 +568,7 @@ mark[class^="k-"], .chip {
   .sig-row { grid-template-columns: 90px 1fr 1fr 1fr; }
   .sig-row span { padding: 10px 8px; font-size: .74rem; }
   .trg li { grid-template-columns: 1fr; border-radius: 20px; }
-  .trg li b { width: 90px; height: 34px; }
+  .trg li > b { width: 90px; height: 34px; }
 }
 @media print {
   .t-panel { display: block !important; box-shadow: none; margin-bottom: 10px; }
@@ -795,3 +795,43 @@ mark[class^="k-"], .chip {
 .tech-table .tr { grid-template-columns: 170px repeat(3, minmax(0, 1fr)); }
 .tr > .rh { overflow-wrap: normal; hyphens: auto; letter-spacing: .02em; }
 @media (max-width: 760px) { .tech-table .tr, .tech-table.mini .tr { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Fiches Uro (prostate) : tableaux de décision, schémas ---------- */
+.ftable-wrap { overflow-x: auto; margin-bottom: 30px; border-radius: var(--radius); border: 4px solid var(--ink); box-shadow: 10px 10px 0 rgba(17, 17, 20, .85); background: var(--card); }
+.ftable { width: 100%; border-collapse: collapse; font-size: .86rem; line-height: 1.45; }
+.ftable th, .ftable td { padding: 10px 12px; border-top: 2px solid rgba(0, 0, 0, .08); border-left: 2px solid rgba(0, 0, 0, .06); text-align: left; vertical-align: middle; }
+.ftable tr > :first-child { border-left: 0; }
+.ftable thead th { background: var(--ink); color: #fff; font-size: .7rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; border-top: 0; }
+.ftable thead th.sub { background: #4a4958; }
+.ftable .rh { background: #e3e3e8; font-weight: 900; font-size: .78rem; letter-spacing: .04em; color: var(--ink); }
+.ftable .rh-big { background: var(--c, var(--blue)); color: #fff; font-size: 1.4rem; text-align: center; }
+.ftable .c { text-align: center; }
+.ftable .sc { text-align: center; font-weight: 900; font-size: 1.05rem; color: #fff; background: var(--c); }
+.ftable .sc.dark { color: var(--ink); }
+.ftable small { display: block; font-size: .72rem; font-weight: 600; color: var(--muted); }
+.ftable .sc small { color: inherit; opacity: .85; }
+.ftable ul { margin: 0; padding-left: 1.1em; }
+.ftable li { margin: .15em 0; }
+.ftable-cap { margin: -18px 0 28px; font-size: .78rem; color: var(--muted); }
+.trg-letters li { grid-template-columns: 54px 1fr; }
+.trg.trg-letters li > b { width: 42px; font-size: 1.1rem; }
+.pr-schema { margin: 0 0 14px; padding: 12px; border-radius: var(--radius); border: 4px solid var(--ink); background: #fff; box-shadow: 10px 10px 0 color-mix(in srgb, var(--c, var(--steel)) 50%, transparent); }
+.pr-schema svg { display: block; width: 100%; height: auto; }
+.abbr-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 26px; }
+.abbr-grid span { padding: 6px 14px; border-radius: 999px; background: var(--card); border: 3px solid var(--c, var(--ink)); font-size: .82rem; font-weight: 700; }
+.abbr-grid b { color: var(--c, var(--ink)); }
+.svg-fig { margin: 0; padding: 14px; border-radius: var(--radius); background: #fff; border: 4px solid var(--ink); box-shadow: 8px 8px 0 color-mix(in srgb, var(--c, var(--steel)) 50%, transparent); }
+.svg-fig svg { display: block; width: 100%; height: auto; max-width: 420px; margin: 0 auto; }
+.svg-fig figcaption { margin-top: 8px; font-size: .8rem; color: var(--muted); text-align: center; }
+.epe-ico { display: block; width: 104px; max-width: none; height: auto; margin: 0 auto; }
+.zt-ico { display: block; width: 64px; height: auto; margin-top: 6px; }
+@media (max-width: 760px) {
+  .trg.trg-letters li { grid-template-columns: 42px 1fr; }
+  .pr-schema { overflow-x: auto; }
+  .pr-schema svg { min-width: 560px; }
+  .ftable { font-size: .8rem; }
+  .ftable th, .ftable td { padding: 8px 9px; }
+}
+@media print {
+  .ftable-wrap, .pr-schema, .svg-fig { box-shadow: none !important; }
+}

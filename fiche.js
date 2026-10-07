@@ -284,6 +284,21 @@ if (body) {
     });
   });
 
+  /* Schéma sectoriel de la prostate (schemas/prostate.js), légendé par zone */
+  if (window.RHProstate) {
+    const ZC = { PZ: '#cfe8d6', TZ: '#f6e7c3', AS: '#e9e2d6', CZ: '#e4d9ee' };
+    const fond = id => {
+      const z = window.RHProstate.parse(id).zone;
+      return z.startsWith('PZ') ? ZC.PZ : z.startsWith('TZ') ? ZC.TZ : ZC[z] || '#fbfbfb';
+    };
+    $$('[data-prostate-schema]').forEach(el => {
+      el.innerHTML = window.RHProstate.svg({
+        fondZone: fond, titreLegende: 'Zones :',
+        legende: [['PZ', ZC.PZ], ['TZ', ZC.TZ], ['AS (SFMA)', ZC.AS], ['CZ', ZC.CZ]],
+      });
+    });
+  }
+
   /* Impression */
   const printBtn = $('#print-btn');
   if (printBtn) printBtn.addEventListener('click', () => {

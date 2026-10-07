@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IRM de la prostate : diagnostic du cancer — Fiche rapide RadiologicHub</title>
+  <meta name="description" content="Fiche rapide RadiologicHub : IRM de la prostate pour le diagnostic du cancer — les 7 commandements, PI-QUAL, signal de fond, score PI-RADS v2.1 en zone périphérique et de transition, cartographie sectorielle.">
+  <link rel="icon" type="image/svg+xml" href="../assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=20261008160000">
+  <link rel="stylesheet" href="../fiche.css?v=20261008160000">
+</head>
+<body class="fiche-page">
+
+  <div class="read-progress" aria-hidden="true"><span></span></div>
+
+  <header class="site-header is-scrolled" id="top">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="RadiologicHub — accueil">
+        <img src="../assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+        <a href="../index.html#masterclass">Masterclass</a>
+        <a href="../fiches-rapides.html" class="is-current">Fiches rapides</a>
+        <a href="../comptes-rendus.html">Comptes rendus</a>
+        <a href="../index.html#cas-du-jour">Cas du jour</a>
+        <a href="../index.html#tarifs">Tarifs</a>
+        <a href="../index.html#inscription" class="btn btn-ink btn-sm">S'inscrire</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ EN-TÊTE DE FICHE ============ -->
+    <section class="fiche-hero sec-down">
+      <div class="container">
+        <nav class="crumbs" aria-label="Fil d'Ariane">
+          <a href="../fiches-rapides.html">Fiches rapides</a> › <a href="../fiches-rapides.html#uro">Uro</a> › <span>Prostate : diagnostic</span>
+        </nav>
+        <p class="marker-tag">Fiche rapide · Imagerie uro</p>
+        <h1>IRM de la prostate : <span class="hl-navy">diagnostic du cancer</span></h1>
+        <p class="fiche-sub">Les 7 commandements, <span class="hl-red">PI-QUAL</span>, signal de fond et score <span class="hl-red">PI-RADS v2.1</span> en zone périphérique et en zone de transition.</p>
+
+        <div class="legend" role="group" aria-label="Code couleur — cliquez pour isoler une catégorie">
+          <span class="legend-label">Code couleur :</span>
+          <button class="chip k-tech" data-k="tech" aria-pressed="false">Technique / séquence</button>
+          <button class="chip k-signo" data-k="signo" aria-pressed="false">Signe radiologique</button>
+          <button class="chip k-grave" data-k="grave" aria-pressed="false">Gravité / suspicion forte</button>
+          <button class="chip k-sign" data-k="sign" aria-pressed="false">Avantage / conduite</button>
+          <button class="chip k-ddx" data-k="ddx" aria-pressed="false">Piège / limite</button>
+          <button class="chip k-key" data-k="key" aria-pressed="false">À retenir</button>
+        </div>
+        <p class="legend-hint">Astuce : cliquez sur une couleur pour n'afficher qu'elle.</p>
+
+        <div class="fiche-actions">
+          <button class="btn btn-outline btn-sm" id="print-btn">Imprimer / PDF</button>
+          <a href="#compte-rendu" class="btn btn-outline btn-sm">Checklist du CR</a>
+          <a href="irm-prostate-extension.html" class="btn btn-outline btn-sm">Bilan d'extension →</a>
+          <a href="#testez-vous" class="btn btn-ink btn-sm">Testez-vous →</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="container fiche-layout">
+      <!-- Sommaire -->
+      <aside class="toc" aria-label="Sommaire">
+        <p class="toc-title">Sommaire</p>
+        <ol>
+          <li><a href="#commandements" style="--c: var(--steel)"><b>I</b>Les 7 commandements</a></li>
+          <li><a href="#pi-qual" style="--c: var(--blue)"><b>II</b>Qualité : PI-QUAL</a></li>
+          <li><a href="#glande" style="--c: var(--teal)"><b>III</b>Glande et signal de fond</a></li>
+          <li><a href="#pirads" style="--c: var(--amber)"><b>IV</b>Score PI-RADS v2.1</a></li>
+          <li><a href="#cartographie" style="--c: var(--green)"><b>V</b>Cartographie sectorielle</a></li>
+          <li><a href="#scores" style="--c: var(--purple)"><b>VI</b>Autres scores</a></li>
+          <li><a href="#compte-rendu" style="--c: var(--plum)"><b>VII</b>Compte rendu</a></li>
+          <li><a href="#testez-vous" style="--c: var(--ink)"><b>?</b>Testez-vous</a></li>
+        </ol>
+      </aside>
+
+      <div class="fiche-body" id="fiche-body">
+
+        <!-- I -->
+        <section class="fsec" id="commandements" style="--c: var(--steel)">
+          <h2 class="fsec-title"><span class="fnum">I</span>Les 7 commandements</h2>
+          <ol class="trg trg-letters">
+            <li style="--c: var(--steel)"><b>A</b><span><mark class="k-tech">IRM multiparamétrique</mark> (biparamétrique possible si patient <mark class="k-sign">naïf de biopsies et sans facteur de risque</mark>).</span></li>
+            <li style="--c: var(--blue)"><b>B</b><span>Évaluer la qualité de l'examen : <mark class="k-key">PI-QUAL</mark> (→ II).</span></li>
+            <li style="--c: var(--teal)"><b>C</b><span><mark class="k-key">Mesurer la glande</mark> et calculer la <mark class="k-key">densité de PSA (PSAd)</mark>.</span></li>
+            <li style="--c: var(--green)"><b>D</b><span>Décrire le signal « <mark class="k-signo">de fond</mark> » (→ III).</span></li>
+            <li style="--c: var(--amber)"><b>E</b><span>Analyser successivement : <mark class="k-tech">ZP, ZT, SFMA, lobe médian, VS</mark>.</span></li>
+            <li style="--c: var(--orange)"><b>F</b><span>Analyser les images significatives :
+              1) <mark class="k-key">PI-RADS v2.1</mark> = zone, taille (mm), score, extension ;
+              2) <mark class="k-sign">PRECISE</mark> pour la surveillance active ;
+              3) <mark class="k-sign">Likert</mark> si prostate traitée ou « impression » différente du PI-RADS ;
+              4) <mark class="k-sign">PI-RR</mark> pour les récidives.</span></li>
+            <li style="--c: var(--plum)"><b>G</b><span>Un <mark class="k-key">compte rendu standardisé incluant le schéma</mark> (<a href="http://www.pcih.fr/portal" target="_blank" rel="noopener">www.pcih.fr/portal</a>).</span></li>
+          </ol>
+          <div class="abbr-grid" aria-label="Abréviations">
+            <span style="--c: var(--green)"><b>ZP</b> zone périphérique</span>
+            <span style="--c: var(--amber)"><b>ZT</b> zone de transition</span>
+            <span style="--c: var(--slate)"><b>SFMA</b> stroma fibromusculaire antérieur (AS)</span>
+            <span style="--c: var(--purple)"><b>ZC</b> zone centrale (CZ)</span>
+            <span style="--c: var(--steel)"><b>VS</b> vésicules séminales</span>
+          </div>
+        </section>
+
+        <!-- II -->
+        <section class="fsec" id="pi-qual" style="--c: var(--blue)">
+          <h2 class="fsec-title"><span class="fnum">II</span>Qualité de l'examen : PI-QUAL</h2>
+          <p class="fintro">PI-QUAL (Giganti, Insights Imaging, 2021) : qualité diagnostique des séquences de l'IRM multiparamétrique (T2, diffusion, perfusion).</p>
+          <div class="ftable-wrap">
+            <table class="ftable">
+              <thead><tr><th>PI-QUAL</th><th>Critères</th><th>Implications cliniques</th></tr></thead>
+              <tbody>
+                <tr><td class="sc" style="--c: var(--k-grave)">1</td><td>Toutes les séquences sont <mark class="k-grave">en dessous du standard minimal</mark> de qualité diagnostique</td>
+                  <td rowspan="2"><ul><li><mark class="k-grave">Impossible d'affirmer</mark> toutes les lésions significatives</li><li><mark class="k-grave">Impossible d'exclure</mark> tous les cancers significatifs*</li></ul></td></tr>
+                <tr><td class="sc" style="--c: var(--orange)">2</td><td>Une seule séquence est de qualité diagnostique acceptable</td></tr>
+                <tr><td class="sc dark" style="--c: var(--amber)">3</td><td>Au moins deux séquences, <b>prises ensemble</b>, sont de qualité diagnostique</td>
+                  <td><ul><li>Possible d'affirmer toutes les lésions significatives</li><li><mark class="k-ddx">Impossible d'exclure</mark> tous les cancers significatifs</li></ul></td></tr>
+                <tr><td class="sc" style="--c: var(--teal)">4</td><td>Deux séquences ou plus sont <b>indépendamment</b> de qualité diagnostique</td>
+                  <td rowspan="2"><ul><li><mark class="k-sign">Possible d'affirmer</mark> toutes les lésions significatives</li><li><mark class="k-sign">Possible d'exclure</mark> tous les cancers significatifs</li></ul></td></tr>
+                <tr><td class="sc" style="--c: var(--green)">5</td><td>Toutes les séquences sont de qualité diagnostique <b>optimale</b></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="ftable-cap">* PI-QUAL 1 ou 2 : le compte rendu ne devrait <mark class="k-ddx">pas comporter de score PI-RADS ni de Likert</mark>.</p>
+        </section>
+
+        <!-- III -->
+        <section class="fsec" id="glande" style="--c: var(--teal)">
+          <h2 class="fsec-title"><span class="fnum">III</span>Glande, PSAd et signal de fond</h2>
+          <div class="two-col" style="align-items: start">
+            <div class="fcard" style="--c: var(--teal)">
+              <h3 class="marker-sub">Mesurer la glande</h3>
+              <ul class="fl">
+                <li>Trois diamètres : <mark class="k-tech">transverse × antéro-postérieur × crânio-caudal</mark>.</li>
+                <li>Volume (ellipsoïde) = <mark class="k-key">L × l × h × 0,52</mark>.</li>
+                <li><mark class="k-key">PSAd = PSA / volume</mark> (ng/mL/cm³).</li>
+              </ul>
+            </div>
+            <div class="fcard" style="--c: var(--green)">
+              <h3 class="marker-sub">Signal « de fond » de la ZP</h3>
+              <p class="fintro">Bura, Eur Radiol, 2021.</p>
+              <ol class="trg">
+                <li style="--c: #8fb3e0"><b>1</b><span>Presque tout est en <mark class="k-signo">hypersignal T2</mark>.</span></li>
+                <li style="--c: #5f8ccf"><b>2</b><span>Quelques plages linéaires de signal intermédiaire (<b>1 à 2 secteurs</b>).</span></li>
+                <li style="--c: #3c67b8"><b>3</b><span>Multiples plages linéaires ou triangulaires de signal intermédiaire (<b>≥ 3 secteurs</b>).</span></li>
+                <li style="--c: #263f73"><b>4</b><span>Multiples plages <mark class="k-ddx">très hétérogènes ou hyposignal diffus</mark>.</span></li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <!-- IV -->
+        <section class="fsec" id="pirads" style="--c: var(--amber)">
+          <h2 class="fsec-title"><span class="fnum">IV</span>Score PI-RADS v2.1</h2>
+          <p class="fintro">Pour chaque image significative : <mark class="k-key">zone, taille (mm), score, extension</mark>. La séquence dominante dépend de la zone.</p>
+          <div class="t-stepper" role="tablist" aria-label="Zone">
+            <button class="t-btn is-active" data-t="zp" role="tab" aria-selected="true" style="--c: var(--green)">ZP · diffusion</button>
+            <button class="t-btn" data-t="zt" role="tab" aria-selected="false" style="--c: var(--amber)">ZT · T2</button>
+          </div>
+          <div class="t-panels">
+            <article class="t-panel is-active" data-t="zp" style="--c: var(--green)">
+              <h4>Zone périphérique : séquence dominante = <mark class="k-tech">diffusion</mark></h4>
+              <ol class="trg">
+                <li style="--c: #1f9d55"><b>1</b><span>Aucune anomalie.</span></li>
+                <li style="--c: #7bb661"><b>2</b><span>Image <mark class="k-signo">linéaire ou angulaire</mark>.</span></li>
+                <li style="--c: #f2ab2f"><b>3</b><span>Image <mark class="k-signo">focale</mark>, restriction <b>modérée</b> (peut être marquée, mais sur <mark class="k-ddx">une seule des deux images</mark> de diffusion : b élevé ou ADC).</span></li>
+                <li style="--c: #ea701e"><b>4</b><span>Image <mark class="k-signo">focale &lt; 15 mm</mark>, restriction <b>marquée</b>.</span></li>
+                <li style="--c: #a8172d"><b>5</b><span>Image <mark class="k-grave">focale ≥ 15 mm</mark>, restriction marquée, <mark class="k-grave">ou extension extraprostatique (EEP)</mark>.</span></li>
+              </ol>
+              <div class="ftable-wrap">
+                <table class="ftable">
+                  <thead>
+                    <tr><th>Dominante</th><th>Accessoire</th><th rowspan="2" class="c">PI-RADS</th></tr>
+                    <tr><th class="sub">Diffusion</th><th class="sub">Perfusion (DCE)</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td class="rh c">1</td><td class="c">—</td><td class="sc" style="--c: #1f9d55">1</td></tr>
+                    <tr><td class="rh c">2</td><td class="c">—</td><td class="sc" style="--c: #7bb661">2</td></tr>
+                    <tr><td class="rh c" rowspan="2">3</td><td class="c">Négative</td><td class="sc dark" style="--c: #f7d84a">3</td></tr>
+                    <tr><td class="c"><mark class="k-key">Positive</mark><small>(nettement)</small></td><td class="sc" style="--c: #ea701e">3 + 1 = 4</td></tr>
+                    <tr><td class="rh c">4</td><td class="c">—</td><td class="sc" style="--c: #ea701e">4</td></tr>
+                    <tr><td class="rh c">5</td><td class="c">—</td><td class="sc" style="--c: #d0202e">5</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="ftable-cap">La perfusion ne sert qu'à <mark class="k-key">faire passer un score diffusion 3 à PI-RADS 4</mark>.</p>
+            </article>
+            <article class="t-panel" data-t="zt" style="--c: var(--amber)">
+              <h4>Zone de transition : séquence dominante = <mark class="k-tech">T2</mark></h4>
+              <ol class="trg">
+                <li style="--c: #1f9d55"><b>1</b><span>Nodule <mark class="k-sign">parfaitement encapsulé</mark>, ou ZT homogène normale (rare).
+                  <svg class="zt-ico" viewBox="0 0 64 40" aria-hidden="true"><ellipse cx="32" cy="22" rx="29" ry="16" fill="#dcdce2" stroke="#55545f" stroke-width="1.5"/><circle cx="44" cy="18" r="7" fill="#b9b9c2" stroke="#111114" stroke-width="2"/></svg></span></li>
+                <li style="--c: #7bb661"><b>2</b><span>Nodule <b>presque complètement encapsulé</b> ; nodule <b>circonscrit homogène non encapsulé</b> ; nodule <b>circonscrit homogène hypointense</b>.
+                  <svg class="zt-ico" viewBox="0 0 64 40" aria-hidden="true"><ellipse cx="32" cy="22" rx="29" ry="16" fill="#dcdce2" stroke="#55545f" stroke-width="1.5"/><circle cx="22" cy="25" r="6.5" fill="#111114"/><circle cx="34" cy="14" r="5.5" fill="#3f3d56"/><circle cx="45" cy="24" r="6" fill="#a7a7b0" stroke="#55545f"/></svg></span></li>
+                <li style="--c: #f2ab2f"><b>3</b><span>Image <mark class="k-signo">hétérogène avec contours incertains</mark> (et tout ce qui n'est pas 2, 4 ou 5).</span></li>
+                <li style="--c: #ea701e"><b>4</b><span>Image <mark class="k-signo">lenticulaire ou non circonscrite, homogène, de signal intermédiaire</mark>, <b>&lt; 15 mm</b>.</span></li>
+                <li style="--c: #a8172d"><b>5</b><span>Idem <mark class="k-grave">≥ 15 mm</mark>, <mark class="k-grave">ou extension extraprostatique (EEP)</mark>.</span></li>
+              </ol>
+              <div class="ftable-wrap">
+                <table class="ftable">
+                  <thead>
+                    <tr><th>Dominante</th><th>Accessoire</th><th rowspan="2" class="c">PI-RADS</th></tr>
+                    <tr><th class="sub">T2</th><th class="sub">Diffusion</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td class="rh c">1</td><td class="c">—</td><td class="sc" style="--c: #1f9d55">1</td></tr>
+                    <tr><td class="rh c" rowspan="2">2</td><td class="c">1 à 3</td><td class="sc" style="--c: #7bb661">2</td></tr>
+                    <tr><td class="c"><mark class="k-key">4 ou 5</mark><small>(restriction marquée)</small></td><td class="sc dark" style="--c: #f7d84a">2 + 1 = 3</td></tr>
+                    <tr><td class="rh c" rowspan="2">3</td><td class="c">1 à 4</td><td class="sc dark" style="--c: #f7d84a">3</td></tr>
+                    <tr><td class="c"><mark class="k-key">5</mark><small>(marquée, ≥ 15 mm)</small></td><td class="sc" style="--c: #ea701e">3 + 1 = 4</td></tr>
+                    <tr><td class="rh c">4</td><td class="c">—</td><td class="sc" style="--c: #ea701e">4</td></tr>
+                    <tr><td class="rh c">5</td><td class="c">—</td><td class="sc" style="--c: #d0202e">5</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="ftable-cap">La diffusion ne modifie que les scores T2 <b>2</b> (→ 3) et <b>3</b> (→ 4).</p>
+            </article>
+          </div>
+          <div class="callout">
+            <p><mark class="k-key">Seuil de 15 mm</mark> entre les scores 4 et 5 ; une <mark class="k-grave">extension extraprostatique</mark> classe d'emblée la lésion en 5.</p>
+          </div>
+        </section>
+
+        <!-- V -->
+        <section class="fsec" id="cartographie" style="--c: var(--green)">
+          <h2 class="fsec-title"><span class="fnum">V</span>Cartographie sectorielle</h2>
+          <p class="fintro">Localiser chaque lésion sur le schéma : <mark class="k-key">niveau</mark> (base, milieu, apex), <mark class="k-key">côté</mark> et <mark class="k-key">secteur</mark>. Coupes axiales, vue sagittale et vue coronale.</p>
+          <div class="pr-schema" data-prostate-schema role="img" aria-label="Schéma sectoriel de la prostate : coupes axiales base, tiers moyen et apex, vues sagittale et coronale"></div>
+          <div class="abbr-grid" aria-label="Correspondance des abréviations">
+            <span style="--c: var(--green)"><b>LPZ</b> = PZpl (postérolatérale)</span>
+            <span style="--c: var(--green)"><b>MPZ</b> = PZpm (postéromédiale)</span>
+            <span style="--c: var(--green)"><b>APZ</b> = PZa (antérieure)</span>
+            <span style="--c: var(--amber)"><b>PTZ</b> = TZp</span>
+            <span style="--c: var(--amber)"><b>ATZ</b> = TZa</span>
+            <span style="--c: var(--slate)"><b>AFS</b> = AS (SFMA)</span>
+          </div>
+          <p class="fintro">Le calculateur <b>PI-RADS</b> de la page <a href="../comptes-rendus.html">Comptes rendus</a> place les lésions sur ce même schéma (axial, sagittal, coronal) et rédige le texte.</p>
+        </section>
+
+        <!-- VI -->
+        <section class="fsec" id="scores" style="--c: var(--purple)">
+          <h2 class="fsec-title"><span class="fnum">VI</span>Autres scores selon la situation</h2>
+          <div class="tiles">
+            <article class="tile" style="--c: var(--amber)">
+              <span class="tile-badge">1</span>
+              <h3>PI-RADS v2.1</h3>
+              <p><mark class="k-key">Diagnostic</mark> : zone, taille (mm), score, extension.</p>
+            </article>
+            <article class="tile" style="--c: var(--teal)">
+              <span class="tile-badge">2</span>
+              <h3>PRECISE</h3>
+              <p>Patients en <mark class="k-sign">surveillance active</mark>.</p>
+            </article>
+            <article class="tile" style="--c: var(--blue)">
+              <span class="tile-badge">3</span>
+              <h3>Likert</h3>
+              <p><mark class="k-ddx">Prostate traitée</mark> ou « impression » différente du PI-RADS.</p>
+            </article>
+            <article class="tile" style="--c: var(--k-grave)">
+              <span class="tile-badge">4</span>
+              <h3>PI-RR</h3>
+              <p><mark class="k-grave">Récidives</mark>.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- VII -->
+        <section class="fsec" id="compte-rendu" style="--c: var(--plum)">
+          <h2 class="fsec-title"><span class="fnum">VII</span>Éléments à préciser au compte rendu</h2>
+          <p class="fintro">Cochez au fur et à mesure de votre lecture.</p>
+          <div class="fcard checklist" style="--c: var(--plum)">
+            <p class="nodes-title">Technique et qualité</p>
+            <label><input type="checkbox"> IRM multiparamétrique (ou biparamétrique, si justifiée)</label>
+            <label><input type="checkbox"> Score PI-QUAL</label>
+            <p class="nodes-title">Glande</p>
+            <label><input type="checkbox"> Trois diamètres, volume prostatique et densité de PSA</label>
+            <label><input type="checkbox"> Signal de fond de la ZP (1 à 4)</label>
+            <label><input type="checkbox"> Analyse de la ZP, de la ZT, du SFMA, du lobe médian et des VS</label>
+            <p class="nodes-title">Pour chaque lésion</p>
+            <label><input type="checkbox"> Zone et secteurs (niveau, côté)</label>
+            <label><input type="checkbox"> Taille (mm)</label>
+            <label><input type="checkbox"> Score PI-RADS v2.1 (séquence dominante selon la zone)</label>
+            <label><input type="checkbox"> Extension extraprostatique</label>
+            <label><input type="checkbox"> Lésion index</label>
+            <p class="nodes-title">Synthèse</p>
+            <label><input type="checkbox"> Schéma sectoriel joint</label>
+            <label><input type="checkbox"> Score adapté si besoin : PRECISE, Likert, PI-RR</label>
+            <p class="check-count" aria-live="polite"></p>
+            <button class="btn btn-outline btn-sm check-reset" type="button">Tout décocher</button>
+          </div>
+        </section>
+
+        <!-- Testez-vous -->
+        <section class="fsec" id="testez-vous" style="--c: var(--ink)">
+          <h2 class="fsec-title"><span class="fnum">?</span>Testez-vous</h2>
+          <p class="fintro">Cliquez sur une carte pour voir la réponse.</p>
+          <div class="flash flash-3">
+            <button class="flip" aria-pressed="false" style="--c: var(--green)">
+              <span class="flip-tab">1</span>
+              <span class="flip-inner">
+                <span class="flip-face flip-front"><strong>Séquence dominante en zone périphérique ?</strong><small>cliquez pour retourner</small></span>
+                <span class="flip-face flip-back"><p><b>La diffusion</b>La perfusion ne sert qu'à passer un 3 en 4.</p></span>
+              </span>
+            </button>
+            <button class="flip" aria-pressed="false" style="--c: var(--amber)">
+              <span class="flip-tab">2</span>
+              <span class="flip-inner">
+                <span class="flip-face flip-front"><strong>Séquence dominante en zone de transition ?</strong><small>cliquez pour retourner</small></span>
+                <span class="flip-face flip-back"><p><b>Le T2</b>La diffusion module les scores T2 2 et 3.</p></span>
+              </span>
+            </button>
+            <button class="flip" aria-pressed="false" style="--c: var(--orange)">
+              <span class="flip-tab">3</span>
+              <span class="flip-inner">
+                <span class="flip-face flip-front"><strong>ZP : diffusion 3 et perfusion nettement positive ?</strong><small>cliquez pour retourner</small></span>
+                <span class="flip-face flip-back"><p><b>PI-RADS 4</b>3 + 1 = 4.</p></span>
+              </span>
+            </button>
+            <button class="flip" aria-pressed="false" style="--c: var(--blue)">
+              <span class="flip-tab">4</span>
+              <span class="flip-inner">
+                <span class="flip-face flip-front"><strong>ZT : T2 2 et diffusion 5 ?</strong><small>cliquez pour retourner</small></span>
+                <span class="flip-face flip-back"><p><b>PI-RADS 3</b>2 + 1 = 3 (diffusion 4 ou 5).</p></span>
+              </span>
+            </button>
+            <button class="flip" aria-pressed="false" style="--c: var(--k-grave)">
+              <span class="flip-tab">5</span>
+              <span class="flip-inner">
+                <span class="flip-face flip-front"><strong>Quel critère sépare un score 4 d'un score 5 ?</strong><small>cliquez pour retourner</small></span>
+                <span class="flip-face flip-back"><p><b>15 mm</b>Ou une extension extraprostatique.</p></span>
+              </span>
+            </button>
+            <button class="flip" aria-pressed="false" style="--c: var(--purple)">
+              <span class="flip-tab">6</span>
+              <span class="flip-inner">
+                <span class="flip-face flip-front"><strong>PI-QUAL 1 ou 2 : que mettre au compte rendu ?</strong><small>cliquez pour retourner</small></span>
+                <span class="flip-face flip-back"><p><b>Ni PI-RADS ni Likert</b>Impossible d'affirmer ou d'exclure un cancer significatif.</p></span>
+              </span>
+            </button>
+          </div>
+        </section>
+
+        <div class="fiche-end">
+          <img src="../assets/emblem.svg" alt="" width="60" height="54">
+          <p>Synthèse du cours — RadiologicHub</p>
+          <a href="../fiches-rapides.html#uro" class="btn btn-outline btn-sm">← Toutes les fiches</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="../index.html" class="brand">
+        <img src="../assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav aria-label="Liens de pied de page">
+        <a href="../index.html#masterclass">Masterclass</a>
+        <a href="../fiches-rapides.html">Fiches rapides</a>
+        <a href="../comptes-rendus.html">Comptes rendus</a>
+        <a href="../index.html#cas-du-jour">Cas du jour</a>
+        <a href="../index.html#inscription">Contact</a>
+      </nav>
+      <p class="copyright">© <span id="year"></span> RadiologicHub · Formation en radiologie d'urgence</p>
+    </div>
+  </footer>
+  <script src="../schemas/prostate.js?v=20261008160000"></script>
+  <script src="../fiche.js?v=20261008160000"></script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 /* =========================================================
    RadiologicHub — schémas et calculateurs du compte rendu
-   • PI-RADS v2.1 (prostate) : carte des secteurs + score
+   • PI-RADS v2.1 (prostate) : carte des secteurs (axial, sagittal,
+     coronal : schemas/prostate.js) + score
    • BI-RADS (sein) : schéma en cadran horaire + catégories ACR
    • EU-TIRADS (thyroïde) : schéma des lobes + score + cytoponction
    • Fleischner 2017 : nodules pulmonaires fortuits (schéma des lobes,
@@ -65,54 +66,11 @@
     5: 'très élevé : cancer cliniquement significatif hautement probable',
   };
   const piColor = c => (c == null ? C.blue : c <= 2 ? C.green : c === 3 ? C.amber : c === 4 ? C.orange : C.red);
-  // Vue axiale, antérieur en haut, côté droit du patient à gauche de l'image
-  const PG = { rx: 92, ry: 68, cy: 190, cx: { B: 120, M: 355, A: 590 } };
-  const PI_ANG = {
-    R: { PZpm: [90, 125], PZpl: [125, 175], PZa: [175, 215], AS: [215, 270], TZp: [90, 180], TZa: [180, 270] },
-    L: { AS: [270, 325], PZa: [325, 365], PZpl: [365, 415], PZpm: [415, 450], TZa: [270, 360], TZp: [360, 450] },
-  };
-  const ept = (cx, cy, k, a) => {
-    const r = a * Math.PI / 180;
-    return [+(cx + PG.rx * k * Math.cos(r)).toFixed(1), +(cy + PG.ry * k * Math.sin(r)).toFixed(1)];
-  };
-  const ringPath = (cx, cy, k1, k2, a1, a2) => {
-    const large = a2 - a1 > 180 ? 1 : 0;
-    const [x1, y1] = ept(cx, cy, k2, a1), [x2, y2] = ept(cx, cy, k2, a2);
-    const arc2 = `A${+(PG.rx * k2).toFixed(1)},${+(PG.ry * k2).toFixed(1)} 0 ${large} 1 ${x2},${y2}`;
-    if (!k1) return `M${cx},${cy}L${x1},${y1}${arc2}Z`;
-    const [x3, y3] = ept(cx, cy, k1, a2), [x4, y4] = ept(cx, cy, k1, a1);
-    return `M${x1},${y1}${arc2}L${x3},${y3}A${+(PG.rx * k1).toFixed(1)},${+(PG.ry * k1).toFixed(1)} 0 ${large} 0 ${x4},${y4}Z`;
-  };
-  const PI_SECTORS = (() => {
-    const out = [];
-    const add = (lv, side, zone, k1, k2, a1, a2) => {
-      const cx = PG.cx[lv];
-      const [lx, ly] = ept(cx, PG.cy, k1 ? (k1 + k2) / 2 : 0.3, (a1 + a2) / 2);
-      out.push({ id: `${lv}-${side}-${zone}`, zone, d: ringPath(cx, PG.cy, k1, k2, a1, a2), lx, ly });
-    };
-    for (const lv of ['B', 'M', 'A']) {
-      for (const side of ['R', 'L']) {
-        for (const [zone, [a1, a2]] of Object.entries(PI_ANG[side])) {
-          if (zone.startsWith('TZ')) add(lv, side, zone, 0, 0.5, a1, a2);
-          else if (lv === 'B' && zone === 'PZpm') { add(lv, side, 'CZ', 0.5, 0.75, a1, a2); add(lv, side, 'PZpm', 0.75, 1, a1, a2); }
-          else add(lv, side, zone, 0.5, 1, a1, a2);
-        }
-      }
-    }
-    return out;
-  })();
-  const PI_ORDER = [...PI_SECTORS.map(s => s.id), 'SV-R', 'SV-L', 'US'];
-  const piParse = id => {
-    if (id === 'US') return { zone: 'US', side: '', lv: '' };
-    if (id.startsWith('SV-')) return { zone: 'SV', side: id.slice(3), lv: '' };
-    const [lv, side, zone] = id.split('-');
-    return { lv, side, zone };
-  };
+  // Géométrie des coupes axiales, sagittale et coronale : schemas/prostate.js (window.RHProstate)
+  const PR = window.RHProstate;
+  const PI_ORDER = PR ? PR.ORDRE : [];
+  const piParse = id => PR.parse(id);
   const sideAdj = (zone, side) => !side ? '' : zone === 'AS' ? (side === 'R' ? ' droit' : ' gauche') : (side === 'R' ? ' droite' : ' gauche');
-  const piSectorName = id => {
-    const p = piParse(id);
-    return PI_ZONE[p.zone] + sideAdj(p.zone, p.side) + (p.lv ? ` (${PI_LEVEL[p.lv]})` : '');
-  };
   const piDescribe = ids => {
     const groups = new Map();
     [...ids].sort((a, b) => PI_ORDER.indexOf(a) - PI_ORDER.indexOf(b)).forEach(id => {
@@ -154,50 +112,16 @@
   const PIRADS = {
     title: 'PI-RADS v2.1 — IRM prostatique', chip: 'PI-RADS', sub: 'prostate',
     keys: ['pirads', 'pirad'], suggest: /prostat|pi-?rads/,
-    hint: 'Cliquez sur les secteurs du schéma pour localiser la lésion active (un second clic retire le secteur).',
+    hint: 'Cliquez sur les secteurs des coupes axiales pour localiser la lésion active (un second clic retire le secteur) ; les vues sagittale et coronale se placent automatiquement.',
     init: () => ({ l: '', w: '', h: '', psa: '', lesions: [newPiLesion()], active: 0 }),
     newItem: () => newPiLesion(), max: 4,
     svg(st, live) {
-      const owner = {};
-      st.lesions.forEach((l, i) => l.sectors.forEach(s => { if (!(s in owner)) owner[s] = i; }));
-      const fill = (id, base) => owner[id] != null ? piColor(piCat(st.lesions[owner[id]])) : base;
-      const sw = id => owner[id] === st.active && owner[id] != null ? 2.8 : 1.2;
-      const data = id => live ? ` data-s="${id}"` : '';
-      let g = `<rect width="710" height="350" fill="#fff"/>`;
-      for (const [lv, name] of [['B', 'BASE'], ['M', 'TIERS MOYEN'], ['A', 'APEX']]) {
-        const cx = PG.cx[lv];
-        g += txt(cx, 305, name, { size: 12, weight: 900, ls: 1 });
-        g += txt(cx - PG.rx - 14, PG.cy + 4, 'D', { size: 12, weight: 900 }) + txt(cx + PG.rx + 14, PG.cy + 4, 'G', { size: 12, weight: 900 });
-        g += txt(cx, PG.cy - PG.ry - 8, 'antérieur', { size: 8, weight: 600, fill: '#55545f' });
-      }
-      PI_SECTORS.forEach(s => {
-        const base = s.zone.startsWith('TZ') ? '#e3e7f1' : s.zone === 'AS' ? '#efe9df' : s.zone === 'CZ' ? '#ece4f1' : '#fbfbfb';
-        g += `<path d="${s.d}" fill="${fill(s.id, base)}" stroke="${INK}" stroke-width="${sw(s.id)}" stroke-linejoin="round"${data(s.id)}><title>${esc(piSectorName(s.id))}</title></path>`;
+      return PR.svg({
+        interactif: live,
+        lesions: st.lesions.map((l, i) => ({ n: i + 1, color: piColor(piCat(l)), active: i === st.active, sectors: l.sectors })),
+        titreLegende: 'PI-RADS :',
+        legende: [['1–2', C.green], ['3', C.amber], ['4', C.orange], ['5', C.red], ['à scorer', C.blue]],
       });
-      PI_SECTORS.forEach(s => { if (owner[s.id] == null) g += txt(s.lx, s.ly + 3, s.zone, { size: 7, weight: 600, fill: '#6a6975' }); });
-      // Vésicules séminales (au-dessus de la base) et sphincter urétral (sous l'apex)
-      g += txt(PG.cx.B, 52, 'vésicules séminales', { size: 8, weight: 600, fill: '#55545f' });
-      for (const [id, x, rot] of [['SV-R', PG.cx.B - 36, -16], ['SV-L', PG.cx.B + 36, 16]]) {
-        g += `<ellipse cx="${x}" cy="80" rx="31" ry="13" transform="rotate(${rot} ${x} 80)" fill="${fill(id, '#fbfbfb')}" stroke="${INK}" stroke-width="${sw(id)}"${data(id)}><title>${esc(piSectorName(id))}</title></ellipse>`;
-      }
-      g += `<circle cx="${PG.cx.A}" cy="276" r="10" fill="${fill('US', '#fbfbfb')}" stroke="${INK}" stroke-width="${sw('US')}"${data('US')}><title>${esc(PI_ZONE.US)}</title></circle>`;
-      g += txt(PG.cx.A + 46, 279, 'sphincter', { size: 8, weight: 600, fill: '#55545f' });
-      // Numéros des lésions
-      st.lesions.forEach((l, i) => {
-        const first = [...l.sectors].sort((a, b) => PI_ORDER.indexOf(a) - PI_ORDER.indexOf(b))[0];
-        if (!first) return;
-        const s = PI_SECTORS.find(x => x.id === first);
-        const [x, y] = s ? [s.lx, s.ly] : first === 'US' ? [PG.cx.A, 276] : [first === 'SV-R' ? PG.cx.B - 36 : PG.cx.B + 36, 80];
-        g += pin(x, y, i + 1, piColor(piCat(l)), i === st.active);
-      });
-      // Légende
-      let lx = 200;
-      g += txt(150, 336, 'PI-RADS :', { size: 10, weight: 900, anchor: 'end' });
-      for (const [lab, c] of [['1–2', C.green], ['3', C.amber], ['4', C.orange], ['5', C.red], ['à scorer', C.blue]]) {
-        g += `<rect x="${lx - 40}" y="327" width="14" height="12" rx="3" fill="${c}"/>` + txt(lx - 22, 337, lab, { size: 10, anchor: 'start' });
-        lx += lab.length > 3 ? 90 : 60;
-      }
-      return svgWrap(710, 350, g);
     },
     click(st, e) {
       const t = e.target.closest('[data-s]');
@@ -990,7 +914,7 @@
   /* =======================================================
      Fenêtre des outils
      ======================================================= */
-  const TOOLS = { pirads: PIRADS, birads: BIRADS, tirads: TIRADS, ...(FL ? { fleischner: FLEISCHNER } : {}), recist: RECIST, lugano: LUGANO };
+  const TOOLS = { ...(PR ? { pirads: PIRADS } : {}), birads: BIRADS, tirads: TIRADS, ...(FL ? { fleischner: FLEISCHNER } : {}), recist: RECIST, lugano: LUGANO };
   const states = {};
   let cur = null;
   const titleEl = $('#tool-title', dlg), hintEl = $('#tool-hint', dlg), schemaEl = $('#tool-schema', dlg), formEl = $('#tool-form', dlg);
