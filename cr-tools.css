@@ -59,6 +59,10 @@
   cursor: pointer;
 }
 .cr-attach-del:hover { background: var(--red); border-color: var(--red); color: #fff; }
+.cr-attach-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.cr-attach-actions .btn { padding: .6em 1em; font-size: .64rem; }
+.cr-send-attach { flex-basis: 100%; margin: 0; padding: 8px 12px; border-radius: 10px; background: rgba(132, 7, 94, .1); color: var(--plum); font-size: .78rem; font-weight: 700; line-height: 1.5; }
+.cr-send-attach[hidden] { display: none; }
 
 /* ---------- Fenêtre des outils ---------- */
 .tool-dialog {

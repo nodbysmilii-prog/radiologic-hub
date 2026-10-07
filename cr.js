@@ -100,11 +100,11 @@
 
   const flashEl = $('#cr-flash');
   let flashTimer;
-  const flash = (msg, warn = false) => {
+  const flash = (msg, warn = false, ms = 5000) => {
     flashEl.textContent = msg;
     flashEl.classList.toggle('is-warn', warn);
     clearTimeout(flashTimer);
-    flashTimer = setTimeout(() => { flashEl.textContent = ''; }, 5000);
+    flashTimer = setTimeout(() => { flashEl.textContent = ''; }, ms);
   };
 
   /* ---------- Position du curseur (pour placer la bulle) ---------- */
@@ -634,14 +634,49 @@
         <button type="button" class="cr-attach-del" data-i="${i}" title="Retirer ce schéma" aria-label="Retirer le schéma ${esc(a.title)}">✕</button>
       </figure>`).join('');
   };
-  const saveAttach = () => { store.set(KEY.attach, attachments); renderAttach(); };
+  // Image PNG de tous les schémas joints, préparée à l'avance : au moment de l'envoi,
+  // la copie dans le presse-papiers doit se faire dans le clic, avant d'ouvrir la messagerie.
+  let attachPng = null, attachBlob = null;
+  const refreshAttachPng = () => {
+    attachBlob = null;
+    attachPng = attachments.length && window.RHTools && window.RHTools.combinePng ? window.RHTools.combinePng(attachments) : null;
+    if (attachPng) {
+      const p = attachPng;
+      p.then(b => { if (attachPng === p) attachBlob = b; }, () => { if (attachPng === p) attachPng = null; });
+    }
+  };
+  const copyAttachImage = () => {
+    if (!attachPng || !window.ClipboardItem || !navigator.clipboard || !navigator.clipboard.write) return Promise.resolve(false);
+    try {
+      return navigator.clipboard.write([new ClipboardItem({ 'image/png': attachBlob || attachPng })]).then(() => true, () => false);
+    } catch (e) {
+      return Promise.resolve(false);
+    }
+  };
+  const sendHint = $('#cr-send-attach');
+  const saveAttach = () => {
+    store.set(KEY.attach, attachments);
+    renderAttach();
+    refreshAttachPng();
+    const n = attachments.length;
+    sendHint.hidden = !n;
+    sendHint.textContent = n ? `${n} schéma${n > 1 ? 's' : ''} joint${n > 1 ? 's' : ''} : à l'envoi, l'image est copiée automatiquement — dans le message, collez-la sous « Schéma : » (⌘ + V sur Mac, Ctrl + V sur PC).` : '';
+  };
   attachList.addEventListener('click', e => {
     const b = e.target.closest('[data-i]');
     if (!b) return;
     attachments.splice(+b.dataset.i, 1);
     saveAttach();
   });
-  renderAttach();
+  $('#cr-attach-copy').addEventListener('click', async () => {
+    flash(await copyAttachImage()
+      ? 'Image des schémas copiée : collez-la dans votre e-mail ou votre logiciel (⌘ + V / Ctrl + V).'
+      : 'Copie d\'image impossible dans ce navigateur : utilisez « Télécharger ».', false, 10000);
+  });
+  $('#cr-attach-png').addEventListener('click', async () => {
+    try { download(await attachPng, 'schemas-compte-rendu.png'); } catch (e) { flash('Export de l\'image impossible dans ce navigateur.', true); }
+  });
+  saveAttach();
 
   // Liaison avec les outils (cr-tools.js)
   window.RHEditor = {
@@ -740,15 +775,38 @@
     sendArmed = 0;
     const m = MAILERS[mailer.value] || MAILERS.gmail;
     const text = editor.value.trim();
-    const su = encodeURIComponent('Compte rendu — ' + text.split('\n')[0].trim().slice(0, 100));
+    const subject = 'Compte rendu — ' + text.split('\n')[0].trim().slice(0, 100);
+    const nSch = attachments.length;
+
+    // Téléphone : partage système (application Gmail…) avec le texte ET les schémas en pièce jointe
+    if (mailer.value === 'share') {
+      try {
+        const blob = attachBlob || (attachPng && await attachPng);
+        const files = blob ? [new File([blob], 'schemas-compte-rendu.png', { type: 'image/png' })] : [];
+        const data = { title: subject, text: `À : ${to.join(', ')}\n\n${text}` };
+        if (files.length && navigator.canShare && navigator.canShare({ files })) data.files = files;
+        await navigator.share(data);
+        flash('Compte rendu partagé.');
+      } catch (err) {
+        if (err && err.name !== 'AbortError') flash('Partage impossible : choisissez Gmail ou Outlook.', true);
+      }
+      return;
+    }
+
+    // Les liens Gmail / Outlook / mailto ne transportent que du texte :
+    // l'image des schémas est copiée et l'utilisateur la colle sous « Schéma : ».
+    const withImg = nSch > 0 && !!attachPng;
+    const body = withImg ? `${text}\n\nSchéma${nSch > 1 ? 's' : ''} :\n` : text;
+    const su = encodeURIComponent(subject);
     const toParam = mailer.value === 'mailto' ? to.join(',') : encodeURIComponent(to.join(','));
     const nl = mailer.value === 'mailto' ? '\r\n' : '\n';
-    let url = m.url(toParam, su, encodeURIComponent(text.replace(/\n/g, nl)));
+    let url = m.url(toParam, su, encodeURIComponent(body.replace(/\n/g, nl)));
     // Liens trop longs refusés par certaines messageries : le texte (copié) sera collé à la main
     const tooLong = url.length > 8000;
     if (tooLong) url = m.url(toParam, su, encodeURIComponent('Collez ici le compte rendu (Ctrl + V).'));
     // Copie lancée avant d'ouvrir l'onglet (le presse-papiers exige que la page ait encore le focus)
-    const copying = copyText();
+    const copyingImg = withImg && !tooLong;
+    const copying = copyingImg ? copyAttachImage() : copyText();
     if (mailer.value === 'mailto') {
       const a = document.createElement('a');
       a.href = url;
@@ -759,10 +817,22 @@
       else location.href = url; // bloqueur de fenêtres : ouvrir dans l'onglet courant
     }
     const copied = await copying;
+    if (copyingImg) {
+      flash(copied
+        ? `${m.name} s'ouvre avec le compte rendu. Le schéma est copié : dans le message, cliquez sous « Schéma : » puis collez-le (⌘ + V sur Mac, Ctrl + V sur PC), et envoyez.`
+        : `${m.name} s'ouvre avec le compte rendu. Le schéma n'a pas pu être copié : cliquez sur « Télécharger » sous l'éditeur puis glissez l'image dans le message.`, !copied, 25000);
+      return;
+    }
     flash(tooLong
-      ? `${m.name} s'ouvre. Compte rendu trop long pour être pré-rempli : ${copied ? 'il est copié, collez-le dans le message (Ctrl + V).' : 'copiez-le avec le bouton « Copier ».'}`
-      : `${m.name} s'ouvre avec le compte rendu prêt à envoyer${copied ? ' (il est aussi copié, au cas où)' : ''}.`);
+      ? `${m.name} s'ouvre. Compte rendu trop long pour être pré-rempli : ${copied ? 'il est copié, collez-le dans le message (Ctrl + V).' : 'copiez-le avec le bouton « Copier ».'}${nSch ? ' Puis ajoutez le schéma avec « Copier l\'image » sous l\'éditeur.' : ''}`
+      : `${m.name} s'ouvre avec le compte rendu prêt à envoyer${copied ? ' (il est aussi copié, au cas où)' : ''}.`, false, nSch ? 20000 : 5000);
   });
+
+  // Partage système (pièce jointe possible) : proposé sur téléphone et tablette
+  if (navigator.share && navigator.canShare && window.matchMedia('(pointer: coarse)').matches) {
+    mailer.insertAdjacentHTML('afterbegin', '<option value="share">Partager (appli Gmail… avec le schéma)</option>');
+    if (savedMailer === 'share') mailer.value = 'share';
+  }
 
   /* ---------- Mes phrases ---------- */
   const form = $('#ph-form');

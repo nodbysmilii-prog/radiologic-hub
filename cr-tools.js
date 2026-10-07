@@ -894,21 +894,46 @@
   });
 
   /* Image du schéma (PNG) */
-  const svgToPng = svg => new Promise((resolve, reject) => {
+  const loadSvg = svg => new Promise((resolve, reject) => {
     const [, w, h] = svg.match(/viewBox="0 0 (\d+) (\d+)"/);
     const img = new Image();
-    img.onload = () => {
-      const c = document.createElement('canvas');
-      c.width = w * 2; c.height = h * 2;
-      const ctx = c.getContext('2d');
-      ctx.fillStyle = '#fff';
-      ctx.fillRect(0, 0, c.width, c.height);
-      ctx.drawImage(img, 0, 0, c.width, c.height);
-      c.toBlob(b => (b ? resolve(b) : reject(new Error('png'))), 'image/png');
-    };
+    img.onload = () => resolve({ img, w: +w, h: +h });
     img.onerror = () => reject(new Error('svg'));
     img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg.replace('<svg ', `<svg width="${w}" height="${h}" `));
   });
+  const canvasPng = c => new Promise((resolve, reject) => c.toBlob(b => (b ? resolve(b) : reject(new Error('png'))), 'image/png'));
+  const svgToPng = async svg => {
+    const { img, w, h } = await loadSvg(svg);
+    const c = document.createElement('canvas');
+    c.width = w * 2; c.height = h * 2;
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, c.width, c.height);
+    ctx.drawImage(img, 0, 0, c.width, c.height);
+    return canvasPng(c);
+  };
+  // Plusieurs schémas joints → une seule image (titre au-dessus de chaque schéma), à coller dans un e-mail
+  const combinePng = async items => {
+    const imgs = await Promise.all(items.map(it => loadSvg(it.svg)));
+    const W = 900, pad = 20, cap = 30;
+    const hs = imgs.map(o => Math.round(o.h * (W - 2 * pad) / o.w));
+    const c = document.createElement('canvas');
+    c.width = W;
+    c.height = pad + hs.reduce((a, h) => a + cap + h + pad, 0);
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, c.width, c.height);
+    let y = pad;
+    imgs.forEach((o, i) => {
+      ctx.fillStyle = INK;
+      ctx.font = 'bold 18px Montserrat, Arial, sans-serif';
+      ctx.fillText(items[i].title, pad, y + 18);
+      y += cap;
+      ctx.drawImage(o.img, pad, y, W - 2 * pad, hs[i]);
+      y += hs[i] + pad;
+    });
+    return canvasPng(c);
+  };
 
   dlg.addEventListener('click', async e => {
     if (e.target === dlg) { dlg.close(); return; }
@@ -972,6 +997,7 @@
   /* API pour l'éditeur : mots-clés qui ouvrent les outils */
   window.RHTools = {
     open,
+    combinePng,
     entries: Object.entries(TOOLS).map(([k, T]) => ({ tool: k, k: T.keys[0], alias: T.keys.slice(1), label: `Ouvrir : ${T.title}` })),
   };
 })();

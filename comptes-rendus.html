@@ -9,10 +9,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261008090000">
-  <link rel="stylesheet" href="fiche.css?v=20261008090000">
-  <link rel="stylesheet" href="cr.css?v=20261008090000">
-  <link rel="stylesheet" href="cr-tools.css?v=20261008090000">
+  <link rel="stylesheet" href="styles.css?v=20261008100000">
+  <link rel="stylesheet" href="fiche.css?v=20261008100000">
+  <link rel="stylesheet" href="cr.css?v=20261008100000">
+  <link rel="stylesheet" href="cr-tools.css?v=20261008100000">
 </head>
 <body>
 
@@ -119,8 +119,12 @@
             </label>
           </div>
           <div class="cr-attach" id="cr-attach" hidden>
-            <p class="cr-attach-title">Schémas joints <small>(imprimés avec le compte rendu ; pour un e-mail ou votre logiciel, utilisez « Copier l'image » dans l'outil)</small></p>
+            <p class="cr-attach-title">Schémas joints <small>(imprimés avec le compte rendu ; copiés automatiquement à l'envoi par e-mail)</small></p>
             <div class="cr-attach-list" id="cr-attach-list"></div>
+            <div class="cr-attach-actions">
+              <button class="btn btn-outline btn-sm" type="button" id="cr-attach-copy">Copier l'image des schémas</button>
+              <button class="btn btn-outline btn-sm" type="button" id="cr-attach-png">Télécharger (PNG)</button>
+            </div>
           </div>
 
           <form class="cr-send" id="cr-send" novalidate>
@@ -134,6 +138,7 @@
               <option value="mailto">Application Mail de l'ordinateur</option>
             </select>
             <button class="btn btn-ink btn-sm" type="submit">Envoyer par e-mail ✉</button>
+            <p class="cr-send-attach" id="cr-send-attach" hidden></p>
             <p class="cr-send-note">Ouvre un nouveau message dans la messagerie choisie (Gmail ou Outlook dans un nouvel onglet, ou l'application Mail), avec le compte rendu déjà rédigé : il ne reste qu'à cliquer sur « Envoyer ». L'adresse et la messagerie sont mémorisées. E-mail ordinaire non sécurisé : pour un patient identifiable, utilisez une messagerie sécurisée de santé (MSSanté).</p>
           </form>
 
@@ -251,9 +256,9 @@
   <!-- Version imprimable du compte rendu -->
   <div class="cr-print" id="cr-print" aria-hidden="true"></div>
 
-  <script src="fiche.js?v=20261008090000"></script>
-  <script src="cr-data.js?v=20261008090000"></script>
-  <script src="cr-tools.js?v=20261008090000"></script>
-  <script src="cr.js?v=20261008090000"></script>
+  <script src="fiche.js?v=20261008100000"></script>
+  <script src="cr-data.js?v=20261008100000"></script>
+  <script src="cr-tools.js?v=20261008100000"></script>
+  <script src="cr.js?v=20261008100000"></script>
 </body>
 </html>
