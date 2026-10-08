@@ -90,7 +90,7 @@ Page `comptes-rendus.html` (lien « Comptes rendus » dans le menu de toutes les
 
 **Fonctionnement**
 
-1. **Modèles** (colonne de gauche, onglet « Modèles ») : choisir d'abord l'**examen** (Échographie, Radiographie standard, IRM, TDM, avec le nombre de modèles ; ou « Tous les examens »), puis la **spécialité** (seules celles qui ont des modèles pour cet examen sont proposées) ; un clic charge le compte rendu type dans l'éditeur. L'examen choisi est mémorisé. Les modèles perso sont classés d'après leur titre (« ÉCHOGRAPHIE… », « RADIOGRAPHIE… », « IRM… », « TDM… / SCANNER… ») ; sans examen reconnu, ils apparaissent pour tous les examens.
+1. **Modèles** (colonne de gauche, onglet « Modèles ») : choisir d'abord l'**examen** (Échographie, Radiographie standard, Mammographie, IRM, TDM, avec le nombre de modèles ; ou « Tous les examens »), puis la **spécialité** (seules celles qui ont des modèles pour cet examen sont proposées) ; un clic charge le compte rendu type dans l'éditeur. L'examen choisi est mémorisé. Les modèles perso sont classés d'après leur titre (« ÉCHOGRAPHIE… », « RADIOGRAPHIE… », « IRM… », « TDM… / SCANNER… ») ; sans examen reconnu, ils apparaissent pour tous les examens.
 2. **Phrases automatiques** : en tapant un mot-clé (ex. `angiome`), une bulle propose aussitôt la ou les descriptions correspondantes (TDM / écho / IRM…). **Tab** (ou clic) insère la description, **↑ ↓** choisit une variante, **Échap** ferme. Les suggestions apparaissent dès le mot-clé exact ou dès 4 lettres du début du mot-clé. **Ctrl + Z** annule une insertion.
 3. **Champs à compléter** : les éléments variables sont entre crochets (`[x] mm`, `[droit / gauche]`). Le premier champ est sélectionné après chaque insertion ; **Tab** (ou le bouton « Champ suivant ») passe au suivant. Le nombre de champs restants est affiché sous l'éditeur, et un avertissement s'affiche à la copie s'il en reste.
 4. **Insertion automatique** (interrupteur sous l'éditeur, désactivé par défaut) : un mot-clé tapé **en début de ligne** (éventuellement après une puce « • ») suivi d'un espace, d'une ponctuation ou d'Entrée est remplacé directement par la première description.
@@ -130,16 +130,33 @@ Page `comptes-rendus.html` (lien « Comptes rendus » dans le menu de toutes les
 
 **Contenu fourni (`cr-data.js`)**
 
-**8 comptes rendus types, uniquement les formules normales du service** (fournies en PDF le 07/10/2026 ; les modèles rédigés au départ par Claude ont été retirés à la demande de l'utilisateur). Reprises mot pour mot avec leurs puces « • » ; seules corrections : accents sur les majuscules, accords et coquilles (« constitutionnelle », « contenant-contenu », « 4e », « polygone de Willis », « selon différentes pondérations », « intra- ou extra-axial »), points finaux, titre de la radio du bassin (le document indiquait « IRM du bassin de face »), intertitres « Au niveau dorsal » et « Au niveau du bassin » ajoutés dans les IRM du rachis, et quelques champs `[ … ]` (côté, compartiment, conclusion, `[Absence d'arthrose / Arthrose]` interapophysaire à chaque étage).
+**36 comptes rendus types, uniquement les formules normales du service** : 8 fournies en PDF le 07/10/2026 et 28 fournies en Word le 08/10/2026 (les modèles rédigés au départ par Claude ont été retirés à la demande de l'utilisateur).
+
+*Lot du 07/10/2026 (PDF)* : Reprises mot pour mot avec leurs puces « • » ; seules corrections : accents sur les majuscules, accords et coquilles (« constitutionnelle », « contenant-contenu », « 4e », « polygone de Willis », « selon différentes pondérations », « intra- ou extra-axial »), points finaux, titre de la radio du bassin (le document indiquait « IRM du bassin de face »), intertitres « Au niveau dorsal » et « Au niveau du bassin » ajoutés dans les IRM du rachis, et quelques champs `[ … ]` (côté, compartiment, conclusion, `[Absence d'arthrose / Arthrose]` interapophysaire à chaque étage).
+
+*Lot du 08/10/2026 (Word, 28 formules)* : texte repris tel quel, mis au format du site (titre en capitales, une constatation par ligne précédée de « • », intertitres conservés), avec les corrections suivantes :
+- **retirés** : formules de politesse et **signatures des médecins** ; **restes du patient précédent** remplacés par des champs à compléter — renseignements cliniques (`[renseignements cliniques]`, `[indication]`), mesures (thyroïde, reins, résidu vésical, prostate, vitesses vertébrales, grand axe des reins → `[x]`) ;
+- **formules qui contenaient des anomalies**, rendues normales par défaut avec le texte du service en choix : radio du rachis lombaire (`[Absence de pincement discal / Discret pincement discal en « L5-S1 »]`, arthrose inter-apophysaire postérieure, ostéophytes), scanner du rachis cervical (à chaque étage : saillie discale ou barre unco-disco-ostéophytique, plicature des ligaments jaunes, rétrécissement foraminal ; conclusion « cervicarthrose étagée… »), scanner du rachis lombaire (conclusion « discopathie dégénérative et protrusive » en choix, les résultats étant normaux), échographie de l'épaule courte (arthropathie acromio-claviculaire), écho-doppler des TSA (minime infiltration athéromateuse) ;
+- **choix ajoutés** : densité mammaire BI-RADS `[type A / B / C / D]` (le document indiquait type C), Keros `[I / II / III]` (le document indiquait II), côté de la cheville et de l'épaule ;
+- accents sur les majuscules, accords et coquilles (« dure-mériens », « aqueducale », « ostéophytique », « troncs supra-aortiques », « anévrismale », « de morphologie et de taille normales », « tendon du long biceps »…), conclusions vides remplacées par `[conclusion]`.
+
+Deux nouvelles spécialités (**ORL / tête et cou**, **TAP / corps entier**), une spécialité **Sein** et un nouvel examen **Mammographie**.
 
 | Examen | Spécialité | Comptes rendus types |
 |---|---|---|
-| TDM | Neuro | TDM cérébrale sans injection — normale |
-| TDM | Thorax | TDM thoracique sans injection — normale |
+| TDM | Neuro | TDM cérébrale sans injection — normale · sans injection (formule courte) · sans et avec injection |
+| TDM | Thorax | TDM thoracique sans injection — normale · sans injection (variante) · avec injection · angioscanner thoracique |
+| TDM | TAP / corps entier | TAP sans et avec injection · cérébral + TAP · cervico-TAP |
+| TDM | Digestif | Abdomino-pelvien sans injection · sans et avec injection · entéroscanner |
+| TDM | Uro-gynéco | Uroscanner sans et avec injection (temps excréteur) · uroscanner sans injection |
+| TDM | ORL / tête et cou | Massif facial (sinus) · cone beam des sinus · rochers |
+| TDM | Ostéo-articulaire | Rachis cervical (choix pour la cervicarthrose) · rachis lombaire |
 | IRM | Neuro | IRM cérébrale et médullaire — normale (encéphale avec injection et angiographie + rachis étage par étage + bassin) |
 | IRM | Ostéo-articulaire | IRM médullaire (rachis entier) — normale |
-| Radiographie standard | Ostéo-articulaire | Rachis lombaire (F + P) — normal · Bassin (F) — normal · Genou (F + P) — normal · Genou (F + P) — gonarthrose |
-| Échographie | — | aucun pour l'instant (bouton grisé) |
+| Radiographie standard | Ostéo-articulaire | Rachis lombaire (F + P) — normal · Rachis lombaire (F + P) — normal ou dégénératif · Bassin (F) — normal · Genou (F + P) — normal · Genou (F + P) — gonarthrose |
+| Radiographie standard | Traumato | Cheville — normale |
+| Mammographie | Sein | Mammographie + échographie mammaire (bilan sénologique) |
+| Échographie | Sein · Digestif · Uro-gynéco · ORL · Ostéo-articulaire · Vasculaire | Échographie mammaire · abdomino-pelvienne · rénale et vésico-prostatique · cervicale (thyroïde, glandes salivaires) · épaule (détaillée et courte) · écho-doppler des troncs supra-aortiques |
 
 **73 phrases**, classées par type (couleur du mot-clé). ★ = phrases tirées des formules du service ; les autres ont été rédigées par Claude (à relire) :
 
@@ -358,7 +375,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 - [ ] **Fiche rectum** : préciser les légendes des images « formes tumorales » et « mesure axiale 1,57 cm ».
 - [ ] **Fiches des autres spécialités** : Neuro, Thorax, Traumato, Vasculaire, Pédiatrie ; Imagerie de la femme : d'autres fiches à venir.
 - [ ] **Lecteur de séries** (défilement dans un scanner / IRM) : en attente d'une série anonymisée exportée en JPG.
-- [ ] **Comptes rendus types** : continuer à intégrer les formules normales du service (7 reçues le 07/10/2026 ; aucune en échographie pour l'instant) ; relire et valider médicalement les ~55 phrases automatiques rédigées par Claude (`cr-data.js`).
+- [ ] **Comptes rendus types** : continuer à intégrer les formules normales du service (8 reçues le 07/10/2026, 28 le 08/10/2026 dont 7 échographies) ; **faire relire le lot du 08/10/2026** : formules qui contenaient des anomalies rendues normales par défaut (radio et scanner du rachis, épaule courte, doppler des TSA), choix ajoutés (densité BI-RADS, Keros), formules en double (deux TDM cérébrales et thoraciques sans injection, deux échographies de l'épaule) à garder ou fusionner ; relire et valider médicalement les ~55 phrases automatiques rédigées par Claude (`cr-data.js`).
 - [ ] **Suivi oncologique** : étapes 2 à 7 (moteur RECIST 1.1, texte, contrôles, Lugano — y compris couleurs du schéma —, import texte libre, QR / courbe / iRECIST) ; faire vérifier `suivi/seuils.js` par un radiologue ; ajouter éventuellement le lien dans le menu principal (actuellement depuis la page Comptes rendus).
 - [ ] **Dictée vocale** : tester au vrai micro sur Chrome, Edge et Safari (le navigateur de test n'a pas de micro : vérification avec une reconnaissance simulée) ; enrichir `dictee/corrections.js` avec le vocabulaire du service ; **V2 : moteur Whisper local (WebGPU)** dans `dictee/moteurs.js`.
 - [ ] **Schémas & calculateurs** : faire valider les règles et les textes (PI-RADS, BI-RADS, EU-TIRADS, Fleischner, FIGO, RECIST, Lugano) ; FIGO : la conclusion ne propose pas de conduite à tenir (la fiche n'en donne pas) ; PI-RADS : la zone centrale et le stroma antérieur suivent par défaut l'algorithme de la zone périphérique / de transition (modifiable) ; ajouter d'autres outils si besoin (Lung-RADS, LI-RADS, O-RADS, Bosniak…).
@@ -374,6 +391,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 08/10/2026 | Comptes rendus : **28 formules normales du service** ajoutées (TDM cérébrale, thoracique, angioscanner, TAP, cérébral + TAP, cervico-TAP, abdomino-pelvien, entéroscanner, uroscanners, massif facial, cone beam, rochers, rachis cervical et lombaire ; radios du rachis lombaire et de la cheville ; mammographie + échographie ; échographies mammaire, abdomino-pelvienne, rénale et vésico-prostatique, cervicale, de l'épaule ; doppler des TSA), sans signatures ni restes du patient précédent (champs `[ … ]`) ; nouvel examen « Mammographie », spécialités « ORL / tête et cou », « TAP / corps entier » et « Sein » |
 | 08/10/2026 | Module **Remplacements**, étapes 3 à 8 : page `remplacements.html` (entrée « Remplacements » ajoutée au menu et au pied de page de toutes les pages) — inscriptions remplaçant et structure avec consentement, calendrier des disponibilités, demande de remplacement, réponses et choix en un clic, annulation et remise en ligne, tableaux de bord remplaçant / structure / administrateur, contrat PDF et agenda .ics, honoraires ; page `remplacements-reponse.html` (boutons des e-mails, désinscription) ; **mode démonstration** à données fictives (changer d'utilisateur, avancer l'horloge, boîte d'envoi) ; page `mentions-legales.html` (protection des données, loi organique 2004-63) ; guide `remplacements/INSTALLATION.md` ; menu : passage en menu repliable sous 1140 px et espacement resserré pour loger la nouvelle entrée |
 | 08/10/2026 | Module **Remplacements**, étape 2 (backend) : noyau partagé (règles de compatibilité, agent de mise en relation, .ics, gabarits, PDF, contrat), 17 modèles d'e-mails et modèle de contrat dans des fichiers séparés, base Supabase (tables, droits d'accès par ligne, stockage privé), fonctions serveur `rp-agent` / `rp-lien` / `rp-taches`, envoi Brevo ou Resend ; tests unitaires, scénario complet, tests SQL et d'intégration (PostgreSQL + PostgREST) |
 | 07/10/2026 | Myomes, affichage sur téléphone : la planche FIGO de la fiche n'est plus coupée (dessin centré à la largeur de l'écran, légendes en liste dessous) ; dans l'outil FIGO, la vue coronale passe sous la vue sagittale et le schéma tient en largeur, sans défilement horizontal |

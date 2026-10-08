@@ -14,9 +14,12 @@
 /* Spécialités (mêmes couleurs que les fiches rapides) */
 const CR_SPECIALTIES = {
   neuro:      { label: 'Neuro',             c: 'var(--purple)' },
+  orl:        { label: 'ORL / tête et cou', c: 'var(--gold)' },
   thorax:     { label: 'Thorax',            c: 'var(--blue)' },
+  tap:        { label: 'TAP / corps entier', c: 'var(--slate)' },
   digestif:   { label: 'Digestif',          c: 'var(--amber)' },
   uro:        { label: 'Uro-gynéco',        c: 'var(--steel)' },
+  femme:      { label: 'Sein',              c: 'var(--crimson)' },
   trauma:     { label: 'Traumato',          c: 'var(--rose)' },
   osteo:      { label: 'Ostéo-articulaire', c: 'var(--plum)' },
   vasculaire: { label: 'Vasculaire',        c: 'var(--teal)' },
@@ -29,6 +32,7 @@ const CR_SPECIALTIES = {
 const CR_MODALITIES = {
   'Écho':  { label: 'Échographie' },
   'Radio': { label: 'Radiographie standard' },
+  'Mammo': { label: 'Mammo\u00ADgraphie' },   // césure possible si le bouton est étroit
   'IRM':   { label: 'IRM' },
   'TDM':   { label: 'TDM' },
 };
@@ -377,6 +381,820 @@ COMPTE-RENDU :
 • Gonarthrose fémoro-patellaire [bilatérale / droite / gauche] avec pincement de l'interligne articulaire, condensation de l'os sous-chondral et ostéophytes.
 • Absence d'épanchement intra-articulaire.
 • Intégrité des parties molles.`,
+  },
+  /* ----- Formules normales du service reçues le 08/10/2026 (Word) ----- */
+  {
+    id: 'tdm-cerebrale-courte', spe: 'neuro', mod: 'TDM',
+    title: 'TDM cérébrale sans injection — normale (formule courte)',
+    text: `SCANNER CÉRÉBRAL
+
+RENSEIGNEMENTS CLINIQUES :
+[renseignements cliniques]
+
+TECHNIQUE :
+Acquisition hélicoïdale multicoupes centrée sur le crâne sans injection de PDC iodé.
+
+RÉSULTATS :
+• Absence d'anomalie en contraste spontané du parenchyme cérébral, cérébelleux et du tronc cérébral.
+• Absence de processus expansif intra-crânien intra- ou extra-axial décelable.
+• Absence d'hémorragie intra- ou extra-axiale.
+• Le système ventriculaire est de morphologie et de taille normales.
+• Les structures médianes sont en place.
+• Les citernes de la base sont libres.
+• Absence de lésion osseuse d'allure rapidement évolutive.
+
+AU TOTAL :
+[conclusion]`,
+  },
+  {
+    id: 'tdm-cerebrale-injectee', spe: 'neuro', mod: 'TDM',
+    title: 'TDM cérébrale sans et avec injection — normale',
+    text: `SCANNER CÉRÉBRAL
+
+INDICATION :
+[indication]
+
+TECHNIQUE :
+Acquisition hélicoïdale multicoupes centrée sur le crâne sans et avec injection de PDC iodé.
+
+RÉSULTATS :
+• Absence d'anomalie de densité ou de rehaussement du parenchyme cérébral, cérébelleux et du tronc cérébral.
+• Absence de processus expansif intra-crânien intra- ou extra-axial décelable.
+• Absence d'hémorragie intra- ou extra-axiale.
+• Le système ventriculaire est de morphologie et de taille normales.
+• Les structures médianes sont en place.
+• Les citernes de la base sont libres.
+• Les sinus veineux dure-mériens et les veines cérébrales internes sont perméables.
+• Absence de lésion osseuse d'allure rapidement évolutive.
+
+AU TOTAL :
+Scanner cérébral sans anomalie.`,
+  },
+  {
+    id: 'tdm-thorax-variante', spe: 'thorax', mod: 'TDM',
+    title: 'TDM thoracique sans injection — normale (variante)',
+    text: `SCANNER THORACIQUE
+
+INDICATION :
+[indication]
+
+TECHNIQUE :
+Acquisition hélicoïdale multicoupes fines centrée sur les poumons sans injection intra-veineuse de produit de contraste iodé.
+
+RÉSULTATS :
+Étude médiastinale :
+• Absence d'adénomégalie médiastinale.
+• Absence d'épanchement péricardique.
+• Absence d'anomalie de la silhouette des gros vaisseaux médiastinaux et des cavités cardiaques.
+
+Étude parenchymateuse et pleuro-pariétale :
+• Arbre trachéo-bronchique libre.
+• Absence de lésion parenchymateuse évolutive.
+• Absence de nodule pulmonaire suspect.
+• Absence d'épanchement pleural.
+• Absence de lésion osseuse évolutive.
+
+AU TOTAL :
+[conclusion]`,
+  },
+  {
+    id: 'tdm-thorax-injectee', spe: 'thorax', mod: 'TDM',
+    title: 'TDM thoracique avec injection — normale',
+    text: `SCANNER THORACIQUE
+
+INDICATION :
+[indication]
+
+TECHNIQUE :
+Acquisition hélicoïdale multicoupes fines centrée sur les poumons avec injection intra-veineuse de produit de contraste iodé.
+
+RÉSULTATS :
+Étude médiastinale :
+• Absence d'adénomégalie médiastinale ou hilaire.
+• Rehaussement conservé des cavités cardiaques et des gros vaisseaux du médiastin.
+• Absence d'épanchement péricardique.
+
+Étude pleuro-parenchymateuse et pariétale :
+• Les bronches souches, lobaires et segmentaires sont libres, à parois fines.
+• Absence de nodule parenchymateux suspect.
+• Absence d'épanchement pleural.
+• Absence d'adénomégalie axillaire, mammaire interne ou sus-claviculaire.
+
+AU TOTAL :
+[conclusion]`,
+  },
+  {
+    id: 'angio-tdm-thorax', spe: 'thorax', mod: 'TDM',
+    title: 'Angioscanner thoracique — normal',
+    text: `ANGIOSCANNER THORACIQUE
+
+RENSEIGNEMENTS CLINIQUES :
+[renseignements cliniques]
+
+TECHNIQUE :
+Acquisition hélicoïdale multicoupes fines centrée sur les poumons sans puis après injection intra-veineuse de produit de contraste iodé.
+
+RÉSULTATS :
+Étude médiastinale et vasculaire :
+• Tronc de l'artère pulmonaire, artères pulmonaires droite et gauche et leurs branches lobaires et segmentaires de 1er ordre perméables et de calibre normal.
+• Absence d'hypervascularisation systémique bronchique ou non bronchique.
+• Absence d'image anévrismale artérielle pulmonaire ou systémique décelable.
+• Absence d'adénomégalie médiastinale ou hilaire.
+• Rehaussement conservé des cavités cardiaques et des gros vaisseaux du médiastin.
+• Absence d'épanchement péricardique.
+
+Étude pleuro-parenchymateuse et pariétale :
+• Les bronches souches, lobaires et segmentaires sont libres, à parois fines et de calibre normal.
+• Absence de nodule parenchymateux suspect.
+• Absence de condensation parenchymateuse ou d'hyperdensité en « verre dépoli ».
+• Absence d'épanchement pleural.
+• Absence d'adénomégalie axillaire, mammaire interne ou sus-claviculaire.
+• Absence de lésion osseuse condensante ou lytique suspecte de malignité.
+
+AU TOTAL :
+[conclusion]`,
+  },
+  {
+    id: 'tdm-tap', spe: 'tap', mod: 'TDM',
+    title: 'TDM thoraco-abdomino-pelvienne sans et avec injection — normale',
+    text: `SCANNER THORACO-ABDOMINO-PELVIEN
+
+RENSEIGNEMENTS CLINIQUES :
+[renseignements cliniques]
+
+TECHNIQUE :
+Acquisition hélicoïdale multicoupes fines sans et après injection intra-veineuse de produit de contraste iodé allant des apex pulmonaires au plancher pelvien.
+
+RÉSULTATS :
+I/ Étage thoracique :
+Étude médiastinale :
+• Absence d'adénomégalie médiastinale ou hilaire.
+• Rehaussement conservé des cavités cardiaques et des gros vaisseaux du médiastin.
+• Absence d'épanchement péricardique.
+
+Étude pleuro-parenchymateuse et pariétale :
+• Les bronches souches, lobaires et segmentaires sont libres, à parois fines.
+• Absence de nodule parenchymateux suspect.
+• Absence d'épanchement pleural.
+• Absence d'adénomégalie axillaire, mammaire interne ou sus-claviculaire.
+
+II/ Étage abdomino-pelvien :
+• Le foie est de taille normale, de contours réguliers, de densité spontanée normale et de rehaussement homogène.
+• Tronc porte, veines hépatiques et VCI perméables.
+• Absence de dilatation des voies biliaires intra- ou extra-hépatiques.
+• La vésicule biliaire est non distendue.
+• Le pancréas est de volume normal et de rehaussement homogène.
+• La rate est de taille normale et de rehaussement homogène.
+• Les surrénales sont d'aspect normal.
+• Les reins sont en place, de taille et de trophicité normales et de contours réguliers.
+• Absence de dilatation des cavités pyélo-calicielles ni de calcul décelable.
+• La vessie est en semi-réplétion, à contenu homogène.
+• Absence d'adénomégalie intra- ou rétro-péritonéale.
+• Absence d'épanchement intra-abdominal.
+
+III/ Étude osseuse :
+• Absence de lésion osseuse condensante ou lytique suspecte de malignité.
+
+AU TOTAL :
+TDM thoracique et abdomino-pelvienne sans anomalie décelable.`,
+  },
+  {
+    id: 'tdm-cerebrale-tap', spe: 'tap', mod: 'TDM',
+    title: 'TDM cérébrale et thoraco-abdomino-pelvienne — normale',
+    text: `SCANNER CÉRÉBRAL ET THORACO-ABDOMINO-PELVIEN
+
+RENSEIGNEMENTS CLINIQUES :
+[renseignements cliniques]
+
+TECHNIQUE :
+• Acquisitions hélicoïdales multicoupes fines sans et après injection intra-veineuse de produit de contraste iodé allant des apex pulmonaires au plancher pelvien.
+• Acquisition hélicoïdale multicoupes fines prenant le crâne d'emblée après injection intra-veineuse de produit de contraste iodé.
+
+RÉSULTATS :
+I/ Étage cérébral :
+• Absence d'anomalie de rehaussement du parenchyme cérébral, cérébelleux et du tronc cérébral.
+• Absence de processus expansif intra-crânien intra- ou extra-axial décelable.
+• Absence d'hémorragie intra- ou extra-axiale.
+• Le système ventriculaire est de morphologie et de taille normales.
+• Les structures médianes sont en place.
+• Les citernes de la base sont libres.
+• Les sinus veineux dure-mériens et les veines cérébrales internes sont perméables.
+
+II/ Étage thoracique :
+Étude médiastinale :
+• Absence d'adénomégalie médiastinale ou hilaire.
+• Rehaussement conservé des cavités cardiaques et des gros vaisseaux du médiastin.
+• Absence d'épanchement péricardique.
+
+Étude pleuro-parenchymateuse et pariétale :
+• Les bronches souches, lobaires et segmentaires sont libres, à parois fines.
+• Absence de nodule parenchymateux suspect.
+• Absence de condensation parenchymateuse.
+• Absence d'épanchement pleural.
+• Absence d'adénomégalie axillaire, mammaire interne ou sus-claviculaire.
+
+III/ Étage abdomino-pelvien :
+• Foie non dysmorphique, de taille normale, de contours réguliers, de densité spontanée normale et de rehaussement homogène.
+• Tronc porte et ses branches, veines hépatiques et VCI perméables.
+• Absence de dilatation des voies biliaires intra- ou extra-hépatiques.
+• La vésicule biliaire est non distendue, de contenu hypodense homogène.
+• Le pancréas est de volume normal et de rehaussement homogène.
+• La rate et les surrénales sont d'aspect normal.
+• Rehaussement conservé du réseau vasculaire mésentérique et des axes vasculaires ilio-fémoraux.
+• Les reins sont en place, de taille et de trophicité normales, de contours réguliers, sans masse solide ou kystique décelable.
+• Absence de dilatation des cavités pyélo-calicielles ni de calcul décelable.
+• La vessie est en moyenne réplétion, à paroi fine et à contenu homogène.
+• Absence d'adénomégalie intra- ou rétro-péritonéale.
+• Absence d'épanchement intra-abdominal.
+
+IV/ Étude osseuse :
+• Absence de lésion osseuse condensante ou lytique suspecte de malignité.
+
+AU TOTAL :
+[conclusion]`,
+  },
+  {
+    id: 'tdm-cervico-tap', spe: 'tap', mod: 'TDM',
+    title: 'TDM cervico-thoraco-abdomino-pelvienne — normale',
+    text: `SCANNER CERVICO-THORACO-ABDOMINO-PELVIEN
+
+RENSEIGNEMENTS CLINIQUES :
+[renseignements cliniques]
+
+TECHNIQUE :
+Acquisitions hélicoïdales explorant les étages cervical, thoracique et abdomino-pelvien sans et avec injection intra-veineuse de produit de contraste.
+
+RÉSULTATS :
+1- Étage cervical :
+• Filière aéro-digestive libre.
+• Absence de masse cervicale visible.
+• Aspect TDM normal des glandes thyroïde, sub-mandibulaires et parotidiennes.
+• Absence d'adénomégalie cervicale décelable.
+• Les axes jugulo-carotidiens sont perméables, en place.
+
+2- Étage thoracique :
+En fenêtre parenchymateuse :
+• Arbre trachéo-bronchique libre.
+• Absence de nodule ou de lésion pulmonaire élémentaire.
+• Absence d'épanchement pleural.
+
+En fenêtre médiastinale :
+• Absence d'adénomégalie médiastinale ou hilaire.
+• Rehaussement conservé des cavités cardiaques et des gros vaisseaux du médiastin.
+• Absence de dilatation des cavités cardiaques.
+• Absence d'épanchement péricardique.
+• Absence d'adénomégalie axillaire, mammaire interne ou sus-claviculaire.
+
+3- Étage abdominal :
+• Le foie est de volume normal, de contours réguliers et de rehaussement homogène, sans lésion focale décelable.
+• Tronc porte et ses branches, veines hépatiques et VCI perméables.
+• Absence de dilatation des voies biliaires intra- ou extra-hépatiques.
+• La vésicule biliaire est non distendue.
+• Le pancréas est de volume normal et de rehaussement homogène.
+• La rate est de volume normal et de rehaussement homogène.
+• Les glandes surrénales sont fines.
+• Les reins sont de taille normale, de contours réguliers, de rehaussement habituel, sans dilatation des cavités pyélo-calicielles.
+• La vessie, en semi-réplétion, est de contenu homogène.
+• Absence d'anomalie patente des anses digestives.
+• Absence d'épanchement liquidien intra-péritonéal.
+• Absence d'adénomégalies abdomino-pelviennes.
+
+4- Fenêtre osseuse :
+• Absence de lésion suspecte sur le volume exploré.
+
+AU TOTAL :
+[conclusion]`,
+  },
+  {
+    id: 'tdm-abdo-pelvienne', spe: 'digestif', mod: 'TDM',
+    title: 'TDM abdomino-pelvienne sans injection — normale',
+    text: `SCANNER ABDOMINO-PELVIEN
+
+RENSEIGNEMENTS CLINIQUES :
+[renseignements cliniques]
+
+TECHNIQUE :
+Acquisition hélicoïdale multicoupes fines prenant l'abdomen sans injection de produit de contraste iodé.
+
+RÉSULTATS :
+• Le foie est non dysmorphique, de taille normale, de contours réguliers, sans lésion focale décelable en contraste spontané.
+• Absence de dilatation des voies biliaires intra- ou extra-hépatiques.
+• La vésicule biliaire est non distendue, de contenu homogène.
+• Le pancréas, la rate et les surrénales sont d'aspect normal en contraste spontané.
+• Les reins sont en place, de taille et de trophicité normales et de contours réguliers.
+• Absence de dilatation des cavités pyélo-calicielles ni de calcul décelable.
+• Vessie en semi-réplétion, de plage homogène.
+• Absence d'adénomégalie intra- ou rétro-péritonéale.
+• Absence d'épanchement intra-abdominal.
+• Absence de lésion osseuse condensante ou lytique suspecte de malignité.
+
+AU TOTAL :
+[conclusion]`,
+  },
+  {
+    id: 'tdm-abdo-pelvienne-injectee', spe: 'digestif', mod: 'TDM',
+    title: 'TDM abdomino-pelvienne sans et avec injection — normale',
+    text: `SCANNER ABDOMINO-PELVIEN
+
+RENSEIGNEMENTS CLINIQUES :
+[renseignements cliniques]
+
+TECHNIQUE :
+Acquisition hélicoïdale multicoupes fines prenant l'abdomen sans et avec injection intra-veineuse de produit de contraste iodé.
+
+RÉSULTATS :
+• Foie non dysmorphique, de taille normale, de contours réguliers, de densité spontanée et de rehaussement homogènes.
+• Tronc porte, veines hépatiques et VCI perméables.
+• Absence de dilatation des voies biliaires intra- ou extra-hépatiques.
+• La vésicule biliaire est non distendue.
+• Le pancréas est de volume normal et de rehaussement homogène.
+• La rate est de taille normale et de rehaussement homogène.
+• Les surrénales sont d'aspect normal.
+• Les reins sont en place, de taille et de trophicité normales et de contours réguliers.
+• Absence de dilatation des cavités pyélo-calicielles ni de calcul décelable.
+• Vessie en semi-réplétion, de plage homogène.
+• Absence d'adénomégalie intra- ou rétro-péritonéale.
+• Absence d'épanchement intra-abdominal.
+• Absence de lésion osseuse condensante ou lytique suspecte de malignité.
+
+AU TOTAL :
+[conclusion]`,
+  },
+  {
+    id: 'entero-tdm', spe: 'digestif', mod: 'TDM',
+    title: 'Entéroscanner — normal',
+    text: `ENTÉROSCANNER
+
+RENSEIGNEMENTS CLINIQUES :
+[renseignements cliniques]
+
+TECHNIQUE :
+Acquisitions volumiques centrées sur l'abdomen sans puis après injection de PDC iodé aux temps portal et tardif, après balisage digestif à l'eau.
+
+RÉSULTATS :
+• Distension satisfaisante de l'estomac et des anses grêles.
+• Absence d'épaississement pariétal digestif suspect.
+• Absence de rehaussement pathologique des anses grêles.
+• Absence d'adénomégalie intra- ou rétro-péritonéale.
+• Absence d'épanchement intra-abdominal.
+
+Par ailleurs :
+• Le foie est non dysmorphique, de taille normale, de contours réguliers et de rehaussement homogène, sans lésion focale décelable.
+• Tronc porte et ses branches, veines hépatiques et VCI perméables.
+• Absence de dilatation des voies biliaires intra- ou extra-hépatiques.
+• La vésicule biliaire est non distendue, de contenu hypodense homogène.
+• Le pancréas est de volume normal et de rehaussement homogène.
+• La rate et les surrénales sont d'aspect normal.
+• Rehaussement conservé du réseau vasculaire mésentérique et des axes vasculaires ilio-fémoraux.
+• Les reins sont en place, de taille et de trophicité normales, de contours réguliers, sans masse solide ou kystique décelable.
+• Absence de dilatation des cavités pyélo-calicielles ni de calcul décelable.
+• Absence de lésion osseuse condensante ou lytique suspecte de malignité.
+
+AU TOTAL :
+[conclusion]`,
+  },
+  {
+    id: 'uroscanner', spe: 'uro', mod: 'TDM',
+    title: 'Uroscanner sans et avec injection — normal',
+    text: `UROSCANNER
+
+RENSEIGNEMENTS CLINIQUES :
+[renseignements cliniques]
+
+TECHNIQUE :
+Acquisition hélicoïdale multicoupes fines prenant l'abdomen sans puis après injection intra-veineuse multiphasique de produit de contraste iodé, avec cliché d'UIV.
+
+RÉSULTATS :
+• Les reins sont en place, de taille et de trophicité normales, de contours réguliers, sans masse solide ou kystique décelable.
+• Absence de dilatation des cavités excrétrices ou de calcul décelable.
+• Absence d'épaississement tissulaire ou de lacune au temps tardif le long des voies excrétrices.
+• Vessie en semi-réplétion, de plage homogène.
+
+Par ailleurs :
+• Le foie est de taille normale, de contours réguliers, de rehaussement homogène, sans lésion focale décelable.
+• Tronc porte et ses branches, veines hépatiques et VCI perméables.
+• Vésicule biliaire non distendue.
+• Absence de dilatation des voies biliaires intra- ou extra-hépatiques.
+• Le pancréas, la rate et les surrénales sont d'aspect normal.
+• Absence d'adénomégalie intra- ou rétro-péritonéale.
+• Absence d'épanchement intra-abdominal.
+• Absence de lésion osseuse condensante ou lytique suspecte de malignité.
+
+AU TOTAL :
+[conclusion]`,
+  },
+  {
+    id: 'uroscanner-sans-injection', spe: 'uro', mod: 'TDM',
+    title: 'Uroscanner sans injection — normal',
+    text: `UROSCANNER
+
+RENSEIGNEMENTS CLINIQUES :
+[renseignements cliniques]
+
+TECHNIQUE :
+Acquisition hélicoïdale multicoupes fines prenant l'abdomen sans injection intra-veineuse de produit de contraste iodé.
+
+RÉSULTATS :
+• Les reins sont en place, de taille et de trophicité normales, mesurant [x] mm de grand axe à droite et [x] mm à gauche, de contours réguliers, sans masse solide ou kystique décelable.
+• Absence de dilatation des cavités excrétrices ou de calcul décelable.
+• Vessie en semi-réplétion, de plage homogène.
+• Absence de masse pelvienne décelable.
+
+Par ailleurs :
+• Le foie est de taille normale, de contours réguliers, sans lésion focale décelable en contraste spontané.
+• Absence de dilatation des voies biliaires intra- ou extra-hépatiques.
+• La vésicule biliaire est non distendue, de contenu liquidien.
+• Le pancréas, la rate et les surrénales sont d'aspect normal en contraste spontané.
+• Absence d'adénomégalie intra- ou rétro-péritonéale.
+• Absence d'épanchement intra-abdominal.
+• Absence de lésion osseuse condensante ou lytique suspecte de malignité.
+
+AU TOTAL :
+Uroscanner sans anomalie significative en contraste spontané.`,
+  },
+  {
+    id: 'tdm-massif-facial', spe: 'orl', mod: 'TDM',
+    title: 'TDM du massif facial (sinus) — normale',
+    text: `SCANNER DU MASSIF FACIAL
+
+RENSEIGNEMENTS CLINIQUES :
+[renseignements cliniques]
+
+TECHNIQUE :
+Acquisition hélicoïdale multicoupes fines centrée sur le massif facial sans injection intra-veineuse de produit de contraste iodé.
+
+RÉSULTATS :
+• Pneumatisation conservée des sinus frontaux, maxillaires, sphénoïdaux et des cellules ethmoïdales.
+• Les carrefours ostio-méatiques sont libres.
+• Absence de protrusion dentaire intra-sinusienne.
+• Absence de granulome apical dentaire.
+
+Variantes à risque de confinement :
+• Absence de déviation de la cloison nasale.
+• Absence de concha bullosa.
+• Absence d'anomalie d'insertion ou de courbure des processus unciformes.
+• Absence d'hypertrophie bullaire.
+• Absence de cellule de Haller.
+
+Variantes à risque chirurgical :
+• Absence de procidence des canaux infra-orbitaires.
+• Absence d'asymétrie des toits de l'ethmoïde, Keros [I / II / III] bilatéral.
+• Absence de procidence des artères ethmoïdales.
+• Absence de procidence carotidienne.
+• Absence de procidence des canaux des nerfs optiques.
+
+AU TOTAL :
+[conclusion]`,
+  },
+  {
+    id: 'cone-beam-sinus', spe: 'orl', mod: 'TDM',
+    title: 'Cone beam des sinus — normal',
+    text: `CONE BEAM DES SINUS
+
+RENSEIGNEMENTS CLINIQUES :
+[renseignements cliniques]
+
+TECHNIQUE :
+Acquisition en mode cone beam centrée sur le massif facial.
+
+RÉSULTATS :
+• Pneumatisation conservée des sinus frontaux, sphénoïdaux, maxillaires et des cellules ethmoïdales.
+• Absence de protrusion dentaire intra-sinusienne.
+• Absence de granulome apical dentaire.
+
+Variantes à risque de confinement :
+• Absence de déviation de la cloison nasale.
+• Absence de concha bullosa.
+• Absence d'anomalie d'insertion ou de courbure des processus unciformes.
+• Absence d'hypertrophie bullaire.
+• Absence de cellule de Haller.
+
+Variantes à risque chirurgical :
+• Absence de procidence des canaux infra-orbitaires.
+• Absence d'asymétrie des toits de l'ethmoïde, Keros [I / II / III] bilatéral.
+• Absence de procidence des artères ethmoïdales.
+• Absence de procidence carotidienne.
+
+AU TOTAL :
+[conclusion]`,
+  },
+  {
+    id: 'tdm-rochers', spe: 'orl', mod: 'TDM',
+    title: 'TDM des rochers — normale',
+    text: `SCANNER DES ROCHERS
+
+RENSEIGNEMENTS CLINIQUES :
+[renseignements cliniques]
+
+TECHNIQUE :
+• Acquisition hélicoïdale multicoupes fines centrée sur les rochers sans injection de PDC iodé.
+• Reconstructions coronales, sagittales et MIP.
+
+RÉSULTATS :
+Du côté droit :
+• Conduit auditif externe libre.
+• Aération normale des cellules mastoïdiennes et de la caisse du tympan.
+• Intégrité de la chaîne ossiculaire.
+• Respect des parois osseuses de la caisse du tympan, en particulier du tegmen tympani et du mur de la logette.
+• Intégrité de la niche de la fenêtre ovale et de la fenêtre ronde.
+• Aspect normal du canal du nerf facial dans ses trois portions.
+• Absence d'anomalie cochléaire ou vestibulaire.
+• Intégrité du conduit auditif interne.
+• Absence d'anomalie aqueducale.
+
+Du côté gauche :
+• Conduit auditif externe libre.
+• Aération normale des cellules mastoïdiennes et de la caisse du tympan.
+• Intégrité de la chaîne ossiculaire.
+• Respect des parois osseuses de la caisse du tympan, en particulier du tegmen tympani et du mur de la logette.
+• Intégrité de la niche de la fenêtre ovale et de la fenêtre ronde.
+• Aspect normal du canal du nerf facial dans ses trois portions.
+• Absence d'anomalie cochléaire ou vestibulaire.
+• Intégrité du conduit auditif interne.
+• Absence d'anomalie aqueducale.
+
+AU TOTAL :
+TDM des rochers sans anomalie.`,
+  },
+  {
+    id: 'tdm-rachis-cervical', spe: 'osteo', mod: 'TDM',
+    title: 'TDM du rachis cervical — normale (choix pour la cervicarthrose)',
+    text: `SCANNER DU RACHIS CERVICAL
+
+INDICATION :
+[indication]
+
+TECHNIQUE :
+Examen réalisé en mode hélicoïdal par des coupes axiales millimétriques explorant l'ensemble du rachis cervical sans injection de produit de contraste.
+
+RÉSULTATS :
+• Absence d'anomalie de la charnière cervico-occipitale.
+• Canal cervical de mensurations constitutionnelles normales.
+• Conservation de la lordose cervicale.
+• Absence de lésion osseuse d'allure évolutive.
+• Absence de discarthrose ou d'uncarthrose.
+• [Absence d'arthrose inter-apophysaire postérieure / Arthrose inter-apophysaire postérieure étagée].
+• Intégrité des parties molles péri-vertébrales.
+
+C2-C3 :
+• [Absence de saillie discale / Saillie discale médiane / Barre unco-disco-ostéophytique].
+• [Absence de plicature / Plicature] des ligaments jaunes.
+• [Les foramens de conjugaison sont libres / Rétrécissement foraminal « droit / gauche / bilatéral »].
+
+C3-C4 :
+• [Absence de saillie discale / Saillie discale médiane / Barre unco-disco-ostéophytique].
+• [Absence de plicature / Plicature] des ligaments jaunes.
+• [Les foramens de conjugaison sont libres / Rétrécissement foraminal « droit / gauche / bilatéral »].
+
+C4-C5 :
+• [Absence de saillie discale / Saillie discale médiane / Barre unco-disco-ostéophytique].
+• [Absence de plicature / Plicature] des ligaments jaunes.
+• [Les foramens de conjugaison sont libres / Rétrécissement foraminal « droit / gauche / bilatéral »].
+
+C5-C6 :
+• [Absence de saillie discale / Saillie discale médiane / Barre unco-disco-ostéophytique].
+• [Absence de plicature / Plicature] des ligaments jaunes.
+• [Les foramens de conjugaison sont libres / Rétrécissement foraminal « droit / gauche / bilatéral »].
+
+C6-C7 :
+• [Absence de saillie discale / Saillie discale médiane / Barre unco-disco-ostéophytique].
+• [Absence de plicature / Plicature] des ligaments jaunes.
+• [Les foramens de conjugaison sont libres / Rétrécissement foraminal « droit / gauche / bilatéral »].
+
+AU TOTAL :
+Canal cervical de mensurations constitutionnelles normales.
+[Absence de cervicarthrose / Cervicarthrose étagée avec un maximum de sténose centrale et foraminale en « C5-C6 »].`,
+  },
+  {
+    id: 'tdm-rachis-lombaire', spe: 'osteo', mod: 'TDM',
+    title: 'TDM du rachis lombaire — normale',
+    text: `SCANNER DU RACHIS LOMBAIRE
+
+INDICATION :
+[indication]
+
+TECHNIQUE :
+Examen réalisé en mode hélicoïdal par des coupes axiales de 2 mm d'épaisseur explorant le rachis lombaire sans injection de produit de contraste, avec reconstructions dans les trois plans de l'espace.
+
+RÉSULTATS :
+• Absence d'anomalie transitionnelle de la charnière lombo-sacrée.
+• Absence de lésion osseuse évolutive lytique ou condensante du rachis lombaire.
+• Absence d'anomalie de hauteur des corps vertébraux.
+• Canal lombaire de dimensions constitutionnelles normales.
+• Intégrité des articulations sacro-iliaques, coxo-fémorales et de la symphyse pubienne.
+• Intégrité des parties molles péri-vertébrales.
+
+Étage L3-L4 :
+• Absence de hernie discale.
+• Absence d'hypertrophie des ligaments jaunes.
+• Absence d'arthrose inter-apophysaire postérieure.
+• Les foramens de conjugaison sont libres.
+
+Étage L4-L5 :
+• Absence de hernie discale.
+• Absence d'hypertrophie des ligaments jaunes.
+• Absence d'arthrose inter-apophysaire postérieure.
+• Les foramens de conjugaison sont libres.
+
+Étage L5-S1 :
+• Absence de hernie discale.
+• Absence d'hypertrophie des ligaments jaunes.
+• Absence d'arthrose inter-apophysaire postérieure.
+• Les foramens de conjugaison sont libres.
+
+AU TOTAL :
+Canal lombaire de dimensions normales.
+[Absence de hernie discale / Discopathie dégénérative et protrusive en « L4-L5 »].`,
+  },
+  {
+    id: 'rx-rachis-lombaire-degeneratif', spe: 'osteo', mod: 'Radio',
+    title: 'Radiographie du rachis lombaire (F + P) — normale ou dégénérative',
+    text: `RADIOGRAPHIE DU RACHIS LOMBAIRE (FACE ET PROFIL)
+
+COMPTE-RENDU :
+• Bonne minéralisation osseuse.
+• Absence de lésion osseuse évolutive.
+• Pas d'anomalie vertébrale aux différents étages.
+• [Absence de pincement discal / Discret pincement discal en « L5-S1 »].
+• [Absence d'arthrose inter-apophysaire postérieure / Arthrose inter-apophysaire postérieure en « L4-L5 et L5-S1 »].
+• [Absence d'ostéophyte / Ostéophytes étagés].
+• Articulations sacro-iliaques et coxo-fémorales respectées.`,
+  },
+  {
+    id: 'rx-cheville', spe: 'trauma', mod: 'Radio',
+    title: 'Radiographie de la cheville — normale',
+    text: `RADIOGRAPHIE DE LA CHEVILLE [DROITE / GAUCHE]
+
+COMPTE-RENDU :
+• Minéralisation normale de la trame osseuse.
+• Absence de lésion osseuse traumatique visible.
+• Intégrité des interlignes articulaires.
+• Absence d'anomalie des parties molles.`,
+  },
+  {
+    id: 'mammo-echo', spe: 'femme', mod: 'Mammo',
+    title: 'Mammographie + échographie mammaire (bilan sénologique) — normal',
+    text: `MAMMOGRAPHIE ET ÉCHOGRAPHIE MAMMAIRE
+
+RENSEIGNEMENTS CLINIQUES :
+[renseignements cliniques]
+
+RÉSULTATS :
+I/ Mammographie bilatérale (face + oblique + profil) :
+• Seins [graisseux, type A / avec densités fibroglandulaires éparses, type B / denses hétérogènes, type C / extrêmement denses, type D] au BI-RADS.
+• Absence de masse décelable.
+• Absence d'asymétrie glandulaire.
+• Absence de distorsion architecturale.
+• Absence de microcalcifications de forme ou de groupement suspect.
+• Absence d'adénomégalie axillaire.
+
+II/ Échographie mammaire, à droite comme à gauche :
+• Absence de masse solide ou kystique décelable.
+• Absence d'atténuation suspecte des ultrasons.
+• Absence d'ectasie canalaire.
+• Absence d'anomalie du revêtement cutané.
+• Absence d'adénomégalie axillaire.
+
+AU TOTAL :
+[conclusion]`,
+  },
+  {
+    id: 'echo-mammaire', spe: 'femme', mod: 'Écho',
+    title: 'Échographie mammaire — normale',
+    text: `ÉCHOGRAPHIE MAMMAIRE
+
+RENSEIGNEMENTS CLINIQUES :
+[renseignements cliniques]
+
+RÉSULTATS :
+À droite comme à gauche :
+• Absence de masse solide ou kystique décelable.
+• Absence d'atténuation suspecte des ultrasons.
+• Absence d'ectasie canalaire.
+• Absence d'anomalie du revêtement cutané.
+• Absence d'adénomégalie axillaire.
+
+AU TOTAL :
+[conclusion]`,
+  },
+  {
+    id: 'echo-abdo-pelvienne', spe: 'digestif', mod: 'Écho',
+    title: 'Échographie abdomino-pelvienne — normale',
+    text: `ÉCHOGRAPHIE ABDOMINO-PELVIENNE
+
+INDICATION :
+[indication]
+
+RÉSULTATS :
+• Le foie est non dysmorphique, de taille normale, de contours réguliers, d'échostructure homogène, sans lésion focale décelable.
+• La vésicule biliaire est non distendue, à paroi fine et alithiasique.
+• Absence de dilatation des voies biliaires intra- et extra-hépatiques.
+• Le réseau porte et les veines hépatiques sont perméables.
+• Le pancréas céphalo-caudal est homogène, de volume normal.
+• La rate est de taille normale, de contours réguliers et d'échostructure homogène.
+• Les reins sont en place, de taille normale, de contours réguliers, présentant une bonne différenciation cortico-médullaire.
+• Absence de macrocalculs.
+• Absence de dilatation des cavités excrétrices.
+• La vessie est en bonne réplétion, à paroi fine et régulière, à contenu liquidien homogène.
+• Absence de masse pelvienne.
+• Absence d'épanchement intra-abdominal.
+
+AU TOTAL :
+Échographie abdomino-pelvienne sans anomalie.`,
+  },
+  {
+    id: 'echo-reno-vesico-prostatique', spe: 'uro', mod: 'Écho',
+    title: 'Échographie rénale et vésico-prostatique — normale',
+    text: `ÉCHOGRAPHIE RÉNALE ET VÉSICO-PROSTATIQUE
+
+RENSEIGNEMENTS CLINIQUES :
+[renseignements cliniques]
+
+RÉSULTATS :
+• Les reins sont en place, de taille normale, mesurant [x] mm de grand axe à droite et [x] mm à gauche, de contours réguliers, présentant une bonne différenciation cortico-sinusale.
+• Absence de dilatation des cavités pyélo-calicielles ou de calcul décelable.
+• Vessie en bonne réplétion, à paroi fine et de contenu transonore.
+• Volume pré-mictionnel estimé à [x] mL.
+• Volume post-mictionnel estimé à [x] mL.
+• La prostate, étudiée par voie sus-pubienne, est d'échostructure habituelle, de volume normal, mesurant [x] x [x] x [x] mm, soit un poids estimé à [x] g.
+• Absence d'épanchement intra-abdominal.
+
+AU TOTAL :
+Échographie rénale et vésico-prostatique sans anomalie décelable, notamment absence d'hypertrophie prostatique.`,
+  },
+  {
+    id: 'echo-cervicale', spe: 'orl', mod: 'Écho',
+    title: 'Échographie cervicale (thyroïde, glandes salivaires) — normale',
+    text: `ÉCHOGRAPHIE CERVICALE
+
+RENSEIGNEMENTS CLINIQUES :
+[renseignements cliniques]
+
+RÉSULTATS :
+• La glande thyroïde est de volume normal, de contours réguliers, normovascularisée au Doppler couleur. Elle présente les mensurations suivantes :
+• Le lobe droit mesure [x] x [x] x [x] mm, soit un volume de [x] mL.
+• Le lobe gauche mesure [x] x [x] x [x] mm, soit un volume de [x] mL.
+• L'isthme mesure [x] mm d'épaisseur.
+• Les glandes parotides et sous-maxillaires sont d'aspect échographique normal.
+• Absence d'adénomégalie cervicale.
+
+AU TOTAL :
+[conclusion]`,
+  },
+  {
+    id: 'echo-epaule', spe: 'osteo', mod: 'Écho',
+    title: 'Échographie de l\'épaule — normale',
+    text: `ÉCHOGRAPHIE DE L'ÉPAULE [DROITE / GAUCHE]
+
+RENSEIGNEMENTS CLINIQUES :
+[renseignements cliniques]
+
+RÉSULTATS :
+• Le tendon du long biceps est visualisé au sein de sa gouttière, continu, d'échostructure hyperéchogène fibrillaire.
+• Le tendon sub-scapulaire n'est pas désinséré, d'échostructure hyperéchogène fibrillaire normale. Absence de signe de conflit antérieur.
+• Le tendon supra-épineux est continu, d'échostructure hyperéchogène fibrillaire normale.
+• Le tendon infra-épineux est continu, d'échostructure hyperéchogène fibrillaire normale.
+• Absence de dégénérescence graisseuse des muscles de la coiffe des rotateurs.
+• Intégrité de l'articulation acromio-claviculaire.
+• Absence d'épanchement articulaire ou de la bourse sous-acromio-deltoïdienne.
+
+AU TOTAL :
+[conclusion]`,
+  },
+  {
+    id: 'echo-epaule-courte', spe: 'osteo', mod: 'Écho',
+    title: 'Échographie de l\'épaule — normale (formule courte)',
+    text: `ÉCHOGRAPHIE DE L'ÉPAULE [DROITE / GAUCHE]
+
+RENSEIGNEMENTS CLINIQUES :
+[renseignements cliniques]
+
+RÉSULTATS :
+• Le tendon du long biceps est dans sa gouttière, continu, d'échostructure fibrillaire normale.
+• Le tendon subscapulaire n'est pas désinséré.
+• Le tendon supra-épineux est continu, d'aspect fibrillaire normal.
+• Le tendon infra-épineux est continu, d'aspect fibrillaire normal.
+• Absence de dégénérescence graisseuse des muscles supra- et infra-épineux.
+• [Intégrité de l'articulation acromio-claviculaire / Arthropathie acromio-claviculaire].
+• Absence d'épanchement dans la bourse sous-acromio-deltoïdienne.
+• Absence d'épanchement intra-articulaire.
+
+AU TOTAL :
+[conclusion]`,
+  },
+  {
+    id: 'doppler-tsa', spe: 'vasculaire', mod: 'Écho',
+    title: 'Écho-doppler des troncs supra-aortiques — normal',
+    text: `ÉCHO-DOPPLER DES TRONCS SUPRA-AORTIQUES
+
+RÉSULTATS :
+• [Absence d'infiltration athéromateuse / Minime infiltration athéromateuse] des axes vasculaires du cou.
+• Les artères carotides communes, internes et externes sont perméables avec des spectres vélocimétriques normaux.
+• Les artères vertébrales sont perméables et symétriques, avec des pics de vitesse systolique de [x] cm/s.
+• Les artères sub-clavières sont perméables, présentant des spectres vélocimétriques normaux.
+
+CONCLUSION :
+[Écho-doppler des troncs supra-aortiques sans anomalie décelable / Minime infiltration athéromateuse des axes vasculaires du cou ; écho-doppler des troncs supra-aortiques sans anomalie décelable par ailleurs].`,
   },
 ];
 
