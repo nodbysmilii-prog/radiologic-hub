@@ -60,6 +60,14 @@ Chaque fiche (`fiches/…html`) propose :
 
 Éditeur de compte rendu avec bibliothèque de modèles et **phrases automatiques** — voir la [section dédiée](#comptes-rendus-types-et-phrases-automatiques).
 
+### Remplacements (`remplacements.html`)
+
+Mise en relation des radiologues remplaçants (spécialistes, résidents R3 à R5) avec les cliniques et cabinets de Tunisie : inscriptions validées par l'administrateur, calendrier des disponibilités, demandes, propositions par e-mail avec réponse en un clic — voir la [section dédiée](#remplacements-mise-en-relation). Page de réponse aux boutons des e-mails : `remplacements-reponse.html`.
+
+### Mentions légales (`mentions-legales.html`)
+
+Éditeur, hébergement, **protection des données personnelles** (loi organique n° 2004-63, INPDP ; ancre `#donnees`, liée depuis la case de consentement des inscriptions). Les passages entre crochets sont à compléter. Lien dans le pied de page de toutes les pages.
+
 ---
 
 ## Fiches rapides disponibles
@@ -170,15 +178,23 @@ Page `suivi-oncologique.html` (lien depuis la page Comptes rendus : bouton « Su
 
 ## Remplacements (mise en relation)
 
-Module en cours de construction : mise en relation de **remplaçants** (radiologues spécialistes, résidents R3 à R5) avec des **cliniques et cabinets** en Tunisie ; un agent envoie par e-mail les propositions (date, horaires, honoraires) et les confirmations.
+Page `remplacements.html` (entrée **Remplacements** du menu). Mise en relation de **remplaçants** (radiologues spécialistes, résidents R3 à R5) avec des **cliniques et cabinets** en Tunisie ; un agent envoie par e-mail les propositions et les confirmations. Français, pensé d'abord pour le téléphone, heure de Tunis, dates JJ/MM/AAAA, montants en TND. **Aucune donnée patient** dans ce module.
 
-**Fait (étape 2 — backend)** :
-- **Noyau partagé** `remplacements/noyau/` (sans dépendance ; utilisé par le site, les fonctions serveur et les tests) : référentiels et formats tunisiens (24 gouvernorats, fuseau Africa/Tunis, dates JJ/MM/AAAA, montants en TND), règles de compatibilité (disponible à **toutes** les dates sur le bon créneau, gouvernorat accepté, compétences couvrant les modalités, profil accepté avec année minimale de résidanat, pas de mission en conflit ; honoraires souhaités affichés mais non filtrants), **agent** (`moteur.js` : sélection, propositions, réponses par liens à usage unique, choix en un clic ou attribution automatique au premier, confirmations avec .ics et contrat PDF, « poste pourvu », annulation et remise en ligne, relance et alerte après X heures, expiration, rappel la veille, confirmation de réalisation, récapitulatif mensuel, désinscription, journal de toutes les actions), agenda `.ics`, gabarits d'e-mails, générateur PDF et contrat.
-- **Modèles** dans des fichiers séparés : `remplacements/modeles/emails/*.html` (17 e-mails + mise en page commune aux couleurs du site) et `remplacements/modeles/contrat.md` (contrat de remplacement **à faire valider**).
-- **Base Supabase** `supabase/migrations/` : comptes (`profils`), remplaçants, structures (plusieurs comptes par structure, invitations), disponibilités, demandes, propositions, jetons (empreintes seulement), journal des actions et des e-mails, stockage privé des justificatifs ; droits d'accès par ligne (une structure ne voit un remplaçant qu'après sa réponse « disponible »).
-- **Fonctions serveur** `supabase/functions/` : `rp-agent` (actions des utilisateurs connectés), `rp-lien` (boutons des e-mails, sans connexion), `rp-taches` (toutes les 15 minutes) ; envoi par **Brevo** ou **Resend** (clés en variables d'environnement), prêt pour WhatsApp / SMS.
+**Mode démonstration** (tant que `remplacements/config.js` est vide) : tout fonctionne dans le navigateur avec des données **fictives** (4 remplaçants, 2 structures, 1 remplaçante et 1 cabinet en attente de validation, 1 administrateur, 1 demande déjà publiée). Une barre « Démo » permet de **se connecter comme** n'importe quel utilisateur fictif, d'**avancer l'horloge** (+12 h, +1 jour : l'agent tourne — relances, rappels, réalisations, récapitulatifs), d'ouvrir la **boîte d'envoi** (aperçu des e-mails, pièces jointes .ics et PDF ; les boutons des e-mails fonctionnent) et de **réinitialiser**.
 
-**À venir** : interface (inscriptions, calendrier, demandes, tableaux de bord, contrat PDF), mode démonstration, entrée « Remplacements » dans le menu, mentions légales et consentement, guide d'installation.
+**Parcours** :
+
+| Qui | Ce qu'il fait |
+|---|---|
+| **Remplaçant** | S'inscrit (nom, prénom, téléphone, e-mail, statut spécialiste ou résident + année, affectation, 6 compétences, gouvernorats acceptés, honoraires journaliers indicatifs, justificatif facultatif, consentement) ; après validation : coche ses **disponibilités** sur un calendrier mensuel (journée, matin, après-midi, garde ; « pinceau » + remplissage du mois) ; répond aux **propositions** (« Je suis disponible » / « Pas disponible »), dans son espace ou par les boutons de l'e-mail ; voit ses **missions**, le contrat PDF et l'agenda .ics, peut annuler (la structure est prévenue, la demande remise en ligne) ; tableau de **honoraires** (mois, année, à venir) ; profil, désinscription des e-mails, suppression de l'inscription |
+| **Structure** (plusieurs comptes) | S'inscrit (nom, clinique ou cabinet, adresse, gouvernorat, équipements, contact, e-mail) ; après validation : publie une **demande** (dates au calendrier, horaires, type journée / demi-journée / garde / week-end, modalités, profil accepté : spécialistes seuls ou résidents acceptés avec année minimale facultative, forfait TND par jour ou par garde, logement / transport / repas, commentaire ; total calculé) ; voit les **remplaçants disponibles** avec leur statut et **choisit en un clic** (ou attribution automatique au premier) ; favoris ; annulation (remise en ligne ou définitive) ; confirmation de réalisation ; onglets En cours / Pourvues / Historique ; réglages de l'agent (attribution automatique, délai de relance en heures) et équipe (invitations) |
+| **Administrateur** | Valide ou refuse les inscriptions (motif envoyé par e-mail), consulte le justificatif, suspend / réactive les comptes, statistiques (comptes, demandes, délai moyen de pourvoi, e-mails), journal des e-mails et **journal de toutes les actions** (qui, quoi, quand), lance l'agent |
+
+**Agent** (`remplacements/noyau/moteur.js`, identique dans le navigateur, les fonctions serveur et les tests) : sélection des remplaçants compatibles (disponibles à **toutes** les dates sur le bon créneau, gouvernorat accepté, compétences couvrant les modalités, profil accepté, pas de mission en conflit ; honoraires souhaités affichés mais non filtrants), e-mail avec deux **boutons à usage unique** sans connexion (page de confirmation intermédiaire : les antivirus qui ouvrent les liens ne déclenchent rien), confirmation aux deux parties (récapitulatif, coordonnées, .ics, contrat PDF pré-rempli, lien d'annulation), « poste pourvu » aux autres intéressés, relance après X heures avec alerte à la structure, expiration, rappel la veille à 18 h, annulation → e-mail immédiat à l'autre partie et remise en ligne, confirmation de réalisation, récapitulatif mensuel, désinscription signée (lien dans chaque e-mail).
+
+**Production** : Supabase (base PostgreSQL avec droits d'accès par ligne, connexion par **lien magique** sans mot de passe, stockage privé des justificatifs, fonctions serveur `rp-agent` / `rp-lien` / `rp-taches` planifiées toutes les 15 minutes) et **Brevo** ou **Resend** pour les e-mails. Clés et identifiants dans les **secrets des fonctions**, jamais dans le code publié (seules l'adresse du projet et la clé publique « anon » vont dans `config.js`). Architecture prête pour WhatsApp / SMS (transport interchangeable, colonne `canal`). **Mise en service pas à pas : [`remplacements/INSTALLATION.md`](remplacements/INSTALLATION.md).**
+
+**Modèles à relire / faire valider** (fichiers séparés) : e-mails `remplacements/modeles/emails/*.html` (17 modèles + mise en page commune aux couleurs du site), contrat `remplacements/modeles/contrat.md` (**à faire valider**, passages entre crochets à compléter), e-mail de connexion `remplacements/modeles/supabase/lien-magique.html`.
 
 ---
 
@@ -248,7 +264,29 @@ radiologic-hub/
 │   ├── seuils.js           Seuils RECIST 1.1 / Lugano 2014 / contrôles, documentés (à vérifier médicalement)
 │   ├── registre.js         Modèle de données, report des lésions, sommes, nadir, comparatif, JSON
 │   └── schema.js           Schéma anatomique : placement automatique des lésions, couleurs, SVG
-├── tests/                  Tests unitaires (node --test), cas fictifs uniquement
+├── remplacements.html      Module Remplacements (mise en relation remplaçants / structures)
+├── remplacements-reponse.html  Page des boutons des e-mails (réponse, choix, annulation, désinscription)
+├── mentions-legales.html   Mentions légales et protection des données (#donnees)
+├── remplacements/
+│   ├── noyau/              Règles, agent, .ics, gabarits, PDF, contrat, dépôt en mémoire (partagés site / serveur / tests)
+│   ├── modeles/            Modèles d'e-mails (emails/*.html), contrat (contrat.md), lien magique (supabase/)
+│   ├── config.js           Adresse Supabase + clé publique « anon » (vide = mode démonstration)
+│   ├── api-supabase.js     Accès à Supabase (production)
+│   ├── api-demo.js         Mode démonstration (données fictives dans le navigateur)
+│   ├── api.js              Choix de la source de données
+│   ├── app.js              Interface (accueil, inscriptions, espaces remplaçant / structure, administration)
+│   ├── calendrier.js       Calendrier mensuel (disponibilités, dates d'une demande)
+│   ├── demo.js             Barre de démonstration et boîte d'envoi
+│   ├── reponse.js          Page de réponse aux boutons des e-mails
+│   ├── rp.css              Styles du module et des mentions légales
+│   └── INSTALLATION.md     Mise en service (Supabase, Brevo, secrets, planification, administrateur)
+├── supabase/
+│   ├── migrations/         Tables, droits d'accès par ligne, stockage des justificatifs
+│   ├── functions/          Fonctions serveur rp-agent, rp-lien, rp-taches (+ _shared, généré en partie)
+│   ├── sql/planification.sql  Tâche planifiée (pg_cron) et déclaration de l'administrateur
+│   └── config.toml         Réglages des fonctions
+├── scripts/preparer-backend.js  Recopie le noyau et les modèles vers supabase/functions/_shared
+├── tests/                  Tests unitaires (node --test), cas fictifs uniquement ; tests/sql : base et intégration
 ├── package.json            « npm test » (aucune dépendance)
 └── assets/
     ├── logo-radiologichub.png, emblem.svg, emblem-light.svg
@@ -271,11 +309,14 @@ radiologic-hub/
 | Ajouter un compte rendu type | Ajouter un objet `{ id, spe, mod, title, text }` dans `CR_TEMPLATES` (`cr-data.js`) ; `mod` = `'Écho'`, `'Radio'`, `'IRM'` ou `'TDM'` (liste `CR_MODALITIES`) ; lien direct possible : `comptes-rendus.html#modele=<id>` |
 | Ajouter une phrase automatique | Ajouter un objet `{ k, alias, organ, mod, type, label, text }` dans `CR_PHRASES` (`cr-data.js`). Mot-clé sans espace ni accent ; éviter les mots courants (« foie », « normal »…) qui ouvriraient la bulle en pleine rédaction |
 | Champs à compléter | Les écrire entre crochets `[x]`, `[droit / gauche]` ; **pas de crochets imbriqués** (utiliser « … » à l'intérieur d'un choix) |
+| Remplacements : texte d'un e-mail | `remplacements/modeles/emails/<nom>.html` (titre = objet ; `{{variable}}`), puis `npm run backend:preparer` et redéploiement des fonctions |
+| Remplacements : contrat | `remplacements/modeles/contrat.md` (syntaxe expliquée en tête du fichier) |
+| Remplacements : gouvernorats, compétences, équipements, types | `remplacements/noyau/referentiel.js` |
 | Style des formules du service | Titre en capitales, `TECHNIQUE :`, `RÉSULTAT :` (ou `COMPTE-RENDU :`), une constatation par ligne précédée de `• `, `AU TOTAL :` / `CONCLUSION :` |
 
 **Images médicales :** toujours **anonymisées** (aucun nom, date, n° de dossier, ni texte incrusté). Le site et le dépôt sont publics.
 
-**Cache :** après une modification de `styles.css`, `fiche.css`, `script.js`, `fiche.js`, `cr.css`, `cr.js`, `cr-data.js`, `cr-tools.js` ou `cr-tools.css`, changer le numéro `?v=…` dans les liens des pages HTML pour forcer les navigateurs à recharger les fichiers.
+**Cache :** après une modification de `styles.css`, `fiche.css`, `script.js`, `fiche.js`, `cr.css`, `cr.js`, `cr-data.js`, `cr-tools.js`, `cr-tools.css` ou d'un fichier de `remplacements/`, changer le numéro `?v=…` dans les liens des pages HTML pour forcer les navigateurs à recharger les fichiers.
 
 ---
 
@@ -284,7 +325,8 @@ radiologic-hub/
 Site 100 % statique (HTML / CSS / JavaScript, aucune installation).
 
 - **En ligne** : GitHub Pages, branche `claude/radiologichub-website-ss89g9`, dossier racine. Chaque modification poussée est en ligne en 1 à 2 minutes.
-- **En local** : ouvrir `index.html` dans un navigateur.
+- **En local** : ouvrir `index.html` dans un navigateur. Pour le module Remplacements (modèles d'e-mails chargés par le réseau), passer par un petit serveur : `python3 -m http.server` puis `http://localhost:8000/remplacements.html`.
+- **Module Remplacements en production** : nécessite un projet Supabase et un compte Brevo ou Resend — voir [`remplacements/INSTALLATION.md`](remplacements/INSTALLATION.md). Sans configuration, la page fonctionne en mode démonstration.
 
 ---
 
@@ -300,6 +342,8 @@ npm run backend:preparer  # recopie le noyau et les modèles dans supabase/funct
 ```
 
 Module Remplacements : `tests/remplacements-*.test.js` couvrent les règles de compatibilité, les formats tunisiens, les gabarits et tous les modèles d'e-mails, l'agenda .ics, le PDF et le contrat, les liens sécurisés, et un **scénario complet** (demande réservée aux spécialistes, demande ouverte aux résidents, trois remplaçants compatibles, acceptation, choix, annulation, remise en ligne, attribution automatique, relance, rappel, réalisation, récapitulatif mensuel, désinscription, réponses simultanées).
+
+Interface du module vérifiée dans un navigateur (Chromium, téléphone 390 px et ordinateur 1366 px, sans débordement) sur deux scénarios fictifs : demande réservée aux spécialistes (réponse par le bouton de l'e-mail, lien rouvert = « déjà enregistré », choix, contrat PDF, annulation par le remplaçant et remise en ligne, calendrier, validation et refus par l'administrateur, +24 h → relance, inscription avec erreurs puis valide) et demande ouverte aux résidents (3 remplaçants contactés, 2 disponibles, choix depuis l'e-mail, « poste pourvu », annulation par la structure depuis son e-mail et remise en ligne, boîte d'envoi et pièces jointes). Client Supabase vérifié avec la bibliothèque officielle face à un serveur simulé (inscription avant connexion puis lien magique, réponse par la fonction `rp-agent`, disponibilités, espace structure). Comptes rendus vérifiés inchangés.
 
 Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : aucune donnée patient dans le dépôt. Toute modification d'une règle ou d'un seuil (`suivi/seuils.js`, `regles/fleischner.js`, `regles/myome.js`) doit être accompagnée de ses tests.
 
@@ -319,6 +363,9 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 - [ ] **Dictée vocale** : tester au vrai micro sur Chrome, Edge et Safari (le navigateur de test n'a pas de micro : vérification avec une reconnaissance simulée) ; enrichir `dictee/corrections.js` avec le vocabulaire du service ; **V2 : moteur Whisper local (WebGPU)** dans `dictee/moteurs.js`.
 - [ ] **Schémas & calculateurs** : faire valider les règles et les textes (PI-RADS, BI-RADS, EU-TIRADS, Fleischner, FIGO, RECIST, Lugano) ; FIGO : la conclusion ne propose pas de conduite à tenir (la fiche n'en donne pas) ; PI-RADS : la zone centrale et le stroma antérieur suivent par défaut l'algorithme de la zone périphérique / de transition (modifiable) ; ajouter d'autres outils si besoin (Lung-RADS, LI-RADS, O-RADS, Bosniak…).
 - [ ] **IRM médullaire / IRM cérébrale et médullaire** : la technique cite des coupes axiales sur « les 3 derniers étages lombaires » (ou « les derniers étages lombaires ») mais le CR décrit L1-L2 à L5-S1, et les coupes coronales T2 FatSat du bassin ne sont pas citées dans la technique — à vérifier.
+- [ ] **Remplacements — mise en service** : créer le projet Supabase et le compte Brevo, régler les secrets, déployer, planifier, déclarer l'administrateur, renseigner `config.js` (guide : `remplacements/INSTALLATION.md`).
+- [ ] **Remplacements — juridique** : compléter `mentions-legales.html` (passages entre crochets), déclaration auprès de l'INPDP et autorisation de transfert (hébergement hors de Tunisie) ; faire valider le contrat `remplacements/modeles/contrat.md`.
+- [ ] **Remplacements — plus tard** : WhatsApp / SMS (transport à écrire), export comptable du récapitulatif, notation des remplacements.
 - [ ] **Nom de domaine** `www.radiologichub.com` : à acheter et configurer (DNS + réglages GitHub Pages), puis mettre à jour le lien « Site en ligne » ci-dessus.
 
 ---
@@ -327,6 +374,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 08/10/2026 | Module **Remplacements**, étapes 3 à 8 : page `remplacements.html` (entrée « Remplacements » ajoutée au menu et au pied de page de toutes les pages) — inscriptions remplaçant et structure avec consentement, calendrier des disponibilités, demande de remplacement, réponses et choix en un clic, annulation et remise en ligne, tableaux de bord remplaçant / structure / administrateur, contrat PDF et agenda .ics, honoraires ; page `remplacements-reponse.html` (boutons des e-mails, désinscription) ; **mode démonstration** à données fictives (changer d'utilisateur, avancer l'horloge, boîte d'envoi) ; page `mentions-legales.html` (protection des données, loi organique 2004-63) ; guide `remplacements/INSTALLATION.md` ; menu : passage en menu repliable sous 1140 px et espacement resserré pour loger la nouvelle entrée |
 | 08/10/2026 | Module **Remplacements**, étape 2 (backend) : noyau partagé (règles de compatibilité, agent de mise en relation, .ics, gabarits, PDF, contrat), 17 modèles d'e-mails et modèle de contrat dans des fichiers séparés, base Supabase (tables, droits d'accès par ligne, stockage privé), fonctions serveur `rp-agent` / `rp-lien` / `rp-taches`, envoi Brevo ou Resend ; tests unitaires, scénario complet, tests SQL et d'intégration (PostgreSQL + PostgREST) |
 | 07/10/2026 | Myomes, affichage sur téléphone : la planche FIGO de la fiche n'est plus coupée (dessin centré à la largeur de l'écran, légendes en liste dessous) ; dans l'outil FIGO, la vue coronale passe sous la vue sagittale et le schéma tient en largeur, sans défilement horizontal |
 | 07/10/2026 | Myomes : le dessin FIGO reprend le style des schémas FIGO classiques fournis (gros corps utérin arrondi, cavité sombre, col et vagin en double tube, légendes en texte à côté de chaque myome, étiquettes de catégorie à gauche) — planche de la fiche et vue sagittale de l'outil FIGO, vue coronale gardée en médaillon pour les parois latérales ; transmural en lavande ; tests du clic sur les deux vues |

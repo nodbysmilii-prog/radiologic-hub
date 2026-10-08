@@ -167,12 +167,12 @@ p { margin: 0 0 1em; }
   color: var(--ink);
 }
 
-.main-nav { display: flex; align-items: center; gap: 26px; }
+.main-nav { display: flex; align-items: center; gap: 20px; }
 .main-nav a:not(.btn) {
   text-decoration: none;
   font-weight: 700;
   font-size: .8rem;
-  letter-spacing: .08em;
+  letter-spacing: .06em;
   text-transform: uppercase;
   color: var(--ink);
   position: relative;
@@ -789,7 +789,7 @@ p { margin: 0 0 1em; }
 }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 1200px) {
+@media (max-width: 1212px) {
   .main-nav { gap: 18px; }
   .main-nav a:not(.btn) { font-size: .74rem; letter-spacing: .05em; }
 }
@@ -808,7 +808,8 @@ p { margin: 0 0 1em; }
   }
 }
 
-@media (max-width: 960px) {
+/* Menu repliable : les entrées ne tiennent plus sur une ligne en dessous de 1140 px */
+@media (max-width: 1140px) {
   .nav-toggle { display: block; }
   .main-nav {
     position: fixed;

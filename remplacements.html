@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Remplacements — RadiologicHub</title>
+  <meta name="description" content="Remplacements en radiologie en Tunisie : mise en relation des radiologues remplaçants (spécialistes et résidents R3 à R5) avec les cliniques et cabinets. Propositions par e-mail, réponse en un clic.">
+  <link rel="icon" type="image/svg+xml" href="assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261008235000">
+  <link rel="stylesheet" href="fiche.css?v=20261008235000">
+  <link rel="stylesheet" href="remplacements/rp.css?v=20261008235000">
+</head>
+<body>
+
+  <header class="site-header is-scrolled" id="top">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="RadiologicHub — accueil">
+        <img src="assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+        <a href="index.html#masterclass">Masterclass</a>
+        <a href="fiches-rapides.html">Fiches rapides</a>
+        <a href="comptes-rendus.html">Comptes rendus</a>
+        <a href="remplacements.html" class="is-current">Remplacements</a>
+        <a href="index.html#cas-du-jour">Cas du jour</a>
+        <a href="index.html#tarifs">Tarifs</a>
+        <a href="index.html#inscription" class="btn btn-ink btn-sm">S'inscrire</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="fiche-hero sec-down rp-hero">
+      <div class="container">
+        <p class="marker-tag">Remplacements</p>
+        <h1>Remplacements en <span class="hl-navy">radiologie</span></h1>
+        <p class="fiche-sub">Les cliniques et cabinets de Tunisie publient leurs besoins ; l'agent propose aussitôt la mission par e-mail aux <strong>radiologues spécialistes</strong> et <strong>résidents (R3 à R5)</strong> disponibles et compatibles. Réponse <span class="hl-red">en un clic</span>, sans mot de passe.</p>
+      </div>
+    </section>
+
+    <!-- Barre de démonstration : affichée seulement quand Supabase n'est pas configuré (remplacements/config.js) -->
+    <div class="rp-demo" id="rp-demo" hidden>
+      <div class="container rp-demo-inner">
+        <span class="rp-demo-titre">Démo <small>données fictives</small></span>
+        <select id="rp-demo-qui" aria-label="Se connecter comme (utilisateur fictif)"></select>
+        <span class="rp-demo-horloge" id="rp-demo-horloge"></span>
+        <button type="button" class="btn btn-outline btn-sm" data-demo="avancer" data-h="12" title="Avancer l'horloge de 12 heures et lancer l'agent">+12 h</button>
+        <button type="button" class="btn btn-outline btn-sm" data-demo="avancer" data-h="24" title="Avancer l'horloge d'un jour et lancer l'agent">+1 jour</button>
+        <button type="button" class="btn btn-ink btn-sm" data-demo="boite">Boîte d'envoi <span class="rp-demo-compte" id="rp-demo-compte" hidden></span></button>
+        <button type="button" class="btn btn-outline btn-sm" data-demo="reinitialiser" title="Revenir aux données de départ">Réinitialiser</button>
+      </div>
+    </div>
+
+    <section class="sec-up rp-page">
+      <div class="container">
+        <div class="rp-barre" id="rp-barre"></div>
+        <div id="rp-app"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="index.html" class="brand">
+        <img src="assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav aria-label="Liens de pied de page">
+        <a href="index.html#masterclass">Masterclass</a>
+        <a href="fiches-rapides.html">Fiches rapides</a>
+        <a href="comptes-rendus.html">Comptes rendus</a>
+        <a href="remplacements.html">Remplacements</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="index.html#inscription">Contact</a>
+      </nav>
+      <p class="copyright">© <span id="year"></span> RadiologicHub · Formation en radiologie d'urgence</p>
+    </div>
+  </footer>
+
+  <!-- Boîte d'envoi de la démonstration -->
+  <dialog class="rp-boite" id="rp-boite" aria-labelledby="rp-boite-titre">
+    <div class="rp-boite-inner">
+      <div class="rp-boite-tete">
+        <h2 id="rp-boite-titre">Boîte d'envoi (démonstration)</h2>
+        <button type="button" class="modal-close" data-demo="fermer" aria-label="Fermer">&times;</button>
+      </div>
+      <div class="rp-boite-corps">
+        <ul class="rp-boite-liste" id="rp-boite-liste"></ul>
+        <div class="rp-boite-vue" id="rp-boite-vue"></div>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="fiche.js?v=20261008235000"></script>
+  <script src="remplacements/noyau/referentiel.js?v=20261008235000"></script>
+  <script src="remplacements/noyau/regles.js?v=20261008235000"></script>
+  <script src="remplacements/noyau/recap.js?v=20261008235000"></script>
+  <script src="remplacements/noyau/jetons.js?v=20261008235000"></script>
+  <script src="remplacements/noyau/gabarits.js?v=20261008235000"></script>
+  <script src="remplacements/noyau/ics.js?v=20261008235000"></script>
+  <script src="remplacements/noyau/pdf.js?v=20261008235000"></script>
+  <script src="remplacements/noyau/contrat.js?v=20261008235000"></script>
+  <script src="remplacements/noyau/messagerie.js?v=20261008235000"></script>
+  <script src="remplacements/noyau/moteur.js?v=20261008235000"></script>
+  <script src="remplacements/noyau/depot-memoire.js?v=20261008235000"></script>
+  <script src="remplacements/config.js?v=20261008235000"></script>
+  <script src="remplacements/api-supabase.js?v=20261008235000"></script>
+  <script src="remplacements/api-demo.js?v=20261008235000"></script>
+  <script src="remplacements/api.js?v=20261008235000"></script>
+  <script src="remplacements/calendrier.js?v=20261008235000"></script>
+  <script src="remplacements/app.js?v=20261008235000"></script>
+  <script src="remplacements/demo.js?v=20261008235000"></script>
+</body>
+</html>
