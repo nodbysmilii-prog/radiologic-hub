@@ -1,0 +1,9 @@
+<title>Remplacement annulé — {{demande.structure}} le {{demande.date_courte}}</title>
+<body>
+<p style="margin:0 0 12px;">Bonjour,</p>
+<p style="margin:0 0 12px;"><strong style="color:#a8172d;">Le remplacement ci-dessous a été annulé par {{par}}.</strong>{{#remplacant}} ({{remplacant.nom_complet}}){{/remplacant}}</p>
+{{#motif}}<p style="margin:0 0 12px;">Motif indiqué : « {{motif}} »</p>{{/motif}}
+{{> recap}}
+{{#pour_structure}}{{#remise}}<p style="margin:0 0 12px;">Votre demande a été <strong>remise en ligne automatiquement</strong> : les remplaçants compatibles sont de nouveau contactés. Vous recevrez un e-mail dès que l'un d'eux sera disponible.</p>{{/remise}}{{/pour_structure}}
+{{^pour_structure}}<p style="margin:0 0 12px;">Un fichier d'agenda est joint pour retirer cet événement de votre agenda. Vos autres disponibilités restent enregistrées.</p>{{/pour_structure}}
+</body>

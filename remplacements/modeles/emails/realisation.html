@@ -1,0 +1,10 @@
+<title>Le remplacement du {{demande.date_courte}} a-t-il eu lieu ?</title>
+<body>
+<p style="margin:0 0 12px;">Bonjour,</p>
+<p style="margin:0 0 12px;">Merci de confirmer que ce remplacement{{#pour_structure}} avec {{remplacant.nom_complet}}{{/pour_structure}} a bien eu lieu. Cette réponse alimente le récapitulatif mensuel des remplacements et des honoraires.</p>
+{{> recap}}
+<p style="margin:0 0 16px;">
+  <a href="{{lien_oui}}" style="display:inline-block;margin:4px 8px 4px 0;padding:13px 22px;border-radius:12px;background:#548c6c;color:#ffffff;font-weight:800;font-size:16px;text-decoration:none;">Oui, il a eu lieu</a>
+  <a href="{{lien_non}}" style="display:inline-block;margin:4px 0;padding:11px 20px;border-radius:12px;border:2px solid #111114;background:#ffffff;color:#111114;font-weight:700;font-size:15px;text-decoration:none;">Non</a>
+</p>
+</body>

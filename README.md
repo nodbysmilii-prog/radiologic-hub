@@ -4,7 +4,7 @@
 
 🌐 **Site en ligne :** https://nodbysmilii-prog.github.io/radiologic-hub/
 
-> Dernière mise à jour du README : 7 octobre 2026
+> Dernière mise à jour du README : 8 octobre 2026
 
 ---
 
@@ -14,14 +14,15 @@
 2. [Fiches rapides disponibles](#fiches-rapides-disponibles)
 3. [Comptes rendus types et phrases automatiques](#comptes-rendus-types-et-phrases-automatiques)
 4. [Suivi oncologique (RECIST 1.1 / Lugano)](#suivi-oncologique-recist-11--lugano)
-5. [Charte graphique](#charte-graphique)
-6. [Code couleur des fiches](#code-couleur-des-fiches)
-7. [Organisation des fichiers](#organisation-des-fichiers)
-8. [Ajouter ou modifier du contenu](#ajouter-ou-modifier-du-contenu)
-9. [Mise en ligne](#mise-en-ligne)
-10. [Tests](#tests)
-11. [À faire / points en attente](#à-faire--points-en-attente)
-12. [Historique des modifications](#historique-des-modifications)
+5. [Remplacements (mise en relation)](#remplacements-mise-en-relation)
+6. [Charte graphique](#charte-graphique)
+7. [Code couleur des fiches](#code-couleur-des-fiches)
+8. [Organisation des fichiers](#organisation-des-fichiers)
+9. [Ajouter ou modifier du contenu](#ajouter-ou-modifier-du-contenu)
+10. [Mise en ligne](#mise-en-ligne)
+11. [Tests](#tests)
+12. [À faire / points en attente](#à-faire--points-en-attente)
+13. [Historique des modifications](#historique-des-modifications)
 
 ---
 
@@ -167,6 +168,20 @@ Page `suivi-oncologique.html` (lien depuis la page Comptes rendus : bouton « Su
 
 ---
 
+## Remplacements (mise en relation)
+
+Module en cours de construction : mise en relation de **remplaçants** (radiologues spécialistes, résidents R3 à R5) avec des **cliniques et cabinets** en Tunisie ; un agent envoie par e-mail les propositions (date, horaires, honoraires) et les confirmations.
+
+**Fait (étape 2 — backend)** :
+- **Noyau partagé** `remplacements/noyau/` (sans dépendance ; utilisé par le site, les fonctions serveur et les tests) : référentiels et formats tunisiens (24 gouvernorats, fuseau Africa/Tunis, dates JJ/MM/AAAA, montants en TND), règles de compatibilité (disponible à **toutes** les dates sur le bon créneau, gouvernorat accepté, compétences couvrant les modalités, profil accepté avec année minimale de résidanat, pas de mission en conflit ; honoraires souhaités affichés mais non filtrants), **agent** (`moteur.js` : sélection, propositions, réponses par liens à usage unique, choix en un clic ou attribution automatique au premier, confirmations avec .ics et contrat PDF, « poste pourvu », annulation et remise en ligne, relance et alerte après X heures, expiration, rappel la veille, confirmation de réalisation, récapitulatif mensuel, désinscription, journal de toutes les actions), agenda `.ics`, gabarits d'e-mails, générateur PDF et contrat.
+- **Modèles** dans des fichiers séparés : `remplacements/modeles/emails/*.html` (17 e-mails + mise en page commune aux couleurs du site) et `remplacements/modeles/contrat.md` (contrat de remplacement **à faire valider**).
+- **Base Supabase** `supabase/migrations/` : comptes (`profils`), remplaçants, structures (plusieurs comptes par structure, invitations), disponibilités, demandes, propositions, jetons (empreintes seulement), journal des actions et des e-mails, stockage privé des justificatifs ; droits d'accès par ligne (une structure ne voit un remplaçant qu'après sa réponse « disponible »).
+- **Fonctions serveur** `supabase/functions/` : `rp-agent` (actions des utilisateurs connectés), `rp-lien` (boutons des e-mails, sans connexion), `rp-taches` (toutes les 15 minutes) ; envoi par **Brevo** ou **Resend** (clés en variables d'environnement), prêt pour WhatsApp / SMS.
+
+**À venir** : interface (inscriptions, calendrier, demandes, tableaux de bord, contrat PDF), mode démonstration, entrée « Remplacements » dans le menu, mentions légales et consentement, guide d'installation.
+
+---
+
 ## Charte graphique
 
 Reprise des visuels RadiologicHub.
@@ -278,8 +293,13 @@ Site 100 % statique (HTML / CSS / JavaScript, aucune installation).
 Les règles de calcul du suivi oncologique, les recommandations Fleischner, la classification FIGO et l'arbre décisionnel des myomes, les schémas de la prostate et de l'utérus, et le traitement de la dictée vocale sont couverts par des tests unitaires (lanceur intégré de Node ≥ 18, **aucune dépendance**) :
 
 ```
-npm test        # ou : node --test tests/*.test.js
+npm test                  # ou : node --test tests/*.test.js
+npm run test:sql          # schéma Supabase du module Remplacements sur un PostgreSQL local (droits d'accès)
+npm run test:integration  # agent + base réelle (PostgreSQL + PostgREST, sous Deno) — variables POSTGREST_BIN et DENO_BIN
+npm run backend:preparer  # recopie le noyau et les modèles dans supabase/functions/_shared (avant déploiement)
 ```
+
+Module Remplacements : `tests/remplacements-*.test.js` couvrent les règles de compatibilité, les formats tunisiens, les gabarits et tous les modèles d'e-mails, l'agenda .ics, le PDF et le contrat, les liens sécurisés, et un **scénario complet** (demande réservée aux spécialistes, demande ouverte aux résidents, trois remplaçants compatibles, acceptation, choix, annulation, remise en ligne, attribution automatique, relance, rappel, réalisation, récapitulatif mensuel, désinscription, réponses simultanées).
 
 Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : aucune donnée patient dans le dépôt. Toute modification d'une règle ou d'un seuil (`suivi/seuils.js`, `regles/fleischner.js`, `regles/myome.js`) doit être accompagnée de ses tests.
 
@@ -307,6 +327,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 08/10/2026 | Module **Remplacements**, étape 2 (backend) : noyau partagé (règles de compatibilité, agent de mise en relation, .ics, gabarits, PDF, contrat), 17 modèles d'e-mails et modèle de contrat dans des fichiers séparés, base Supabase (tables, droits d'accès par ligne, stockage privé), fonctions serveur `rp-agent` / `rp-lien` / `rp-taches`, envoi Brevo ou Resend ; tests unitaires, scénario complet, tests SQL et d'intégration (PostgreSQL + PostgREST) |
 | 07/10/2026 | Myomes, affichage sur téléphone : la planche FIGO de la fiche n'est plus coupée (dessin centré à la largeur de l'écran, légendes en liste dessous) ; dans l'outil FIGO, la vue coronale passe sous la vue sagittale et le schéma tient en largeur, sans défilement horizontal |
 | 07/10/2026 | Myomes : le dessin FIGO reprend le style des schémas FIGO classiques fournis (gros corps utérin arrondi, cavité sombre, col et vagin en double tube, légendes en texte à côté de chaque myome, étiquettes de catégorie à gauche) — planche de la fiche et vue sagittale de l'outil FIGO, vue coronale gardée en médaillon pour les parois latérales ; transmural en lavande ; tests du clic sur les deux vues |
 | 07/10/2026 | Myomes : nouveau dessin FIGO inspiré des planches de référence — dans la fiche, **planche** sagittale légendée (un myome par type, catégories) ; dans l'outil FIGO, vue sagittale d'un **utérus antéversé** (paroi antérieure en bas, vessie) et rendu harmonisé (utérus rosé, cavité sombre, bulles colorées) ; nouvelle palette des catégories (sous-muqueux orange, interstitiel bleu-vert, sous-séreux bleu) ; tests du clic sur la vue sagittale et de la planche |

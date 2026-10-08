@@ -1,0 +1,11 @@
+<title>Remplacement confirmé — {{remplacant.nom_complet}} le {{demande.date_courte}}</title>
+<body>
+<p style="margin:0 0 12px;">Bonjour,</p>
+<p style="margin:0 0 12px;"><strong style="color:#548c6c;">C'est confirmé :</strong> {{remplacant.nom_complet}} assurera votre remplacement{{#auto}} (attribution automatique au premier remplaçant disponible){{/auto}}.</p>
+{{> recap}}
+<p style="margin:0 0 6px;font-weight:700;">Coordonnées du remplaçant</p>
+<p style="margin:0 0 14px;">{{remplacant.nom_complet}} — {{remplacant.statut}}<br>Affectation : {{remplacant.affectation}}<br>Compétences : {{remplacant.competences}}<br>Téléphone : <a href="tel:{{remplacant.telephone}}" style="color:#2b2a74;">{{remplacant.telephone}}</a><br>E-mail : <a href="mailto:{{remplacant.email}}" style="color:#2b2a74;">{{remplacant.email}}</a></p>
+<p style="margin:0 0 14px;">En pièces jointes : <strong>l'événement pour votre agenda</strong> (.ics) et <strong>le contrat de remplacement</strong> pré-rempli (PDF), à signer par les deux parties.</p>
+<p style="margin:0 0 14px;"><a href="{{lien_demande}}" style="display:inline-block;padding:11px 18px;border-radius:10px;background:#2b2a74;color:#ffffff;font-weight:800;text-decoration:none;">Voir la demande</a></p>
+<p style="margin:0 0 6px;font-size:13px;color:#55545f;">Besoin d'annuler ? <a href="{{lien_annuler}}" style="color:#a8172d;font-weight:700;">Annuler ce remplacement</a> — le remplaçant est prévenu immédiatement ; vous pourrez remettre la demande en ligne.</p>
+</body>

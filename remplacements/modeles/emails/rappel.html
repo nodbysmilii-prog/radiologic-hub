@@ -1,0 +1,8 @@
+<title>Rappel : remplacement demain — {{demande.structure}}</title>
+<body>
+<p style="margin:0 0 12px;">Bonjour,</p>
+<p style="margin:0 0 12px;">Rappel : ce remplacement commence <strong>demain</strong>.</p>
+{{> recap}}
+<p style="margin:0 0 6px;font-weight:700;">{{#pour_structure}}Votre remplaçant{{/pour_structure}}{{^pour_structure}}Votre contact sur place{{/pour_structure}}</p>
+<p style="margin:0 0 14px;">{{autre.nom}}{{#autre.statut}} — {{autre.statut}}{{/autre.statut}}{{#autre.contact}}<br>Contact : {{autre.contact}}{{/autre.contact}}{{#autre.adresse}}<br>{{autre.adresse}}{{/autre.adresse}}<br>Téléphone : <a href="tel:{{autre.telephone}}" style="color:#2b2a74;">{{autre.telephone}}</a><br>E-mail : <a href="mailto:{{autre.email}}" style="color:#2b2a74;">{{autre.email}}</a></p>
+</body>

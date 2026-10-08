@@ -1,0 +1,14 @@
+<title>{{#relance}}Rappel — {{/relance}}{{#remise}}De nouveau disponible — {{/remise}}Remplacement le {{demande.date_courte}} — {{demande.structure}} ({{demande.ville}})</title>
+<body>
+<p style="margin:0 0 12px;">Bonjour {{remplacant.nom_complet}},</p>
+{{#remise}}<p style="margin:0 0 12px;">Ce remplacement est <strong>de nouveau disponible</strong> : le remplacement prévu vient d'être annulé.</p>{{/remise}}
+{{#relance}}<p style="margin:0 0 12px;">Petit rappel : cette structure n'a pas encore trouvé de remplaçant.</p>{{/relance}}
+<p style="margin:0 0 4px;">Une structure cherche un remplaçant qui correspond à votre profil et à vos disponibilités :</p>
+{{> recap}}
+<p style="margin:0 0 10px;font-weight:700;">Répondez en un clic, sans vous connecter :</p>
+<p style="margin:0 0 16px;">
+  <a href="{{lien_oui}}" style="display:inline-block;margin:4px 8px 4px 0;padding:14px 22px;border-radius:12px;background:#548c6c;color:#ffffff;font-weight:800;font-size:16px;text-decoration:none;">Je suis disponible</a>
+  <a href="{{lien_non}}" style="display:inline-block;margin:4px 0;padding:12px 20px;border-radius:12px;border:2px solid #111114;background:#ffffff;color:#111114;font-weight:700;font-size:15px;text-decoration:none;">Pas disponible</a>
+</p>
+<p style="margin:0 0 6px;font-size:13px;color:#55545f;">Chaque bouton ne sert qu'une fois. Si vous êtes disponible, la structure reçoit votre profil et confirme son choix : vous recevrez alors un e-mail de confirmation avec ses coordonnées.</p>
+</body>

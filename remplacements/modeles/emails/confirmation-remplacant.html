@@ -1,0 +1,11 @@
+<title>Remplacement confirmé — {{demande.structure}} le {{demande.date_courte}}</title>
+<body>
+<p style="margin:0 0 12px;">Bonjour {{destinataire.nom}},</p>
+<p style="margin:0 0 12px;"><strong style="color:#548c6c;">C'est confirmé :</strong> {{structure.nom}} vous a retenu(e) pour ce remplacement.</p>
+{{> recap}}
+<p style="margin:0 0 6px;font-weight:700;">Coordonnées de la structure</p>
+<p style="margin:0 0 14px;">{{structure.nom}} ({{structure.type}})<br>{{structure.adresse}}, {{structure.ville}} — {{structure.gouvernorat}}<br>Contact : {{structure.contact}}<br>Téléphone : <a href="tel:{{structure.telephone}}" style="color:#2b2a74;">{{structure.telephone}}</a><br>E-mail : <a href="mailto:{{structure.email}}" style="color:#2b2a74;">{{structure.email}}</a></p>
+<p style="margin:0 0 14px;">En pièces jointes : <strong>l'événement pour votre agenda</strong> (.ics) et <strong>le contrat de remplacement</strong> pré-rempli (PDF), à signer par les deux parties.</p>
+<p style="margin:0 0 14px;"><a href="{{lien_mission}}" style="display:inline-block;padding:11px 18px;border-radius:10px;background:#2b2a74;color:#ffffff;font-weight:800;text-decoration:none;">Voir la mission</a></p>
+<p style="margin:0 0 6px;font-size:13px;color:#55545f;">Un empêchement ? <a href="{{lien_annuler}}" style="color:#a8172d;font-weight:700;">Annuler ce remplacement</a> — la structure est prévenue immédiatement et la demande est remise en ligne.</p>
+</body>

@@ -1,0 +1,31 @@
+<!doctype html>
+<!-- Mise en page commune à tous les e-mails (ne pas renommer) : le corps de chaque
+     modèle est inséré à l'emplacement « contenu » ; couleurs du site RadiologicHub. -->
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{objet}}</title>
+</head>
+<body style="margin:0;padding:0;background:#f0f1f1;font-family:Montserrat,Arial,Helvetica,sans-serif;color:#2e2d3a;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f0f1f1;padding:20px 10px;">
+<tr><td align="center">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border:3px solid #111114;border-radius:18px;overflow:hidden;">
+    <tr><td style="background:#111114;padding:18px 22px;">
+      <span style="font-size:20px;font-weight:800;color:#ffffff;letter-spacing:.04em;">Radiologic<span style="color:#f2ab2f;">Hub</span></span>
+      <span style="display:block;font-size:11px;color:#c9c8e6;margin-top:3px;letter-spacing:.12em;text-transform:uppercase;">Remplacements en radiologie</span>
+    </td></tr>
+    <tr><td style="height:6px;line-height:6px;font-size:0;background-color:#84075e;background-image:linear-gradient(90deg,#f2ab2f,#d63f4c,#84075e,#2b2a74);">&nbsp;</td></tr>
+    <tr><td style="padding:24px 22px 10px;font-size:15px;line-height:1.55;">
+{{{contenu}}}
+    </td></tr>
+    <tr><td style="padding:14px 22px 22px;font-size:12px;line-height:1.5;color:#55545f;border-top:1px solid #e4e3ea;">
+      Message envoyé automatiquement par l'agent de remplacements RadiologicHub.<br>
+      <a href="{{url_espace}}" style="color:#2b2a74;">Mon espace</a> · <a href="{{url_mentions}}" style="color:#2b2a74;">Mentions légales et données personnelles</a>
+      {{#lien_desinscription}}<br><a href="{{lien_desinscription}}" style="color:#55545f;">Ne plus recevoir de propositions ni de récapitulatifs par e-mail</a>{{/lien_desinscription}}
+    </td></tr>
+  </table>
+</td></tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<title>{{nouveau.nom_complet}} est disponible pour votre remplacement du {{demande.date_courte}}</title>
+<body>
+<p style="margin:0 0 12px;">Bonjour,</p>
+<p style="margin:0 0 12px;"><strong>{{nouveau.nom_complet}}</strong> ({{nouveau.statut}}) est disponible pour votre demande de remplacement :</p>
+{{> recap}}
+<p style="margin:0 0 10px;font-weight:700;">Remplaçants disponibles ({{nombre}}) — choisissez en un clic :</p>
+{{#interesses}}
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 10px;border:2px solid {{#nouveau}}#548c6c{{/nouveau}}{{^nouveau}}#e4e3ea{{/nouveau}};border-radius:12px;">
+  <tr><td style="padding:12px 14px;font-size:14px;">
+    <strong style="font-size:15px;">{{nom_complet}}</strong>{{#favori}} <span style="color:#f2ab2f;">★ favori</span>{{/favori}}{{#nouveau}} <span style="color:#548c6c;font-weight:700;">nouveau</span>{{/nouveau}}<br>
+    <span style="color:#55545f;">{{statut}} — {{affectation}}</span><br>
+    Compétences : {{competences}}<br>
+    Honoraires souhaités (indicatifs) : {{honoraires_souhaites}}<br>
+    <a href="{{lien_choisir}}" style="display:inline-block;margin-top:10px;padding:11px 18px;border-radius:10px;background:#2b2a74;color:#ffffff;font-weight:800;text-decoration:none;">Choisir {{nom_complet}}</a>
+  </td></tr>
+</table>
+{{/interesses}}
+<p style="margin:12px 0 6px;font-size:13px;color:#55545f;">Les coordonnées du remplaçant vous sont envoyées dès que vous l'avez choisi. Vous pouvez aussi choisir depuis <a href="{{lien_demande}}" style="color:#2b2a74;">votre espace</a>.</p>
+</body>

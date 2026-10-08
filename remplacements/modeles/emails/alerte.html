@@ -1,0 +1,14 @@
+<title>Pas encore de remplaçant pour le {{demande.date_courte}}</title>
+<body>
+<p style="margin:0 0 12px;">Bonjour,</p>
+{{#contactes}}<p style="margin:0 0 12px;">Aucun des <strong>{{contactes}} remplaçant(s) contacté(s)</strong> ne s'est déclaré disponible depuis {{delai}} heures. Nous venons de les relancer.</p>{{/contactes}}
+{{^contactes}}<p style="margin:0 0 12px;">Aucun remplaçant inscrit ne correspond encore à cette demande (disponibilités, gouvernorat, compétences, profil). Elle reste en ligne et sera envoyée dès qu'un remplaçant correspondra.</p>{{/contactes}}
+{{> recap}}
+<p style="margin:0 0 6px;font-weight:700;">Pour élargir la recherche :</p>
+<ul style="margin:0 0 14px;padding-left:20px;">
+  <li>accepter les résidents, ou abaisser l'année minimale ;</li>
+  <li>revoir les honoraires ou les conditions (logement, transport, repas) ;</li>
+  <li>réduire les modalités demandées.</li>
+</ul>
+<p style="margin:0 0 6px;"><a href="{{lien_demande}}" style="display:inline-block;padding:11px 18px;border-radius:10px;background:#2b2a74;color:#ffffff;font-weight:800;text-decoration:none;">Voir la demande</a></p>
+</body>

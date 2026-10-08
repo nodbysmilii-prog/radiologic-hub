@@ -1,0 +1,14 @@
+# Configuration Supabase du projet RadiologicHub (module Remplacements).
+# Les autres réglages gardent leurs valeurs par défaut.
+project_id = "radiologic-hub"
+
+# Boutons des e-mails : accessibles sans connexion (jetons à usage unique)
+[functions.rp-lien]
+verify_jwt = false
+
+# Tâches planifiées : protégées par l'en-tête x-rp-secret
+[functions.rp-taches]
+verify_jwt = false
+
+[functions.rp-agent]
+verify_jwt = true
