@@ -153,6 +153,10 @@ try {
     assert.equal(admin(`select count(*) from rp_remplacants where id = '${R2.id}'`), '0');
     assert.equal(admin(`select count(*) from rp_propositions where remplacant_id = '${R2.id}'`), '0');
   });
+  verifier('suppression du compte du créateur d\'une structure : la structure reste, sans créateur', () => {
+    admin(`delete from auth.users where id = '${M2.id}'`);
+    assert.equal(admin(`select coalesce(cree_par::text, 'aucun') from rp_structures where id = '${S2}'`), 'aucun');
+  });
   console.log(`\n# pass ${ok}\n# fail 0`);
 } catch (e) {
   console.error(e.message);

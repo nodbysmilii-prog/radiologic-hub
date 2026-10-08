@@ -538,6 +538,7 @@
       creerDemande, selectionner, repondre, choisir, annuler, cloturer, confirmerRealisation,
       infosJeton, utiliserJeton, desinscrire, lienDesinscription,
       inscriptionRecue, validerInscription, refuserInscription, taches, recapitulatif, ErreurMetier,
+      envoyerCourriel: envoyer,                                // utilisé aussi par la Communauté (rappels de messages)
     };
   }
 

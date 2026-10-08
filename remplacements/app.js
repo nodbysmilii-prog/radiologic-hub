@@ -70,6 +70,10 @@
     catch (e) { toast(e.message || 'Une erreur est survenue.', 'ko'); return null; }
   }
 
+  /* Messagerie de la Communauté (même compte) : disponible en production seulement */
+  const GOOGLE = '<svg class="rp-google" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.7 13.3l7.9 6.1C12.5 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v9h12.4c-.5 2.9-2.2 5.3-4.6 6.9l7.4 5.7c4.3-4 6.9-9.9 6.9-17z"/><path fill="#FBBC05" d="M10.6 28.6A14.6 14.6 0 0 1 9.5 24c0-1.6.3-3.2.8-4.6l-7.9-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.7 10.7z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.2 0-11.5-4.1-13.4-9.9l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg>';
+  const lienMessage = (profilId, libelle = 'Message') => (api.mode === 'supabase' && profilId ? `<a class="rp-lien-btn" href="communaute.html#/messages/nouveau/${esc(profilId)}">${libelle}</a>` : '');
+
   /* ---------- Téléchargements : contrat PDF et agenda ---------- */
   const telecharger = (contenu, nom, type) => {
     const a = document.createElement('a');
@@ -151,8 +155,10 @@
       <h2>Connexion</h2>
       <p>Pas de mot de passe : saisissez votre adresse e-mail, vous recevez un <strong>lien de connexion</strong> valable une fois.</p>
       ${demo}
+      ${api.connexionGoogle ? `<button type="button" class="btn btn-outline btn-block rp-btn-google" data-act="google">${GOOGLE} Continuer avec Google</button><p class="rp-ou"><span>ou</span></p>` : ''}
       ${champ('E-mail', entree('email', '', { type: 'email', ph: 'prenom.nom@exemple.tn', attrs: ' autocomplete="email" required' }), { pour: 'f-email' })}
       <button class="btn btn-ink btn-block" type="submit">Recevoir mon lien de connexion</button>
+      <p class="rp-muted rp-centre">Même compte que pour la <a href="communaute.html">Communauté</a>.</p>
       <p class="rp-muted rp-centre">Pas encore inscrit ? <a href="#/inscription/remplacant">Remplaçant</a> · <a href="#/inscription/structure">Structure</a></p>
     </form>`;
   }
@@ -541,7 +547,7 @@
       <div class="rp-item-lien"><span class="rp-ligne-titre">${esc(rr.nom_complet)} <span class="rp-statut">${esc(rr.statut_court)}</span></span>
         <span class="rp-ligne-sous">${esc(rr.affectation)}</span><span class="rp-ligne-sous">${esc(rr.competences)}</span>
         <span class="rp-ligne-sous">Honoraires souhaités : ${esc(rr.honoraires_souhaites)}</span>
-        ${coordonnees ? `<span class="rp-ligne-sous"><a href="tel:${esc(rr.telephone)}">${esc(rr.telephone)}</a> · <a href="mailto:${esc(rr.email)}">${esc(rr.email)}</a></span>` : ''}</div>
+        ${coordonnees ? `<span class="rp-ligne-sous"><a href="tel:${esc(rr.telephone)}">${esc(rr.telephone)}</a> · <a href="mailto:${esc(rr.email)}">${esc(rr.email)}</a>${lienMessage(i.remplacant.id) ? ` · ${lienMessage(i.remplacant.id)}` : ''}</span>` : ''}</div>
       <div class="rp-item-pied"><button type="button" class="rp-etoile${i.favori ? ' is-actif' : ''}" data-act="favori" data-sid="${s.id}" data-rid="${i.remplacant.id}" aria-pressed="${i.favori}" title="Favori">★</button>${action}</div></article>`;
   }
 
@@ -561,7 +567,7 @@
     if (p.etat === 'interesse') h += '<div class="rp-bandeau is-en_attente">Vous vous êtes déclaré disponible : la structure choisit son remplaçant. Vous recevrez un e-mail de confirmation si elle vous retient.</div>';
     if (retenu) {
       const rs = RECAP.structure(s);
-      h += `<div class="rp-carte"><h3 class="rp-h">Coordonnées de la structure</h3><p>${esc(rs.nom)} (${esc(rs.type)})<br>${esc(rs.adresse)}, ${esc(rs.ville)} — ${esc(rs.gouvernorat)}<br>Contact : ${esc(rs.contact)}<br><a href="tel:${esc(rs.telephone)}">${esc(rs.telephone)}</a> · <a href="mailto:${esc(rs.email)}">${esc(rs.email)}</a></p>
+      h += `<div class="rp-carte"><h3 class="rp-h">Coordonnées de la structure</h3><p>${esc(rs.nom)} (${esc(rs.type)})<br>${esc(rs.adresse)}, ${esc(rs.ville)} — ${esc(rs.gouvernorat)}<br>Contact : ${esc(rs.contact)}<br><a href="tel:${esc(rs.telephone)}">${esc(rs.telephone)}</a> · <a href="mailto:${esc(rs.email)}">${esc(rs.email)}</a>${lienMessage(s.cree_par) ? ` · ${lienMessage(s.cree_par, 'Écrire au responsable')}` : ''}</p>
         <p class="rp-actions"><button type="button" class="btn btn-outline btn-sm" data-act="contrat" data-did="${d.id}">Contrat PDF</button><button type="button" class="btn btn-outline btn-sm" data-act="ics" data-did="${d.id}">Ajouter à l'agenda</button></p></div>`;
       if (d.etat === 'pourvue' && REG.debut(d) > maintenant()) h += `<details class="rp-plus rp-danger-zone"><summary>Je ne peux plus assurer ce remplacement</summary><p>La structure est prévenue immédiatement et la demande est remise en ligne.</p>${champ('Motif (facultatif)', '<input id="f-motif" maxlength="300">', { pour: 'f-motif' })}<button type="button" class="btn btn-outline btn-sm rp-danger" data-act="annuler" data-did="${d.id}">Annuler ce remplacement</button></details>`;
       if (fini && d.realisation_remplacant == null && d.etat !== 'non_realisee') h += `<div class="rp-carte"><p><strong>Le remplacement a-t-il eu lieu ?</strong></p><p class="rp-actions"><button type="button" class="btn btn-sm rp-oui" data-act="realisation" data-did="${d.id}" data-oui="1">Oui</button><button type="button" class="btn btn-outline btn-sm" data-act="realisation" data-did="${d.id}">Non</button></p></div>`;
@@ -723,6 +729,7 @@
   const motif = () => ($('#f-motif') || {}).value || '';
   const ACTIONS = {
     async deconnexion() { await api.deconnexion(); S = null; barre(); location.hash = '#/'; },
+    async google() { await essayer(() => api.connexionGoogle()); },
     role(b) { vue.role = b.dataset.role; mem.ecrire('role', vue.role); location.hash = '#/espace'; afficher(); },
     async repondre(b) {
       b.disabled = true;

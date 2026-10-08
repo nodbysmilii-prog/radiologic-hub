@@ -1,10 +1,10 @@
 {
   "name": "radiologic-hub",
   "private": true,
-  "description": "Site RadiologicHub (statique) — tests des règles de calcul, du module Remplacements et de son schéma Supabase.",
+  "description": "Site RadiologicHub (statique) — tests des règles de calcul, des modules Remplacements et Communauté et de leur schéma Supabase.",
   "scripts": {
     "test": "node --test tests/*.test.js",
-    "test:sql": "node tests/sql/rls.js",
+    "test:sql": "node tests/sql/rls.js && node tests/sql/rls-reseau.js",
     "test:integration": "node tests/sql/integration.js",
     "backend:preparer": "node scripts/preparer-backend.js"
   }

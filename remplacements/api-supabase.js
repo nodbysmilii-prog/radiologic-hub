@@ -82,6 +82,10 @@
       ok(await sb.auth.signInWithOtp({ email: String(email).trim(), options: { emailRedirectTo: retour(), shouldCreateUser: true } }));
       return { ok: true, lienEnvoye: true };
     },
+    async connexionGoogle() {
+      ok(await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: retour() } }));
+      return { ok: true, redirection: true };
+    },
     async deconnexion() { await sb.auth.signOut(); },
     /* Au retour du lien magique : crée l'inscription préparée avant la connexion */
     async finaliserInscription() {

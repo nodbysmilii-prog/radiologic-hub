@@ -262,7 +262,8 @@ begin
     end if;
     if tg_table_name = 'rp_structures' then
       if tg_op = 'INSERT' then new.cree_par := auth.uid(); new.desinscrit := false;
-      else new.cree_par := old.cree_par; end if;
+      -- seule exception : « on delete set null » quand le compte du créateur est supprimé (action de clé étrangère)
+      else new.cree_par := case when new.cree_par is null and pg_trigger_depth() > 1 then null else old.cree_par end; end if;
     end if;
   end if;
   return new;

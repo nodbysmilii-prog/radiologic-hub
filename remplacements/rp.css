@@ -78,6 +78,10 @@
   font-family: var(--font-marker); font-weight: 400; font-size: 1rem;
 }
 .rp-deja { margin: 26px 0 0; text-align: center; font-weight: 700; }
+.btn.rp-btn-google { text-transform: none; letter-spacing: 0; font-size: .92rem; gap: 10px; }
+.rp-google { width: 20px; height: 20px; }
+.rp-ou { display: flex; align-items: center; gap: 10px; margin: 14px 0; font-size: .74rem; font-weight: 800; color: var(--muted); text-transform: uppercase; }
+.rp-ou::before, .rp-ou::after { content: ""; flex: 1; height: 2px; background: rgba(0, 0, 0, .12); }
 .rp-donnees { margin: 18px 0 0; font-size: .8rem; }
 
 /* ---------- Formulaires ---------- */

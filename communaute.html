@@ -3,17 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Réponse — Remplacements — RadiologicHub</title>
-  <meta name="description" content="Réponse à une proposition de remplacement en radiologie (RadiologicHub).">
-  <meta name="robots" content="noindex">
-  <meta name="referrer" content="no-referrer">
+  <title>Communauté — RadiologicHub</title>
+  <meta name="description" content="Communauté RadiologicHub : le réseau des radiologues. Publiez vos cas cliniques anonymisés, échangez avec vos confrères par messagerie, trouvez des remplacements.">
   <link rel="icon" type="image/svg+xml" href="assets/emblem.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=20261009001500">
   <link rel="stylesheet" href="fiche.css?v=20261009001500">
-  <link rel="stylesheet" href="remplacements/rp.css?v=20261009001500">
+  <link rel="stylesheet" href="reseau/rs.css?v=20261009001500">
 </head>
 <body>
 
@@ -27,8 +25,8 @@
         <a href="index.html#masterclass">Masterclass</a>
         <a href="fiches-rapides.html">Fiches rapides</a>
         <a href="comptes-rendus.html">Comptes rendus</a>
-        <a href="remplacements.html" class="is-current">Remplacements</a>
-        <a href="communaute.html">Communauté</a>
+        <a href="remplacements.html">Remplacements</a>
+        <a href="communaute.html" class="is-current">Communauté</a>
         <a href="index.html#tarifs">Tarifs</a>
         <a href="index.html#inscription" class="btn btn-ink btn-sm">S'inscrire</a>
       </nav>
@@ -38,12 +36,22 @@
     </div>
   </header>
 
-  <main>
-    <section class="sec-up rp-page rp-page-reponse">
-      <div class="container">
-        <div id="rp-reponse" aria-live="polite"></div>
+  <main class="rs-page">
+    <!-- Barre de démonstration : affichée seulement quand Supabase n'est pas configuré (remplacements/config.js) -->
+    <div class="rs-demo" id="rs-demo" hidden>
+      <div class="rs-demo-in">
+        <span class="rs-demo-titre">Démo <small>membres et cas fictifs</small></span>
+        <select id="rs-demo-qui" aria-label="Se connecter comme (membre fictif)"></select>
+        <button type="button" class="btn btn-outline btn-sm" data-demo="reinitialiser" title="Revenir aux données de départ">Réinitialiser</button>
+        <p class="rs-demo-note">Changez de membre pour voir chaque rôle ; les membres fictifs répondent automatiquement aux messages.</p>
       </div>
-    </section>
+    </div>
+    <div class="rs-barre" id="rs-barre"></div>
+    <div class="rs-shell">
+      <nav class="rs-nav" id="rs-nav" aria-label="Communauté" hidden></nav>
+      <div class="rs-main" id="rs-app"></div>
+      <aside class="rs-cote" id="rs-cote" aria-label="Confrères"></aside>
+    </div>
   </main>
 
   <footer class="site-footer">
@@ -66,21 +74,15 @@
   </footer>
 
   <script src="fiche.js?v=20261009001500"></script>
-  <script src="remplacements/noyau/referentiel.js?v=20261009001500"></script>
-  <script src="remplacements/noyau/regles.js?v=20261009001500"></script>
-  <script src="remplacements/noyau/recap.js?v=20261009001500"></script>
-  <script src="remplacements/noyau/jetons.js?v=20261009001500"></script>
-  <script src="remplacements/noyau/gabarits.js?v=20261009001500"></script>
-  <script src="remplacements/noyau/ics.js?v=20261009001500"></script>
-  <script src="remplacements/noyau/pdf.js?v=20261009001500"></script>
-  <script src="remplacements/noyau/contrat.js?v=20261009001500"></script>
-  <script src="remplacements/noyau/messagerie.js?v=20261009001500"></script>
-  <script src="remplacements/noyau/moteur.js?v=20261009001500"></script>
-  <script src="remplacements/noyau/depot-memoire.js?v=20261009001500"></script>
+  <script src="reseau/noyau/regles.js?v=20261009001500"></script>
+  <script src="reseau/noyau/confidentialite.js?v=20261009001500"></script>
   <script src="remplacements/config.js?v=20261009001500"></script>
-  <script src="remplacements/api-supabase.js?v=20261009001500"></script>
-  <script src="remplacements/api-demo.js?v=20261009001500"></script>
-  <script src="remplacements/api.js?v=20261009001500"></script>
-  <script src="remplacements/reponse.js?v=20261009001500"></script>
+  <script src="reseau/api-supabase.js?v=20261009001500"></script>
+  <script src="reseau/api-demo.js?v=20261009001500"></script>
+  <script src="reseau/api.js?v=20261009001500"></script>
+  <script src="reseau/images.js?v=20261009001500"></script>
+  <script src="reseau/ui.js?v=20261009001500"></script>
+  <script src="reseau/app.js?v=20261009001500"></script>
+  <script src="reseau/demo.js?v=20261009001500"></script>
 </body>
 </html>

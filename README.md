@@ -1,6 +1,6 @@
 # RadiologicHub
 
-**RadiologicHub** est le site des masterclass de **radiologie d'urgence** : des formations par spécialité (neuro, digestif, thorax, polytraumatisé, vasculaire, pédiatrie), des **fiches rapides** de révision, des **cas cliniques annotés** et un outil de **comptes rendus types** avec phrases automatiques.
+**RadiologicHub** est le site des masterclass de **radiologie d'urgence** : des formations par spécialité (neuro, digestif, thorax, polytraumatisé, vasculaire, pédiatrie), des **fiches rapides** de révision, des **cas cliniques annotés**, un outil de **comptes rendus types** avec phrases automatiques, un **réseau de confrères** (Communauté : profils, cas partagés, messagerie) et la **mise en relation pour les remplacements**.
 
 🌐 **Site en ligne :** https://nodbysmilii-prog.github.io/radiologic-hub/
 
@@ -15,14 +15,15 @@
 3. [Comptes rendus types et phrases automatiques](#comptes-rendus-types-et-phrases-automatiques)
 4. [Suivi oncologique (RECIST 1.1 / Lugano)](#suivi-oncologique-recist-11--lugano)
 5. [Remplacements (mise en relation)](#remplacements-mise-en-relation)
-6. [Charte graphique](#charte-graphique)
-7. [Code couleur des fiches](#code-couleur-des-fiches)
-8. [Organisation des fichiers](#organisation-des-fichiers)
-9. [Ajouter ou modifier du contenu](#ajouter-ou-modifier-du-contenu)
-10. [Mise en ligne](#mise-en-ligne)
-11. [Tests](#tests)
-12. [À faire / points en attente](#à-faire--points-en-attente)
-13. [Historique des modifications](#historique-des-modifications)
+6. [Communauté (réseau des radiologues)](#communauté-réseau-des-radiologues)
+7. [Charte graphique](#charte-graphique)
+8. [Code couleur des fiches](#code-couleur-des-fiches)
+9. [Organisation des fichiers](#organisation-des-fichiers)
+10. [Ajouter ou modifier du contenu](#ajouter-ou-modifier-du-contenu)
+11. [Mise en ligne](#mise-en-ligne)
+12. [Tests](#tests)
+13. [À faire / points en attente](#à-faire--points-en-attente)
+14. [Historique des modifications](#historique-des-modifications)
 
 ---
 
@@ -34,7 +35,7 @@
 |---|---|
 | **Accueil** | Accroche « La radiologie d'urgence, cas par cas », compteurs animés, carte « Cas express » |
 | **Masterclass** | 6 fiches de masterclass filtrables (Essentiel / Avancé), chacune avec une fenêtre de détail (objectifs, thèmes, format) |
-| **Cas du jour** | Mini-quiz interactif sur 3 cas (striatopathie diabétique, hernie d'Amyand, sarcome de l'artère pulmonaire) avec score |
+| **Cas du jour** | Mini-quiz interactif sur 3 cas (striatopathie diabétique, hernie d'Amyand, sarcome de l'artère pulmonaire) avec score — accessible depuis l'accueil et le pied de page (l'entrée du menu est devenue « Communauté ») |
 | **Fiche flash** | 4 cartes à retourner : hypersignal T1 des noyaux gris centraux |
 | **Le format** | 6 points forts présentés en « blobs » colorés |
 | **Une journée type** | Programme heure par heure (exemple : Neuro-urgences) |
@@ -64,9 +65,13 @@ Chaque fiche (`fiches/…html`) propose :
 
 Mise en relation des radiologues remplaçants (spécialistes, résidents R3 à R5) avec les cliniques et cabinets de Tunisie : inscriptions validées par l'administrateur, calendrier des disponibilités, demandes, propositions par e-mail avec réponse en un clic — voir la [section dédiée](#remplacements-mise-en-relation). Page de réponse aux boutons des e-mails : `remplacements-reponse.html`.
 
+### Communauté (`communaute.html`)
+
+Réseau social des radiologues : connexion **Google** (ou lien par e-mail), profil avec photo, publication de **cas anonymisés** sous son nom « Dr … » (comptes vérifiés), j'aime, commentaires, abonnements, **messagerie privée** en temps réel « à la Messenger », notifications, signalements et administration — voir la [section dédiée](#communauté-réseau-des-radiologues). Entrée **Communauté** du menu (à la place de « Cas du jour ») et du pied de page.
+
 ### Mentions légales (`mentions-legales.html`)
 
-Éditeur, hébergement, **protection des données personnelles** (loi organique n° 2004-63, INPDP ; ancre `#donnees`, liée depuis la case de consentement des inscriptions). Les passages entre crochets sont à compléter. Lien dans le pied de page de toutes les pages.
+Éditeur, hébergement, **protection des données personnelles** (loi organique n° 2004-63, INPDP ; ancre `#donnees`, liée depuis la case de consentement des inscriptions), données de la Communauté (`#communaute`) et **conditions d'utilisation** de la Communauté (`#conditions`, liées depuis la case de consentement du profil). Les passages entre crochets sont à compléter. Lien dans le pied de page de toutes les pages.
 
 ---
 
@@ -213,6 +218,28 @@ Page `remplacements.html` (entrée **Remplacements** du menu). Mise en relation 
 
 **Modèles à relire / faire valider** (fichiers séparés) : e-mails `remplacements/modeles/emails/*.html` (17 modèles + mise en page commune aux couleurs du site), contrat `remplacements/modeles/contrat.md` (**à faire valider**, passages entre crochets à compléter), e-mail de connexion `remplacements/modeles/supabase/lien-magique.html`.
 
+## Communauté (réseau des radiologues)
+
+Page `communaute.html` (entrée **Communauté** du menu), application d'une seule page pensée d'abord pour le téléphone (barre d'onglets en bas ; sur ordinateur, menu à gauche et suggestions de confrères à droite). Mêmes comptes, même base Supabase et même administrateur que les Remplacements.
+
+**Mode démonstration** (tant que `remplacements/config.js` est vide) : données **fictives** dans le navigateur (6 membres : Dr Amel TEST spécialiste vérifiée, Dr Sami EXEMPLE résident R4 vérifié, Ines DÉMO interne, Karim FICTIF étudiant, Leila ATTENTE en attente de vérification, Admin SITE ; 3 cas illustrés avec les visuels du site ; une conversation). Une barre « Démo » permet de **se connecter comme** n'importe quel membre et de **réinitialiser** ; la connexion Google est simulée ; les membres fictifs répondent automatiquement aux messages.
+
+| Fonction | Détail |
+|---|---|
+| **Compte** | « Continuer avec Google » (nom, prénom et photo repris du compte Google) ou lien par e-mail ; à la première connexion, profil à compléter : téléphone (**saisi, pas encore vérifié par SMS**, jamais affiché), statut (spécialiste, résident + année, médecin, interne, étudiant, manipulateur…), titre Dr / Pr, établissement, ville, gouvernorat, centres d'intérêt, présentation, photo ; case de **consentement** (conditions d'utilisation + protection des données) |
+| **Vérification** | Demande depuis « Mon profil » avec justificatif facultatif (stockage privé) ; l'administrateur valide → badge ✓ et titre « Dr » / « Pr » affichés ; **seuls les comptes vérifiés** (et les remplaçants validés du module Remplacements) peuvent publier des cas |
+| **Cas** | Titre, spécialité (code couleur du site), modalités, histoire clinique, question, réponse masquée (« Voir la réponse »), 1 à 10 images avec légendes ; **attestation d'anonymisation** obligatoire ; visibles **uniquement par les membres connectés** ; fil « Pour vous », « Abonnements », « Enregistrés », filtres par spécialité, recherche |
+| **Images** | Réencodées dans le navigateur avant l'envoi : **métadonnées retirées** (EXIF, XMP, IPTC, commentaires, date, appareil — signalées sur la vignette), **outil de masquage** des zones contenant un nom ou une date, nom de fichier remplacé |
+| **Alerte d'identité** | Pendant la saisie d'un cas, d'un commentaire ou d'un message : civilité + nom, « né(e) le », date de naissance, n° de dossier / IPP, CIN, téléphone → avertissement avant l'envoi |
+| **Échanges** | J'aime, commentaires, enregistrement, abonnements, notifications (j'aime, commentaire, abonné, nouveau cas d'un confrère suivi, vérification, cas masqué) |
+| **Messagerie** | Conversations privées à deux, en **temps réel** (Supabase Realtime), images jointes (privées, sans métadonnées), « Vu », non lus, suppression d'un message, **blocage** ; e-mail de rappel si un message reste non lu plus d'une heure (sans son contenu, désactivable, lien de désinscription) ; bouton « Message » depuis les Remplacements (carte du remplaçant, responsable d'une demande) |
+| **Modération** | Signalement d'un cas, d'un commentaire, d'un message ou d'un profil (identité de patient, erreur, contenu inapproprié, publicité, usurpation…) ; **masquage automatique** d'un cas après 3 signalements « identité de patient » ou 5 au total ; administration : vérifications, signalements (masquer / rétablir), suspension, statistiques |
+| **Compte supprimé** | Depuis « Mon profil » (taper SUPPRIMER) : profil, photo, cas, images, commentaires, abonnements et notifications effacés ; texte et images des messages effacés (l'interlocuteur voit « Message supprimé ») |
+
+**Sécurité** : tout est contrôlé par la base (droits d'accès par ligne et déclencheurs) : impossible de se déclarer vérifié soi-même, de publier sans vérification, de modifier les compteurs ou de lire une conversation dont on ne fait pas partie ; adresse e-mail et téléphone jamais exposés aux autres membres ; images des cas et des messages dans des espaces privés (adresses signées temporaires). **Aucune donnée patient** dans le dépôt : tests et démonstration n'utilisent que des cas fictifs.
+
+**Fichiers** : `reseau/noyau/regles.js` (statuts, spécialités, limites, validations, nom affiché, dates de Tunis — testé sous Node), `reseau/noyau/confidentialite.js` (alerte d'identité, nettoyage des métadonnées JPEG / PNG — testé sous Node), `reseau/api-supabase.js` / `reseau/api-demo.js` (même interface), `reseau/images.js` (réencodage, masques), `reseau/ui.js`, `reseau/app.js`, `reseau/rs.css`, `reseau/demo.js` ; base : `supabase/migrations/20261009090000_reseau.sql`. **Mise en service (Google, Realtime) : [`remplacements/INSTALLATION.md`](remplacements/INSTALLATION.md), étape 4 bis.**
+
 ---
 
 ## Charte graphique
@@ -283,7 +310,19 @@ radiologic-hub/
 │   └── schema.js           Schéma anatomique : placement automatique des lésions, couleurs, SVG
 ├── remplacements.html      Module Remplacements (mise en relation remplaçants / structures)
 ├── remplacements-reponse.html  Page des boutons des e-mails (réponse, choix, annulation, désinscription)
-├── mentions-legales.html   Mentions légales et protection des données (#donnees)
+├── mentions-legales.html   Mentions légales, protection des données (#donnees, #communaute) et conditions d'utilisation (#conditions)
+├── communaute.html         Communauté : réseau des radiologues (profils, cas, messagerie)
+├── reseau/
+│   ├── noyau/regles.js     Statuts, spécialités, limites, validations, nom affiché, dates (testé sous Node)
+│   ├── noyau/confidentialite.js  Alerte d'identité, retrait des métadonnées JPEG / PNG (testé sous Node)
+│   ├── api-supabase.js     Accès à Supabase (Google, base, stockage, temps réel)
+│   ├── api-demo.js         Mode démonstration (membres et cas fictifs dans le navigateur)
+│   ├── api.js              Choix de la source de données (même config.js que les Remplacements)
+│   ├── images.js           Réencodage des images, masquage de zones
+│   ├── ui.js               Avatars, icônes, fenêtres, éditeur de masques, visionneuse
+│   ├── app.js              Interface (fil, cas, publication, profils, messagerie, notifications, administration)
+│   ├── demo.js             Barre de démonstration
+│   └── rs.css              Styles de la Communauté
 ├── remplacements/
 │   ├── noyau/              Règles, agent, .ics, gabarits, PDF, contrat, dépôt en mémoire (partagés site / serveur / tests)
 │   ├── modeles/            Modèles d'e-mails (emails/*.html), contrat (contrat.md), lien magique (supabase/)
@@ -298,12 +337,12 @@ radiologic-hub/
 │   ├── rp.css              Styles du module et des mentions légales
 │   └── INSTALLATION.md     Mise en service (Supabase, Brevo, secrets, planification, administrateur)
 ├── supabase/
-│   ├── migrations/         Tables, droits d'accès par ligne, stockage des justificatifs
-│   ├── functions/          Fonctions serveur rp-agent, rp-lien, rp-taches (+ _shared, généré en partie)
+│   ├── migrations/         Remplacements (rp_*) puis Communauté (rs_* : membres, cas, messagerie, notifications, signalements, stockage, temps réel)
+│   ├── functions/          Fonctions serveur rp-agent, rp-lien, rp-taches (+ _shared, généré en partie ; _shared/reseau.ts : rappels des messages non lus)
 │   ├── sql/planification.sql  Tâche planifiée (pg_cron) et déclaration de l'administrateur
 │   └── config.toml         Réglages des fonctions
 ├── scripts/preparer-backend.js  Recopie le noyau et les modèles vers supabase/functions/_shared
-├── tests/                  Tests unitaires (node --test), cas fictifs uniquement ; tests/sql : base et intégration
+├── tests/                  Tests unitaires (node --test), cas fictifs uniquement ; tests/sql : base et intégration ; tests/fixtures : images fictives porteuses de métadonnées
 ├── package.json            « npm test » (aucune dépendance)
 └── assets/
     ├── logo-radiologichub.png, emblem.svg, emblem-light.svg
@@ -329,11 +368,14 @@ radiologic-hub/
 | Remplacements : texte d'un e-mail | `remplacements/modeles/emails/<nom>.html` (titre = objet ; `{{variable}}`), puis `npm run backend:preparer` et redéploiement des fonctions |
 | Remplacements : contrat | `remplacements/modeles/contrat.md` (syntaxe expliquée en tête du fichier) |
 | Remplacements : gouvernorats, compétences, équipements, types | `remplacements/noyau/referentiel.js` |
+| Communauté : statuts, spécialités, modalités, motifs de signalement, limites | `reseau/noyau/regles.js` (et les contraintes correspondantes de `supabase/migrations/20261009090000_reseau.sql`) |
+| Communauté : détection d'identité patient | `reseau/noyau/confidentialite.js` (fonction `identite`), avec ses tests dans `tests/reseau.test.js` |
+| Communauté : e-mail de rappel des messages | `remplacements/modeles/emails/message-non-lu.html`, puis `npm run backend:preparer` et redéploiement de `rp-taches` |
 | Style des formules du service | Titre en capitales, `TECHNIQUE :`, `RÉSULTAT :` (ou `COMPTE-RENDU :`), une constatation par ligne précédée de `• `, `AU TOTAL :` / `CONCLUSION :` |
 
 **Images médicales :** toujours **anonymisées** (aucun nom, date, n° de dossier, ni texte incrusté). Le site et le dépôt sont publics.
 
-**Cache :** après une modification de `styles.css`, `fiche.css`, `script.js`, `fiche.js`, `cr.css`, `cr.js`, `cr-data.js`, `cr-tools.js`, `cr-tools.css` ou d'un fichier de `remplacements/`, changer le numéro `?v=…` dans les liens des pages HTML pour forcer les navigateurs à recharger les fichiers.
+**Cache :** après une modification de `styles.css`, `fiche.css`, `script.js`, `fiche.js`, `cr.css`, `cr.js`, `cr-data.js`, `cr-tools.js`, `cr-tools.css` ou d'un fichier de `remplacements/` ou de `reseau/`, changer le numéro `?v=…` dans les liens des pages HTML pour forcer les navigateurs à recharger les fichiers.
 
 ---
 
@@ -343,7 +385,7 @@ Site 100 % statique (HTML / CSS / JavaScript, aucune installation).
 
 - **En ligne** : GitHub Pages, branche `claude/radiologichub-website-ss89g9`, dossier racine. Chaque modification poussée est en ligne en 1 à 2 minutes.
 - **En local** : ouvrir `index.html` dans un navigateur. Pour le module Remplacements (modèles d'e-mails chargés par le réseau), passer par un petit serveur : `python3 -m http.server` puis `http://localhost:8000/remplacements.html`.
-- **Module Remplacements en production** : nécessite un projet Supabase et un compte Brevo ou Resend — voir [`remplacements/INSTALLATION.md`](remplacements/INSTALLATION.md). Sans configuration, la page fonctionne en mode démonstration.
+- **Modules Remplacements et Communauté en production** : nécessitent un projet Supabase, un compte Brevo ou Resend et, pour la Communauté, un identifiant Google OAuth — voir [`remplacements/INSTALLATION.md`](remplacements/INSTALLATION.md). Sans configuration, les deux pages fonctionnent en mode démonstration.
 
 ---
 
@@ -353,7 +395,7 @@ Les règles de calcul du suivi oncologique, les recommandations Fleischner, la c
 
 ```
 npm test                  # ou : node --test tests/*.test.js
-npm run test:sql          # schéma Supabase du module Remplacements sur un PostgreSQL local (droits d'accès)
+npm run test:sql          # schémas Supabase des Remplacements et de la Communauté sur un PostgreSQL local (droits d'accès)
 npm run test:integration  # agent + base réelle (PostgreSQL + PostgREST, sous Deno) — variables POSTGREST_BIN et DENO_BIN
 npm run backend:preparer  # recopie le noyau et les modèles dans supabase/functions/_shared (avant déploiement)
 ```
@@ -361,6 +403,8 @@ npm run backend:preparer  # recopie le noyau et les modèles dans supabase/funct
 Module Remplacements : `tests/remplacements-*.test.js` couvrent les règles de compatibilité, les formats tunisiens, les gabarits et tous les modèles d'e-mails, l'agenda .ics, le PDF et le contrat, les liens sécurisés, et un **scénario complet** (demande réservée aux spécialistes, demande ouverte aux résidents, trois remplaçants compatibles, acceptation, choix, annulation, remise en ligne, attribution automatique, relance, rappel, réalisation, récapitulatif mensuel, désinscription, réponses simultanées).
 
 Interface du module vérifiée dans un navigateur (Chromium, téléphone 390 px et ordinateur 1366 px, sans débordement) sur deux scénarios fictifs : demande réservée aux spécialistes (réponse par le bouton de l'e-mail, lien rouvert = « déjà enregistré », choix, contrat PDF, annulation par le remplaçant et remise en ligne, calendrier, validation et refus par l'administrateur, +24 h → relance, inscription avec erreurs puis valide) et demande ouverte aux résidents (3 remplaçants contactés, 2 disponibles, choix depuis l'e-mail, « poste pourvu », annulation par la structure depuis son e-mail et remise en ligne, boîte d'envoi et pièces jointes). Client Supabase vérifié avec la bibliothèque officielle face à un serveur simulé (inscription avant connexion puis lien magique, réponse par la fonction `rp-agent`, disponibilités, espace structure). Comptes rendus vérifiés inchangés.
+
+Communauté : `tests/reseau.test.js` couvre les règles (nom affiché, statuts, validations, dates), l'alerte d'identité et le **retrait des métadonnées** sur deux images fictives (`tests/fixtures/`, EXIF « Patient TEST-0001 ») ; `tests/sql/rls-reseau.js` vérifie sur une vraie base (18 vérifications) : compte Google, impossibilité de se vérifier soi-même, profils sans e-mail ni téléphone, publication réservée aux vérifiés et aux remplaçants validés, champs protégés, compteurs et notifications, messagerie (non lus, suppression d'un message sans trace dans l'aperçu, blocage), signalements et masquage automatique, suspension, droits sur les fichiers, rappels e-mail, suppression du compte (contenu des messages effacé, aperçu de la conversation compris) ; le test d'intégration envoie un rappel de message non lu une seule fois, sans son contenu. Interface vérifiée dans Chromium (390 px et 1366 px, sans débordement) : visiteur → Google simulé → profil, fil, j'aime, commentaire, publication refusée puis demande de vérification, messagerie avec réponse, alerte d'identité, administration ; publication avec image fictive (métadonnées retirées, nom masqué), signalements → masquage → rétablissement par l'administrateur, blocage, recherche. Comptes rendus et Remplacements vérifiés inchangés.
 
 Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : aucune donnée patient dans le dépôt. Toute modification d'une règle ou d'un seuil (`suivi/seuils.js`, `regles/fleischner.js`, `regles/myome.js`) doit être accompagnée de ses tests.
 
@@ -383,6 +427,9 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 - [ ] **Remplacements — mise en service** : créer le projet Supabase et le compte Brevo, régler les secrets, déployer, planifier, déclarer l'administrateur, renseigner `config.js` (guide : `remplacements/INSTALLATION.md`).
 - [ ] **Remplacements — juridique** : compléter `mentions-legales.html` (passages entre crochets), déclaration auprès de l'INPDP et autorisation de transfert (hébergement hors de Tunisie) ; faire valider le contrat `remplacements/modeles/contrat.md`.
 - [ ] **Remplacements — plus tard** : WhatsApp / SMS (transport à écrire), export comptable du récapitulatif, notation des remplacements.
+- [ ] **Communauté — mise en service** : appliquer la seconde migration, créer l'identifiant **Google OAuth** (console Google Cloud) et l'activer dans Supabase, ajouter `communaute.html` aux adresses de redirection, vérifier le temps réel (guide : `remplacements/INSTALLATION.md`, étape 4 bis).
+- [ ] **Communauté — juridique** : faire relire les conditions d'utilisation (`mentions-legales.html#conditions`) et la section des données ; déclarer ce traitement à l'INPDP ; fixer les durées entre crochets (signalements, justificatifs).
+- [ ] **Communauté — plus tard** : vérification du téléphone par SMS (colonne `telephone_verifie` prête), suppression automatique des justificatifs après décision, purge des anciens signalements, conversations de groupe, notifications push, import des cas de la page Instagram (choix de la méthode en attente).
 - [ ] **Nom de domaine** `www.radiologichub.com` : à acheter et configurer (DNS + réglages GitHub Pages), puis mettre à jour le lien « Site en ligne » ci-dessus.
 
 ---
@@ -391,6 +438,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 08/10/2026 | **Communauté** (réseau des radiologues) : page `communaute.html` — connexion Google ou par e-mail, profil avec photo et statut, vérification par l'administrateur (titre « Dr » / « Pr », publication réservée aux comptes vérifiés), publication de cas anonymisés (retrait des métadonnées des images, masquage de zones, alerte d'identité patient, attestation), fil, j'aime, commentaires, abonnements, notifications, **messagerie privée en temps réel** avec images, blocage, signalements et masquage automatique, administration, suppression du compte ; **mode démonstration** à membres fictifs ; base Supabase (`20261009090000_reseau.sql` : tables, droits d'accès par ligne, stockage, temps réel) ; rappel e-mail des messages non lus ; bouton Google et bouton « Message » dans les Remplacements ; menu : « Cas du jour » remplacé par « Communauté » (le quiz reste sur l'accueil et dans le pied de page) ; mentions légales : données de la Communauté et conditions d'utilisation ; guide d'installation (Google OAuth) ; correction (Remplacements) : la suppression du compte du créateur d'une structure n'échoue plus ; tests unitaires, SQL et d'intégration |
 | 08/10/2026 | Comptes rendus : **28 formules normales du service** ajoutées (TDM cérébrale, thoracique, angioscanner, TAP, cérébral + TAP, cervico-TAP, abdomino-pelvien, entéroscanner, uroscanners, massif facial, cone beam, rochers, rachis cervical et lombaire ; radios du rachis lombaire et de la cheville ; mammographie + échographie ; échographies mammaire, abdomino-pelvienne, rénale et vésico-prostatique, cervicale, de l'épaule ; doppler des TSA), sans signatures ni restes du patient précédent (champs `[ … ]`) ; nouvel examen « Mammographie », spécialités « ORL / tête et cou », « TAP / corps entier » et « Sein » |
 | 08/10/2026 | Module **Remplacements**, étapes 3 à 8 : page `remplacements.html` (entrée « Remplacements » ajoutée au menu et au pied de page de toutes les pages) — inscriptions remplaçant et structure avec consentement, calendrier des disponibilités, demande de remplacement, réponses et choix en un clic, annulation et remise en ligne, tableaux de bord remplaçant / structure / administrateur, contrat PDF et agenda .ics, honoraires ; page `remplacements-reponse.html` (boutons des e-mails, désinscription) ; **mode démonstration** à données fictives (changer d'utilisateur, avancer l'horloge, boîte d'envoi) ; page `mentions-legales.html` (protection des données, loi organique 2004-63) ; guide `remplacements/INSTALLATION.md` ; menu : passage en menu repliable sous 1140 px et espacement resserré pour loger la nouvelle entrée |
 | 08/10/2026 | Module **Remplacements**, étape 2 (backend) : noyau partagé (règles de compatibilité, agent de mise en relation, .ics, gabarits, PDF, contrat), 17 modèles d'e-mails et modèle de contrat dans des fichiers séparés, base Supabase (tables, droits d'accès par ligne, stockage privé), fonctions serveur `rp-agent` / `rp-lien` / `rp-taches`, envoi Brevo ou Resend ; tests unitaires, scénario complet, tests SQL et d'intégration (PostgreSQL + PostgREST) |

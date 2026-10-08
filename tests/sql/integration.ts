@@ -16,6 +16,7 @@ import '../../supabase/functions/_shared/noyau/contrat.js';
 import '../../supabase/functions/_shared/noyau/messagerie.js';
 import '../../supabase/functions/_shared/noyau/moteur.js';
 import { MODELES } from '../../supabase/functions/_shared/modeles.js';
+import { rappelsMessages } from '../../supabase/functions/_shared/reseau.ts';
 
 const RH = (globalThis as any).RHRemplacements;
 const ids = JSON.parse(Deno.env.get('RP_IDS') || '{}');
@@ -108,6 +109,19 @@ try {
   await verifier('journal des actions horodaté en base', async () => {
     const actions = new Set((await db.from('rp_journal').select('action')).data.map((e: any) => e.action));
     for (const a of ['publication', 'selection', 'reponse_disponible', 'choix', 'annulation', 'remise_en_ligne', 'rappel', 'realisation', 'recap_mensuel']) egal(actions.has(a), true, a);
+  });
+  await verifier('Communauté : rappel e-mail d\'un message non lu, une seule fois, sans son contenu', async () => {
+    for (const [id, prenom] of [[ids.R1, 'Un'], [ids.R2, 'Deux']]) await db.from('rs_membres').upsert({ id, prenom, nom: 'TEST', statut: 'specialiste' });
+    const c = (await db.from('rs_conversations').insert({}).select('id').single()).data.id;
+    const p = await db.from('rs_participants').insert([{ conversation_id: c, membre_id: ids.R1, lu_le: new Date(Date.now() - 3 * 3600e3).toISOString() }, { conversation_id: c, membre_id: ids.R2, lu_le: new Date().toISOString() }]);
+    egal(p.error, null, 'participants');
+    await db.from('rs_messages').insert({ conversation_id: c, auteur_id: ids.R2, texte: 'Contenu fictif confidentiel', cree_le: new Date(Date.now() - 2 * 3600e3).toISOString() });
+    egal(await rappelsMessages(agent, db, 'https://exemple.tn'), 1, 'un rappel');
+    const m = dernier('r1@exemple.tn', 'message-non-lu');
+    egal(m.objet, 'Deux TEST vous a écrit — Communauté RadiologicHub', 'objet');
+    egal(/communaute\.html#\/messages/.test(m.html) && !/Contenu fictif/.test(m.html), true, 'lien vers la messagerie, sans le contenu');
+    egal(/Ne plus recevoir/.test(m.html), true, 'lien de désinscription');
+    egal(await rappelsMessages(agent, db, 'https://exemple.tn'), 0, 'pas de second rappel');
   });
   await verifier('désinscription signée, enregistrée en base', async () => {
     const lien = [...dernier('r3@exemple.tn', 'recap-mensuel')?.html.matchAll(/href="([^"]+)"/g) ?? []].map(x => x[1]).find(u => u.includes('d=')) ||

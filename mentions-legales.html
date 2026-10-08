@@ -9,9 +9,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261008235900">
-  <link rel="stylesheet" href="fiche.css?v=20261008235900">
-  <link rel="stylesheet" href="remplacements/rp.css?v=20261008235900">
+  <link rel="stylesheet" href="styles.css?v=20261009001500">
+  <link rel="stylesheet" href="fiche.css?v=20261009001500">
+  <link rel="stylesheet" href="remplacements/rp.css?v=20261009001500">
 </head>
 <body>
 
@@ -26,7 +26,7 @@
         <a href="fiches-rapides.html">Fiches rapides</a>
         <a href="comptes-rendus.html">Comptes rendus</a>
         <a href="remplacements.html">Remplacements</a>
-        <a href="index.html#cas-du-jour">Cas du jour</a>
+        <a href="communaute.html">Communauté</a>
         <a href="index.html#tarifs">Tarifs</a>
         <a href="index.html#inscription" class="btn btn-ink btn-sm">S'inscrire</a>
       </nav>
@@ -49,7 +49,7 @@
       <div class="container">
         <article class="rp-carte rp-legal">
           <nav class="rp-legal-sommaire" aria-label="Sommaire">
-            <a href="#editeur">Éditeur</a> · <a href="#hebergement">Hébergement</a> · <a href="#donnees">Données personnelles</a> · <a href="#outils">Outils de comptes rendus</a> · <a href="#propriete">Propriété intellectuelle</a>
+            <a href="#editeur">Éditeur</a> · <a href="#hebergement">Hébergement</a> · <a href="#donnees">Données personnelles</a> · <a href="#communaute">Communauté</a> · <a href="#conditions">Conditions d'utilisation</a> · <a href="#outils">Outils de comptes rendus</a> · <a href="#propriete">Propriété intellectuelle</a>
           </nav>
 
           <h2 id="editeur">Éditeur du site</h2>
@@ -59,13 +59,14 @@
           <h2 id="hebergement">Hébergement</h2>
           <ul>
             <li><strong>Pages du site</strong> : [GitHub Pages — GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis] ou [autre hébergeur].</li>
-            <li><strong>Module Remplacements — base de données et connexion</strong> : Supabase, Inc. (région d'hébergement : [à préciser, par exemple Union européenne]).</li>
+            <li><strong>Modules Remplacements et Communauté — base de données, fichiers et connexion</strong> : Supabase, Inc. (région d'hébergement : [à préciser, par exemple Union européenne]).</li>
+            <li><strong>Connexion « Continuer avec Google »</strong> : Google LLC (authentification seulement ; Google ne reçoit pas les contenus publiés sur le site).</li>
             <li><strong>Envoi des e-mails</strong> : [Brevo — Sendinblue SAS, France] ou [Resend, États-Unis], selon la configuration retenue.</li>
           </ul>
 
           <h2 id="donnees">Protection des données personnelles</h2>
           <p>Les données personnelles sont traitées conformément à la <strong>loi organique n° 2004-63 du 27 juillet 2004</strong> portant sur la protection des données à caractère personnel. L'autorité de contrôle est l'<strong>Instance nationale de protection des données personnelles (INPDP)</strong>.</p>
-          <p class="rp-note">Formalités auprès de l'INPDP : [numéro et date du récépissé de déclaration — à compléter]. L'hébergement des données du module étant situé hors de Tunisie, [autorisation de transfert à l'étranger à obtenir ou à confirmer auprès de l'INPDP].</p>
+          <p class="rp-note">Formalités auprès de l'INPDP : [numéro et date du récépissé de déclaration — à compléter]. L'hébergement des données des modules Remplacements et Communauté étant situé hors de Tunisie, [autorisation de transfert à l'étranger à obtenir ou à confirmer auprès de l'INPDP].</p>
 
           <h3>Responsable du traitement</h3>
           <p>[Nom de l'éditeur], [adresse], [e-mail du responsable du traitement].</p>
@@ -104,6 +105,49 @@
           <h3>Sécurité et stockage local</h3>
           <p>Connexion sans mot de passe par lien à usage unique ; boutons des e-mails à usage unique, confirmés sur une page dédiée ; accès aux données limité par des règles d'accès par ligne dans la base ; clés secrètes conservées uniquement côté serveur. Le navigateur conserve localement la session de connexion et les brouillons ; aucun cookie publicitaire n'est utilisé. Les polices de caractères sont chargées depuis Google Fonts.</p>
 
+          <h2 id="communaute">Communauté (réseau des radiologues)</h2>
+          <h3>Finalité</h3>
+          <p>Permettre aux radiologues, résidents, internes, étudiants et manipulateurs de se créer un profil, de partager des cas d'imagerie <strong>anonymisés</strong> à visée pédagogique, de les commenter et d'échanger par messagerie privée ; faciliter la prise de contact pour les remplacements.</p>
+
+          <h3>Données collectées</h3>
+          <ul>
+            <li><strong>Connexion</strong> : par Google (nom, prénom, adresse e-mail et, si vous l'acceptez, photo du compte Google) ou par lien envoyé par e-mail. Aucun mot de passe n'est conservé par le site.</li>
+            <li><strong>Profil</strong> : nom, prénom, titre (Dr, Pr) affiché après vérification, statut et année de résidanat, établissement, ville, gouvernorat, centres d'intérêt, courte présentation, photo de profil (facultative).</li>
+            <li><strong>Téléphone</strong> : saisi à l'inscription, <strong>jamais affiché</strong> sur le profil ; il sert à l'administrateur pour la vérification et au module Remplacements. Il n'est pas encore vérifié par SMS.</li>
+            <li><strong>Vérification</strong> : justificatif de statut (carte professionnelle, attestation d'inscription…), visible par l'administrateur seulement, [supprimé après la décision].</li>
+            <li><strong>Contenus</strong> : cas publiés (texte et images), commentaires, mentions « j'aime », cas enregistrés, abonnements, messages privés et images jointes, notifications.</li>
+            <li><strong>Modération</strong> : signalements (auteur, motif, date), décisions de l'administrateur, blocages entre membres.</li>
+          </ul>
+
+          <h3>Visibilité</h3>
+          <ul>
+            <li>Les cas, commentaires et profils sont visibles <strong>uniquement par les membres connectés</strong>, jamais par les visiteurs ni par les moteurs de recherche.</li>
+            <li>L'adresse e-mail et le téléphone ne sont jamais affichés aux autres membres.</li>
+            <li>Les messages privés ne sont lisibles que par les deux participants. Ils sont protégés par les règles d'accès de la base mais <strong>ne sont pas chiffrés de bout en bout</strong> : n'y échangez aucune donnée patient.</li>
+            <li>L'administrateur peut consulter les contenus signalés pour les modérer.</li>
+          </ul>
+
+          <h3>Images et données de santé</h3>
+          <p>Avant l'envoi, le navigateur réencode chaque image et <strong>retire ses métadonnées</strong> (EXIF, XMP, IPTC, commentaires, date et appareil) ; il permet de masquer les zones contenant un nom ou une date. Une alerte s'affiche si le texte semble contenir une identité (nom précédé d'une civilité, date de naissance, numéro de dossier, CIN, téléphone). Ces aides ne remplacent pas la vérification de l'auteur : <strong>chaque publication engage son auteur</strong>, qui atteste que le cas est anonymisé.</p>
+
+          <h3>Base du traitement et conservation</h3>
+          <p>Le <strong>consentement</strong>, recueilli par une case à cocher lors de la création du profil. Les données sont conservées tant que le compte est actif. La suppression du compte (menu « Mon profil ») efface immédiatement le profil, la photo, les cas et leurs images, les commentaires, les « j'aime », les abonnements, les notifications, les signalements que vous avez faits, ainsi que le texte et les images de vos messages (votre interlocuteur voit seulement « Message supprimé »). Les signalements visant vos contenus sont conservés [durée à fixer, par exemple 1 an] pour le suivi de la modération.</p>
+
+          <h3>E-mails</h3>
+          <p>Un e-mail peut vous prévenir d'un message non lu (au plus une fois par message, sans en reproduire le contenu). Vous pouvez désactiver ces e-mails depuis votre profil ; chaque e-mail contient un <strong>lien de désinscription</strong>.</p>
+
+          <h2 id="conditions">Conditions d'utilisation de la Communauté</h2>
+          <ol>
+            <li><strong>Accès</strong> : la Communauté est réservée aux professionnels et étudiants du domaine de la santé. Un compte est personnel ; l'usurpation d'identité ou de titre entraîne la suppression du compte.</li>
+            <li><strong>Titre et vérification</strong> : le titre « Dr » ou « Pr » et le badge de vérification ne sont affichés qu'après contrôle par l'administrateur. Seuls les comptes vérifiés (et les remplaçants validés) peuvent publier des cas.</li>
+            <li><strong>Aucune donnée permettant d'identifier un patient</strong> : ni nom, ni date de naissance, ni numéro de dossier, ni visage, ni information rare permettant de le reconnaître, dans les cas, les images, les commentaires et les messages. Les images doivent être anonymisées avant publication.</li>
+            <li><strong>Contenus</strong> : les cas sont partagés à des fins d'enseignement et de discussion entre confrères. Ils ne constituent pas un avis médical et n'engagent pas RadiologicHub. Toute publicité, sollicitation commerciale ou propos irrespectueux est interdit.</li>
+            <li><strong>Secret professionnel et confraternité</strong> : les membres respectent le secret médical et les règles de déontologie. Les échanges restent courtois ; un membre peut en bloquer un autre.</li>
+            <li><strong>Signalement et modération</strong> : tout membre peut signaler un cas, un commentaire, un message ou un profil. Un cas est automatiquement masqué après plusieurs signalements, en attendant la décision de l'administrateur, qui peut masquer ou supprimer un contenu et suspendre un compte.</li>
+            <li><strong>Droits sur les contenus</strong> : l'auteur garde ses droits sur les cas qu'il publie et autorise leur affichage aux membres de la Communauté. Il peut les modifier ou les supprimer à tout moment.</li>
+            <li><strong>Responsabilité</strong> : chaque membre est responsable de ce qu'il publie. RadiologicHub fournit des outils d'anonymisation sans garantir l'absence d'erreur.</li>
+          </ol>
+
           <h2 id="outils">Outils de comptes rendus et de suivi</h2>
           <p>Les outils d'aide à la rédaction (calculateurs, comptes rendus, suivi oncologique) fonctionnent dans le navigateur : le texte saisi n'est pas envoyé sur un serveur. Les suivis utilisent un identifiant pseudonymisé ; ne saisissez pas d'identité patient. La dictée passe par le service du navigateur : ne dictez pas d'identité patient.</p>
           <p><strong>Aide au calcul — résultat à valider par le radiologue.</strong></p>
@@ -126,6 +170,7 @@
         <a href="index.html#masterclass">Masterclass</a>
         <a href="fiches-rapides.html">Fiches rapides</a>
         <a href="comptes-rendus.html">Comptes rendus</a>
+        <a href="communaute.html">Communauté</a>
         <a href="remplacements.html">Remplacements</a>
         <a href="mentions-legales.html">Mentions légales</a>
         <a href="index.html#inscription">Contact</a>
@@ -134,6 +179,6 @@
     </div>
   </footer>
 
-  <script src="fiche.js?v=20261008235900"></script>
+  <script src="fiche.js?v=20261009001500"></script>
 </body>
 </html>
