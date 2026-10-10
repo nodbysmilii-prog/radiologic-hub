@@ -212,6 +212,7 @@
     const f = fieldsIn(from, to)[0];
     if (!f) return false;
     editor.setSelectionRange(f[0], f[1]);
+    showChoices();
     return true;
   };
 
@@ -223,6 +224,7 @@
     editor.focus({ preventScroll: true });
     editor.setSelectionRange(f[0], f[1]);
     revealCaret();
+    showChoices();
     return true;
   };
 
@@ -244,9 +246,16 @@
   /* ---------- Bulle de suggestions ---------- */
   const pop = $('#cr-pop');
   const list = $('#cr-sug-list');
-  const sug = { items: [], active: 0, token: null, engaged: false, dismissed: -1 };
+  const help = $('.cr-pop-help', pop);
+  const HELP = {
+    phrase: help.innerHTML,
+    choix: 'Clic ou <kbd>↑</kbd><kbd>↓</kbd> + <kbd>Entrée</kbd> choisir · <kbd>Tab</kbd> champ suivant · <kbd>Échap</kbd> fermer',
+  };
+  // mode « phrase » : mots-clés proposés ; mode « choix » : options d'un champ [a / b / c]
+  const sug = { mode: 'phrase', items: [], active: 0, token: null, engaged: false, dismissed: -1 };
 
   const closePop = () => {
+    sug.mode = 'phrase';
     sug.items = [];
     sug.token = null;
     sug.engaged = false;
@@ -257,11 +266,17 @@
   };
 
   const renderPop = () => {
-    list.innerHTML = sug.items.map((p, i) => `
+    const choix = sug.mode === 'choix';
+    list.innerHTML = sug.items.map((p, i) => choix ? `
+      <li class="cr-sug cr-choix${i === sug.active ? ' is-active' : ''}" role="option" id="cr-sug-${i}" aria-selected="${i === sug.active}" data-i="${i}">
+        <span class="cr-choix-n">${i + 1}</span><span class="cr-choix-txt">${esc(p.text)}</span>
+      </li>` : `
       <li class="cr-sug${i === sug.active ? ' is-active' : ''}" role="option" id="cr-sug-${i}" aria-selected="${i === sug.active}" data-i="${i}">
         <span class="cr-sug-head">${keyChip(p)} ${esc(p.label)}${p.mod ? ` <span class="cr-mod">${esc(p.mod)}</span>` : ''}</span>
         <span class="cr-sug-prev">${esc(p.text)}</span>
       </li>`).join('');
+    list.setAttribute('aria-label', choix ? 'Choix du champ' : 'Phrases proposées');
+    help.innerHTML = HELP[sug.mode];
     editor.setAttribute('aria-activedescendant', 'cr-sug-' + sug.active);
     const act = list.children[sug.active];
     if (act) {
@@ -288,9 +303,10 @@
     sug.dismissed = -1;
     const items = findMatches(m[0]);
     if (!items.length) return closePop();
-    const sameWord = sug.token && sug.token.start === start;
+    const sameWord = sug.mode === 'phrase' && sug.token && sug.token.start === start;
     const prevId = sameWord && sug.items[sug.active] ? sug.items[sug.active].id : null;
     const keep = prevId ? items.findIndex(p => p.id === prevId) : -1;
+    sug.mode = 'phrase';
     sug.items = items;
     sug.token = { start, end: pos };
     sug.active = keep >= 0 ? keep : 0;
@@ -304,9 +320,39 @@
   const accept = i => {
     const p = sug.items[i];
     const tok = sug.token;
+    const choix = sug.mode === 'choix';
     closePop();
-    if (p && tok) insertPhrase(p, tok.start, tok.end);
+    if (!p || !tok) return;
+    if (!choix) { insertPhrase(p, tok.start, tok.end); return; }
+    if (editor.value.slice(tok.start, tok.end) !== tok.raw) return; // champ modifié entre-temps
+    replaceRange(tok.start, tok.end, p.text);
+    revealCaret();
   };
+
+  /* Champ à choix [droite / gauche / codominance] sélectionné ou cliqué : ses options en liste */
+  const CHOICE_SEP = /\s+\/\s+/;
+  const choiceField = () => {
+    const a = editor.selectionStart, b = editor.selectionEnd;
+    const f = fieldsIn().find(([s, e]) => s <= a && b <= e && (a < b || (s < a && a < e)));
+    if (!f) return null;
+    const raw = editor.value.slice(f[0], f[1]);
+    const opts = raw.slice(1, -1).split(CHOICE_SEP).map(o => o.trim());
+    return opts.length > 1 && opts.every(Boolean) ? { start: f[0], end: f[1], raw, opts } : null;
+  };
+  const fieldSelected = () => sug.token && editor.selectionStart === sug.token.start && editor.selectionEnd === sug.token.end;
+  function showChoices() {
+    const f = document.activeElement === editor && choiceField();
+    if (!f) { if (sug.mode === 'choix') closePop(); return; }
+    sug.mode = 'choix';
+    sug.items = f.opts.map(text => ({ text }));
+    sug.token = f;
+    sug.active = 0;
+    sug.engaged = false;
+    pop.hidden = false;
+    editor.setAttribute('aria-expanded', 'true');
+    renderPop();
+    placePop(f.start);
+  }
 
   /* Insertion automatique : mot-clé seul en début de ligne + espace / ponctuation / Entrée */
   const autoBox = $('#cr-auto');
@@ -368,14 +414,16 @@
         renderPop();
         return;
       }
-      if ((e.key === 'Tab' && !e.shiftKey) || (e.key === 'Enter' && sug.engaged)) {
+      const choix = sug.mode === 'choix';
+      if (choix && e.key === 'Tab') closePop(); // Tab : champ suivant, sans choisir
+      else if ((e.key === 'Tab' && !e.shiftKey) || (e.key === 'Enter' && (sug.engaged || (choix && fieldSelected())))) {
         e.preventDefault();
         accept(sug.active);
         return;
       }
       if (e.key === 'Escape') {
         e.preventDefault();
-        sug.dismissed = sug.token.start;
+        if (!choix) sug.dismissed = sug.token.start;
         closePop();
         return;
       }
@@ -390,6 +438,7 @@
   });
 
   editor.addEventListener('mousedown', closePop);
+  editor.addEventListener('mouseup', () => setTimeout(showChoices, 0));
   editor.addEventListener('blur', () => setTimeout(() => { if (document.activeElement !== editor) closePop(); }, 200));
   editor.addEventListener('scroll', () => { if (!pop.hidden && sug.token) placePop(sug.token.start); });
   window.addEventListener('resize', closePop);

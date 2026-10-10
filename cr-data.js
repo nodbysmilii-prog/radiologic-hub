@@ -1224,11 +1224,16 @@ II/ Étude du réseau coronaire :
 • L'IVA est perméable, suivie jusqu'à la pointe du cœur, et donne naissance à [deux] diagonales perméables.
 • La Cx est perméable. Elle donne naissance à [une] marginale gauche perméable.
 • Absence de plaque et de sténose décelable sur le réseau coronaire gauche.
+Pontages aorto-coronaires :
+• [Absence de pontage aorto-coronaire / Pontage mammaire interne gauche (AMIG) in situ, anastomosé sur l'IVA, perméable, sans sténose / Pontage mammaire interne droite (AMID) in situ, anastomosé sur la coronaire droite, perméable, sans sténose / Pontage par artère radiale, anastomosé sur l'aorte ascendante et sur la première marginale, perméable, sans sténose / Pontage par artère radiale en Y sur l'AMIG, anastomosé sur la première marginale, perméable, sans sténose / Pontage gastro-épiploïque droit in situ, anastomosé sur l'interventriculaire postérieure, perméable, sans sténose / Pontage veineux (veine grande saphène), anastomosé sur l'aorte ascendante et sur la coronaire droite, perméable, sans sténose / Pontage veineux séquentiel (veine grande saphène), anastomosé sur l'aorte ascendante, sur la première diagonale puis sur la première marginale, perméable, sans sténose].
 
 CONCLUSION :
-Coroscanner normal : score calcique nul, absence de plaque et de sténose coronaire (CAD-RADS 0).`,
+Coroscanner normal : score calcique nul, absence de plaque et de sténose coronaire [(CAD-RADS 0) / et pontage(s) perméable(s) (CAD-RADS 0/G)].`,
   },
 ];
+
+/* État d'un greffon (mêmes libellés que l'outil CAD-RADS, regles/cadrads.js) */
+const CR_ETAT_GREFFON = '[perméable, sans sténose / sténose minime (1-24 %) / sténose légère (25-49 %) / sténose modérée (50-69 %) / sténose sévère (70-99 %) / occlus]';
 
 /* ---------------------------------------------------------
    Phrases automatiques
@@ -1429,6 +1434,22 @@ const CR_PHRASES = [
     text: 'Épanchement pleural liquidien [droit / gauche / bilatéral] de [faible / moyenne / grande] abondance, [de densité liquidienne homogène / avec épaississement et rehaussement des feuillets pleuraux, évocateur d\'empyème], [avec atélectasie passive du parenchyme adjacent].' },
   { k: 'nodule', organ: 'Thorax', mod: 'TDM', type: 'lesion', label: 'Nodule pulmonaire',
     text: 'Nodule pulmonaire [solide / en verre dépoli / partiellement solide] du [lobe], mesurant [x] mm (diamètre moyen), [à contours réguliers / spiculés], [non calcifié]. Conduite à tenir selon les recommandations de la Fleischner Society (2017), en fonction du terrain.' },
+
+  /* ----- Cœur et coronaires : pontages aorto-coronaires (tapez « pontage ») ----- */
+  { k: 'pontageamig', alias: ['amig', 'mammairegauche'], organ: 'Cœur / coronaires', mod: 'TDM', type: 'lesion', label: 'Pontage AMIG (mammaire interne gauche)',
+    text: `• Pontage mammaire interne gauche (AMIG) in situ, anastomosé sur [l'IVA / la première diagonale / la deuxième diagonale] : ${CR_ETAT_GREFFON}.` },
+  { k: 'pontageamid', alias: ['amid', 'mammairedroite'], organ: 'Cœur / coronaires', mod: 'TDM', type: 'lesion', label: 'Pontage AMID (mammaire interne droite)',
+    text: `• Pontage mammaire interne droite (AMID) [in situ / en greffon libre], anastomosé sur [la coronaire droite / l'IVA / la première marginale, par un trajet rétro-aortique] : ${CR_ETAT_GREFFON}.` },
+  { k: 'pontageradiale', alias: ['radiale', 'pontagey', 'composite'], organ: 'Cœur / coronaires', mod: 'TDM', type: 'lesion', label: 'Pontage par artère radiale (aorte ou Y sur l\'AMIG)',
+    text: `• Pontage par artère radiale, anastomosé [sur l'aorte ascendante / en Y sur l'AMIG] et sur [la première marginale / la deuxième marginale / la coronaire droite / l'interventriculaire postérieure / la première diagonale] : ${CR_ETAT_GREFFON}.` },
+  { k: 'pontagegep', alias: ['gep', 'gastroepiploique'], organ: 'Cœur / coronaires', mod: 'TDM', type: 'lesion', label: 'Pontage gastro-épiploïque droit',
+    text: `• Pontage gastro-épiploïque droit in situ, passant à travers le diaphragme, anastomosé sur [l'interventriculaire postérieure / la coronaire droite distale] : ${CR_ETAT_GREFFON}.` },
+  { k: 'pontagesaphene', alias: ['saphene', 'pontageveineux'], organ: 'Cœur / coronaires', mod: 'TDM', type: 'lesion', label: 'Pontage veineux (veine grande saphène)',
+    text: `• Pontage veineux (veine grande saphène), anastomosé sur l'aorte ascendante et sur [la coronaire droite / l'interventriculaire postérieure / la première marginale / la deuxième marginale / la première diagonale / l'IVA] : ${CR_ETAT_GREFFON}.` },
+  { k: 'pontagesequentiel', alias: ['sequentiel'], organ: 'Cœur / coronaires', mod: 'TDM', type: 'lesion', label: 'Pontage veineux séquentiel (deux anastomoses)',
+    text: `• Pontage veineux séquentiel (veine grande saphène), anastomosé sur l'aorte ascendante, sur [la première diagonale / la première marginale / l'interventriculaire postérieure] puis sur [la première marginale / la deuxième marginale / l'interventriculaire postérieure / la rétroventriculaire gauche] : ${CR_ETAT_GREFFON}.` },
+  { k: 'pontageabsent', alias: ['pasdepontage'], organ: 'Cœur / coronaires', mod: 'TDM', type: 'normal', label: 'Absence de pontage aorto-coronaire',
+    text: '• Absence de pontage aorto-coronaire.' },
 
   /* ----- Vaisseaux ----- */
   { k: 'dissection', alias: [], organ: 'Vaisseaux', mod: 'TDM', type: 'aigu', label: 'Dissection aortique',
