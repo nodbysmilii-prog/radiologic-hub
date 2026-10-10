@@ -4,7 +4,7 @@
 
 🌐 **Site en ligne :** https://nodbysmilii-prog.github.io/radiologic-hub/
 
-> Dernière mise à jour du README : 8 octobre 2026
+> Dernière mise à jour du README : 10 octobre 2026
 
 ---
 
@@ -46,7 +46,7 @@
 
 ### Fiches rapides (`fiches-rapides.html`)
 
-Index des fiches avec **un onglet par spécialité** (Digestif, Neuro, Thorax, Traumato, Uro, Imagerie de la femme, Ostéo-articulaire, Vasculaire, Pédiatrie). Les spécialités sans fiche affichent « Bientôt disponible ».
+Index des fiches avec **un onglet par spécialité** (Digestif, Neuro, Thorax, Traumato, Uro, Imagerie de la femme, Ostéo-articulaire, Cardio-vasculaire, Pédiatrie). Les spécialités sans fiche affichent « Bientôt disponible ».
 
 Chaque fiche (`fiches/…html`) propose :
 
@@ -85,6 +85,7 @@ Réseau social des radiologues : connexion **Google** (ou lien par e-mail), prof
 | Uro | **IRM de la prostate : diagnostic du cancer** | `fiches/irm-prostate-diagnostic.html` | D'après la planche du cours, **sans les images IRM** : les 7 commandements (A–G), PI-QUAL (tableau 1–5 et implications), mesure de la glande et PSAd, signal de fond (Bura 2021, 1–4), onglets **ZP · diffusion** / **ZT · T2** (définitions des scores 1–5 et tableaux de décision PI-RADS v2.1 avec la perfusion / la diffusion accessoires), **cartographie sectorielle** dessinée (coupes axiales base / milieu / apex, vues sagittale et coronale, zones colorées, correspondances LPZ = PZpl…), PRECISE / Likert / PI-RR, checklist du CR, 6 cartes « Testez-vous » |
 | Uro | **IRM de la prostate : bilan d'extension** | `fiches/irm-prostate-extension.html` | D'après la planche du cours, **sans les images IRM** : à savoir (pas de vraie capsule…), **TNM 2016**, signes iT3a, **score EPE 0–3** avec schémas dessinés et Se / VPP / VPN, vésicules séminales iT3b (Likert, 3 types d'extension en schéma), iT4, iN (IRM, TEP-choline, TEP-PSMA), iM (scintigraphie, scanner TAP), checklist du CR, 6 cartes « Testez-vous » |
 | Imagerie de la femme | **Le myome utérin dans tous ses états** | `fiches/myome-uterin.html` | D'après la fiche du cours, **sans images** : généralités, indications et intérêts de l'IRM, protocole (T2 3 plans, T1 avec et sans saturation de la graisse, diffusion avec ADC, ± injection), **classification FIGO** (tableau des types 0 à 8 et 2-5 + **planche dessinée dans le style des schémas FIGO classiques** : gros corps utérin, cavité sombre, col et vagin en double tube, un myome par type à sa profondeur avec sa légende, étiquettes Interstitiel / Sous-muqueux / Sous-séreux, fond sombre ; sur téléphone, dessin seul centré à la largeur de l'écran et légendes en liste dessous), alertes type 7 (largeur du pédicule, torsion) et type 2-5 (encorbellement vasculaire), myome simple, onglets des 4 dégénérescences, 3 remaniements, myome cellulaire et léiomyosarcome, **arbre décisionnel T2 / rehaussement / ADC dessiné en diagramme** (arborescence avec réglette d'ADC 0,8 / 1,2, diagnostics colorés bénin / prudence / suspect, chemin mis en évidence au survol, clic vers la partie de la fiche ; arbre vertical sur mobile), take home messages, checklist du CR, 6 cartes « Testez-vous » |
+| Cardio-vasculaire | **IRM des myocardites** | `fiches/irm-myocardite.html` | D'après la fiche du cours (2 pages, sans images) : introduction, diagnostic clinique, triade des indications, protocole (T2 STIR, cartographies T2 et T1, rehaussement tardif, ECV), trois signes cardinaux avec **schéma « un même foyer, trois séquences »**, **critères de Lake Louise 2018** en visuel mnémotechnique (« **Trempé** » T2 **+** « **Touché** » T1 = myocardite ; les 2 « P » de soutien : Péricarde et Pompe ; verdicts 2/2, 1/2, 0/2 avec IRM de contrôle à 1-2 semaines), comparaison 2009 « 2 sur 3 » → 2018 « 1 T2 + 1 T1 », **calculateur Lake Louise** (phrase de conclusion pour le compte rendu), **7 exemples IRM tirés des grandes études** avec auteurs cités et lien DOI (Mahrholdt 2004 et 2006 : PVB19 / HHV6 ; Aquaro 2017 ITAMY ; Grün 2012 et Gräni 2017 : pronostic ; Ferreira 2013 et Lurz 2016 MyoRacer : cartographie T1 ; Aquaro 2019 : IRM à 6 mois ; Fronza 2022 : myocardite post-vaccin ARNm), **schémas IRM redessinés** (coupe petit axe « façon IRM » + œil-de-bœuf AHA ; les figures des articles, protégées, ne sont pas reproduites), pièges (ischémique vs non ischémique, artefacts), take home, checklist du CR, 6 cartes « Testez-vous », 13 références vérifiées sur PubMed ; section « Cas du service » qui s'affiche quand des images anonymisées sont déposées dans `assets/fiches/myocardite/` |
 | Ostéo-articulaire | **Spondylodiscite infectieuse** | `fiches/spondylodiscite.html` | Fusion de deux cours ; tableaux comparatifs pyogènes / tuberculose / brucellose filtrables, onglets par germe, quiz « Quel germe ? », formes rares, diagnostic différentiel, annexe avec 2 cas annotés (tuberculose, *Bacillus cereus*) |
 
 ---
@@ -286,7 +287,8 @@ radiologic-hub/
 ├── fiches/                 Une page HTML par fiche
 ├── schemas/
 │   ├── prostate.js         Schéma sectoriel de la prostate (axial, sagittal, coronal) : calculateur PI-RADS et fiche prostate
-│   └── uterus.js           Schéma de l'utérus (coronal, sagittal) : cartographie FIGO des myomes, outil FIGO et fiche myome
+│   ├── uterus.js           Schéma de l'utérus (coronal, sagittal) : cartographie FIGO des myomes, outil FIGO et fiche myome
+│   └── coeur.js            Cœur : coupe petit axe « façon IRM » (rehaussement tardif, T2 STIR, cartographie T1, ciné) et œil-de-bœuf 17 segments AHA (fiche myocardite)
 ├── comptes-rendus.html     Comptes rendus types : éditeur, bibliothèque, mes phrases
 ├── cr-data.js              Données : modèles de CR (CR_TEMPLATES) et phrases automatiques (CR_PHRASES)
 ├── cr.js                   Éditeur : suggestions, champs [ … ], insertion auto, mes phrases, export/import
@@ -294,7 +296,8 @@ radiologic-hub/
 ├── cr-tools.js             Schémas et calculateurs : PI-RADS, BI-RADS, EU-TIRADS, Fleischner 2017, FIGO (myomes), RECIST 1.1, Lugano 2014
 ├── regles/
 │   ├── fleischner.js       Recommandations Fleischner 2017 (nodules pulmonaires), testées sous Node
-│   └── myome.js            Myomes utérins : classification FIGO, arbre décisionnel IRM, arguments de sarcome, testé sous Node
+│   ├── myome.js            Myomes utérins : classification FIGO, arbre décisionnel IRM, arguments de sarcome, testé sous Node
+│   └── lakelouise.js       Myocardite : critères IRM de Lake Louise 2018 (T2 + T1, soutien, IRM de contrôle, phrase de conclusion), testé sous Node
 ├── cr-tools.css            Styles de la fenêtre des outils
 ├── dictee/                 Dictée vocale de la page Comptes rendus
 │   ├── corrections.js      Dictionnaire de corrections médicales (configurable)
@@ -368,6 +371,8 @@ radiologic-hub/
 | Remplacements : texte d'un e-mail | `remplacements/modeles/emails/<nom>.html` (titre = objet ; `{{variable}}`), puis `npm run backend:preparer` et redéploiement des fonctions |
 | Remplacements : contrat | `remplacements/modeles/contrat.md` (syntaxe expliquée en tête du fichier) |
 | Remplacements : gouvernorats, compétences, équipements, types | `remplacements/noyau/referentiel.js` |
+| Fiche myocardite : un schéma du cœur | Attribut `data-coeur='{…}'` dans `fiches/irm-myocardite.html` : séquence (`lge`, `t2`, `t1map`, `cine`), niveau (`basal`, `median`, `apical`), lésions (`segments` AHA 1–17, `couche` : `sous-epi`, `medio`, `sous-endo`, `transmural` ; `motif` : `patchy`, `focal`), `titre` ; plusieurs coupes avec `panneaux` ; `"oeil": false` pour masquer l'œil-de-bœuf (détails en tête de `schemas/coeur.js`) |
+| Critères de Lake Louise | `regles/lakelouise.js` (et ses tests dans `tests/myocardite.test.js`) |
 | Communauté : statuts, spécialités, modalités, motifs de signalement, limites | `reseau/noyau/regles.js` (et les contraintes correspondantes de `supabase/migrations/20261009090000_reseau.sql`) |
 | Communauté : détection d'identité patient | `reseau/noyau/confidentialite.js` (fonction `identite`), avec ses tests dans `tests/reseau.test.js` |
 | Communauté : e-mail de rappel des messages | `remplacements/modeles/emails/message-non-lu.html`, puis `npm run backend:preparer` et redéploiement de `rp-taches` |
@@ -375,7 +380,7 @@ radiologic-hub/
 
 **Images médicales :** toujours **anonymisées** (aucun nom, date, n° de dossier, ni texte incrusté). Le site et le dépôt sont publics.
 
-**Cache :** après une modification de `styles.css`, `fiche.css`, `script.js`, `fiche.js`, `cr.css`, `cr.js`, `cr-data.js`, `cr-tools.js`, `cr-tools.css` ou d'un fichier de `remplacements/` ou de `reseau/`, changer le numéro `?v=…` dans les liens des pages HTML pour forcer les navigateurs à recharger les fichiers.
+**Cache :** après une modification de `styles.css`, `fiche.css`, `script.js`, `fiche.js`, `cr.css`, `cr.js`, `cr-data.js`, `cr-tools.js`, `cr-tools.css` ou d'un fichier de `remplacements/`, `reseau/`, `regles/` ou `schemas/`, changer le numéro `?v=…` dans les liens des pages HTML pour forcer les navigateurs à recharger les fichiers.
 
 ---
 
@@ -400,13 +405,15 @@ npm run test:integration  # agent + base réelle (PostgreSQL + PostgREST, sous D
 npm run backend:preparer  # recopie le noyau et les modèles dans supabase/functions/_shared (avant déploiement)
 ```
 
+Fiche myocardite : `tests/myocardite.test.js` couvre les critères de Lake Louise 2018 (T2 + T1, critère isolé, aucun critère avec ou sans clinique très évocatrice, critères de soutien seuls) et le schéma du cœur (segments AHA, orientation, arcs à travers 0°, SVG sans valeur invalide, identifiants uniques). Fiche vérifiée dans Chromium (390 px et 1366 px, sans débordement : 10 schémas dessinés, calculateur).
+
 Module Remplacements : `tests/remplacements-*.test.js` couvrent les règles de compatibilité, les formats tunisiens, les gabarits et tous les modèles d'e-mails, l'agenda .ics, le PDF et le contrat, les liens sécurisés, et un **scénario complet** (demande réservée aux spécialistes, demande ouverte aux résidents, trois remplaçants compatibles, acceptation, choix, annulation, remise en ligne, attribution automatique, relance, rappel, réalisation, récapitulatif mensuel, désinscription, réponses simultanées).
 
 Interface du module vérifiée dans un navigateur (Chromium, téléphone 390 px et ordinateur 1366 px, sans débordement) sur deux scénarios fictifs : demande réservée aux spécialistes (réponse par le bouton de l'e-mail, lien rouvert = « déjà enregistré », choix, contrat PDF, annulation par le remplaçant et remise en ligne, calendrier, validation et refus par l'administrateur, +24 h → relance, inscription avec erreurs puis valide) et demande ouverte aux résidents (3 remplaçants contactés, 2 disponibles, choix depuis l'e-mail, « poste pourvu », annulation par la structure depuis son e-mail et remise en ligne, boîte d'envoi et pièces jointes). Client Supabase vérifié avec la bibliothèque officielle face à un serveur simulé (inscription avant connexion puis lien magique, réponse par la fonction `rp-agent`, disponibilités, espace structure). Comptes rendus vérifiés inchangés.
 
 Communauté : `tests/reseau.test.js` couvre les règles (nom affiché, statuts, validations, dates), l'alerte d'identité et le **retrait des métadonnées** sur deux images fictives (`tests/fixtures/`, EXIF « Patient TEST-0001 ») ; `tests/sql/rls-reseau.js` vérifie sur une vraie base (18 vérifications) : compte Google, impossibilité de se vérifier soi-même, profils sans e-mail ni téléphone, publication réservée aux vérifiés et aux remplaçants validés, champs protégés, compteurs et notifications, messagerie (non lus, suppression d'un message sans trace dans l'aperçu, blocage), signalements et masquage automatique, suspension, droits sur les fichiers, rappels e-mail, suppression du compte (contenu des messages effacé, aperçu de la conversation compris) ; le test d'intégration envoie un rappel de message non lu une seule fois, sans son contenu. Interface vérifiée dans Chromium (390 px et 1366 px, sans débordement) : visiteur → Google simulé → profil, fil, j'aime, commentaire, publication refusée puis demande de vérification, messagerie avec réponse, alerte d'identité, administration ; publication avec image fictive (métadonnées retirées, nom masqué), signalements → masquage → rétablissement par l'administrateur, blocage, recherche. Comptes rendus et Remplacements vérifiés inchangés.
 
-Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : aucune donnée patient dans le dépôt. Toute modification d'une règle ou d'un seuil (`suivi/seuils.js`, `regles/fleischner.js`, `regles/myome.js`) doit être accompagnée de ses tests.
+Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : aucune donnée patient dans le dépôt. Toute modification d'une règle ou d'un seuil (`suivi/seuils.js`, `regles/fleischner.js`, `regles/myome.js`, `regles/lakelouise.js`) doit être accompagnée de ses tests.
 
 ---
 
@@ -417,7 +424,8 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 - [ ] **Images manquantes** : fiche pancréas (sémiologie, extension) et fiche Crohn — voir les README de `assets/fiches/pancreas/` et `assets/fiches/crohn/`.
 - [ ] **Fiche Crohn** : harmoniser la préparation de l'entéro-IRM (« 1 L / 45-60 min » vs « 1,5-2 L / 30 min-1 h »).
 - [ ] **Fiche rectum** : préciser les légendes des images « formes tumorales » et « mesure axiale 1,57 cm ».
-- [ ] **Fiches des autres spécialités** : Neuro, Thorax, Traumato, Vasculaire, Pédiatrie ; Imagerie de la femme : d'autres fiches à venir.
+- [ ] **Fiches des autres spécialités** : Neuro, Thorax, Traumato, Pédiatrie ; Cardio-vasculaire et Imagerie de la femme : d'autres fiches à venir.
+- [ ] **Fiche myocardite** : faire relire médicalement (notamment les chiffres repris des études et le calculateur Lake Louise) ; déposer des images **anonymisées** de cas du service dans `assets/fiches/myocardite/` (noms attendus dans le README du dossier) ; images d'articles seulement sous licence libre (CC BY), auteurs cités.
 - [ ] **Lecteur de séries** (défilement dans un scanner / IRM) : en attente d'une série anonymisée exportée en JPG.
 - [ ] **Comptes rendus types** : continuer à intégrer les formules normales du service (8 reçues le 07/10/2026, 28 le 08/10/2026 dont 7 échographies) ; **faire relire le lot du 08/10/2026** : formules qui contenaient des anomalies rendues normales par défaut (radio et scanner du rachis, épaule courte, doppler des TSA), choix ajoutés (densité BI-RADS, Keros), formules en double (deux TDM cérébrales et thoraciques sans injection, deux échographies de l'épaule) à garder ou fusionner ; relire et valider médicalement les ~55 phrases automatiques rédigées par Claude (`cr-data.js`).
 - [ ] **Suivi oncologique** : étapes 2 à 7 (moteur RECIST 1.1, texte, contrôles, Lugano — y compris couleurs du schéma —, import texte libre, QR / courbe / iRECIST) ; faire vérifier `suivi/seuils.js` par un radiologue ; ajouter éventuellement le lien dans le menu principal (actuellement depuis la page Comptes rendus).
@@ -438,6 +446,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 10/10/2026 | Nouvelle fiche **IRM des myocardites** (onglet « Vasculaire » renommé **« Cardio-vasculaire »**) d'après le cours fourni : indications, protocole, trois signes cardinaux, **critères de Lake Louise 2018** en visuel mnémotechnique « Trempé (T2) + Touché (T1) » avec les 2 « P » de soutien et un **calculateur**, **7 exemples IRM tirés des grandes études** (auteurs cités, liens DOI, références vérifiées sur PubMed) dessinés en schémas « façon IRM » (`schemas/coeur.js` : coupe petit axe + œil-de-bœuf AHA), pièges, checklist du CR, « Testez-vous » ; `regles/lakelouise.js` et `tests/myocardite.test.js` |
 | 08/10/2026 | Communauté, messagerie sur ordinateur : la fenêtre de conversation tient dans l'écran (elle dépassait en mode démonstration et l'en-tête de la conversation passait sous la barre « Communauté ») |
 | 08/10/2026 | **Communauté** (réseau des radiologues) : page `communaute.html` — connexion Google ou par e-mail, profil avec photo et statut, vérification par l'administrateur (titre « Dr » / « Pr », publication réservée aux comptes vérifiés), publication de cas anonymisés (retrait des métadonnées des images, masquage de zones, alerte d'identité patient, attestation), fil, j'aime, commentaires, abonnements, notifications, **messagerie privée en temps réel** avec images, blocage, signalements et masquage automatique, administration, suppression du compte ; **mode démonstration** à membres fictifs ; base Supabase (`20261009090000_reseau.sql` : tables, droits d'accès par ligne, stockage, temps réel) ; rappel e-mail des messages non lus ; bouton Google et bouton « Message » dans les Remplacements ; menu : « Cas du jour » remplacé par « Communauté » (le quiz reste sur l'accueil et dans le pied de page) ; mentions légales : données de la Communauté et conditions d'utilisation ; guide d'installation (Google OAuth) ; correction (Remplacements) : la suppression du compte du créateur d'une structure n'échoue plus ; tests unitaires, SQL et d'intégration |
 | 08/10/2026 | Comptes rendus : **28 formules normales du service** ajoutées (TDM cérébrale, thoracique, angioscanner, TAP, cérébral + TAP, cervico-TAP, abdomino-pelvien, entéroscanner, uroscanners, massif facial, cone beam, rochers, rachis cervical et lombaire ; radios du rachis lombaire et de la cheville ; mammographie + échographie ; échographies mammaire, abdomino-pelvienne, rénale et vésico-prostatique, cervicale, de l'épaule ; doppler des TSA), sans signatures ni restes du patient précédent (champs `[ … ]`) ; nouvel examen « Mammographie », spécialités « ORL / tête et cou », « TAP / corps entier » et « Sein » |

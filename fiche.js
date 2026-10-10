@@ -352,6 +352,36 @@ if (body) {
     });
   });
 
+  /* Schémas du cœur (schemas/coeur.js) : coupes petit axe « façon IRM » et œil-de-bœuf */
+  if (window.RHCoeur) {
+    $$('[data-coeur]').forEach(el => {
+      try { el.innerHTML = window.RHCoeur.figure(JSON.parse(el.dataset.coeur)); } catch (e) { console.error('schéma du cœur', e); }
+    });
+  }
+
+  /* Calculateur des critères de Lake Louise 2018 (regles/lakelouise.js) */
+  const LL = window.RHRegles && window.RHRegles.lakeLouise;
+  if (LL) {
+    const GROUPES = [['t2', 'T2 · Trempé', 'œdème'], ['t1', 'T1 · Touché', 'lésion'], ['support', 'Soutien', 'les 2 P']];
+    $$('[data-lake-louise]').forEach(box => {
+      $('.llc-groupes', box).innerHTML = GROUPES.map(([f, titre, sous]) => `<fieldset class="llc-groupe is-${f}"><legend>${titre} <small>${sous}</small></legend>${
+        LL.CRITERES[f].map(c => `<label><input type="checkbox" data-crit="${c.id}"> ${c.label}</label>`).join('')}</fieldset>`).join('');
+      const res = $('.llc-res', box);
+      const maj = () => {
+        const r = LL.evaluer($$('input[data-crit]:checked', box).map(i => i.dataset.crit), { tresEvocateur: !!$('input[data-clinique]:checked', box) });
+        res.dataset.niveau = r.niveau;
+        $('.llc-titre', res).textContent = r.titre;
+        $('.llc-texte', res).textContent = r.texte;
+        $('.llc-cr', res).textContent = LL.conclusion(r);
+        $$('.llc-groupe', box).forEach(g => g.classList.toggle('is-on', $$('input:checked', g).length > 0));
+      };
+      box.addEventListener('change', maj);
+      const reset = $('.llc-reset', box);
+      if (reset) reset.addEventListener('click', () => { $$('input', box).forEach(i => { i.checked = false; }); maj(); });
+      maj();
+    });
+  }
+
   /* Impression */
   const printBtn = $('#print-btn');
   if (printBtn) printBtn.addEventListener('click', () => {

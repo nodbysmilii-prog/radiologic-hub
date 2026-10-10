@@ -931,3 +931,108 @@ a.dt-leaf:hover, a.dt-leaf:focus-visible { transform: translateY(-3px); box-shad
   .dt-legend { justify-content: flex-start; }
 }
 @media print { .dtree, .dt-n { box-shadow: none !important; } .dtree.has-path .dt-n { opacity: 1; } }
+
+/* ---------- Fiche « IRM des myocardites » ----------
+   Schémas du cœur (schemas/coeur.js), critères de Lake Louise
+   « Trempé + Touché », calculateur, exemples tirés des articles. */
+.coeur-planche { margin: 0 0 14px; padding: 14px; border-radius: var(--radius); border: 4px solid var(--ink); background: #1b1b20; box-shadow: 10px 10px 0 color-mix(in srgb, var(--c, var(--blue)) 50%, transparent); }
+.coeur-panneaux { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; }
+.coeur-coupe { flex: 1 1 210px; max-width: 320px; }
+.coeur-oeil { flex: 0 0 128px; padding: 6px 4px 2px; border-radius: 16px; background: #fff; }
+.coeur-panneaux svg { display: block; width: 100%; height: auto; }
+
+/* Lake Louise : T2 « Trempé » + T1 « Touché » = myocardite */
+.ll { --t2: var(--blue); --t1: var(--crimson); margin: 0 0 34px; }
+.ll-devise { margin: 0 0 30px; text-align: center; font-family: var(--font-marker); font-size: clamp(1.25rem, 3.2vw, 1.85rem); line-height: 1.25; color: var(--ink); }
+.ll-devise b { font-weight: 400; color: var(--c); }
+.ll-eq { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, .78fr); align-items: stretch; gap: 14px; }
+.ll-carte { --c: var(--t2); position: relative; padding: 46px 18px 18px; border: 4px solid var(--ink); border-radius: var(--radius); background: #fff; box-shadow: 8px 8px 0 color-mix(in srgb, var(--c) 55%, transparent); }
+.ll-carte.is-t1 { --c: var(--t1); }
+.ll-badge { position: absolute; top: -24px; left: 18px; display: grid; place-items: center; width: 62px; height: 62px; border-radius: 50%; border: 4px solid var(--ink); background: var(--c); color: #fff; font-size: 1.35rem; font-weight: 900; letter-spacing: .02em; }
+.ll-ico { position: absolute; top: 12px; right: 14px; width: 40px; height: 40px; color: var(--c); }
+.ll-mot { margin: 0; font-family: var(--font-marker); font-size: 1.9rem; line-height: 1; color: var(--c); letter-spacing: .02em; }
+.ll-quoi { margin: 6px 0 12px; font-size: .74rem; font-weight: 900; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.ll-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; counter-reset: ll; }
+.ll-liste li { counter-increment: ll; display: grid; grid-template-columns: 24px 1fr; gap: 9px; align-items: start; padding: 8px 10px; border-radius: 12px; background: color-mix(in srgb, var(--c) 9%, #fff); font-size: .86rem; line-height: 1.38; }
+.ll-liste li::before { content: counter(ll); display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--c); color: #fff; font-size: .74rem; font-weight: 900; }
+.ll-liste small { display: block; color: var(--muted); font-size: .74rem; }
+.ll-op { align-self: center; font-size: 2.6rem; font-weight: 900; line-height: 1; color: var(--ink); }
+.ll-res { display: flex; flex-direction: column; justify-content: center; gap: 8px; padding: 22px 16px; border: 4px solid var(--ink); border-radius: var(--radius); background: var(--ink); color: #fff; text-align: center; box-shadow: 8px 8px 0 color-mix(in srgb, var(--amber) 60%, transparent); }
+.ll-res b { font-family: var(--font-marker); font-weight: 400; font-size: 1.55rem; line-height: 1.1; color: var(--amber); }
+.ll-res span { font-size: .8rem; font-weight: 700; line-height: 1.4; }
+.ll-res .ll-regle { align-self: center; padding: 6px 14px; border-radius: 999px; background: #fff; color: var(--ink); font-size: .95rem; font-weight: 900; }
+.ll-soutien { display: grid; grid-template-columns: auto 1fr 1fr; align-items: center; gap: 12px 16px; margin-top: 30px; padding: 16px 18px; border: 3px dashed var(--slate); border-radius: var(--radius); background: var(--card); }
+.ll-soutien > p { margin: 0; font-size: .74rem; font-weight: 900; letter-spacing: .07em; text-transform: uppercase; }
+.ll-p { display: flex; align-items: center; gap: 10px; font-size: .86rem; line-height: 1.35; }
+.ll-p b { flex: 0 0 auto; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: var(--slate); color: #fff; font-family: var(--font-marker); font-weight: 400; font-size: 1.15rem; }
+.ll-verdicts { margin-top: 52px; }
+.ll-verdicts .light { padding-top: 54px; }
+.ll-verdicts .light .dot { width: 54px; height: 54px; margin-left: -27px; top: -22px; display: grid; place-items: center; color: #fff; font-weight: 900; font-size: .95rem; }
+.ll-histoire { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 14px; margin: 0 0 30px; }
+.ll-an { padding: 16px 18px; border: 4px solid var(--ink); border-radius: var(--radius); background: #fff; }
+.ll-an.is-2018 { box-shadow: 8px 8px 0 color-mix(in srgb, var(--green) 55%, transparent); }
+.ll-an h4 { margin: 0 0 4px; font-size: .74rem; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.ll-an .ll-gros { display: block; margin-bottom: 6px; font-family: var(--font-marker); font-size: 1.7rem; line-height: 1; color: var(--ink); }
+.ll-an p { margin: 0; font-size: .84rem; line-height: 1.45; }
+.ll-fleche { font-size: 2rem; font-weight: 900; }
+@media (max-width: 900px) {
+  .ll-eq { grid-template-columns: minmax(0, 1fr); gap: 34px; }
+  .ll-op { justify-self: center; margin: -18px 0 -10px; }
+  .ll-soutien { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .ll-histoire { grid-template-columns: 1fr; }
+  .ll-fleche { justify-self: center; transform: rotate(90deg); }
+}
+
+/* Calculateur Lake Louise */
+.llc { margin: 0 0 34px; padding: 22px; border: 4px solid var(--ink); border-radius: var(--radius); background: #fff; box-shadow: 10px 10px 0 color-mix(in srgb, var(--purple) 40%, transparent); }
+.llc-groupes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.llc-groupe { --c: var(--blue); margin: 0; padding: 12px 14px 10px; border: 3px solid color-mix(in srgb, var(--c) 45%, #fff); border-radius: 16px; transition: border-color .2s, background .2s; }
+.llc-groupe.is-t1 { --c: var(--crimson); }
+.llc-groupe.is-support { --c: var(--slate); }
+.llc-groupe.is-on { border-color: var(--c); background: color-mix(in srgb, var(--c) 7%, #fff); }
+.llc-groupe legend { padding: 0 6px; font-weight: 900; color: var(--c); }
+.llc-groupe legend small { font-weight: 700; color: var(--muted); }
+.llc-groupe label, .llc-contexte { display: flex; gap: 9px; align-items: flex-start; padding: 6px 0; font-size: .85rem; line-height: 1.35; cursor: pointer; }
+.llc input { flex: 0 0 auto; width: 18px; height: 18px; margin-top: 1px; accent-color: var(--ink); }
+.llc-contexte { margin-top: 10px; font-weight: 700; }
+.llc-res { --c: var(--green); margin-top: 16px; padding: 16px 18px; border-radius: 16px; border: 3px solid var(--c); background: color-mix(in srgb, var(--c) 10%, #fff); }
+.llc-res[data-niveau="possible"] { --c: var(--amber); }
+.llc-res[data-niveau="positif"] { --c: var(--k-grave); }
+.llc-titre { margin: 0 0 4px; font-weight: 900; color: var(--ink); }
+.llc-titre::before { content: ""; display: inline-block; width: 12px; height: 12px; margin-right: 8px; border-radius: 50%; background: var(--c); vertical-align: 1px; }
+.llc-texte { margin: 0; font-size: .88rem; line-height: 1.45; }
+.llc-cr { margin: 10px 0 0; padding: 10px 12px; border-radius: 10px; background: #fff; border: 2px dashed rgba(0, 0, 0, .18); font-size: .84rem; font-style: italic; }
+.llc-actions { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-top: 12px; }
+.llc-actions small { color: var(--muted); font-size: .74rem; }
+@media (max-width: 900px) { .llc-groupes { grid-template-columns: minmax(0, 1fr); } }
+
+/* Exemples tirés des articles */
+.myo-avert { margin: 0 0 22px; font-size: .82rem; color: var(--muted); }
+.myo-exemples { display: grid; gap: 30px; }
+.myo-ex { --c: var(--crimson); display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); border: 4px solid var(--ink); border-radius: var(--radius); overflow: hidden; background: #fff; box-shadow: 10px 10px 0 color-mix(in srgb, var(--c) 45%, transparent); }
+.myo-ex-fig { margin: 0; padding: 16px; background: #1b1b20; display: grid; align-content: center; }
+.myo-ex-txt { padding: 20px 22px 18px; }
+.myo-ex-tag { display: inline-block; margin-bottom: 8px; padding: 4px 11px; border-radius: 999px; background: var(--c); color: #fff; font-size: .68rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+.myo-ex h3 { margin: 0 0 10px; font-size: 1.05rem; font-weight: 900; line-height: 1.3; color: var(--ink); }
+.myo-ex .fl { margin-bottom: 12px; }
+.myo-ex-retenir { margin: 0 0 12px; padding: 10px 12px; border-left: 5px solid var(--c); border-radius: 0 12px 12px 0; background: color-mix(in srgb, var(--c) 9%, #fff); font-size: .86rem; font-weight: 700; line-height: 1.4; }
+.myo-cite { margin: 0; padding-top: 10px; border-top: 2px solid rgba(0, 0, 0, .08); font-size: .76rem; line-height: 1.45; color: var(--muted); }
+.myo-cite a { font-weight: 800; color: var(--royal); }
+.myo-vs { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: start; gap: 14px; margin: 0 0 30px; }
+.myo-vs figure { margin: 0; overflow: hidden; border: 4px solid var(--ink); border-radius: var(--radius); background: #fff; }
+.myo-vs figure > [data-coeur] { padding: 14px; background: #1b1b20; }
+.myo-vs figcaption { padding: 12px 16px 14px; font-size: .84rem; line-height: 1.45; }
+.myo-vs figcaption strong { display: block; margin-bottom: 4px; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--k-grave); }
+.myo-vs .vs-b { align-self: center; display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 900; }
+.refs { margin: 0; padding-left: 1.4em; display: grid; gap: 8px; font-size: .8rem; line-height: 1.45; color: var(--text); }
+.refs a { font-weight: 800; color: var(--royal); word-break: break-word; }
+@media (max-width: 900px) {
+  .myo-ex { grid-template-columns: minmax(0, 1fr); }
+  .myo-vs { grid-template-columns: minmax(0, 1fr); }
+  .myo-vs .vs-b { justify-self: center; }
+}
+@media print {
+  .ll-carte, .ll-res, .llc, .myo-ex { box-shadow: none !important; break-inside: avoid; }
+}
