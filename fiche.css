@@ -968,21 +968,10 @@ a.dt-leaf:hover, a.dt-leaf:focus-visible { transform: translateY(-3px); box-shad
 .ll-verdicts { margin-top: 52px; }
 .ll-verdicts .light { padding-top: 54px; }
 .ll-verdicts .light .dot { width: 54px; height: 54px; margin-left: -27px; top: -22px; display: grid; place-items: center; color: #fff; font-weight: 900; font-size: .95rem; }
-.ll-histoire { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 14px; margin: 0 0 30px; }
-.ll-an { padding: 16px 18px; border: 4px solid var(--ink); border-radius: var(--radius); background: #fff; }
-.ll-an.is-2018 { box-shadow: 8px 8px 0 color-mix(in srgb, var(--green) 55%, transparent); }
-.ll-an h4 { margin: 0 0 4px; font-size: .74rem; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
-.ll-an .ll-gros { display: block; margin-bottom: 6px; font-family: var(--font-marker); font-size: 1.7rem; line-height: 1; color: var(--ink); }
-.ll-an p { margin: 0; font-size: .84rem; line-height: 1.45; }
-.ll-fleche { font-size: 2rem; font-weight: 900; }
 @media (max-width: 900px) {
   .ll-eq { grid-template-columns: minmax(0, 1fr); gap: 34px; }
   .ll-op { justify-self: center; margin: -18px 0 -10px; }
   .ll-soutien { grid-template-columns: 1fr; }
-}
-@media (max-width: 640px) {
-  .ll-histoire { grid-template-columns: 1fr; }
-  .ll-fleche { justify-self: center; transform: rotate(90deg); }
 }
 
 /* Calculateur Lake Louise */
