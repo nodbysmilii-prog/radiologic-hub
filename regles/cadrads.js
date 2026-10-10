@@ -29,7 +29,7 @@
     1: { court: 'CD prox.', nom: 'coronaire droite proximale', vaisseau: 'CD' },
     2: { court: 'CD moy.', nom: 'coronaire droite moyenne', vaisseau: 'CD' },
     3: { court: 'CD dist.', nom: 'coronaire droite distale', vaisseau: 'CD' },
-    4: { court: 'IVP (CD)', nom: 'interventriculaire postérieure (issue de la coronaire droite)', vaisseau: 'CD', dominance: 'DC' },
+    4: { court: 'IVP (CD)', nom: 'interventriculaire postérieure issue de la coronaire droite', vaisseau: 'CD', dominance: 'DC' },
     5: { court: 'TC', nom: 'tronc commun gauche', vaisseau: 'TC' },
     6: { court: 'IVA prox.', nom: 'interventriculaire antérieure proximale', vaisseau: 'IVA' },
     7: { court: 'IVA moy.', nom: 'interventriculaire antérieure moyenne', vaisseau: 'IVA' },
@@ -40,10 +40,10 @@
     12: { court: 'M1', nom: 'première marginale', vaisseau: 'Cx' },
     13: { court: 'Cx dist.', nom: 'circonflexe moyenne et distale', vaisseau: 'Cx' },
     14: { court: 'M2', nom: 'deuxième marginale', vaisseau: 'Cx' },
-    15: { court: 'IVP (Cx)', nom: 'interventriculaire postérieure (issue de la circonflexe)', vaisseau: 'Cx', dominance: 'G' },
-    16: { court: 'RVG (CD)', nom: 'rétroventriculaire gauche (issue de la coronaire droite)', vaisseau: 'CD', dominance: 'D' },
-    17: { court: 'Bissectrice', nom: 'bissectrice (ramus intermedius)', vaisseau: 'Cx', option: true },
-    18: { court: 'RVG (Cx)', nom: 'rétroventriculaire gauche (issue de la circonflexe)', vaisseau: 'Cx', dominance: 'GC' },
+    15: { court: 'IVP (Cx)', nom: 'interventriculaire postérieure issue de la circonflexe', vaisseau: 'Cx', dominance: 'G' },
+    16: { court: 'RVG (CD)', nom: 'rétroventriculaire gauche issue de la coronaire droite', vaisseau: 'CD', dominance: 'D' },
+    17: { court: 'Bissectrice', nom: 'bissectrice', vaisseau: 'Cx', option: true },
+    18: { court: 'RVG (Cx)', nom: 'rétroventriculaire gauche issue de la circonflexe', vaisseau: 'Cx', dominance: 'GC' },
   };
   const DOMINANCES = {
     droite: { lettre: 'D', label: 'Dominance droite', texte: 'l\'interventriculaire postérieure et la rétroventriculaire gauche naissent de la coronaire droite' },
@@ -118,6 +118,34 @@
     return AGATSTON.find(a => c >= a.min && c <= a.max) || AGATSTON[AGATSTON.length - 1];
   }
 
+  /* Pontages aorto-coronaires : greffon, montage, artère(s) receveuse(s), état.
+     CAD-RADS 2.0 : modificateur G ; le greffon se grade comme une artère
+     native (sa sténose la plus sévère compte) ; l'artère native pontée,
+     en amont de l'anastomose, n'est pas gradée. */
+  const GREFFONS = {
+    amig: { court: 'AMIG', nom: 'artère mammaire interne gauche', type: 'arteriel', origine: 'in situ (sous-clavière gauche)' },
+    amid: { court: 'AMID', nom: 'artère mammaire interne droite', type: 'arteriel', origine: 'in situ (sous-clavière droite)' },
+    radiale: { court: 'Radiale', nom: 'artère radiale', type: 'arteriel', origine: 'greffon libre' },
+    gep: { court: 'GEP', nom: 'artère gastro-épiploïque droite', type: 'arteriel', origine: 'in situ (à travers le diaphragme)' },
+    saphene: { court: 'Saphène', nom: 'veine grande saphène', type: 'veineux', origine: 'greffon libre' },
+  };
+  const MONTAGES = {
+    simple: 'pontage simple (une anastomose distale)',
+    sequentiel: 'pontage séquentiel (plusieurs anastomoses distales sur le même greffon)',
+    y: 'pontage composite en Y (greffon branché sur l\'AMIG)',
+    aorte: 'anastomose proximale sur l\'aorte ascendante',
+  };
+  const ETATS_GREFFE = {
+    permeable: 'perméable, sans sténose',
+    '1-24': 'sténose minime (1-24 %)',
+    '25-49': 'sténose légère (25-49 %)',
+    '50-69': 'sténose modérée (50-69 %)',
+    '70-99': 'sténose sévère (70-99 %)',
+    100: 'occlus',
+  };
+  /* Grade CAD-RADS apporté par un greffon (null : perméable sans sténose ou non précisé) */
+  const gradeGreffe = g => (g && g.etat && g.etat !== 'permeable' && STENOSES[g.etat] ? STENOSES[g.etat].cat : null);
+
   /* Lésions : { seg, grade, plaque, hrp: { remodelage, hypodense, ponctuees, anneau }, stent } */
   const hrpLesion = l => Object.keys(HRP).filter(k => l.hrp && l.hrp[k]);
   function categorie(lesions = [], options = {}) {
@@ -125,6 +153,8 @@
     const nonAnalysable = lesions.some(l => l.grade === 'nd');
     let cat = options.cac != null && nombre(options.cac) > 0 ? '1' : '0';
     valides.forEach(l => { const c = STENOSES[l.grade].cat; if (ORDRE.indexOf(c) > ORDRE.indexOf(cat)) cat = c; });
+    // Greffons : leur sténose la plus sévère compte (hors règle du tronc commun et des trois territoires)
+    (options.pontages || []).forEach(g => { const c = gradeGreffe(g); if (c && ORDRE.indexOf(c) > ORDRE.indexOf(cat)) cat = c; });
     // 4B : tronc commun ≥ 50 % ou trois territoires (CD, IVA, Cx) ≥ 70 %
     const tc = valides.some(l => SEGMENTS[l.seg].vaisseau === 'TC' && STENOSES[l.grade].rang >= 3);
     const severes = new Set(valides.filter(l => STENOSES[l.grade].rang >= 4).map(l => SEGMENTS[l.seg].vaisseau));
@@ -138,7 +168,8 @@
   /* Résultat complet : code, charge en plaque, modificateurs, conduite */
   function evaluer(st = {}) {
     const lesions = st.lesions || [];
-    const r = categorie(lesions, { cac: st.cac });
+    const pontages = (st.pontages || []).filter(g => GREFFONS[g.greffon]);
+    const r = categorie(lesions, { cac: st.cac, pontages });
     const sis = new Set(lesions.filter(l => STENOSES[l.grade] && STENOSES[l.grade].rang != null).map(l => l.seg)).size;
     const P = r.cat === '0' ? null : chargePlaque(st.cac, sis || null);
     const hrp = lesions.some(l => hrpLesion(l).length >= 2);
@@ -148,7 +179,7 @@
     if (hrp) mods.push('HRP');
     if (st.ischemie && ISCHEMIE[st.ischemie] && st.ischemie !== '') mods.push(st.ischemie);
     if (stent) mods.push('S');
-    if (st.pontage) mods.push('G');
+    if (st.pontage || pontages.length) mods.push('G');
     if (st.exception) mods.push('E');
     const code = ['CAD-RADS ' + r.cat, P ? P.code : '', ...mods].filter(Boolean).join('/');
     const C = CATEGORIES[r.cat];
@@ -159,5 +190,5 @@
     return { ...r, code, P, sis, hrp, stent, mods, titre: C.titre, stenose: C.stenose, conduite };
   }
 
-  return { SEGMENTS, DOMINANCES, STENOSES, CATEGORIES, HRP, ISCHEMIE, AGATSTON, segmentsPresents, chargePlaque, agatston, hrpLesion, categorie, evaluer };
+  return { SEGMENTS, DOMINANCES, STENOSES, CATEGORIES, HRP, ISCHEMIE, AGATSTON, GREFFONS, MONTAGES, ETATS_GREFFE, gradeGreffe, segmentsPresents, chargePlaque, agatston, hrpLesion, categorie, evaluer };
 });

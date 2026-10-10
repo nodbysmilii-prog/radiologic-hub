@@ -207,3 +207,8 @@
 .tl-ref td { padding: 6px 8px; border-top: 1px solid rgba(17, 17, 20, .08); vertical-align: top; }
 .tl-ref td:first-child { white-space: nowrap; }
 .tl-ref tr.is-on td { background: rgba(242, 171, 47, .28); font-weight: 700; }
+.tl-ponts { padding-bottom: 10px; }
+.tl-pont { margin: 4px 0 12px; padding: 8px 12px 2px; border-left: 5px solid var(--c); border-radius: 10px; background: #fff; }
+.tl-pont-titre { display: flex; align-items: center; justify-content: space-between; margin: 0 0 6px; font-size: .78rem; }
+.tl-ponts > .tl-add { margin: 2px 0 10px; }
+.tl-ref small { font-weight: 600; color: var(--muted); }

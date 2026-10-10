@@ -91,3 +91,34 @@ test('Schéma coronaire : SVG valide pour chaque dominance', () => {
   }
   assert.equal(CO.position(99, 'droite'), null);
 });
+
+test('Pontages : greffons, état gradé comme une artère native, modificateur G', () => {
+  assert.deepEqual(Object.keys(CA.GREFFONS), ['amig', 'amid', 'radiale', 'gep', 'saphene']);
+  assert.equal(CA.GREFFONS.saphene.type, 'veineux');
+  assert.equal(CA.GREFFONS.amig.type, 'arteriel');
+  assert.equal(CA.evaluer({ pontages: [{ greffon: 'amig', cible1: '7', etat: 'permeable' }] }).code, 'CAD-RADS 0/G', 'greffon perméable : G seul');
+  assert.equal(CA.evaluer({ pontages: [{ greffon: 'saphene', etat: '100' }] }).code, 'CAD-RADS 5/G', 'greffon occlus');
+  assert.equal(CA.evaluer({ lesions: [L(2, '25-49')], pontages: [{ greffon: 'saphene', etat: '70-99' }] }).cat, '4A');
+  assert.equal(CA.evaluer({ pontages: [{ greffon: 'inconnu', etat: '100' }] }).code, 'CAD-RADS 0', 'greffon inconnu ignoré');
+  assert.equal(CA.gradeGreffe({ etat: 'permeable' }), null);
+  assert.equal(CA.gradeGreffe({ etat: '50-69' }), '3');
+});
+
+test('Schéma coronaire : tracé des pontages', () => {
+  const amig = CO.tracePontage({ greffon: 'amig', cibles: [7] }, 'droite');
+  assert.equal(amig.length, 1);
+  assert.deepEqual(amig[0].d[0], CO.PONTAGES.amig.origine, 'l\'AMIG part de la sous-clavière gauche');
+  const seq = CO.tracePontage({ greffon: 'saphene', montage: 'sequentiel', cibles: [9, 12] }, 'droite');
+  assert.equal(seq.length, 2, 'séquentiel : deux anastomoses');
+  assert.deepEqual(seq[1].d[0], seq[0].cible, 'la 2e anastomose part de la 1re');
+  assert.deepEqual(seq[0].d[0], [334, 40], 'greffon libre vers le réseau gauche : aorte ascendante');
+  const y = CO.tracePontage({ greffon: 'radiale', montage: 'y', cibles: [14] }, 'droite', amig[0].d);
+  assert.notDeepEqual(y[0].d[0], [334, 40], 'montage en Y : départ sur l\'AMIG');
+  assert.equal(CO.tracePontage({ greffon: 'saphene', cibles: [] }, 'droite').length, 0);
+  const svg = CO.svg({ dominance: 'droite', pontages: [{ greffon: 'amig', cibles: [7], couleur: '#548c6c' }, { greffon: 'saphene', cibles: [4], occlus: true }] });
+  assert.match(svg, /P1 AMIG/);
+  assert.match(svg, /P2 Saphène/);
+  assert.match(svg, /stroke-dasharray="7 6"/, 'greffon occlus en pointillés');
+  assert.match(svg, /Pontage veineux/);
+  assert.doesNotMatch(svg, /NaN|undefined/);
+});

@@ -11,6 +11,11 @@
    Couleurs par territoire : coronaire droite (rouge), IVA (bleu),
    circonflexe (vert), tronc commun (gris). Chaque segment est cliquable
    (attribut data-seg) ; les lésions s'affichent en pastilles numérotées.
+   Pontages : chaque greffon part de son origine (AMIG à droite de
+   l'image, AMID à gauche, gastro-épiploïque par en bas, greffons libres
+   depuis l'aorte ascendante ou en Y sur l'AMIG) et rejoint son ou ses
+   artères receveuses (montage séquentiel) ; artériel en orange, veineux
+   en violet, en pointillés s'il est occlus.
    Utilisé par l'outil « CAD-RADS » des comptes rendus (cr-tools.js).
    Module sans dépendance au navigateur (testé sous Node :
    tests/cadrads.test.js).
@@ -87,6 +92,37 @@
     return point(forme(seg, dominance), k > 1 ? 0.3 + 0.4 * i / (k - 1) : 0.5);
   }
 
+  /* ---------- Pontages ---------- */
+  const PONT = {
+    amig: { court: 'AMIG', type: 'arteriel', origine: [592, 92] },
+    amid: { court: 'AMID', type: 'arteriel', origine: [8, 118] },
+    gep: { court: 'GEP', type: 'arteriel', origine: [214, 468] },
+    radiale: { court: 'Radiale', type: 'arteriel', origine: null },
+    saphene: { court: 'Saphène', type: 'veineux', origine: null },
+  };
+  const COUL_PONT = { arteriel: '#f18d25', veineux: '#6b0d8c' };
+  // Courbe douce d'un point à un autre (d'abord dans le sens horizontal, puis vers la cible)
+  const arc = (a, b) => B(a, [+(a[0] + (b[0] - a[0]) * 0.6).toFixed(1), a[1]], [b[0], +(b[1] - (b[1] - a[1]) * 0.4).toFixed(1)], b);
+  /* Tracés d'un pontage : [{ d: courbe, cible: [x, y] }] ; amig : tracé de l'AMIG pour un montage en Y */
+  function tracePontage(p, dominance, amig) {
+    const def = PONT[p.greffon];
+    if (!def) return [];
+    const cibles = (p.cibles || []).map(Number).filter(n => GEO[n]).map(n => point(forme(n, dominance), 0.6));
+    if (!cibles.length) return [];
+    let o = def.origine;
+    const inferieure = cibles[0][1] > 330;                               // face inférieure : IVP, RVG, CD distale
+    if (p.montage === 'y' && amig) o = point(amig, 0.45);
+    else if (!o) o = cibles[0][0] < 300 || inferieure ? [266, 40] : [334, 40];   // anastomose proximale sur l'aorte ascendante
+    const traces = [];
+    cibles.forEach((c, i) => {
+      const a = i ? cibles[i - 1] : o;
+      // Greffon libre vers la face inférieure : il contourne le bord droit du cœur (à gauche de l'image)
+      const d = !i && !def.origine && p.montage !== 'y' && inferieure ? B(a, [104, 112], [22, c[1] + 40], c) : arc(a, c);
+      traces.push({ d, cible: c });
+    });
+    return traces;
+  }
+
   const ETIQ = { droite: 'Dominance droite', gauche: 'Dominance gauche', codominance: 'Codominance' };
   const EXPL = {
     droite: 'IVP et RVG naissent de la coronaire droite',
@@ -145,6 +181,32 @@
       const y = 400 + i * 17;
       g += `<rect x="16" y="${y - 9}" width="20" height="8" rx="4" fill="${c}" stroke="${INK}" stroke-width="1"/>` + txt(42, y, l, { size: 10, weight: 700, anchor: 'start' });
     });
+    // Pontages (sous les pastilles des lésions)
+    const ponts = (o.pontages || []).filter(p => PONT[p.greffon]);
+    if (ponts.length) {
+      const amigP = ponts.find(p => p.greffon === 'amig' && p.montage !== 'y');
+      const amigTrace = amigP ? (tracePontage(amigP, dom)[0] || {}).d : null;
+      ponts.forEach((p, i) => {
+        const def = PONT[p.greffon], col = COUL_PONT[def.type];
+        const traces = tracePontage(p, dom, amigTrace);
+        traces.forEach(t => {
+          const d = chemin(t.d);
+          g += `<path d="${d}" fill="none" stroke="${INK}" stroke-width="8" stroke-linecap="round" pointer-events="none"${p.occlus ? ' stroke-dasharray="1 0" opacity=".55"' : ''}/>`;
+          g += `<path d="${d}" fill="none" stroke="${col}" stroke-width="5" stroke-linecap="round" pointer-events="none"${p.occlus ? ' stroke-dasharray="7 6"' : ''}/>`;
+          g += `<circle cx="${t.cible[0]}" cy="${t.cible[1]}" r="6.5" fill="${p.couleur || col}" stroke="${INK}" stroke-width="2" pointer-events="none"/>`;
+        });
+        if (traces.length) {
+          const [x, y] = point(traces[0].d, def.origine && p.montage !== 'y' ? 0.3 : 0.55);
+          const lab = `P${i + 1} ${def.court}`;
+          g += `<g pointer-events="none"><rect x="${(x - lab.length * 3.4 - 6).toFixed(1)}" y="${y - 10}" width="${(lab.length * 6.8 + 12).toFixed(1)}" height="18" rx="9" fill="#fff" stroke="${col}" stroke-width="2"/>${txt(x, y + 3.5, lab, { size: 9.5, weight: 900, fill: col })}</g>`;
+        }
+      });
+      // Légende des pontages (en haut à droite)
+      [['Pontage artériel', COUL_PONT.arteriel], ['Pontage veineux', COUL_PONT.veineux]].forEach(([l, c], k) => {
+        const y = 22 + k * 17;
+        g += `<line x1="448" y1="${y - 4}" x2="472" y2="${y - 4}" stroke="${c}" stroke-width="5" stroke-linecap="round"/>` + txt(478, y, l, { size: 10, weight: 700, anchor: 'start' });
+      });
+    }
     // Lésions
     const parSeg = {};
     (o.lesions || []).forEach((l, i) => { if (GEO[l.seg] && segs.includes(+l.seg)) (parSeg[l.seg] = parSeg[l.seg] || []).push(i); });
@@ -156,5 +218,5 @@
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" font-family="${FONT}" role="img" aria-label="${esc(`Arbre coronaire, ${ETIQ[dom].toLowerCase()} : ${EXPL[dom]}`)}">${g}</svg>`;
   }
 
-  return { W, H, COULEURS: COUL, GEO, segments, position, svg, ETIQUETTES: ETIQ, EXPLICATIONS: EXPL };
+  return { W, H, COULEURS: COUL, GEO, PONTAGES: PONT, segments, position, tracePontage, svg, ETIQUETTES: ETIQ, EXPLICATIONS: EXPL };
 });

@@ -1104,17 +1104,35 @@
   const CA_PLAQUES = { calcifiee: 'calcifiée', mixte: 'partiellement calcifiée', 'non-calcifiee': 'non calcifiée' };
   const CA_EXCEPTIONS = [['', 'Aucune'], ['anomalie de naissance', 'Anomalie de naissance'], ['dissection', 'Dissection'], ['anévrisme', 'Anévrisme / pseudo-anévrisme'], ['fistule', 'Fistule coronaire'], ['vascularite', 'Vascularite'], ['compression extrinsèque', 'Compression extrinsèque'], ['autre cause non athéromateuse', 'Autre (non athéromateuse)']];
   const newCoroLesion = () => ({ seg: '', grade: '', plaque: '', hrp: { remodelage: false, hypodense: false, ponctuees: false, anneau: false }, stent: false });
+  const newPontage = () => ({ greffon: '', montage: 'simple', cible1: '', cible2: '', etat: '' });
+  const caPontCibles = p => [p.cible1, p.montage === 'sequentiel' ? p.cible2 : ''].filter(Boolean);
+  const caPontColor = e => (e === 'permeable' ? C.green : e ? caGradeColor(e) : '#ffffff');
+  // Cibles habituelles et origine de chaque greffon (tableau de référence de l'outil)
+  const CA_PONT_REF = [
+    ['amig', 'Artériel, in situ', 'Sous-clavière gauche', 'IVA (pontage de référence), diagonale'],
+    ['amid', 'Artériel, in situ ou libre', 'Sous-clavière droite', 'IVA, CD ; Cx en passant derrière l\'aorte'],
+    ['radiale', 'Artériel, greffon libre', 'Aorte ascendante ou en Y sur l\'AMIG', 'Marginales, CD, IVP'],
+    ['gep', 'Artériel, in situ', 'Artère gastroduodénale (à travers le diaphragme)', 'IVP, CD distale'],
+    ['saphene', 'Veineux, greffon libre', 'Aorte ascendante', 'Toutes : CD, IVP, marginales, diagonales'],
+  ];
+  const caPontNom = p => {
+    const G = CA.GREFFONS[p.greffon];
+    if (!G) return '[greffon]';
+    if (p.greffon === 'saphene') return 'pontage veineux (veine grande saphène)';
+    return `${G.nom}${/^in situ/.test(G.origine) && p.montage !== 'y' ? ' in situ' : ' (greffon libre)'}`;
+  };
   const caSegLabel = n => `${n} — ${CA.SEGMENTS[n].nom.replace(/^./, m => m.toUpperCase())}`;
 
   const CADRADS = {
     title: 'CAD-RADS 2.0 — coroscanner', chip: 'CAD-RADS', sub: 'coroscanner',
     keys: ['cadrads', 'scorecalcique', 'dominance'], suggest: /coro-?scanner|cad-?rads|score calcique|agatston|coronaire|dominance/,
     hint: 'Choisissez la dominance (le schéma se redessine), puis cliquez sur un segment pour y placer la lésion active. Schéma à plat, 18 segments.',
-    init: () => ({ dominance: 'droite', bissectrice: false, cac: '', ischemie: '', pontage: false, exception: '', lesions: [], active: 0 }),
+    init: () => ({ dominance: 'droite', bissectrice: false, cac: '', ischemie: '', exception: '', lesions: [], pontages: [], active: 0 }),
     newItem: () => newCoroLesion(), max: 8,
     svg(st, live) {
       return CO.svg({ dominance: st.dominance, bissectrice: st.bissectrice, live, actif: st.active,
-        lesions: st.lesions.map(l => ({ seg: +l.seg, couleur: caGradeColor(l.grade) })) });
+        lesions: st.lesions.map(l => ({ seg: +l.seg, couleur: caGradeColor(l.grade) })),
+        pontages: st.pontages.map(p => ({ greffon: p.greffon, montage: p.montage, cibles: caPontCibles(p), couleur: caPontColor(p.etat), occlus: p.etat === '100' })) });
     },
     click(st, e) {
       const z = e.target.closest('[data-seg]');
@@ -1133,7 +1151,7 @@
         </div>
         <div class="tf-row">
           ${sel('exception', 'Exception (E)', CA_EXCEPTIONS, st.exception)}
-          <span class="tf-checks">${chk('bissectrice', 'Bissectrice', st.bissectrice)}${chk('pontage', 'Pontage(s) (G)', st.pontage)}</span>
+          <span class="tf-checks">${chk('bissectrice', 'Bissectrice', st.bissectrice)}</span>
         </div>
       </fieldset>`;
       // Tableau du score calcique (ligne correspondante surlignée)
@@ -1158,12 +1176,42 @@
               Object.entries(CA.HRP).map(([k, v]) => chk(`${p}hrp.${k}`, v.replace(/^./, m => m.toUpperCase()), l.hrp[k])).join('')}</div></fieldset>`;
         }
       }
+      // Pontages aorto-coronaires
+      const presentsP = CA.segmentsPresents(st.dominance, st.bissectrice);
+      const cibleOpts = [['', '—'], ...presentsP.map(n => [String(n), caSegLabel(n)])];
+      h += `<fieldset class="tl-box tl-ponts"><legend>Pontages aorto-coronaires (G)</legend>`;
+      st.pontages.forEach((pt, i) => {
+        const p = `pontages.${i}.`;
+        h += `<div class="tl-pont" style="--c:${caPontColor(pt.etat) === '#ffffff' ? '#cfcfd6' : caPontColor(pt.etat)}">
+          <p class="tl-pont-titre"><b>Pontage ${i + 1}</b><button type="button" class="tl-x" data-act="del-pont" data-i="${i}" title="Supprimer le pontage ${i + 1}" aria-label="Supprimer le pontage ${i + 1}">×</button></p>
+          <div class="tf-row">
+            ${sel(p + 'greffon', 'Greffon', [['', '—'], ...Object.entries(CA.GREFFONS).map(([k, g]) => [k, `${g.court} — ${g.nom.replace(/^./, m => m.toUpperCase())}`])], pt.greffon, { wide: 1 })}
+            ${sel(p + 'montage', 'Montage', [['simple', 'Simple'], ['sequentiel', 'Séquentiel (2 anastomoses)'], ['y', 'Composite en Y sur l\'AMIG']], pt.montage)}
+          </div>
+          <div class="tf-row">
+            ${sel(p + 'cible1', pt.montage === 'sequentiel' ? 'Artère receveuse 1' : 'Artère receveuse', cibleOpts, pt.cible1, { wide: 1 })}
+            ${pt.montage === 'sequentiel' ? sel(p + 'cible2', 'Artère receveuse 2', cibleOpts, pt.cible2, { wide: 1 }) : ''}
+            ${sel(p + 'etat', 'État du greffon', [['', '—'], ...Object.entries(CA.ETATS_GREFFE).map(([k, v]) => [k, v.replace(/^./, m => m.toUpperCase())])], pt.etat)}
+          </div>
+        </div>`;
+      });
+      h += `<button type="button" class="tl-tab tl-add" data-act="add-pont">+ Ajouter un pontage</button>
+        <p class="tl-note">CAD-RADS 2.0 : le greffon se grade comme une artère native (sa sténose la plus sévère compte) ; l'artère native pontée, en amont de l'anastomose, <strong>n'est pas gradée</strong>.</p></fieldset>`;
+      h += `<table class="tl-ref"><caption>Types de pontages</caption>
+        <thead><tr><th>Greffon</th><th>Type</th><th>Origine</th><th>Artères receveuses habituelles</th></tr></thead><tbody>${
+        CA_PONT_REF.map(([k, type, orig, cib]) => `<tr${st.pontages.some(p => p.greffon === k) ? ' class="is-on"' : ''}><td><b>${esc(CA.GREFFONS[k].court)}</b><br><small>${esc(CA.GREFFONS[k].nom)}</small></td><td>${esc(type)}</td><td>${esc(orig)}</td><td>${esc(cib)}</td></tr>`).join('')}</tbody></table>
+        <p class="tl-note">Montages : <strong>simple</strong> (une anastomose distale) · <strong>séquentiel</strong> (un greffon, plusieurs anastomoses latéro-latérales puis terminale) · <strong>composite en Y ou en T</strong> (greffon libre branché sur l'AMIG, sans anastomose aortique) · greffons libres sinon anastomosés sur l'<strong>aorte ascendante</strong>.</p>`;
       // Rappel des catégories CAD-RADS 2.0 (catégorie obtenue surlignée)
       h += `<table class="tl-ref"><caption>CAD-RADS 2.0 — douleur thoracique stable</caption>
         <thead><tr><th>Cat.</th><th>Sténose maximale</th><th>Conduite proposée</th></tr></thead><tbody>${
         Object.entries(CA.CATEGORIES).map(([k, c]) => `<tr${r.cat === k ? ' class="is-on"' : ''}><td><b style="color:${caCatColor(k)}">${k}</b></td><td>${esc(c.stenose)}</td><td>${esc(c.conduite)}</td></tr>`).join('')}</tbody></table>
         <p class="tl-note">Modificateurs, dans l'ordre : <strong>N</strong> non diagnostique · <strong>HRP</strong> plaque à haut risque · <strong>I</strong> ischémie (I+, I−, I±) · <strong>S</strong> stent · <strong>G</strong> pontage · <strong>E</strong> exception (cause non athéromateuse).</p>`;
       return h;
+    },
+    action(st, d) {
+      if (d.act === 'add-pont') { st.pontages.push(newPontage()); return true; }
+      if (d.act === 'del-pont') { st.pontages.splice(+d.i, 1); return true; }
+      return false;
     },
     result(st) {
       const r = CA.evaluer(st);
@@ -1177,6 +1225,12 @@
         if (!l.grade) w.push(`Lésion ${i + 1} : préciser le degré de sténose.`);
         const n = CA.hrpLesion(l).length;
         if (n === 1) w.push(`Lésion ${i + 1} : un seul critère de plaque à haut risque (HRP à partir de 2).`);
+      });
+      st.pontages.forEach((pt, i) => {
+        if (!pt.greffon) w.push(`Pontage ${i + 1} : préciser le greffon.`);
+        if (!pt.cible1 || (pt.montage === 'sequentiel' && !pt.cible2)) w.push(`Pontage ${i + 1} : préciser l'artère receveuse.`);
+        if (!pt.etat) w.push(`Pontage ${i + 1} : préciser l'état du greffon.`);
+        if (pt.montage === 'y' && !st.pontages.some(q => q.greffon === 'amig' && q.montage !== 'y')) w.push(`Pontage ${i + 1} : montage en Y sans AMIG décrite.`);
       });
       const c = num(st.cac);
       if (c > 0 && !st.lesions.length) w.push('Score calcique positif : décrire les plaques (au moins CAD-RADS 1).');
@@ -1210,7 +1264,16 @@
       if (nd.length) out.push(`Segment${nd.length > 1 ? 's' : ''} non analysable${nd.length > 1 ? 's' : ''} : ${listFr(nd)}.`);
       if (!st.lesions.some(l => l.grade && l.grade !== 'nd') && r.cat === '0') out.push('Absence de plaque et de sténose coronaire.');
       if (st.ischemie) out.push(`Évaluation fonctionnelle (FFR-CT / perfusion) : ${CA.ISCHEMIE[st.ischemie]}.`);
-      if (st.pontage) out.push('Pontage(s) aorto-coronaire(s).');
+      st.pontages.forEach((pt, i) => {
+        const art = nom => (/^[aeiouhéè]/i.test(nom) ? 'l\'' : /^tronc/.test(nom) ? 'le ' : 'la ');
+        const cibles = caPontCibles(pt).map(seg => CA.SEGMENTS[seg] ? `${art(CA.SEGMENTS[seg].nom)}${CA.SEGMENTS[seg].nom} (segment ${seg})` : '[artère receveuse]');
+        const montage = pt.montage === 'y' ? ' en Y sur l\'artère mammaire interne gauche' : pt.montage === 'sequentiel' ? ' séquentiel' : '';
+        const aorte = (pt.greffon === 'saphene' || pt.greffon === 'radiale') && pt.montage !== 'y' ? ', anastomosé sur l\'aorte ascendante' : '';
+        const vers = cibles.length ? (pt.montage === 'sequentiel' ? cibles.join(' puis sur ') : cibles[0]) : '[artère receveuse]';
+        const nom = pt.greffon === 'saphene' ? `pontage veineux${montage} (veine grande saphène)` : `${caPontNom(pt)}${montage}`;
+        out.push(`Pontage n°${i + 1} : ${nom}${aorte}, sur ${vers} : ${pt.etat ? CA.ETATS_GREFFE[pt.etat] : '[état du greffon]'}.`);
+      });
+      if (st.pontages.length) out.push('Artère(s) native(s) pontée(s) non gradée(s) en amont de l\'anastomose (CAD-RADS 2.0).');
       if (st.exception) out.push(`Exception : ${st.exception}.`);
       out.push(`Conclusion : ${r.code} — ${r.titre.toLowerCase()} (${r.stenose}). Conduite proposée : ${r.conduite.replace(/^./, m => m.toLowerCase())}`);
       return out.join('\n');
@@ -1295,6 +1358,7 @@
     const b = e.target.closest('[data-act]');
     if (!b) return;
     const st = states[cur], T = TOOLS[cur], list = b.dataset.list;
+    if (T.action && T.action(st, b.dataset)) { render(); return; }
     if (b.dataset.act === 'pick') st.active = +b.dataset.i;
     if (b.dataset.act === 'add') { st[list].push(T.newItem()); if ('active' in st) st.active = st[list].length - 1; }
     if (b.dataset.act === 'del') {
