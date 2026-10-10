@@ -132,6 +132,22 @@ const CASES = [
       'Rehaussement après injection',
       'Nodules pulmonaires métastatiques'
     ]
+  },
+  {
+    tab: 'Cas 4 · Tête et cou',
+    vignette: 'Femme de 41 ans : <span class="hl-red">menton et lèvre inférieure droits engourdis</span> depuis 8 mois, <span class="hl-red">mâchoire qui dévie à droite</span> à l\'ouverture de la bouche, oreille droite « bouchée ». L\'IRM montre une <span class="hl-navy">masse bien limitée, en haltère, de la fosse infratemporale droite</span>, qui remonte le long d\'un nerf jusqu\'à la base du crâne.',
+    question: 'Par quel orifice la masse remonte-t-elle vers la base du crâne ?',
+    options: ['Fissure orbitaire supérieure', 'Foramen rond', 'Foramen ovale', 'Foramen épineux'],
+    answer: 2,
+    title: 'Schwannome du nerf mandibulaire (V3)',
+    points: [
+      'Le V3 sort du crâne par le foramen ovale',
+      'Foramen élargi à bords lisses : croissance lente',
+      'Masse bien limitée, rehaussement hétérogène',
+      'V3 : seule branche motrice (muscles masticateurs)',
+      'Spaghetti → fente, nid → rond, penne → ovale'
+    ],
+    link: { href: 'cas/schwannome-v3.html', label: 'Le cas complet, image par image →' }
   }
 ];
 
@@ -241,6 +257,7 @@ function renderCase(i) {
       <div>
         <h4>${c.title}</h4>
         <ul>${c.points.map(p => `<li>${p}</li>`).join('')}</ul>
+        ${c.link ? `<a class="btn btn-ink btn-sm quiz-more" href="${c.link.href}">${c.link.label}</a>` : ''}
         ${i < CASES.length - 1 ? '<button class="btn btn-outline btn-sm quiz-next">Cas suivant →</button>' : ''}
       </div>
     </div>`;

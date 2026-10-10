@@ -262,7 +262,7 @@ if (body) {
       const done = items.filter(i => i.dataset.result);
       const good = done.filter(i => i.dataset.result === 'ok').length;
       if (!done.length) { score.textContent = ''; return; }
-      score.textContent = `Score : ${good} / ${done.length}` + (done.length === items.length ? (good === items.length ? ' — sans faute, bravo !' : ' — relisez le tableau comparatif !') : '');
+      score.textContent = `Score : ${good} / ${done.length}` + (done.length === items.length ? (good === items.length ? ' — sans faute, bravo !' : (quiz.dataset.relire || ' — relisez le tableau comparatif !')) : '');
     };
     items.forEach(item => {
       const answer = item.dataset.answer;

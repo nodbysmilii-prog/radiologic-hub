@@ -35,7 +35,7 @@
 |---|---|
 | **Accueil** | Accroche « La radiologie d'urgence, cas par cas », compteurs animés, carte « Cas express » |
 | **Masterclass** | 6 fiches de masterclass filtrables (Essentiel / Avancé), chacune avec une fenêtre de détail (objectifs, thèmes, format) |
-| **Cas du jour** | Mini-quiz interactif sur 3 cas (striatopathie diabétique, hernie d'Amyand, sarcome de l'artère pulmonaire) avec score — accessible depuis l'accueil et le pied de page (l'entrée du menu est devenue « Communauté ») |
+| **Cas du jour** | Mini-quiz interactif sur 4 cas (striatopathie diabétique, hernie d'Amyand, sarcome de l'artère pulmonaire, schwannome du V3) avec score — accessible depuis l'accueil et le pied de page (l'entrée du menu est devenue « Communauté ») ; un cas peut renvoyer vers son **cas complet** (bouton après la réponse et bouton « Cas complet : le menton qui s'endort » sous le quiz) |
 | **Fiche flash** | 4 cartes à retourner : hypersignal T1 des noyaux gris centraux |
 | **Le format** | 6 points forts présentés en « blobs » colorés |
 | **Une journée type** | Programme heure par heure (exemple : Neuro-urgences) |
@@ -43,6 +43,20 @@
 | **Tarifs** | 3 formules (module unique, pack 3 modules, cursus complet) |
 | **FAQ** | Questions fréquentes repliables |
 | **Inscription** | Formulaire avec vérification des champs |
+
+### Cas cliniques complets (`cas/`)
+
+Une page par cas, construite comme une enquête, au style des fiches (sommaire, code couleur, impression) :
+
+- **`cas/schwannome-v3.html` — « Le menton qui s'endort »** (tête et cou, IRM), d'après la publication RadiologicHub « Trigeminal nerve, a pasta feast » traduite en français :
+  - **I. L'histoire** : scénario pédagogique signalé comme tel (clinique reconstituée ; seules les images IRM viennent du cas) — menton et lèvre inférieure engourdis, mâchoire qui dévie, oreille bouchée ; raisonnement « pourquoi V3 ? » (atteint / épargné) ; drapeau rouge du menton engourdi ;
+  - **II. L'IRM** : les 4 coupes sans annotation (axiale et coronale T2, axiale et coronale T1 après gadolinium), agrandissables ;
+  - **III. À vous de jouer** : 4 questions (espace, foramen, branche, diagnostic) avec correction et score ;
+  - **IV. Le verdict** (à déplier) : description traduite, coupes annotées (flèche sur la masse, ellipse sur le foramen ovale reprise de la publication, flèche sur l'épanchement mastoïdien), légende qui surligne les annotations ;
+  - **V. Un festin de pâtes** : pont → marmite (ganglion trigéminal) → spaghetti / nid de tagliatelles / penne et leurs passoires (fente, trou rond, trou ovale), pictogrammes dessinés en SVG ; les 3 coupes de repère de la publication (FOS + V1, FR + V2, FO + V3) avec leurs flèches ; tableau branche / orifice / destination / territoire ;
+  - **VI. Pourquoi un schwannome ?** (forme, signal, rehaussement, os, retentissement) et diagnostics différentiels ;
+  - **VII. Classification de Wanibuchi** : 4 schémas de profil de la base du crâne (A fosse moyenne, B fosse postérieure, C en haltère, D extracrânien), « Notre cas : type D » et le piège du mot « haltère » ; épilogue ;
+  - **VIII. Le compte rendu** proposé (champs `[ … ]`), **IX. À retenir**, **Testez-vous** (8 cartes).
 
 ### Fiches rapides (`fiches-rapides.html`)
 
@@ -287,6 +301,7 @@ radiologic-hub/
 ├── fiche.css               Styles communs à toutes les fiches
 ├── fiche.js                Interactions des fiches (légende, carrousels, checklist…) + menu mobile
 ├── fiches/                 Une page HTML par fiche
+├── cas/                    Une page HTML par cas clinique complet (schwannome-v3.html)
 ├── schemas/
 │   ├── prostate.js         Schéma sectoriel de la prostate (axial, sagittal, coronal) : calculateur PI-RADS et fiche prostate
 │   ├── uterus.js           Schéma de l'utérus (coronal, sagittal) : cartographie FIGO des myomes, outil FIGO et fiche myome
@@ -354,7 +369,8 @@ radiologic-hub/
 └── assets/
     ├── logo-radiologichub.png, emblem.svg, emblem-light.svg
     ├── posts/              Visuels RadiologicHub (galerie de l'accueil)
-    └── fiches/<fiche>/     Images de chaque fiche + README listant les fichiers attendus
+    ├── fiches/<fiche>/     Images de chaque fiche + README listant les fichiers attendus
+    └── cas/<cas>/          Images des cas cliniques (JPEG réenregistrés sans métadonnées)
 ```
 
 ---
@@ -364,7 +380,8 @@ radiologic-hub/
 | Je veux… | Où ? |
 |---|---|
 | Modifier une masterclass | Tableau `COURSES` dans `script.js` |
-| Modifier le quiz « Cas du jour » | Tableau `CASES` dans `script.js` |
+| Modifier le quiz « Cas du jour » | Tableau `CASES` dans `script.js` (champ facultatif `link: { href, label }` : bouton vers le cas complet) |
+| Ajouter un cas clinique complet | Créer `cas/mon-cas.html` (copier `cas/schwannome-v3.html`), images dans `assets/cas/mon-cas/` sans métadonnées ni donnée patient, puis un lien depuis le quiz (`link`) ou la section « Cas du jour » de `index.html` |
 | Modifier la fiche flash de l'accueil | Tableau `FLASH` dans `script.js` |
 | Changer tarifs, programme, FAQ | Directement dans `index.html` |
 | Ajouter une fiche rapide | Créer `fiches/ma-fiche.html` (copier une fiche existante) + ajouter une carte `<a class="fiche-card" data-spe="…">` dans `fiches-rapides.html` |
@@ -412,6 +429,8 @@ npm run backend:preparer  # recopie le noyau et les modèles dans supabase/funct
 
 Coroscanner : `tests/cadrads.test.js` couvre les pontages (greffons, état gradé, G, tracés simple / séquentiel / en Y, pointillés si occlus) et CAD-RADS 2.0 (catégories 0 à 5, 4B par le tronc commun ou trois territoires, N avant ou après la charge en plaque, P1-P4 par score calcique ou nombre de segments, ordre des modificateurs, conduite selon P et ischémie), les classes d'Agatston et le schéma coronaire (segments présents selon la dominance, cohérence schéma / règles, SVG valide, M2 rattachée à la circonflexe). Outil vérifié dans Chromium (1366 px et 390 px, sans débordement) : formule chargée, outil suggéré, clic sur chacun des segments dans les trois dominances, texte inséré.
 
+Cas « Le menton qui s'endort » : page vérifiée dans Chromium (1366 px et 390 px, sans débordement ni image manquante) : quiz et score, verdict déplié, survol de la légende, zoom d'une coupe annotée, cas n° 4 du quiz de l'accueil et son lien.
+
 Fiche myocardite : `tests/myocardite.test.js` couvre les critères de Lake Louise 2018 (T2 + T1, critère isolé, aucun critère avec ou sans clinique très évocatrice, critères de soutien seuls) et le schéma du cœur (segments AHA, orientation, arcs à travers 0°, SVG sans valeur invalide, identifiants uniques). Fiche vérifiée dans Chromium (390 px et 1366 px, sans débordement : 10 schémas dessinés, calculateur).
 
 Module Remplacements : `tests/remplacements-*.test.js` couvrent les règles de compatibilité, les formats tunisiens, les gabarits et tous les modèles d'e-mails, l'agenda .ics, le PDF et le contrat, les liens sécurisés, et un **scénario complet** (demande réservée aux spécialistes, demande ouverte aux résidents, trois remplaçants compatibles, acceptation, choix, annulation, remise en ligne, attribution automatique, relance, rappel, réalisation, récapitulatif mensuel, désinscription, réponses simultanées).
@@ -425,6 +444,8 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 ---
 
 ## À faire / points en attente
+
+- [ ] **Cas « Le menton qui s'endort »** : faire relire le scénario clinique (inventé pour l'apprentissage et signalé comme tel), la lecture de l'**épanchement mastoïdien droit** (hypersignal T2 ajouté à la description de la publication), le classement en **type D** et les lettres A-D attribuées à la classification de Wanibuchi ; confirmer que les images IRM de la publication peuvent être publiées sur le site (aucune donnée patient visible).
 
 - [ ] **Formulaire d'inscription** : l'envoi n'est pas branché (voir `TODO` dans `script.js`) → Formspree, Netlify Forms ou back-end.
 - [ ] **Tarifs, horaires, nombre de cas** : valeurs d'exemple à remplacer.
@@ -454,6 +475,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 10/10/2026 | **Cas clinique complet « Le menton qui s'endort »** (`cas/schwannome-v3.html`) : la publication « Trigeminal nerve, a pasta feast » traduite en français et réécrite en enquête — scénario clinique pédagogique, 4 coupes IRM, quiz en 4 questions, verdict déplié avec coupes annotées (masse, foramen ovale, épanchement mastoïdien), festin de pâtes (pictogrammes SVG, passoires fente / rond / ovale, coupes de repère FOS, FR, FO), sémiologie et diagnostics différentiels, 4 schémas de la classification de Wanibuchi (notre cas : type D), compte rendu proposé, à retenir, 8 cartes ; 4e cas du quiz « Cas du jour » (tête et cou) avec bouton vers le cas complet ; message de fin du quiz des fiches réglable (`data-relire`) |
 | 10/10/2026 | **Pontages en mode choix** : formule coroscanner avec une ligne « Pontages aorto-coronaires » à choix (absence de pontage, AMIG, AMID, radiale sur l'aorte ou en Y, gastro-épiploïque, saphène simple ou séquentiel) et conclusion `CAD-RADS 0` ou `0/G` ; 7 phrases automatiques `pontage…` (`amig`, `amid`, `radiale`, `gep`, `saphene`, `sequentiel`, `pasdepontage`) avec artère receveuse et état du greffon au choix ; éditeur : un champ à choix `[a / b / c]` sélectionné (Tab) ou cliqué affiche ses options, un clic (ou ↑ ↓ + Entrée) insère l'option choisie |
 | 10/10/2026 | Outil **CAD-RADS** : **types de pontages** — AMIG, AMID, artère radiale, gastro-épiploïque, veine grande saphène ; montages simple, séquentiel, composite en Y ; artère(s) receveuse(s), état du greffon ; pontages dessinés sur le schéma coronaire, tableau des types de pontages, texte rédigé, greffon gradé comme une artère native (G) |
 | 10/10/2026 | Formule **coroscanner normal** : ne garde que TECHNIQUE, RÉSULTAT et CONCLUSION (titre et renseignements cliniques retirés ; « AU TOTAL » devient « CONCLUSION ») |
