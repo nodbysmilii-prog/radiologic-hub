@@ -22,7 +22,7 @@ const CR_SPECIALTIES = {
   femme:      { label: 'Sein',              c: 'var(--crimson)' },
   trauma:     { label: 'Traumato',          c: 'var(--rose)' },
   osteo:      { label: 'Ostéo-articulaire', c: 'var(--plum)' },
-  vasculaire: { label: 'Vasculaire',        c: 'var(--teal)' },
+  vasculaire: { label: 'Cardio-vasculaire', c: 'var(--teal)' },
   pediatrie:  { label: 'Pédiatrie',         c: 'var(--green)' },
   perso:      { label: 'Mes modèles',       c: 'var(--orange)' },
 };
@@ -1195,6 +1195,43 @@ RÉSULTATS :
 
 CONCLUSION :
 [Écho-doppler des troncs supra-aortiques sans anomalie décelable / Minime infiltration athéromateuse des axes vasculaires du cou ; écho-doppler des troncs supra-aortiques sans anomalie décelable par ailleurs].`,
+  },
+  {
+    id: 'coroscanner', spe: 'vasculaire', mod: 'TDM',
+    title: 'Coroscanner — normal',
+    text: `CORO-SCANNER
+
+RENSEIGNEMENTS CLINIQUES :
+[renseignements cliniques]
+
+TECHNIQUE :
+• Acquisition hélicoïdale en 128 × 0,6 mm centrée sur le cœur avec synchronisation cardiaque et injection intraveineuse de produit de contraste iodé.
+
+RÉSULTAT :
+I/ Étude cardiaque et pleuro-parenchymateuse pulmonaire :
+• Absence d'épanchement péricardique.
+• Absence de dilatation des cavités cardiaques.
+• Tricuspidie aortique.
+• Absence de fuite aortique.
+• Fraction d'éjection calculée à [x] %.
+• Absence de dilatation de l'aorte thoracique ascendante.
+• Absence d'épanchement pleural.
+• Absence d'adénomégalie médiastinale.
+
+II/ Étude du réseau coronaire :
+• Score calcique = 0.
+• Dominance [droite / gauche / codominance].
+À droite :
+• L'artère coronaire droite prend naissance au niveau du sinus coronaire droit. Son ostium est libre. Absence de plaque et de sténose décelable.
+• Elle se termine par une interventriculaire postérieure et une rétroventriculaire gauche qui sont perméables.
+À gauche :
+• Le tronc commun gauche prend naissance au niveau du sinus coronaire gauche. Son ostium est libre. Il est perméable et, après un court trajet, il se bifurque en interventriculaire antérieure (IVA) et en circonflexe (Cx).
+• L'IVA est perméable, suivie jusqu'à la pointe du cœur, et donne naissance à [deux] diagonales perméables.
+• La Cx est perméable. Elle donne naissance à [une] marginale gauche perméable.
+• Absence de plaque et de sténose décelable sur le réseau coronaire gauche.
+
+AU TOTAL :
+Coroscanner normal : score calcique nul, absence de plaque et de sténose coronaire (CAD-RADS 0).`,
   },
 ];
 

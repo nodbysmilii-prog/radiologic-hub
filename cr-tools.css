@@ -195,3 +195,15 @@
   .tl-table { font-size: .7rem; }
   .tl-table th:nth-child(3), .tl-table td:nth-child(3) { width: 34px; }
 }
+
+/* ---------- Outil CAD-RADS (coroscanner) ---------- */
+.tool-schema [data-seg]:hover { stroke: rgba(242, 171, 47, .45); }
+.tf-checks { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 6px 16px; flex: 1 1 220px; padding-bottom: 8px; }
+.tl-ref { width: 100%; margin: 6px 0 8px; border-collapse: collapse; font-size: .74rem; line-height: 1.35; }
+.tl-ref caption { padding: 0 0 6px; text-align: left; font-size: .64rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.tl-ref th { padding: 6px 8px; background: var(--ink); color: #fff; font-size: .6rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; text-align: left; }
+.tl-ref th:first-child { border-radius: 8px 0 0 0; }
+.tl-ref th:last-child { border-radius: 0 8px 0 0; }
+.tl-ref td { padding: 6px 8px; border-top: 1px solid rgba(17, 17, 20, .08); vertical-align: top; }
+.tl-ref td:first-child { white-space: nowrap; }
+.tl-ref tr.is-on td { background: rgba(242, 171, 47, .28); font-weight: 700; }

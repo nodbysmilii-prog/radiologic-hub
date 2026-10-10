@@ -8,6 +8,8 @@
      règles dans regles/fleischner.js)
    • FIGO : cartographie des myomes utérins (schéma coronal + sagittal :
      schemas/uterus.js ; arbre décisionnel IRM : regles/myome.js)
+   • CAD-RADS 2.0 : coroscanner (arbre coronaire selon la dominance :
+     schemas/coronaires.js ; règles et score calcique : regles/cadrads.js)
    • RECIST 1.1 : réponse des tumeurs solides
    • Lugano 2014 (Cheson) : réponse des lymphomes (TEP ou TDM)
    Chaque outil rédige le texte à insérer dans le compte rendu ;
@@ -1092,9 +1094,133 @@
   };
 
   /* =======================================================
+     CAD-RADS 2.0 — coroscanner (dominance, lésions, score calcique)
+     Règles : regles/cadrads.js (testées sous Node) ; schéma : schemas/coronaires.js
+     ======================================================= */
+  const CA = window.RHRegles && window.RHRegles.cadrads;
+  const CO = window.RHCoronaires;
+  const caGradeColor = g => ({ 0: C.green, '1-24': C.green, '25-49': C.amber, '50-69': C.orange, '70-99': C.red, 100: '#5c0a18', nd: C.grey }[g] || C.blue);
+  const caCatColor = c => (c === '0' || c === '1' ? C.green : c === '2' ? C.amber : c === '3' ? C.orange : c === 'N' ? C.grey : c == null ? C.blue : C.red);
+  const CA_PLAQUES = { calcifiee: 'calcifiée', mixte: 'partiellement calcifiée', 'non-calcifiee': 'non calcifiée' };
+  const CA_EXCEPTIONS = [['', 'Aucune'], ['anomalie de naissance', 'Anomalie de naissance'], ['dissection', 'Dissection'], ['anévrisme', 'Anévrisme / pseudo-anévrisme'], ['fistule', 'Fistule coronaire'], ['vascularite', 'Vascularite'], ['compression extrinsèque', 'Compression extrinsèque'], ['autre cause non athéromateuse', 'Autre (non athéromateuse)']];
+  const newCoroLesion = () => ({ seg: '', grade: '', plaque: '', hrp: { remodelage: false, hypodense: false, ponctuees: false, anneau: false }, stent: false });
+  const caSegLabel = n => `${n} — ${CA.SEGMENTS[n].nom.replace(/^./, m => m.toUpperCase())}`;
+
+  const CADRADS = {
+    title: 'CAD-RADS 2.0 — coroscanner', chip: 'CAD-RADS', sub: 'coroscanner',
+    keys: ['cadrads', 'scorecalcique', 'dominance'], suggest: /coro-?scanner|cad-?rads|score calcique|agatston|coronaire|dominance/,
+    hint: 'Choisissez la dominance (le schéma se redessine), puis cliquez sur un segment pour y placer la lésion active. Schéma à plat, 18 segments.',
+    init: () => ({ dominance: 'droite', bissectrice: false, cac: '', ischemie: '', pontage: false, exception: '', lesions: [], active: 0 }),
+    newItem: () => newCoroLesion(), max: 8,
+    svg(st, live) {
+      return CO.svg({ dominance: st.dominance, bissectrice: st.bissectrice, live, actif: st.active,
+        lesions: st.lesions.map(l => ({ seg: +l.seg, couleur: caGradeColor(l.grade) })) });
+    },
+    click(st, e) {
+      const z = e.target.closest('[data-seg]');
+      if (!z) return false;
+      if (!st.lesions.length) { st.lesions.push(newCoroLesion()); st.active = 0; }
+      st.lesions[st.active].seg = z.dataset.seg;
+      return true;
+    },
+    form(st) {
+      const r = CA.evaluer(st), ag = CA.agatston(st.cac);
+      let h = `<fieldset class="tl-box"><legend>Examen</legend>
+        <div class="tf-row">
+          ${sel('dominance', 'Dominance', [['droite', 'Droite'], ['gauche', 'Gauche'], ['codominance', 'Codominance']], st.dominance)}
+          ${inp('cac', 'Score calcique (Agatston)', st.cac, { small: 1, ph: '0' })}
+          ${sel('ischemie', 'Ischémie (FFR-CT / perfusion)', Object.entries(CA.ISCHEMIE).map(([k, v]) => [k, k ? `${k} — ${v}` : 'Non évaluée']), st.ischemie)}
+        </div>
+        <div class="tf-row">
+          ${sel('exception', 'Exception (E)', CA_EXCEPTIONS, st.exception)}
+          <span class="tf-checks">${chk('bissectrice', 'Bissectrice', st.bissectrice)}${chk('pontage', 'Pontage(s) (G)', st.pontage)}</span>
+        </div>
+      </fieldset>`;
+      // Tableau du score calcique (ligne correspondante surlignée)
+      h += `<table class="tl-ref"><caption>Score calcique d'Agatston</caption>
+        <thead><tr><th>Score</th><th>Calcifications</th><th>Risque</th></tr></thead><tbody>${
+        CA.AGATSTON.map(a => `<tr${ag && ag.classe === a.classe ? ' class="is-on"' : ''}><td><b>${esc(a.classe)}</b></td><td>${esc(a.label)}</td><td>${esc(a.risque)}</td></tr>`).join('')}</tbody></table>
+        <p class="tl-note">Charge en plaque (CAD-RADS 2.0) par le score calcique : <strong>P1</strong> 1-100 · <strong>P2</strong> 101-300 · <strong>P3</strong> 301-999 · <strong>P4</strong> ≥ 1000 ; ou par le nombre de segments atteints : P1 ≤ 2 · P2 3-4 · P3 5-7 · P4 ≥ 8.</p>`;
+      h += tabs(st.lesions.map(l => ({ color: caGradeColor(l.grade), badge: l.grade ? CA.STENOSES[l.grade].court : '' })), st.active, 'Lésion', this.max, 'lesions');
+      const l = st.lesions[st.active];
+      if (!l) h += `<p class="tl-note">Aucune lésion : <strong>CAD-RADS ${r.cat}</strong>${r.cat === '0' ? ' (ni plaque ni sténose)' : ''}. Cliquez sur un segment du schéma ou sur « + Ajouter ».</p>`;
+      else {
+        const p = `lesions.${st.active}.`;
+        const presents = CA.segmentsPresents(st.dominance, st.bissectrice);
+        const segs = [...new Set([...presents, ...(l.seg ? [+l.seg] : [])])];
+        h += `<div class="tf-row">
+            ${sel(p + 'seg', 'Segment', [['', '—'], ...segs.map(n => [String(n), caSegLabel(n)])], l.seg, { wide: 1 })}
+            ${sel(p + 'grade', 'Sténose', [['', '—'], ...Object.entries(CA.STENOSES).map(([k, v]) => [k, v.label])], l.grade, { re: 1 })}
+          </div>`;
+        if (l.grade && l.grade !== 'nd') {
+          h += `<div class="tf-row">${sel(p + 'plaque', 'Plaque', [['', '—'], ...Object.entries(CA_PLAQUES).map(([k, v]) => [k, v.replace(/^./, m => m.toUpperCase())])], l.plaque)}${chk(p + 'stent', 'Sur stent (S)', l.stent)}</div>
+            <fieldset class="tl-box"><legend>Plaque à haut risque (HRP si au moins 2 critères)</legend><div class="tf-row">${
+              Object.entries(CA.HRP).map(([k, v]) => chk(`${p}hrp.${k}`, v.replace(/^./, m => m.toUpperCase()), l.hrp[k])).join('')}</div></fieldset>`;
+        }
+      }
+      // Rappel des catégories CAD-RADS 2.0 (catégorie obtenue surlignée)
+      h += `<table class="tl-ref"><caption>CAD-RADS 2.0 — douleur thoracique stable</caption>
+        <thead><tr><th>Cat.</th><th>Sténose maximale</th><th>Conduite proposée</th></tr></thead><tbody>${
+        Object.entries(CA.CATEGORIES).map(([k, c]) => `<tr${r.cat === k ? ' class="is-on"' : ''}><td><b style="color:${caCatColor(k)}">${k}</b></td><td>${esc(c.stenose)}</td><td>${esc(c.conduite)}</td></tr>`).join('')}</tbody></table>
+        <p class="tl-note">Modificateurs, dans l'ordre : <strong>N</strong> non diagnostique · <strong>HRP</strong> plaque à haut risque · <strong>I</strong> ischémie (I+, I−, I±) · <strong>S</strong> stent · <strong>G</strong> pontage · <strong>E</strong> exception (cause non athéromateuse).</p>`;
+      return h;
+    },
+    result(st) {
+      const r = CA.evaluer(st);
+      return badge(r.code, caCatColor(r.cat)) + badge(r.titre, caCatColor(r.cat)) + (r.P ? badge(`${r.P.code} : charge en plaque ${r.P.label}`, C.slate) : '');
+    },
+    warn(st) {
+      const w = [], presents = CA.segmentsPresents(st.dominance, st.bissectrice);
+      st.lesions.forEach((l, i) => {
+        if (!l.seg) w.push(`Lésion ${i + 1} : choisir le segment (clic sur le schéma).`);
+        else if (!presents.includes(+l.seg)) w.push(`Lésion ${i + 1} : le segment ${l.seg} n'existe pas avec la dominance choisie.`);
+        if (!l.grade) w.push(`Lésion ${i + 1} : préciser le degré de sténose.`);
+        const n = CA.hrpLesion(l).length;
+        if (n === 1) w.push(`Lésion ${i + 1} : un seul critère de plaque à haut risque (HRP à partir de 2).`);
+      });
+      const c = num(st.cac);
+      if (c > 0 && !st.lesions.length) w.push('Score calcique positif : décrire les plaques (au moins CAD-RADS 1).');
+      const r = CA.evaluer(st);
+      if (r.cat === 'N') w.push('Segment non analysable sans autre sténose ≥ 50 % : CAD-RADS N.');
+      if (r.tc) w.push('Tronc commun ≥ 50 % : CAD-RADS 4B.');
+      else if (r.tri) w.push('Atteinte sévère des trois territoires : CAD-RADS 4B.');
+      return w;
+    },
+    text(st) {
+      const out = [], r = CA.evaluer(st), ag = CA.agatston(st.cac), c = num(st.cac);
+      if (c != null) out.push(`Score calcique (Agatston) = ${fr(c, 0)} : ${ag ? ag.label.toLowerCase() : ''}${r.P && r.P.methode === 'score calcique' ? ` ; charge en plaque ${r.P.code} (${r.P.label})` : ''}.`);
+      const d = CA.DOMINANCES[st.dominance];
+      out.push(`${d.label} : ${d.texte}.`);
+      const nd = [];
+      st.lesions.forEach((l, i) => {
+        if (!l.seg && !l.grade) return;
+        const seg = l.seg && CA.SEGMENTS[l.seg] ? `${CA.SEGMENTS[l.seg].nom} (segment ${l.seg})` : '[segment]';
+        if (l.grade === 'nd') { nd.push(seg); return; }
+        let s = `Lésion n°${i + 1} : ${seg} : plaque${l.plaque ? ' ' + CA_PLAQUES[l.plaque] : ''}`;
+        if (!l.grade) s += ' [degré de sténose]';
+        else if (l.grade === '0') s += ' sans sténose';
+        else if (l.grade === '100') s += ' responsable d\'une occlusion complète';
+        else s += ` responsable d'une sténose ${CA.STENOSES[l.grade].label.replace(/^Sténose /, '')}`;
+        if (l.stent) s += ', sur stent';
+        const hrp = CA.hrpLesion(l).map(k => CA.HRP[k]);
+        if (hrp.length >= 2) s += `, avec des critères de plaque à haut risque : ${listFr(hrp)}`;
+        else if (hrp.length) s += `, ${hrp[0]}`;
+        out.push(s + '.');
+      });
+      if (nd.length) out.push(`Segment${nd.length > 1 ? 's' : ''} non analysable${nd.length > 1 ? 's' : ''} : ${listFr(nd)}.`);
+      if (!st.lesions.some(l => l.grade && l.grade !== 'nd') && r.cat === '0') out.push('Absence de plaque et de sténose coronaire.');
+      if (st.ischemie) out.push(`Évaluation fonctionnelle (FFR-CT / perfusion) : ${CA.ISCHEMIE[st.ischemie]}.`);
+      if (st.pontage) out.push('Pontage(s) aorto-coronaire(s).');
+      if (st.exception) out.push(`Exception : ${st.exception}.`);
+      out.push(`Conclusion : ${r.code} — ${r.titre.toLowerCase()} (${r.stenose}). Conduite proposée : ${r.conduite.replace(/^./, m => m.toLowerCase())}`);
+      return out.join('\n');
+    },
+  };
+
+  /* =======================================================
      Fenêtre des outils
      ======================================================= */
-  const TOOLS = { ...(PR ? { pirads: PIRADS } : {}), birads: BIRADS, tirads: TIRADS, ...(FL ? { fleischner: FLEISCHNER } : {}), ...(MY && UT ? { figo: MYOMES } : {}), recist: RECIST, lugano: LUGANO };
+  const TOOLS = { ...(PR ? { pirads: PIRADS } : {}), birads: BIRADS, tirads: TIRADS, ...(FL ? { fleischner: FLEISCHNER } : {}), ...(MY && UT ? { figo: MYOMES } : {}), ...(CA && CO ? { cadrads: CADRADS } : {}), recist: RECIST, lugano: LUGANO };
   const states = {};
   let cur = null;
   const titleEl = $('#tool-title', dlg), hintEl = $('#tool-hint', dlg), schemaEl = $('#tool-schema', dlg), formEl = $('#tool-form', dlg);
