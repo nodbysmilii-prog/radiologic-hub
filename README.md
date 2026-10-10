@@ -158,7 +158,7 @@ Deux nouvelles spécialités (**ORL / tête et cou**, **TAP / corps entier**), u
 | TDM | Uro-gynéco | Uroscanner sans et avec injection (temps excréteur) · uroscanner sans injection |
 | TDM | ORL / tête et cou | Massif facial (sinus) · cone beam des sinus · rochers |
 | TDM | Ostéo-articulaire | Rachis cervical (choix pour la cervicarthrose) · rachis lombaire |
-| TDM | Cardio-vasculaire | Coroscanner normal (d'après la photo du compte rendu du service : « examen de qualité sous-optimale » et données du patient retirés, FEVG sans valeur `[x] %`, dominance au choix, « sinus coronaire droit / gauche » à la place de « sinus antérieur », conclusion CAD-RADS 0) |
+| TDM | Cardio-vasculaire | Coroscanner normal (d'après la photo du compte rendu du service, **uniquement TECHNIQUE, RÉSULTAT et CONCLUSION** : en-tête, renseignements cliniques, « examen de qualité sous-optimale » et données du patient retirés, FEVG sans valeur `[x] %`, dominance au choix, « sinus coronaire droit / gauche » à la place de « sinus antérieur », conclusion CAD-RADS 0) |
 | IRM | Neuro | IRM cérébrale et médullaire — normale (encéphale avec injection et angiographie + rachis étage par étage + bassin) |
 | IRM | Ostéo-articulaire | IRM médullaire (rachis entier) — normale |
 | Radiographie standard | Ostéo-articulaire | Rachis lombaire (F + P) — normal · Rachis lombaire (F + P) — normal ou dégénératif · Bassin (F) — normal · Genou (F + P) — normal · Genou (F + P) — gonarthrose |
@@ -454,6 +454,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 10/10/2026 | Formule **coroscanner normal** : ne garde que TECHNIQUE, RÉSULTAT et CONCLUSION (titre et renseignements cliniques retirés ; « AU TOTAL » devient « CONCLUSION ») |
 | 10/10/2026 | Comptes rendus : formule **coroscanner normal** (d'après la photo du compte rendu du service, sans données du patient ni « examen de qualité sous-optimale », FEVG sans valeur, dominance au choix) ; nouvel outil **CAD-RADS 2.0** : schéma de l'arbre coronaire selon la **dominance droite / gauche / codominance**, lésions par segment, plaque à haut risque, **tableau du score calcique d'Agatston**, tableau des catégories CAD-RADS avec la conduite, code complet (`CAD-RADS 4A/P2/HRP`…) ; spécialité « Vasculaire » renommée « Cardio-vasculaire » ; `regles/cadrads.js`, `schemas/coronaires.js` et leurs tests |
 | 10/10/2026 | Fiche **IRM des myocardites** : seuls les critères de Lake Louise **2018** sont présentés (encadré « De 2009 à 2018 » et mentions des critères de 2009 retirés) |
 | 10/10/2026 | Fiche **IRM des myocardites** : les exemples ne citent plus d'auteurs (leurs images n'étant pas reprises) — section devenue « Les aspects IRM à connaître », 7 situations types avec leur schéma, sans chiffres d'études ; section Références et liens DOI retirés |

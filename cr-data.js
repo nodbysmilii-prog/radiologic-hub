@@ -1199,12 +1199,7 @@ CONCLUSION :
   {
     id: 'coroscanner', spe: 'vasculaire', mod: 'TDM',
     title: 'Coroscanner — normal',
-    text: `CORO-SCANNER
-
-RENSEIGNEMENTS CLINIQUES :
-[renseignements cliniques]
-
-TECHNIQUE :
+    text: `TECHNIQUE :
 • Acquisition hélicoïdale en 128 × 0,6 mm centrée sur le cœur avec synchronisation cardiaque et injection intraveineuse de produit de contraste iodé.
 
 RÉSULTAT :
@@ -1230,7 +1225,7 @@ II/ Étude du réseau coronaire :
 • La Cx est perméable. Elle donne naissance à [une] marginale gauche perméable.
 • Absence de plaque et de sténose décelable sur le réseau coronaire gauche.
 
-AU TOTAL :
+CONCLUSION :
 Coroscanner normal : score calcique nul, absence de plaque et de sténose coronaire (CAD-RADS 0).`,
   },
 ];
