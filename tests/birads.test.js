@@ -172,6 +172,9 @@ test('conduite à tenir du service selon la catégorie la plus élevée', () => 
   assert.deepEqual(B.conduite(['1', '1']), [DEUX_ANS]);
   assert.deepEqual(B.conduite(['2', '1']), [DEUX_ANS]);
   assert.deepEqual(B.conduite(['3', '2']), [SIX_MOIS]);
+  assert.deepEqual(B.conduite(['3', '1'], ['echo']), [SIX_MOIS]);
+  assert.deepEqual(B.conduite(['3', '1'], ['mammo']), ['À contrôler dans 6 mois par une mammographie.'], 'BI-RADS 3 vu seulement en mammographie');
+  assert.deepEqual(B.conduite(['3', '3'], ['echo', 'mammo']), ['À contrôler dans 6 mois par une mammographie et une échographie mammaire.']);
   assert.deepEqual(B.conduite(['3', '4B']), [BIOPSIE], 'la catégorie la plus élevée l\'emporte');
   assert.deepEqual(B.conduite(['0', '2']), [B.CONDUITE[0]], 'bilan incomplet : pas de contrôle à deux ans');
   assert.deepEqual(B.conduite(['', '1']), ['[conduite à tenir]'], 'catégorie manquante : champ à compléter');
@@ -182,4 +185,18 @@ test('conduite à tenir du service selon la catégorie la plus élevée', () => 
   l.cat = '4A';
   const r2 = B.integrer(r1, e).texte;
   assert.ok(r2.includes(BIOPSIE) && !r2.includes(SIX_MOIS), r2);
+});
+
+test('BI-RADS 3 en mammographie seule : contrôle par mammographie dans 6 mois', () => {
+  const e = etat('mammo-echo');
+  const l = lesion(e, { mod: 'mammo', breast: 'G', type: 'calc', calcMorph: 'typiquement bénignes', calcDist: 'groupées (en amas)', cat: '3' });
+  const r = B.integrer(modele('mammo-echo'), e).texte;
+  assert.ok(r.endsWith('À contrôler dans 6 mois par une mammographie.'), r);
+  // Une lésion classée 3 en échographie s'ajoute : contrôle par les deux examens, sans garder l'ancienne phrase
+  lesion(e, { mod: 'echo', breast: 'D', type: 'kyste', cyst: 'compliqué (contenu échogène)', cat: '3' });
+  const r2 = B.integrer(r, e).texte;
+  assert.ok(r2.endsWith('\nÀ contrôler dans 6 mois par une mammographie et une échographie mammaire.'), r2);
+  assert.equal((r2.match(/À contrôler dans 6 mois/g) || []).length, 1);
+  l.cat = '2';
+  assert.ok(B.integrer(r2, e).texte.endsWith('\nÀ contrôler dans 6 mois par une échographie mammaire.'));
 });

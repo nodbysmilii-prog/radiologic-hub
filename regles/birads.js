@@ -197,16 +197,27 @@
       ls.forEach(({ l, i }) => L.push(`• ${SEINS[b]}, lésion n°${i + 1}${mods.length > 1 ? ` (${MODALITES[l.mod].nom.toLowerCase()})` : ''} : ${resume(l)} — ${categorie(l.cat)}.`));
       if (ls.length > 1) L.push(`• ${SEINS[b]} : ${categorie(categorieSein(etat, b))}, catégorie la plus élevée.`);
     }
-    return L.concat(conduite(['D', 'G'].map(b => categorieSein(etat, b))));
+    const vues3 = [...new Set(etat.lesions.filter(l => l.cat === '3').map(l => l.mod))];
+    return L.concat(conduite(['D', 'G'].map(b => categorieSein(etat, b)), vues3));
+  }
+
+  /* BI-RADS 3 : contrôle à 6 mois par la modalité qui montre la ou les lésions classées 3
+     (échographie par défaut ; mammographie seule → mammographie ; les deux → les deux) */
+  const EXAMEN_CONTROLE = { mammo: 'une mammographie', echo: 'une échographie mammaire', irm: 'une IRM mammaire' };
+  function controle3(vues) {
+    const v = ['mammo', 'echo', 'irm'].filter(m => (vues || []).includes(m));
+    return v.length ? `À contrôler dans 6 mois par ${v.map(m => EXAMEN_CONTROLE[m]).join(' et ')}.` : CONDUITE[3];
   }
 
   /* Conduite selon la catégorie la plus élevée des deux seins ; une catégorie 0 (bilan incomplet)
-     ajoute sa phrase ; catégorie manquante : champ à compléter */
-  function conduite(cats) {
+     ajoute sa phrase ; catégorie manquante : champ à compléter.
+     vues3 : modalités des lésions classées BI-RADS 3 */
+  function conduite(cats, vues3) {
     if (cats.some(c => !c)) return ['[conduite à tenir]'];
     const haut = cats.filter(c => c !== '0').sort((x, y) => RANG[y] - RANG[x])[0];
     const L = [];
-    if (haut && RANG[haut] >= 3) L.push(CONDUITE[haut.charAt(0)]);
+    if (haut === '3') L.push(controle3(vues3));
+    else if (haut && RANG[haut] > 3) L.push(CONDUITE[haut.charAt(0)]);
     if (cats.includes('0')) L.push(CONDUITE[0]);
     return L.length ? L : [CONDUITE[1]];
   }
@@ -329,7 +340,7 @@
       return { titre: 'CONCLUSION', creee: true };
     }
     const fin = finRubrique(L, c);
-    const garde = L.slice(c + 1, fin).filter(l => l.trim() && !/^\s*\[[^\]]*\]\s*\.?\s*$/.test(l) && !/BI-RADS/.test(l) && !/^\s*Conduite à tenir/.test(l) && !PHRASES_CONDUITE.has(l.trim()) && !/^\s*•\s*Seins de densité de type/.test(l));
+    const garde = L.slice(c + 1, fin).filter(l => l.trim() && !/^\s*\[[^\]]*\]\s*\.?\s*$/.test(l) && !/BI-RADS/.test(l) && !/^\s*Conduite à tenir/.test(l) && !PHRASES_CONDUITE.has(l.trim()) && !/^\s*À contrôler dans 6 mois par /.test(l) && !/^\s*•\s*Seins de densité de type/.test(l));
     const suite = fin < L.length ? [''] : [];
     L.splice(c + 1, fin - c - 1, ...lignes, ...garde, ...suite);
     return { titre: L[c].trim().replace(/\s*:$/, ''), creee: false };
