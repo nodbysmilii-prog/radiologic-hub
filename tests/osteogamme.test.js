@@ -7,6 +7,7 @@ const assert = require('node:assert/strict');
 const fs = require('fs');
 const path = require('path');
 const D = require('../outils/osteogamme-data.js');
+const OsteoGammeMoteur = require('../outils/osteogamme-moteur.js');
 
 const RACINE = path.join(__dirname, '..');
 const OS = Object.keys(D.CAT), CATEGORIES = [...new Set(Object.values(D.CAT))];
@@ -55,7 +56,7 @@ test('page /outils/osteogamme : référencement, avertissement, menu, onglet Pon
   for (const [, lien] of html.matchAll(/(?:src|href)="([^"#?:]+\.(?:js|css|svg|png))(?:\?v=\d+)?"/g)) {
     assert.ok(fs.existsSync(path.join(RACINE, 'outils', lien)), `${lien} introuvable`);
   }
-  assert.ok(html.indexOf('osteogamme-data.js') < html.indexOf('osteogamme.js?'), 'données chargées avant le moteur');
+  assert.ok(html.indexOf('osteogamme-data.js') < html.indexOf('osteogamme-moteur.js') && html.indexOf('osteogamme-moteur.js') < html.indexOf('osteogamme.js?'), 'données, puis moteur, puis affichage');
   const js = fs.readFileSync(path.join(RACINE, 'outils/osteogamme.js'), 'utf8');
   assert.match(js, /has\('admin'\)/, 'Pondérations avec ?admin');
   assert.match(js, /localhost/, 'Pondérations en local');
@@ -70,4 +71,31 @@ test('menu : « Outils › OsteoGamme » sur toutes les pages du site', () => {
     assert.ok(html.includes(`<a href="${pre}outils/osteogamme" class="nav-groupe-titre">Outils`), `${p} : entrée Outils`);
     assert.ok(html.includes(`<a href="${pre}outils/osteogamme">OsteoGamme<small>`), `${p} : sous-menu OsteoGamme`);
   }
+});
+
+test('moteur partagé : cas exemples, alertes, état, créé plusieurs fois sans recalculer les os', () => {
+  const M = OsteoGammeMoteur(D);
+  const tete = s => { M.state = { ...s }; return M.evaluate().res[0].dx.id; };
+  assert.deepEqual(D.EXAMPLES.map(e => tete(e.s)), ['tcg', 'os', 'mm', 'df'], 'diagnostic en tête de chaque cas exemple (comme l\'outil d\'origine)');
+  M.state = { ...D.EXAMPLES[1].s };
+  assert.deepEqual(M.flags().map(f => f[1]), ['Lésion d’allure agressive']);
+  M.state = {};
+  assert.equal(M.evaluate().filled.length, 0);
+  const avant = JSON.stringify(D.DX.map(d => d.w));
+  const M2 = OsteoGammeMoteur(D);
+  assert.equal(JSON.stringify(D.DX.map(d => d.w)), avant, 'os et sites calculés une seule fois');
+  M2.state = { ...D.EXAMPLES[0].s };
+  assert.equal(M2.evaluate().res[0].dx.id, 'tcg');
+  M2.overrides = { tcg: { age: { '20-40': -3 }, segment: { epiphyse: -3 }, lodwick: { IB: -3 }, axe: { excentree: -3 } } };
+  assert.notEqual(M2.evaluate().res[0].dx.id, 'tcg', 'pondérations modifiées prises en compte');
+  assert.equal(tete(D.EXAMPLES[0].s), 'tcg', 'chaque moteur garde ses propres modifications');
+});
+
+test('page Comptes rendus : outil OsteoGamme branché sur le même moteur', () => {
+  const html = fs.readFileSync(path.join(RACINE, 'comptes-rendus.html'), 'utf8');
+  const i = s => html.indexOf(s);
+  assert.ok(i('outils/osteogamme-data.js') > 0 && i('outils/osteogamme-data.js') < i('outils/osteogamme-moteur.js') && i('outils/osteogamme-moteur.js') < i('cr-tools.js?'), 'données et moteur chargés avant les outils');
+  const tools = fs.readFileSync(path.join(RACINE, 'cr-tools.js'), 'utf8');
+  assert.match(tools, /osteogamme: OSTEOGAMME/);
+  assert.match(tools, /OsteoGammeMoteur\(OGD\)/);
 });

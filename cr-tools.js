@@ -14,6 +14,8 @@
      schemas/coronaires.js ; règles et score calcique : regles/cadrads.js)
    • RECIST 1.1 : réponse des tumeurs solides
    • Lugano 2014 (Cheson) : réponse des lymphomes (TEP ou TDM)
+   • OsteoGamme : gamme diagnostique d'une lésion osseuse lytique (même
+     calcul que la page Outils › OsteoGamme : outils/osteogamme-*.js)
    Chaque outil rédige le texte à insérer dans le compte rendu ;
    les schémas (SVG) peuvent être joints, copiés ou téléchargés.
    Liaison avec l'éditeur : window.RHEditor (cr.js).
@@ -1225,7 +1227,84 @@
   /* =======================================================
      Fenêtre des outils
      ======================================================= */
-  const TOOLS = { ...(PR ? { pirads: PIRADS } : {}), ...(BR ? { birads: BIRADS } : {}), tirads: TIRADS, ...(FL ? { fleischner: FLEISCHNER } : {}), ...(MY && UT ? { figo: MYOMES } : {}), ...(CA && CO ? { cadrads: CADRADS } : {}), recist: RECIST, lugano: LUGANO };
+  /* =======================================================
+     OsteoGamme — gamme diagnostique d'une lésion osseuse lytique
+     (données : outils/osteogamme-data.js ; calcul : outils/osteogamme-moteur.js,
+     le même que la page Outils › OsteoGamme, pondérations du fichier de données)
+     ======================================================= */
+  const OGD = typeof OsteoGammeDonnees !== 'undefined' ? OsteoGammeDonnees : null;   // déclaré par osteogamme-data.js
+  const OGM = OGD && window.OsteoGammeMoteur ? window.OsteoGammeMoteur(OGD) : null;
+  const ogEval = st => { OGM.state = st.c; return OGM.evaluate(); };
+  const OG_NAT = { malin: C.red, agressif: C.orange, benin: C.green, infect: C.amber, pseudo: C.slate };
+  const OG_OS = { femur: 'du fémur', tibia: 'du tibia', fibula: 'de la fibula', humerus: 'de l\'humérus', radius: 'du radius ou de l\'ulna', mains: 'd\'un os de la main', pieds: 'd\'un métatarsien ou d\'une phalange d\'orteil', tarse: 'du tarse', rachis: 'du rachis', sacrum: 'du sacrum', bassin: 'du bassin', scap: 'de la scapula ou de la clavicule', cote: 'd\'une côte', crane: 'du crâne ou du massif facial' };
+  /* Texte de chaque critère : [singulier, pluriel] (lésions multiples) */
+  const OG_TXT = {
+    segment: { epiphyse: ['épiphysaire', 'épiphysaires'], metaphyse: ['métaphysaire', 'métaphysaires'], diaphyse: ['diaphysaire', 'diaphysaires'] },
+    axe: { centrale: ['centrale', 'centrales'], excentree: ['excentrée', 'excentrées'], corticale: ['corticale', 'corticales'], surface: ['juxtacorticale', 'juxtacorticales'] },
+    matrice: { aucune: 'sans matrice minéralisée', chondroide: 'à matrice chondroïde (anneaux et arcs)', osteoide: 'à matrice ostéoïde', verre: 'à matrice en verre dépoli' },
+    cloisons: { oui: ['cloisonnée', 'cloisonnées'], non: ['non cloisonnée', 'non cloisonnées'] },
+    soufflure: { oui: ['soufflante', 'soufflantes'], non: ['non soufflante', 'non soufflantes'] },
+    nll: { oui: 'avec niveaux liquide-liquide', non: 'sans niveau liquide-liquide' },
+    perioste: { aucune: 'sans réaction périostée', continue: 'avec réaction périostée continue et solide', agressive: 'avec réaction périostée agressive (lamellaire, spicules ou triangle de Codman)' },
+    masse: { oui: 'avec masse des tissus mous', non: 'sans masse des tissus mous' },
+    signe: { fragment: 'avec signe du fragment tombé', sequestre: 'avec séquestre', nidus: 'avec nidus', biseau: 'avec bords biseautés (vertèbre plane)' },
+  };
+  const minInit = t => t.charAt(0).toLowerCase() + t.slice(1);
+  /* Description de la lésion à partir des critères actifs (sans l'âge, le sexe ni le cancer connu) */
+  function ogDescription(c) {
+    OGM.state = c;
+    const on = k => { const f = OGD.F.find(x => x.k === k); return c[k] && OGM.active(f) ? c[k] : ''; };
+    const pl = on('nombre') === 'multiple' ? 1 : 0;
+    const accord = (k, v) => { const t = OG_TXT[k][v]; return Array.isArray(t) ? t[pl] : t; };
+    const mat = on('matrice');
+    let t = pl ? `Lésions osseuses${!mat || mat === 'aucune' ? ' lytiques' : ''} multiples` : `Lésion osseuse${!mat || mat === 'aucune' ? ' lytique' : ''}${on('nombre') === 'unique' ? ' unique' : ''}`;
+    if (on('os')) t += on('extremite') ? ` de l'extrémité ${on('extremite')} ${OG_OS[on('os')]}` : ` ${OG_OS[on('os')]}`;
+    const parts = ['segment', 'axe'].filter(on).map(k => accord(k, on(k)));
+    if (on('lodwick')) { const o = OGD.F.find(x => x.k === 'lodwick').o.find(x => x[0] === on('lodwick')); parts.push(`de type ${o[1]} de Lodwick (${o[2]})`); }
+    ['matrice', 'cloisons', 'soufflure', 'nll', 'perioste', 'masse', 'signe'].filter(on).forEach(k => parts.push(accord(k, on(k))));
+    return [t, ...parts].join(', ') + '.';
+  }
+
+  const OSTEOGAMME = OGM && {
+    title: 'OsteoGamme — lésion osseuse lytique', chip: 'OsteoGamme', sub: 'os lytique',
+    keys: ['osteogamme', 'lyseosseuse'], suggest: /\blytiques?\b|osteolys|lacunes? osseuses?|lodwick|tumeurs? osseuses?|lesions? osseuses?/,
+    hint: 'Cochez les critères de la lésion : la gamme diagnostique se classe en direct. Outil d\'aide au raisonnement et d\'enseignement : les pondérations sont une première version à valider ; il ne remplace ni l\'analyse radiologique complète ni l\'histologie.',
+    init: () => ({ c: {}, n: '3' }),
+    action(st, d) {
+      if (d.act === 'og-ex') { st.c = { ...OGD.EXAMPLES[+d.i].s }; return true; }
+      if (d.act === 'og-raz') { st.c = {}; return true; }
+      return false;
+    },
+    form(st) {
+      OGM.state = st.c;
+      let h = `<div class="tl-tabs og-cas">${OGD.EXAMPLES.map((e, i) => `<button type="button" class="tl-tab" data-act="og-ex" data-i="${i}">${esc(e.l)}</button>`).join('')}<button type="button" class="tl-tab tl-del" data-act="og-raz">Tout effacer</button></div>`;
+      h += OGD.GROUPS.map(g => `<fieldset class="tl-box"><legend>${esc(g)}</legend><div class="tf-row">${OGD.F.filter(f => f.g === g).map(f => {
+        const html = sel(`c.${f.k}`, `${f.l}${f.hint ? ` (${f.hint})` : ''}`, [['', '—'], ...f.o.map(([v, l, x]) => [v, x ? `${l} — ${x}` : l])], st.c[f.k] || '');
+        return OGM.active(f) ? html : html.replace('<select ', '<select disabled ');
+      }).join('')}</div></fieldset>`).join('');
+      h += `<div class="tf-row">${sel('n', 'Hypothèses insérées', [['3', 'Les 3 premières'], ['5', 'Les 5 premières'], ['1', 'La première']], st.n)}</div>
+        <p class="tl-note">Critères pour et contre, messages clés : <a href="outils/osteogamme" target="_blank" rel="noopener">page OsteoGamme complète</a>.</p>`;
+      return h;
+    },
+    warn(st) { OGM.state = st.c; return OGM.flags().map(([, t, x]) => `${t} : ${x}`); },
+    result(st) {
+      const { filled, res } = ogEval(st);
+      if (filled.length < 2) return badge('Renseignez au moins deux critères (par exemple l\'âge et la localisation)', C.grey);
+      return res.slice(0, 5).map((r, i) => badge(`${i + 1}. ${r.dx.n}`, OG_NAT[r.dx.nat] || C.blue)).join('');
+    },
+    text(st) {
+      const { filled, res } = ogEval(st);
+      const out = [`• ${ogDescription(st.c)}`];
+      if (filled.length < 2) out.push('• Hypothèses diagnostiques : [à compléter].');
+      else {
+        const noms = res.slice(0, +st.n || 3).map(r => minInit(r.dx.n));
+        out.push(noms.length > 1 ? `• Hypothèses diagnostiques : ${noms[0]} en premier lieu ; à discuter : ${noms.slice(1).join(', ')}.` : `• Hypothèse diagnostique : ${noms[0]}.`);
+      }
+      return out.join('\n');
+    },
+  };
+
+  const TOOLS = { ...(PR ? { pirads: PIRADS } : {}), ...(BR ? { birads: BIRADS } : {}), tirads: TIRADS, ...(FL ? { fleischner: FLEISCHNER } : {}), ...(MY && UT ? { figo: MYOMES } : {}), ...(CA && CO ? { cadrads: CADRADS } : {}), recist: RECIST, lugano: LUGANO, ...(OSTEOGAMME ? { osteogamme: OSTEOGAMME } : {}) };
   const states = {};
   let cur = null;
   const titleEl = $('#tool-title', dlg), hintEl = $('#tool-hint', dlg), schemaEl = $('#tool-schema', dlg), formEl = $('#tool-form', dlg);

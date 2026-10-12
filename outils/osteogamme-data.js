@@ -3,7 +3,7 @@
    ---------------------------------------------------------
    Seul fichier à modifier pour mettre à jour l'outil (critères,
    diagnostics, pondérations, cas exemples). La logique de calcul est
-   dans osteogamme.js et ne doit pas changer.
+   dans osteogamme-moteur.js et ne doit pas changer.
 
    F        critères du formulaire : k (clé), g (groupe), l (libellé),
             o (choix : [valeur, libellé, précision facultative]),
@@ -126,4 +126,5 @@ const EXAMPLES=[
  {l:'Côte, verre dépoli',s:{age:'10-20',nombre:'unique',os:'cote',axe:'centrale',lodwick:'IA',matrice:'verre',soufflure:'oui',perioste:'aucune'}}
 ];
 
-if (typeof module === 'object' && module.exports) module.exports = { LONG, TUBULAR, CAT, F, GROUPS, DX, BONUS, SITE, EXAMPLES };
+const OsteoGammeDonnees = { LONG, TUBULAR, CAT, F, GROUPS, DX, BONUS, SITE, EXAMPLES };
+if (typeof module === 'object' && module.exports) module.exports = OsteoGammeDonnees;
