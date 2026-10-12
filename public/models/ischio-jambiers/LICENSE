@@ -20,8 +20,9 @@ Attribution
 Modifications apportées par RadiologicHub (octobre 2026)
 --------------------------------------------------------
 - extraction de 18 structures du membre inférieur droit (liste et détail par fichier : manifest.json) ;
-- tibia, fibula et nerf tibial coupés 12 cm sous le sommet du tibia, sections refermées ;
-- nerfs tibial et fibulaire commun épaissis pour l'affichage (× 2,5 et × 3) ;
+- tibia, fibula (tête incluse) et nerf tibial coupés 12 cm sous le sommet du tibia, sections refermées ;
+- nerfs calés sur des diamètres d'affichage approximatifs (sciatique 11 mm au tiers moyen de la cuisse,
+  tibial 5 mm et fibulaire commun 3,5 mm dans la fosse poplitée) ;
 - simplification des maillages (décimation), matériaux simplifiés (muscle, tendon, os, cartilage,
   nerf, artère, veine), recentrage commun à tous les fichiers ;
 - conversion en glTF binaire (.glb) et compression meshopt.

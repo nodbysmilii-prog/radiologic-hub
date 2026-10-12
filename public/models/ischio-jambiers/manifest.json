@@ -18,7 +18,7 @@
  },
  "licence": "CC BY-SA 4.0",
  "compression": "EXT_meshopt_compression (gltf-transform meshopt)",
- "total_octets": 320692,
+ "total_octets": 339660,
  "modeles": [
   {
    "id": "biceps-long",
@@ -30,11 +30,11 @@
     "muscle",
     "tendon"
    ],
-   "triangles": 4500,
-   "octets": 38108,
-   "version": "f6c8687a5980",
+   "triangles": 5806,
+   "octets": 46520,
+   "version": "b3927254df19",
    "modifications": [
-    "simplifié de 7258 à 4500 triangles"
+    "simplifié de 7258 à 5806 triangles (20 %)"
    ]
   },
   {
@@ -77,11 +77,11 @@
     "muscle",
     "tendon"
    ],
-   "triangles": 4499,
-   "octets": 37792,
-   "version": "35ee6a7a1451",
+   "triangles": 5951,
+   "octets": 48276,
+   "version": "808fd880f747",
    "modifications": [
-    "simplifié de 7442 à 4500 triangles"
+    "simplifié de 7442 à 5952 triangles (20 %)"
    ]
   },
   {
@@ -97,7 +97,7 @@
    "octets": 22572,
    "version": "a6eedaf7cb00",
    "modifications": [
-    "simplifié de 3326 à 2500 triangles"
+    "simplifié de 3326 à 2500 triangles (25 %)"
    ]
   },
   {
@@ -114,7 +114,7 @@
    "octets": 27616,
    "version": "c4ba9c66455c",
    "modifications": [
-    "simplifié de 8192 à 2500 triangles"
+    "simplifié de 8192 à 2500 triangles (69 %)"
    ]
   },
   {
@@ -131,7 +131,7 @@
    "octets": 23380,
    "version": "6647dc942321",
    "modifications": [
-    "simplifié de 9356 à 2500 triangles"
+    "simplifié de 9356 à 2500 triangles (73 %)"
    ]
   },
   {
@@ -148,7 +148,7 @@
    "octets": 24404,
    "version": "43eebac11e95",
    "modifications": [
-    "simplifié de 3788 à 3000 triangles"
+    "simplifié de 3788 à 3000 triangles (21 %)"
    ]
   },
   {
@@ -165,7 +165,7 @@
    "octets": 24124,
    "version": "7e32f21c0773",
    "modifications": [
-    "simplifié de 3794 à 3000 triangles"
+    "simplifié de 3794 à 3000 triangles (21 %)"
    ]
   },
   {
@@ -212,10 +212,10 @@
     "nerf"
    ],
    "triangles": 1124,
-   "octets": 9328,
-   "version": "91bcab8a2559",
+   "octets": 9392,
+   "version": "2a6abf4099de",
    "modifications": [
-    "épaisseur du pack (1 à 12 mm de diamètre)"
+    "diamètre d'affichage 11 mm au tiers moyen de la cuisse (mesuré : 10.3 mm ; pack : 1 à 12 mm ; section ronde ; approximatif)"
    ]
   },
   {
@@ -229,9 +229,9 @@
    ],
    "triangles": 284,
    "octets": 3928,
-   "version": "3a7f9866acf4",
+   "version": "e9675d5cf665",
    "modifications": [
-    "épaisseur ×2.5 pour l'affichage (pack : 1 à 4 mm de diamètre ; approximatif)",
+    "diamètre d'affichage 5 mm dans la fosse poplitée (mesuré : 4.6 mm ; pack : 1 à 4 mm ; section ronde ; approximatif)",
     "coupé 12 cm sous le sommet du tibia, section refermée"
    ]
   },
@@ -245,10 +245,10 @@
     "nerf"
    ],
    "triangles": 460,
-   "octets": 5124,
-   "version": "b7ace17308ba",
+   "octets": 5132,
+   "version": "ecd51734b084",
    "modifications": [
-    "épaisseur ×3 pour l'affichage (pack : 1 à 1 mm de diamètre ; approximatif)"
+    "diamètre d'affichage 3.5 mm dans la fosse poplitée (mesuré : 3.2 mm ; pack : 1 à 1 mm ; section ronde ; approximatif)"
    ]
   },
   {

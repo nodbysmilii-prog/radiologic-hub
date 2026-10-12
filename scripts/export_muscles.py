@@ -15,12 +15,13 @@ Usage (Blender sans interface, scripts du fichier .blend désactivés) :
   1. liste FERMÉE d'objets (STRUCTURES) ; refus de tout objet rangé dans une
      collection sous licence NC du pack (oreille interne, rein) ;
   2. géométrie évaluée en coordonnées monde ; nerfs et vaisseaux sont des
-     courbes dont le pack règle l'épaisseur point par point : elle est gardée,
-     sauf pour les nerfs tibial et fibulaire commun (1 à 4 mm dans le pack),
-     épaissis par un facteur d'AFFICHAGE approximatif ;
+     courbes dont le pack règle l'épaisseur point par point : elle est gardée
+     pour les vaisseaux ; les nerfs sont calés sur un diamètre d'AFFICHAGE
+     réaliste approximatif (sciatique au tiers moyen de la cuisse, tibial et
+     fibulaire commun dans la fosse poplitée), mesuré après export ;
   3. coupe horizontale sous le genou (tibia et fibula proximaux, nerf tibial),
      section refermée ;
-  4. simplification (décimation) jusqu'au nombre de triangles visé ;
+  4. simplification (décimation) : nombre de triangles visé, ou proportion gardée ;
   5. matériaux simplifiés (muscle / tendon / os / cartilage / nerf / artère / veine) ;
   6. recentrage commun (tous les fichiers restent alignés entre eux) ;
   7. un .glb par structure, puis compression meshopt (gltf-transform) ;
@@ -44,15 +45,22 @@ Z_ANATOMY_COMMIT = '2b6cf98a8ca012571ecb252e5c077b42a21b3b61'
 # Collections du pack sous licence NC (non commerciale) : rien ne doit en venir.
 NC = re.compile(r'(ear|cochlea|labyrinth|vestibul|kidney|renal)', re.I)
 
-# Distance gardée sous le sommet du tibia (plateau) pour la jambe : 12 cm
+# Distance gardée sous le sommet du tibia (plateau) pour la jambe : 12 cm (la tête fibulaire reste entière)
 JAMBE_GARDEE = 0.12
+# Altitudes de mesure des nerfs (repère du pack, m) : milieu du fémur (0,430-0,884) et fosse poplitée
+Z_TIERS_MOYEN = 0.657
+Z_FOSSE_POPLITEE = 0.47
 
-# id (nom du fichier) · objet source · nom français · catégorie · triangles visés · facteur d'épaisseur (courbes ; 1 = pack)
+# id (nom du fichier) · objet source · nom français · catégorie · simplification · diamètre des courbes
+#   simplification : entier = triangles visés ; décimal ≤ 1 = proportion gardée ; None = aucune
+#   diamètre : None = épaisseur du pack ; (mm, rayon_pack_min, z_mesure) = diamètre d'affichage imposé
+#              aux points dont le rayon dans le pack est ≥ rayon_pack_min (le tronc, pas les racines),
+#              mesuré à l'altitude z_mesure (repère du pack, en mètres)
 STRUCTURES = [
-    ('biceps-long',           'Long head of biceps femoris.r',  'Longue portion du biceps fémoral', 'muscle',   4500, None),
-    ('biceps-court',          'Short head of biceps femoris.r', 'Courte portion du biceps fémoral', 'muscle',   4500, None),
-    ('semi-tendineux',        'Semitendinosus muscle.r',        'Semi-tendineux',                   'muscle',   4500, None),
-    ('semi-membraneux',       'Semimembranosus muscle.r',       'Semi-membraneux',                  'muscle',   4500, None),
+    ('biceps-long',           'Long head of biceps femoris.r',  'Longue portion du biceps fémoral', 'muscle',   0.8,  None),
+    ('biceps-court',          'Short head of biceps femoris.r', 'Courte portion du biceps fémoral', 'muscle',   None, None),
+    ('semi-tendineux',        'Semitendinosus muscle.r',        'Semi-tendineux',                   'muscle',   None, None),
+    ('semi-membraneux',       'Semimembranosus muscle.r',       'Semi-membraneux',                  'muscle',   0.8,  None),
     ('grand-gluteal',         'Gluteus maximus muscle.r',       'Grand glutéal',                    'contexte', 2500, None),
     ('grand-adducteur',       'Adductor magnus.r',              'Grand adducteur',                  'contexte', 2500, None),
     ('vaste-lateral',         'Vastus lateralis muscle.r',      'Vaste latéral',                    'contexte', 2500, None),
@@ -60,13 +68,13 @@ STRUCTURES = [
     ('femur',                 'Femur.r',                        'Fémur',                            'os',       3000, None),
     ('tibia-proximal',        'Tibia.r',                        'Tibia (partie proximale)',         'os',       3000, None),
     ('fibula-proximale',      'Fibula.r',                       'Fibula (partie proximale)',        'os',       3000, None),
-    ('nerf-sciatique',        'Sciatic nerve.r',                'Nerf sciatique',                   'nerf',     None, 1.0),
-    ('nerf-tibial',           'Tibial nerve.r',                 'Nerf tibial',                      'nerf',     None, 2.5),
-    ('nerf-fibulaire-commun', 'Common fibular nerve.r',         'Nerf fibulaire commun',            'nerf',     None, 3.0),
-    ('artere-femorale',       'Femoral artery.r',               'Artère fémorale',                  'artere',   None, 1.0),
-    ('veine-femorale',        'Femoral vein.r',                 'Veine fémorale',                   'veine',    None, 1.0),
-    ('artere-poplitee',       'Popliteal artery.r',             'Artère poplitée',                  'artere',   None, 1.0),
-    ('veine-poplitee',        'Popliteal vein.r',               'Veine poplitée',                   'veine',    None, 1.0),
+    ('nerf-sciatique',        'Sciatic nerve.r',                'Nerf sciatique',                   'nerf',     None, (11, 3, Z_TIERS_MOYEN)),
+    ('nerf-tibial',           'Tibial nerve.r',                 'Nerf tibial',                      'nerf',     None, (5, 0, Z_FOSSE_POPLITEE)),
+    ('nerf-fibulaire-commun', 'Common fibular nerve.r',         'Nerf fibulaire commun',            'nerf',     None, (3.5, 0, Z_FOSSE_POPLITEE)),
+    ('artere-femorale',       'Femoral artery.r',               'Artère fémorale',                  'artere',   None, None),
+    ('veine-femorale',        'Femoral vein.r',                 'Veine fémorale',                   'veine',    None, None),
+    ('artere-poplitee',       'Popliteal artery.r',             'Artère poplitée',                  'artere',   None, None),
+    ('veine-poplitee',        'Popliteal vein.r',               'Veine poplitée',                   'veine',    None, None),
 ]
 
 # Couleurs des matériaux (la visionneuse du site peut les remplacer)
@@ -141,12 +149,17 @@ def categorie_du_materiau(nom_source, categorie):
     return categorie
 
 
-def maillage_monde(obj, facteur):
-    """Maillage évalué de l'objet, en coordonnées monde. Courbes : épaisseur du pack × facteur."""
+def maillage_monde(obj, diametre):
+    """Maillage évalué de l'objet, en coordonnées monde. Courbes : diamètre d'affichage imposé (ou celui du pack)."""
     if obj.type == 'CURVE':
         cu = obj.data
+        if diametre:
+            mm, rayon_min, _z = diametre
+            for sp in cu.splines:
+                for p in list(sp.points) + list(sp.bezier_points):
+                    if p.radius >= rayon_min:
+                        p.radius = mm / 2000 / cu.bevel_depth
         cu.bevel_mode = 'ROUND'
-        cu.bevel_depth = cu.bevel_depth * facteur
         cu.bevel_resolution = 2
         cu.resolution_u = 4
         cu.use_fill_caps = True
@@ -180,11 +193,11 @@ def triangles(me):
 
 
 def decimer(obj, cible):
-    """Décimation (collapse) jusqu'à environ `cible` triangles. Renvoie le ratio appliqué."""
+    """Décimation (collapse) : `cible` = triangles visés (entier) ou proportion gardée (≤ 1). Renvoie le ratio."""
     avant = triangles(obj.data)
-    if not cible or avant <= cible:
+    ratio = (cible if cible <= 1 else cible / avant) if cible else 1.0
+    if ratio >= 1:
         return 1.0
-    ratio = cible / avant
     mod = obj.modifiers.new('decimation', 'DECIMATE')
     mod.decimate_type = 'COLLAPSE'
     mod.ratio = ratio
@@ -198,6 +211,24 @@ def decimer(obj, cible):
     bpy.data.meshes.remove(ancien)
     nouveau.name = nom
     return ratio
+
+
+def largeur_a(me, z):
+    """Plus petite largeur (mm) de la section du maillage par le plan horizontal z : diamètre d'un tube oblique."""
+    pts = []
+    for e in me.edges:
+        a, b = me.vertices[e.vertices[0]].co, me.vertices[e.vertices[1]].co
+        if (a.z - z) * (b.z - z) <= 0 and a.z != b.z:
+            t = (z - a.z) / (b.z - a.z)
+            pts.append((a.x + t * (b.x - a.x), a.y + t * (b.y - a.y)))
+    if len(pts) < 3:
+        arreter(f'mesure impossible à z = {z} (le maillage ne coupe pas ce plan)')
+    largeurs = []
+    for a in range(0, 180, 3):
+        c, s_ = math.cos(math.radians(a)), math.sin(math.radians(a))
+        proj = [x * c + y * s_ for x, y in pts]
+        largeurs.append(max(proj) - min(proj))
+    return min(largeurs) * 1000
 
 
 def lisser(me):
@@ -253,17 +284,21 @@ def main():
     z_coupe = sommet_tibia - JAMBE_GARDEE
 
     objets = []
-    for ident, nom, libelle, categorie, cible, facteur in STRUCTURES:
+    for ident, nom, libelle, categorie, cible, diametre in STRUCTURES:
         src = bpy.data.objects[nom]
         if src.type == 'CURVE':
             rayons = [p.radius for sp in src.data.splines for p in list(sp.points) + list(sp.bezier_points)]
-            diametres = [2000 * src.data.bevel_depth * r for r in (min(rayons), max(rayons))]
-        me = maillage_monde(src, facteur or 1.0)
+            pack = [2000 * src.data.bevel_depth * r for r in (min(rayons), max(rayons))]
+        me = maillage_monde(src, diametre)
         modifs = []
-        if facteur and facteur != 1:
-            modifs.append(f'épaisseur ×{facteur:g} pour l\'affichage (pack : {diametres[0]:.0f} à {diametres[1]:.0f} mm de diamètre ; approximatif)')
-        elif facteur:
-            modifs.append(f'épaisseur du pack ({diametres[0]:.0f} à {diametres[1]:.0f} mm de diamètre)')
+        if diametre:
+            mm, _rmin, z = diametre
+            mesure = largeur_a(me, z)
+            ou = 'au tiers moyen de la cuisse' if z == Z_TIERS_MOYEN else 'dans la fosse poplitée'
+            modifs.append(f'diamètre d\'affichage {mm:g} mm {ou} (mesuré : {mesure:.1f} mm ; pack : {pack[0]:.0f} à {pack[1]:.0f} mm ; section ronde ; approximatif)')
+            print(f'  mesure {ident} : {mesure:.1f} mm {ou} (visé {mm:g} mm)')
+        elif src.type == 'CURVE':
+            modifs.append(f'épaisseur du pack ({pack[0]:.0f} à {pack[1]:.0f} mm de diamètre)')
         if couper_sous(me, z_coupe):
             modifs.append(f'coupé {JAMBE_GARDEE * 100:.0f} cm sous le sommet du tibia, section refermée')
         me.name = ident
@@ -272,7 +307,7 @@ def main():
         tris_source = triangles(me)
         ratio = decimer(obj, cible)
         if ratio < 1:
-            modifs.append(f'simplifié de {tris_source} à {triangles(obj.data)} triangles')
+            modifs.append(f'simplifié de {tris_source} à {triangles(obj.data)} triangles ({(1 - triangles(obj.data) / tris_source) * 100:.0f} %)')
         mats = remplacer_materiaux(obj.data, categorie)
         lisser(obj.data)
         objets.append(dict(id=ident, obj=obj, nom=libelle, categorie=categorie, source=nom,
