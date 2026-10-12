@@ -88,6 +88,10 @@ Réseau social des radiologues : connexion **Google** (ou lien par e-mail), prof
 
 Annuaire d'articles d'imagerie **en accès libre** : le site n'héberge pas les articles, seulement des liens et des métadonnées, avec un résumé en français. Pages par thème (Essentiels en tête, dans l'ordre de lecture conseillé), recherche et filtres combinables ; administration dans `bibliotheque-admin.html`. Entrée **Bibliothèque** du menu et du pied de page de toutes les pages — voir la [section dédiée](#bibliothèque-articles-en-accès-libre).
 
+### Cours d'échoanatomie (en préparation, rien n'est encore visible)
+
+Module « **Échoanatomie musculaire du membre inférieur** », groupe par groupe, en commençant par les **ischio-jambiers** : texte reformulé d'après une synthèse de démonstration échographique (gardée dans le dépôt privé `radiologic-hub-sources`, jamais copiée ici), visionneuse 3D (Three.js) avec plan de coupe « sonde », schémas de coupe en SVG et emplacements pour les images échographiques de l'auteur, chaque schéma et chaque modèle soumis à validation dans l'administration. **Étape A faite** : 18 modèles 3D exportés de Z-Anatomy (CC BY-SA 4.0) dans `public/models/ischio-jambiers/`, en attente de validation des aperçus — aucune page ne les charge encore. Étapes suivantes : schémas SVG (B), puis page de cours, visionneuse et validation (C).
+
 ### Mentions légales (`mentions-legales.html`)
 
 Éditeur, hébergement, **protection des données personnelles** (loi organique n° 2004-63, INPDP ; ancre `#donnees`, liée depuis la case de consentement des inscriptions), données de la Communauté (`#communaute`) et **conditions d'utilisation** de la Communauté (`#conditions`, liées depuis la case de consentement du profil). Les passages entre crochets sont à compléter. Lien dans le pied de page de toutes les pages.
@@ -401,7 +405,13 @@ radiologic-hub/
 │   ├── functions/          Fonctions serveur rp-agent, rp-lien, rp-taches (+ _shared, généré en partie ; _shared/reseau.ts : rappels des messages non lus)
 │   ├── sql/planification.sql  Tâche planifiée (pg_cron) et déclaration de l'administrateur
 │   └── config.toml         Réglages des fonctions
-├── scripts/preparer-backend.js  Recopie le noyau et les modèles vers supabase/functions/_shared
+├── scripts/
+│   ├── preparer-backend.js       Recopie le noyau et les modèles vers supabase/functions/_shared
+│   ├── telecharger_z_anatomy.sh  Télécharge le pack Z-Anatomy (version figée) dans assets-sources/z-anatomy
+│   ├── export_muscles.py         Blender sans interface : extrait, coupe, simplifie et exporte les modèles 3D d'un groupe (.glb compressés meshopt + manifest.json)
+│   └── rendu_apercus.py          Blender sans interface : aperçu PNG de chaque export + vues d'ensemble
+├── public/models/<groupe>/ Modèles 3D dérivés de Z-Anatomy (.glb, manifest.json) avec leur LICENSE (CC BY-SA 4.0, ce dossier seulement)
+├── assets-sources/         NON VERSIONNÉ (.gitignore) : pack Z-Anatomy, exports non compressés, aperçus PNG
 ├── tests/                  Tests unitaires (node --test), cas fictifs uniquement ; tests/sql : base, liste des droits (droits-attendus.txt) et intégration ; tests/fixtures : images fictives porteuses de métadonnées
 ├── package.json            « npm test » (aucune dépendance)
 └── assets/
@@ -489,6 +499,8 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 ## À faire / points en attente
 
+- [ ] **Cours d'échoanatomie — ischio-jambiers** : valider les aperçus des 18 modèles 3D (étape A) ; étape B (schémas de coupe SVG : insertion ischiatique et triangle de Michel Cohen, croisement du semi-membraneux sous le tendon conjoint, membrane du semi-membraneux, tiers moyen, « cerise sur le gâteau », tendon distal du biceps fémoral) ; étape C (page de cours, visionneuse 3D, plan de coupe, emplacement « Source / crédits » à remplir par l'auteur, validation dans l'administration, fichier des incertitudes) ; puis les autres groupes musculaires. Régénérer les modèles : `bash scripts/telecharger_z_anatomy.sh`, puis `blender -b --disable-autoexec assets-sources/z-anatomy/Z-Anatomy/Startup.blend -P scripts/export_muscles.py` (nécessite `python3-numpy` pour l'export glTF de Blender et Node.js pour la compression), puis `blender -b --factory-startup -P scripts/rendu_apercus.py -- ischio-jambiers`.
+
 - [ ] **Bibliothèque** : revoir les tags, niveaux et Essentiels d'exemple du mode démonstration ; étapes 3 à 6 (file « À valider », veille hebdomadaire, liens croisés avec les comptes rendus, liens morts) ; objectif du test : 50 à 100 articles publiés dont 10 Essentiels.
 
 - [ ] **Cas « Le menton qui s'endort »** : faire relire le scénario clinique (inventé pour l'apprentissage et signalé comme tel), la lecture de l'**épanchement mastoïdien droit** (hypersignal T2 ajouté à la description de la publication), le classement en **type D** et les lettres A-D attribuées à la classification de Wanibuchi ; confirmer que les images IRM de la publication peuvent être publiées sur le site (aucune donnée patient visible).
@@ -521,6 +533,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 12/10/2026 | **Cours d'échoanatomie du membre inférieur — ischio-jambiers, étape A** : 18 modèles 3D du membre inférieur droit tirés de Z-Anatomy (CC BY-SA 4.0, dérivé de BodyParts3D) — 4 ischio-jambiers (tendons en blanc), 3 muscles de contexte semi-transparents (grand glutéal, grand adducteur, vaste latéral), os coxal, fémur, tibia et fibula proximaux, nerfs sciatique, tibial et fibulaire commun, artères et veines fémorales et poplitées — exportés par `scripts/export_muscles.py` (Blender sans interface, liste fermée, aucun modèle NC, compression meshopt, 0,31 Mo au total) dans `public/models/ischio-jambiers/` avec `LICENSE` et `manifest.json` ; aperçus par `scripts/rendu_apercus.py` ; pack téléchargé par `scripts/telecharger_z_anatomy.sh` dans `assets-sources/` (non versionné) ; sources de cours rangées dans le dépôt privé `radiologic-hub-sources` (consigne ajoutée à `CLAUDE.md`). Aucune page ne charge encore ces modèles |
 | 12/10/2026 | **Bibliothèque** : import réel des 5 DOI réussi (`npm run test:bib-reel`, 8/8) et import en lot vérifié dans le navigateur (les 3 services acceptent les appels depuis le site, pas besoin de fonction serveur) ; mode démonstration corrigé d'après l'import réel (appendicite CC BY, recommandations européennes CC BY-NC, pancréatite aiguë « Gratuit – licence non ouverte ») ; le test réel vérifie maintenant l'accès et la licence des 5 articles |
 | 12/10/2026 | **Bibliothèque** (étapes 1 et 2) : annuaire d'articles d'imagerie en accès libre (liens et métadonnées seulement, jamais l'abstract ni les figures) — configuration unique `bibliotheque/config.js` (10 sous-spécialités, organes, modalités, classifications, niveaux, 3 thèmes digestifs avec leurs requêtes, contact « RadiologicHub »), noyau (identifiants, Europe PMC / PubMed / Unpaywall, licences, débit, cache, import et import en lot, doublons, filtres, ordre de lecture), migration `20261012120000_bibliotheque.sql` (droits explicites, la veille ne publie jamais), page `bibliotheque.html` (thèmes avec Essentiels numérotés, recherche, filtres combinables, badges « licence ouverte » / « Gratuit – licence non ouverte » / « Licence à vérifier », mention des droits des auteurs), administration `bibliotheque-admin.html` (import par DOI / PMID / PMCID, lot avec rapport, fiche, statuts), mode démonstration avec 5 articles réels ; entrée « Bibliothèque » dans le menu et le pied de page de toutes les pages (menu resserré pour tenir sur une ligne) ; mentions légales (`#bibliotheque`) ; message de fin du quiz des fiches réglable ; tests unitaires, SQL, réel et navigateur |
 | 12/10/2026 | **Droits Supabase explicites** (exposition automatique des tables désactivée) : migration `20261012090000_droits_explicites.sql` accordant à `authenticated` l'exécution des 10 fonctions appelées dans les règles d'accès (sinon « permission denied » avec ce réglage) ; base de test rendue stricte (aucun droit par défaut) ; nouveau test `tests/sql/droits.js` et liste de référence des droits `tests/sql/droits-attendus.txt` ; guide d'installation mis à jour |

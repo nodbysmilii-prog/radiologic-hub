@@ -1,0 +1,319 @@
+{
+ "groupe": "ischio-jambiers",
+ "cote": "droit",
+ "unite": "mètre",
+ "axes": "glTF : +Y vers le haut, +Z vers l'avant du patient, -X vers le côté latéral (membre droit)",
+ "centre_source": [
+  -0.08009,
+  0.02793,
+  0.66256
+ ],
+ "coupe_jambe": "12 cm sous le sommet du tibia",
+ "source": {
+  "nom": "Z-Anatomy",
+  "depot": "https://github.com/Z-Anatomy/Models-of-human-anatomy",
+  "commit": "2b6cf98a8ca012571ecb252e5c077b42a21b3b61",
+  "licence": "CC BY-SA 4.0",
+  "origine": "BodyParts3D, The Database Center for Life Science (CC BY-SA 2.1 Japon)"
+ },
+ "licence": "CC BY-SA 4.0",
+ "compression": "EXT_meshopt_compression (gltf-transform meshopt)",
+ "total_octets": 320692,
+ "modeles": [
+  {
+   "id": "biceps-long",
+   "fichier": "biceps-long.glb",
+   "nom": "Longue portion du biceps fémoral",
+   "categorie": "muscle",
+   "source": "Long head of biceps femoris.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 4500,
+   "octets": 38108,
+   "version": "f6c8687a5980",
+   "modifications": [
+    "simplifié de 7258 à 4500 triangles"
+   ]
+  },
+  {
+   "id": "biceps-court",
+   "fichier": "biceps-court.glb",
+   "nom": "Courte portion du biceps fémoral",
+   "categorie": "muscle",
+   "source": "Short head of biceps femoris.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 2476,
+   "octets": 21988,
+   "version": "416c56c44982",
+   "modifications": []
+  },
+  {
+   "id": "semi-tendineux",
+   "fichier": "semi-tendineux.glb",
+   "nom": "Semi-tendineux",
+   "categorie": "muscle",
+   "source": "Semitendinosus muscle.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 4316,
+   "octets": 35992,
+   "version": "5c9067684606",
+   "modifications": []
+  },
+  {
+   "id": "semi-membraneux",
+   "fichier": "semi-membraneux.glb",
+   "nom": "Semi-membraneux",
+   "categorie": "muscle",
+   "source": "Semimembranosus muscle.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 4499,
+   "octets": 37792,
+   "version": "35ee6a7a1451",
+   "modifications": [
+    "simplifié de 7442 à 4500 triangles"
+   ]
+  },
+  {
+   "id": "grand-gluteal",
+   "fichier": "grand-gluteal.glb",
+   "nom": "Grand glutéal",
+   "categorie": "contexte",
+   "source": "Gluteus maximus muscle.r",
+   "materiaux": [
+    "contexte"
+   ],
+   "triangles": 2500,
+   "octets": 22572,
+   "version": "a6eedaf7cb00",
+   "modifications": [
+    "simplifié de 3326 à 2500 triangles"
+   ]
+  },
+  {
+   "id": "grand-adducteur",
+   "fichier": "grand-adducteur.glb",
+   "nom": "Grand adducteur",
+   "categorie": "contexte",
+   "source": "Adductor magnus.r",
+   "materiaux": [
+    "contexte",
+    "tendon"
+   ],
+   "triangles": 2500,
+   "octets": 27616,
+   "version": "c4ba9c66455c",
+   "modifications": [
+    "simplifié de 8192 à 2500 triangles"
+   ]
+  },
+  {
+   "id": "vaste-lateral",
+   "fichier": "vaste-lateral.glb",
+   "nom": "Vaste latéral",
+   "categorie": "contexte",
+   "source": "Vastus lateralis muscle.r",
+   "materiaux": [
+    "contexte",
+    "tendon"
+   ],
+   "triangles": 2500,
+   "octets": 23380,
+   "version": "6647dc942321",
+   "modifications": [
+    "simplifié de 9356 à 2500 triangles"
+   ]
+  },
+  {
+   "id": "os-coxal",
+   "fichier": "os-coxal.glb",
+   "nom": "Os coxal",
+   "categorie": "os",
+   "source": "Hip bone.r",
+   "materiaux": [
+    "os",
+    "cartilage"
+   ],
+   "triangles": 3000,
+   "octets": 24404,
+   "version": "43eebac11e95",
+   "modifications": [
+    "simplifié de 3788 à 3000 triangles"
+   ]
+  },
+  {
+   "id": "femur",
+   "fichier": "femur.glb",
+   "nom": "Fémur",
+   "categorie": "os",
+   "source": "Femur.r",
+   "materiaux": [
+    "os",
+    "cartilage"
+   ],
+   "triangles": 3000,
+   "octets": 24124,
+   "version": "7e32f21c0773",
+   "modifications": [
+    "simplifié de 3794 à 3000 triangles"
+   ]
+  },
+  {
+   "id": "tibia-proximal",
+   "fichier": "tibia-proximal.glb",
+   "nom": "Tibia (partie proximale)",
+   "categorie": "os",
+   "source": "Tibia.r",
+   "materiaux": [
+    "os",
+    "cartilage"
+   ],
+   "triangles": 1116,
+   "octets": 11728,
+   "version": "ddb39b228721",
+   "modifications": [
+    "coupé 12 cm sous le sommet du tibia, section refermée"
+   ]
+  },
+  {
+   "id": "fibula-proximale",
+   "fichier": "fibula-proximale.glb",
+   "nom": "Fibula (partie proximale)",
+   "categorie": "os",
+   "source": "Fibula.r",
+   "materiaux": [
+    "os",
+    "cartilage"
+   ],
+   "triangles": 666,
+   "octets": 8032,
+   "version": "1155aa9c7299",
+   "modifications": [
+    "coupé 12 cm sous le sommet du tibia, section refermée"
+   ]
+  },
+  {
+   "id": "nerf-sciatique",
+   "fichier": "nerf-sciatique.glb",
+   "nom": "Nerf sciatique",
+   "categorie": "nerf",
+   "source": "Sciatic nerve.r",
+   "materiaux": [
+    "nerf"
+   ],
+   "triangles": 1124,
+   "octets": 9328,
+   "version": "91bcab8a2559",
+   "modifications": [
+    "épaisseur du pack (1 à 12 mm de diamètre)"
+   ]
+  },
+  {
+   "id": "nerf-tibial",
+   "fichier": "nerf-tibial.glb",
+   "nom": "Nerf tibial",
+   "categorie": "nerf",
+   "source": "Tibial nerve.r",
+   "materiaux": [
+    "nerf"
+   ],
+   "triangles": 284,
+   "octets": 3928,
+   "version": "3a7f9866acf4",
+   "modifications": [
+    "épaisseur ×2.5 pour l'affichage (pack : 1 à 4 mm de diamètre ; approximatif)",
+    "coupé 12 cm sous le sommet du tibia, section refermée"
+   ]
+  },
+  {
+   "id": "nerf-fibulaire-commun",
+   "fichier": "nerf-fibulaire-commun.glb",
+   "nom": "Nerf fibulaire commun",
+   "categorie": "nerf",
+   "source": "Common fibular nerve.r",
+   "materiaux": [
+    "nerf"
+   ],
+   "triangles": 460,
+   "octets": 5124,
+   "version": "b7ace17308ba",
+   "modifications": [
+    "épaisseur ×3 pour l'affichage (pack : 1 à 1 mm de diamètre ; approximatif)"
+   ]
+  },
+  {
+   "id": "artere-femorale",
+   "fichier": "artere-femorale.glb",
+   "nom": "Artère fémorale",
+   "categorie": "artere",
+   "source": "Femoral artery.r",
+   "materiaux": [
+    "artere"
+   ],
+   "triangles": 972,
+   "octets": 8340,
+   "version": "2604f693ba93",
+   "modifications": [
+    "épaisseur du pack (9 à 9 mm de diamètre)"
+   ]
+  },
+  {
+   "id": "veine-femorale",
+   "fichier": "veine-femorale.glb",
+   "nom": "Veine fémorale",
+   "categorie": "veine",
+   "source": "Femoral vein.r",
+   "materiaux": [
+    "veine"
+   ],
+   "triangles": 908,
+   "octets": 7944,
+   "version": "5d7366bba606",
+   "modifications": [
+    "épaisseur du pack (10 à 10 mm de diamètre)"
+   ]
+  },
+  {
+   "id": "artere-poplitee",
+   "fichier": "artere-poplitee.glb",
+   "nom": "Artère poplitée",
+   "categorie": "artere",
+   "source": "Popliteal artery.r",
+   "materiaux": [
+    "artere"
+   ],
+   "triangles": 460,
+   "octets": 5140,
+   "version": "acd5eac65056",
+   "modifications": [
+    "épaisseur du pack (6 à 9 mm de diamètre)"
+   ]
+  },
+  {
+   "id": "veine-poplitee",
+   "fichier": "veine-poplitee.glb",
+   "nom": "Veine poplitée",
+   "categorie": "veine",
+   "source": "Popliteal vein.r",
+   "materiaux": [
+    "veine"
+   ],
+   "triangles": 460,
+   "octets": 5152,
+   "version": "0201fea13678",
+   "modifications": [
+    "épaisseur du pack (6 à 10 mm de diamètre)"
+   ]
+  }
+ ]
+}
