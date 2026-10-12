@@ -4,36 +4,44 @@ La partie pelvis est rangée par organe, avec deux autres portes d'entrée : la 
 
 ## Par organe
 
-| Chapitre | Contenu | État |
+| Chapitre | Contenu | Fiches |
 | --- | --- | --- |
-| <?claude block ov?> | Ovaire fonctionnel, masses annexielles, O-RADS, tumeurs | Rédigé |
-| Endométriose | Formes, endométriome, endométriose profonde, cartographie | À venir |
-| Trompe | Infection génitale haute, hydrosalpinx, grossesse extra-utérine, torsion tubaire isolée | À venir |
-| Endomètre et col | Endomètre normal et pathologique, cancer de l'endomètre, cancer du col | À venir |
-| Myomètre | Myomes, adénomyose, lésions kystiques | À venir |
-| Pathologie vasculaire | Malformation artério-veineuse, congestion pelvienne, thrombophlébite ovarienne | À venir |
-| Malformations utéro-annexielles | Embryologie, classifications | À venir |
-| Maladie trophoblastique | Môle hydatiforme, tumeur trophoblastique | À venir |
-| Plancher pelvien | Compartiments, repères, troubles de la statique | À venir |
-| Carcinose péritonéale | Cartographie, localisations non résécables, pièges | À venir |
+| Ovaire | Radio-anatomie, ovaire fonctionnel et ses complications, démarche devant une masse, O-RADS, tumeurs épithéliales, germinales et des cordons sexuels, métastases | 20 |
+| Endométriose | Généralités et protocole, endométriome (décidualisé, transformation maligne), endométriose profonde par compartiment, péritoine, localisations rares | 11 |
+| Trompe | Infection génitale haute, pyosalpinx et abcès tubo-ovarien, actinomycose, tuberculose, hydrosalpinx, carcinome tubaire, grossesse extra-utérine, torsion tubaire isolée | 8 |
+| Endomètre et col | Endomètre normal, atrophie, hypertrophie, polype, synéchie, saignements après la ménopause, adénocarcinome, sarcomes, rétention trophoblastique, cancer du col | 10 |
+| Myomètre | Radio-anatomie, léiomyome et classification FIGO, léiomyosarcome, léiomyomatoses, adénomyose interne et externe, adénomyome, lésions kystiques | 9 |
+| Pathologie vasculaire | Malformation artério-veineuse, faux anévrisme, congestion pelvienne, thrombophlébite ovarienne | 5 |
+| Malformations | Embryologie et démarche, syndrome de Rokitansky, utérus unicorne, bicorne, cloisonné, communiquant, classifications | 7 |
+| Maladie trophoblastique | Généralités, môle hydatiforme, tumeur trophoblastique gestationnelle | 3 |
+| Plancher pelvien | Radio-anatomie, méthodes d'imagerie, repères et grades, compartiments urinaire, gynécologique, digestif, péritonéal et périnéal | 7 |
+| Carcinose péritonéale | Place de l'imagerie, cartographie et résécabilité, pièges diagnostiques | 3 |
 
 ## Par situation clinique
 
-- Douleur pelvienne aiguë de la femme jeune : <?claude block tor?>, <?claude block rup?> ; grossesse extra-utérine et salpingite à venir.
-- Masse annexielle découverte en échographie : <?claude block dem?>, puis <?claude block ous?> et <?claude block oir?>.
-- Métrorragies post-ménopausiques : à venir avec le chapitre endomètre.
-- Infertilité : à venir (SOPK, endométriose, trompe, malformations).
+- **Douleur pelvienne aiguë de la femme jeune** : Torsion d'annexe, Rupture et hémorragie de kyste, Grossesse extra-utérine, Infection génitale haute et salpingite, Pyosalpinx et abcès tubo-ovarien, Torsion tubaire isolée ; dans le post-partum, Thrombophlébite ovarienne.
+- **Masse annexielle découverte en échographie** : Démarche devant une masse, puis O-RADS échographie et O-RADS IRM.
+- **Saignements après la ménopause** : Saignements après la ménopause, puis Hypertrophie endométriale, Polype endométrial, Adénocarcinome de l'endomètre.
+- **Saignements après une grossesse ou une fausse couche** : Rétention trophoblastique, Malformation artério-veineuse, Faux anévrisme, Môle hydatiforme.
+- **Infertilité** : SOPK, Généralités et stratégie (endométriose), Hydrosalpinx, Synéchie utérine, Classifications des malformations, Adénomyose interne.
+- **Douleurs pelviennes chroniques, dysménorrhée** : Généralités et stratégie (endométriose), Adénomyose interne, Syndrome de congestion pelvienne.
+- **Bilan d'extension d'un cancer gynécologique** : Adénocarcinome de l'endomètre, Cancer du col utérin, Cartographie et résécabilité.
+- **Troubles de la statique pelvienne** : Repères et grades.
 
 ## Classifications
 
-| Classification | Usage | État |
+| Classification | Usage | Fiche |
 | --- | --- | --- |
-| O-RADS échographie v2022 | Risque d'une masse annexielle en échographie | Rédigé |
-| O-RADS IRM | Risque d'une masse annexielle indéterminée en IRM | Rédigé |
-| Classification FIGO des myomes | Topographie des myomes | À venir |
-| FIGO cancer de l'endomètre et du col | Stadification | À venir |
-| Malformations utérines | Description et classification | À venir |
-| #Enzian | Cartographie de l'endométriose | À venir |
+| O-RADS échographie v2022 | Risque de malignité d'une masse annexielle en échographie | O-RADS échographie |
+| O-RADS IRM | Risque de malignité d'une masse annexielle indéterminée en IRM | O-RADS IRM |
+| FIGO 2023 | Stadification du cancer de l'endomètre | Adénocarcinome de l'endomètre |
+| FIGO 2018 | Stadification du cancer du col | Cancer du col utérin |
+| FIGO 2014 | Stadification des cancers de l'ovaire, de la trompe et du péritoine | Généralités et place de l'imagerie |
+| Index de carcinose péritonéale (PCI) | Étendue de la carcinose, résécabilité | Cartographie et résécabilité |
+| FIGO des myomes (types 0 à 8) | Topographie des myomes | Classification FIGO des myomes |
+| AFS 1988 et ESHRE/ESGE 2013 | Malformations utérines | Classifications des malformations |
+| Score pronostique FIGO/OMS | Tumeur trophoblastique gestationnelle | Tumeur trophoblastique gestationnelle |
+| Grades de prolapsus (ligne pubo-coccygienne) | Troubles de la statique pelvienne | Repères et grades |
 
 ## Plan commun de chaque fiche
 
