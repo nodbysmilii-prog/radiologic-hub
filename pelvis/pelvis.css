@@ -103,7 +103,7 @@
 .pv-table { margin-bottom: 26px; box-shadow: 8px 8px 0 rgba(17, 17, 20, .85); }
 .pv-table .ftable { font-size: .86rem; }
 .pv-table thead th { white-space: nowrap; }
-.pv-table tbody th[scope="row"] { font-weight: 800; color: var(--ink); background: rgba(17, 17, 20, .03); min-width: 8.5em; vertical-align: top; }
+.pv-table tbody th[scope="row"] { font-weight: 800; color: var(--ink); background: rgba(17, 17, 20, .03); vertical-align: top; }
 .pv-table td { vertical-align: top; }
 .pv-table tr:has(.pv-avenir) th, .pv-table tr:has(.pv-avenir) td { color: var(--muted); }
 .pv-glisser { display: none; }
