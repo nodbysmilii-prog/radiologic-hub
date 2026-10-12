@@ -63,7 +63,7 @@ test('examen déduit du compte rendu type chargé', () => {
   assert.equal(B.examDepuis(modele('tdm-cerebrale')), null);
 });
 
-test('mammographie + échographie : anomalies dans leur rubrique, phrase normale gardée pour l\'autre sein, conclusion', () => {
+test('mammographie + échographie : constatations en tête de leur rubrique, phrase normale gardée pour l\'autre sein, conclusion courte', () => {
   const e = etat('mammo-echo', 'c');
   lesion(e, { mod: 'echo', breast: 'D', hour: '10', dist: '3', a: '12', b: '9', shape: 'irrégulière', orient: 'non parallèle à la peau', margins: 'spiculés', echo: 'hypoéchogène', post: 'avec atténuation postérieure', cat: '5' });
   lesion(e, { mod: 'mammo', breast: 'D', hour: '10', type: 'calc', calcMorph: 'fines pléomorphes', calcDist: 'groupées (en amas)', cat: '4B' });
@@ -71,11 +71,13 @@ test('mammographie + échographie : anomalies dans leur rubrique, phrase normale
   const mammo = rubrique(r.texte, 'I/ Mammographie'), echo = rubrique(r.texte, 'II/ Échographie'), total = rubrique(r.texte, 'AU TOTAL');
   assert.deepEqual(r.rubriques, ['I/ Mammographie bilatérale (face + oblique + profil)', 'II/ Échographie mammaire, à droite comme à gauche']);
   assert.equal(r.conclusion, 'AU TOTAL');
-  // Mammographie : densité choisie dans le champ du modèle, microcalcifications à la place de la phrase normale
-  assert.equal(mammo[0], '• Seins denses hétérogènes, type C au BI-RADS.');
-  const i = mammo.findIndex(l => l.startsWith('• Sein droit, lésion n°2 : microcalcifications fines pléomorphes, groupées (en amas)'));
-  assert.ok(i > 0, 'lésion n°2 dans la rubrique Mammographie');
-  assert.equal(mammo[i + 1], '• À gauche, absence de microcalcifications de forme ou de groupement suspect.');
+  // Mammographie : densité choisie dans le champ du modèle, puis la lésion, puis les phrases normales
+  assert.deepEqual(mammo.slice(0, 2), [
+    '• Seins denses hétérogènes, type C au BI-RADS.',
+    '• Sein droit, lésion n°2 : microcalcifications fines pléomorphes, groupées (en amas), à 10 h (quadrant supéro-externe).',
+  ]);
+  assert.ok(mammo.includes('• À gauche, absence de microcalcifications de forme ou de groupement suspect.'));
+  assert.ok(!mammo.includes('• Absence de microcalcifications de forme ou de groupement suspect.'));
   assert.ok(mammo.includes('• Absence de masse décelable.'), 'phrases non contredites gardées');
   assert.ok(!mammo.some(l => /lésion n°1/.test(l)), 'la lésion vue en échographie n\'est pas dans la mammographie');
   // Échographie : masse, et l'atténuation contredit aussi « Absence d'atténuation suspecte »
@@ -83,14 +85,10 @@ test('mammographie + échographie : anomalies dans leur rubrique, phrase normale
   assert.equal(echo[1], '• À gauche, absence de masse solide ou kystique décelable.');
   assert.equal(echo[2], '• À gauche, absence d\'atténuation suspecte des ultrasons.');
   assert.ok(!echo.some(l => /^• Absence de masse/.test(l)));
-  // Conclusion selon les constatations, à la place de [conclusion]
+  // Conclusion : « Bilan sénologique classé … » et conduite à tenir, rien de plus
   assert.ok(!r.texte.includes('[conclusion]'));
   assert.deepEqual(total.filter(Boolean), [
-    '• Seins de densité de type C (ACR).',
-    '• Sein droit, lésion n°1 (échographie) : masse irrégulière, à contours spiculés, 12 × 9 mm, quadrant supéro-externe (10 h) — BI-RADS 5 (hautement évocateur de malignité).',
-    '• Sein droit, lésion n°2 (mammographie) : microcalcifications fines pléomorphes, groupées (en amas), quadrant supéro-externe (10 h) — BI-RADS 4B (suspicion intermédiaire).',
-    '• Sein droit : BI-RADS 5 (hautement évocateur de malignité), catégorie la plus élevée.',
-    '• Sein gauche : pas d\'anomalie décelable — BI-RADS 1 (négatif).',
+    'Bilan sénologique classé BI-RADS 5 à droite et BI-RADS 1 à gauche.',
     'Nous restons à votre disposition pour une microbiopsie/macrobiopsie mammaire.',
   ]);
   assert.ok(![...mammo, ...echo].some(l => /BI-RADS [0-6]/.test(l)), 'catégories seulement dans la conclusion');
@@ -98,6 +96,46 @@ test('mammographie + échographie : anomalies dans leur rubrique, phrase normale
   assert.ok(r.texte.startsWith('MAMMOGRAPHIE ET ÉCHOGRAPHIE MAMMAIRE\n\nRENSEIGNEMENTS CLINIQUES :\n[renseignements cliniques]'));
   // Réinsérer après une nouvelle ouverture de l'outil ne duplique rien
   assert.equal(B.integrer(r.texte, e).texte, r.texte);
+});
+
+test('lésion vue en mammographie : sa description échographique dans la rubrique Échographie, même numéro', () => {
+  const e = etat('mammo-echo');
+  const l = lesion(e, { mod: 'mammo', breast: 'D', hour: '10', dist: '3', a: '15', shape: 'irrégulière', margins: 'spiculés', dens: 'de haute densité', cat: '5',
+    eco: 'oui', eShape: 'irrégulière', eOrient: 'non parallèle à la peau', eMargins: 'anguleux', eEcho: 'hypoéchogène', ePost: 'avec atténuation postérieure', ea: '12', eb: '9' });
+  lesion(e, { mod: 'mammo', breast: 'G', hour: '2', type: 'calc', calcMorph: 'amorphes', calcDist: 'groupées (en amas)', cat: '4A', eco: 'non' });
+  lesion(e, { mod: 'echo', breast: 'G', hour: '4', dist: '2', a: '6', type: 'kyste', cat: '2' });
+  const r = B.integrer(modele('mammo-echo'), e);
+  const mammo = rubrique(r.texte, 'I/ Mammographie'), echo = rubrique(r.texte, 'II/ Échographie');
+  assert.deepEqual(mammo.slice(0, 3), [
+    '• Seins [graisseux, type A / avec densités fibroglandulaires éparses, type B / denses hétérogènes, type C / extrêmement denses, type D] au BI-RADS.',
+    '• Sein droit, lésion n°1 : masse irrégulière, à contours spiculés, de haute densité, mesurant 15 mm, à 10 h, à 3 cm du mamelon (quadrant supéro-externe).',
+    '• Sein gauche, lésion n°2 : microcalcifications amorphes, groupées (en amas), à 2 h (quadrant supéro-externe).',
+  ]);
+  assert.ok(mammo.includes('• À gauche, absence de masse décelable.') && mammo.includes('• À droite, absence de microcalcifications de forme ou de groupement suspect.'));
+  // Échographie : sein droit puis gauche, par numéro ; la masse et le kyste contredisent « Absence de masse » des deux côtés
+  assert.deepEqual(echo.slice(0, 4), [
+    '• Sein droit, lésion n°1, correspondant à l\'anomalie mammographique : masse irrégulière, non parallèle à la peau, à contours anguleux, hypoéchogène, avec atténuation postérieure, mesurant 12 × 9 mm, à 10 h, à 3 cm du mamelon (quadrant supéro-externe).',
+    '• Sein gauche, lésion n°2 : pas de traduction échographique de l\'anomalie mammographique.',
+    '• Sein gauche, lésion n°3 : kyste simple, mesurant 6 mm, à 4 h, à 2 cm du mamelon (quadrant inféro-externe).',
+    '• À gauche, absence d\'atténuation suspecte des ultrasons.',
+  ]);
+  assert.ok(!echo.some(l => /absence de masse/i.test(l)));
+  assert.deepEqual(rubrique(r.texte, 'AU TOTAL').filter(Boolean), [
+    'Bilan sénologique classé BI-RADS 5 à droite et BI-RADS 4A à gauche.',
+    'Nous restons à votre disposition pour une microbiopsie/macrobiopsie mammaire.',
+  ]);
+  assert.equal(B.integrer(r.texte, e).texte, r.texte, 'réinsertion sans doublon');
+  // Taille échographique non saisie : celle de la mammographie ; échographie non précisée : rien en échographie
+  l.ea = '';
+  assert.match(B.integrer(modele('mammo-echo'), e).texte, /lésion n°1, correspondant à l'anomalie mammographique : [^\n]*mesurant 15 mm/);
+  l.eco = '';
+  assert.ok(!/lésion n°1, correspondant/.test(B.integrer(modele('mammo-echo'), e).texte));
+  // Descripteurs échographiques hors lexique effacés ; examen sans échographie : pas de traduction
+  l.eco = 'oui'; l.eMargins = 'masqués';
+  B.normaliser(e);
+  assert.equal(l.eMargins, '', '« masqués » : terme de mammographie');
+  e.exam = 'mammo';
+  assert.ok(!/correspondant/.test(B.texte(e)));
 });
 
 test('lésions des deux seins : la phrase normale disparaît ; conclusion écrite par le radiologue gardée', () => {
@@ -127,14 +165,14 @@ test('échographie seule : anomalies dans RÉSULTATS ; mammographie seule : rubr
   assert.equal(res[0], 'À droite comme à gauche :');
   assert.equal(res[1], '• Sein gauche, lésion n°1 : kyste compliqué (contenu échogène), mesurant 8 mm, à 2 h, à 4 cm du mamelon (quadrant supéro-externe).');
   assert.equal(res[2], '• À droite, absence de masse solide ou kystique décelable.');
-  assert.ok(!/\(échographie\)/.test(r.texte), 'une seule modalité : pas de précision dans la conclusion');
+  assert.deepEqual(rubrique(r.texte, 'AU TOTAL').filter(Boolean), ['Bilan sénologique classé BI-RADS 1 à droite et BI-RADS 3 à gauche.', 'À contrôler dans 6 mois par une échographie mammaire.']);
   // Rubrique absente : créée juste avant la conclusion
   const m = etat('mammo');
   lesion(m, { breast: 'D', type: 'asym', asym: 'évolutive', cat: '0' });
   const r2 = B.integrer('MAMMOGRAPHIE\n\nINDICATION :\nDépistage.\n\nCONCLUSION :\n[conclusion]', m);
   assert.deepEqual(r2.creees, ['Mammographie']);
   assert.match(r2.texte, /Dépistage\.\n\nMammographie :\n• Sein droit, lésion n°1 : asymétrie évolutive\.\n\nCONCLUSION :\n/);
-  assert.match(r2.texte, /BI-RADS 0 \(évaluation incomplète\)/);
+  assert.match(r2.texte, /CONCLUSION :\nBilan sénologique classé BI-RADS 0 à droite et BI-RADS 1 à gauche\.\nExamen\(s\) complémentaire\(s\)/);
 });
 
 test('sans rubrique ni conclusion : texte complet inséré au curseur', () => {
@@ -145,8 +183,7 @@ test('sans rubrique ni conclusion : texte complet inséré au curseur', () => {
     'Mammographie :', '• Pas d\'anomalie décelable.', '',
     'Échographie :', '• Pas d\'anomalie décelable.', '',
     'Conclusion :',
-    '• Sein droit : pas d\'anomalie décelable — BI-RADS 1 (négatif).',
-    '• Sein gauche : pas d\'anomalie décelable — BI-RADS 1 (négatif).',
+    'Bilan sénologique classé BI-RADS 1 bilatéral.',
     'Prochain contrôle par un bilan sénologique complet dans deux ans.',
   ].join('\n'));
 });

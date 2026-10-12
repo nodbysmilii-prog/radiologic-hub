@@ -13,8 +13,11 @@
    • integrer(compte rendu, état) : place les anomalies dans la
      rubrique Mammographie / Échographie / IRM du compte rendu type
      (en remplaçant la phrase normale qu'elles contredisent, gardée
-     pour l'autre sein) et rédige la conclusion (AU TOTAL…) : catégories
-     BI-RADS (seulement dans la conclusion) et conduite à tenir du service.
+     pour l'autre sein) et rédige la conclusion (AU TOTAL…) : « Bilan
+     sénologique classé BI-RADS … » et conduite à tenir du service ;
+   • une lésion vue en mammographie peut recevoir sa description
+     échographique (ou « pas de traduction échographique »), écrite dans
+     la rubrique Échographie sous le même numéro.
    Module sans dépendance au navigateur (testé sous Node :
    tests/birads.test.js). À FAIRE VÉRIFIER MÉDICALEMENT.
    ========================================================= */
@@ -127,12 +130,24 @@
   const champs = l => (typeDe(l) || [, , []])[2];
   const options = (l, k) => { const o = LEXIQUE[k][1]; return Array.isArray(o) ? o : o[l.mod] || o.echo; };
 
+  /* Lésion vue en mammographie : sa traduction échographique (eco : '' non précisée, 'oui' décrite,
+     'non' absente) est décrite dans des champs préfixés par « e » (eType, eShape, eMargins…) */
+  const TRADUCTION = [['', '— non précisée'], ['oui', 'Oui : la décrire'], ['non', 'Pas de traduction échographique']];
+  const cleEcho = k => 'e' + k.charAt(0).toUpperCase() + k.slice(1);
+  const avecEcho = (etat, l) => l.mod === 'mammo' && modalites(etat).includes('echo');
+  const correlat = l => {
+    const c = { mod: 'echo', type: l.eType, breast: l.breast, hour: l.hour, dist: l.dist, a: num(l.ea) ? l.ea : l.a, b: num(l.ea) ? l.eb : l.b, cat: l.cat, more: '' };
+    for (const k of Object.keys(LEXIQUE)) c[k] = l[cleEcho(k)] ?? '';
+    return c;
+  };
+
   function nouvelleLesion(etat) {
     const mods = etat ? modalites(etat) : EXAMENS['mammo-echo'];
     const active = etat && etat.lesions && etat.lesions[etat.active];
     return {
       breast: 'D', hour: '', dist: '', a: '', b: '', mod: active && mods.includes(active.mod) ? active.mod : mods[0], type: 'masse',
       shape: '', orient: '', margins: '', dens: '', echo: '', post: '', calcMorph: '', calcDist: '', cyst: 'simple', asym: 'focale', rnmDist: '', rnmPat: '', cat: '', more: '',
+      eco: '', eType: 'masse', eShape: '', eOrient: '', eMargins: '', eEcho: '', ePost: '', eCyst: 'simple', ea: '', eb: '',
     };
   }
 
@@ -143,6 +158,10 @@
       if (!mods.includes(l.mod)) l.mod = mods[0];
       if (!typeDe(l)) l.type = TYPES[l.mod][0][0];
       for (const k of champs(l)) if (!options(l, k).some(([v]) => v === l[k])) l[k] = options(l, k)[0][0];
+      if (!TRADUCTION.some(([v]) => v === l.eco)) l.eco = '';
+      if (!TYPES.echo.some(t => t[0] === l.eType)) l.eType = 'masse';
+      const c = correlat(l);
+      for (const k of champs(c)) if (!options(c, k).some(([v]) => v === c[k])) l[cleEcho(k)] = options(c, k)[0][0];
     }
     return etat;
   }
@@ -170,35 +189,22 @@
   const mesure = l => (num(l.a) ? `${fr(num(l.a), 0)}${num(l.b) ? ' × ' + fr(num(l.b), 0) : ''} mm` : '');
   const localisation = (l, b) => (!l.hour ? '' : l.hour === 'c' ? 'en région rétro-aréolaire'
     : `à ${heure(+l.hour)}${num(l.dist) != null ? `, à ${fr(num(l.dist))} cm du mamelon` : ''} (${quadrant(b, l.hour)})`);
-  const categorie = c => (c !== '' && c != null ? `BI-RADS ${c} (${CAT[c]})` : '[catégorie BI-RADS]');
 
-  /* Ligne de la rubrique de la modalité (sans catégorie : elle est dans la conclusion) */
-  const ligneLesion = (l, i) =>
-    `• ${SEINS[l.breast]}, lésion n°${i + 1} : ${joindre([description(l), mesure(l) && 'mesurant ' + mesure(l), localisation(l, l.breast), l.more.trim()])}.`;
-  const LIGNE_OUTIL = /^\s*•\s*Sein (droit|gauche), lésion n°\d+\s*:/;
+  /* Ligne de la rubrique de la modalité (sans catégorie : elle n'est que dans la conclusion) */
+  const ligneLesion = (l, i, precision = '') =>
+    `• ${SEINS[l.breast]}, lésion n°${i + 1}${precision} : ${joindre([description(l), mesure(l) && 'mesurant ' + mesure(l), localisation(l, l.breast), l.more.trim()])}.`;
+  const LIGNE_OUTIL = /^\s*•\s*Sein (droit|gauche), lésion n°\d+[^:\n]*:/;
 
   const ligneDensite = d => `• Seins de densité de type ${d.toUpperCase()} (ACR) : ${DENSITES[d]}.`;
 
-  /* Résumé court pour la conclusion : nature, taille, quadrant (et heure) */
-  function resume(l) {
-    const v = k => (champs(l).includes(k) ? l[k] : '');
-    const nature = l.type === 'masse' ? joindre([`masse${v('shape') ? ' ' + v('shape') : ''}`, v('margins') && `à contours ${v('margins')}`]) : description(l);
-    const lieu = !l.hour ? '' : l.hour === 'c' ? 'rétro-aréolaire' : `${quadrant(l.breast, l.hour)} (${heure(+l.hour)})`;
-    return joindre([nature, mesure(l), lieu]);
-  }
-
+  /* Conclusion : « Bilan sénologique classé … » puis la conduite à tenir, rien de plus */
   function conclusion(etat) {
     normaliser(etat);
-    const mods = modalites(etat), L = [];
-    if (mods.includes('mammo') && etat.density) L.push(`• Seins de densité de type ${etat.density.toUpperCase()} (ACR).`);
-    for (const b of ['D', 'G']) {
-      const ls = etat.lesions.map((l, i) => ({ l, i })).filter(x => x.l.breast === b);
-      if (!ls.length) { L.push(`• ${SEINS[b]} : pas d'anomalie décelable — ${categorie('1')}.`); continue; }
-      ls.forEach(({ l, i }) => L.push(`• ${SEINS[b]}, lésion n°${i + 1}${mods.length > 1 ? ` (${MODALITES[l.mod].nom.toLowerCase()})` : ''} : ${resume(l)} — ${categorie(l.cat)}.`));
-      if (ls.length > 1) L.push(`• ${SEINS[b]} : ${categorie(categorieSein(etat, b))}, catégorie la plus élevée.`);
-    }
-    const vues3 = [...new Set(etat.lesions.filter(l => l.cat === '3').map(l => l.mod))];
-    return L.concat(conduite(['D', 'G'].map(b => categorieSein(etat, b)), vues3));
+    const cD = categorieSein(etat, 'D'), cG = categorieSein(etat, 'G');
+    const cat = c => (c ? `BI-RADS ${c}` : '[catégorie BI-RADS]');
+    const classe = cD && cD === cG ? `Bilan sénologique classé BI-RADS ${cD} bilatéral.` : `Bilan sénologique classé ${cat(cD)} à droite et ${cat(cG)} à gauche.`;
+    const vues3 = [...new Set(etat.lesions.filter(l => l.cat === '3').flatMap(l => (avecEcho(etat, l) && l.eco === 'oui' ? [l.mod, 'echo'] : [l.mod])))];
+    return [classe, ...conduite([cD, cG], vues3)];
   }
 
   /* BI-RADS 3 : contrôle à 6 mois par la modalité qui montre la ou les lésions classées 3
@@ -223,12 +229,28 @@
   }
   const PHRASES_CONDUITE = new Set([...Object.values(CONDUITE), '[conduite à tenir]']);
 
-  /* Lignes de la rubrique d'une modalité : densité (mammographie) puis lésions */
+  /* Constatations d'une modalité, sein droit puis gauche, par numéro : { l (lésion ou sa traduction
+     échographique), n, ligne }. En échographie, une lésion vue en mammographie apparaît avec sa
+     description échographique, ou « pas de traduction échographique ». */
+  function constatations(etat, m) {
+    const out = [];
+    etat.lesions.forEach((l, n) => {
+      if (l.mod === m) out.push({ l, n, ligne: ligneLesion(l, n) });
+      else if (m === 'echo' && avecEcho(etat, l) && l.eco === 'oui') {
+        const c = correlat(l);
+        out.push({ l: c, n, ligne: ligneLesion(c, n, ', correspondant à l\'anomalie mammographique') });
+      } else if (m === 'echo' && avecEcho(etat, l) && l.eco === 'non') {
+        out.push({ l: { breast: l.breast, type: null }, n, ligne: `• ${SEINS[l.breast]}, lésion n°${n + 1} : pas de traduction échographique de l'anomalie mammographique.` });
+      }
+    });
+    return out.sort((x, y) => (x.l.breast === y.l.breast ? x.n - y.n : x.l.breast === 'D' ? -1 : 1));
+  }
+
+  /* Lignes de la rubrique d'une modalité : densité (mammographie) puis constatations */
   function lignesModalite(etat, m) {
     const L = [];
     if (m === 'mammo' && etat.density) L.push(ligneDensite(etat.density));
-    etat.lesions.forEach((l, i) => { if (l.mod === m) L.push(ligneLesion(l, i)); });
-    return L;
+    return L.concat(constatations(etat, m).map(x => x.ligne));
   }
 
   /* Texte complet (aperçu, ou insertion au curseur quand le compte rendu n'a pas de rubriques) */
@@ -278,11 +300,14 @@
     return vus.length === 1 ? vus[0] : null;
   }
 
-  /* Remplit la rubrique d'une modalité ; renvoie le titre de la rubrique (ou null) */
+  /* Remplit la rubrique d'une modalité ; renvoie son titre. Les constatations sont regroupées en
+     tête de rubrique (après la densité et les sous-titres de début), sein droit puis gauche ; chaque
+     phrase normale qu'elles contredisent (« Absence de masse… ») est gardée pour l'autre sein
+     (« À gauche, absence de masse… ») ou retirée si les deux seins sont atteints. */
   function remplirRubrique(L, i, m, etat) {
     const fin = finRubrique(L, i);
     const corps = L.slice(i + 1, fin);
-    const lesions = etat.lesions.map((l, n) => ({ l, n })).filter(x => x.l.mod === m);
+    const ents = constatations(etat, m);
     // Densité : champ [type A / … / type D] du compte rendu type, sinon ligne ajoutée en tête
     let enTete = [];
     if (m === 'mammo' && etat.density) {
@@ -294,38 +319,31 @@
         });
       } else if (!corps.some(l => /densit|\btype [abcd]\b/.test(norm(l)))) enTete = [ligneDensite(etat.density)];
     }
-    // Chaque lésion prend la place de la phrase normale qu'elle contredit (« Absence de masse… ») ;
-    // une phrase normale propre à un côté (« À gauche, absence de… ») n'est contredite que de ce côté
-    const placees = new Map(), contredites = new Map(), restantes = [];
+    // Phrases normales contredites ; une phrase propre à un côté n'est contredite que de ce côté
+    const contredites = new Map();
     const candidates = re => corps.map((l, k) => k).filter(k => !LIGNE_OUTIL.test(corps[k]) && re.test(norm(corps[k])));
-    const contredire = (k, sein) => { if (!contredites.has(k)) contredites.set(k, new Set()); contredites.get(k).add(sein); };
-    for (const x of lesions) {
-      const re = (PHRASE_NORMALE[m] || {})[x.l.type];
-      const ks = re ? candidates(re) : [];
-      if (ks.length) { if (!placees.has(ks[0])) placees.set(ks[0], []); placees.get(ks[0]).push(x); } else restantes.push(x);
-      const autres = CONTREDIT.filter(r => r.mod === m && r.si(x.l)).flatMap(r => candidates(r.re));
-      for (const k of [...ks, ...autres]) if (!coteDe(corps[k]) || coteDe(corps[k]) === x.l.breast) contredire(k, x.l.breast);
-    }
-    const nouveau = [...enTete];
-    let place = restantes.length === 0;
-    corps.forEach((ligne, k) => {
-      if (LIGNE_OUTIL.test(ligne)) {                       // lignes d'une insertion précédente : remplacées
-        if (!place) { restantes.forEach(x => nouveau.push(ligneLesion(x.l, x.n))); place = true; }
-        return;
+    for (const x of ents) {
+      const re = x.l.type && (PHRASE_NORMALE[m] || {})[x.l.type];
+      const ks = [...(re ? candidates(re) : []), ...CONTREDIT.filter(r => r.mod === m && r.si(x.l)).flatMap(r => candidates(r.re))];
+      for (const k of ks) {
+        if (coteDe(corps[k]) && coteDe(corps[k]) !== x.l.breast) continue;
+        if (!contredites.has(k)) contredites.set(k, new Set());
+        contredites.get(k).add(x.l.breast);
       }
-      (placees.get(k) || []).forEach(x => nouveau.push(ligneLesion(x.l, x.n)));
+    }
+    const reste = [];
+    corps.forEach((ligne, k) => {
+      if (LIGNE_OUTIL.test(ligne)) return;                 // lignes d'une insertion précédente : remplacées
       const seins = contredites.get(k);
-      if (!seins) { nouveau.push(ligne); return; }
+      if (!seins) { reste.push(ligne); return; }
       if (coteDe(ligne) || seins.size > 1) return;         // phrase contredite : retirée
       const autre = seins.has('D') ? 'À gauche' : 'À droite';   // l'autre sein garde la phrase normale
-      nouveau.push(`• ${autre}, ${minusculeInitiale(ligne.trim().replace(/^[•*–-]\s*/, ''))}`);
+      reste.push(`• ${autre}, ${minusculeInitiale(ligne.trim().replace(/^[•*–-]\s*/, ''))}`);
     });
-    if (!place) {
-      let k = nouveau.length;
-      while (k > 0 && !nouveau[k - 1].trim()) k--;
-      nouveau.splice(k, 0, ...restantes.map(x => ligneLesion(x.l, x.n)));
-    }
-    L.splice(i + 1, fin - i - 1, ...nouveau);
+    let p = 0;
+    while (p < reste.length && reste[p].trim() && (estTitre(reste[p]) || /densit|\btype [abcd]\b/.test(norm(reste[p])))) p++;
+    reste.splice(p, 0, ...enTete, ...ents.map(x => x.ligne));
+    L.splice(i + 1, fin - i - 1, ...reste);
     return L[i].trim().replace(/\s*:$/, '');
   }
 
@@ -340,7 +358,7 @@
       return { titre: 'CONCLUSION', creee: true };
     }
     const fin = finRubrique(L, c);
-    const garde = L.slice(c + 1, fin).filter(l => l.trim() && !/^\s*\[[^\]]*\]\s*\.?\s*$/.test(l) && !/BI-RADS/.test(l) && !/^\s*Conduite à tenir/.test(l) && !PHRASES_CONDUITE.has(l.trim()) && !/^\s*À contrôler dans 6 mois par /.test(l) && !/^\s*•\s*Seins de densité de type/.test(l));
+    const garde = L.slice(c + 1, fin).filter(l => l.trim() && !/^\s*\[[^\]]*\]\s*\.?\s*$/.test(l) && !/BI-RADS/.test(l) && !/^\s*Conduite à tenir/.test(l) && !PHRASES_CONDUITE.has(l.trim()) && !/^\s*À contrôler dans 6 mois par /.test(l) && !/^\s*•\s*Seins de densité de type/.test(l) && !/^\s*Bilan sénologique classé/.test(l));
     const suite = fin < L.length ? [''] : [];
     L.splice(c + 1, fin - c - 1, ...lignes, ...garde, ...suite);
     return { titre: L[c].trim().replace(/\s*:$/, ''), creee: false };
@@ -375,6 +393,6 @@
   return {
     CAT, CONDUITE, RANG, CATEGORIES, CHOIX_DENSITE, CHOIX_EXAMEN, MODALITES, EXAMENS, LEXIQUE, TYPES, HEURES, SUSPECT,
     heure, quadrant, conduite, modalites, champs, options, nouvelleLesion, normaliser, categorieSein,
-    description, resume, ligneLesion, conclusion, texte, integrer, examDepuis,
+    TRADUCTION, cleEcho, correlat, description, ligneLesion, conclusion, texte, integrer, examDepuis,
   };
 });

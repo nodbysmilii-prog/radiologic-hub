@@ -218,8 +218,8 @@
   const BIRADS = BR && {
     title: 'BI-RADS — sein (classification ACR)', chip: 'BI-RADS', sub: 'sein',
     keys: ['birads', 'acrsein'], suggest: /\bseins?\b|mammo|mammaire|bi-?rads/,
-    hint: 'Cliquez sur le schéma pour placer la lésion active : l\'heure et la distance au mamelon sont calculées (vue de face, comme en échographie). Pour chaque lésion, choisissez Mammographie ou Échographie : elle est décrite avec le lexique de cette modalité, puis insérée dans la rubrique correspondante du compte rendu type, avec la conclusion.',
-    preview: 'Texte qui sera intégré au compte rendu type (anomalies dans la rubrique Mammographie ou Échographie, conclusion dans AU TOTAL) ; sans rubriques, il est inséré au curseur :',
+    hint: 'Cliquez sur le schéma pour placer la lésion active : l\'heure et la distance au mamelon sont calculées (vue de face, comme en échographie). Pour chaque lésion, choisissez Mammographie ou Échographie (lexique de cette modalité) ; une lésion vue en mammographie peut aussi être décrite en échographie. « Insérer » écrit chaque constatation dans sa rubrique du compte rendu type, puis la conclusion.',
+    preview: 'Texte qui sera intégré au compte rendu type (constatations en tête de la rubrique Mammographie ou Échographie, conclusion dans AU TOTAL) ; sans rubriques, il est inséré au curseur :',
     init: () => ({ exam: 'mammo-echo', density: '', lesions: [], active: 0 }),
     newItem: st => BR.nouvelleLesion(st), max: 6,
     // À l'ouverture, l'examen suit le compte rendu type chargé (mammographie et/ou échographie)
@@ -293,7 +293,21 @@
           ${inp(p + 'b', '× (mm)', l.b, { small: 1 })}
         </div>
         <div class="tf-row">${sel(p + 'type', `Type (${BR.MODALITES[l.mod].nom.toLowerCase()})`, BR.TYPES[l.mod].map(([v, t]) => [v, t]), l.type, { re: 1 })}`;
-      h += BR.champs(l).map(k => sel(p + k, BR.LEXIQUE[k][0], BR.options(l, k), l[k])).join('') + `</div><div class="tf-row">
+      h += BR.champs(l).map(k => sel(p + k, BR.LEXIQUE[k][0], BR.options(l, k), l[k])).join('') + `</div>`;
+      // Lésion vue en mammographie : accès à sa description en échographie (même numéro de lésion)
+      if (l.mod === 'mammo' && mods.includes('echo')) {
+        h += `<fieldset class="tl-box"><legend>Échographie de cette lésion</legend><div class="tf-row">
+          ${sel(p + 'eco', 'Traduction échographique', BR.TRADUCTION, l.eco, { re: 1 })}`;
+        if (l.eco === 'oui') {
+          const c = BR.correlat(l);
+          h += sel(p + 'eType', 'Type (échographie)', BR.TYPES.echo.map(([v, t]) => [v, t]), l.eType, { re: 1 })
+            + BR.champs(c).map(k => sel(p + BR.cleEcho(k), BR.LEXIQUE[k][0], BR.options(c, k), c[k])).join('')
+            + inp(p + 'ea', 'Taille écho (mm)', l.ea, { small: 1, ph: l.a ? `${l.a} (mammo)` : 'grand axe' })
+            + inp(p + 'eb', '× (mm)', l.eb, { small: 1 });
+        }
+        h += `</div></fieldset>`;
+      }
+      h += `<div class="tf-row">
           ${sel(p + 'cat', 'Catégorie BI-RADS', BR.CATEGORIES, l.cat)}
           ${inp(p + 'more', 'Précisions (facultatif)', l.more, { wide: 1, text: 1, ph: 'ex. profondeur, comparaison…' })}
         </div>`;
@@ -301,7 +315,8 @@
     },
     warn(st) {
       const l = st.lesions[st.active];
-      return l && l.cat !== '' && BR.RANG[l.cat] <= 3 && BR.SUSPECT.test(BR.description(l))
+      const textes = l ? [BR.description(l), l.mod === 'mammo' && l.eco === 'oui' ? BR.description(BR.correlat(l)) : ''] : [];
+      return l && l.cat !== '' && BR.RANG[l.cat] <= 3 && BR.SUSPECT.test(textes.join(' '))
         ? ['Un descripteur suspect est sélectionné : une catégorie 4 ou 5 est à envisager.'] : [];
     },
     result(st) {
