@@ -735,6 +735,19 @@
       insertPhrase({ text }, s, end, !before || before.endsWith('\n') ? '' : '\n');
       flash('Texte de l\'outil inséré dans le compte rendu.');
     },
+    /* Texte d'un outil intégré aux rubriques du compte rendu (BI-RADS) : seule la partie modifiée
+       est remplacée, en une étape d'historique (« ↶ Retour » l'annule) */
+    integrer(text, message) {
+      const old = editor.value;
+      let a = 0;
+      while (a < old.length && a < text.length && old[a] === text[a]) a++;
+      let b = 0;
+      while (b < old.length - a && b < text.length - a && old[old.length - 1 - b] === text[text.length - 1 - b]) b++;
+      closePop();
+      replaceRange(a, old.length - b, text.slice(a, text.length - b));
+      revealCaret();
+      flash(message || 'Texte de l\'outil intégré au compte rendu.');
+    },
     attach(item) {
       attachments.push(item);
       saveAttach();

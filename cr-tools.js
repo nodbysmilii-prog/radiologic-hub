@@ -2,7 +2,9 @@
    RadiologicHub — schémas et calculateurs du compte rendu
    • PI-RADS v2.1 (prostate) : carte des secteurs (axial, sagittal,
      coronal : schemas/prostate.js) + score
-   • BI-RADS (sein) : schéma en cadran horaire + catégories ACR
+   • BI-RADS (sein) : schéma en cadran horaire + catégories ACR ; lexique
+     par modalité, texte intégré aux rubriques Mammographie / Échographie
+     du compte rendu type et conclusion (règles dans regles/birads.js)
    • EU-TIRADS (thyroïde) : schéma des lobes + score + cytoponction
    • Fleischner 2017 : nodules pulmonaires fortuits (schéma des lobes,
      règles dans regles/fleischner.js)
@@ -209,78 +211,19 @@
   /* =======================================================
      BI-RADS — sein
      ======================================================= */
-  const BI_CAT = {
-    0: 'évaluation incomplète', 1: 'négatif', 2: 'bénin', 3: 'probablement bénin',
-    4: 'suspect', '4A': 'suspicion faible', '4B': 'suspicion intermédiaire', '4C': 'suspicion modérée',
-    5: 'hautement évocateur de malignité', 6: 'malignité prouvée histologiquement',
-  };
-  const BI_CONDUCT = {
-    0: 'Évaluation incomplète : examen(s) complémentaire(s) et/ou comparaison avec les examens antérieurs nécessaires.',
-    1: 'Pas d\'anomalie : surveillance habituelle.',
-    2: 'Anomalie bénigne : surveillance habituelle.',
-    3: 'Anomalie probablement bénigne : surveillance à court terme recommandée.',
-    4: 'Anomalie suspecte : prélèvement histologique recommandé.',
-    5: 'Anomalie hautement évocatrice de malignité : prélèvement histologique recommandé.',
-    6: 'Malignité prouvée : prise en charge thérapeutique adaptée.',
-  };
-  const BI_RANK = { 1: 1, 2: 2, 3: 3, 4: 4, '4A': 4.1, '4B': 4.2, '4C': 4.3, 5: 5, 6: 6, 0: 0.5 };
+  const BR = window.RHRegles && window.RHRegles.birads;
   const biColor = c => (c === '' || c == null ? C.blue : c === '0' ? C.slate : +c <= 2 ? C.green : c === '3' ? C.amber : String(c).startsWith('4') ? C.orange : C.red);
   const BI = { r: 118, cy: 172, cx: { D: 165, G: 475 } };
-  const BI_HOURS = [['', '—'], ['c', 'Rétro-aréolaire'], ...Array.from({ length: 24 }, (_, i) => { const h = i / 2; return [String(h), hourLabel(h)]; })];
-  function hourLabel(h) { const H = Math.floor(h) || 12; return h % 1 ? `${H} h 30` : `${H} h`; }
-  const biQuadrant = (breast, h) => {
-    if (h === 'c') return 'région rétro-aréolaire';
-    const x = +h % 12;
-    const right = breast === 'D';
-    if (x === 0) return 'union des quadrants supérieurs';
-    if (x === 6) return 'union des quadrants inférieurs';
-    if (x === 3) return right ? 'union des quadrants internes' : 'union des quadrants externes';
-    if (x === 9) return right ? 'union des quadrants externes' : 'union des quadrants internes';
-    const up = x < 3 || x > 9, low = x > 3 && x < 9;
-    const outer = right ? x > 6 : x < 6;
-    return `quadrant ${up ? 'supéro' : low ? 'inféro' : ''}-${outer ? 'externe' : 'interne'}`;
-  };
-  const BI_DESC = {
-    shape: [['', '—'], ['ovale', 'Ovale'], ['ronde', 'Ronde'], ['irrégulière', 'Irrégulière']],
-    orient: [['', '—'], ['parallèle à la peau', 'Parallèle à la peau'], ['non parallèle à la peau', 'Non parallèle']],
-    margins: [['', '—'], ['circonscrits', 'Circonscrits'], ['indistincts', 'Indistincts'], ['anguleux', 'Anguleux'], ['microlobulés', 'Microlobulés'], ['spiculés', 'Spiculés']],
-    echo: [['', '—'], ['anéchogène', 'Anéchogène'], ['hyperéchogène', 'Hyperéchogène'], ['hypoéchogène', 'Hypoéchogène'], ['isoéchogène', 'Isoéchogène'], ['hétérogène', 'Hétérogène'], ['complexe, kystique et solide', 'Complexe kystique et solide']],
-    post: [['', '—'], ['sans effet postérieur', 'Aucun'], ['avec renforcement postérieur', 'Renforcement'], ['avec atténuation postérieure', 'Atténuation'], ['avec effet postérieur mixte', 'Mixte']],
-    calcMorph: [['', '—'], ['typiquement bénignes', 'Typiquement bénignes'], ['amorphes', 'Amorphes'], ['grossières hétérogènes', 'Grossières hétérogènes'], ['fines pléomorphes', 'Fines pléomorphes'], ['fines linéaires ou linéaires branchées', 'Fines linéaires (branchées)']],
-    calcDist: [['', '—'], ['de distribution diffuse', 'Diffuse'], ['de distribution régionale', 'Régionale'], ['groupées (en amas)', 'Groupées (amas)'], ['de distribution linéaire', 'Linéaire'], ['de distribution segmentaire', 'Segmentaire']],
-    cyst: [['simple', 'Simple'], ['compliqué (contenu échogène)', 'Compliqué'], ['complexe (composante solide)', 'Complexe']],
-    asym: [['focale', 'Focale'], ['globale', 'Globale'], ['évolutive', 'Évolutive']],
-    rnmDist: [['', '—'], ['focal', 'Focale'], ['linéaire', 'Linéaire'], ['segmentaire', 'Segmentaire'], ['régional', 'Régionale'], ['multirégional', 'Multirégionale'], ['diffus', 'Diffuse']],
-    rnmPat: [['', '—'], ['homogène', 'Homogène'], ['hétérogène', 'Hétérogène'], ['en mottes', 'En mottes'], ['en anneaux groupés', 'En anneaux groupés']],
-  };
-  const BI_SUSPECT = /irrégulière|non parallèle|indistincts|anguleux|microlobulés|spiculés|fines pléomorphes|fines linéaires|linéaire|segmentaire|en mottes|anneaux|complexe \(composante|évolutive/;
-  const BI_TYPES = [['masse', 'Masse'], ['kyste', 'Kyste'], ['calc', 'Microcalcifications'], ['distorsion', 'Distorsion architecturale'], ['asym', 'Asymétrie'], ['rnm', 'Rehaussement non masse (IRM)'], ['ganglion', 'Ganglion intramammaire']];
-  const newBiLesion = () => ({ breast: 'D', hour: '', dist: '', a: '', b: '', type: 'masse', shape: '', orient: '', margins: '', echo: '', post: '', calcMorph: '', calcDist: '', cyst: 'simple', asym: 'focale', rnmDist: '', rnmPat: '', cat: '', more: '' });
-  const biDescr = l => {
-    const j = a => a.filter(Boolean).join(', ');
-    switch (l.type) {
-      case 'masse': return j([`masse${l.shape ? ' ' + l.shape : ''}`, l.orient, l.margins && `à contours ${l.margins}`, l.echo, l.post]);
-      case 'kyste': return `kyste ${l.cyst}`;
-      case 'calc': return j([`microcalcifications${l.calcMorph ? ' ' + l.calcMorph : ''}`, l.calcDist]);
-      case 'distorsion': return 'distorsion architecturale';
-      case 'asym': return `asymétrie ${l.asym}`;
-      case 'rnm': return j([`rehaussement non masse${l.rnmDist ? ' ' + l.rnmDist : ''}`, l.rnmPat && `d'aspect ${l.rnmPat}`]);
-      default: return 'ganglion intramammaire';
-    }
-  };
-  const biBreastCat = (st, b) => {
-    const cats = st.lesions.filter(l => l.breast === b && l.cat !== '').map(l => l.cat);
-    if (!cats.length) return st.lesions.some(l => l.breast === b) ? '' : '1';
-    if (cats.includes('0') && cats.every(c => BI_RANK[c] < 4)) return '0';
-    return cats.filter(c => c !== '0').sort((x, y) => BI_RANK[y] - BI_RANK[x])[0] || '0';
-  };
 
-  const BIRADS = {
+  const BIRADS = BR && {
     title: 'BI-RADS — sein (classification ACR)', chip: 'BI-RADS', sub: 'sein',
     keys: ['birads', 'acrsein'], suggest: /\bseins?\b|mammo|mammaire|bi-?rads/,
-    hint: 'Cliquez sur le schéma pour placer la lésion active : l\'heure et la distance au mamelon sont calculées (vue de face, comme en échographie).',
+    hint: 'Cliquez sur le schéma pour placer la lésion active : l\'heure et la distance au mamelon sont calculées (vue de face, comme en échographie). Pour chaque lésion, choisissez Mammographie ou Échographie : elle est décrite avec le lexique de cette modalité, puis insérée dans la rubrique correspondante du compte rendu type, avec la conclusion.',
+    preview: 'Texte qui sera intégré au compte rendu type (anomalies dans la rubrique Mammographie ou Échographie, conclusion dans AU TOTAL) ; sans rubriques, il est inséré au curseur :',
     init: () => ({ exam: 'mammo-echo', density: '', lesions: [], active: 0 }),
-    newItem: () => newBiLesion(), max: 6,
+    newItem: st => BR.nouvelleLesion(st), max: 6,
+    // À l'ouverture, l'examen suit le compte rendu type chargé (mammographie et/ou échographie)
+    opened(st, texteCR) { if (!st.lesions.length) { const e = BR.examDepuis(texteCR); if (e) st.exam = e; } },
     svg(st, live) {
       let g = `<rect width="640" height="350" fill="#fff"/>`;
       for (const b of ['D', 'G']) {
@@ -296,7 +239,7 @@
         g += txt(cx - 52, cy - 46, q[0], { size: 9, fill: '#9a99a6' }) + txt(cx + 52, cy - 46, q[1], { size: 9, fill: '#9a99a6' })
           + txt(cx - 52, cy + 56, q[2], { size: 9, fill: '#9a99a6' }) + txt(cx + 52, cy + 56, q[3], { size: 9, fill: '#9a99a6' });
         g += txt(cx - r - 14, cy + 20, b === 'D' ? 'EXT' : 'INT', { size: 8, weight: 900, fill: '#55545f' }) + txt(cx + r + 14, cy + 20, b === 'D' ? 'INT' : 'EXT', { size: 8, weight: 900, fill: '#55545f' });
-        const cat = biBreastCat(st, b);
+        const cat = BR.categorieSein(st, b);
         g += txt(cx, 330, `SEIN ${b === 'D' ? 'DROIT' : 'GAUCHE'}${cat ? ' — BI-RADS ' + cat : ''}`, { size: 12, weight: 900, ls: 1 });
       }
       st.lesions.forEach((l, i) => {
@@ -321,7 +264,7 @@
         if (r <= BI.r + 8) best = { b, dx, dy, r };
       }
       if (!best) return false;
-      if (!st.lesions.length) { st.lesions.push(newBiLesion()); st.active = 0; }
+      if (!st.lesions.length) { st.lesions.push(BR.nouvelleLesion(st)); st.active = 0; }
       const l = st.lesions[st.active];
       l.breast = best.b;
       if (best.r <= 24) { l.hour = 'c'; l.dist = ''; return true; }
@@ -331,62 +274,46 @@
       return true;
     },
     form(st) {
-      const mammo = st.exam.includes('mammo');
+      BR.normaliser(st);
+      const mods = BR.modalites(st);
       let h = `<fieldset class="tl-box"><legend>Examen</legend><div class="tf-row">
-        ${sel('exam', 'Examen', [['mammo-echo', 'Mammographie + échographie'], ['mammo', 'Mammographie'], ['echo', 'Échographie'], ['irm', 'IRM mammaire']], st.exam, { re: 1 })}
-        ${mammo ? sel('density', 'Densité (ACR)', [['', '—'], ['a', 'a — graisseux'], ['b', 'b — fibroglandulaire épars'], ['c', 'c — dense hétérogène'], ['d', 'd — extrêmement dense']], st.density) : ''}
+        ${sel('exam', 'Examen', BR.CHOIX_EXAMEN, st.exam, { re: 1 })}
+        ${mods.includes('mammo') ? sel('density', 'Densité (ACR)', BR.CHOIX_DENSITE, st.density) : ''}
       </div></fieldset>`;
       h += tabs(st.lesions.map(x => ({ color: biColor(x.cat), badge: x.cat !== '' ? 'BI-RADS ' + x.cat : '' })), st.active, 'Lésion', this.max, 'lesions');
       const l = st.lesions[st.active];
       if (!l) return h + `<p class="tl-note">Aucune lésion : les deux seins seront classés BI-RADS 1. Cliquez sur le schéma ou sur « + Ajouter » pour décrire une lésion.</p>`;
       const p = `lesions.${st.active}.`;
       h += `<div class="tf-row">
+          ${mods.length > 1 ? sel(p + 'mod', 'Vue en', mods.map(m => [m, BR.MODALITES[m].nom]), l.mod, { re: 1 }) : ''}
           ${sel(p + 'breast', 'Sein', [['D', 'Droit'], ['G', 'Gauche']], l.breast)}
-          ${sel(p + 'hour', 'Rayon horaire', BI_HOURS, l.hour)}
+          ${sel(p + 'hour', 'Rayon horaire', BR.HEURES, l.hour)}
           ${inp(p + 'dist', 'Distance au mamelon (cm)', l.dist, { small: 1 })}
           ${inp(p + 'a', 'Taille (mm)', l.a, { small: 1, ph: 'grand axe' })}
           ${inp(p + 'b', '× (mm)', l.b, { small: 1 })}
         </div>
-        <div class="tf-row">${sel(p + 'type', 'Type', BI_TYPES, l.type, { re: 1 })}`;
-      const d = k => sel(p + k, { shape: 'Forme', orient: 'Orientation', margins: 'Contours', echo: 'Échostructure', post: 'Effet postérieur', calcMorph: 'Morphologie', calcDist: 'Distribution', cyst: 'Kyste', asym: 'Asymétrie', rnmDist: 'Distribution', rnmPat: 'Aspect' }[k], BI_DESC[k], l[k]);
-      const fields = { masse: ['shape', 'orient', 'margins', 'echo', 'post'], kyste: ['cyst'], calc: ['calcMorph', 'calcDist'], asym: ['asym'], rnm: ['rnmDist', 'rnmPat'] }[l.type] || [];
-      h += fields.map(d).join('') + `</div><div class="tf-row">
-          ${sel(p + 'cat', 'Catégorie BI-RADS', [['', '—'], ['0', '0 — incomplet'], ['2', '2 — bénin'], ['3', '3 — probablement bénin'], ['4', '4 — suspect'], ['4A', '4A — suspicion faible'], ['4B', '4B — intermédiaire'], ['4C', '4C — modérée'], ['5', '5 — hautement évocateur'], ['6', '6 — malignité prouvée']], l.cat)}
+        <div class="tf-row">${sel(p + 'type', `Type (${BR.MODALITES[l.mod].nom.toLowerCase()})`, BR.TYPES[l.mod].map(([v, t]) => [v, t]), l.type, { re: 1 })}`;
+      h += BR.champs(l).map(k => sel(p + k, BR.LEXIQUE[k][0], BR.options(l, k), l[k])).join('') + `</div><div class="tf-row">
+          ${sel(p + 'cat', 'Catégorie BI-RADS', BR.CATEGORIES, l.cat)}
           ${inp(p + 'more', 'Précisions (facultatif)', l.more, { wide: 1, text: 1, ph: 'ex. profondeur, comparaison…' })}
         </div>`;
       return h;
     },
     warn(st) {
       const l = st.lesions[st.active];
-      return l && l.cat !== '' && BI_RANK[l.cat] <= 3 && BI_SUSPECT.test(biDescr(l))
+      return l && l.cat !== '' && BR.RANG[l.cat] <= 3 && BR.SUSPECT.test(BR.description(l))
         ? ['Un descripteur suspect est sélectionné : une catégorie 4 ou 5 est à envisager.'] : [];
     },
     result(st) {
-      return ['D', 'G'].map(b => { const c = biBreastCat(st, b); return badge(`Sein ${b === 'D' ? 'droit' : 'gauche'} : ${c ? 'BI-RADS ' + c : 'à compléter'}`, biColor(c)); }).join('');
+      return ['D', 'G'].map(b => { const c = BR.categorieSein(st, b); return badge(`Sein ${b === 'D' ? 'droit' : 'gauche'} : ${c ? 'BI-RADS ' + c : 'à compléter'}`, biColor(c)); }).join('');
     },
-    text(st) {
-      const out = [];
-      if (st.exam.includes('mammo') && st.density) {
-        out.push(`Seins de densité de type ${st.density} (ACR) : ${{ a: 'seins presque entièrement graisseux', b: 'zones de densité fibroglandulaire éparses', c: 'seins de densité hétérogène, pouvant masquer de petites masses', d: 'seins extrêmement denses, ce qui diminue la sensibilité de la mammographie' }[st.density]}.`);
-      }
-      for (const b of ['D', 'G']) {
-        const ls = st.lesions.map((l, i) => ({ l, i })).filter(x => x.l.breast === b);
-        const name = b === 'D' ? 'Sein droit' : 'Sein gauche';
-        if (!ls.length) { out.push(`${name} : pas d'anomalie décelable.`); continue; }
-        ls.forEach(({ l, i }) => {
-          let s = `${name} — lésion n°${i + 1} : ${biDescr(l)}`;
-          if (num(l.a)) s += `, mesurant ${fr(num(l.a), 0)}${num(l.b) ? ' × ' + fr(num(l.b), 0) : ''} mm`;
-          if (l.hour) s += l.hour === 'c' ? ', en région rétro-aréolaire' : `, située à ${hourLabel(+l.hour)}${num(l.dist) != null ? `, à ${fr(num(l.dist), 1)} cm du mamelon` : ''} (${biQuadrant(b, l.hour)})`;
-          if (l.more.trim()) s += `, ${l.more.trim()}`;
-          s += l.cat !== '' ? `. BI-RADS ${l.cat} (${BI_CAT[l.cat]}).` : '. [catégorie BI-RADS]';
-          out.push(s);
-        });
-      }
-      const cD = biBreastCat(st, 'D'), cG = biBreastCat(st, 'G');
-      out.push(`Conclusion : classification BI-RADS de l'ACR — sein droit : ${cD || '[à compléter]'} ; sein gauche : ${cG || '[à compléter]'}.`);
-      const top = [cD, cG].filter(Boolean).sort((x, y) => BI_RANK[y] - BI_RANK[x])[0];
-      if (top) out.push(BI_CONDUCT[String(top).charAt(0)]);
-      return out.join('\n');
+    text: st => BR.texte(st),
+    // « Insérer » : anomalies dans les rubriques du compte rendu type, conclusion dans AU TOTAL
+    integrate(st, texteCR) {
+      const r = BR.integrer(texteCR, st);
+      if (!r) return null;
+      const ou = [...r.rubriques.map(t => `« ${t} »`), ...r.creees.map(t => `« ${t} » (rubrique ajoutée)`)];
+      return { text: r.texte, message: `${ou.length ? `Anomalies insérées dans ${listFr(ou)} ; c` : 'C'}onclusion rédigée dans « ${r.conclusion} ».` };
     },
   };
 
@@ -1283,11 +1210,12 @@
   /* =======================================================
      Fenêtre des outils
      ======================================================= */
-  const TOOLS = { ...(PR ? { pirads: PIRADS } : {}), birads: BIRADS, tirads: TIRADS, ...(FL ? { fleischner: FLEISCHNER } : {}), ...(MY && UT ? { figo: MYOMES } : {}), ...(CA && CO ? { cadrads: CADRADS } : {}), recist: RECIST, lugano: LUGANO };
+  const TOOLS = { ...(PR ? { pirads: PIRADS } : {}), ...(BR ? { birads: BIRADS } : {}), tirads: TIRADS, ...(FL ? { fleischner: FLEISCHNER } : {}), ...(MY && UT ? { figo: MYOMES } : {}), ...(CA && CO ? { cadrads: CADRADS } : {}), recist: RECIST, lugano: LUGANO };
   const states = {};
   let cur = null;
   const titleEl = $('#tool-title', dlg), hintEl = $('#tool-hint', dlg), schemaEl = $('#tool-schema', dlg), formEl = $('#tool-form', dlg);
   const resultEl = $('#tool-result', dlg), previewEl = $('#tool-preview', dlg), msgEl = $('#tool-msg', dlg);
+  const previewLabelEl = $('#tool-preview-label', dlg), PREVIEW_LABEL = previewLabelEl ? previewLabelEl.textContent : '';
 
   const setPath = (o, path, v) => {
     const ks = path.split('.'), last = ks.pop();
@@ -1320,6 +1248,7 @@
     dlg.dataset.tool = cur;
     titleEl.textContent = T.title;
     hintEl.textContent = T.hint;
+    if (previewLabelEl) previewLabelEl.textContent = T.preview || PREVIEW_LABEL;
     dlg.classList.toggle('has-schema', !!T.svg);
     $$('[data-schema]', dlg).forEach(b => { b.hidden = !T.svg; });
     formEl.innerHTML = T.form(states[cur]) + '<div class="tool-warn" aria-live="polite"></div>';
@@ -1335,6 +1264,7 @@
     if (!TOOLS[name]) return;
     cur = name;
     states[name] = states[name] || TOOLS[name].init();
+    if (TOOLS[name].opened) TOOLS[name].opened(states[name], editor.value);
     say('');
     render();
     if (!dlg.open) dlg.showModal();
@@ -1360,7 +1290,7 @@
     const st = states[cur], T = TOOLS[cur], list = b.dataset.list;
     if (T.action && T.action(st, b.dataset)) { render(); return; }
     if (b.dataset.act === 'pick') st.active = +b.dataset.i;
-    if (b.dataset.act === 'add') { st[list].push(T.newItem()); if ('active' in st) st.active = st[list].length - 1; }
+    if (b.dataset.act === 'add') { st[list].push(T.newItem(st)); if ('active' in st) st.active = st[list].length - 1; }
     if (b.dataset.act === 'del') {
       st[list].splice(+b.dataset.i, 1);
       if ('active' in st) st.active = Math.max(0, Math.min(st.active, st[list].length - 1));
@@ -1425,7 +1355,11 @@
     const T = TOOLS[cur], st = states[cur], act = b.dataset.act;
     if (act === 'close') dlg.close();
     if (act === 'insert') {
-      if (window.RHEditor) window.RHEditor.insert(T.text(st));
+      if (window.RHEditor) {
+        const r = T.integrate && T.integrate(st, editor.value);
+        if (r) window.RHEditor.integrer(r.text, r.message);
+        else window.RHEditor.insert(T.text(st));
+      }
       dlg.close();
     }
     if (act === 'attach' && T.svg && window.RHEditor) {
