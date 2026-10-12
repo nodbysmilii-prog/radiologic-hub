@@ -1278,7 +1278,103 @@
     },
   };
 
-  const TOOLS = { ...(PR ? { pirads: PIRADS } : {}), ...(BR ? { birads: BIRADS } : {}), tirads: TIRADS, ...(FL ? { fleischner: FLEISCHNER } : {}), ...(MY && UT ? { figo: MYOMES } : {}), ...(CA && CO ? { cadrads: CADRADS } : {}), recist: RECIST, lugano: LUGANO, ...(OSTEOGAMME ? { osteogamme: OSTEOGAMME } : {}) };
+  /* =======================================================
+     Bosniak 2019 — masses rénales kystiques au scanner et en IRM
+     (règles : outils/bosniak-rules.js et schémas : outils/bosniak-schemas.js,
+     les mêmes que la page Comptes rendus › Bosniak ; aide à l'écriture :
+     regles/bosniak-cr.js)
+     ======================================================= */
+  const BKR = window.BosniakRegles, BKS = window.BosniakSchemas;
+  const BKCR = BKR && BKS && window.RHRegles && window.RHRegles.bosniakCR ? window.RHRegles.bosniakCR.creer(BKR) : null;
+  const bkCouleur = r => (r.categorie ? BKS.COULEURS[r.categorie] : r.hors ? '#c9cbd1' : '#e4e5e8');
+  const bkCourt = r => r.categorie || (r.hors ? 'hors' : '?');
+  // Schéma de la page (viewBox décalé) placé en (x, y), largeur l : groupe mis à l'échelle et découpé
+  // (pas de <svg> imbriqué : la feuille de style de la fenêtre l'étirerait)
+  const bkSchema = (m, i, x, y, l) => {
+    const [vx, vy, vw, vh] = m[1].split(/\s+/).map(Number), k = l / vw;
+    return `<clipPath id="bk-clip-${i}"><rect x="${x}" y="${y}" width="${l}" height="${Math.round(vh * k)}"/></clipPath>`
+      + `<g clip-path="url(#bk-clip-${i})"><g transform="translate(${x} ${y}) scale(${k.toFixed(4)}) translate(${-vx} ${-vy})">${m[2]}</g></g>`;
+  };
+
+  const BOSNIAK = BKCR && {
+    title: 'Bosniak 2019 — masse rénale kystique', chip: 'Bosniak', sub: 'kyste rénal',
+    keys: ['bosniak', 'massekystique'], suggest: /bosniak|uroscanner|kystes? (du rein|renal|cortical)|kystique du rein|masses? renales?/,
+    hint: 'Décrivez chaque lésion : la catégorie se met à jour en direct (règles de la version 2019, appliquées dans l\'ordre : hors Bosniak, IV, III, IIF, II, I). Outil d\'enseignement : il ne remplace pas l\'analyse radiologique (Silverman SG et al., Radiology 2019).',
+    preview: 'Texte qui sera intégré au compte rendu (description sous la ligne des reins, sinon à la fin des constatations ; catégorie et conduite à tenir dans la conclusion) ; sans rubriques, il est inséré au curseur :',
+    init: () => BKCR.init(),
+    newItem: () => BKCR.nouvelleLesion(),
+    // Supprimer la dernière lésion : on repart d'une lésion vide
+    action(st, d) {
+      if (d.act !== 'del' || st.lesions.length > 1) return false;
+      st.lesions = [BKCR.nouvelleLesion()]; st.active = 0;
+      return true;
+    },
+    // Examen (scanner / IRM, injection) repris du compte rendu type
+    opened(st, texteCR) { Object.assign(st, window.RHRegles.bosniakCR.examDepuis(texteCR)); },
+    // Critères du calculateur : mêmes valeurs par défaut que la page (une protrusion qui apparaît est « rehaussée »…)
+    choose(st, path, v) {
+      const m = path.match(/^lesions\.(\d+)\.e\.(\w+)$/);
+      if (!m) return false;
+      const L = st.lesions[+m[1]];
+      L.e = BKCR.choisir(st, L, m[2], v);
+      return true;
+    },
+    form(st) {
+      const i = st.active, L = st.lesions[i], e = BKCR.entrees(st, L), inj = st.injection === 'oui';
+      const p = k => `lesions.${i}.e.${k}`;
+      const s = (k, label, on = true) => { const h = sel(p(k), label, BKR.CHOIX[k], L.e[k]); return on ? h : h.replace('<select ', '<select disabled '); };
+      const box = (titre, corps) => `<fieldset class="tl-box"><legend>${titre}</legend><div class="tf-row">${corps}</div></fieldset>`;
+      const delta = L.e.delta === '' ? BKR.rehaussementMesure(e).delta : null;
+      let h = box('Examen', sel('modalite', 'Modalité', BKR.CHOIX.modalite, st.modalite) + sel('injection', 'Injection', BKR.CHOIX.injection, st.injection));
+      h += tabs(st.lesions.map(l => { const r = BKCR.classer(st, l); return { color: bkCouleur(r), badge: bkCourt(r) }; }), i, 'Lésion', 4, 'lesions');
+      h += box(`Lésion ${i + 1}`, sel(`lesions.${i}.cote`, 'Côté', window.RHRegles.bosniakCR.COTES, L.cote)
+        + sel(`lesions.${i}.siege`, 'Siège', window.RHRegles.bosniakCR.SIEGES, L.siege)
+        + sel(`lesions.${i}.dev`, 'Développement', window.RHRegles.bosniakCR.DEVELOPPEMENTS, L.dev)
+        + inp(`lesions.${i}.taille`, 'Taille (mm)', L.taille, { small: true }));
+      h += box('Avant tout', s('tissu', 'Tissu rehaussé &gt; 25 % du volume') + s('exclusion', 'Infectieuse, inflammatoire, vasculaire ou héréditaire') + s('tropPetite', 'Trop petite pour être caractérisée'));
+      h += box('Paroi', s('paroi', 'Épaisseur') + s('paroiRehaussee', 'Rehaussée', e.paroi !== '<=2' && inj));
+      h += box('Cloisons', s('cloisons', 'Nombre') + s('cloisonsEpaisseur', 'Épaisseur maximale', e.cloisons !== '0') + s('cloisonsRehaussees', 'Rehaussées', e.cloisons !== '0' && inj));
+      h += box('Protrusion (nodule)', s('protrusion', 'Type') + s('protrusionRehaussee', 'Rehaussée', e.protrusion !== 'aucune' && inj));
+      h += box('Calcifications', s('calcifications', 'Calcifications'));
+      h += st.modalite === 'tdm'
+        ? box('Contenu au scanner', inp(p('uhSans'), 'Sans injection (UH)', L.e.uhSans, { small: true, ph: 'UH' })
+          + (inj ? inp(p('uhPortal'), 'Temps portal (UH)', L.e.uhPortal, { small: true, ph: 'UH' }) + inp(p('delta'), 'Delta (UH)', L.e.delta, { small: true, ph: delta != null ? `${fr(delta)} (auto)` : 'auto' }) : ''))
+        : box('Signal en IRM', s('t2Lcr', 'Hypersignal T2 homogène ≈ LCR') + s('t1Hyper', 'Hypersignal T1 ≥ 2,5 × rein') + s('t1FsHetero', 'Hypersignal T1 FS hétérogène'));
+      h += box('Compte rendu', chk('reco', 'Conseils de l\'outil dans la conclusion (IRM…)', st.reco));
+      h += '<p class="tl-note">Schémas des cinq catégories, critères et conduite à tenir : <a href="outils/bosniak" target="_blank" rel="noopener">page Bosniak complète</a>.</p>';
+      return h;
+    },
+    warn: st => BKCR.alertes(st, st.lesions[st.active]),
+    result(st) {
+      const r = BKCR.classer(st, st.lesions[st.active]);
+      const badges = st.lesions.map((l, i) => { const x = BKCR.classer(st, l); return badge(`Lésion ${i + 1} · ${x.categorie ? `Bosniak ${x.categorie}` : x.titre}`, bkCouleur(x)); }).join('');
+      const crit = r.categorie || r.hors ? `<p class="tl-note bk-crit"><strong>${esc(r.titre)}</strong> — ${esc(r.criteres.join(' ; '))}${r.conduite ? `. <strong>Conduite :</strong> ${esc(r.conduite)}` : ''}</p>` : '';
+      return badges + crit;
+    },
+    // Schéma de chaque lésion (catégorie, couleur de la page Bosniak), joignable au compte rendu
+    svg(st) {
+      const W = 230, H = 268;
+      const corps = st.lesions.map((l, i) => {
+        const r = BKCR.classer(st, l), c = r.categorie, m = c && BKS.SVG[c].match(/viewBox="([^"]+)"[^>]*>([\s\S]*)<\/svg>\s*$/);
+        const quoi = c ? `Bosniak ${c}` : r.hors ? 'Hors Bosniak' : 'À compléter';
+        return `<g transform="translate(${i * W},0)">`
+          + `<rect x="10" y="10" width="${W - 20}" height="${H - 20}" rx="18" fill="${bkCouleur(r)}" fill-opacity=".22" stroke="${INK}" stroke-width="2"/>`
+          + txt(W / 2, 36, `Lésion ${i + 1}${l.cote ? ` — rein ${l.cote}` : ''}`, { size: 13 })
+          + (m ? bkSchema(m, i, 30, 48, W - 60) : txt(W / 2, 140, '?', { size: 48, fill: C.grey }))
+          + `<rect x="${W / 2 - 66}" y="${H - 56}" width="132" height="32" rx="16" fill="${bkCouleur(r)}" stroke="${INK}" stroke-width="2.5"/>`
+          + txt(W / 2, H - 34, quoi, { size: 15, weight: 900 }) + '</g>';
+      }).join('');
+      return svgWrap(W * st.lesions.length, H, corps);
+    },
+    text: st => BKCR.texte(st),
+    integrate(st, texteCR) {
+      const r = BKCR.integrer(texteCR, st);
+      const n = st.lesions.length;
+      return r && { text: r.texte, message: `${n > 1 ? `${n} lésions décrites` : 'Lésion décrite'} ${r.rubrique === 'reins' ? 'sous la ligne des reins' : `dans « ${r.rubrique} »`} ; conclusion rédigée${r.creee ? ' (rubrique CONCLUSION ajoutée)' : ` dans « ${r.conclusion} »`}.` };
+    },
+  };
+
+  const TOOLS = { ...(PR ? { pirads: PIRADS } : {}), ...(BR ? { birads: BIRADS } : {}), tirads: TIRADS, ...(FL ? { fleischner: FLEISCHNER } : {}), ...(MY && UT ? { figo: MYOMES } : {}), ...(CA && CO ? { cadrads: CADRADS } : {}), recist: RECIST, lugano: LUGANO, ...(OSTEOGAMME ? { osteogamme: OSTEOGAMME } : {}), ...(BOSNIAK ? { bosniak: BOSNIAK } : {}) };
   const states = {};
   let cur = null;
   const titleEl = $('#tool-title', dlg), hintEl = $('#tool-hint', dlg), schemaEl = $('#tool-schema', dlg), formEl = $('#tool-form', dlg);
@@ -1347,7 +1443,8 @@
   formEl.addEventListener('change', e => {
     const f = e.target.closest('[data-f]');
     if (!f) return;
-    setPath(states[cur], f.dataset.f, f.type === 'checkbox' ? f.checked : f.value);
+    const v = f.type === 'checkbox' ? f.checked : f.value, T = TOOLS[cur];
+    if (!(T.choose && T.choose(states[cur], f.dataset.f, v))) setPath(states[cur], f.dataset.f, v);
     // Listes et cases : on redessine (onglets, champs dépendants). Champs texte : jamais
     // (le « change » arrive quand on clique ailleurs, redessiner ferait perdre ce clic).
     if (f.tagName === 'SELECT' || f.type === 'checkbox') render(); else live();
