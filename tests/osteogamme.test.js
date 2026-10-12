@@ -99,3 +99,61 @@ test('page Comptes rendus : outil OsteoGamme branché sur le même moteur', () =
   assert.match(tools, /osteogamme: OSTEOGAMME/);
   assert.match(tools, /OsteoGammeMoteur\(OGD\)/);
 });
+
+/* ---------- Aide à l'écriture des comptes rendus de radiographie (regles/osteogamme-cr.js) ---------- */
+const vm = require('vm');
+const ctxCR = {};
+vm.runInNewContext(fs.readFileSync(path.join(RACINE, 'cr-data.js'), 'utf8') + ';this.T = CR_TEMPLATES;', ctxCR);
+const modele = id => ctxCR.T.find(t => t.id === id).text;
+const OGCR = require('../regles/osteogamme-cr.js');
+const nouveauCR = () => OGCR.creer(D, OsteoGammeMoteur(D));
+const rubrique = (texte, titre) => { const L = texte.split('\n'), i = L.indexOf(titre); const j = L.findIndex((l, k) => k > i && /^[A-ZÀ-Ý -]+ :$/.test(l)); return L.slice(i + 1, j < 0 ? L.length : j).filter(Boolean); };
+
+test('radiographie du genou : la lésion remplace « Absence de lésion lytique… », masse des tissus mous, conclusion ajoutée', () => {
+  const CR = nouveauCR();
+  const st = { c: { ...D.EXAMPLES[1].s }, n: '3', cote: 'droit', reco: false };
+  const r = CR.integrer(modele('rx-genou'), st);
+  assert.equal(r.rubrique, 'COMPTE-RENDU');
+  assert.equal(r.creee, true, 'le modèle n\'a pas de conclusion : rubrique ajoutée');
+  assert.deepEqual(rubrique(r.texte, 'COMPTE-RENDU :'), [
+    '• Minéralisation osseuse conservée.',
+    '• Lésion osseuse unique de l\'extrémité distale du fémur droit, métaphysaire, centrale, de type III de Lodwick (perméative), à matrice ostéoïde, avec réaction périostée agressive (lamellaire, spicules ou triangle de Codman), avec masse des tissus mous.',
+    '• Intégrité des interlignes articulaires.',
+    '• Absence d\'épanchement intra-articulaire.',
+    '• Masse des tissus mous en regard de la lésion.',
+  ]);
+  assert.deepEqual(rubrique(r.texte, 'CONCLUSION :'), [
+    'Lésion osseuse unique de l\'extrémité distale du fémur droit, d\'allure agressive.',
+    'Hypothèses diagnostiques : ostéosarcome en premier lieu ; à discuter : sarcome d’Ewing, ostéomyélite.',
+  ]);
+  assert.equal(CR.integrer(r.texte, st).texte, r.texte, 'réinsertion sans doublon');
+  // Alertes au choix ; masse décochée : la phrase normale revient
+  st.reco = true; st.c.masse = 'non';
+  const r2 = CR.integrer(r.texte, st);
+  assert.ok(rubrique(r2.texte, 'COMPTE-RENDU :').includes('• Intégrité des parties molles.'));
+  assert.match(rubrique(r2.texte, 'CONCLUSION :').join('\n'), /Lésion d’allure agressive : compléter par l’IRM et le bilan d’extension/);
+  assert.equal(CR.integrer(r2.texte, st).texte, r2.texte);
+});
+
+test('radiographie : rachis (lésions multiples, au pluriel), fragment tombé, cheville, compte rendu sans rubrique', () => {
+  const CR = nouveauCR();
+  const rachis = CR.integrer(modele('rx-rachis-lombaire-degeneratif'), { c: { ...D.EXAMPLES[2].s }, n: '3', cote: 'droit', reco: false }).texte;
+  const corps = rubrique(rachis, 'COMPTE-RENDU :');
+  assert.equal(corps[1], '• Lésions osseuses lytiques multiples du rachis, de type II de Lodwick (mitée), sans matrice minéralisée, sans réaction périostée.', 'pas de côté pour le rachis');
+  assert.ok(!corps.some(l => /anomalie vertébrale/.test(l)), '« Pas d\'anomalie vertébrale » retiré');
+  assert.match(rachis, /CONCLUSION :\nLésions osseuses lytiques multiples du rachis, d'allure agressive\.\nHypothèses diagnostiques : myélome \/ plasmocytome en premier lieu/);
+  const bassin = CR.integrer(modele('rx-bassin'), { c: { age: '10-20', os: 'bassin', axe: 'centrale', lodwick: 'IA', signe: 'fragment' }, n: '1', cote: 'gauche', reco: false }).texte;
+  assert.ok(rubrique(bassin, 'COMPTE-RENDU :').includes('• Fracture pathologique (signe du fragment tombé).'), '« Absence de fracture » remplacé');
+  assert.match(bassin, /• Lésion osseuse lytique du bassin, à gauche, centrale, de type IA de Lodwick \(liseré scléreux\), avec signe du fragment tombé\./);
+  const cheville = CR.integrer(modele('rx-cheville'), { c: { ...D.EXAMPLES[0].s, os: 'tibia' }, n: '1', cote: 'gauche', reco: false }).texte;
+  const c = rubrique(cheville, 'COMPTE-RENDU :');
+  assert.match(c[1], /^• Lésion osseuse lytique unique de l'extrémité distale du tibia gauche, épiphysaire/, 'sous la minéralisation');
+  assert.ok(c.includes('• Absence de lésion osseuse traumatique visible.'), 'phrase non contredite gardée');
+  assert.match(cheville, /Hypothèse diagnostique : tumeur à cellules géantes\.$/);
+  assert.equal(CR.integrer('Patient de 15 ans.', { c: {}, n: '3', cote: '', reco: false }), null, 'sans rubrique : texte au curseur');
+  assert.equal(CR.texte({ c: {}, n: '3', cote: '', reco: false }), '• Lésion osseuse lytique.\n• Hypothèses diagnostiques : [à compléter].');
+  // Conclusion existante écrite par le radiologue : gardée
+  const avecConclusion = CR.integrer('RADIOGRAPHIE\n\nCOMPTE-RENDU :\n• Absence de lésion lytique.\n\nCONCLUSION :\nComparaison avec 2024 souhaitable.', { c: { ...D.EXAMPLES[0].s }, n: '1', cote: '', reco: false });
+  assert.equal(avecConclusion.creee, false);
+  assert.match(avecConclusion.texte, /CONCLUSION :\nLésion osseuse lytique unique de l'extrémité distale du fémur\.\nHypothèse diagnostique : tumeur à cellules géantes\.\nComparaison avec 2024 souhaitable\.$/);
+});
