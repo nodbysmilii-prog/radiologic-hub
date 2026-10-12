@@ -167,12 +167,12 @@ p { margin: 0 0 1em; }
   color: var(--ink);
 }
 
-.main-nav { display: flex; align-items: center; gap: 20px; }
+.main-nav { display: flex; align-items: center; gap: 13px; }
 .main-nav a:not(.btn) {
   text-decoration: none;
   font-weight: 700;
-  font-size: .8rem;
-  letter-spacing: .06em;
+  font-size: .73rem;
+  letter-spacing: .035em;
   text-transform: uppercase;
   color: var(--ink);
   position: relative;
@@ -791,8 +791,8 @@ p { margin: 0 0 1em; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1212px) {
-  .main-nav { gap: 18px; }
-  .main-nav a:not(.btn) { font-size: .74rem; letter-spacing: .05em; }
+  .main-nav { gap: 11px; }
+  .main-nav a:not(.btn) { font-size: .69rem; letter-spacing: .03em; }
 }
 
 @media (max-width: 980px) {

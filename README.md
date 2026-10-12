@@ -1,6 +1,6 @@
 # RadiologicHub
 
-**RadiologicHub** est le site des masterclass de **radiologie d'urgence** : des formations par spécialité (neuro, digestif, thorax, polytraumatisé, vasculaire, pédiatrie), des **fiches rapides** de révision, des **cas cliniques annotés**, un outil de **comptes rendus types** avec phrases automatiques, un **réseau de confrères** (Communauté : profils, cas partagés, messagerie) et la **mise en relation pour les remplacements**.
+**RadiologicHub** est le site des masterclass de **radiologie d'urgence** : des formations par spécialité (neuro, digestif, thorax, polytraumatisé, vasculaire, pédiatrie), des **fiches rapides** de révision, des **cas cliniques annotés**, une **bibliothèque d'articles en accès libre**, un outil de **comptes rendus types** avec phrases automatiques, un **réseau de confrères** (Communauté : profils, cas partagés, messagerie) et la **mise en relation pour les remplacements**.
 
 🌐 **Site en ligne :** https://nodbysmilii-prog.github.io/radiologic-hub/
 
@@ -16,14 +16,15 @@
 4. [Suivi oncologique (RECIST 1.1 / Lugano)](#suivi-oncologique-recist-11--lugano)
 5. [Remplacements (mise en relation)](#remplacements-mise-en-relation)
 6. [Communauté (réseau des radiologues)](#communauté-réseau-des-radiologues)
-7. [Charte graphique](#charte-graphique)
-8. [Code couleur des fiches](#code-couleur-des-fiches)
-9. [Organisation des fichiers](#organisation-des-fichiers)
-10. [Ajouter ou modifier du contenu](#ajouter-ou-modifier-du-contenu)
-11. [Mise en ligne](#mise-en-ligne)
-12. [Tests](#tests)
-13. [À faire / points en attente](#à-faire--points-en-attente)
-14. [Historique des modifications](#historique-des-modifications)
+7. [Bibliothèque (articles en accès libre)](#bibliothèque-articles-en-accès-libre)
+8. [Charte graphique](#charte-graphique)
+9. [Code couleur des fiches](#code-couleur-des-fiches)
+10. [Organisation des fichiers](#organisation-des-fichiers)
+11. [Ajouter ou modifier du contenu](#ajouter-ou-modifier-du-contenu)
+12. [Mise en ligne](#mise-en-ligne)
+13. [Tests](#tests)
+14. [À faire / points en attente](#à-faire--points-en-attente)
+15. [Historique des modifications](#historique-des-modifications)
 
 ---
 
@@ -82,6 +83,10 @@ Mise en relation des radiologues remplaçants (spécialistes, résidents R3 à R
 ### Communauté (`communaute.html`)
 
 Réseau social des radiologues : connexion **Google** (ou lien par e-mail), profil avec photo, publication de **cas anonymisés** sous son nom « Dr … » (comptes vérifiés), j'aime, commentaires, abonnements, **messagerie privée** en temps réel « à la Messenger », notifications, signalements et administration — voir la [section dédiée](#communauté-réseau-des-radiologues). Entrée **Communauté** du menu (à la place de « Cas du jour ») et du pied de page.
+
+### Bibliothèque (`bibliotheque.html`)
+
+Annuaire d'articles d'imagerie **en accès libre** : le site n'héberge pas les articles, seulement des liens et des métadonnées, avec un résumé en français. Pages par thème (Essentiels en tête, dans l'ordre de lecture conseillé), recherche et filtres combinables ; administration dans `bibliotheque-admin.html`. Entrée **Bibliothèque** du menu et du pied de page de toutes les pages — voir la [section dédiée](#bibliothèque-articles-en-accès-libre).
 
 ### Mentions légales (`mentions-legales.html`)
 
@@ -259,6 +264,30 @@ Page `communaute.html` (entrée **Communauté** du menu), application d'une seul
 
 ---
 
+## Bibliothèque (articles en accès libre)
+
+Annuaire d'articles d'imagerie **en accès libre**. **Le site n'héberge pas les articles** : uniquement des liens et des métadonnées. **L'abstract et les figures ne sont jamais repris** (ils sont ignorés dès la lecture des réponses des services, donc jamais mis en cache ni enregistrés ; aucune colonne de la base ne peut les contenir). Mention permanente : « Les articles appartiennent à leurs auteurs et éditeurs ; ce site ne fournit que des liens. »
+
+**Avancement** : étapes **1** (modèle de données, fiches, import par DOI / PMID) et **2** (pages thèmes, recherche, filtres) livrées. À venir : 3 (file « À valider », tableau de bord), 4 (veille hebdomadaire Europe PMC / PubMed / Unpaywall par une fonction Supabase planifiée, lançable aussi depuis l'administration), 5 (articles associés aux modèles de comptes rendus), 6 (liens morts, vérification mensuelle). **Périmètre de la première version** : imagerie digestive, 3 thèmes (urgences digestives ; foie, dont LI-RADS et kyste hydatique ; pancréas, dont pancréatite aiguë et lésions kystiques) ; modèle de données et interface prévus pour les 10 sous-spécialités.
+
+| Élément | Détail |
+|---|---|
+| **Fiche article** | Titre, premier auteur + « et al. », revue, année, DOI, PMID, PMCID ; boutons **Texte intégral gratuit** (PMC en priorité, sinon Europe PMC ou l'éditeur), **PubMed**, **DOI** ; badge de licence ; résumé personnel en français (400 caractères au plus) ; tags ; niveau ; badge **★ Essentiel** |
+| **Accès** | **Licence ouverte** (CC BY, CC BY-NC…, badge vert), **« Gratuit – licence non ouverte »** (lecture gratuite, droits réservés à l'éditeur : seuls les métadonnées et le résumé sont affichés), **« Licence à vérifier »** (une seule source consultée). Un article sans texte intégral gratuit est refusé à l'import |
+| **Classement** | Sous-spécialité, organe / région, modalité (échographie, scanner, IRM, radiographie, mammographie), classification (LI-RADS, Atlanta révisée, CTSI, OMS-IWGE, Gharbi, BI-RADS, PI-RADS, O-RADS, Bosniak, FIGO, EU-TIRADS, Fleischner, CAD-RADS, Lake Louise, Munich, BAMIC, RECIST, Lugano), niveau (étudiant, résident, senior), thèmes avec badge Essentiel et **rang de lecture propres à chaque thème** |
+| **Page publique** | Accueil : 10 sous-spécialités (« bientôt » tant qu'elles n'ont ni thème ni article), thèmes, derniers ajouts. **Page thème** (`#theme=foie`) : les Essentiels en tête, numérotés dans l'ordre de lecture conseillé, puis « Pour aller plus loin ». **Recherche** (sans accents ni majuscules, tous les mots, y compris dans le résumé et les libellés des tags) et **filtres combinables** (ET entre filtres, OU dans un filtre ; seules les valeurs présentes sont proposées, avec leur nombre d'articles) ; adresse partageable (`#q=…&modalites=irm,scanner`) ; filtres dans un panneau repliable sur téléphone, en colonne sur ordinateur |
+| **Administration** (`bibliotheque-admin.html`, non indexée) | Connexion Google ou lien par e-mail, **réservée à l'administrateur** (table `rp_admins`, le même compte que les autres modules). **Import** : coller un DOI, un PMID, un PMCID ou leur adresse → fiche pré-remplie (Europe PMC, puis PubMed si besoin, puis Unpaywall) avec les sources consultées et les avertissements ; plusieurs identifiants (un par ligne) → **import en lot** avec rapport (ajoutés « à valider », doublons, pas en accès libre, introuvables, services injoignables, identifiants non reconnus). **Fiche** : métadonnées modifiables, classement, résumé avec compteur, statut (à valider, publié, rejeté + motif). Liste des articles par statut, recherche, suppression |
+| **Doublons** | DOI (sans casse ni préfixe `doi:` / `https://doi.org/`), PMID et PMCID : refusés par la base (index uniques) et signalés avant tout appel réseau ; un article déjà rejeté n'est pas réimporté |
+| **Services** | Europe PMC, E-utilities de PubMed, Unpaywall, doi.org. Adresse de contact et nom d'outil (`radiologichub@gmail.com`, « RadiologicHub ») dans la **configuration** ; débit limité par service (PubMed 3 requêtes/s sans clé, Europe PMC et Unpaywall 5/s), une nouvelle tentative après une surcharge (429 / 503), **cache** des seules métadonnées (7 jours pour les recherches, 30 jours par article) |
+| **Base** | Migration `20261012120000_bibliotheque.sql` : `bib_articles`, `bib_article_themes`. Visiteurs : articles **publiés** seulement et **colonnes publiques** seulement ; utilisateurs connectés : lecture des publiés ; écriture réservée à l'administrateur ; la veille (clé de service) ajoute « à valider » et **ne peut jamais publier** (déclencheur) ; publier exige sous-spécialité et niveau. Droits accordés explicitement (exposition automatique désactivée), listés dans `tests/sql/droits-attendus.txt` |
+| **Mode démonstration** | Tant que `remplacements/config.js` est vide : les 5 articles du test réel (métadonnées relevées sur PubMed, liens PMC ; licence CC BY confirmée pour le kyste hydatique, « gratuit » pour LI-RADS 2018 et les recommandations européennes, « à vérifier » pour les deux autres), tags et niveaux donnés à titre d'exemple, sans résumé ; l'administration est ouverte pour l'essai et garde les modifications dans le navigateur |
+
+**Ajouter une sous-spécialité, un thème, un organe, une classification ou une requête de veille** : **uniquement** dans `bibliotheque/config.js` (aucun code à modifier ; la base ne vérifie que le format des identifiants). Un thème passe en ligne avec `actif: true`. Le test `tests/bibliotheque.test.js` vérifie la configuration (identifiants uniques, tags connus, requêtes valides).
+
+**Fichiers** : `bibliotheque.html`, `bibliotheque-admin.html` ; `bibliotheque/config.js` (configuration), `bibliotheque/noyau/` (`identifiants.js`, `sources.js`, `reseau.js`, `import.js`, `catalogue.js` — partagés par le site, les futures fonctions serveur et les tests), `bibliotheque/api-supabase.js` / `api-demo.js` / `api.js`, `bibliotheque/app.js` (page publique), `bibliotheque/admin.js` (administration), `bibliotheque/demo.js`, `bibliotheque/bib.css`.
+
+---
+
 ## Charte graphique
 
 Reprise des visuels RadiologicHub.
@@ -302,6 +331,15 @@ radiologic-hub/
 ├── fiche.js                Interactions des fiches (légende, carrousels, checklist…) + menu mobile
 ├── fiches/                 Une page HTML par fiche
 ├── cas/                    Une page HTML par cas clinique complet (schwannome-v3.html)
+├── bibliotheque.html       Bibliothèque : articles en accès libre (accueil, thèmes, recherche, filtres)
+├── bibliotheque-admin.html Bibliothèque : administration (import, fiches, statuts)
+├── bibliotheque/
+│   ├── config.js           Configuration : contact, sous-spécialités, tags, thèmes, requêtes de veille (seul fichier à modifier pour en ajouter)
+│   ├── noyau/              identifiants, sources (Europe PMC, PubMed, Unpaywall), reseau (débit, cache), import, catalogue (filtres, tri, validation)
+│   ├── api-supabase.js, api-demo.js, api.js   Source de données (production ou démonstration)
+│   ├── app.js, admin.js    Page publique et administration
+│   ├── demo.js             5 articles du mode démonstration
+│   └── bib.css             Styles
 ├── schemas/
 │   ├── prostate.js         Schéma sectoriel de la prostate (axial, sagittal, coronal) : calculateur PI-RADS et fiche prostate
 │   ├── uterus.js           Schéma de l'utérus (coronal, sagittal) : cartographie FIGO des myomes, outil FIGO et fiche myome
@@ -359,7 +397,7 @@ radiologic-hub/
 │   ├── rp.css              Styles du module et des mentions légales
 │   └── INSTALLATION.md     Mise en service (Supabase, Brevo, secrets, planification, administrateur)
 ├── supabase/
-│   ├── migrations/         Remplacements (rp_*), Communauté (rs_* : membres, cas, messagerie, notifications, signalements, stockage, temps réel), puis droits explicites (GRANT des fonctions des règles d'accès)
+│   ├── migrations/         Remplacements (rp_*), Communauté (rs_* : membres, cas, messagerie, notifications, signalements, stockage, temps réel), droits explicites (GRANT des fonctions des règles d'accès), Bibliothèque (bib_*)
 │   ├── functions/          Fonctions serveur rp-agent, rp-lien, rp-taches (+ _shared, généré en partie ; _shared/reseau.ts : rappels des messages non lus)
 │   ├── sql/planification.sql  Tâche planifiée (pg_cron) et déclaration de l'administrateur
 │   └── config.toml         Réglages des fonctions
@@ -380,6 +418,7 @@ radiologic-hub/
 | Je veux… | Où ? |
 |---|---|
 | Modifier une masterclass | Tableau `COURSES` dans `script.js` |
+| Bibliothèque : ajouter une sous-spécialité, un thème, un organe, une classification, une requête de veille | `bibliotheque/config.js` uniquement (voir la section Bibliothèque) |
 | Modifier le quiz « Cas du jour » | Tableau `CASES` dans `script.js` (champ facultatif `link: { href, label }` : bouton vers le cas complet) |
 | Ajouter un cas clinique complet | Créer `cas/mon-cas.html` (copier `cas/schwannome-v3.html`), images dans `assets/cas/mon-cas/` sans métadonnées ni donnée patient, puis un lien depuis le quiz (`link`) ou la section « Cas du jour » de `index.html` |
 | Modifier la fiche flash de l'accueil | Tableau `FLASH` dans `script.js` |
@@ -422,12 +461,15 @@ Les règles de calcul du suivi oncologique, les recommandations Fleischner, la c
 
 ```
 npm test                  # ou : node --test tests/*.test.js
-npm run test:sql          # schémas Supabase des Remplacements et de la Communauté sur un PostgreSQL local (droits d'accès, liste des GRANT)
+npm run test:sql          # schémas Supabase des Remplacements, de la Communauté et de la Bibliothèque sur un PostgreSQL local (droits d'accès, liste des GRANT)
+npm run test:bib-reel     # Bibliothèque : import réel de 5 DOI (réseau nécessaire ; ignoré sinon, rien n'est simulé)
 npm run test:integration  # agent + base réelle (PostgreSQL + PostgREST, sous Deno) — variables POSTGREST_BIN et DENO_BIN
 npm run backend:preparer  # recopie le noyau et les modèles dans supabase/functions/_shared (avant déploiement)
 ```
 
 Coroscanner : `tests/cadrads.test.js` couvre les pontages (greffons, état gradé, G, tracés simple / séquentiel / en Y, pointillés si occlus) et CAD-RADS 2.0 (catégories 0 à 5, 4B par le tronc commun ou trois territoires, N avant ou après la charge en plaque, P1-P4 par score calcique ou nombre de segments, ordre des modificateurs, conduite selon P et ischémie), les classes d'Agatston et le schéma coronaire (segments présents selon la dominance, cohérence schéma / règles, SVG valide, M2 rattachée à la circonflexe). Outil vérifié dans Chromium (1366 px et 390 px, sans débordement) : formule chargée, outil suggéré, clic sur chacun des segments dans les trois dominances, texte inséré.
+
+Bibliothèque : `tests/bibliotheque.test.js` (16 tests) couvre les identifiants (DOI, PMID, PMCID et leurs adresses, lots), les doublons, les licences, la lecture des réponses d'Europe PMC, de PubMed et d'Unpaywall (réponses fictives au format des API, abstract jamais repris), la fusion des sources (licence ouverte, gratuit, à vérifier, pas gratuit), l'import (cache, PubMed avec l'outil « RadiologicHub », introuvable, non libre, services en panne), l'import en lot (doublons dans le lot et avec un article rejeté), le débit (3 requêtes/s pour PubMed), le cache, les filtres combinables, l'ordre de lecture par thème, l'adresse partageable, la validation des fiches et de la configuration (ajout d'un thème d'une autre sous-spécialité par la seule configuration). `tests/sql/rls-bibliotheque.js` (9 vérifications) : file « à valider » invisible, publication par l'administrateur seulement, colonnes publiques pour les visiteurs, aucune écriture hors administrateur, doublons DOI / PMID / PMCID refusés, contraintes, la veille ne publie jamais, rejet. `tests/bibliotheque-reel.js` importe en direct 5 vrais DOI (appendicite, LI-RADS 2018, kyste hydatique, pancréatite aiguë, lésions kystiques du pancréas) et vérifie DOI, PMID, PMCID, accès et licence attendus, puis les doublons par PMID et PMCID. Pages vérifiées dans Chromium (1366 px et 390 px, sans débordement) : accueil, page thème, recherche, filtres combinés et retirés, administration (modification d'une fiche, résumé trop long refusé, doublon détecté, identifiant invalide, services injoignables signalés), résumé visible sur la page publique.
 
 Cas « Le menton qui s'endort » : page vérifiée dans Chromium (1366 px et 390 px, sans débordement ni image manquante) : quiz et score, verdict déplié, survol de la légende, zoom d'une coupe annotée, cas n° 4 du quiz de l'accueil et son lien.
 
@@ -446,6 +488,8 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 ---
 
 ## À faire / points en attente
+
+- [ ] **Bibliothèque** : lancer `npm run test:bib-reel` (import réel des 5 DOI) dès que l'environnement a accès à www.ebi.ac.uk, eutils.ncbi.nlm.nih.gov, api.unpaywall.org et doi.org ; vérifier dans le navigateur que ces services acceptent les appels depuis le site (sinon, l'import passera par une fonction serveur à l'étape 4) ; revoir les tags, niveaux et Essentiels d'exemple du mode démonstration ; étapes 3 à 6 (file « À valider », veille hebdomadaire, liens croisés avec les comptes rendus, liens morts) ; objectif du test : 50 à 100 articles publiés dont 10 Essentiels.
 
 - [ ] **Cas « Le menton qui s'endort »** : faire relire le scénario clinique (inventé pour l'apprentissage et signalé comme tel), la lecture de l'**épanchement mastoïdien droit** (hypersignal T2 ajouté à la description de la publication), le classement en **type D** et les lettres A-D attribuées à la classification de Wanibuchi ; confirmer que les images IRM de la publication peuvent être publiées sur le site (aucune donnée patient visible).
 
@@ -477,6 +521,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 12/10/2026 | **Bibliothèque** (étapes 1 et 2) : annuaire d'articles d'imagerie en accès libre (liens et métadonnées seulement, jamais l'abstract ni les figures) — configuration unique `bibliotheque/config.js` (10 sous-spécialités, organes, modalités, classifications, niveaux, 3 thèmes digestifs avec leurs requêtes, contact « RadiologicHub »), noyau (identifiants, Europe PMC / PubMed / Unpaywall, licences, débit, cache, import et import en lot, doublons, filtres, ordre de lecture), migration `20261012120000_bibliotheque.sql` (droits explicites, la veille ne publie jamais), page `bibliotheque.html` (thèmes avec Essentiels numérotés, recherche, filtres combinables, badges « licence ouverte » / « Gratuit – licence non ouverte » / « Licence à vérifier », mention des droits des auteurs), administration `bibliotheque-admin.html` (import par DOI / PMID / PMCID, lot avec rapport, fiche, statuts), mode démonstration avec 5 articles réels ; entrée « Bibliothèque » dans le menu et le pied de page de toutes les pages (menu resserré pour tenir sur une ligne) ; mentions légales (`#bibliotheque`) ; message de fin du quiz des fiches réglable ; tests unitaires, SQL, réel et navigateur |
 | 12/10/2026 | **Droits Supabase explicites** (exposition automatique des tables désactivée) : migration `20261012090000_droits_explicites.sql` accordant à `authenticated` l'exécution des 10 fonctions appelées dans les règles d'accès (sinon « permission denied » avec ce réglage) ; base de test rendue stricte (aucun droit par défaut) ; nouveau test `tests/sql/droits.js` et liste de référence des droits `tests/sql/droits-attendus.txt` ; guide d'installation mis à jour |
 | 10/10/2026 | **Cas clinique complet « Le menton qui s'endort »** (`cas/schwannome-v3.html`) : la publication « Trigeminal nerve, a pasta feast » traduite en français et réécrite en enquête — scénario clinique pédagogique, 4 coupes IRM, quiz en 4 questions, verdict déplié avec coupes annotées (masse, foramen ovale, épanchement mastoïdien), festin de pâtes (pictogrammes SVG, passoires fente / rond / ovale, coupes de repère FOS, FR, FO), sémiologie et diagnostics différentiels, 4 schémas de la classification de Wanibuchi (notre cas : type D), compte rendu proposé, à retenir, 8 cartes ; 4e cas du quiz « Cas du jour » (tête et cou) avec bouton vers le cas complet ; message de fin du quiz des fiches réglable (`data-relire`) |
 | 10/10/2026 | **Pontages en mode choix** : formule coroscanner avec une ligne « Pontages aorto-coronaires » à choix (absence de pontage, AMIG, AMID, radiale sur l'aorte ou en Y, gastro-épiploïque, saphène simple ou séquentiel) et conclusion `CAD-RADS 0` ou `0/G` ; 7 phrases automatiques `pontage…` (`amig`, `amid`, `radiale`, `gep`, `saphene`, `sequentiel`, `pasdepontage`) avec artère receveuse et état du greffon au choix ; éditeur : un champ à choix `[a / b / c]` sélectionné (Tab) ou cliqué affiche ses options, un clic (ou ↑ ↓ + Entrée) insère l'option choisie |

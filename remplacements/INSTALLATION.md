@@ -23,7 +23,7 @@ Pour passer en production (vrais comptes, vrais e-mails), suivre les étapes ci-
 
 Au choix :
 
-- **Éditeur SQL** (*SQL Editor → New query*) : coller tout le fichier `supabase/migrations/20261008120000_remplacements.sql` et l'exécuter, **puis** faire de même avec `supabase/migrations/20261009090000_reseau.sql` (Communauté), **puis** avec `supabase/migrations/20261012090000_droits_explicites.sql` — dans cet ordre (si les deux premières ont déjà été exécutées, exécuter seulement la troisième) ;
+- **Éditeur SQL** (*SQL Editor → New query*) : coller tout le fichier `supabase/migrations/20261008120000_remplacements.sql` et l'exécuter, **puis** faire de même avec `supabase/migrations/20261009090000_reseau.sql` (Communauté), **puis** avec `supabase/migrations/20261012090000_droits_explicites.sql`, **puis** avec `supabase/migrations/20261012120000_bibliotheque.sql` (Bibliothèque) — dans cet ordre (exécuter seulement celles qui ne l'ont pas encore été) ;
 - ou **en ligne de commande** (outil `supabase`, depuis la racine du dépôt) :
   ```
   supabase login
@@ -33,7 +33,7 @@ Au choix :
 
 La première migration crée les tables `rp_*`, les droits d'accès par ligne et l'espace de stockage privé `justificatifs`. La seconde crée les tables `rs_*` de la Communauté (profils, cas, commentaires, messagerie, notifications, signalements), leurs droits d'accès par ligne, les espaces de stockage `avatars` (photos de profil, public), `cas-images` et `messages-images` (privés), et ajoute les messages et notifications au **temps réel** (Realtime).
 
-La troisième accorde le droit d'exécuter les fonctions utilisées par les règles d'accès. **Exposition automatique désactivée** (*Project Settings → Data API*, ou choix fait à la création du projet) : c'est le réglage recommandé, et le dépôt est prévu pour lui. Les nouvelles tables et fonctions n'y sont accessibles à aucun rôle sans `GRANT` explicite ; chaque migration accorde donc elle-même, table par table, les droits nécessaires aux rôles `anon` (visiteur non connecté) et `authenticated` (utilisateur connecté), en plus des règles d'accès par ligne. La liste complète des droits accordés est dans `tests/sql/droits-attendus.txt`, vérifiée par `npm run test:sql`.
+La troisième accorde le droit d'exécuter les fonctions utilisées par les règles d'accès. La quatrième crée les tables `bib_articles` et `bib_article_themes` de la Bibliothèque (articles en accès libre : métadonnées et liens seulement) : les visiteurs ne lisent que les articles publiés et leurs colonnes publiques ; seul l'administrateur (table `rp_admins`, le même compte) importe, classe et publie, depuis `bibliotheque-admin.html`. **Exposition automatique désactivée** (*Project Settings → Data API*, ou choix fait à la création du projet) : c'est le réglage recommandé, et le dépôt est prévu pour lui. Les nouvelles tables et fonctions n'y sont accessibles à aucun rôle sans `GRANT` explicite ; chaque migration accorde donc elle-même, table par table, les droits nécessaires aux rôles `anon` (visiteur non connecté) et `authenticated` (utilisateur connecté), en plus des règles d'accès par ligne. La liste complète des droits accordés est dans `tests/sql/droits-attendus.txt`, vérifiée par `npm run test:sql`.
 
 Vérifier dans *Database → Publications* que `supabase_realtime` contient bien `rs_messages`, `rs_participants` et `rs_notifications` (sinon les y ajouter ou réexécuter la fin de la seconde migration) : c'est ce qui fait apparaître les messages sans recharger la page.
 

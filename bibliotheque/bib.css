@@ -1,0 +1,132 @@
+/* =========================================================
+   RadiologicHub — Bibliothèque (pages publique et administration)
+   Mobile d'abord ; charte du site (Montserrat, Permanent Marker, bordures encre).
+   ========================================================= */
+
+.bib-hero { padding-bottom: 34px; }
+.bib-recherche { display: flex; gap: 10px; max-width: 720px; margin-top: 22px; }
+.bib-recherche input { flex: 1; min-width: 0; padding: 14px 18px; border: 3px solid var(--ink); border-radius: 999px; font: 600 1rem var(--font); background: #fff; }
+.bib-recherche input:focus { outline: 3px solid var(--amber); outline-offset: 2px; }
+.bib-demo { margin: 16px 0 0; padding: 10px 14px; max-width: 720px; border: 2px dashed rgba(0, 0, 0, .3); border-radius: 14px; font-size: .84rem; color: var(--muted); }
+.bib-section { padding: 30px 0 70px; }
+.bib-mention { margin: 0; padding: 18px 16px; background: var(--ink); color: #fff; text-align: center; font-size: .86rem; font-weight: 700; }
+
+/* ---------- Accueil ---------- */
+.bib-titre-bloc { margin: 0 0 16px; font-family: var(--font-marker); font-weight: 400; font-size: 1.35rem; letter-spacing: .03em; }
+.bib-titre-bloc + p { margin-top: -8px; color: var(--muted); }
+.bib-specs { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 40px; padding: 0; list-style: none; }
+.bib-spec { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border: 3px solid var(--c, var(--ink)); border-radius: 999px; background: #fff; font-weight: 800; font-size: .82rem; color: var(--ink); text-decoration: none; }
+.bib-spec b { display: inline-grid; place-items: center; min-width: 24px; height: 24px; padding: 0 6px; border-radius: 999px; background: var(--c, var(--ink)); color: #fff; font-size: .72rem; }
+a.bib-spec:hover { background: color-mix(in srgb, var(--c) 12%, #fff); }
+.bib-spec.is-bientot { border-style: dashed; color: var(--muted); opacity: .75; }
+.bib-spec.is-bientot small { font-weight: 700; font-size: .68rem; text-transform: uppercase; letter-spacing: .05em; }
+.bib-themes { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; margin: 0 0 46px; padding: 0; list-style: none; }
+.bib-theme { display: flex; flex-direction: column; gap: 8px; height: 100%; padding: 22px 22px 18px; border: 4px solid var(--c, var(--ink)); border-radius: var(--radius); background: var(--card); box-shadow: 8px 8px 0 color-mix(in srgb, var(--c) 45%, transparent); color: var(--ink); text-decoration: none; transition: transform .2s; }
+.bib-theme:hover { transform: translate(-3px, -3px); }
+.bib-theme h3 { margin: 0; font-size: 1.15rem; font-weight: 900; }
+.bib-theme p { margin: 0; font-size: .88rem; color: var(--muted); }
+.bib-theme .bib-compte { margin-top: auto; padding-top: 8px; font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: var(--ink); }
+
+/* ---------- Mise en page : filtres + résultats ---------- */
+.bib-layout { display: grid; gap: 22px; }
+.bib-entete-res { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin-bottom: 16px; }
+.bib-entete-res p { margin: 0; font-weight: 800; }
+.bib-ouvrir-filtres { display: inline-flex; }
+.bib-filtres { display: none; padding: 18px; border: 3px solid var(--ink); border-radius: 20px; background: #fff; }
+.bib-filtres.is-open { display: block; }
+.bib-filtres fieldset { margin: 0 0 16px; padding: 0; border: 0; }
+.bib-filtres legend { margin-bottom: 8px; font-size: .74rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); }
+.bib-options { display: flex; flex-wrap: wrap; gap: 6px; }
+.bib-option { position: relative; }
+.bib-option input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.bib-option span { display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border: 2px solid rgba(0, 0, 0, .2); border-radius: 999px; font-size: .8rem; font-weight: 700; background: #fff; }
+.bib-option span small { color: var(--muted); font-weight: 800; }
+.bib-option input:checked + span { border-color: var(--ink); background: var(--ink); color: #fff; }
+.bib-option input:checked + span small { color: #c9c9d6; }
+.bib-option input:focus-visible + span { outline: 3px solid var(--amber); outline-offset: 2px; }
+.bib-filtres select { width: 100%; padding: 8px 10px; border: 2px solid rgba(0, 0, 0, .25); border-radius: 12px; font: 700 .85rem var(--font); background: #fff; }
+.bib-actifs { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 16px; padding: 0; list-style: none; }
+.bib-actifs button { padding: 5px 10px; border: 2px solid var(--ink); border-radius: 999px; background: #fff7e0; font: 700 .76rem var(--font); cursor: pointer; }
+.bib-actifs button::after { content: " ×"; font-weight: 900; }
+.bib-vide { padding: 30px 20px; border: 3px dashed rgba(0, 0, 0, .2); border-radius: 20px; text-align: center; color: var(--muted); font-weight: 700; }
+@media (min-width: 1000px) {
+  .bib-layout { grid-template-columns: 270px minmax(0, 1fr); align-items: start; }
+  .bib-filtres { display: block; position: sticky; top: calc(var(--header-h) + 16px); max-height: calc(100vh - var(--header-h) - 32px); overflow: auto; }
+  .bib-ouvrir-filtres { display: none; }
+}
+
+/* ---------- Page thème ---------- */
+.bib-retour { display: inline-block; margin-bottom: 14px; font-weight: 800; color: var(--ink); }
+.bib-theme-tete { margin-bottom: 26px; padding: 22px; border: 4px solid var(--c, var(--ink)); border-radius: var(--radius); background: color-mix(in srgb, var(--c) 8%, #fff); }
+.bib-theme-tete h2 { margin: 0 0 6px; font-size: clamp(1.4rem, 3.4vw, 2rem); }
+.bib-theme-tete p { margin: 0; color: var(--muted); }
+.bib-sous-titre { display: flex; align-items: center; gap: 10px; margin: 30px 0 14px; font-size: 1rem; font-weight: 900; text-transform: uppercase; letter-spacing: .05em; }
+.bib-sous-titre small { font-size: .74rem; color: var(--muted); text-transform: none; letter-spacing: 0; font-weight: 700; }
+
+/* ---------- Fiche article ---------- */
+.bib-liste { display: grid; gap: 18px; margin: 0; padding: 0; list-style: none; counter-reset: lecture; }
+.bib-article { position: relative; padding: 18px 18px 16px; border: 3px solid var(--ink); border-radius: 20px; background: #fff; }
+.bib-liste.is-lecture > li { counter-increment: lecture; }
+.bib-liste.is-lecture > li .bib-article { padding-left: 64px; border-color: var(--amber); box-shadow: 6px 6px 0 color-mix(in srgb, var(--amber) 45%, transparent); }
+.bib-liste.is-lecture > li .bib-article::before { content: counter(lecture); position: absolute; left: 16px; top: 18px; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 900; }
+.bib-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.bib-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 999px; font-size: .68rem; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; border: 2px solid currentColor; }
+.bib-badge.is-essentiel { background: var(--amber); border-color: var(--ink); color: var(--ink); }
+.bib-badge.is-niveau { color: var(--royal); }
+.bib-badge.is-ouvert { color: #1f7a4d; background: #e6f6ec; }
+.bib-badge.is-gratuit { color: #8a4b00; background: #fff1dc; }
+.bib-badge.is-verifier { color: var(--muted); background: #f2f2f4; border-style: dashed; }
+.bib-badge.is-statut { color: var(--crimson); }
+.bib-article h3 { margin: 0 0 6px; font-size: 1.02rem; line-height: 1.4; font-weight: 800; text-transform: none; letter-spacing: 0; }
+.bib-article h3 a { color: var(--ink); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.bib-ref { margin: 0 0 10px; font-size: .84rem; color: var(--muted); font-weight: 600; }
+.bib-resume { margin: 0 0 10px; padding: 10px 12px; border-left: 5px solid var(--teal); border-radius: 0 12px 12px 0; background: #eef8f7; font-size: .9rem; line-height: 1.5; }
+.bib-resume b { display: block; font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.bib-tags { display: flex; flex-wrap: wrap; gap: 5px; margin: 0 0 12px; padding: 0; list-style: none; }
+.bib-tags li { padding: 2px 8px; border-radius: 8px; background: var(--card); font-size: .74rem; font-weight: 700; }
+.bib-liens { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
+.bib-liens .btn { font-size: .7rem; }
+
+/* ---------- Administration ---------- */
+.bib-admin-barre { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 18px; }
+.bib-onglets { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 20px; }
+.bib-onglets button { padding: 9px 16px; border: 3px solid var(--ink); border-radius: 999px; background: #fff; font: 800 .8rem var(--font); cursor: pointer; }
+.bib-onglets button[aria-selected="true"] { background: var(--ink); color: #fff; }
+.bib-carte { padding: 20px; margin-bottom: 20px; border: 3px solid var(--ink); border-radius: 20px; background: #fff; }
+.bib-carte h2 { margin: 0 0 12px; font-size: 1.1rem; }
+.bib-carte textarea, .bib-form input[type="text"], .bib-form input[type="url"], .bib-form input[type="number"], .bib-form select, .bib-form textarea, .bib-carte input[type="email"] {
+  width: 100%; padding: 10px 12px; border: 2px solid rgba(0, 0, 0, .25); border-radius: 12px; font: 600 .9rem var(--font); background: #fff; }
+.bib-carte textarea { min-height: 110px; resize: vertical; }
+.bib-aide { margin: 6px 0 12px; font-size: .8rem; color: var(--muted); }
+.bib-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.bib-msg { margin: 12px 0 0; padding: 10px 14px; border-radius: 12px; font-size: .86rem; font-weight: 700; }
+.bib-msg.is-ok { background: #e6f6ec; color: #1f5a3a; }
+.bib-msg.is-erreur { background: #fde2e4; color: #8a1426; }
+.bib-msg.is-info { background: #fff6dc; color: #6b4a00; }
+.bib-msg ul { margin: 6px 0 0; padding-left: 1.2em; font-weight: 600; }
+.bib-progression { height: 10px; margin-top: 12px; border-radius: 6px; background: var(--card); overflow: hidden; }
+.bib-progression span { display: block; height: 100%; width: 0; background: var(--amber); transition: width .2s; }
+.bib-rapport { display: grid; gap: 10px; margin-top: 14px; }
+.bib-rapport details { padding: 10px 14px; border: 2px solid rgba(0, 0, 0, .15); border-radius: 12px; }
+.bib-rapport summary { font-weight: 800; cursor: pointer; }
+.bib-rapport li { margin: 4px 0; font-size: .85rem; }
+.bib-form { display: grid; gap: 14px; }
+.bib-form fieldset { margin: 0; padding: 14px; border: 2px solid rgba(0, 0, 0, .15); border-radius: 14px; }
+.bib-form legend { padding: 0 6px; font-size: .74rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+.bib-form label { display: block; font-size: .8rem; font-weight: 800; }
+.bib-form label + label, .bib-form label + .bib-options { margin-top: 10px; }
+.bib-grille { display: grid; gap: 10px; }
+.bib-cocher { display: inline-flex !important; align-items: center; gap: 8px; font-weight: 700 !important; }
+.bib-theme-ligne { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 8px 0; border-bottom: 1px dashed rgba(0, 0, 0, .15); }
+.bib-theme-ligne input[type="number"] { width: 80px; }
+.bib-compteur { display: block; text-align: right; font-size: .74rem; color: var(--muted); }
+.bib-compteur.is-trop { color: var(--crimson); font-weight: 900; }
+.bib-table { display: grid; gap: 10px; }
+.bib-ligne { display: grid; gap: 4px; padding: 12px 14px; border: 2px solid rgba(0, 0, 0, .15); border-radius: 14px; background: #fff; cursor: pointer; text-align: left; font: inherit; }
+.bib-ligne:hover { border-color: var(--ink); }
+.bib-ligne strong { font-size: .9rem; }
+.bib-ligne small { color: var(--muted); }
+@media (min-width: 700px) {
+  .bib-grille { grid-template-columns: 1fr 1fr; }
+  .bib-grille .is-large { grid-column: 1 / -1; }
+}
