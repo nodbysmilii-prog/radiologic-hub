@@ -291,6 +291,7 @@ function page({ p, pv, titre, description, corps, scripts = '', corpsClasse = ''
   <meta property="og:title" content="${esc(titre)}">
   <meta property="og:description" content="${esc(description)}">
   <meta property="og:type" content="article">
+  <meta property="og:image" content="${p}assets/logo-radiologichub.png">
   <link rel="icon" type="image/svg+xml" href="${p}assets/emblem.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

@@ -80,7 +80,7 @@ if (require.main === module) {
   const fichiers = (args.length ? args.map(a => path.resolve(RACINE, a)) : [RACINE]).flatMap(p => pagesHtml(p));
   const attentes = [];
   const problemes = verifier(fichiers, attentes);
-  if (args.includes('--details') || process.env.DETAILS) attentes.forEach(p => console.log(p));
+  if (process.argv.includes('--details') || process.env.DETAILS) attentes.forEach(p => console.log(p));
   problemes.forEach(p => console.log(p));
   console.log(`${fichiers.length} pages vérifiées, ${problemes.length} problème(s)${attentes.length ? ` ; ${attentes.length} image(s) d'exemple en attente (masquées sur le site ; détail : --details)` : ''}.`);
   process.exit(problemes.length ? 1 : 0);
