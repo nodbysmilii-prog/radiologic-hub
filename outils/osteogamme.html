@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>OsteoGamme — gamme diagnostique des lésions osseuses lytiques | RadiologicHub</title>
+  <meta name="description" content="OsteoGamme : outil d'aide au raisonnement devant une lésion osseuse lytique ou mixte en radiographie et TDM. Cochez l'âge, la topographie, le Lodwick, la matrice et la réaction périostée : la gamme diagnostique se classe en direct.">
+  <meta property="og:title" content="OsteoGamme — gamme diagnostique des lésions osseuses lytiques">
+  <meta property="og:description" content="Âge, topographie, Lodwick, matrice, périoste : la gamme diagnostique d'une lésion osseuse lytique, classée en direct. Outil d'aide au raisonnement et d'enseignement.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="../assets/logo-radiologichub.png">
+  <link rel="icon" type="image/svg+xml" href="../assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=20261012235000">
+  <link rel="stylesheet" href="../fiche.css?v=20261012150000">
+  <link rel="stylesheet" href="osteogamme.css?v=20261012235000">
+</head>
+<body class="og-page">
+
+  <header class="site-header is-scrolled" id="top">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="RadiologicHub — accueil">
+        <img src="../assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+        <a href="../index.html#masterclass">Masterclass</a>
+        <a href="../fiches-rapides.html">Fiches rapides</a>
+        <a href="../bibliotheque.html">Bibliothèque</a>
+        <a href="../comptes-rendus.html">Comptes rendus</a>
+        <div class="nav-groupe">
+          <a href="osteogamme" class="nav-groupe-titre is-current" aria-current="page">Outils<span class="nav-caret" aria-hidden="true"></span></a>
+          <div class="nav-sous">
+            <a href="osteogamme" aria-current="page">OsteoGamme<small>Lésions osseuses lytiques</small></a>
+          </div>
+        </div>
+        <a href="../remplacements.html">Remplacements</a>
+        <a href="../communaute.html">Communauté</a>
+        <a href="../index.html#tarifs">Tarifs</a>
+        <a href="../index.html#inscription" class="btn btn-ink btn-sm">S'inscrire</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="fiche-hero sec-down og-hero">
+      <div class="container">
+        <p class="crumbs"><a href="../index.html">Accueil</a> › Outils › OsteoGamme</p>
+        <p class="marker-tag">Outil du radiologue</p>
+        <h1>Osteo<span class="hl-navy">Gamme</span></h1>
+        <p class="fiche-sub">Lésions osseuses <span class="hl-red">lytiques et mixtes</span> en radiographie et TDM. Cochez les critères&nbsp;: la <span class="hl-navy">gamme diagnostique</span> se classe en direct, du plus au moins probable.</p>
+        <div class="og-avert" role="note">
+          <span class="og-avert-icone" aria-hidden="true">!</span>
+          <p><strong>Outil d'aide au raisonnement et d'enseignement.</strong> Les pondérations sont une première version à valider&nbsp;; il ne remplace ni l'analyse radiologique complète ni l'histologie.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="og sec-up" id="osteogamme" aria-label="OsteoGamme">
+      <div class="container">
+        <div class="og-tabs" id="og-tabs" role="tablist" aria-label="Vues" hidden>
+          <button id="tab-a" type="button" role="tab" aria-selected="true" data-tab="analyse">Analyse</button>
+          <button id="tab-k" type="button" role="tab" aria-selected="false" data-tab="kb">Pondérations</button>
+        </div>
+        <p class="og-modifie" id="og-modifie" hidden>Des pondérations modifiées dans ce navigateur sont appliquées (onglet « Pondérations », adresse avec <code>?admin</code>).</p>
+
+        <section id="v-analyse">
+          <div class="og-examples" id="examples"><span class="og-lab">Cas exemples</span></div>
+          <div class="og-grid">
+            <form id="form" onsubmit="return false" aria-label="Critères sémiologiques"></form>
+            <aside class="og-results" id="results-anchor" aria-label="Gamme diagnostique">
+              <div class="og-panel">
+                <h2>Gamme diagnostique</h2>
+                <p class="og-meta" id="meta"></p>
+                <div class="og-flags" id="flags" aria-live="polite"></div>
+                <ol class="og-dx" id="dxlist" aria-live="polite"></ol>
+                <p class="og-disc"><strong>Outil d'aide au raisonnement et d'enseignement.</strong> Les pondérations sont une première version à valider&nbsp;; ne remplace ni l'analyse radiologique complète ni l'histologie.</p>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section id="v-kb" hidden>
+          <p class="og-kb-intro">Chaque diagnostic reçoit des points pour chaque critère coché. Touchez une valeur pour la modifier (cycle de −3 à +3). Les valeurs modifiées sont encadrées&nbsp;; copiez-les ensuite pour les intégrer à la version suivante de <code>osteogamme-data.js</code>.</p>
+          <div class="og-scale">
+            <span class="og-pill og-pill-p">+3 typique</span><span class="og-pill og-pill-p">+1 compatible</span><span class="og-pill">0 neutre</span><span class="og-pill og-pill-n">−1 inhabituel</span><span class="og-pill og-pill-n">−3 très atypique</span>
+          </div>
+          <div class="og-kbbar">
+            <select id="kbsel" aria-label="Diagnostic"></select>
+            <button class="btn btn-ink btn-sm" type="button" id="copy">Copier mes modifications</button>
+            <button class="btn btn-outline btn-sm" type="button" id="resetw">Réinitialiser</button>
+            <span class="og-note" id="modcount"></span>
+          </div>
+          <div class="og-pearlbox" id="kbpearl"></div>
+          <div class="og-kbgrid" id="kbgrid"></div>
+          <div id="copyfallback" hidden>
+            <p class="og-note">Copie automatique refusée&nbsp;: sélectionnez le texte ci-dessous.</p>
+            <textarea id="copytext" readonly></textarea>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <div class="og-bottombar" id="bottombar">
+    <div class="og-bb-t" id="bbtext"></div>
+    <button class="btn btn-ink btn-sm" type="button" id="bbgo">Voir la gamme</button>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="../index.html" class="brand">
+        <img src="../assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav aria-label="Liens de pied de page">
+        <a href="../index.html#masterclass">Masterclass</a>
+        <a href="../fiches-rapides.html">Fiches rapides</a>
+        <a href="../bibliotheque.html">Bibliothèque</a>
+        <a href="../comptes-rendus.html">Comptes rendus</a>
+        <a href="osteogamme">OsteoGamme</a>
+        <a href="../suivi-oncologique.html">Suivi oncologique</a>
+        <a href="../communaute.html">Communauté</a>
+        <a href="../remplacements.html">Remplacements</a>
+        <a href="../index.html#cas-du-jour">Cas du jour</a>
+        <a href="../mentions-legales.html">Mentions légales</a>
+        <a href="../index.html#inscription">Contact</a>
+      </nav>
+      <p class="copyright">© <span id="year"></span> RadiologicHub · Formation en radiologie d'urgence</p>
+    </div>
+  </footer>
+
+  <script src="osteogamme-data.js?v=20261012235000"></script>
+  <script src="osteogamme.js?v=20261012235000"></script>
+  <script src="../fiche.js?v=20261012150000"></script>
+</body>
+</html>
