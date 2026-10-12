@@ -3,7 +3,8 @@
    Test RÉEL de l'import (npm run test:bib-reel) : 5 articles d'imagerie
    digestive en accès libre, interrogés en direct sur Europe PMC, PubMed
    et Unpaywall, puis un doublon (même article collé par son PMID).
-   Identifiants attendus relevés sur PubMed. Réseau nécessaire : si les
+   Identifiants attendus relevés sur PubMed ; accès et licences relevés
+   lors du premier import réel (12/10/2026). Réseau nécessaire : si les
    services sont injoignables, le test est IGNORÉ (rien n'est simulé).
    ========================================================= */
 const CFG = require('../bibliotheque/config.js');
@@ -12,11 +13,11 @@ const I = require('../bibliotheque/noyau/import.js');
 const ID = require('../bibliotheque/noyau/identifiants.js');
 
 const ATTENDUS = [
-  { doi: '10.1186/s13244-021-01086-3', pmid: '34674054', pmcid: 'PMC8531161', theme: 'urgences digestives (appendicite)' },
+  { doi: '10.1186/s13244-021-01086-3', pmid: '34674054', pmcid: 'PMC8531161', theme: 'urgences digestives (appendicite)', acces: 'ouvert', licence: 'CC BY' },
   { doi: '10.1148/radiol.2018181494', pmid: '30251931', pmcid: 'PMC6677371', theme: 'foie (LI-RADS)', acces: 'gratuit' },
   { doi: '10.1186/s13244-019-0805-8', pmid: '31792750', pmcid: 'PMC6889260', theme: 'foie (kyste hydatique)', acces: 'ouvert', licence: 'CC BY' },
-  { doi: '10.1007/s00261-020-02468-9', pmid: '32189022', pmcid: 'PMC7223113', theme: 'pancréas (pancréatite aiguë)' },
-  { doi: '10.1136/gutjnl-2018-316027', pmid: '29574408', pmcid: 'PMC5890653', theme: 'pancréas (lésions kystiques)' },
+  { doi: '10.1007/s00261-020-02468-9', pmid: '32189022', pmcid: 'PMC7223113', theme: 'pancréas (pancréatite aiguë)', acces: 'gratuit' },
+  { doi: '10.1136/gutjnl-2018-316027', pmid: '29574408', pmcid: 'PMC5890653', theme: 'pancréas (lésions kystiques)', acces: 'ouvert', licence: 'CC BY-NC' },
 ];
 
 (async () => {
@@ -37,7 +38,7 @@ const ATTENDUS = [
     const r = await I.importer(a.doi, { client, cache, config: CFG });
     const f = r.fiche || {};
     const ok = r.ok && f.doi === a.doi && f.pmid === a.pmid && f.pmcid === a.pmcid && f.url_texte && f.titre
-      && (!a.acces || f.acces === a.acces) && (!a.licence || f.licence === a.licence);
+      && f.acces === a.acces && (f.licence || null) === (a.licence || null);
     verifier(`${a.theme} : ${f.premier_auteur || '?'}${f.et_al ? ' et al.' : ''}, ${f.revue || '?'} ${f.annee || '?'} — ${f.acces || r.code}${f.licence ? ' (' + f.licence + ')' : ''}`,
       ok, JSON.stringify({ code: r.code, doi: f.doi, pmid: f.pmid, pmcid: f.pmcid, acces: f.acces, licence: f.licence, avert: r.avertissements }));
     if (r.ok) importes.push(f);
