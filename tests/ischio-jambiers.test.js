@@ -29,23 +29,89 @@ test('repères demandés présents dans chaque coupe', () => {
   assert.ok(['tendon-biceps-femoral', 'nerf-fibulaire-commun'].every(x => ids('s6').includes(x)));
 });
 
-test('corrections de l\'auteur (12/10/2026) : nerf au contact du tendon conjoint, cloison sigmoïde d\'un bord à l\'autre, cerise au centre', () => {
-  const forme = (sid, id) => S.PAR_ID[sid].formes.find(f => f.id === id);
-  // S1 : nerf sciatique en dehors du tendon conjoint et à son contact
-  const ct = forme('s1', 'tendon-conjoint').pts, [nx, , nrx] = forme('s1', 'nerf-sciatique').e;
-  const bordLateral = Math.max(...ct.map(p => p[0]));
-  assert.ok(nx > bordLateral, 'nerf en dehors du tendon conjoint');
-  assert.ok(Math.abs(nx - nrx - bordLateral) <= 4, `nerf au contact du tendon conjoint (écart ${nx - nrx - bordLateral})`);
-  // S4 : la cloison sigmoïde part d'un bord du semi-tendineux et aboutit à l'autre
+// Outils géométriques des tests anatomiques (coordonnées de l'image : x médial → latéral, y superficiel → profond).
+const forme = (sid, id) => S.PAR_ID[sid].formes.find(f => f.id === id);
+const centre = pts => [pts.reduce((a, p) => a + p[0], 0) / pts.length, pts.reduce((a, p) => a + p[1], 0) / pts.length];
+const contourEllipse = ([cx, cy, rx, ry, rot = 0]) => Array.from({ length: 360 }, (_, i) => {
+  const t = i * Math.PI / 180, a = rot * Math.PI / 180, x = rx * Math.cos(t), y = ry * Math.sin(t);
+  return [cx + x * Math.cos(a) - y * Math.sin(a), cy + x * Math.sin(a) + y * Math.cos(a)];
+});
+const distSegment = (p, a, b) => {
+  const dx = b[0] - a[0], dy = b[1] - a[1], l = dx * dx + dy * dy;
+  const t = l ? Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / l)) : 0;
+  return Math.hypot(p[0] - a[0] - t * dx, p[1] - a[1] - t * dy);
+};
+const distLigne = (p, ligne) => Math.min(...ligne.slice(1).map((b, i) => distSegment(p, ligne[i], b)));
+const distContour = (p, contour) => Math.min(...contour.map(q => Math.hypot(p[0] - q[0], p[1] - q[1])));
+const dedans = (p, pts) => {
+  let c = false;
+  for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+    const [xi, yi] = pts[i], [xj, yj] = pts[j];
+    if ((yi > p[1]) !== (yj > p[1]) && p[0] < (xj - xi) * (p[1] - yi) / (yj - yi) + xi) c = !c;
+  }
+  return c;
+};
+
+test('S1 (Balius 2019) : semi-membraneux latéral et profond au contact du nerf, fibres du semi-tendineux sur la tubérosité', () => {
+  const tub = forme('s1', 'tuberosite').pts, st = forme('s1', 'semi-tendineux').pts;
+  const ct = centre(forme('s1', 'tendon-conjoint').pts), smPts = forme('s1', 'tendon-semi-membraneux').pts, sm = centre(smPts);
+  assert.ok(st.filter(p => distLigne(p, tub) <= 3).length >= 3, 'fibres charnues du semi-tendineux posées sur la corticale');
+  const sommet = tub.reduce((a, p) => (p[1] < a[1] ? p : a));
+  assert.ok(ct[0] > sommet[0], 'tendon conjoint en dehors du sommet de la tubérosité');
+  assert.ok(sm[0] > ct[0] && sm[1] > ct[1], 'tendon du semi-membraneux plus latéral et plus profond que le tendon conjoint');
+  const nerf = forme('s1', 'nerf-sciatique').e;
+  assert.ok(nerf[0] > sm[0], 'nerf en dehors du tendon du semi-membraneux');
+  const ecart = Math.min(...smPts.map(p => distContour(p, contourEllipse(nerf))));
+  assert.ok(ecart <= 3, `tendon du semi-membraneux au contact du nerf (écart ${ecart.toFixed(1)} px)`);
+});
+
+test('S3 (Balius 2019) : étoile « Mercedes » autour du nerf, membrane du nerf au tendon du semi-membraneux', () => {
+  const nerf = forme('s3', 'nerf-sciatique').e, bord = contourEllipse(nerf);
+  const branche = id => forme('s3', id).pts;
+  for (const id of ['mercedes-tendon-conjoint', 'mercedes-branche-mediale', 'mercedes-branche-laterale']) {
+    assert.ok(distContour(branche(id)[0], bord) <= 6, `${id} : part du nerf`);
+  }
+  const fin = id => branche(id)[branche(id).length - 1];
+  assert.ok(fin('mercedes-tendon-conjoint')[1] < nerf[1] - 80, 'branche superficielle (tendon conjoint)');
+  assert.ok(fin('mercedes-branche-mediale')[0] < nerf[0] - 100, 'branche médiale (semi-tendineux)');
+  assert.ok(fin('mercedes-branche-laterale')[0] > nerf[0] + 100, 'branche latérale (biceps)');
+  const tendon = forme('s3', 'tendon-semi-membraneux').e, membrane = branche('membrane-semi-membraneux');
+  assert.ok(membrane[0][0] < nerf[0] && distContour(membrane[0], bord) <= 6, 'membrane : part du bord médial du nerf');
+  assert.ok(distContour(membrane[membrane.length - 1], contourEllipse(tendon)) <= 3, 'membrane : se termine sur le tendon');
+  assert.ok(tendon[2] !== tendon[3] && tendon[2] * tendon[3] < nerf[2] * nerf[3], 'tendon ovale, plus petit que le nerf');
+});
+
+test('S4 : cloison du semi-tendineux à concavité médiale, semi-membraneux en demi-cercle à concavité latérale, note « piège »', () => {
   const st = forme('s4', 'semi-tendineux').pts, cl = forme('s4', 'cloison-sigmoide-semi-tendineux').pts;
   const surBord = p => st.some(q => q[0] === p[0] && q[1] === p[1]);
   assert.ok(surBord(cl[0]) && surBord(cl[cl.length - 1]), 'extrémités sur le contour du muscle');
-  assert.ok(cl[0][0] === Math.min(...st.map(p => p[0])) && cl[cl.length - 1][0] === Math.max(...st.map(p => p[0])), 'du bord médial au bord latéral');
-  // S5 : tendon du semi-tendineux au centre du semi-membraneux
+  assert.equal(cl[0][1], Math.min(...st.map(p => p[1])), 'part du bord superficiel');
+  assert.equal(cl[cl.length - 1][1], Math.max(...st.map(p => p[1])), 'aboutit au bord profond');
+  assert.ok(Math.max(...cl.map(p => p[0])) > Math.max(cl[0][0], cl[cl.length - 1][0]) + 30, 'bombe en dehors : concavité médiale');
+  const sm = forme('s4', 'semi-membraneux').pts, [tx, ty, , ry] = forme('s4', 'tendon-semi-membraneux').e;
+  assert.ok(!dedans([tx, ty], sm), 'tendon hors du muscle, dans sa concavité');
+  assert.ok(Math.min(...sm.map(p => p[1])) < ty - ry - 30 && Math.max(...sm.map(p => p[1])) > ty + ry + 30, 'le croissant entoure le tendon en haut et en bas');
+  assert.ok(Math.min(...sm.map(p => p[0])) < tx - 100, 'muscle en dedans du tendon : concavité latérale');
+  assert.ok(sm.some(p => p[1] < ty && p[0] > tx - 15) && sm.some(p => p[1] > ty && p[0] > tx - 15), 'cornes du croissant de part et d\'autre du tendon');
+  assert.match(S.PAR_ID.s4.piege, /concavité médiale[\s\S]*concavité latérale/);
+  assert.match(S.svg('s4'), /data-role="piege"/);
+  assert.doesNotMatch(S.svg('s1'), /data-role="piege"/);
+});
+
+test('S5 (Balius 2019) : la « cerise » posée SUR le gâteau, dans une gouttière ; gracile et sartorius en dedans', () => {
   const sm = forme('s5', 'semi-membraneux').pts, [tx, ty] = forme('s5', 'tendon-semi-tendineux').e;
-  const cx = sm.reduce((a, p) => a + p[0], 0) / sm.length, cy = sm.reduce((a, p) => a + p[1], 0) / sm.length;
-  assert.ok(Math.hypot(tx - cx, ty - cy) <= 6, `cerise à ${Math.hypot(tx - cx, ty - cy).toFixed(1)} px du centre`);
-  assert.ok(sm.every(p => p[0] >= 0 && p[0] <= S.IW), 'semi-membraneux entièrement dans le champ');
+  const st = forme('s5', 'semi-tendineux').pts;
+  assert.ok(!dedans([tx, ty], sm), 'tendon hors du semi-membraneux (pas au centre)');
+  assert.ok(ty < centre(sm)[1] - 40, 'sur la face superficielle');
+  const i = sm.findIndex(p => Math.abs(p[0] - tx) <= 2 && p[1] > ty);
+  assert.ok(i >= 0, 'fond de la gouttière à l\'aplomb du tendon');
+  const [avant, fond, apres] = [sm[i - 1], sm[i], sm[i + 1]];
+  assert.ok(fond[1] > avant[1] && fond[1] > apres[1], 'gouttière : creux de la face superficielle');
+  assert.ok(st.some(p => p[0] === fond[0] && p[1] === fond[1]), 'semi-tendineux posé au fond de la gouttière');
+  const xMinSm = Math.min(...sm.map(p => p[0]));
+  for (const id of ['gracile', 'sartorius']) {
+    assert.ok(Math.max(...forme('s5', id).pts.map(p => p[0])) < xMinSm, `${id} en dedans du semi-membraneux`);
+  }
 });
 
 test('même légende partout : chaque forme correspond à une entrée de légende', () => {

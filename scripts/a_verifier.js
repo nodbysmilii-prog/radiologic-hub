@@ -35,10 +35,12 @@ function generer() {
   L.push('- Coupes **transversales**, patient en **décubitus ventral**, sonde sur la face postérieure de la cuisse.');
   L.push('- Par défaut, **médial à gauche** de l\'écran, en attendant d\'aligner les schémas sur l\'orientation de vos images ; bouton « Inverser gauche/droite ». Repères **M / L** (médial / latéral) et **S / P** (superficiel, côté sonde / profond) sur chaque schéma ; point orange = repère de la sonde, côté gauche de l\'écran.');
   L.push('- Code commun : ' + S.LEGENDE.map(l => l.texte.toLowerCase()).join(' ; ') + '.');
-  L.push('- Proportions schématiques (environ 68 px par cm) : épaisseurs et profondeurs indicatives, variables selon la morphologie.', '');
+  L.push('- Proportions schématiques (environ 68 px par cm) : épaisseurs et profondeurs indicatives, variables selon la morphologie.');
+  L.push('- Références anatomiques : démonstration du Dr Brasseur (synthèse fournie par l\'auteur, conservée dans le dépôt privé des sources) ; Balius R, Pedret C, Iriarte I, Sáiz R, Cerezal L. *Sonographic landmarks in hamstring muscles*. Skeletal Radiol. 2019;48(11):1675-1683, doi:10.1007/s00256-019-03208-x (S1, S3, S4 et S5 corrigés d\'après cet article).', '');
   for (const s of S.SCHEMAS) {
     L.push(`## ${s.court} — ${s.titre} (version \`${S.version(s.id)}\`)`, '');
     L.push(`Niveau : ${s.niveau} · tiers ${s.tiers}${s.note ? ` · ${s.note}` : ''}`, '');
+    if (s.piege) L.push(`**${s.piege}**`, '');
     if (s.relecture) L.push(`Relecture de l'auteur (${s.relecture.date.split('-').reverse().join('/')}) : **${s.relecture.avis}**.`, '');
     L.push('**Ce qui est représenté**', '');
     s.represente.forEach(r => L.push(`- ${r}`));
