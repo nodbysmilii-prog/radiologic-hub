@@ -3,6 +3,9 @@
   "private": true,
   "description": "Site RadiologicHub (statique) — tests des règles de calcul, des modules Remplacements, Communauté et Bibliothèque et de leur schéma Supabase.",
   "scripts": {
+    "build": "node scripts/construire-pelvis.js",
+    "build:verifier": "node scripts/construire-pelvis.js --verifier",
+    "liens": "node scripts/verifier-liens.js",
     "test": "node --test tests/*.test.js",
     "test:sql": "node tests/sql/rls.js && node tests/sql/rls-reseau.js && node tests/sql/rls-bibliotheque.js && node tests/sql/rls-cours.js && node tests/sql/droits.js",
     "test:integration": "node tests/sql/integration.js",
