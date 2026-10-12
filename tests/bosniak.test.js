@@ -123,3 +123,26 @@ test('page /outils/bosniak : référencement, avertissement et source, schémas,
   }
   assert.match(fs.readFileSync(path.join(RACINE, 'comptes-rendus.html'), 'utf8'), /<a class="cr-tool-chip cr-tool-link" href="outils\/bosniak">Bosniak<small>/);
 });
+
+test('formulaire : une protrusion, une paroi épaissie ou des cloisons choisies sont « rehaussées » par défaut (le choix change le résultat)', () => {
+  const choix = (champ, v, depart = B.DEFAUT) => B.classer(B.choisir(depart, champ, v));
+  assert.equal(choix('protrusion', 'obtus<=3').categorie, 'III');
+  assert.equal(choix('protrusion', 'obtus>=4').categorie, 'IV');
+  assert.equal(choix('protrusion', 'aigu').categorie, 'IV', 'il suffit de choisir le type de protrusion');
+  assert.equal(choix('paroi', '>=4').categorie, 'III');
+  assert.equal(choix('paroi', '3').categorie, 'IIF');
+  const cloisons = B.choisir(B.DEFAUT, 'cloisons', '>=4');
+  assert.equal(cloisons.cloisonsRehaussees, 'oui');
+  assert.equal(B.classer(cloisons).categorie, 'IIF');
+  // « Non » choisi ensuite : respecté, et expliqué
+  const nonRh = B.choisir(B.choisir(B.DEFAUT, 'protrusion', 'aigu'), 'protrusionRehaussee', 'non');
+  assert.equal(B.choisir(nonRh, 'protrusion', 'obtus>=4').protrusionRehaussee, 'non', 'changer de type ne réactive pas le rehaussement');
+  const r = B.classer(nonRh);
+  assert.equal(r.categorie, null);
+  assert.match(r.criteres[0], /La protrusion : marquée « non rehaussée », non prise en compte/);
+  assert.match(B.classer({ ...nonRh, uhSans: '8', uhPortal: '10', calcifications: 'fines' }).conseils.join(' '), /non prise en compte/, 'remarque aussi quand la lésion est classée');
+  // Sans injection : rien n'est coché « rehaussée »
+  const sansInj = B.choisir({ ...B.DEFAUT, injection: 'non' }, 'protrusion', 'aigu');
+  assert.equal(sansInj.protrusionRehaussee, 'non');
+  assert.match(B.classer(sansInj).criteres[0], /Sans injection/);
+});

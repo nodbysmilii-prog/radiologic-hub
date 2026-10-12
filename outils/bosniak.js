@@ -94,7 +94,7 @@
   form.addEventListener('click', ev => {
     const b = ev.target.closest('.bk-bouton');
     if (!b || b.disabled) return;
-    etat[b.dataset.champ] = b.dataset.valeur;
+    etat = R.choisir(etat, b.dataset.champ, b.dataset.valeur);
     dessinerFormulaire(); afficherResultat();
   });
   form.addEventListener('input', ev => {

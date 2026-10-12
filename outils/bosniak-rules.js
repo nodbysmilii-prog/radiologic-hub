@@ -105,6 +105,13 @@
     const R = rehaussementMesure(e);
     const sans = tdm ? num(e.uhSans) : null, portal = tdm && inj ? num(e.uhPortal) : null;
     const conseils = [];
+    // Structures signalées mais « non rehaussées » (avec injection) : elles ne comptent pas, on le dit
+    const nonRehaussees = [];
+    if (inj && e.protrusion !== 'aucune' && e.protrusionRehaussee !== 'oui') nonRehaussees.push('la protrusion');
+    if (inj && e.paroi !== '<=2' && e.paroiRehaussee !== 'oui') nonRehaussees.push('la paroi épaissie');
+    if (inj && avecCloisons && e.cloisonsRehaussees !== 'oui' && (e.cloisons === '>=4' || e.cloisonsEpaisseur !== '<=2')) nonRehaussees.push('les cloisons');
+    const remarque = nonRehaussees.length ? `${nonRehaussees.join(', ').replace(/^./, c => c.toUpperCase())} : marquée${nonRehaussees.length > 1 ? 's' : ''} « non rehaussée${nonRehaussees.length > 1 ? 's' : ''} », non prise${nonRehaussees.length > 1 ? 's' : ''} en compte (seul ce qui se rehausse compte). Si elle${nonRehaussees.length > 1 ? 's' : ''} se rehausse${nonRehaussees.length > 1 ? 'nt' : ''}, choisir « Rehaussée : oui ».` : '';
+    if (remarque) conseils.push(remarque);
     if (R.niveau === 'equivoque') conseils.push(`${CONSEIL.equivoque} (${fmt(R.delta)} UH, seuil ${REHAUSSEMENT.equivoque} à ${REHAUSSEMENT.franc - 1} UH)`);
     const resultat = (categorie, criteres, extra = {}) => ({
       categorie, hors: null, titre: `Bosniak ${categorie}`, criteres, conduite: CONDUITE[categorie],
@@ -167,18 +174,30 @@
     const manque = [];
     const aEvaluer = e.paroi !== '<=2' || e.protrusion !== 'aucune' || e.cloisons === '>=4' || (avecCloisons && e.cloisonsEpaisseur !== '<=2');
     if (!inj && aEvaluer) manque.push('Sans injection, le rehaussement de la paroi, des cloisons ou d\'une protrusion ne peut pas être évalué : compléter par un scanner ou une IRM avec injection.');
-    else if (R.niveau === 'equivoque') manque.push(`Rehaussement équivoque (${fmt(R.delta)} UH) : IRM conseillée avant de classer.`);
-    else if (R.niveau === 'franc' && homogene) manque.push(`Rehaussement franc (${fmt(R.delta)} UH) d'une lésion homogène : penser à une masse solide (vérifier la part de tissu rehaussé).`);
-    else if (tdm && sans == null && portal == null) manque.push('Renseigner la densité du contenu (sans injection et/ou au temps portal).');
-    else if (irm && e.t2Lcr !== 'oui' && e.t1Hyper !== 'oui') manque.push('Préciser le signal du contenu (T2 proche du LCR, hypersignal T1…).');
-    else if (aEvaluer) manque.push('Paroi, cloisons ou protrusion épaisses mais non rehaussées : vérifier le rehaussement.');
-    else manque.push('Contenu hors des valeurs de la classification : vérifier les densités ou compléter par une IRM.');
-    return { categorie: null, hors: null, titre: 'Classement impossible', criteres: manque, conduite: '', conseils, rehaussement: R };
+    if (remarque) manque.push(remarque);
+    if (R.niveau === 'equivoque') manque.push(`Rehaussement équivoque (${fmt(R.delta)} UH) : IRM conseillée avant de classer.`);
+    if (R.niveau === 'franc' && homogene) manque.push(`Rehaussement franc (${fmt(R.delta)} UH) d'une lésion homogène : penser à une masse solide (vérifier la part de tissu rehaussé).`);
+    if (tdm && sans == null && portal == null) manque.push('Renseigner la densité du contenu (sans injection et/ou au temps portal).');
+    if (irm && e.t2Lcr !== 'oui' && e.t1Hyper !== 'oui') manque.push('Préciser le signal du contenu (T2 proche du LCR, hypersignal T1…).');
+    if (!manque.length) manque.push('Contenu hors des valeurs de la classification : vérifier les densités ou compléter par une IRM.');
+    return { categorie: null, hors: null, titre: 'Classement impossible', criteres: manque, conduite: '', conseils: conseils.filter(c => c !== remarque), rehaussement: R };
+  }
+
+  /* Choix d'un bouton : quand une protrusion, une paroi épaissie ou des cloisons apparaissent, elles sont
+     « rehaussées » par défaut (avec injection) — sinon le choix ne changerait rien au résultat ;
+     on peut ensuite choisir « non ». */
+  function choisir(etat, champ, valeur) {
+    const e = { ...etat, [champ]: valeur };
+    const apparait = (k, absent, rh) => { if (champ === k && etat[k] === absent && valeur !== absent && e.injection === 'oui') e[rh] = 'oui'; };
+    apparait('protrusion', 'aucune', 'protrusionRehaussee');
+    apparait('paroi', '<=2', 'paroiRehaussee');
+    apparait('cloisons', '0', 'cloisonsRehaussees');
+    return e;
   }
 
   function fmt(n) { return n == null ? '?' : String(Math.round(n * 10) / 10).replace('.', ',').replace('-', '−'); }
 
-  const BosniakRegles = { REHAUSSEMENT, CHOIX, DEFAUT, CONDUITE, CONSEIL, rehaussementMesure, classer };
+  const BosniakRegles = { REHAUSSEMENT, CHOIX, DEFAUT, CONDUITE, CONSEIL, rehaussementMesure, classer, choisir };
   racine.BosniakRegles = BosniakRegles;
   if (typeof module === 'object' && module.exports) module.exports = BosniakRegles;
 })(typeof self !== 'undefined' ? self : this);
