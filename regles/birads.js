@@ -13,7 +13,8 @@
    • integrer(compte rendu, état) : place les anomalies dans la
      rubrique Mammographie / Échographie / IRM du compte rendu type
      (en remplaçant la phrase normale qu'elles contredisent, gardée
-     pour l'autre sein) et rédige la conclusion (AU TOTAL…).
+     pour l'autre sein) et rédige la conclusion (AU TOTAL…) : catégories
+     BI-RADS (seulement dans la conclusion) et conduite à tenir du service.
    Module sans dépendance au navigateur (testé sous Node :
    tests/birads.test.js). À FAIRE VÉRIFIER MÉDICALEMENT.
    ========================================================= */
@@ -30,14 +31,15 @@
     4: 'suspect', '4A': 'suspicion faible', '4B': 'suspicion intermédiaire', '4C': 'suspicion modérée',
     5: 'hautement évocateur de malignité', 6: 'malignité prouvée histologiquement',
   };
+  /* Conduite à tenir : phrases du service pour les catégories 1 à 5 (4A, 4B, 4C comme 4) */
   const CONDUITE = {
-    0: 'examen(s) complémentaire(s) et/ou comparaison avec les examens antérieurs nécessaires',
-    1: 'surveillance habituelle',
-    2: 'surveillance habituelle',
-    3: 'surveillance à court terme recommandée',
-    4: 'prélèvement histologique recommandé',
-    5: 'prélèvement histologique recommandé',
-    6: 'prise en charge thérapeutique adaptée',
+    0: 'Examen(s) complémentaire(s) et/ou comparaison avec les examens antérieurs nécessaires.',
+    1: 'Prochain contrôle par un bilan sénologique complet dans deux ans.',
+    2: 'Prochain contrôle par un bilan sénologique complet dans deux ans.',
+    3: 'À contrôler dans 6 mois par une échographie mammaire.',
+    4: 'Nous restons à votre disposition pour une microbiopsie/macrobiopsie mammaire.',
+    5: 'Nous restons à votre disposition pour une microbiopsie/macrobiopsie mammaire.',
+    6: 'Prise en charge thérapeutique adaptée.',
   };
   const RANG = { 1: 1, 2: 2, 3: 3, 4: 4, '4A': 4.1, '4B': 4.2, '4C': 4.3, 5: 5, 6: 6, 0: 0.5 };
   const CATEGORIES = [['', '—'], ['0', '0 — incomplet'], ['2', '2 — bénin'], ['3', '3 — probablement bénin'], ['4', '4 — suspect'], ['4A', '4A — suspicion faible'], ['4B', '4B — intermédiaire'], ['4C', '4C — modérée'], ['5', '5 — hautement évocateur'], ['6', '6 — malignité prouvée']];
@@ -195,10 +197,20 @@
       ls.forEach(({ l, i }) => L.push(`• ${SEINS[b]}, lésion n°${i + 1}${mods.length > 1 ? ` (${MODALITES[l.mod].nom.toLowerCase()})` : ''} : ${resume(l)} — ${categorie(l.cat)}.`));
       if (ls.length > 1) L.push(`• ${SEINS[b]} : ${categorie(categorieSein(etat, b))}, catégorie la plus élevée.`);
     }
-    const top = ['D', 'G'].map(b => categorieSein(etat, b)).filter(Boolean).sort((x, y) => RANG[y] - RANG[x])[0];
-    if (top) L.push(`Conduite à tenir : ${CONDUITE[String(top).charAt(0)]}.`);
-    return L;
+    return L.concat(conduite(['D', 'G'].map(b => categorieSein(etat, b))));
   }
+
+  /* Conduite selon la catégorie la plus élevée des deux seins ; une catégorie 0 (bilan incomplet)
+     ajoute sa phrase ; catégorie manquante : champ à compléter */
+  function conduite(cats) {
+    if (cats.some(c => !c)) return ['[conduite à tenir]'];
+    const haut = cats.filter(c => c !== '0').sort((x, y) => RANG[y] - RANG[x])[0];
+    const L = [];
+    if (haut && RANG[haut] >= 3) L.push(CONDUITE[haut.charAt(0)]);
+    if (cats.includes('0')) L.push(CONDUITE[0]);
+    return L.length ? L : [CONDUITE[1]];
+  }
+  const PHRASES_CONDUITE = new Set([...Object.values(CONDUITE), '[conduite à tenir]']);
 
   /* Lignes de la rubrique d'une modalité : densité (mammographie) puis lésions */
   function lignesModalite(etat, m) {
@@ -317,7 +329,7 @@
       return { titre: 'CONCLUSION', creee: true };
     }
     const fin = finRubrique(L, c);
-    const garde = L.slice(c + 1, fin).filter(l => l.trim() && !/^\s*\[[^\]]*\]\s*\.?\s*$/.test(l) && !/BI-RADS/.test(l) && !/^\s*Conduite à tenir/.test(l) && !/^\s*•\s*Seins de densité de type/.test(l));
+    const garde = L.slice(c + 1, fin).filter(l => l.trim() && !/^\s*\[[^\]]*\]\s*\.?\s*$/.test(l) && !/BI-RADS/.test(l) && !/^\s*Conduite à tenir/.test(l) && !PHRASES_CONDUITE.has(l.trim()) && !/^\s*•\s*Seins de densité de type/.test(l));
     const suite = fin < L.length ? [''] : [];
     L.splice(c + 1, fin - c - 1, ...lignes, ...garde, ...suite);
     return { titre: L[c].trim().replace(/\s*:$/, ''), creee: false };
@@ -351,7 +363,7 @@
 
   return {
     CAT, CONDUITE, RANG, CATEGORIES, CHOIX_DENSITE, CHOIX_EXAMEN, MODALITES, EXAMENS, LEXIQUE, TYPES, HEURES, SUSPECT,
-    heure, quadrant, modalites, champs, options, nouvelleLesion, normaliser, categorieSein,
+    heure, quadrant, conduite, modalites, champs, options, nouvelleLesion, normaliser, categorieSein,
     description, resume, ligneLesion, conclusion, texte, integrer, examDepuis,
   };
 });

@@ -91,8 +91,9 @@ test('mammographie + échographie : anomalies dans leur rubrique, phrase normale
     '• Sein droit, lésion n°2 (mammographie) : microcalcifications fines pléomorphes, groupées (en amas), quadrant supéro-externe (10 h) — BI-RADS 4B (suspicion intermédiaire).',
     '• Sein droit : BI-RADS 5 (hautement évocateur de malignité), catégorie la plus élevée.',
     '• Sein gauche : pas d\'anomalie décelable — BI-RADS 1 (négatif).',
-    'Conduite à tenir : prélèvement histologique recommandé.',
+    'Nous restons à votre disposition pour une microbiopsie/macrobiopsie mammaire.',
   ]);
+  assert.ok(![...mammo, ...echo].some(l => /BI-RADS [0-6]/.test(l)), 'catégories seulement dans la conclusion');
   // Le reste du compte rendu est intact
   assert.ok(r.texte.startsWith('MAMMOGRAPHIE ET ÉCHOGRAPHIE MAMMAIRE\n\nRENSEIGNEMENTS CLINIQUES :\n[renseignements cliniques]'));
   // Réinsérer après une nouvelle ouverture de l'outil ne duplique rien
@@ -114,7 +115,7 @@ test('lésions des deux seins : la phrase normale disparaît ; conclusion écrit
   assert.equal(rubrique(r.texte, 'I/ Mammographie').join('\n'), rubrique(cr, 'I/ Mammographie').join('\n'), 'mammographie inchangée');
   const total = rubrique(r.texte, 'AU TOTAL');
   assert.ok(total.includes('Comparaison avec l\'examen de 2024.'));
-  assert.ok(total.includes('Conduite à tenir : surveillance à court terme recommandée.'));
+  assert.ok(total.includes('À contrôler dans 6 mois par une échographie mammaire.'));
 });
 
 test('échographie seule : anomalies dans RÉSULTATS ; mammographie seule : rubrique ajoutée si absente', () => {
@@ -146,7 +147,7 @@ test('sans rubrique ni conclusion : texte complet inséré au curseur', () => {
     'Conclusion :',
     '• Sein droit : pas d\'anomalie décelable — BI-RADS 1 (négatif).',
     '• Sein gauche : pas d\'anomalie décelable — BI-RADS 1 (négatif).',
-    'Conduite à tenir : surveillance habituelle.',
+    'Prochain contrôle par un bilan sénologique complet dans deux ans.',
   ].join('\n'));
 });
 
@@ -161,4 +162,24 @@ test('catégorie par sein : la plus élevée ; 0 si seulement associé à des ca
   lesion(e, { breast: 'G' });
   assert.equal(B.categorieSein(e, 'G'), '', 'lésion sans catégorie : à compléter');
   assert.match(B.conclusion(e).join('\n'), /\[catégorie BI-RADS\]/);
+});
+
+test('conduite à tenir du service selon la catégorie la plus élevée', () => {
+  const BIOPSIE = 'Nous restons à votre disposition pour une microbiopsie/macrobiopsie mammaire.';
+  const DEUX_ANS = 'Prochain contrôle par un bilan sénologique complet dans deux ans.';
+  const SIX_MOIS = 'À contrôler dans 6 mois par une échographie mammaire.';
+  for (const c of ['4', '4A', '4B', '4C', '5']) assert.deepEqual(B.conduite([c, '1']), [BIOPSIE], `BI-RADS ${c}`);
+  assert.deepEqual(B.conduite(['1', '1']), [DEUX_ANS]);
+  assert.deepEqual(B.conduite(['2', '1']), [DEUX_ANS]);
+  assert.deepEqual(B.conduite(['3', '2']), [SIX_MOIS]);
+  assert.deepEqual(B.conduite(['3', '4B']), [BIOPSIE], 'la catégorie la plus élevée l\'emporte');
+  assert.deepEqual(B.conduite(['0', '2']), [B.CONDUITE[0]], 'bilan incomplet : pas de contrôle à deux ans');
+  assert.deepEqual(B.conduite(['', '1']), ['[conduite à tenir]'], 'catégorie manquante : champ à compléter');
+  // Réinsertion : l'ancienne conduite est remplacée, pas ajoutée
+  const e = etat('echo');
+  const l = lesion(e, { breast: 'D', type: 'kyste', cyst: 'compliqué (contenu échogène)', cat: '3' });
+  const r1 = B.integrer(modele('echo-mammaire'), e).texte;
+  l.cat = '4A';
+  const r2 = B.integrer(r1, e).texte;
+  assert.ok(r2.includes(BIOPSIE) && !r2.includes(SIX_MOIS), r2);
 });
