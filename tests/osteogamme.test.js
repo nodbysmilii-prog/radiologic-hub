@@ -68,7 +68,8 @@ test('rattachement à la section Comptes rendus : pas de menu « Outils », lien
   const menu = page.slice(page.indexOf('id="main-nav"'), page.indexOf('</nav>', page.indexOf('id="main-nav"')));
   assert.match(menu, /<a href="\.\.\/comptes-rendus\.html" class="is-current">Comptes rendus<\/a>/, 'Comptes rendus : entrée active du menu');
   assert.match(page, /<p class="crumbs"><a href="\.\.\/comptes-rendus\.html">Comptes rendus<\/a> › <span>OsteoGamme<\/span><\/p>/);
-  for (const p of ['index.html', 'comptes-rendus.html', 'fiches-rapides.html', 'fiches/spondylodiscite.html', 'cours/ischio-jambiers.html', 'outils/osteogamme.html']) {
+  // (le cours n'est pas sur la branche en ligne tant qu'il n'est pas validé : pages absentes ignorées)
+  for (const p of ['index.html', 'comptes-rendus.html', 'fiches-rapides.html', 'fiches/spondylodiscite.html', 'cours/ischio-jambiers.html', 'outils/osteogamme.html'].filter(f => fs.existsSync(path.join(RACINE, f)))) {
     const html = fs.readFileSync(path.join(RACINE, p), 'utf8');
     assert.doesNotMatch(html, /nav-groupe|>Outils</, `${p} : pas de menu « Outils »`);
   }
