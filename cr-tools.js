@@ -1244,7 +1244,7 @@
     keys: ['osteogamme', 'lyseosseuse'], suggest: /\blytiques?\b|osteolys|lacunes? osseuses?|lodwick|tumeurs? osseuses?|lesions? osseuses?/,
     hint: 'Cochez les critères de la lésion : la gamme diagnostique se classe en direct. Outil d\'aide au raisonnement et d\'enseignement : les pondérations sont une première version à valider ; il ne remplace ni l\'analyse radiologique complète ni l\'histologie.',
     preview: 'Texte qui sera intégré au compte rendu (description dans la rubrique COMPTE-RENDU à la place de « Absence de lésion lytique… », conclusion ajoutée) ; sans cette rubrique, il est inséré au curseur :',
-    init: () => ({ c: {}, n: '3', cote: '', reco: false }),
+    init: () => ({ c: {}, n: '3', cote: '', reco: true }),
     action(st, d) {
       if (d.act === 'og-ex') { st.c = { ...OGD.EXAMPLES[+d.i].s }; return true; }
       if (d.act === 'og-raz') { st.c = {}; return true; }

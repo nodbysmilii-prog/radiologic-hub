@@ -63,14 +63,19 @@ test('page /outils/osteogamme : référencement, avertissement, menu, onglet Pon
   assert.doesNotMatch(js, /^const (F|DX|BONUS|SITE|EXAMPLES)=/m, 'données seulement dans osteogamme-data.js');
 });
 
-test('menu : « Outils › OsteoGamme » sur toutes les pages du site', () => {
-  const pages = ['index.html', 'comptes-rendus.html', 'fiches-rapides.html', 'bibliotheque.html', 'communaute.html', 'remplacements.html', 'mentions-legales.html', 'fiches/spondylodiscite.html', 'cours/ischio-jambiers.html', 'cas/schwannome-v3.html'];
-  for (const p of pages) {
+test('rattachement à la section Comptes rendus : pas de menu « Outils », lien depuis les outils des comptes rendus', () => {
+  const page = fs.readFileSync(path.join(RACINE, 'outils/osteogamme.html'), 'utf8');
+  const menu = page.slice(page.indexOf('id="main-nav"'), page.indexOf('</nav>', page.indexOf('id="main-nav"')));
+  assert.match(menu, /<a href="\.\.\/comptes-rendus\.html" class="is-current">Comptes rendus<\/a>/, 'Comptes rendus : entrée active du menu');
+  assert.match(page, /<p class="crumbs"><a href="\.\.\/comptes-rendus\.html">Comptes rendus<\/a> › <span>OsteoGamme<\/span><\/p>/);
+  for (const p of ['index.html', 'comptes-rendus.html', 'fiches-rapides.html', 'fiches/spondylodiscite.html', 'cours/ischio-jambiers.html', 'outils/osteogamme.html']) {
     const html = fs.readFileSync(path.join(RACINE, p), 'utf8');
-    const pre = '../'.repeat(p.split('/').length - 1);
-    assert.ok(html.includes(`<a href="${pre}outils/osteogamme" class="nav-groupe-titre">Outils`), `${p} : entrée Outils`);
-    assert.ok(html.includes(`<a href="${pre}outils/osteogamme">OsteoGamme<small>`), `${p} : sous-menu OsteoGamme`);
+    assert.doesNotMatch(html, /nav-groupe|>Outils</, `${p} : pas de menu « Outils »`);
   }
+  assert.doesNotMatch(fs.readFileSync(path.join(RACINE, 'styles.css'), 'utf8'), /nav-groupe|nav-sous/);
+  const cr = fs.readFileSync(path.join(RACINE, 'comptes-rendus.html'), 'utf8');
+  assert.match(cr, /<a class="cr-tool-chip cr-tool-link" href="outils\/osteogamme">OsteoGamme<small>page complète →<\/small><\/a>/, 'lien vers la page complète, comme le Suivi oncologique');
+  assert.match(fs.readFileSync(path.join(RACINE, 'cr-tools.js'), 'utf8'), /init: \(\) => \(\{ c: \{\}, n: '3', cote: '', reco: true \}\)/, 'alertes dans la conclusion cochées par défaut');
 });
 
 test('moteur partagé : cas exemples, alertes, état, créé plusieurs fois sans recalculer les os', () => {
