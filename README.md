@@ -4,7 +4,7 @@
 
 🌐 **Site en ligne :** https://nodbysmilii-prog.github.io/radiologic-hub/
 
-> Dernière mise à jour du README : 10 octobre 2026
+> Dernière mise à jour du README : 12 octobre 2026
 
 ---
 
@@ -359,12 +359,12 @@ radiologic-hub/
 │   ├── rp.css              Styles du module et des mentions légales
 │   └── INSTALLATION.md     Mise en service (Supabase, Brevo, secrets, planification, administrateur)
 ├── supabase/
-│   ├── migrations/         Remplacements (rp_*) puis Communauté (rs_* : membres, cas, messagerie, notifications, signalements, stockage, temps réel)
+│   ├── migrations/         Remplacements (rp_*), Communauté (rs_* : membres, cas, messagerie, notifications, signalements, stockage, temps réel), puis droits explicites (GRANT des fonctions des règles d'accès)
 │   ├── functions/          Fonctions serveur rp-agent, rp-lien, rp-taches (+ _shared, généré en partie ; _shared/reseau.ts : rappels des messages non lus)
 │   ├── sql/planification.sql  Tâche planifiée (pg_cron) et déclaration de l'administrateur
 │   └── config.toml         Réglages des fonctions
 ├── scripts/preparer-backend.js  Recopie le noyau et les modèles vers supabase/functions/_shared
-├── tests/                  Tests unitaires (node --test), cas fictifs uniquement ; tests/sql : base et intégration ; tests/fixtures : images fictives porteuses de métadonnées
+├── tests/                  Tests unitaires (node --test), cas fictifs uniquement ; tests/sql : base, liste des droits (droits-attendus.txt) et intégration ; tests/fixtures : images fictives porteuses de métadonnées
 ├── package.json            « npm test » (aucune dépendance)
 └── assets/
     ├── logo-radiologichub.png, emblem.svg, emblem-light.svg
@@ -422,7 +422,7 @@ Les règles de calcul du suivi oncologique, les recommandations Fleischner, la c
 
 ```
 npm test                  # ou : node --test tests/*.test.js
-npm run test:sql          # schémas Supabase des Remplacements et de la Communauté sur un PostgreSQL local (droits d'accès)
+npm run test:sql          # schémas Supabase des Remplacements et de la Communauté sur un PostgreSQL local (droits d'accès, liste des GRANT)
 npm run test:integration  # agent + base réelle (PostgreSQL + PostgREST, sous Deno) — variables POSTGREST_BIN et DENO_BIN
 npm run backend:preparer  # recopie le noyau et les modèles dans supabase/functions/_shared (avant déploiement)
 ```
@@ -436,6 +436,8 @@ Fiche myocardite : `tests/myocardite.test.js` couvre les critères de Lake Louis
 Module Remplacements : `tests/remplacements-*.test.js` couvrent les règles de compatibilité, les formats tunisiens, les gabarits et tous les modèles d'e-mails, l'agenda .ics, le PDF et le contrat, les liens sécurisés, et un **scénario complet** (demande réservée aux spécialistes, demande ouverte aux résidents, trois remplaçants compatibles, acceptation, choix, annulation, remise en ligne, attribution automatique, relance, rappel, réalisation, récapitulatif mensuel, désinscription, réponses simultanées).
 
 Interface du module vérifiée dans un navigateur (Chromium, téléphone 390 px et ordinateur 1366 px, sans débordement) sur deux scénarios fictifs : demande réservée aux spécialistes (réponse par le bouton de l'e-mail, lien rouvert = « déjà enregistré », choix, contrat PDF, annulation par le remplaçant et remise en ligne, calendrier, validation et refus par l'administrateur, +24 h → relance, inscription avec erreurs puis valide) et demande ouverte aux résidents (3 remplaçants contactés, 2 disponibles, choix depuis l'e-mail, « poste pourvu », annulation par la structure depuis son e-mail et remise en ligne, boîte d'envoi et pièces jointes). Client Supabase vérifié avec la bibliothèque officielle face à un serveur simulé (inscription avant connexion puis lien magique, réponse par la fonction `rp-agent`, disponibilités, espace structure). Comptes rendus vérifiés inchangés.
+
+Droits des rôles Supabase : le projet est configuré **sans exposition automatique** des tables (rien n'est accessible sans `GRANT` explicite). La base de test simule ce réglage de la façon la plus stricte (aucun droit par défaut sur les tables ni sur les fonctions, pas même pour `PUBLIC`) ; `tests/sql/droits.js` liste tous les droits accordés à `anon`, `authenticated` et `service_role` (tables, colonnes, fonctions) et les compare à la référence `tests/sql/droits-attendus.txt` (à régénérer avec `node tests/sql/droits.js --ecrire` après un changement voulu), vérifie que toutes les tables ont leurs règles RLS, que chaque fonction appelée dans une règle d'accès est exécutable par les rôles de la règle, et que `anon` ne peut jamais écrire.
 
 Communauté : `tests/reseau.test.js` couvre les règles (nom affiché, statuts, validations, dates), l'alerte d'identité et le **retrait des métadonnées** sur deux images fictives (`tests/fixtures/`, EXIF « Patient TEST-0001 ») ; `tests/sql/rls-reseau.js` vérifie sur une vraie base (18 vérifications) : compte Google, impossibilité de se vérifier soi-même, profils sans e-mail ni téléphone, publication réservée aux vérifiés et aux remplaçants validés, champs protégés, compteurs et notifications, messagerie (non lus, suppression d'un message sans trace dans l'aperçu, blocage), signalements et masquage automatique, suspension, droits sur les fichiers, rappels e-mail, suppression du compte (contenu des messages effacé, aperçu de la conversation compris) ; le test d'intégration envoie un rappel de message non lu une seule fois, sans son contenu. Interface vérifiée dans Chromium (390 px et 1366 px, sans débordement) : visiteur → Google simulé → profil, fil, j'aime, commentaire, publication refusée puis demande de vérification, messagerie avec réponse, alerte d'identité, administration ; publication avec image fictive (métadonnées retirées, nom masqué), signalements → masquage → rétablissement par l'administrateur, blocage, recherche. Comptes rendus et Remplacements vérifiés inchangés.
 
@@ -475,6 +477,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 12/10/2026 | **Droits Supabase explicites** (exposition automatique des tables désactivée) : migration `20261012090000_droits_explicites.sql` accordant à `authenticated` l'exécution des 10 fonctions appelées dans les règles d'accès (sinon « permission denied » avec ce réglage) ; base de test rendue stricte (aucun droit par défaut) ; nouveau test `tests/sql/droits.js` et liste de référence des droits `tests/sql/droits-attendus.txt` ; guide d'installation mis à jour |
 | 10/10/2026 | **Cas clinique complet « Le menton qui s'endort »** (`cas/schwannome-v3.html`) : la publication « Trigeminal nerve, a pasta feast » traduite en français et réécrite en enquête — scénario clinique pédagogique, 4 coupes IRM, quiz en 4 questions, verdict déplié avec coupes annotées (masse, foramen ovale, épanchement mastoïdien), festin de pâtes (pictogrammes SVG, passoires fente / rond / ovale, coupes de repère FOS, FR, FO), sémiologie et diagnostics différentiels, 4 schémas de la classification de Wanibuchi (notre cas : type D), compte rendu proposé, à retenir, 8 cartes ; 4e cas du quiz « Cas du jour » (tête et cou) avec bouton vers le cas complet ; message de fin du quiz des fiches réglable (`data-relire`) |
 | 10/10/2026 | **Pontages en mode choix** : formule coroscanner avec une ligne « Pontages aorto-coronaires » à choix (absence de pontage, AMIG, AMID, radiale sur l'aorte ou en Y, gastro-épiploïque, saphène simple ou séquentiel) et conclusion `CAD-RADS 0` ou `0/G` ; 7 phrases automatiques `pontage…` (`amig`, `amid`, `radiale`, `gep`, `saphene`, `sequentiel`, `pasdepontage`) avec artère receveuse et état du greffon au choix ; éditeur : un champ à choix `[a / b / c]` sélectionné (Tab) ou cliqué affiche ses options, un clic (ou ↑ ↓ + Entrée) insère l'option choisie |
 | 10/10/2026 | Outil **CAD-RADS** : **types de pontages** — AMIG, AMID, artère radiale, gastro-épiploïque, veine grande saphène ; montages simple, séquentiel, composite en Y ; artère(s) receveuse(s), état du greffon ; pontages dessinés sur le schéma coronaire, tableau des types de pontages, texte rédigé, greffon gradé comme une artère native (G) |

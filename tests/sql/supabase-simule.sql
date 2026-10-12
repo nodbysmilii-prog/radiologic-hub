@@ -34,10 +34,12 @@ create function storage.foldername(name text) returns text[] language sql immuta
 $$;
 alter table storage.objects enable row level security;
 
--- Privilèges par défaut de Supabase (tout est ouvert, les droits par ligne font le tri)
+-- Privilèges de Supabase avec l'exposition automatique DÉSACTIVÉE (réglage du projet) :
+-- les nouvelles tables et fonctions du schéma public ne reçoivent aucun droit par défaut,
+-- pas même l'exécution des fonctions pour PUBLIC (hypothèse la plus stricte). Chaque migration
+-- doit donc accorder explicitement (GRANT) tout ce dont le site et les fonctions serveur ont besoin.
 grant usage on schema public, auth, storage to anon, authenticated, service_role;
 grant execute on all functions in schema auth to anon, authenticated, service_role;
 grant select on storage.buckets to anon, authenticated, service_role;
 grant all on storage.objects to authenticated, service_role;
-alter default privileges in schema public grant all on tables to anon, authenticated, service_role;
-alter default privileges in schema public grant all on functions to anon, authenticated, service_role;
+alter default privileges for role postgres revoke execute on functions from public;

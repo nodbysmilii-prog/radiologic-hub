@@ -1,0 +1,83 @@
+# Droits accordés dans le schéma public (généré par tests/sql/droits.js --ecrire)
+# Sans GRANT, un rôle n'a aucun accès ; les règles RLS filtrent ensuite les lignes.
+
+## Tables
+profils · authenticated : DELETE, SELECT, UPDATE
+profils · service_role : tous les droits
+rp_admins · service_role : tous les droits
+rp_demandes · authenticated : SELECT
+rp_demandes · service_role : tous les droits
+rp_disponibilites · authenticated : DELETE, INSERT, SELECT, UPDATE
+rp_disponibilites · service_role : tous les droits
+rp_emails · authenticated : SELECT
+rp_emails · service_role : tous les droits
+rp_favoris · authenticated : DELETE, INSERT, SELECT, UPDATE
+rp_favoris · service_role : tous les droits
+rp_invitations · authenticated : DELETE, INSERT, SELECT, UPDATE
+rp_invitations · service_role : tous les droits
+rp_jetons · service_role : tous les droits
+rp_journal · authenticated : SELECT
+rp_journal · service_role : tous les droits
+rp_membres · authenticated : DELETE, SELECT
+rp_membres · service_role : tous les droits
+rp_propositions · authenticated : SELECT
+rp_propositions · service_role : tous les droits
+rp_remplacants · authenticated : DELETE, INSERT, SELECT, UPDATE
+rp_remplacants · service_role : tous les droits
+rp_structures · authenticated : DELETE, INSERT, SELECT, UPDATE
+rp_structures · service_role : tous les droits
+rs_abonnements · authenticated : DELETE, INSERT, SELECT
+rs_abonnements · service_role : tous les droits
+rs_blocages · authenticated : DELETE, INSERT, SELECT
+rs_blocages · service_role : tous les droits
+rs_cas · authenticated : DELETE, INSERT, SELECT, UPDATE
+rs_cas · service_role : tous les droits
+rs_commentaires · authenticated : DELETE, INSERT, SELECT, UPDATE
+rs_commentaires · service_role : tous les droits
+rs_conversations · authenticated : SELECT
+rs_conversations · service_role : tous les droits
+rs_enregistres · authenticated : DELETE, INSERT, SELECT
+rs_enregistres · service_role : tous les droits
+rs_jaime · authenticated : DELETE, INSERT, SELECT
+rs_jaime · service_role : tous les droits
+rs_membres · authenticated : DELETE, INSERT, SELECT, UPDATE
+rs_membres · service_role : tous les droits
+rs_messages · authenticated : SELECT
+rs_messages · service_role : tous les droits
+rs_notifications · authenticated : DELETE, SELECT
+rs_notifications · service_role : tous les droits
+rs_participants · authenticated : SELECT
+rs_participants · service_role : tous les droits
+rs_signalements · authenticated : SELECT
+rs_signalements · service_role : tous les droits
+
+## Colonnes (droit limité à certaines colonnes)
+rs_messages · authenticated : INSERT (conversation_id, image, texte)
+rs_messages · authenticated : UPDATE (supprime)
+rs_notifications · authenticated : UPDATE (lu)
+rs_participants · authenticated : UPDATE (archive, lu_le)
+rs_signalements · authenticated : INSERT (cible_id, cible_type, details, motif)
+rs_signalements · authenticated : UPDATE (decision, traite_le, traite_par)
+
+## Fonctions (EXECUTE)
+rp_a_recu(did uuid) · authenticated
+rp_a_recu_de(sid uuid) · authenticated
+rp_accepter_invitations() · authenticated
+rp_compteurs(ids uuid[]) · authenticated
+rp_est_admin() · authenticated
+rp_est_membre(sid uuid) · authenticated
+rp_est_responsable(sid uuid) · authenticated
+rp_membre_meme_structure(pid uuid) · authenticated
+rp_statistiques() · authenticated
+rp_voit_remplacant(rid uuid) · authenticated
+rs_autre(conv uuid) · authenticated
+rs_bloque(a uuid, b uuid) · authenticated
+rs_est_membre_actif() · authenticated
+rs_mes_conversations() · authenticated
+rs_ouvrir_conversation(autre uuid) · authenticated
+rs_participe(conv uuid) · authenticated
+rs_participe_dossier(dossier text) · authenticated
+rs_peut_publier(uid uuid) · authenticated
+rs_rappels_messages(delai interval) · service_role
+rs_remplacant_valide(uid uuid) · authenticated
+rs_supprimer_mon_compte() · authenticated
