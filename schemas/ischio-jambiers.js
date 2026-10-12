@@ -79,47 +79,49 @@
   const SCHEMAS = [
     {
       id: 's1', court: 'S1', titre: 'Insertion ischiatique', niveau: 'tubérosité ischiatique', hauteur: 0.06, tiers: 'proximal',
+      relecture: { date: '2026-10-12', avis: 'corrigé à sa demande : nerf sciatique au contact du bord latéral du tendon conjoint' },
       formes: [
         { t: 'sc', pts: [[-30, 62], [120, 56], [260, 54], [380, 57], [530, 62]] },
         { t: 'muscle', id: 'grand-gluteal', pts: [[-30, 65], [120, 60], [260, 58], [380, 61], [530, 66], [530, 182], [400, 190], [280, 198], [140, 192], [-30, 178]] },
         { t: 'fin', pts: [[70, 76], [110, 130], [150, 186]] },
         { t: 'fin', pts: [[260, 70], [300, 130], [330, 193]] },
         { t: 'fin', pts: [[420, 69], [440, 122], [458, 184]] },
-        { t: 'muscle', id: 'carre-femoral', pts: [[292, 305], [340, 290], [420, 288], [530, 292], [530, 372], [420, 378], [320, 372], [298, 342]] },
-        { t: 'muscle', id: 'semi-tendineux', pts: [[14, 252], [38, 222], [96, 212], [134, 224], [124, 242], [80, 250], [40, 262]] },
-        { t: 'tendon', id: 'tendon-conjoint', pts: [[66, 268], [84, 246], [140, 238], [192, 246], [208, 262], [184, 276], [130, 273], [86, 280]] },
-        { t: 'tendon', id: 'tendon-semi-membraneux', pts: [[204, 288], [216, 271], [250, 266], [272, 280], [262, 300], [238, 304], [218, 298]] },
-        { t: 'os', id: 'tuberosite', pts: [[-30, 330], [20, 304], [70, 284], [130, 274], [185, 280], [228, 298], [258, 326], [278, 372], [288, 440]] },
-        { t: 'etoile', id: 'triangle-cohen', c: [262, 250], pointes: [[204, 256], [244, 272], [326, 262], [268, 204], [224, 226]] },
-        { t: 'nerf', id: 'nerf-sciatique', e: [364, 266, 38, 15, -6] },
-        { t: 'repere', e: [264, 246, 74, 50, 0] },
+        { t: 'muscle', id: 'carre-femoral', pts: [[350, 292], [400, 276], [470, 276], [530, 280], [530, 370], [460, 378], [380, 372], [352, 340]] },
+        { t: 'muscle', id: 'semi-tendineux', pts: [[64, 256], [92, 228], [150, 218], [192, 228], [184, 248], [140, 258], [96, 268]] },
+        { t: 'tendon', id: 'tendon-conjoint', pts: [[190, 258], [210, 238], [266, 232], [312, 242], [328, 258], [302, 272], [248, 274], [206, 274]] },
+        { t: 'tendon', id: 'tendon-semi-membraneux', pts: [[270, 280], [290, 272], [322, 276], [336, 290], [322, 302], [296, 302], [278, 294]] },
+        { t: 'os', id: 'tuberosite', pts: [[-30, 336], [40, 318], [110, 298], [170, 282], [214, 276], [262, 286], [304, 304], [334, 334], [354, 380], [362, 440]] },
+        { t: 'etoile', id: 'triangle-cohen', c: [332, 270], pointes: [[306, 262], [316, 292], [362, 280], [336, 234]] },
+        { t: 'nerf', id: 'nerf-sciatique', e: [368, 258, 38, 15, -4] },
+        { t: 'repere', e: [334, 262, 58, 42, 0] },
       ],
       etiquettes: [
         { texte: 'Grand glutéal', a: [310, 125] },
-        { texte: 'Semi-tendineux (début du corps musculaire)', a: [70, 234] },
-        { texte: 'Tendon conjoint (longue portion du biceps + semi-tendineux)', a: [140, 258] },
-        { texte: 'Tendon du semi-membraneux', a: [240, 286], cote: 'g' },
-        { texte: 'Tubérosité ischiatique (corticale)', a: [40, 296] },
-        { texte: '« Triangle » de Michel Cohen : carrefour hyperéchogène étoilé', a: [262, 248], cote: 'd' },
-        { texte: 'Nerf sciatique', a: [364, 266] },
-        { texte: 'Carré fémoral (plan profond)', a: [430, 334] },
+        { texte: 'Semi-tendineux (début du corps musculaire)', a: [140, 240] },
+        { texte: 'Tendon conjoint (longue portion du biceps + semi-tendineux)', a: [250, 252], cote: 'g' },
+        { texte: 'Tendon du semi-membraneux', a: [300, 290], cote: 'g' },
+        { texte: 'Tubérosité ischiatique (corticale)', a: [110, 298] },
+        { texte: '« Triangle » de Michel Cohen : carrefour hyperéchogène étoilé', a: [332, 272], cote: 'd' },
+        { texte: 'Nerf sciatique, au contact du tendon conjoint', a: [370, 256] },
+        { texte: 'Carré fémoral (plan profond)', a: [450, 330] },
       ],
       represente: [
         'Coupe transversale au niveau de la tubérosité ischiatique, sous le grand glutéal.',
         'Les deux tendons proximaux sur le versant postéro-latéral de l\'ischion (tubérosité) : tendon conjoint (longue portion du biceps + semi-tendineux) en dedans et en surface, tendon du semi-membraneux en dehors et un peu plus profond.',
         'Premières fibres charnues du semi-tendineux sur le bord médial du tendon conjoint.',
-        'Nerf sciatique en dehors des tendons, au contact de l\'insertion, couché sur le carré fémoral.',
-        '« Triangle » de Michel Cohen dessiné comme une zone conjonctive étoilée reliant le tendon conjoint, le tendon du semi-membraneux, le nerf sciatique et le plan du grand glutéal.',
+        'Nerf sciatique en dehors, au contact direct du bord latéral du tendon conjoint, couché sur le carré fémoral.',
+        '« Triangle » de Michel Cohen dessiné comme une zone conjonctive étoilée au point de rencontre du tendon conjoint, du tendon du semi-membraneux et du nerf sciatique, avec une branche vers le plan du grand glutéal.',
       ],
       incertitudes: [
-        'Forme et position exactes du « triangle » de Michel Cohen : la synthèse le décrit comme une structure hyperéchogène étoilée réunissant tendon conjoint, tendon du semi-membraneux, semi-tendineux et nerf sciatique, sans en donner la géométrie ; ici, étoile à 4 branches centrée entre les deux tendons et le nerf.',
+        'Forme et position exactes du « triangle » de Michel Cohen : la synthèse le décrit comme une structure hyperéchogène étoilée réunissant tendon conjoint, tendon du semi-membraneux, semi-tendineux et nerf sciatique, sans en donner la géométrie ; ici, étoile à 4 branches au point de rencontre des deux tendons et du nerf.',
         'Hauteur exacte de la coupe : les deux tendons sont représentés sur la tubérosité, le semi-tendineux déjà charnu sur le bord médial (en réalité, il devient charnu un peu plus bas).',
-        'Distance tendon / nerf sciatique (environ 1 à 1,5 cm ici) et épaisseurs du grand glutéal et de la graisse : variables selon la morphologie.',
+        'Épaisseurs du grand glutéal et de la graisse : variables selon la morphologie.',
         'Carré fémoral : plan profond ajouté pour situer le nerf ; non cité dans la synthèse.',
       ],
     },
     {
       id: 's2', court: 'S2', titre: 'Croisement du semi-membraneux', niveau: 'quelques centimètres sous l\'ischion', hauteur: 0.14, tiers: 'proximal',
+      relecture: { date: '2026-10-12', avis: 'validé' },
       formes: [
         { t: 'sc', pts: [[-30, 56], [120, 52], [260, 50], [400, 52], [530, 56]] },
         { t: 'muscle', id: 'grand-adducteur', pts: [[-30, 270], [100, 264], [230, 268], [320, 284], [345, 322], [340, 440], [-30, 440]] },
@@ -160,6 +162,7 @@
     },
     {
       id: 's3', court: 'S3', titre: 'Membrane du semi-membraneux', niveau: 'tiers proximal de la cuisse', hauteur: 0.3, tiers: 'proximal',
+      relecture: { date: '2026-10-12', avis: 'validé' },
       formes: [
         { t: 'sc', pts: [[-30, 50], [130, 46], [260, 44], [400, 46], [530, 50]] },
         { t: 'muscle', id: 'grand-adducteur', pts: [[-30, 232], [80, 236], [200, 240], [280, 236], [330, 262], [340, 330], [330, 440], [-30, 440]] },
@@ -199,6 +202,7 @@
     },
     {
       id: 's4', court: 'S4', titre: 'Tiers moyen : les 4 repères conjonctifs', niveau: 'tiers moyen de la cuisse', hauteur: 0.5, tiers: 'moyen',
+      relecture: { date: '2026-10-12', avis: 'corrigé à sa demande : cloison sigmoïde d\'un bord à l\'autre du semi-tendineux' },
       formes: [
         { t: 'sc', pts: [[-30, 46], [130, 42], [260, 40], [400, 42], [530, 46]] },
         { t: 'muscle', id: 'grand-adducteur', pts: [[-30, 292], [120, 298], [250, 284], [300, 300], [332, 338], [330, 440], [-30, 440]] },
@@ -206,7 +210,7 @@
         { t: 'muscle', id: 'semi-membraneux', pts: [[-30, 178], [60, 162], [160, 166], [238, 182], [258, 226], [226, 272], [124, 288], [20, 280], [-30, 262]] },
         { t: 'cloison', id: 'cloison-frontale-semi-membraneux', pts: [[10, 228], [120, 224], [244, 220]] },
         { t: 'muscle', id: 'semi-tendineux', pts: [[8, 84], [38, 56], [118, 48], [198, 60], [224, 98], [204, 146], [120, 162], [30, 150]] },
-        { t: 'cloison', id: 'cloison-sigmoide-semi-tendineux', pts: [[22, 84], [66, 122], [118, 104], [166, 84], [214, 128]] },
+        { t: 'cloison', id: 'cloison-sigmoide-semi-tendineux', pts: [[8, 84], [56, 120], [112, 104], [168, 80], [224, 98]] },
         { t: 'muscle', id: 'biceps-court', pts: [[322, 180], [380, 176], [430, 182], [436, 226], [420, 274], [394, 314], [372, 318], [350, 300], [334, 254], [322, 214]] },
         { t: 'muscle', id: 'biceps-long', pts: [[232, 90], [266, 56], [360, 48], [452, 60], [488, 98], [466, 148], [380, 164], [272, 158]] },
         { t: 'cloison', id: 'cloison-frontale-biceps-long', pts: [[252, 108], [360, 104], [474, 102]] },
@@ -217,7 +221,7 @@
       ],
       etiquettes: [
         { texte: 'Semi-tendineux', a: [60, 66] },
-        { texte: 'Cloison sigmoïde du semi-tendineux', a: [118, 104] },
+        { texte: 'Cloison sigmoïde du semi-tendineux, d\'un bord à l\'autre', a: [112, 104] },
         { texte: 'Cloison frontale du semi-membraneux', a: [120, 224] },
         { texte: 'Semi-membraneux', a: [60, 256] },
         { texte: 'Grand adducteur', a: [120, 345] },
@@ -231,7 +235,7 @@
       ],
       represente: [
         'Coupe transversale au tiers moyen de la cuisse : semi-tendineux, semi-membraneux et longue portion du biceps de volume comparable.',
-        'Cloison sigmoïde du semi-tendineux : voile blanc traversant le muscle d\'un bord à l\'autre, dessiné en S.',
+        'Cloison sigmoïde du semi-tendineux : voile blanc en S traversant TOUT le muscle, de son bord médial à son bord latéral.',
         'Cloison frontale du semi-membraneux : ligne blanche traversant le muscle dans le plan frontal (horizontale sur l\'écran).',
         'Cloison frontale de la longue portion du biceps, dans le prolongement du tendon conjoint.',
         'Structure en T : la longue portion, large et superficielle, forme la barre ; la courte portion, étroite, descend vers la ligne âpre et forme le jambage ; une aponévrose commune les réunit. Nerf sciatique dans l\'angle médial du T, entre longue portion, courte portion, semi-membraneux et grand adducteur.',
@@ -246,36 +250,36 @@
     },
     {
       id: 's5', court: 'S5', titre: '« Cerise sur le gâteau »', niveau: 'tiers distal de la cuisse', hauteur: 0.7, tiers: 'distal',
+      relecture: { date: '2026-10-12', avis: 'corrigé à sa demande : tendon du semi-tendineux au centre du semi-membraneux' },
       formes: [
         { t: 'sc', pts: [[-30, 42], [130, 38], [260, 36], [400, 38], [530, 42]] },
-        { t: 'muscle', id: 'semi-membraneux', pts: [[-30, 96], [30, 62], [80, 54], [150, 56], [205, 72], [228, 120], [208, 186], [120, 208], [20, 198], [-30, 176]] },
-        { t: 'tendon', id: 'tendon-semi-tendineux', e: [112, 76, 18, 17, 0] },
+        { t: 'muscle', id: 'semi-membraneux', pts: [[12, 110], [40, 66], [110, 52], [180, 62], [222, 104], [220, 160], [180, 200], [110, 212], [40, 196], [12, 156]] },
+        { t: 'tendon', id: 'tendon-semi-tendineux', e: [113, 132, 18, 17, 0] },
         { t: 'muscle', id: 'biceps-court', pts: [[298, 154], [396, 148], [478, 154], [496, 200], [452, 242], [352, 248], [302, 218]] },
         { t: 'muscle', id: 'biceps-long', pts: [[262, 74], [300, 52], [398, 48], [468, 66], [482, 106], [436, 134], [330, 138], [270, 112]] },
         { t: 'os', id: 'femur', pts: [[100, 354], [180, 338], [260, 332], [340, 336], [420, 348], [530, 370]] },
         { t: 'veine', id: 'veine-poplitee', e: [250, 234, 22, 14, 0] },
         { t: 'artere', id: 'artere-poplitee', e: [264, 270, 11, 11, 0] },
-        { t: 'nerf', id: 'nerf-sciatique', e: [252, 150, 34, 14, 0] },
-        { t: 'repere', e: [112, 76, 31, 29, 0] },
+        { t: 'nerf', id: 'nerf-sciatique', e: [264, 150, 34, 14, 0] },
+        { t: 'repere', e: [113, 132, 31, 29, 0] },
       ],
       etiquettes: [
-        { texte: 'Tendon du semi-tendineux : la « cerise »', a: [112, 76] },
-        { texte: 'Semi-membraneux : le « gâteau »', a: [100, 150] },
+        { texte: 'Tendon du semi-tendineux : la « cerise », au centre', a: [113, 132] },
+        { texte: 'Semi-membraneux : le « gâteau »', a: [60, 182] },
         { texte: 'Fémur (face poplitée)', a: [180, 340] },
         { texte: 'Longue portion du biceps', a: [400, 90] },
-        { texte: 'Nerf sciatique (se divise vers le haut de la fosse poplitée)', a: [252, 150], cote: 'd' },
+        { texte: 'Nerf sciatique (se divise vers le haut de la fosse poplitée)', a: [264, 150], cote: 'd' },
         { texte: 'Courte portion du biceps', a: [430, 200] },
         { texte: 'Veine poplitée', a: [250, 234], cote: 'd' },
         { texte: 'Artère poplitée', a: [264, 270] },
       ],
       represente: [
         'Coupe transversale au tiers distal de la cuisse.',
-        '« Cerise sur le gâteau » : tendon du semi-tendineux (petit rond blanc) logé au centre de la face superficielle du corps charnu du semi-membraneux.',
+        '« Cerise sur le gâteau » : tendon du semi-tendineux (petit rond blanc) au centre du corps charnu du semi-membraneux.',
         'Longue portion du biceps (en surface) et courte portion (en profondeur) en dehors.',
         'Entre les deux groupes : graisse du sommet de la fosse poplitée, nerf sciatique, puis veine poplitée et artère poplitée, l\'artère au plus profond, contre le fémur.',
       ],
       incertitudes: [
-        'Position de la « cerise » : la synthèse la place « au centre du corps du semi-membraneux » ; dessinée au centre de sa face superficielle, à moitié enchâssée. À confirmer sur image.',
         'Hauteur de la division du nerf sciatique (variable) : nerf dessiné encore unique.',
         'Vaisseaux : la veine est dessinée en surface et un peu en dedans de l\'artère, l\'artère au contact du fémur ; à ce niveau, ils viennent de franchir l\'anneau du grand adducteur (hauteur variable).',
         'Muscles médiaux profonds (vaste médial, tendon du grand adducteur, gracile, sartorius) non représentés.',
@@ -283,6 +287,7 @@
     },
     {
       id: 's6', court: 'S6', titre: 'Tendon distal du biceps fémoral', niveau: 'au-dessus du genou, côté latéral', hauteur: 0.86, tiers: 'distal',
+      relecture: { date: '2026-10-12', avis: 'validé' },
       note: 'Insertion distale double : tête de la fibula et plateau tibial (hors de cette coupe).',
       formes: [
         { t: 'sc', pts: [[-30, 40], [130, 36], [260, 34], [400, 36], [530, 40]] },
@@ -390,6 +395,7 @@
         const fasc = [[-0.45, -0.2], [0, -0.3], [0.45, -0.15], [-0.25, 0.35], [0.25, 0.35]]
           .map(([a, b]) => `<circle cx="${f(x + a * rx)}" cy="${f(cy + b * ry)}" r="${Math.max(1.6, Math.min(3, ry / 4))}" fill="${C.nerf}"/>`).join('');
         return `<g ${data}${r ? ` transform="rotate(${r} ${f(x)} ${f(cy)})"` : ''}>` +
+          `<ellipse cx="${f(x)}" cy="${f(cy)}" rx="${rx}" ry="${ry}" fill="${C.fond}"/>` +
           `<ellipse cx="${f(x)}" cy="${f(cy)}" rx="${rx}" ry="${ry}" fill="${C.nerf}" fill-opacity="0.28" stroke="${C.nerf}" stroke-width="3"/>${rx > 15 ? fasc : ''}</g>`;
       }
       case 'artere': return ellipse(s.e, inv, `${data} fill="${C.artere}" stroke="#ff8a8d" stroke-width="2"`);

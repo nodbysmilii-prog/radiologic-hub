@@ -10,39 +10,43 @@
 - Code commun : muscle ; conjonctif : cloison, aponévrose, tendon (hyperéchogène) ; nerf ; artère ; veine ; os : corticale et ombre acoustique ; graisse ; repère clé du schéma.
 - Proportions schématiques (environ 68 px par cm) : épaisseurs et profondeurs indicatives, variables selon la morphologie.
 
-## S1 — Insertion ischiatique (version `1561d85d`)
+## S1 — Insertion ischiatique (version `10d7c0ae`)
 
 Niveau : tubérosité ischiatique · tiers proximal
+
+Relecture de l'auteur (12/10/2026) : **corrigé à sa demande : nerf sciatique au contact du bord latéral du tendon conjoint**.
 
 **Ce qui est représenté**
 
 - Coupe transversale au niveau de la tubérosité ischiatique, sous le grand glutéal.
 - Les deux tendons proximaux sur le versant postéro-latéral de l'ischion (tubérosité) : tendon conjoint (longue portion du biceps + semi-tendineux) en dedans et en surface, tendon du semi-membraneux en dehors et un peu plus profond.
 - Premières fibres charnues du semi-tendineux sur le bord médial du tendon conjoint.
-- Nerf sciatique en dehors des tendons, au contact de l'insertion, couché sur le carré fémoral.
-- « Triangle » de Michel Cohen dessiné comme une zone conjonctive étoilée reliant le tendon conjoint, le tendon du semi-membraneux, le nerf sciatique et le plan du grand glutéal.
+- Nerf sciatique en dehors, au contact direct du bord latéral du tendon conjoint, couché sur le carré fémoral.
+- « Triangle » de Michel Cohen dessiné comme une zone conjonctive étoilée au point de rencontre du tendon conjoint, du tendon du semi-membraneux et du nerf sciatique, avec une branche vers le plan du grand glutéal.
 
 **Étiquettes** (numéros de la version téléphone)
 
 1. Grand glutéal
 2. Semi-tendineux (début du corps musculaire)
-3. « Triangle » de Michel Cohen : carrefour hyperéchogène étoilé
-4. Tendon conjoint (longue portion du biceps + semi-tendineux)
-5. Nerf sciatique
+3. Tendon conjoint (longue portion du biceps + semi-tendineux)
+4. Nerf sciatique, au contact du tendon conjoint
+5. « Triangle » de Michel Cohen : carrefour hyperéchogène étoilé
 6. Tendon du semi-membraneux
 7. Tubérosité ischiatique (corticale)
 8. Carré fémoral (plan profond)
 
 **Incertitudes à vérifier**
 
-- [ ] Forme et position exactes du « triangle » de Michel Cohen : la synthèse le décrit comme une structure hyperéchogène étoilée réunissant tendon conjoint, tendon du semi-membraneux, semi-tendineux et nerf sciatique, sans en donner la géométrie ; ici, étoile à 4 branches centrée entre les deux tendons et le nerf.
+- [ ] Forme et position exactes du « triangle » de Michel Cohen : la synthèse le décrit comme une structure hyperéchogène étoilée réunissant tendon conjoint, tendon du semi-membraneux, semi-tendineux et nerf sciatique, sans en donner la géométrie ; ici, étoile à 4 branches au point de rencontre des deux tendons et du nerf.
 - [ ] Hauteur exacte de la coupe : les deux tendons sont représentés sur la tubérosité, le semi-tendineux déjà charnu sur le bord médial (en réalité, il devient charnu un peu plus bas).
-- [ ] Distance tendon / nerf sciatique (environ 1 à 1,5 cm ici) et épaisseurs du grand glutéal et de la graisse : variables selon la morphologie.
+- [ ] Épaisseurs du grand glutéal et de la graisse : variables selon la morphologie.
 - [ ] Carré fémoral : plan profond ajouté pour situer le nerf ; non cité dans la synthèse.
 
 ## S2 — Croisement du semi-membraneux (version `161d2b83`)
 
 Niveau : quelques centimètres sous l'ischion · tiers proximal
+
+Relecture de l'auteur (12/10/2026) : **validé**.
 
 **Ce qui est représenté**
 
@@ -75,6 +79,8 @@ Niveau : quelques centimètres sous l'ischion · tiers proximal
 
 Niveau : tiers proximal de la cuisse · tiers proximal
 
+Relecture de l'auteur (12/10/2026) : **validé**.
+
 **Ce qui est représenté**
 
 - Coupe transversale au tiers proximal de la cuisse.
@@ -101,14 +107,16 @@ Niveau : tiers proximal de la cuisse · tiers proximal
 - [ ] Aponévrose de la longue portion : position approximative (bord profond et médial du muscle).
 - [ ] Courte portion du biceps non représentée (elle naît plus bas, au tiers moyen de la ligne âpre).
 
-## S4 — Tiers moyen : les 4 repères conjonctifs (version `63b49735`)
+## S4 — Tiers moyen : les 4 repères conjonctifs (version `b16d3708`)
 
 Niveau : tiers moyen de la cuisse · tiers moyen
+
+Relecture de l'auteur (12/10/2026) : **corrigé à sa demande : cloison sigmoïde d'un bord à l'autre du semi-tendineux**.
 
 **Ce qui est représenté**
 
 - Coupe transversale au tiers moyen de la cuisse : semi-tendineux, semi-membraneux et longue portion du biceps de volume comparable.
-- Cloison sigmoïde du semi-tendineux : voile blanc traversant le muscle d'un bord à l'autre, dessiné en S.
+- Cloison sigmoïde du semi-tendineux : voile blanc en S traversant TOUT le muscle, de son bord médial à son bord latéral.
 - Cloison frontale du semi-membraneux : ligne blanche traversant le muscle dans le plan frontal (horizontale sur l'écran).
 - Cloison frontale de la longue portion du biceps, dans le prolongement du tendon conjoint.
 - Structure en T : la longue portion, large et superficielle, forme la barre ; la courte portion, étroite, descend vers la ligne âpre et forme le jambage ; une aponévrose commune les réunit. Nerf sciatique dans l'angle médial du T, entre longue portion, courte portion, semi-membraneux et grand adducteur.
@@ -119,7 +127,7 @@ Niveau : tiers moyen de la cuisse · tiers moyen
 1. Semi-tendineux
 2. Longue portion du biceps
 3. Cloison frontale de la longue portion
-4. Cloison sigmoïde du semi-tendineux
+4. Cloison sigmoïde du semi-tendineux, d'un bord à l'autre
 5. Structure en T : la longue portion (barre) posée sur la courte portion (jambage) par une aponévrose commune
 6. Nerf sciatique, à la pointe du T
 7. Cloison frontale du semi-membraneux
@@ -136,23 +144,25 @@ Niveau : tiers moyen de la cuisse · tiers moyen
 - [ ] Position en hauteur des cloisons frontales dans chaque muscle : approximative.
 - [ ] Largeur du champ : la coupe montre toute la loge postérieure ; avec une sonde linéaire, il faut en pratique deux positions ou un mode panoramique.
 
-## S5 — « Cerise sur le gâteau » (version `4ffc2161`)
+## S5 — « Cerise sur le gâteau » (version `c8c2ada1`)
 
 Niveau : tiers distal de la cuisse · tiers distal
+
+Relecture de l'auteur (12/10/2026) : **corrigé à sa demande : tendon du semi-tendineux au centre du semi-membraneux**.
 
 **Ce qui est représenté**
 
 - Coupe transversale au tiers distal de la cuisse.
-- « Cerise sur le gâteau » : tendon du semi-tendineux (petit rond blanc) logé au centre de la face superficielle du corps charnu du semi-membraneux.
+- « Cerise sur le gâteau » : tendon du semi-tendineux (petit rond blanc) au centre du corps charnu du semi-membraneux.
 - Longue portion du biceps (en surface) et courte portion (en profondeur) en dehors.
 - Entre les deux groupes : graisse du sommet de la fosse poplitée, nerf sciatique, puis veine poplitée et artère poplitée, l'artère au plus profond, contre le fémur.
 
 **Étiquettes** (numéros de la version téléphone)
 
-1. Tendon du semi-tendineux : la « cerise »
-2. Longue portion du biceps
-3. Semi-membraneux : le « gâteau »
-4. Nerf sciatique (se divise vers le haut de la fosse poplitée)
+1. Longue portion du biceps
+2. Tendon du semi-tendineux : la « cerise », au centre
+3. Nerf sciatique (se divise vers le haut de la fosse poplitée)
+4. Semi-membraneux : le « gâteau »
 5. Courte portion du biceps
 6. Veine poplitée
 7. Artère poplitée
@@ -160,7 +170,6 @@ Niveau : tiers distal de la cuisse · tiers distal
 
 **Incertitudes à vérifier**
 
-- [ ] Position de la « cerise » : la synthèse la place « au centre du corps du semi-membraneux » ; dessinée au centre de sa face superficielle, à moitié enchâssée. À confirmer sur image.
 - [ ] Hauteur de la division du nerf sciatique (variable) : nerf dessiné encore unique.
 - [ ] Vaisseaux : la veine est dessinée en surface et un peu en dedans de l'artère, l'artère au contact du fémur ; à ce niveau, ils viennent de franchir l'anneau du grand adducteur (hauteur variable).
 - [ ] Muscles médiaux profonds (vaste médial, tendon du grand adducteur, gracile, sartorius) non représentés.
@@ -168,6 +177,8 @@ Niveau : tiers distal de la cuisse · tiers distal
 ## S6 — Tendon distal du biceps fémoral (version `44359b87`)
 
 Niveau : au-dessus du genou, côté latéral · tiers distal · Insertion distale double : tête de la fibula et plateau tibial (hors de cette coupe).
+
+Relecture de l'auteur (12/10/2026) : **validé**.
 
 **Ce qui est représenté**
 

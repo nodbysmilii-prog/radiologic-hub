@@ -29,6 +29,25 @@ test('repères demandés présents dans chaque coupe', () => {
   assert.ok(['tendon-biceps-femoral', 'nerf-fibulaire-commun'].every(x => ids('s6').includes(x)));
 });
 
+test('corrections de l\'auteur (12/10/2026) : nerf au contact du tendon conjoint, cloison sigmoïde d\'un bord à l\'autre, cerise au centre', () => {
+  const forme = (sid, id) => S.PAR_ID[sid].formes.find(f => f.id === id);
+  // S1 : nerf sciatique en dehors du tendon conjoint et à son contact
+  const ct = forme('s1', 'tendon-conjoint').pts, [nx, , nrx] = forme('s1', 'nerf-sciatique').e;
+  const bordLateral = Math.max(...ct.map(p => p[0]));
+  assert.ok(nx > bordLateral, 'nerf en dehors du tendon conjoint');
+  assert.ok(Math.abs(nx - nrx - bordLateral) <= 4, `nerf au contact du tendon conjoint (écart ${nx - nrx - bordLateral})`);
+  // S4 : la cloison sigmoïde part d'un bord du semi-tendineux et aboutit à l'autre
+  const st = forme('s4', 'semi-tendineux').pts, cl = forme('s4', 'cloison-sigmoide-semi-tendineux').pts;
+  const surBord = p => st.some(q => q[0] === p[0] && q[1] === p[1]);
+  assert.ok(surBord(cl[0]) && surBord(cl[cl.length - 1]), 'extrémités sur le contour du muscle');
+  assert.ok(cl[0][0] === Math.min(...st.map(p => p[0])) && cl[cl.length - 1][0] === Math.max(...st.map(p => p[0])), 'du bord médial au bord latéral');
+  // S5 : tendon du semi-tendineux au centre du semi-membraneux
+  const sm = forme('s5', 'semi-membraneux').pts, [tx, ty] = forme('s5', 'tendon-semi-tendineux').e;
+  const cx = sm.reduce((a, p) => a + p[0], 0) / sm.length, cy = sm.reduce((a, p) => a + p[1], 0) / sm.length;
+  assert.ok(Math.hypot(tx - cx, ty - cy) <= 6, `cerise à ${Math.hypot(tx - cx, ty - cy).toFixed(1)} px du centre`);
+  assert.ok(sm.every(p => p[0] >= 0 && p[0] <= S.IW), 'semi-membraneux entièrement dans le champ');
+});
+
 test('même légende partout : chaque forme correspond à une entrée de légende', () => {
   const cles = S.LEGENDE.map(l => l.cle);
   assert.equal(cles.length, 8);

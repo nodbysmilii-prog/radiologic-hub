@@ -39,6 +39,7 @@ function generer() {
   for (const s of S.SCHEMAS) {
     L.push(`## ${s.court} — ${s.titre} (version \`${S.version(s.id)}\`)`, '');
     L.push(`Niveau : ${s.niveau} · tiers ${s.tiers}${s.note ? ` · ${s.note}` : ''}`, '');
+    if (s.relecture) L.push(`Relecture de l'auteur (${s.relecture.date.split('-').reverse().join('/')}) : **${s.relecture.avis}**.`, '');
     L.push('**Ce qui est représenté**', '');
     s.represente.forEach(r => L.push(`- ${r}`));
     L.push('', '**Étiquettes** (numéros de la version téléphone)', '');
