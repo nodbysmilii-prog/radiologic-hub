@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Classification de Bosniak 2019 — masses rénales kystiques | RadiologicHub</title>
+  <meta name="description" content="Classification de Bosniak, version 2019 : les 5 catégories de masses rénales kystiques en schémas (I, II, IIF, III, IV), un calculateur au scanner et en IRM (paroi, cloisons, protrusion, densités, signal) et la conduite à tenir.">
+  <meta property="og:title" content="Classification de Bosniak 2019 — masses rénales kystiques">
+  <meta property="og:description" content="Les 5 catégories en schémas, un calculateur TDM / IRM et la conduite à tenir. Outil d'enseignement.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="../assets/logo-radiologichub.png">
+  <link rel="icon" type="image/svg+xml" href="../assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=20261013020000">
+  <link rel="stylesheet" href="../fiche.css?v=20261012150000">
+  <link rel="stylesheet" href="bosniak.css?v=20261013030000">
+</head>
+<body class="bk-page">
+
+  <header class="site-header is-scrolled" id="top">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="RadiologicHub — accueil">
+        <img src="../assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+        <a href="../index.html#masterclass">Masterclass</a>
+        <a href="../fiches-rapides.html">Fiches rapides</a>
+        <a href="../bibliotheque.html">Bibliothèque</a>
+        <a href="../comptes-rendus.html" class="is-current">Comptes rendus</a>
+        <a href="../remplacements.html">Remplacements</a>
+        <a href="../communaute.html">Communauté</a>
+        <a href="../index.html#tarifs">Tarifs</a>
+        <a href="../index.html#inscription" class="btn btn-ink btn-sm">S'inscrire</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="fiche-hero sec-down bk-hero">
+      <div class="container">
+        <p class="crumbs"><a href="../comptes-rendus.html">Comptes rendus</a> › <span>Classification de Bosniak</span></p>
+        <p class="marker-tag">Outil des comptes rendus</p>
+        <h1>Classification de <span class="hl-navy">Bosniak</span></h1>
+        <p class="fiche-sub">Masses rénales <span class="hl-red">kystiques</span>, version 2019 : les cinq catégories en schémas, un <span class="hl-navy">calculateur</span> au scanner et en IRM, et la conduite à tenir.</p>
+        <div class="bk-avert" role="note">
+          <span class="bk-avert-icone" aria-hidden="true">!</span>
+          <p><strong>Outil d'enseignement</strong>&nbsp;: il ne remplace pas l'analyse radiologique. Source&nbsp;: Silverman SG et al., <i>Radiology</i> 2019 (<a href="https://doi.org/10.1148/radiol.2019182646" target="_blank" rel="noopener">doi:10.1148/radiol.2019182646</a>).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Les 5 catégories -->
+    <section class="bk-section sec-up" id="categories" aria-labelledby="titre-categories">
+      <div class="container">
+        <h2 class="bk-titre" id="titre-categories">Les 5 catégories</h2>
+        <p class="bk-intro">Rein en gris, kyste en noir&nbsp;; la paroi, les cloisons et la protrusion prennent la couleur de la catégorie. <span class="bk-glisser">Faites glisser pour voir les cinq.</span></p>
+        <div class="bk-cartes" id="bk-cartes" tabindex="0" aria-label="Schémas des catégories I, II, IIF, III et IV"></div>
+      </div>
+    </section>
+
+    <!-- Calculateur -->
+    <section class="bk-section" id="calculateur" aria-labelledby="titre-calculateur">
+      <div class="container">
+        <h2 class="bk-titre" id="titre-calculateur">Calculateur</h2>
+        <p class="bk-intro">Décrivez la lésion : la catégorie se met à jour à chaque choix. Les règles sont appliquées dans l'ordre de la version 2019 (hors Bosniak, puis IV, III, IIF, II, I).</p>
+        <div class="bk-exemples" id="bk-exemples"><span class="bk-lab">Cas exemples</span></div>
+        <div class="bk-grille">
+          <form id="bk-form" onsubmit="return false" aria-label="Description de la lésion"></form>
+          <aside class="bk-resultat" id="bk-resultat" aria-label="Résultat" aria-live="polite"></aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- À retenir -->
+    <section class="bk-section sec-up" id="a-retenir" aria-labelledby="titre-retenir">
+      <div class="container">
+        <h2 class="bk-titre" id="titre-retenir">À retenir</h2>
+        <div class="bk-retenir">
+          <article class="bk-note" style="--c: var(--k-sign)">
+            <h3>Kyste hyperdense (Bosniak II)</h3>
+            <ul>
+              <li>Plus de <b>70 UH</b> sans injection&nbsp;;</li>
+              <li>ou hyperdense (vers 50 UH) <b>sans rehaussement</b> après injection&nbsp;;</li>
+              <li>en IRM, hypersignal T1 avec un rapport de signal lésion / rein <b>≥ 2,5</b>.</li>
+              <li><mark class="k-grave">Plus de 3 cm et endophytique</mark>&nbsp;: IRM recommandée.</li>
+            </ul>
+          </article>
+          <article class="bk-note" style="--c: var(--k-tech)">
+            <h3>Rehausse ou pas&nbsp;?</h3>
+            <p>Différence de densité entre le temps sans injection et le temps portal&nbsp;:</p>
+            <ul class="bk-delta">
+              <li><span class="bk-pastille" style="--p:#fff27a">&lt; 10 UH</span> pas de rehaussement</li>
+              <li><span class="bk-pastille" style="--p:#c9d6c4">10 à 19 UH</span> zone grise&nbsp;: IRM</li>
+              <li><span class="bk-pastille" style="--p:#e39a73">≥ 20 UH</span> rehaussement</li>
+            </ul>
+            <p class="bk-petit">Seuils du calculateur, réglables dans <code>outils/bosniak-rules.js</code>.</p>
+          </article>
+          <article class="bk-note" style="--c: var(--orange)">
+            <h3>IIF&nbsp;: surveiller</h3>
+            <p>Contrôle à 6 et 12 mois, puis tous les ans jusqu'à 5 ans. Une IRM peut précéder le premier contrôle&nbsp;: elle fait passer environ <b>17 %</b> des IIF du scanner en III.</p>
+          </article>
+          <article class="bk-note" style="--c: var(--k-grave)">
+            <h3>III&nbsp;: opérer ou surveiller</h3>
+            <p>Chirurgie (tumorectomie chez le patient jeune) ou <b>surveillance active</b> selon l'âge et les comorbidités&nbsp;: beaucoup de lésions III sont des tumeurs kystiques multiloculaires bénignes ou de bas potentiel de malignité (néphrome kystique ou tumeur mixte épithéliale et stromale, tumeur papillaire à cellules claires, néoplasme kystique multiloculaire de bas potentiel de malignité, carcinome rénal éosinophile solide et kystique, carcinome tubulo-kystique).</p>
+          </article>
+          <article class="bk-note" style="--c: var(--k-ddx)">
+            <h3>Biopsie</h3>
+            <p>À éviter devant une tumeur kystique, sauf s'il existe une composante tissulaire solide significative.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="bk-section" id="sources" aria-labelledby="titre-sources">
+      <div class="container">
+        <h2 class="bk-titre" id="titre-sources">Sources</h2>
+        <ul class="bk-sources">
+          <li>Silverman SG, Pedrosa I, Ellis JH, et al. <i>Bosniak Classification of Cystic Renal Masses, Version 2019: An Update Proposal and Needs Assessment.</i> Radiology. 2019;292(2):475-488. <a href="https://doi.org/10.1148/radiol.2019182646" target="_blank" rel="noopener">doi:10.1148/radiol.2019182646</a> (<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6677285/" target="_blank" rel="noopener">texte intégral en accès libre</a>).</li>
+          <li>Notes de cours de l'auteur « Masses rénales kystiques » (texte reformulé) ; schémas des catégories&nbsp;: auteur.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <div class="bk-barre" id="bk-barre">
+    <div class="bk-barre-t" id="bk-barre-t"></div>
+    <button class="btn btn-ink btn-sm" type="button" id="bk-voir">Voir le résultat</button>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="../index.html" class="brand">
+        <img src="../assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav aria-label="Liens de pied de page">
+        <a href="../index.html#masterclass">Masterclass</a>
+        <a href="../fiches-rapides.html">Fiches rapides</a>
+        <a href="../bibliotheque.html">Bibliothèque</a>
+        <a href="../comptes-rendus.html">Comptes rendus</a>
+        <a href="../suivi-oncologique.html">Suivi oncologique</a>
+        <a href="../communaute.html">Communauté</a>
+        <a href="../remplacements.html">Remplacements</a>
+        <a href="../index.html#cas-du-jour">Cas du jour</a>
+        <a href="../mentions-legales.html">Mentions légales</a>
+        <a href="../index.html#inscription">Contact</a>
+      </nav>
+      <p class="copyright">© <span id="year"></span> RadiologicHub · Formation en radiologie d'urgence</p>
+    </div>
+  </footer>
+
+  <script src="bosniak-schemas.js?v=20261013030000"></script>
+  <script src="bosniak-rules.js?v=20261013030000"></script>
+  <script src="bosniak.js?v=20261013030000"></script>
+  <script src="../fiche.js?v=20261012150000"></script>
+</body>
+</html>
