@@ -9,6 +9,10 @@
   0.66256
  ],
  "coupe_jambe": "12 cm sous le sommet du tibia",
+ "reperes": {
+  "ischion_y": 0.13478,
+  "plateau_tibial_y": -0.22938
+ },
  "source": {
   "nom": "Z-Anatomy",
   "depot": "https://github.com/Z-Anatomy/Models-of-human-anatomy",

@@ -7,6 +7,14 @@ bib_article_themes · authenticated : DELETE, INSERT, SELECT, UPDATE
 bib_article_themes · service_role : tous les droits
 bib_articles · authenticated : DELETE, INSERT, SELECT, UPDATE
 bib_articles · service_role : tous les droits
+cours_images · anon : SELECT
+cours_images · authenticated : DELETE, INSERT, SELECT, UPDATE
+cours_images · service_role : tous les droits
+cours_reglages · anon : SELECT
+cours_reglages · authenticated : DELETE, INSERT, SELECT, UPDATE
+cours_reglages · service_role : tous les droits
+cours_validations · authenticated : DELETE, INSERT, SELECT, UPDATE
+cours_validations · service_role : tous les droits
 profils · authenticated : DELETE, SELECT, UPDATE
 profils · service_role : tous les droits
 rp_admins · service_role : tous les droits
@@ -58,6 +66,7 @@ rs_signalements · service_role : tous les droits
 
 ## Colonnes (droit limité à certaines colonnes)
 bib_articles · anon : SELECT (acces, annee, classifications, doi, et_al, id, licence, modalites, niveau, organes, pmcid, pmid, premier_auteur, publie_le, resume, revue, source_texte, specialite, statut, titre, url_texte)
+cours_validations · anon : SELECT (cours, element, statut, type, version)
 rs_messages · authenticated : INSERT (conversation_id, image, texte)
 rs_messages · authenticated : UPDATE (supprime)
 rs_notifications · authenticated : UPDATE (lu)

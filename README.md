@@ -17,14 +17,15 @@
 5. [Remplacements (mise en relation)](#remplacements-mise-en-relation)
 6. [Communauté (réseau des radiologues)](#communauté-réseau-des-radiologues)
 7. [Bibliothèque (articles en accès libre)](#bibliothèque-articles-en-accès-libre)
-8. [Charte graphique](#charte-graphique)
-9. [Code couleur des fiches](#code-couleur-des-fiches)
-10. [Organisation des fichiers](#organisation-des-fichiers)
-11. [Ajouter ou modifier du contenu](#ajouter-ou-modifier-du-contenu)
-12. [Mise en ligne](#mise-en-ligne)
-13. [Tests](#tests)
-14. [À faire / points en attente](#à-faire--points-en-attente)
-15. [Historique des modifications](#historique-des-modifications)
+8. [Cours d'échoanatomie (validation par l'auteur)](#cours-déchoanatomie-validation-par-lauteur)
+9. [Charte graphique](#charte-graphique)
+10. [Code couleur des fiches](#code-couleur-des-fiches)
+11. [Organisation des fichiers](#organisation-des-fichiers)
+12. [Ajouter ou modifier du contenu](#ajouter-ou-modifier-du-contenu)
+13. [Mise en ligne](#mise-en-ligne)
+14. [Tests](#tests)
+15. [À faire / points en attente](#à-faire--points-en-attente)
+16. [Historique des modifications](#historique-des-modifications)
 
 ---
 
@@ -88,13 +89,13 @@ Réseau social des radiologues : connexion **Google** (ou lien par e-mail), prof
 
 Annuaire d'articles d'imagerie **en accès libre** : le site n'héberge pas les articles, seulement des liens et des métadonnées, avec un résumé en français. Pages par thème (Essentiels en tête, dans l'ordre de lecture conseillé), recherche et filtres combinables ; administration dans `bibliotheque-admin.html`. Entrée **Bibliothèque** du menu et du pied de page de toutes les pages — voir la [section dédiée](#bibliothèque-articles-en-accès-libre).
 
-### Cours d'échoanatomie (en préparation, rien n'est encore visible)
+### Cours d'échoanatomie (`cours/ischio-jambiers.html`, `cours-admin.html`)
 
-Module « **Échoanatomie musculaire du membre inférieur** », groupe par groupe, en commençant par les **ischio-jambiers** : texte reformulé d'après une synthèse de démonstration échographique (gardée dans le dépôt privé `radiologic-hub-sources`, jamais copiée ici), visionneuse 3D (Three.js) avec plan de coupe « sonde », schémas de coupe en SVG et emplacements pour les images échographiques de l'auteur, chaque schéma et chaque modèle soumis à validation dans l'administration. **Étape A faite et validée** : 18 modèles 3D exportés de Z-Anatomy (CC BY-SA 4.0) dans `public/models/ischio-jambiers/`. **Étape B faite et relue par l'auteur** (S1, S4, S5 corrigés à sa demande) : 6 schémas de coupe transversale générés par `schemas/ischio-jambiers.js` (S1 insertion ischiatique et « triangle » de Michel Cohen, S2 croisement du semi-membraneux sous le tendon conjoint, S3 membrane du semi-membraneux, S4 tiers moyen et ses 4 repères conjonctifs, S5 « cerise sur le gâteau », S6 tendon distal du biceps fémoral) : même légende partout (muscle gris, conjonctif blanc, nerf jaune, artère rouge, veine bleue, os et ombre acoustique), repères M / L et S / P, sonde et niveau de coupe, médial à gauche par défaut avec inversion gauche / droite, étiquettes en texte (numérotées sur téléphone) ; incertitudes listées dans `cours/ischio-jambiers/A-VERIFIER.md`. Aucune page ne les affiche encore. Étape suivante : page de cours, visionneuse et validation (C).
+Module « **Échoanatomie musculaire du membre inférieur** », groupe par groupe ; premier groupe : les **ischio-jambiers**. Page de cours (texte reformulé d'après une synthèse de démonstration gardée dans le dépôt privé `radiologic-hub-sources`), **visionneuse 3D** avec sonde mobile, **6 schémas de coupe** et emplacements pour les **images échographiques de l'auteur**, bloc « Source / crédits ». **Rien n'est montré aux élèves sans l'approbation de l'auteur** dans `cours-admin.html` — voir la [section dédiée](#cours-déchoanatomie-validation-par-lauteur). Carte « Cours · Échographie » dans l'onglet Ostéo-articulaire des Fiches rapides (page non indexée tant que le cours est en préparation).
 
 ### Mentions légales (`mentions-legales.html`)
 
-Éditeur, hébergement, **protection des données personnelles** (loi organique n° 2004-63, INPDP ; ancre `#donnees`, liée depuis la case de consentement des inscriptions), données de la Communauté (`#communaute`) et **conditions d'utilisation** de la Communauté (`#conditions`, liées depuis la case de consentement du profil). Les passages entre crochets sont à compléter. Lien dans le pied de page de toutes les pages.
+Éditeur, hébergement, **protection des données personnelles** (loi organique n° 2004-63, INPDP ; ancre `#donnees`, liée depuis la case de consentement des inscriptions), données de la Communauté (`#communaute`) et **conditions d'utilisation** de la Communauté (`#conditions`, liées depuis la case de consentement du profil). Les passages entre crochets sont à compléter. Lien dans le pied de page de toutes les pages. Propriété intellectuelle : exceptions sous licence libre (modèles 3D des cours en CC BY-SA 4.0, dérivés de Z-Anatomy / BodyParts3D ; three.js en MIT ; images échographiques propriété de leur auteur).
 
 ---
 
@@ -292,6 +293,26 @@ Annuaire d'articles d'imagerie **en accès libre**. **Le site n'héberge pas les
 
 ---
 
+## Cours d'échoanatomie (validation par l'auteur)
+
+Premier module : **ischio-jambiers** (`cours/ischio-jambiers.html`). Les autres groupes musculaires viendront après validation de celui-ci.
+
+| Élément | Détail |
+|---|---|
+| **Texte** | Squelette conjonctif (et classification de Garrett), installation du patient, repères par tiers (insertion ischiatique, tiers moyen, tiers distal), tableau des 4 repères conjonctifs du tiers moyen avec leur intérêt pathologique, messages clés, sources. Reformulé d'après la synthèse de la démonstration du Dr Brasseur (jamais recopiée ; le PDF reste dans le dépôt privé). |
+| **Modèle 3D** | Visionneuse three.js 0.170.0 (hébergée dans `vendor/`, licence MIT), chargée **au clic sur « Voir en 3D » sur téléphone**, à l'arrivée de la section à l'écran sur ordinateur. Rotation, zoom, déplacement ; **surbrillance** de la structure choisie (clic sur le modèle, l'étiquette ou la liste) ; étiquettes cliquables ; os, nerfs, vaisseaux et muscles de contexte affichables ou non ; vues postérieure, latérale et « de la coupe ». **Sonde** : plan transversal mobile (curseur de l'ischion au genou), **3 positions prédéfinies** (tiers proximal, moyen, distal) et accès direct à chaque schéma ; le modèle est coupé sous la sonde, la section est remplie et étiquetée, et la vue de la coupe est orientée comme les schémas (superficiel en haut, latéral à droite). Le schéma de coupe correspondant s'affiche à côté. Bloc d'attribution Z-Anatomy / BodyParts3D toujours visible. |
+| **Schémas et images** | Les 6 schémas de `schemas/ischio-jambiers.js`, regroupés par tiers, avec la légende commune, étiquettes en texte (ordinateur) ou numérotées avec leur liste (téléphone), bouton **« Inverser gauche/droite »**. À côté de chaque schéma : l'**image échographique de l'auteur** avec ses étiquettes superposées (masquables) ; le schéma prend l'orientation de l'image (médial à gauche ou à droite). |
+| **Validation** | Chaque élément — texte (empreinte du contenu des blocs `data-texte`), 6 schémas (version de `schemas/ischio-jambiers.js`), 18 modèles (version du `manifest.json`), images (révision) — est **À valider** par défaut ; l'auteur l'**approuve** ou le marque **À corriger** avec un commentaire. Il n'est visible des élèves que s'il est approuvé **dans sa version actuelle** : toute modification le remet « à valider ». Texte non approuvé : page « Cours en préparation ». `?apercu=admin` : l'auteur voit tout, avec les statuts et les emplacements d'image vides. |
+| **Administration** (`cours-admin.html`, non indexée) | Même compte administrateur que les autres modules. Résumé des statuts, liens vers la vue élève et l'aperçu complet ; texte ; schémas (vignette, ce qui est représenté, incertitudes, relecture) ; modèles 3D (taille, modifications, « voir en 3D », approbation groupée) ; **images** : envoi (JPEG, PNG ou WebP, **réduites à 1 600 px et réenregistrées sans métadonnées**), orientation, étiquettes à **faire glisser** sur l'image (reprise possible des étiquettes du schéma) ; bloc **« Source / crédits »**. |
+| **Base** | Migration `20261012180000_cours.sql` : `cours_validations`, `cours_images` (révision augmentée à chaque modification), `cours_reglages`, stockage `cours-images` (chemins aléatoires). Visiteurs : éléments approuvés sans le commentaire de l'auteur (effacé à l'approbation), images approuvées dans leur révision actuelle, crédits ; écriture réservée à l'administrateur. |
+| **Mode démonstration** | Tant que `remplacements/config.js` est vide : validations, images et crédits gardés dans le navigateur de l'auteur ; les élèves (autres navigateurs) ne voient que « Cours en préparation ». |
+
+**Ajouter un groupe musculaire** : exporter ses modèles avec `scripts/export_muscles.py` (liste `STRUCTURES`), écrire ses schémas dans un module comme `schemas/ischio-jambiers.js`, copier la page et changer `data-cours` / `data-modeles`.
+
+**Fichiers** : `cours/ischio-jambiers.html` (page), `cours-admin.html` (administration) ; `cours/noyau.js` (catalogue, versions, visibilité, plan de coupe, étiquettes), `cours/api-demo.js`, `cours/api-supabase.js`, `cours/api.js` (source de données, préparation des images), `cours/cours.js` (page), `cours/visionneuse.js` (module 3D), `cours/admin.js`, `cours/cours.css` ; `cours/ischio-jambiers/A-VERIFIER.md` (généré).
+
+---
+
 ## Charte graphique
 
 Reprise des visuels RadiologicHub.
@@ -402,7 +423,7 @@ radiologic-hub/
 │   ├── rp.css              Styles du module et des mentions légales
 │   └── INSTALLATION.md     Mise en service (Supabase, Brevo, secrets, planification, administrateur)
 ├── supabase/
-│   ├── migrations/         Remplacements (rp_*), Communauté (rs_* : membres, cas, messagerie, notifications, signalements, stockage, temps réel), droits explicites (GRANT des fonctions des règles d'accès), Bibliothèque (bib_*)
+│   ├── migrations/         Remplacements (rp_*), Communauté (rs_* : membres, cas, messagerie, notifications, signalements, stockage, temps réel), droits explicites (GRANT des fonctions des règles d'accès), Bibliothèque (bib_*), Cours (cours_* : validations, images, crédits, stockage cours-images)
 │   ├── functions/          Fonctions serveur rp-agent, rp-lien, rp-taches (+ _shared, généré en partie ; _shared/reseau.ts : rappels des messages non lus)
 │   ├── sql/planification.sql  Tâche planifiée (pg_cron) et déclaration de l'administrateur
 │   └── config.toml         Réglages des fonctions
@@ -412,7 +433,9 @@ radiologic-hub/
 │   ├── export_muscles.py         Blender sans interface : extrait, coupe, simplifie et exporte les modèles 3D d'un groupe (.glb compressés meshopt + manifest.json)
 │   ├── rendu_apercus.py          Blender sans interface : aperçu PNG de chaque export + vues d'ensemble
 │   └── a_verifier.js             Génère cours/ischio-jambiers/A-VERIFIER.md (représenté, versions, incertitudes de chaque schéma et modèle)
-├── cours/ischio-jambiers/  Cours d'échoanatomie (en préparation) : A-VERIFIER.md (généré)
+├── cours/                  Cours d'échoanatomie : ischio-jambiers.html (page), noyau.js, api*.js, cours.js, visionneuse.js (3D), admin.js, cours.css ; ischio-jambiers/A-VERIFIER.md (généré)
+├── cours-admin.html        Cours : validation de l'auteur (statuts, images et étiquettes, crédits)
+├── vendor/three-0.170.0/   Moteur 3D three.js (module, OrbitControls, GLTFLoader, décodeur meshopt) et sa licence MIT
 ├── public/models/<groupe>/ Modèles 3D dérivés de Z-Anatomy (.glb, manifest.json) avec leur LICENSE (CC BY-SA 4.0, ce dossier seulement)
 ├── assets-sources/         NON VERSIONNÉ (.gitignore) : pack Z-Anatomy, exports non compressés, aperçus PNG
 ├── tests/                  Tests unitaires (node --test), cas fictifs uniquement ; tests/sql : base, liste des droits (droits-attendus.txt) et intégration ; tests/fixtures : images fictives porteuses de métadonnées
@@ -474,13 +497,13 @@ Les règles de calcul du suivi oncologique, les recommandations Fleischner, la c
 
 ```
 npm test                  # ou : node --test tests/*.test.js
-npm run test:sql          # schémas Supabase des Remplacements, de la Communauté et de la Bibliothèque sur un PostgreSQL local (droits d'accès, liste des GRANT)
+npm run test:sql          # schémas Supabase des Remplacements, de la Communauté, de la Bibliothèque et des cours sur un PostgreSQL local (droits d'accès, liste des GRANT)
 npm run test:bib-reel     # Bibliothèque : import réel de 5 DOI (réseau nécessaire ; ignoré sinon, rien n'est simulé)
 npm run test:integration  # agent + base réelle (PostgreSQL + PostgREST, sous Deno) — variables POSTGREST_BIN et DENO_BIN
 npm run backend:preparer  # recopie le noyau et les modèles dans supabase/functions/_shared (avant déploiement)
 ```
 
-Cours d'échoanatomie : `tests/ischio-jambiers.test.js` (9 tests) vérifie les 6 coupes (repères demandés présents dans chacune, même légende partout, M / L / S / P, médial à gauche par défaut et inversion sans retourner le texte, étiquettes dans l'image et sans chevauchement, version téléphone numérotée, version stable qui change à la moindre modification) et que `cours/ischio-jambiers/A-VERIFIER.md` est à jour.
+Cours d'échoanatomie : `tests/ischio-jambiers.test.js` (10 tests) vérifie les 6 coupes (repères demandés présents dans chacune, même légende partout, M / L / S / P, médial à gauche par défaut et inversion sans retourner le texte, étiquettes dans l'image et sans chevauchement, version téléphone numérotée, version stable qui change à la moindre modification) et que `cours/ischio-jambiers/A-VERIFIER.md` est à jour. `tests/cours.test.js` (7 tests) : catalogue des éléments et versions, visibilité (seulement approuvé dans la version actuelle, « modifié depuis l'approbation », à corriger), version du texte, plan de coupe (hauteur ↔ altitude, schéma le plus proche parmi les approuvés, tiers), étiquettes des images (bornes, 30 au plus), mode démonstration (lectures des élèves, révisions d'image, crédits), fichiers de la page (moteur 3D, licences, attribution, « Source / crédits »). `tests/sql/rls-cours.js` (8 vérifications) : rien de visible avant approbation, commentaire jamais lisible des élèves, image invisible tant que sa révision actuelle n'est pas approuvée, écriture réservée à l'auteur, contraintes, stockage. Parcours vérifié dans Chromium (33 vérifications, 1366 px et 390 px) : élève sans rien d'approuvé, approbations, visionneuse (étiquettes, surbrillance, os masqués, positions prédéfinies, curseur, inversion), « à corriger », envoi d'image avec étiquette glissée et orientation, approbation puis modification, crédits, aperçu de l'auteur, téléphone (3D au clic, schémas numérotés, sans débordement).
 
 Coroscanner : `tests/cadrads.test.js` couvre les pontages (greffons, état gradé, G, tracés simple / séquentiel / en Y, pointillés si occlus) et CAD-RADS 2.0 (catégories 0 à 5, 4B par le tronc commun ou trois territoires, N avant ou après la charge en plaque, P1-P4 par score calcique ou nombre de segments, ordre des modificateurs, conduite selon P et ischémie), les classes d'Agatston et le schéma coronaire (segments présents selon la dominance, cohérence schéma / règles, SVG valide, M2 rattachée à la circonflexe). Outil vérifié dans Chromium (1366 px et 390 px, sans débordement) : formule chargée, outil suggéré, clic sur chacun des segments dans les trois dominances, texte inséré.
 
@@ -504,7 +527,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 ## À faire / points en attente
 
-- [ ] **Cours d'échoanatomie — ischio-jambiers** : relire les 6 schémas de coupe et cocher les incertitudes de `cours/ischio-jambiers/A-VERIFIER.md` (forme du « triangle » de Michel Cohen, lecture de la structure en T, position de la « cerise », diamètres approximatifs des nerfs…) ; aligner l'orientation sur les images échographiques de l'auteur ; étape C (page de cours, visionneuse 3D, plan de coupe, emplacement « Source / crédits » à remplir par l'auteur, validation dans l'administration, fichier des incertitudes) ; puis les autres groupes musculaires. Régénérer les modèles : `bash scripts/telecharger_z_anatomy.sh`, puis `blender -b --disable-autoexec assets-sources/z-anatomy/Z-Anatomy/Startup.blend -P scripts/export_muscles.py` (nécessite `python3-numpy` pour l'export glTF de Blender et Node.js pour la compression), puis `blender -b --factory-startup -P scripts/rendu_apercus.py -- ischio-jambiers`.
+- [ ] **Cours d'échoanatomie — ischio-jambiers** : dans `cours-admin.html`, relire et **approuver** le texte, les 6 schémas et les 18 modèles (ou les marquer « À corriger ») ; envoyer les **images échographiques** (une par schéma, anonymisées) et placer leurs étiquettes ; remplir **« Source / crédits »** ; cocher les incertitudes de `cours/ischio-jambiers/A-VERIFIER.md`. Pour que les élèves voient le cours : mettre Supabase en service et exécuter la migration `20261012180000_cours.sql` (en démonstration, les validations restent dans le navigateur de l'auteur). À la publication : retirer « En préparation » de la carte des Fiches rapides et la balise `noindex` de la page. Ensuite : les autres groupes musculaires (mollet, adducteurs, quadriceps). Régénérer les modèles : `bash scripts/telecharger_z_anatomy.sh`, puis `blender -b --disable-autoexec assets-sources/z-anatomy/Z-Anatomy/Startup.blend -P scripts/export_muscles.py` (nécessite `python3-numpy` pour l'export glTF de Blender et Node.js pour la compression), puis `blender -b --factory-startup -P scripts/rendu_apercus.py -- ischio-jambiers`.
 
 - [ ] **Bibliothèque** : revoir les tags, niveaux et Essentiels d'exemple du mode démonstration ; étapes 3 à 6 (file « À valider », veille hebdomadaire, liens croisés avec les comptes rendus, liens morts) ; objectif du test : 50 à 100 articles publiés dont 10 Essentiels.
 
@@ -538,6 +561,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 12/10/2026 | **Cours d'échoanatomie — ischio-jambiers, étape C** : page `cours/ischio-jambiers.html` (squelette conjonctif et classification de Garrett, installation, repères par tiers, tableau des 4 repères conjonctifs du tiers moyen, messages clés, sources et bloc « Source / crédits »), **visionneuse 3D** three.js 0.170.0 hébergée dans `vendor/` (chargement au clic sur téléphone, surbrillance, étiquettes cliquables, os / nerfs / vaisseaux / contexte, sonde mobile avec 3 positions prédéfinies, coupe du modèle avec section remplie et schéma correspondant, attribution Z-Anatomy / BodyParts3D), schémas avec inversion gauche / droite et **images de l'auteur** à étiquettes superposées ; **validation par l'auteur** (`cours-admin.html`) : rien de visible des élèves sans approbation de la version actuelle de chaque élément ; migration `20261012180000_cours.sql` (validations, images, crédits, stockage) ; repères de hauteur ajoutés au `manifest.json` (fichiers .glb inchangés) ; carte « Cours · Échographie » dans les Fiches rapides (Ostéo-articulaire) ; mentions légales (licences des modèles 3D et de three.js) ; guide d'installation (5ᵉ migration) ; tests unitaires, SQL et navigateur |
 | 12/10/2026 | **Cours d'échoanatomie — ischio-jambiers, schémas relus par l'auteur** : S1 nerf sciatique au contact du bord latéral du tendon conjoint (complexe d'insertion décalé sur le versant postéro-latéral de l'ischion), S4 cloison sigmoïde traversant tout le semi-tendineux d'un bord à l'autre, S5 tendon du semi-tendineux au centre du semi-membraneux ; S2, S3, S6 validés ; relecture notée dans `A-VERIFIER.md` ; test des trois corrections |
 | 12/10/2026 | **Cours d'échoanatomie — ischio-jambiers, étape B** : 6 schémas de coupe transversale en SVG (`schemas/ischio-jambiers.js`) — insertion ischiatique et « triangle » de Michel Cohen, croisement du semi-membraneux sous le tendon conjoint, membrane du semi-membraneux, tiers moyen (cloison sigmoïde du semi-tendineux, cloisons frontales du semi-membraneux et de la longue portion, structure en T avec le nerf sciatique à sa pointe), « cerise sur le gâteau », tendon distal du biceps fémoral et nerf fibulaire commun ; légende commune, repères M / L et S / P, sonde et niveau de coupe, médial à gauche par défaut et inversion gauche / droite, étiquettes en texte ou numérotées (téléphone), version par schéma ; `cours/ischio-jambiers/A-VERIFIER.md` généré par `scripts/a_verifier.js` ; 9 tests (`tests/ischio-jambiers.test.js`). Pas encore affichés sur le site |
 | 12/10/2026 | **Cours d'échoanatomie — ischio-jambiers, modèles 3D validés** avec ajustements : nerfs calés sur des diamètres d'affichage réalistes approximatifs (sciatique 11 mm au tiers moyen de la cuisse, tibial 5 mm et fibulaire commun 3,5 mm dans la fosse poplitée ; diamètres mesurés après export et notés dans `manifest.json`), simplification ramenée à 20 % pour la longue portion du biceps et le semi-membraneux (semi-tendineux et courte portion intacts), fibula coupée au niveau du tibia avec la tête fibulaire ; 0,32 Mo au total |

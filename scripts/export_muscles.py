@@ -318,6 +318,13 @@ def main():
     mn = Vector((min(p.x for p in pts), min(p.y for p in pts), min(p.z for p in pts)))
     mx = Vector((max(p.x for p in pts), max(p.y for p in pts), max(p.z for p in pts)))
     centre = (mn + mx) / 2
+    # Repères de hauteur pour le plan de coupe de la visionneuse (repère glTF : y = z du pack - centre)
+    coxal = next(o['obj'] for o in objets if o['id'] == 'os-coxal')
+    tibia_obj = next(o['obj'] for o in objets if o['id'] == 'tibia-proximal')
+    reperes = dict(
+        ischion_y=round(min(v.co.z for v in coxal.data.vertices) - centre.z, 5),
+        plateau_tibial_y=round(max(v.co.z for v in tibia_obj.data.vertices) - centre.z, 5),
+    )
     for o in objets:
         o['obj'].data.transform(Matrix.Translation(-centre))
         o['obj'].data.update()
@@ -357,6 +364,7 @@ def main():
         axes='glTF : +Y vers le haut, +Z vers l\'avant du patient, -X vers le côté latéral (membre droit)',
         centre_source=[round(c, 5) for c in centre],
         coupe_jambe='%.0f cm sous le sommet du tibia' % (JAMBE_GARDEE * 100),
+        reperes=reperes,
         source=dict(nom='Z-Anatomy', depot='https://github.com/Z-Anatomy/Models-of-human-anatomy',
                     commit=Z_ANATOMY_COMMIT, licence='CC BY-SA 4.0',
                     origine='BodyParts3D, The Database Center for Life Science (CC BY-SA 2.1 Japon)'),

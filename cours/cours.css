@@ -1,0 +1,172 @@
+/* =========================================================
+   RadiologicHub — Cours d'échoanatomie (page élève + administration)
+   S'appuie sur styles.css et fiche.css (charte, cartes, sommaire).
+   ========================================================= */
+
+/* Un élément masqué l'est vraiment, quelle que soit sa mise en page (validation de l'auteur) */
+.cours-page [hidden], .cours-admin-page [hidden] { display: none !important; }
+
+/* ---------- Statuts de validation ---------- */
+.cours-statut { display: inline-block; padding: .2em .75em; border-radius: 999px; font: 800 .68rem var(--font); letter-spacing: .06em; text-transform: uppercase; vertical-align: middle; border: 2px solid currentColor; white-space: nowrap; }
+.cours-statut.is-a_valider { color: #7a5000; background: rgba(242, 171, 47, .25); }
+.cours-statut.is-approuve { color: var(--k-sign); background: rgba(31, 138, 91, .14); }
+.cours-statut.is-a_corriger { color: var(--k-grave); background: rgba(168, 23, 45, .12); }
+.cours-statut.is-modifie { color: var(--purple); background: rgba(107, 13, 140, .1); }
+.cours-statut-texte { margin: 0 0 18px; font-weight: 700; }
+
+.cours-barre { position: sticky; top: var(--header-h); z-index: 20; background: var(--ink); color: #fff; padding: 10px 0; font-size: .88rem; }
+.cours-barre .container { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; justify-content: space-between; }
+.cours-barre p { margin: 0; }
+.cours-barre .btn-outline { color: #fff; border-color: #fff; }
+
+.cours-attente { padding: 40px 16px 90px; max-width: 760px; }
+.cours-attente h2 { margin-bottom: .5em; }
+.cours-erreur { color: var(--k-grave); font-weight: 700; }
+.lien-bouton { border: 0; background: none; padding: 0; font: 700 .85rem var(--font); color: var(--royal); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+
+/* ---------- Texte du cours ---------- */
+.cours-classes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.cours-classes article { position: relative; padding: 18px 18px 16px 72px; border-radius: 18px; background: var(--card); border: 3px solid var(--c); }
+.cours-classes b { position: absolute; left: 14px; top: 16px; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: var(--c); color: #fff; font-weight: 900; }
+.cours-classes h4 { margin: 0 0 .3em; font-size: .95rem; font-weight: 900; }
+.cours-classes p { margin: 0; font-size: .9rem; }
+.cours-tiers .tile { font-size: .93rem; }
+.cours-renvoi { margin: .6em 0 0; font-weight: 800; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+
+.cours-table { border-radius: 18px; overflow: hidden; border: 4px solid var(--ink); box-shadow: 10px 10px 0 color-mix(in srgb, var(--c) 45%, transparent); background: #fff; }
+.cours-table-tete, .cours-table-ligne { display: grid; grid-template-columns: 1fr 1.5fr 1.4fr; }
+.cours-table-tete span { padding: 10px 14px; background: var(--ink); color: #fff; font-weight: 900; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
+.cours-table-ligne span { padding: 14px; border-top: 2px solid rgba(0, 0, 0, .08); font-size: .92rem; }
+.cours-table-ligne span:first-child { font-weight: 900; background: color-mix(in srgb, var(--c) 10%, #fff); }
+.cours-table-ligne small { font-weight: 600; color: var(--muted); }
+
+.cours-credits h3 { margin: 0 0 .4em; font-size: 1rem; font-weight: 900; }
+.cours-credits-texte { margin: 0; white-space: pre-line; }
+.cours-credits.is-vide .cours-credits-texte { color: var(--muted); font-style: italic; }
+
+/* ---------- Visionneuse 3D ---------- */
+.v3d { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 18px; align-items: start; }
+.v3d-scene { position: relative; aspect-ratio: 4 / 3.4; border: 4px solid var(--ink); border-radius: var(--radius); background: #f4f3ef; overflow: hidden; box-shadow: 10px 10px 0 color-mix(in srgb, var(--c) 45%, transparent); }
+@media (min-width: 1001px) { .v3d-scene { position: sticky; top: calc(var(--header-h) + 16px); } }
+.v3d-canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+.v3d-canvas:active { cursor: grabbing; }
+.v3d-attente { position: absolute; inset: 0; display: grid; place-content: center; gap: 14px; padding: 24px; text-align: center; background: radial-gradient(circle at 50% 40%, #fff 0, #ecebe5 70%); }
+.v3d-attente p { margin: 0; max-width: 420px; }
+.v3d-progression { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); margin: 0; padding: 10px 16px; border-radius: 999px; background: var(--ink); color: #fff; font-weight: 700; font-size: .85rem; z-index: 2; }
+.v3d-etiquettes { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.v3d-etiquette { position: absolute; left: 0; top: 0; pointer-events: auto; padding: 3px 9px; border-radius: 999px; border: 2px solid var(--ink); background: #fff; color: var(--ink); font: 800 .7rem var(--font); white-space: nowrap; cursor: pointer; box-shadow: 0 2px 0 rgba(0, 0, 0, .25); }
+.v3d-etiquette::after { content: ""; position: absolute; left: 50%; bottom: -7px; width: 2px; height: 6px; background: var(--ink); transform: translateX(-50%); }
+.v3d-etiquette.v3d-nerf { background: #fff3c4; }
+.v3d-etiquette.is-active { background: var(--ink); color: #fff; }
+.v3d-panneau { display: grid; gap: 12px; font-size: .88rem; }
+.v3d-bloc { padding: 12px 14px; border-radius: 16px; background: var(--card); border: 2px solid rgba(0, 0, 0, .08); }
+.v3d-bloc p { margin: 0 0 .4em; }
+.v3d-titre { font-weight: 900; font-size: .7rem !important; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.v3d-bascules { display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.v3d-bascule { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; cursor: pointer; }
+.v3d-vues, .v3d-tiers-liste, .v3d-puces, .v3d-structures { display: flex; flex-wrap: wrap; gap: 6px; }
+.v3d-panneau button:not(.lien-bouton) { padding: .4em .85em; border-radius: 999px; border: 2px solid var(--ink); background: #fff; font: 800 .72rem var(--font); cursor: pointer; }
+.v3d-panneau button.is-active { background: var(--ink); color: #fff; }
+.v3d-tiers-liste button { border-color: var(--amber) !important; }
+.v3d-tiers-liste button.is-active { background: var(--amber) !important; color: var(--ink) !important; }
+.v3d-structures .v3d-nerf { border-color: #c79a00 !important; }
+.v3d-structures .v3d-artere { border-color: #d8342e !important; }
+.v3d-structures .v3d-veine { border-color: #3a66d8 !important; }
+.v3d-structures .v3d-os, .v3d-structures .v3d-contexte { border-color: #9a948a !important; }
+.v3d-curseur { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px; margin: 10px 0; font-weight: 700; font-size: .75rem; }
+.v3d-curseur input { width: 100%; accent-color: var(--amber); }
+.v3d-aide { color: var(--muted); font-size: .8rem; }
+.v3d-schema .v3d-coupe { margin: 6px 0 0; }
+.v3d-coupe-outils { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px; font-weight: 800; font-size: .8rem; }
+.v3d-attribution { margin: 18px 0 0; padding: 12px 16px; border-left: 4px solid var(--c); background: var(--card); border-radius: 0 14px 14px 0; font-size: .82rem; }
+.v3d-attribution a { font-weight: 700; }
+
+/* ---------- Schémas de coupe et images ---------- */
+.coupe-legende { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 0 0 6px; padding: 12px 16px; border-radius: 16px; background: var(--card); font-size: .82rem; font-weight: 700; }
+.coupe-legende li { display: inline-flex; align-items: center; gap: 7px; }
+.pastille-legende { display: inline-block; width: 22px; height: 14px; border-radius: 4px; background: #80868f; border: 2px solid #e6e9ec; }
+.pastille-legende.is-conjonctif { background: #2b2e34; box-shadow: inset 0 0 0 3px #2b2e34, inset 0 -5px 0 0 #f5f6f8; border-color: #2b2e34; }
+.pastille-legende.is-nerf { background: rgba(245, 197, 24, .35); border-color: #f5c518; border-radius: 50%; }
+.pastille-legende.is-artere { background: #e5484d; border-color: #e5484d; border-radius: 50%; width: 14px; }
+.pastille-legende.is-veine { background: #3e6ff2; border-color: #3e6ff2; border-radius: 50%; }
+.pastille-legende.is-os { background: #060708; border-color: #060708; box-shadow: inset 0 3px 0 0 #fff; }
+.pastille-legende.is-graisse { background: #2f3238; border-color: #596069; }
+.pastille-legende.is-repere { background: transparent; border: 2px dashed #f5a524; }
+.coupe-orientation { margin: 0 0 26px; font-size: .82rem; color: var(--muted); }
+.coupe { margin: 0 0 34px; scroll-margin-top: calc(var(--header-h) + 20px); }
+.coupe-outils { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: flex-end; margin-bottom: 8px; }
+.coupe-grille { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+.coupe-grille.is-seul { grid-template-columns: minmax(0, 1fr); }
+.coupe-schema, .coupe-image, .v3d-coupe { margin: 0; }
+.coupe-svg { border: 3px solid var(--ink); border-radius: 18px; overflow: hidden; background: #fff; }
+.coupe-svg svg { display: block; width: 100%; height: auto; }
+.coupe-liste { margin: 10px 0 0; padding-left: 1.8em; font-size: .86rem; columns: 2; column-gap: 24px; }
+.coupe-liste li { break-inside: avoid; margin: .2em 0; }
+.v3d-coupe .coupe-liste { columns: 1; font-size: .8rem; }
+
+.echo { position: relative; border: 3px solid var(--ink); border-radius: 18px; overflow: hidden; background: #000; }
+.echo img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.echo-etiquettes { position: absolute; inset: 0; pointer-events: none; }
+.echo-etiquette { position: absolute; transform: translate(-6px, -50%); display: inline-flex; align-items: center; gap: 6px; max-width: 60%; padding: 2px 8px 2px 0; color: #fff; font: 700 .72rem/1.25 var(--font); text-shadow: 0 1px 2px #000, 0 0 4px #000; }
+.echo-etiquette i { flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--amber); border: 2px solid #fff; box-shadow: 0 0 0 1px #000; }
+.sans-etiquettes .echo-etiquettes { display: none; }
+.coupe-image figcaption { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; margin-top: 8px; font-size: .8rem; color: var(--muted); }
+.echo-vide { display: grid; place-content: center; min-height: 220px; padding: 20px; border: 3px dashed var(--muted); border-radius: 18px; text-align: center; color: var(--muted); font-size: .88rem; }
+.echo-vide p { margin: .3em 0; }
+
+/* ---------- Administration ---------- */
+.adm-demo { margin: 16px 0 0; padding: 10px 14px; max-width: 760px; border: 2px dashed rgba(0, 0, 0, .3); border-radius: 14px; font-size: .84rem; color: var(--muted); }
+.adm-section { margin: 0 0 40px; }
+.adm-section > h2 { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-size: 1.2rem; margin-bottom: 14px; }
+.adm-resume { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+.adm-liens { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 26px; }
+.adm-liste { display: grid; gap: 12px; }
+.adm-el { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px 18px; padding: 14px 16px; border-radius: 16px; background: var(--card); border: 2px solid rgba(0, 0, 0, .08); }
+.adm-el h3 { margin: 0; font-size: .98rem; font-weight: 900; }
+.adm-el .adm-meta { margin: 4px 0 0; font-size: .78rem; color: var(--muted); }
+.adm-el .adm-commentaire { margin: 6px 0 0; font-size: .85rem; color: var(--k-grave); font-weight: 600; }
+.adm-actions { display: flex; flex-wrap: wrap; gap: 6px; align-items: flex-start; justify-content: flex-end; }
+.adm-actions .btn { white-space: nowrap; }
+.adm-correction { grid-column: 1 / -1; display: grid; gap: 8px; }
+.adm-correction textarea, .adm-credits textarea { width: 100%; min-height: 70px; padding: 10px 12px; border-radius: 12px; border: 2px solid var(--ink); font: 500 .9rem var(--font); }
+.adm-vignette { width: 180px; border: 2px solid var(--ink); border-radius: 10px; overflow: hidden; background: #fff; }
+.adm-vignette svg { display: block; width: 100%; height: auto; }
+.adm-el details { grid-column: 1 / -1; font-size: .85rem; }
+.adm-el details summary { cursor: pointer; font-weight: 700; }
+.adm-el details ul { margin: .4em 0; padding-left: 1.3em; }
+.adm-image { padding: 16px; border-radius: 18px; background: var(--card); border: 2px solid rgba(0, 0, 0, .08); }
+.adm-image-tete { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.adm-image-tete h3 { margin: 0; font-size: .98rem; font-weight: 900; }
+.adm-image-corps { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.adm-editeur .echo { touch-action: none; }
+.adm-editeur .echo-etiquettes { pointer-events: auto; }
+.adm-editeur .echo-etiquette { cursor: grab; pointer-events: auto; user-select: none; }
+.adm-editeur .echo-etiquette.is-active { color: var(--amber); }
+.adm-champs { display: grid; gap: 10px; font-size: .88rem; }
+.adm-champs label { display: grid; gap: 4px; font-weight: 700; }
+.adm-champs input[type="text"], .adm-champs select { padding: 7px 10px; border-radius: 10px; border: 2px solid var(--ink); font: 500 .88rem var(--font); }
+.adm-etiq { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; }
+.adm-aide { margin: 0; font-size: .8rem; color: var(--muted); }
+.adm-msg { margin: 8px 0 0; font-weight: 700; font-size: .85rem; }
+.adm-msg.is-erreur { color: var(--k-grave); }
+.adm-msg.is-ok { color: var(--k-sign); }
+
+/* ---------- Téléphone ---------- */
+@media (max-width: 1000px) {
+  .v3d { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .cours-barre { position: static; font-size: .8rem; }
+  .cours-classes { grid-template-columns: 1fr; }
+  .cours-table-tete { display: none; }
+  .cours-table-ligne { grid-template-columns: 1fr; border-top: 3px solid var(--ink); }
+  .cours-table-ligne:first-of-type { border-top: 0; }
+  .cours-table-ligne span[data-l]:not(:first-child)::before { content: attr(data-l); display: block; margin-bottom: 3px; font-size: .64rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .v3d-scene { aspect-ratio: 1 / 1.15; box-shadow: 6px 6px 0 color-mix(in srgb, var(--c) 45%, transparent); }
+  .coupe-grille { grid-template-columns: 1fr; }
+  .coupe-liste { columns: 1; }
+  .adm-el { grid-template-columns: 1fr; }
+  .adm-actions { justify-content: flex-start; }
+  .adm-image-corps { grid-template-columns: 1fr; }
+  .adm-vignette { width: 140px; }
+}
