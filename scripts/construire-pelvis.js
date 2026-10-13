@@ -6,17 +6,24 @@
    TEL QUEL : aucune reformulation, aucune correction ; seuls la mise en
    page, les liens et la navigation sont ajoutés).
 
-     pelvis/00-sommaire.md          → pelvis/index.html            (/pelvis)
-     pelvis/ovaire/00-ovaire.md     → pelvis/ovaire/index.html     (/pelvis/ovaire)
-     pelvis/ovaire/NN-<nom>.md      → pelvis/ovaire/<nom>.html     (/pelvis/ovaire/<nom>)
-     (fiches 09 et 10 + Bosniak)    → pelvis/classifications.html  (/pelvis/classifications)
-     pelvis/sources.md              → pelvis/sources.html          (/pelvis/sources)
-     index de recherche             → pelvis/recherche.js
-     ovaire/schema-demarche-masse.jsx → SVG statique dans la fiche 08
+     pelvis/00-sommaire.md                 → pelvis/index.html                 (/pelvis)
+     pelvis/NN-<chapitre>/00-*.md          → pelvis/<chapitre>/index.html      (/pelvis/<chapitre>)
+     pelvis/NN-<chapitre>/NN-<fiche>.md    → pelvis/<chapitre>/<fiche>.html    (/pelvis/<chapitre>/<fiche>)
+     tableau « Classifications » du sommaire → pelvis/classifications.html     (/pelvis/classifications)
+     pelvis/99-sources.md                  → pelvis/sources.html               (/pelvis/sources)
+     index de recherche                    → pelvis/recherche.js (chargé à la première recherche)
+     01-ovaire/schema-demarche-masse.jsx   → SVG statique à la place de la ligne « *Schéma : …* » de la fiche 08
+
+   Rendu des fiches = composants des fiches rapides (fiche.css, comme la
+   fiche pancréas) : carte « En bref », rangée de puces des sections
+   (collée sous l'en-tête sur téléphone), sections .fsec à pastille, texte
+   en .fcard, **mot clé** → <b>, ==alerte== → badge rouge (mark.k-grave),
+   ligne en gras seule → intertitre (comme « Siège »), > encadré → .callout,
+   tableaux .ftable, Pièges en carte d'alerte, Signes clés en carte verte,
+   « Dans le compte rendu » en check-list.
 
    Lancer : npm run build   (ou : node scripts/construire-pelvis.js)
    Vérifier sans écrire : node scripts/construire-pelvis.js --verifier
-   (sort en erreur si une page n'est pas à jour).
    Les zones de texte repris des fiches sont balisées <!--md--> … <!--/md-->
    (tests/pelvis.test.js vérifie qu'elles reproduisent le Markdown mot pour mot).
    ========================================================= */
@@ -28,7 +35,6 @@ const crypto = require('crypto');
 
 const RACINE = path.join(__dirname, '..');
 const PELVIS = path.join(RACINE, 'pelvis');
-const OVAIRE = path.join(PELVIS, 'ovaire');
 
 /* ---------- Utilitaires ---------- */
 const lire = f => fs.readFileSync(f, 'utf8').replace(/\r\n?/g, '\n');
@@ -37,17 +43,24 @@ const sansAccents = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '');
 const ancre = s => sansAccents(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const empreinte = s => crypto.createHash('sha1').update(s).digest('hex').slice(0, 10);
 const echec = m => { throw new Error(`[pelvis] ${m}`); };
+const ROMAIN = n => [['M', 1000], ['CM', 900], ['D', 500], ['CD', 400], ['C', 100], ['XC', 90], ['L', 50], ['XL', 40], ['X', 10], ['IX', 9], ['V', 5], ['IV', 4], ['I', 1]]
+  .reduce((s, [r, v]) => { while (n >= v) { s += r; n -= v; } return s; }, '');
 
 /* Versions des feuilles et scripts communs : reprises de fiches-rapides.html (mêmes ?v= que le reste du site) */
 const INDEX_FICHES = lire(path.join(RACINE, 'fiches-rapides.html'));
 const version = f => (INDEX_FICHES.match(new RegExp(`${f.replace('.', '\\.')}\\?v=(\\d+)`)) || echec(`version de ${f} introuvable`))[1];
 const V = { styles: version('styles.css'), fiche: version('fiche.css'), ficheJs: version('fiche.js') };
 
+/* Anomalies de la source relevées pendant la construction (signalées, jamais corrigées dans le texte) */
+const ANOMALIES = [];
+let FICHIER_EN_COURS = '';
+
 /* =======================================================
-   Markdown → blocs (titres, paragraphes, listes imbriquées, tableaux)
+   Markdown → blocs : titres, paragraphes, listes imbriquées, tableaux, citations (>)
    ======================================================= */
 const RE_ITEM = /^(\s*)(?:([-*])|(\d+)\.)\s+(.*)$/;
 const RE_TITRE = /^(#{1,3})\s+(.*)$/;
+const RE_CITATION = /^\s*>\s?(.*)$/;
 
 function blocs(md) {
   const L = md.split('\n');
@@ -58,6 +71,12 @@ function blocs(md) {
     if (!l.trim()) { i++; continue; }
     let m;
     if ((m = l.match(RE_TITRE))) { out.push({ type: 'titre', niveau: m[1].length, texte: m[2].trim() }); i++; continue; }
+    if (RE_CITATION.test(l)) {
+      const lignes = [];
+      while (i < L.length && RE_CITATION.test(L[i])) lignes.push(L[i++].match(RE_CITATION)[1]);
+      out.push({ type: 'citation', blocs: blocs(lignes.join('\n')) });
+      continue;
+    }
     if (/^\s*\|/.test(l)) {
       const lignes = [];
       while (i < L.length && /^\s*\|/.test(L[i])) lignes.push(L[i++]);
@@ -71,20 +90,16 @@ function blocs(md) {
       continue;
     }
     const p = [];
-    while (i < L.length && L[i].trim() && !RE_TITRE.test(L[i]) && !/^\s*\|/.test(L[i]) && !RE_ITEM.test(L[i])) p.push(L[i++].trim());
+    while (i < L.length && L[i].trim() && !RE_TITRE.test(L[i]) && !/^\s*\|/.test(L[i]) && !RE_ITEM.test(L[i]) && !RE_CITATION.test(L[i])) p.push(L[i++].trim());
     out.push({ type: 'p', texte: p.join(' ') });
   }
   return out;
 }
 
-/* Anomalies de la source relevées pendant la construction (signalées, jamais corrigées dans le texte) */
-const ANOMALIES = [];
-let FICHIER_EN_COURS = '';
-
 function tableau(lignes) {
   const cellules = l => l.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map(c => c.trim());
   const [tete, separation, ...corps] = lignes;
-  if (!separation || !/^\s*\|?\s*:?-{3,}/.test(separation)) echec(`tableau sans ligne de séparation : ${tete}`);
+  if (!separation || !/^\s*\|?\s*:?-{3,}/.test(separation)) echec(`${FICHIER_EN_COURS} : tableau sans ligne de séparation : ${tete}`);
   const t = { type: 'tableau', tete: cellules(tete), corps: corps.map(cellules), vides: [] };
   t.corps.forEach((r, i) => {
     if (r.length > t.tete.length) echec(`${FICHIER_EN_COURS} : ligne de tableau de ${r.length} cellules (au lieu de ${t.tete.length}) : ${r.join(' | ')}`);
@@ -117,126 +132,159 @@ function arbre(lignes) {
 }
 
 /* =======================================================
-   Rendu en ligne : gras, italique, liens, blocs <?claude block x?>
-   ctx.bloc(id) → HTML du lien (sommaire) ; ctx.lien(texte) → URL d'une fiche nommée
+   Rendu en ligne : **mot clé** → <b>, ==alerte== → badge rouge, *italique*, liens, `code`
+   ctx.lier(texte brut échappé) → texte avec liens vers les fiches (sommaire, renvois « fiche … »)
    ======================================================= */
 function enLigne(t, ctx = {}) {
-  const re = /<\?claude block (\w+)\?>|\[([^\]]+)\]\(([^)\s]+)\)|\*\*(.+?)\*\*|\*(?!\s)(.+?)\*/g;
+  const re = /\[([^\]]+)\]\(([^)\s]+)\)|\*\*\*(.+?)\*\*\*|\*\*(.+?)\*\*|==(.+?)==|\*(?!\s)(.+?)\*|`([^`]+)`/g;
   let h = '', dernier = 0, m;
+  const brut = s => (ctx.lier ? ctx.lier(s) : esc(s));
   while ((m = re.exec(t))) {
-    h += esc(t.slice(dernier, m.index));
-    if (m[1]) h += ctx.bloc ? ctx.bloc(m[1]) : echec(`bloc ${m[1]} non résolu`);
-    else if (m[2]) {
-      const externe = /^https?:/.test(m[3]);
-      h += `<a href="${esc(m[3])}"${externe ? ' target="_blank" rel="noopener"' : ''}>${enLigne(m[2], ctx)}</a>`;
-    } else if (m[4]) h += `<strong>${enLigne(m[4], ctx)}</strong>`;
-    else h += `<em>${enLigne(m[5], ctx)}</em>`;
+    h += brut(t.slice(dernier, m.index));
+    if (m[1]) {
+      const externe = /^https?:/.test(m[2]);
+      h += `<a href="${esc(m[2])}"${externe ? ' target="_blank" rel="noopener"' : ''}>${enLigne(m[1], { ...ctx, lier: null })}</a>`;
+    } else if (m[3]) h += `<b><em>${enLigne(m[3], { ...ctx, lier: null })}</em></b>`;
+    else if (m[4]) h += `<b>${enLigne(m[4], { ...ctx, lier: null })}</b>`;
+    else if (m[5]) h += `<mark class="k-grave">${enLigne(m[5], { ...ctx, lier: null })}</mark>`;
+    else if (m[6]) h += `<em>${enLigne(m[6], ctx)}</em>`;
+    else h += `<code>${esc(m[7])}</code>`;
     dernier = re.lastIndex;
   }
-  return h + esc(t.slice(dernier));
+  return h + brut(t.slice(dernier));
 }
 
-/* Texte brut d'une ligne Markdown (pour l'index de recherche et les descriptions) */
-function texteBrut(t, ctx = {}) {
-  return t.replace(/<\?claude block (\w+)\?>/g, (_, id) => (ctx.nomBloc ? ctx.nomBloc(id) : id))
-    .replace(/\[([^\]]+)\]\([^)\s]+\)/g, '$1').replace(/\*\*(.+?)\*\*/g, '$1').replace(/\*(?!\s)(.+?)\*/g, '$1');
-}
+/* Texte brut d'une ligne Markdown (index de recherche et descriptions) */
+const texteBrut = t => t.replace(/\[([^\]]+)\]\([^)\s]+\)/g, '$1').replace(/\*\*\*(.+?)\*\*\*/g, '$1').replace(/\*\*(.+?)\*\*/g, '$1').replace(/==(.+?)==/g, '$1').replace(/\*(?!\s)(.+?)\*/g, '$1').replace(/`([^`]+)`/g, '$1');
 
-function htmlListe(items, ctx) {
+function htmlListe(items, ctx, classe = 'fl') {
   // Items frères consécutifs de même type → une liste
   let h = '', i = 0;
   while (i < items.length) {
     const ordonne = items[i].ordonne, groupe = [];
     while (i < items.length && items[i].ordonne === ordonne) groupe.push(items[i++]);
     const debut = ordonne && groupe[0].numero !== 1 ? ` start="${groupe[0].numero}"` : '';
-    h += `<${ordonne ? 'ol' : 'ul'}${debut}>`
-      + groupe.map(it => `<li>${ctx.item ? ctx.item(it) : enLigne(it.texte, ctx)}${it.enfants.length ? htmlListe(it.enfants, ctx) : ''}</li>`).join('')
+    h += `<${ordonne ? 'ol' : 'ul'} class="${classe}"${debut}>`
+      + groupe.map(it => `<li>${ctx.item ? ctx.item(it) : enLigne(it.texte, ctx)}${it.enfants.length ? htmlListe(it.enfants, ctx, classe) : ''}</li>`).join('')
       + `</${ordonne ? 'ol' : 'ul'}>`;
   }
   return h;
 }
 
-function htmlTableau(t, ctx) {
+function htmlTableau(t, ctx = {}) {
   const cellule = (c, j) => (ctx.cellule ? ctx.cellule(c, j) : enLigne(c, ctx));
   const vide = (i, j) => (t.vides || []).includes(`${i}:${j}`);
   return `<p class="pv-glisser" aria-hidden="true">Faites glisser le tableau →</p><div class="ftable-wrap pv-table pv-col-${t.tete.length}"><table class="ftable">`
-    + `<thead><tr>${t.tete.map(c => `<th scope="col">${enLigne(c, ctx)}</th>`).join('')}</tr></thead>`
-    + `<tbody>${t.corps.map((r, i) => `<tr>${r.map((c, j) => (vide(i, j) ? `<td class="pv-absente" title="Cellule absente dans la fiche source (à compléter par l'auteur)"></td>`
+    + `<thead><tr>${t.tete.map(c => `<th scope="col">${enLigne(c)}</th>`).join('')}</tr></thead>`
+    + `<tbody>${t.corps.map((r, i) => `<tr>${r.map((c, j) => (vide(i, j) ? '<td class="pv-absente" title="Cellule absente dans la fiche source (à compléter par l\'auteur)"></td>'
       : j === 0 ? `<th scope="row" class="rh">${cellule(c, j)}</th>` : `<td>${cellule(c, j)}</td>`)).join('')}</tr>`).join('')}</tbody>`
-    + `</table></div>`;
+    + '</table></div>';
 }
 
-function htmlBloc(b, ctx) {
-  if (b.type === 'p') return ctx.paragraphe ? ctx.paragraphe(b) : `<p>${enLigne(b.texte, ctx)}</p>`;
-  if (b.type === 'liste') return htmlListe(b.items, ctx);
-  if (b.type === 'tableau') return htmlTableau(b, ctx);
-  if (b.type === 'titre') return `<h${b.niveau + 1}>${enLigne(b.texte, ctx)}</h${b.niveau + 1}>`;
-  return echec(`bloc inconnu ${b.type}`);
+/* Ligne entièrement en gras (éventuellement suivie d'une précision entre parenthèses) = intertitre */
+const RE_INTERTITRE = /^\*\*([^*]+)\*\*(\s*\(.*\))?$/;
+const intertitre = b => b.type === 'p' && RE_INTERTITRE.test(b.texte) && !/^\*\*En bref\*\*/.test(b.texte);
+function htmlIntertitre(b, ctx) {
+  const m = b.texte.match(RE_INTERTITRE);
+  return `<p class="siege-title pv-intertitre"><b>${enLigne(m[1], ctx)}</b>${m[2] ? ` <span class="pv-precision">${enLigne(m[2].trim(), ctx)}</span>` : ''}</p>`;
 }
 
 /* =======================================================
-   Fiches du chapitre Ovaire
+   Fiches : sections, types de section et couleurs fixes
    ======================================================= */
 const RE_BREF = /^\*\*En bref\*\*\s*:\s*/;
-const PLACE_SCHEMA = /^\*Schéma : voir schema-demarche-masse\.jsx \(arbre de décision IRM\)\.\*$/;
+const PLACE_SCHEMA = /^\*Schéma : .*schema-demarche-masse\.jsx.*\*$/;
 
-/* Couleur des sections selon leur titre (code couleur du site) */
-function couleurSection(titre) {
+/* Type de section selon son titre → couleur fixe (identique sur toutes les fiches) et composant */
+function typeSection(titre) {
   const t = sansAccents(titre).toLowerCase();
-  if (/^pieges/.test(t)) return 'var(--k-grave)';
-  if (/^diagnostics? differentiels?/.test(t)) return 'var(--k-ddx)';
-  if (/^conduite a tenir/.test(t)) return 'var(--k-sign)';
-  if (/^dans le compte rendu/.test(t)) return 'var(--plum)';
-  if (/^signes cles|^signes d/.test(t)) return 'var(--k-signo)';
-  if (/^imagerie|^protocole|^aspect selon|^courbes/.test(t)) return 'var(--k-tech)';
-  if (/^a retenir/.test(t)) return 'var(--k-key)';
-  if (/^terrain|^definitions?|^situation|^vascularisation/.test(t)) return 'var(--steel)';
-  if (/^complications|^gravite|^transformation maligne/.test(t)) return 'var(--k-grave)';
-  return 'var(--crimson)';
+  if (/^pieges?\b/.test(t)) return { type: 'pieges', c: 'var(--k-grave)' };
+  if (/^signes? cles?\b/.test(t)) return { type: 'cles', c: 'var(--green)' };
+  if (/^dans le compte rendu/.test(t)) return { type: 'cr', c: 'var(--muted)' };
+  if (/^diagnostics? differentiels?/.test(t)) return { type: 'ddx', c: 'var(--purple)' };
+  if (/^conduite a tenir/.test(t)) return { type: 'cat', c: 'var(--orange)' };
+  if (/^imagerie\b/.test(t)) return { type: 'imagerie', c: 'var(--royal)' };
+  if (/^(terrain|definitions?|clinique|contexte)\b/.test(t)) return { type: 'terrain', c: 'var(--blue)' };
+  if (/^a retenir\b/.test(t)) return { type: 'retenir', c: 'var(--amber)' };
+  if (/^complications?\b/.test(t)) return { type: 'complications', c: 'var(--rose)' };
+  if (/^(technique|protocole|methodes?)\b/.test(t)) return { type: 'technique', c: 'var(--teal)' };
+  return { type: 'autre', c: null };            // couleur d'accent du chapitre
 }
 
-function lireFiches() {
-  const fichiers = fs.readdirSync(OVAIRE).filter(f => /^\d\d-.+\.md$/.test(f) && !f.startsWith('00-')).sort();
-  if (fichiers.length !== 20) echec(`20 fiches attendues dans pelvis/ovaire, ${fichiers.length} trouvées`);
-  return fichiers.map((f, i) => {
-    FICHIER_EN_COURS = `pelvis/ovaire/${f}`;
-    const md = lire(path.join(OVAIRE, f));
-    const B = blocs(md);
-    if (B[0].type !== 'titre' || B[0].niveau !== 1) echec(`${f} : le fichier doit commencer par un titre « # »`);
-    const ib = B.findIndex(b => b.type === 'p' && RE_BREF.test(b.texte));
-    if (ib < 0) echec(`${f} : paragraphe « En bref » introuvable`);
-    const numero = +f.slice(0, 2);
-    if (numero !== i + 1) echec(`${f} : numérotation interrompue`);
-    // Sections : contenu avant le premier « ## » (hors titre et En bref), puis une section par « ## »
-    const sections = [];
-    let cur = { titre: null, blocs: [] };
-    B.forEach((b, j) => {
-      if (j === 0 || j === ib) return;
-      if (b.type === 'titre' && b.niveau === 2) { sections.push(cur); cur = { titre: b.texte, blocs: [] }; return; }
-      cur.blocs.push(b);
+/* Couleur d'accent de chaque chapitre (carte « En bref », sections sans type) */
+const ACCENTS = ['var(--crimson)', 'var(--plum)', 'var(--teal)', 'var(--rose)', 'var(--purple)', 'var(--red)', 'var(--cornflower)', 'var(--gold)', 'var(--steel)', 'var(--slate)'];
+
+function lireFiche(chemin, fichier) {
+  FICHIER_EN_COURS = path.relative(RACINE, chemin);
+  const B = blocs(lire(chemin));
+  if (B[0].type !== 'titre' || B[0].niveau !== 1) echec(`${FICHIER_EN_COURS} : le fichier doit commencer par un titre « # »`);
+  const ib = B.findIndex(b => b.type === 'p' && RE_BREF.test(b.texte));
+  if (ib !== 1) echec(`${FICHIER_EN_COURS} : paragraphe « En bref » attendu juste après le titre`);
+  const sections = [];
+  let cur = { titre: null, blocs: [] };
+  B.slice(2).forEach(b => {
+    if (b.type === 'titre' && b.niveau === 2) { sections.push(cur); cur = { titre: b.texte, blocs: [] }; return; }
+    cur.blocs.push(b);
+  });
+  sections.push(cur);
+  const ids = new Set();
+  sections.forEach(s => {
+    if (!s.titre) return;
+    let id = ancre(s.titre) || 'section', n = 2;
+    while (ids.has(id)) id = `${ancre(s.titre)}-${n++}`;
+    ids.add(id);
+    s.id = id;
+    Object.assign(s, typeSection(s.titre));
+  });
+  return {
+    fichier, numero: +fichier.slice(0, 2), slug: fichier.replace(/^\d\d-/, '').replace(/\.md$/, ''),
+    titre: B[0].texte, bref: B[1].texte, sections: sections.filter(s => s.titre || s.blocs.length),
+  };
+}
+
+/* Noms écrits dans une page de chapitre (listes numérotées ; lignes « Famille : a, b, c »), dans l'ordre */
+function nomsDuChapitre(BC) {
+  const noms = [];
+  BC.forEach(b => {
+    if (b.type !== 'liste') return;
+    b.items.forEach(it => {
+      if (it.ordonne) noms.push(it.texte);
+      else {
+        const m = it.texte.match(/^([^:]+) : (.+)$/) || echec(`ligne de page de chapitre inattendue : ${it.texte}`);
+        noms.push(...m[2].split(', '));
+      }
     });
-    sections.push(cur);
-    const ids = new Set();
-    sections.forEach(s => {
-      if (!s.titre) return;
-      let id = ancre(s.titre) || 'section', n = 2;
-      while (ids.has(id)) id = `${ancre(s.titre)}-${n++}`;
-      ids.add(id);
-      s.id = id;
+  });
+  return noms;
+}
+
+function lireChapitres() {
+  const dossiers = fs.readdirSync(PELVIS).filter(d => /^\d\d-/.test(d) && fs.statSync(path.join(PELVIS, d)).isDirectory()).sort();
+  return dossiers.map((d, k) => {
+    const dir = path.join(PELVIS, d);
+    const accueil = fs.readdirSync(dir).find(f => /^00-.+\.md$/.test(f)) || echec(`${d} : page de chapitre 00-*.md absente`);
+    FICHIER_EN_COURS = `pelvis/${d}/${accueil}`;
+    const BC = blocs(lire(path.join(dir, accueil)));
+    const fichiers = fs.readdirSync(dir).filter(f => /^\d\d-.+\.md$/.test(f) && !f.startsWith('00-')).sort();
+    const fiches = fichiers.map((f, i) => {
+      const fi = lireFiche(path.join(dir, f), f);
+      if (fi.numero !== i + 1) echec(`${d}/${f} : numérotation interrompue`);
+      return fi;
     });
-    return {
-      fichier: f, numero, slug: f.replace(/^\d\d-/, '').replace(/\.md$/, ''),
-      titre: B[0].texte, bref: B[ib].texte, sections: sections.filter(s => s.titre || s.blocs.length),
-    };
+    const noms = nomsDuChapitre(BC);
+    if (noms.length !== fiches.length) echec(`${d} : la page du chapitre nomme ${noms.length} fiches, ${fiches.length} fichiers`);
+    const chap = { dossier: d, numero: k + 1, slug: d.replace(/^\d\d-/, ''), accueil, blocs: BC, titre: BC[0].texte, fiches, accent: ACCENTS[k % ACCENTS.length] };
+    fiches.forEach((f, i) => { f.nom = noms[i]; f.chapitre = chap; });
+    return chap;
   });
 }
 
 /* =======================================================
-   Schéma de la fiche 08 (ovaire/schema-demarche-masse.jsx) en SVG statique
+   Schéma de la fiche 08 (01-ovaire/schema-demarche-masse.jsx) en SVG statique
    Positions et textes repris du JSX à l'identique ; couleurs du site.
    ======================================================= */
-function schemaDemarche() {
-  const jsx = lire(path.join(OVAIRE, 'schema-demarche-masse.jsx'));
+function schemaDemarche(jsxChemin) {
+  const jsx = lire(jsxChemin);
   const textes = {};
   for (const m of jsx.matchAll(/data-claude-text-id='([^']+)'[^>]*>([^<]*)<\/text>/g)) textes[m[1]] = m[2];
   const aria = (jsx.match(/aria-label='([^']*)'/) || echec('aria-label du schéma introuvable'))[1];
@@ -278,9 +326,9 @@ function schemaDemarche() {
 
 /* =======================================================
    Gabarit commun (en-tête, menu, pied de page du site)
-   p : préfixe vers la racine du site ("../" ou "../../")
+   p : préfixe vers la racine du site ; pv : préfixe vers pelvis/
    ======================================================= */
-function page({ p, pv, titre, description, corps, scripts = '', corpsClasse = '' }) {
+function page({ p, pv, titre, description, corps, corpsClasse = '' }) {
   return `<!doctype html>
 <html lang="fr">
 <head>
@@ -300,7 +348,7 @@ function page({ p, pv, titre, description, corps, scripts = '', corpsClasse = ''
   <link rel="stylesheet" href="${p}fiche.css?v=${V.fiche}">
   <link rel="stylesheet" href="${pv}pelvis.css?v={{V_CSS}}">
 </head>
-<body class="fiche-page pv-page${corpsClasse ? ' ' + corpsClasse : ''}" data-pv-racine="${pv}">
+<body class="fiche-page pv-page${corpsClasse ? ' ' + corpsClasse : ''}" data-pv-racine="${pv}" data-pv-index="${pv}recherche.js?v={{V_INDEX}}">
 
   <div class="read-progress" aria-hidden="true"><span></span></div>
 
@@ -350,9 +398,8 @@ ${corps}
       <p class="copyright">© <span id="year"></span> RadiologicHub · Formation en radiologie d'urgence</p>
     </div>
   </footer>
-  <script src="${pv}recherche.js?v={{V_INDEX}}"></script>
   <script src="${pv}pelvis.js?v={{V_JS}}"></script>
-${scripts}  <script src="${p}fiche.js?v=${V.ficheJs}"></script>
+  <script src="${p}fiche.js?v=${V.ficheJs}"></script>
 </body>
 </html>
 `;
@@ -360,167 +407,262 @@ ${scripts}  <script src="${p}fiche.js?v=${V.ficheJs}"></script>
 
 /* Champ de recherche (résultats remplis par pelvis.js) */
 const recherche = (id, o = {}) => `<form class="pv-recherche${o.grand ? ' pv-recherche-grande' : ''}" role="search" action="#" data-pv-recherche>
-          <label for="${id}">${o.libelle || 'Rechercher dans les fiches'}</label>
-          <div class="pv-recherche-champ"><input id="${id}" type="search" placeholder="${o.ph || 'torsion, O-RADS, Krukenberg…'}" autocomplete="off" spellcheck="false" aria-controls="${id}-res"></div>
+          <label for="${id}">${o.libelle || 'Rechercher dans les fiches Pelvis'}</label>
+          <div class="pv-recherche-champ"><input id="${id}" type="search" placeholder="${o.ph || 'torsion, O-RADS, FIGO, endométriome…'}" autocomplete="off" spellcheck="false" aria-controls="${id}-res"></div>
           <ol class="pv-resultats" id="${id}-res" aria-live="polite"></ol>
         </form>`;
 
 const fil = items => `<nav class="crumbs" aria-label="Fil d'Ariane">${items.map(([t, u]) => (u ? `<a href="${u}">${esc(t)}</a>` : `<span>${esc(t)}</span>`)).join(' › ')}</nav>`;
 
+/* Titre de section à pastille (composant .fsec-title des fiches) */
+const titreSection = (num, titre, ctx = {}) => `<h2 class="fsec-title"><span class="fnum" aria-hidden="true">${num}</span>${enLigne(titre, ctx)}</h2>`;
+
 /* =======================================================
    Construction
    ======================================================= */
 function construire() {
-  const fiches = lireFiches();
-  const parNom = {};
+  ANOMALIES.length = 0;
+  const chapitres = lireChapitres();
+  const fiches = chapitres.flatMap(c => c.fiches);
   const sommaireMd = lire(path.join(PELVIS, '00-sommaire.md'));
-  const ovaireMd = lire(path.join(OVAIRE, '00-ovaire.md'));
-  const sourcesMd = lire(path.join(PELVIS, 'sources.md'));
+  const sourcesMd = lire(path.join(PELVIS, '99-sources.md'));
+  FICHIER_EN_COURS = 'pelvis/00-sommaire.md';
+  const BS = blocs(sommaireMd);
 
-  /* Noms des fiches tels qu'écrits dans la page Ovaire (00-ovaire.md), dans l'ordre des fichiers 01 à 20 */
-  const BO = blocs(ovaireMd);
-  const nomsOvaire = [];
-  BO.forEach(b => {
-    if (b.type !== 'liste') return;
-    b.items.forEach(it => {
-      if (it.ordonne) nomsOvaire.push(it.texte);
-      else {
-        const m = it.texte.match(/^([^:]+) : (.+)$/) || echec(`ligne de la page Ovaire inattendue : ${it.texte}`);
-        nomsOvaire.push(...m[2].split(', '));
-      }
-    });
-  });
-  if (nomsOvaire.length !== fiches.length) echec(`la page Ovaire nomme ${nomsOvaire.length} fiches, ${fiches.length} fichiers`);
-  fiches.forEach((f, i) => { f.nom = nomsOvaire[i]; parNom[f.nom] = f; });
+  /* Noms courts des chapitres : colonne « Chapitre » du tableau « Par organe » du sommaire, dans l'ordre des dossiers */
+  const iOrg = BS.findIndex(b => b.type === 'titre' && ancre(b.texte) === 'par-organe');
+  const tableOrg = BS.slice(iOrg).find(b => b.type === 'tableau') || echec('tableau « Par organe » introuvable');
+  if (tableOrg.corps.length !== chapitres.length) echec(`le sommaire nomme ${tableOrg.corps.length} chapitres, ${chapitres.length} dossiers`);
+  chapitres.forEach((c, i) => { c.nom = tableOrg.corps[i][0]; });
 
-  /* Blocs <?claude block x?> du sommaire → liens (chapitre Ovaire et fiches citées) */
-  const BLOCS = { ov: ['Ovaire', 'ovaire/index.html'] };
-  const parSlug = s => fiches.find(f => f.slug === s) || echec(`fiche ${s} introuvable`);
-  for (const [id, slug] of Object.entries({ tor: 'torsion-annexe', rup: 'rupture-hemorragie-kyste', dem: 'demarche-masse-annexielle', ous: 'o-rads-echographie', oir: 'o-rads-irm' })) {
-    const f = parSlug(slug);
-    BLOCS[id] = [f.nom, `ovaire/${f.slug}.html`];
-  }
-  for (const m of sommaireMd.matchAll(/<\?claude block (\w+)\?>/g)) if (!BLOCS[m[1]]) echec(`bloc ${m[1]} du sommaire sans correspondance`);
-  const blocLien = (id, pre = '') => `<a href="${pre}${BLOCS[id][1]}">${esc(BLOCS[id][0])}</a>`;
-  /* Classifications rédigées → fiche */
-  const CLASSIF = { 'O-RADS échographie v2022': parSlug('o-rads-echographie'), 'O-RADS IRM': parSlug('o-rads-irm') };
-  const etat = (c, ctx) => (c === 'À venir' ? `<span class="pv-etat pv-avenir">${esc(c)}</span>` : c === 'Rédigé' ? `<span class="pv-etat pv-redige">${esc(c)}</span>` : enLigne(c, ctx));
+  /* Noms → fiche : noms des pages de chapitre, titres des fiches, et formulations du sommaire et des renvois */
+  const NOMS = new Map();
+  const ajouterNom = (n, f) => { if (NOMS.has(n) && NOMS.get(n) !== f) NOMS.set(n, null); else NOMS.set(n, f); };   // null : ambigu
+  fiches.forEach(f => { ajouterNom(f.nom, f); ajouterNom(f.titre, f); });
+  const parChemin = c => fiches.find(f => `${f.chapitre.slug}/${f.slug}` === c) || echec(`fiche ${c} introuvable`);
+  const ALIAS = {
+    'Infection génitale haute et salpingite': 'trompe/infection-genitale-haute-salpingite',
+    'Saignements après la ménopause': 'endometre-col/saignements-apres-menopause',
+    'Hypertrophie endométriale': 'endometre-col/hypertrophie-endometriale',
+    'Malformation artério-veineuse': 'vasculaire/malformation-arterio-veineuse',
+    'Faux anévrisme': 'vasculaire/faux-anevrisme',
+    'Généralités et stratégie (endométriose)': 'endometriose/generalites-strategie',
+    'Repères et grades': 'plancher-pelvien/reperes-grades',
+  };
+  Object.entries(ALIAS).forEach(([n, c]) => ajouterNom(n, parChemin(c)));
+  const RENVOIS = { 'Repères': 'plancher-pelvien/reperes-grades' };           // « (fiche Repères) »
+  const nomsTries = [...NOMS.keys()].filter(n => NOMS.get(n)).sort((a, b) => b.length - a.length);
+  const reNoms = new RegExp(nomsTries.map(n => n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'g');
+  const url = (f, depuis) => (depuis === 'pelvis' ? `${f.chapitre.slug}/${f.slug}.html` : depuis === f.chapitre.slug ? `${f.slug}.html` : `../${f.chapitre.slug}/${f.slug}.html`);
+  const LIENS_FAITS = [];
+  /* Lier les noms de fiches d'un texte brut (sommaire : situations cliniques) */
+  const lierNoms = depuis => s => {
+    let h = '', d = 0;
+    for (const m of s.matchAll(reNoms)) {
+      const avant = s[m.index - 1], apres = s[m.index + m[0].length];
+      if ((avant && /[\p{L}\p{N}]/u.test(avant)) || (apres && /[\p{L}\p{N}]/u.test(apres))) continue;   // mot entier seulement
+      const f = NOMS.get(m[0]);
+      h += esc(s.slice(d, m.index)) + `<a href="${url(f, depuis)}">${esc(m[0])}</a>`;
+      LIENS_FAITS.push([depuis, m[0], `${f.chapitre.slug}/${f.slug}`]);
+      d = m.index + m[0].length;
+    }
+    return h + esc(s.slice(d));
+  };
+  /* Renvois dans une fiche : « fiche <Nom> » */
+  const lierRenvois = depuis => s => {
+    let h = '', d = 0;
+    for (const m of s.matchAll(/\bfiche ([A-ZÉÈ][^().,;:]*)/g)) {
+      const cand = m[1].trim();
+      const nom = nomsTries.find(n => cand === n || cand.startsWith(n + ' ')) || Object.keys(RENVOIS).find(n => cand === n);
+      if (!nom) continue;
+      const f = NOMS.get(nom) || parChemin(RENVOIS[nom]);
+      const debut = m.index + 'fiche '.length;
+      h += esc(s.slice(d, debut)) + `<a href="${url(f, depuis)}">${esc(nom)}</a>`;
+      LIENS_FAITS.push([depuis, nom, `${f.chapitre.slug}/${f.slug}`]);
+      d = debut + nom.length;
+    }
+    return h + esc(s.slice(d));
+  };
 
   const sorties = {};
   const ecrire = (rel, html) => { sorties[rel] = html; };
 
-  /* ---------- Fiches ---------- */
-  const GROUPES = [['Ovaire normal et fonctionnel', 1, 7], ['Masse annexielle', 8, 10], ['Tumeurs', 11, 20]];
-  const menuFiches = actuelle => GROUPES.map(([g, a, b]) => `<p class="pv-groupe">${esc(g)}</p><ol class="pv-liste-fiches">${fiches.filter(f => f.numero >= a && f.numero <= b).map(f => {
-    const ici = actuelle && f === actuelle;
-    const secs = ici ? `<ol class="pv-sections">${f.sections.filter(s => s.titre).map(s => `<li><a href="#${s.id}" style="--c:${couleurSection(s.titre)}">${enLigne(s.titre)}</a></li>`).join('')}</ol>` : '';
-    return `<li${ici ? ' class="is-ici"' : ''}><a href="${f.slug}.html"${ici ? ' aria-current="page"' : ''}><b>${String(f.numero).padStart(2, '0')}</b>${esc(f.nom)}</a>${secs}</li>`;
-  }).join('')}</ol>`).join('');
+  /* ---------- Menu des chapitres (sommaire latéral) ---------- */
+  const menu = (actuelle, depuis) => {
+    const versChap = c => (depuis === c.slug ? 'index.html' : `../${c.slug}/index.html`);
+    return `<ol class="pv-chapitres">${chapitres.map(c => {
+      const ici = actuelle && actuelle.chapitre === c;
+      const liste = ici ? `<ol class="pv-liste-fiches">${c.fiches.map(f => `<li${f === actuelle ? ' class="is-ici"' : ''}><a href="${url(f, depuis)}"${f === actuelle ? ' aria-current="page"' : ''}><b>${String(f.numero).padStart(2, '0')}</b>${esc(f.nom)}</a></li>`).join('')}</ol>` : '';
+      return `<li${ici ? ' class="is-ici"' : ''}><a class="pv-chap-lien" href="${versChap(c)}" style="--c:${c.accent}"><b>${c.numero}</b>${esc(c.nom)}</a>${liste}</li>`;
+    }).join('')}</ol>`;
+  };
 
+  /* ---------- Fiches ---------- */
   const index = [];
-  for (const f of fiches) {
-    const prec = fiches[f.numero - 2], suiv = fiches[f.numero];
+  let schema = null;
+  fiches.forEach((f, k) => {
+    const c = f.chapitre, prec = fiches[k - 1], suiv = fiches[k + 1];
+    const ctx = { lier: lierRenvois(c.slug) };
+    let n = 0;
     const corpsSections = f.sections.map(s => {
-      const contenu = s.blocs.map(b => {
+      // Blocs : texte regroupé en cartes ; tableaux, citations et schéma à part (comme dans les fiches rapides)
+      const morceaux = [];
+      let carte = [];
+      const fermer = () => { if (carte.length) { morceaux.push({ carte }); carte = []; } };
+      s.blocs.forEach(b => {
         if (b.type === 'p' && PLACE_SCHEMA.test(b.texte)) {
           if (f.slug !== 'demarche-masse-annexielle') echec(`${f.fichier} : schéma inattendu`);
-          return '<!--/md-->' + schemaDemarche() + '<!--md-->';
+          schema = schema || schemaDemarche(path.join(PELVIS, c.dossier, 'schema-demarche-masse.jsx'));
+          fermer(); morceaux.push({ html: '<!--/md-->' + schema + '<!--md-->' });
+        } else if (b.type === 'tableau') { fermer(); morceaux.push({ html: htmlTableau(b, ctx) }); }
+        else if (b.type === 'citation') { fermer(); morceaux.push({ html: `<div class="callout pv-encadre">${b.blocs.map(x => htmlBloc(x, ctx)).join('')}</div>` }); }
+        else carte.push(b);
+      });
+      fermer();
+      const coul = s.c || c.accent;
+      const cartes = morceaux.map(m => {
+        if (m.html) return m.html;
+        if (s.type === 'cr') {
+          // Check-list : chaque point de la liste devient une case à cocher (texte inchangé)
+          return `<div class="fcard checklist pv-checklist" style="--c:${coul}">${m.carte.map(b => (b.type === 'liste'
+            ? b.items.map(it => `<label><input type="checkbox"> <span>${enLigne(it.texte, ctx)}${it.enfants.length ? htmlListe(it.enfants, ctx) : ''}</span></label>`).join('')
+            : htmlBloc(b, ctx))).join('')}<p class="check-count" aria-live="polite"></p><button class="btn btn-outline btn-sm check-reset" type="button">Tout décocher</button></div>`;
         }
-        return htmlBloc(b, {});
+        const classe = s.type === 'pieges' ? 'fcard alert pv-pieges' : s.type === 'cles' ? 'fcard pv-cles' : 'fcard';
+        return `<div class="${classe}" style="--c:${coul}">${m.carte.map(b => htmlBloc(b, ctx)).join('')}</div>`;
       }).join('\n');
-      if (!s.titre) return `<div class="pv-intro">${contenu}</div>`;
-      return `<section class="pv-sec" id="${s.id}" style="--c:${couleurSection(s.titre)}"><h2 class="pv-sec-titre">${enLigne(s.titre)}</h2>${contenu}</section>`;
+      if (!s.titre) return `<div class="pv-intro">${cartes}</div>`;
+      const num = s.type === 'pieges' ? '⚠' : ROMAIN(++n);
+      s.num = num;
+      return `<section class="fsec pv-sec pv-type-${s.type}" id="${s.id}" style="--c:${coul}">${titreSection(num, s.titre)}${cartes}</section>`;
     }).join('\n');
-    const bref = f.bref.replace(RE_BREF, '');
+    const puces = f.sections.filter(s => s.titre).map(s => `<li><a href="#${s.id}" style="--c:${s.c || c.accent}"><b>${s.num}</b>${enLigne(s.titre)}</a></li>`).join('');
     const corps = `    <section class="fiche-hero sec-down pv-hero">
       <div class="container">
-        ${fil([['Pelvis', '../index.html'], ['Ovaire', 'index.html'], [f.titre]])}
-        <p class="marker-tag">Pelvis · Ovaire · fiche ${f.numero} / ${fiches.length}</p>
+        ${fil([['Pelvis', '../index.html'], [c.nom, 'index.html'], [texteBrut(f.titre)]])}
+        <p class="marker-tag">Fiche rapide · Pelvis · ${esc(c.nom)}</p>
         <h1><!--md-->${enLigne(f.titre)}<!--/md--></h1>
-        <div class="pv-bref" role="note"><p><!--md-->${enLigne(f.bref)}<!--/md--></p></div>
+        <div class="fiche-actions">
+          <button class="btn btn-outline btn-sm" id="print-btn">Imprimer / PDF</button>
+          ${f.sections.some(s => s.type === 'cr') ? `<a href="#${f.sections.find(s => s.type === 'cr').id}" class="btn btn-outline btn-sm">Dans le compte rendu</a>` : ''}
+          <a href="../sources.html" class="btn btn-outline btn-sm">Sources</a>
+        </div>
       </div>
     </section>
 
     <div class="container fiche-layout pv-layout">
       <details class="pv-menu" open>
-        <summary>Sommaire · Rechercher</summary>
+        <summary>Chapitres et fiches · Rechercher</summary>
         <div class="pv-menu-corps">
-          ${recherche('pv-q', { libelle: 'Rechercher dans les fiches', ph: 'Rechercher…' })}
-          <p class="toc-title"><a href="index.html">Ovaire</a></p>
-          ${menuFiches(f)}
-          <p class="pv-menu-liens"><a href="../index.html">Sommaire Pelvis</a> · <a href="../classifications.html">Classifications</a></p>
+          ${recherche('pv-q', { ph: 'Rechercher…' })}
+          <p class="toc-title"><a href="../index.html">Pelvis</a></p>
+          ${menu(f, c.slug)}
+          <p class="pv-menu-liens"><a href="../classifications.html">Classifications</a> · <a href="../sources.html">Sources</a></p>
         </div>
       </details>
 
-      <article class="fiche-body pv-prose" id="fiche-body">
+      <article class="fiche-body pv-fiche" id="fiche-body">
+        <div class="fcard pv-bref" style="--c:${c.accent}" role="note"><p><!--md-->${enLigne(f.bref, ctx)}<!--/md--></p></div>
+        <nav class="toc pv-puces" aria-label="Sections de la fiche"><ol>${puces}</ol></nav>
         <!--md-->${corpsSections}<!--/md-->
 
         <nav class="pv-suite" aria-label="Fiche précédente et suivante">
-          ${prec ? `<a class="pv-prec" href="${prec.slug}.html" rel="prev"><small>← Fiche précédente</small><b>${esc(prec.nom)}</b></a>` : '<a class="pv-prec" href="index.html"><small>← Chapitre</small><b>Ovaire</b></a>'}
-          ${suiv ? `<a class="pv-suiv" href="${suiv.slug}.html" rel="next"><small>Fiche suivante →</small><b>${esc(suiv.nom)}</b></a>` : '<a class="pv-suiv" href="index.html"><small>Chapitre →</small><b>Ovaire</b></a>'}
+          ${prec ? `<a class="pv-prec" href="${url(prec, c.slug)}" rel="prev"><small>← Fiche précédente${prec.chapitre !== c ? ` · ${esc(prec.chapitre.nom)}` : ''}</small><b>${esc(prec.nom)}</b></a>` : '<a class="pv-prec" href="../index.html"><small>← Sommaire</small><b>Pelvis</b></a>'}
+          ${suiv ? `<a class="pv-suiv" href="${url(suiv, c.slug)}" rel="next"><small>Fiche suivante${suiv.chapitre !== c ? ` · ${esc(suiv.chapitre.nom)}` : ''} →</small><b>${esc(suiv.nom)}</b></a>` : '<a class="pv-suiv" href="../index.html"><small>Sommaire →</small><b>Pelvis</b></a>'}
         </nav>
         <p class="pv-sources"><a href="../sources.html">Sources</a></p>
       </article>
     </div>`;
-    ecrire(`ovaire/${f.slug}.html`, page({
-      p: '../../', pv: '../', titre: `${texteBrut(f.titre)} — Pelvis, ovaire | RadiologicHub`, description: texteBrut(bref), corps,
+    ecrire(`${c.slug}/${f.slug}.html`, page({
+      p: '../../', pv: '../', titre: `${texteBrut(f.titre)} — Pelvis, ${c.nom.toLowerCase()} | RadiologicHub`, description: texteBrut(f.bref.replace(RE_BREF, '')), corps, corpsClasse: 'pv-page-fiche',
     }));
     index.push({
-      t: texteBrut(f.titre), n: f.nom, u: `ovaire/${f.slug}.html`, c: 'Ovaire', b: texteBrut(bref),
+      t: texteBrut(f.titre), n: f.nom, u: `${c.slug}/${f.slug}.html`, c: c.nom, b: texteBrut(f.bref.replace(RE_BREF, '')),
       s: f.sections.map(s => ({ i: s.id || '', t: s.titre ? texteBrut(s.titre) : '', x: texteSection(s) })),
     });
-  }
+  });
 
-  /* ---------- Page Ovaire ---------- */
-  {
-    const titre = BO[0].texte;
-    const ctxOv = {
+  /* ---------- Pages de chapitre ---------- */
+  chapitres.forEach(c => {
+    let n = 0;
+    const parNom = new Map(c.fiches.map(f => [f.nom, f]));
+    const ctxC = {
       item: it => {
-        if (it.ordonne) { const f = parNom[it.texte] || echec(`fiche « ${it.texte} » inconnue`); return `<a href="${f.slug}.html">${enLigne(it.texte)}</a>`; }
+        if (it.ordonne) { const f = parNom.get(it.texte) || echec(`${c.dossier} : fiche « ${it.texte} » inconnue`); return `<a href="${f.slug}.html">${enLigne(it.texte)}</a>`; }
         const m = it.texte.match(/^([^:]+) : (.+)$/);
-        return `${esc(m[1])} : ${m[2].split(', ').map(n => `<a href="${parNom[n].slug}.html">${esc(n)}</a>`).join(', ')}`;
+        return `${esc(m[1])} : ${m[2].split(', ').map(x => `<a href="${parNom.get(x).slug}.html">${esc(x)}</a>`).join(', ')}`;
       },
     };
-    const contenu = BO.slice(1).map(b => (b.type === 'titre' ? `<h2 class="pv-sec-titre" id="${ancre(b.texte)}">${enLigne(b.texte)}</h2>` : b.type === 'p' ? `<p class="pv-chapo">${enLigne(b.texte)}</p>` : htmlBloc(b, ctxOv))).join('\n');
+    const sections = [];
+    let cur = null;
+    c.blocs.slice(1).forEach(b => {
+      if (b.type === 'titre') { cur = { titre: b.texte, blocs: [] }; sections.push(cur); }
+      else if (!cur) sections.push({ intro: b });
+      else cur.blocs.push(b);
+    });
+    const contenu = sections.map(s => (s.intro ? (s.intro.type === 'p' ? `<div class="fcard pv-bref" style="--c:${c.accent}"><p>${enLigne(s.intro.texte)}</p></div>`
+      : `<div class="fcard pv-liste-chapitre" style="--c:${c.accent}">${htmlBloc(s.intro, ctxC)}</div>`)
+      : `<section class="fsec pv-sec" id="${ancre(s.titre)}" style="--c:${c.accent}">${titreSection(ROMAIN(++n), s.titre)}<div class="fcard pv-liste-chapitre" style="--c:${c.accent}">${s.blocs.map(b => htmlBloc(b, ctxC)).join('')}</div></section>`)).join('\n');
     const corps = `    <section class="fiche-hero sec-down pv-hero">
       <div class="container">
-        ${fil([['Pelvis', '../index.html'], ['Ovaire']])}
-        <p class="marker-tag">Pelvis · chapitre</p>
-        <h1><!--md-->${enLigne(titre)}<!--/md--></h1>
+        ${fil([['Pelvis', '../index.html'], [c.nom]])}
+        <p class="marker-tag">Pelvis · chapitre ${c.numero} / ${chapitres.length}</p>
+        <h1><!--md-->${enLigne(c.titre)}<!--/md--></h1>
         ${recherche('pv-q', { grand: true })}
       </div>
     </section>
-    <div class="container pv-colonne pv-prose pv-chapitre">
-      <!--md-->${contenu}<!--/md-->
-      <p class="pv-sources"><a href="../sources.html">Sources</a> · <a href="../index.html">Sommaire Pelvis</a> · <a href="../classifications.html">Classifications</a></p>
+    <div class="container fiche-layout pv-layout">
+      <details class="pv-menu" open>
+        <summary>Chapitres · Rechercher</summary>
+        <div class="pv-menu-corps">
+          <p class="toc-title"><a href="../index.html">Pelvis</a></p>
+          ${menu(null, c.slug).replace(`href="index.html" style`, `href="index.html" aria-current="page" style`)}
+          <p class="pv-menu-liens"><a href="../classifications.html">Classifications</a> · <a href="../sources.html">Sources</a></p>
+        </div>
+      </details>
+      <div class="fiche-body pv-fiche pv-chapitre">
+        <!--md-->${contenu}<!--/md-->
+        <p class="pv-sources"><a href="../sources.html">Sources</a> · <a href="../index.html">Sommaire Pelvis</a> · <a href="../classifications.html">Classifications</a></p>
+      </div>
     </div>`;
-    ecrire('ovaire/index.html', page({ p: '../../', pv: '../', titre: `${titre} — Pelvis | RadiologicHub`, description: texteBrut(BO.find(b => b.type === 'p').texte), corps }));
-  }
+    ecrire(`${c.slug}/index.html`, page({ p: '../../', pv: '../', titre: `${texteBrut(c.titre)} — Pelvis | RadiologicHub`, description: texteBrut((c.blocs.find(b => b.type === 'p') || { texte: c.titre }).texte), corps }));
+  });
 
   /* ---------- Sommaire Pelvis ---------- */
   {
-    const BS = blocs(sommaireMd);
     const titre = BS[0].texte;
+    let n = 0, section = null;
     const ctxS = {
-      bloc: id => blocLien(id),
-      cellule: (c, j) => {
-        if (j === 0 && CLASSIF[c]) return `<a href="ovaire/${CLASSIF[c].slug}.html">${esc(c)}</a>`;
-        return etat(c, ctxS);
+      lier: lierNoms('pelvis'),
+      cellule: (cel, j, table) => {
+        if (table === 'organes' && j === 0) { const ch = chapitres.find(x => x.nom === cel); return `<a href="${ch.slug}/index.html">${esc(cel)}</a>`; }
+        if (table === 'classifications' && j === 2) { const fi = NOMS.get(cel) || echec(`classification : fiche « ${cel} » introuvable`); LIENS_FAITS.push(['pelvis', cel, `${fi.chapitre.slug}/${fi.slug}`]); return `<a href="${url(fi, 'pelvis')}">${esc(cel)}</a>`; }
+        return enLigne(cel);
       },
     };
-    let section = null;
-    const contenu = BS.slice(1).map(b => {
-      if (b.type === 'titre') { section = ancre(b.texte); return `<h2 class="pv-sec-titre" id="${section}">${enLigne(b.texte)}</h2>`; }
-      if (b.type === 'p') return `<p class="pv-chapo">${enLigne(b.texte, ctxS)}</p>`;
-      if (b.type === 'tableau') return htmlTableau(b, ctxS);
-      return htmlBloc(b, ctxS);
+    const parties = [];
+    let cur = null;
+    BS.slice(1).forEach(b => {
+      if (b.type === 'titre') { section = ancre(b.texte); cur = { id: section, titre: b.texte, blocs: [] }; parties.push(cur); }
+      else if (!cur) parties.push({ intro: b });
+      else cur.blocs.push(b);
+    });
+    const rendre = (b, id) => {
+      if (b.type === 'tableau') return htmlTableau(b, { ...ctxS, cellule: (x, j) => ctxS.cellule(x, j, id === 'par-organe' ? 'organes' : id === 'classifications' ? 'classifications' : '') });
+      if (b.type === 'liste') return htmlListe(b.items, id === 'par-situation-clinique' ? ctxS : {});
+      return htmlBloc(b, {});
+    };
+    const contenu = parties.map(s => {
+      if (s.intro) return `<div class="fcard pv-bref" style="--c: var(--crimson)"><p>${enLigne(s.intro.texte)}</p></div>`;
+      const tab = s.blocs.filter(b => b.type === 'tableau').map(b => rendre(b, s.id)).join('');
+      const reste = s.blocs.filter(b => b.type !== 'tableau').map(b => rendre(b, s.id)).join('');
+      return `<section class="fsec pv-sec" id="${s.id}" style="--c: var(--crimson)">${titreSection(ROMAIN(++n), s.titre)}${tab}${reste ? `<div class="fcard" style="--c: var(--crimson)">${reste}</div>` : ''}</section>`;
     }).join('\n');
-    const ids = [...sommaireMd.matchAll(/^## (.+)$/gm)].map(m => ancre(m[1]));
-    ['par-organe', 'par-situation-clinique', 'classifications', 'plan-commun-de-chaque-fiche'].forEach(a => { if (!ids.includes(a)) echec(`rubrique #${a} absente du sommaire`); });
+    ['par-organe', 'par-situation-clinique', 'classifications', 'plan-commun-de-chaque-fiche'].forEach(a => { if (!parties.some(s => s.id === a)) echec(`rubrique #${a} absente du sommaire`); });
     const corps = `    <section class="fiche-hero sec-down pv-hero">
       <div class="container">
         ${fil([['Fiches rapides', '../fiches-rapides.html#femme'], ['Pelvis']])}
-        <p class="marker-tag">Imagerie de la femme</p>
+        <p class="marker-tag">Imagerie de la femme · ${fiches.length} fiches</p>
         <h1><!--md-->${enLigne(titre)}<!--/md--></h1>
         <nav class="pv-portes" aria-label="Entrées de la section">
           <a href="#par-organe" style="--c: var(--crimson)"><b>1</b>Par organe</a>
@@ -530,54 +672,58 @@ function construire() {
         ${recherche('pv-q', { grand: true })}
       </div>
     </section>
-    <div class="container pv-colonne pv-prose pv-sommaire">
+    <div class="container pv-colonne pv-fiche pv-sommaire">
       <!--md-->${contenu}<!--/md-->
       <p class="pv-sources"><a href="sources.html">Sources</a></p>
     </div>`;
     ecrire('index.html', page({ p: '../', pv: '', titre: `${texteBrut(titre)} | RadiologicHub`, description: texteBrut(BS.find(b => b.type === 'p').texte), corps }));
 
-    /* ---------- Classifications (fiches 09 et 10, à côté du Bosniak) ---------- */
-    const iC = BS.findIndex(b => b.type === 'titre' && ancre(b.texte) === 'classifications');
-    const tableC = BS.slice(iC).find(b => b.type === 'tableau');
-    const carte = (f, couleur) => `<a class="pv-carte" href="ovaire/${f.slug}.html" style="--c:${couleur}">
-          <span class="pv-carte-badge">Fiche ${String(f.numero).padStart(2, '0')}</span>
-          <h2>${enLigne(f.titre)}</h2>
-          <p>${enLigne(f.bref)}</p>
-          <span class="fiche-open">Ouvrir la fiche →</span>
-        </a>`;
+    /* ---------- Classifications ---------- */
+    const iC = parties.findIndex(s => s.id === 'classifications');
+    const tableC = parties[iC].blocs.find(b => b.type === 'tableau');
     const corpsC = `    <section class="fiche-hero sec-down pv-hero">
       <div class="container">
-        ${fil([['Pelvis', 'index.html'], [BS[iC].texte]])}
+        ${fil([['Pelvis', 'index.html'], [parties[iC].titre]])}
         <p class="marker-tag">Pelvis · par classification</p>
-        <h1>${enLigne(BS[iC].texte)}</h1>
+        <h1>${enLigne(parties[iC].titre)}</h1>
         ${recherche('pv-q', { grand: true })}
       </div>
     </section>
-    <div class="container pv-colonne pv-prose">
-      <div class="pv-cartes">
-        ${carte(CLASSIF['O-RADS échographie v2022'], 'var(--crimson)')}
-        ${carte(CLASSIF['O-RADS IRM'], 'var(--plum)')}
-        <div class="pv-carte pv-carte-bosniak" style="--c: var(--teal)">
-          <span class="pv-carte-badge">Rein · Uro</span>
-          <h2>Classification de Bosniak 2019</h2>
-          <p>Masses rénales kystiques : les 5 catégories en schémas, le calculateur au scanner et en IRM, et la conduite à tenir.</p>
-          <p class="pv-carte-liens"><a href="../outils/bosniak.html">Calculateur Bosniak →</a> <a href="../fiches/masses-renales-kystiques.html">Fiche rapide →</a></p>
+    <div class="container pv-colonne pv-fiche">
+      <section class="fsec pv-sec" id="pelvis" style="--c: var(--crimson)">
+        <h2 class="fsec-title"><span class="fnum" aria-hidden="true">I</span>Classifications de la section Pelvis</h2>
+        <!--md-->${htmlTableau(tableC, { cellule: (x, j) => ctxS.cellule(x, j, 'classifications') })}<!--/md-->
+      </section>
+      <section class="fsec pv-sec" id="autres" style="--c: var(--teal)">
+        <h2 class="fsec-title"><span class="fnum" aria-hidden="true">II</span>Autres classifications du site</h2>
+        <div class="pv-cartes">
+          <a class="pv-carte" href="../outils/bosniak.html" style="--c: var(--teal)"><span class="pv-carte-badge">Rein · Uro</span><h3>Classification de Bosniak 2019</h3><p>Masses rénales kystiques : les 5 catégories en schémas, le calculateur et la conduite à tenir.</p><span class="fiche-open">Calculateur Bosniak →</span></a>
+          <a class="pv-carte" href="../suivi-oncologique.html" style="--c: var(--blue)"><span class="pv-carte-badge">Oncologie</span><h3>RECIST 1.1 et Lugano</h3><p>Suivi oncologique : registre des lésions cibles et non cibles, sommes, nadir et réponse.</p><span class="fiche-open">Suivi oncologique →</span></a>
+          <a class="pv-carte" href="../comptes-rendus.html" style="--c: var(--plum)"><span class="pv-carte-badge">Comptes rendus</span><h3>Scores des comptes rendus</h3><p>PI-RADS, BI-RADS, EU-TIRADS, Fleischner, FIGO des myomes, CAD-RADS, OsteoGamme : schémas et calculateurs de l'éditeur.</p><span class="fiche-open">Comptes rendus →</span></a>
         </div>
-      </div>
-      <h2 class="pv-sec-titre" id="toutes">${enLigne(BS[iC].texte)} de la section Pelvis</h2>
-      <!--md-->${htmlTableau(tableC, ctxS)}<!--/md-->
+      </section>
       <p class="pv-sources"><a href="sources.html">Sources</a> · <a href="index.html">Sommaire Pelvis</a></p>
     </div>`;
     ecrire('classifications.html', page({
-      p: '../', pv: '', titre: `${texteBrut(BS[iC].texte)} — Pelvis | RadiologicHub`,
-      description: 'Classifications de la section Pelvis : O-RADS échographie et O-RADS IRM, à côté de la classification de Bosniak des masses rénales kystiques.', corps: corpsC,
+      p: '../', pv: '', titre: `${texteBrut(parties[iC].titre)} — Pelvis | RadiologicHub`,
+      description: 'Classifications de la section Pelvis (O-RADS, FIGO, PCI, malformations, score FIGO/OMS, grades de prolapsus) avec leur fiche, à côté de Bosniak et RECIST.', corps: corpsC,
     }));
   }
 
   /* ---------- Sources ---------- */
   {
+    FICHIER_EN_COURS = 'pelvis/99-sources.md';
     const BR = blocs(sourcesMd);
-    const contenu = BR.slice(1).map(b => (b.type === 'titre' ? `<h2 class="pv-sec-titre" id="${ancre(b.texte)}">${enLigne(b.texte)}</h2>` : b.type === 'p' ? `<p class="pv-chapo">${enLigne(b.texte)}</p>` : htmlBloc(b, {}))).join('\n');
+    let n = 0;
+    const parties = [];
+    let cur = null;
+    BR.slice(1).forEach(b => {
+      if (b.type === 'titre') { cur = { titre: b.texte, blocs: [] }; parties.push(cur); }
+      else if (!cur) parties.push({ intro: b });
+      else cur.blocs.push(b);
+    });
+    const contenu = parties.map(s => (s.intro ? `<p class="pv-chapo">${enLigne(s.intro.texte)}</p>`
+      : `<section class="fsec pv-sec" id="${ancre(s.titre)}" style="--c: var(--steel)">${titreSection(ROMAIN(++n), s.titre)}<div class="fcard pv-page-sources" style="--c: var(--steel)">${s.blocs.map(b => htmlBloc(b, {})).join('')}</div></section>`)).join('\n');
     const corps = `    <section class="fiche-hero sec-down pv-hero">
       <div class="container">
         ${fil([['Pelvis', 'index.html'], [BR[0].texte]])}
@@ -585,9 +731,9 @@ function construire() {
         <h1><!--md-->${enLigne(BR[0].texte)}<!--/md--></h1>
       </div>
     </section>
-    <div class="container pv-colonne pv-prose pv-page-sources">
+    <div class="container pv-colonne pv-fiche">
       <!--md-->${contenu}<!--/md-->
-      <p class="pv-sources"><a href="index.html">Sommaire Pelvis</a> · <a href="ovaire/index.html">Ovaire</a></p>
+      <p class="pv-sources"><a href="index.html">Sommaire Pelvis</a> · <a href="classifications.html">Classifications</a></p>
     </div>`;
     ecrire('sources.html', page({ p: '../', pv: '', titre: `${texteBrut(BR[0].texte)} — Pelvis | RadiologicHub`, description: texteBrut(BR.find(b => b.type === 'p').texte), corps }));
   }
@@ -595,7 +741,7 @@ function construire() {
   /* ---------- Index de recherche et versions ---------- */
   const js = `/* Généré par scripts/construire-pelvis.js — ne pas modifier à la main.
    Index de recherche de la section Pelvis : une entrée par fiche
-   (t : titre, n : nom dans le sommaire, u : adresse depuis pelvis/, c : chapitre, b : En bref,
+   (t : titre, n : nom dans la page du chapitre, u : adresse depuis pelvis/, c : chapitre, b : En bref,
    s : sections { i : ancre, t : titre, x : texte }). */
 window.PelvisRecherche = ${JSON.stringify(index)};
 `;
@@ -604,19 +750,31 @@ window.PelvisRecherche = ${JSON.stringify(index)};
   const vJs = empreinte(lire(path.join(PELVIS, 'pelvis.js')));
   const vIndex = empreinte(js);
   for (const k of Object.keys(sorties)) if (k.endsWith('.html')) sorties[k] = sorties[k].replace(/\{\{V_CSS\}\}/g, vCss).replace(/\{\{V_JS\}\}/g, vJs).replace(/\{\{V_INDEX\}\}/g, vIndex);
-  return { sorties, fiches };
+  return { sorties, chapitres, fiches, liens: LIENS_FAITS };
+}
+
+function htmlBloc(b, ctx) {
+  if (intertitre(b)) return htmlIntertitre(b, ctx);
+  if (b.type === 'p') return `<p>${enLigne(b.texte, ctx)}</p>`;
+  if (b.type === 'liste') return htmlListe(b.items, ctx);
+  if (b.type === 'tableau') return htmlTableau(b, ctx);
+  if (b.type === 'citation') return `<div class="callout pv-encadre">${b.blocs.map(x => htmlBloc(x, ctx)).join('')}</div>`;
+  if (b.type === 'titre') return `<h${b.niveau + 1} class="marker-sub">${enLigne(b.texte, ctx)}</h${b.niveau + 1}>`;
+  return echec(`bloc inconnu ${b.type}`);
 }
 
 /* Texte brut d'une section (index de recherche) */
 function texteSection(s) {
   const morceaux = [];
   const items = its => its.forEach(it => { morceaux.push(texteBrut(it.texte)); items(it.enfants); });
-  s.blocs.forEach(b => {
+  const parcourir = bs => bs.forEach(b => {
     if (b.type === 'p') { if (!PLACE_SCHEMA.test(b.texte)) morceaux.push(texteBrut(b.texte)); }
     else if (b.type === 'liste') items(b.items);
-    else if (b.type === 'tableau') { morceaux.push(b.tete.map(c => texteBrut(c)).join(' · ')); b.corps.forEach(r => morceaux.push(r.map(c => texteBrut(c)).join(' · '))); }
+    else if (b.type === 'tableau') { morceaux.push(b.tete.map(texteBrut).join(' · ')); b.corps.forEach(r => morceaux.push(r.map(texteBrut).join(' · '))); }
+    else if (b.type === 'citation') parcourir(b.blocs);
     else if (b.type === 'titre') morceaux.push(texteBrut(b.texte));
   });
+  parcourir(s.blocs);
   return morceaux.join(' ');
 }
 
@@ -632,9 +790,19 @@ if (require.main === module) {
     if (avant === contenu) continue;
     ecarts++;
     if (verifier) console.error(`pas à jour : pelvis/${rel}`);
-    else { fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, contenu); console.log(`écrit : pelvis/${rel}`); }
+    else { fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, contenu); }
   }
+  // Pages générées qui n'ont plus de source (fiche renommée ou supprimée)
+  const attendues = new Set(Object.keys(sorties).map(r => path.join(PELVIS, r)));
+  const orphelines = [];
+  const parcourir = d => fs.readdirSync(d, { withFileTypes: true }).forEach(e => {
+    const p = path.join(d, e.name);
+    if (e.isDirectory()) parcourir(p);
+    else if (e.name.endsWith('.html') && !attendues.has(p)) orphelines.push(p);
+  });
+  parcourir(PELVIS);
+  orphelines.forEach(p => { if (verifier) console.error(`page sans source : ${path.relative(RACINE, p)}`); else { fs.unlinkSync(p); console.log(`supprimé : ${path.relative(RACINE, p)}`); } });
   ANOMALIES.forEach(a => console.warn(`anomalie de la source : ${a.fichier}, tableau, ligne ${a.ligne} : cellule « ${a.colonnes.join(' », « ')} » absente — ${a.texte}`));
-  if (verifier && ecarts) { console.error(`${ecarts} fichier(s) à régénérer : npm run build`); process.exit(1); }
+  if (verifier && (ecarts || orphelines.length)) { console.error(`${ecarts + orphelines.length} fichier(s) à régénérer : npm run build`); process.exit(1); }
   console.log(`${Object.keys(sorties).length} fichiers ${verifier ? 'vérifiés' : 'à jour'}${ecarts && !verifier ? ` (${ecarts} écrits)` : ''}.`);
 }

@@ -1,146 +1,118 @@
-# Rapport — intégration de la section Pelvis
+# Rapport — section Pelvis, version complète
 
-Nuit du 12 au 13 octobre 2026. Branche **`section-pelvis`**, poussée sur GitHub pour sauvegarde. **Rien n'a été mis en ligne** : la branche publiée (`claude/radiologichub-website-ss89g9`) n'a pas été touchée.
+13 octobre 2026. Branche **`pelvis-fiches`**, poussée sur GitHub. **Rien n'est en production** : la branche du site en ligne n'a pas été touchée.
 
 ## En bref
 
-- Les 20 fiches de l'ovaire, la page Ovaire, le sommaire, la page Classifications et la page Sources sont intégrés au site, dans la charte.
-- **Le texte médical n'a pas été modifié**. Un test compare chaque page au Markdown **mot pour mot** : changer un seul mot le fait échouer (essayé).
-- Build, tests et liens sont au vert :
-  - 192 tests sur 192 ;
-  - 0 lien interne cassé sur les 68 pages du site ;
-  - vérification dans Chromium à 1366 px et 390 px.
-- Une anomalie dans une fiche source est à corriger par vous (fiche 11, voir plus bas).
+- **95 fichiers publiés** : 83 fiches, 10 pages de chapitre, le sommaire et les sources, plus la page Classifications (96 pages).
+- **Texte inchangé**. Un test compare chaque page au Markdown mot pour mot. Un autre vérifie que chaque `**mot clé**` et chaque `==alerte==` du texte devient exactement un mot en gras ou un badge rouge.
+- **Même rendu que les fiches digestives** (fiche pancréas) : mêmes composants de `fiche.css`, pas de nouveau style de base.
+- **Vérifications au vert** :
+  - 194 tests sur 194 ;
+  - aucun lien interne cassé sur les 140 pages du site ;
+  - parcours complet dans Chromium à 1366 px et à 390 px.
 
-## Ce qui a été fait
+## Rendu des fiches
 
-### 1. Import
-`pelvis-fiches.zip` est décompressé à la racine, dans `pelvis/`, sans aucun changement : contenu identique au zip, vérifié. Commit séparé : « Pelvis : import des fiches Markdown de l'auteur (sans modification) ».
+| Élément du Markdown | Rendu (composant des fiches rapides) |
+|---|---|
+| `**mot clé**` | gras foncé (`<b>`), comme « la plus fréquente » |
+| `==alerte==` | badge rouge (`mark.k-grave`), comme « survie à 5 ans voisine de 5 % » ; syntaxe ajoutée au moteur |
+| `***…***` | gras italique ; ajouté, car présent dans la fiche Infection génitale haute |
+| « **En bref** : … » | grande carte en haut de la fiche, à la couleur du chapitre |
+| `## Section` | pastille ronde (chiffre romain, ⚠ pour Pièges), majuscules, filet coloré |
+| ligne entièrement en gras (« **Échographie** », « **IRM** »…) | intertitre comme « SIÈGE » (`.siege-title`) |
+| `>` (« Pour le radiologue », « À retenir ») | encadré `.callout` à fond teinté |
+| tableaux | `.ftable` : 1re colonne en gras, lignes alternées, défilement horizontal sur téléphone |
 
-### 2. Pages générées
-Le site n'avait pas d'étape de build. J'ai écrit un générateur Node sans dépendance : `scripts/construire-pelvis.js`, lancé par `npm run build`. Il lit les `.md` et produit les pages HTML statiques, qui sont versionnées (GitHub Pages sert les fichiers tels quels).
+**Une couleur fixe par type de section, sur toutes les fiches** :
 
-| Adresse | Fichier | Source |
-|---|---|---|
-| `/pelvis` | `pelvis/index.html` | `00-sommaire.md` |
-| `/pelvis/ovaire` | `pelvis/ovaire/index.html` | `ovaire/00-ovaire.md` |
-| `/pelvis/ovaire/<fiche>` (20 pages) | `pelvis/ovaire/radio-anatomie.html` … `metastases.html` | `ovaire/01` à `ovaire/20` |
-| `/pelvis/classifications` | `pelvis/classifications.html` | fiches 09 et 10, tableau du sommaire, Bosniak |
-| `/pelvis/sources` | `pelvis/sources.html` | `sources.md` |
+| Section | Couleur et rendu |
+|---|---|
+| Terrain / Définition / Clinique / Contexte | bleu |
+| Imagerie | bleu soutenu |
+| Signes clés | vert, en carte mise en avant |
+| Diagnostics différentiels | violet |
+| Conduite à tenir | orange |
+| Pièges | rouge, en carte d'alerte avec ⚠ |
+| Dans le compte rendu | gris, en check-list cochable (mémorisée dans le navigateur) |
+| Autres sections | couleur du chapitre |
 
-`npm run build:verifier` contrôle que les pages sont à jour sans rien écrire. `npm test` échoue si quelqu'un modifie un `.md` sans relancer le build.
+**Rangée de puces vers les sections** en haut de chaque fiche. Sur téléphone, elle reste collée sous l'en-tête pendant le défilement, et la puce de la section lue est surlignée et ramenée à l'écran.
 
-### 3. Consignes du LISEZ-MOI, point par point
+J'ai comparé côte à côte avec la fiche pancréas, sur téléphone et sur ordinateur, les trois fiches demandées : Torsion d'annexe, Grossesse extra-utérine et Adénocarcinome de l'endomètre.
 
-1. **Structure** :
-   - le sommaire offre trois entrées : par organe, par situation clinique, par classification ;
-   - la page Ovaire liste les fiches dans l'ordre ;
-   - chaque fichier a sa page ;
-   - les chapitres « À venir » restent affichés, sans lien, en gris ;
-   - dans le sommaire et la page Ovaire, les noms de fiches sont des liens.
-2. **Texte et tableaux repris exactement**, vérifié par un test mot pour mot (20 fiches, sommaire, page Ovaire, sources, tableau des classifications).
-3. **« En bref »** est affiché en encadré en haut de chaque fiche.
-4. **Navigation** :
-   - fil d'Ariane Pelvis › Ovaire › fiche ;
-   - fiche précédente / suivante ;
-   - sur ordinateur, sommaire latéral collé en haut : les 20 fiches, les sections de la fiche en cours, la section lue surlignée ;
-   - sur téléphone, menu repliable « Sommaire · Rechercher », qui se referme après un choix ;
-   - tableaux en défilement horizontal sur téléphone, avec l'indication « Faites glisser le tableau → ».
-5. **Classifications** : les fiches O-RADS échographie (09) et O-RADS IRM (10) y figurent en cartes, à côté d'une carte Bosniak (liens vers le calculateur et la fiche rapide), suivies du tableau des classifications du sommaire.
-6. **Recherche** dans les titres et le contenu des 20 fiches :
-   - elle ignore les accents et les majuscules ;
-   - tous les mots tapés doivent être présents ; un mot trouvé dans le titre classe la fiche en premier ;
-   - chaque résultat mène directement à la section concernée, avec un extrait où les mots sont surlignés ;
-   - Entrée ouvre le premier résultat.
-   
-   Elle est disponible dans le sommaire, la page Ovaire, la page Classifications et le menu de chaque fiche. L'index est `pelvis/recherche.js`, généré par le build.
-7. **Sources** : un lien en bas de chaque fiche mène à `/pelvis/sources`.
-8. **Titre et meta description** propres à chaque fiche. La description est le texte « En bref » complet.
-9. **Charte et téléphone** :
-   - Montserrat, Permanent Marker pour les étiquettes, cadres épais et ombres décalées ;
-   - sections colorées selon le code couleur `k-*` : pièges en rouge, diagnostics différentiels en violet, conduite à tenir en vert, technique en bleu, compte rendu en prune ;
-   - vérifié à 390 px et à 1366 px.
+## Structure et navigation
 
-**Schéma de la fiche 08** : `schema-demarche-masse.jsx` est converti en SVG statique aux couleurs du site. Les 22 textes et la description accessible sont identiques au JSX (vérifié par un test). Sur téléphone, le schéma défile horizontalement pour rester lisible.
+- **Adresses** :
+  - `/pelvis` pour le sommaire ;
+  - `/pelvis/<chapitre>` pour chaque chapitre : `ovaire`, `endometriose`, `trompe`, `endometre-col`, `myometre`, `vasculaire`, `malformations`, `trophoblaste`, `plancher-pelvien`, `carcinose` ;
+  - `/pelvis/<chapitre>/<fiche>` pour chaque fiche, avec le nom de fichier sans numéro ;
+  - `/pelvis/classifications` et `/pelvis/sources`.
+- **Fil d'Ariane** : Pelvis › Chapitre › Fiche.
+- **Fiche précédente / suivante** dans l'ordre des fichiers ; on passe d'un chapitre au suivant.
+- **Menus** :
+  - sur ordinateur, menu latéral des 10 chapitres, avec les fiches du chapitre en cours dépliées ;
+  - sur téléphone, menu repliable « Chapitres et fiches · Rechercher ».
+- **En bas de chaque fiche** : lien « Sources ».
+- **Référencement** : titre et meta description propres à chaque fiche ; la description est la phrase « En bref ».
+- **Liens ajoutés** :
+  - dans le sommaire : les 10 chapitres, les noms de fiches des situations cliniques (31 liens) et la colonne « Fiche » des classifications ;
+  - dans les pages de chapitre : chaque nom de fiche ;
+  - dans les fiches : les deux renvois du texte (« voir la fiche Léiomyome utérin », « (fiche Repères) »).
+- **Classifications** : la page reprend le tableau du sommaire, chaque ligne liée à sa fiche, puis les autres classifications du site (Bosniak, RECIST / Lugano, scores des comptes rendus). On y accède aussi depuis la rangée d'outils des comptes rendus, à côté de Bosniak et du suivi oncologique (RECIST).
+- **Recherche** dans les titres et le contenu des 83 fiches :
+  - elle ignore les accents ;
+  - chaque résultat indique le chapitre et la section, avec un extrait où les mots sont surlignés ;
+  - l'index (environ 0,3 Mo) ne se charge qu'à la première recherche.
+- **Schéma de la fiche 08** : converti en SVG statique, placé à l'endroit de la ligne « *Schéma : …* », avec les textes identiques au JSX.
 
-### 4. Intégration au reste du site
-- Une carte « Pelvis : ovaire en 20 fiches » s'ajoute dans **Fiches rapides › Imagerie de la femme**.
-- Sur les pages Pelvis, l'entrée « Fiches rapides » du menu est active, et le pied de page a un lien « Pelvis ».
-- Nouveau vérificateur de liens internes pour tout le site : `scripts/verifier-liens.js`, lancé par `npm run liens`.
-- `README.md` est mis à jour : description de la section, ajout ou modification de fiches, fichiers, tests, mise en ligne, « À faire », historique.
+## Décisions prises
 
-## Décisions prises (choix non couverts par les consignes)
+1. **Correspondance des noms du sommaire** : certains noms du sommaire diffèrent du titre de la fiche. Je les ai reliés ainsi — **à vérifier** :
 
-1. **Build** : générateur Node maison, sans dépendance, plutôt qu'un générateur de site. Le reste du site est en HTML statique sans outil de build. Les pages générées sont committées.
-2. **Adresses** :
-   - les adresses courtes demandées (`/pelvis`, `/pelvis/ovaire/<fiche>`…) fonctionnent sur GitHub Pages ;
-   - les liens internes pointent vers les fichiers `.html`, pour marcher aussi en local et en ouvrant un fichier directement ;
-   - le nom d'une fiche dans l'adresse est celui du fichier **sans son numéro** (`01-radio-anatomie.md` → `/pelvis/ovaire/radio-anatomie`).
-3. **Menu du site** : pas de nouvelle entrée « Pelvis » dans le menu principal, qui déborde déjà dès qu'on ajoute une entrée (c'était le cas avec « Outils », retiré à votre demande). La section est rattachée aux **Fiches rapides**. Le fil d'Ariane suit la consigne (Pelvis › Ovaire › fiche) ; sur le sommaire, il est Fiches rapides › Pelvis.
-4. **Blocs `<?claude block …?>` du sommaire** : ce sont des restes de l'export. Je les ai remplacés par des liens qui portent le nom de la fiche tel qu'écrit dans la page Ovaire. La correspondance est déduite du contexte, **à vérifier** :
-
-   | Bloc | Lien |
+   | Nom dans le sommaire | Fiche liée |
    |---|---|
-   | `ov` | Ovaire |
-   | `tor` | Torsion d'annexe |
-   | `rup` | Rupture et hémorragie de kyste |
-   | `dem` | Démarche devant une masse |
-   | `ous` | O-RADS échographie |
-   | `oir` | O-RADS IRM |
+   | « Infection génitale haute et salpingite » | Infection génitale haute et salpingite aiguë |
+   | « Saignements après la ménopause » | Saignements après la ménopause : démarche |
+   | « Hypertrophie endométriale » | Hypertrophie endométriale d'allure bénigne |
+   | « Malformation artério-veineuse » | Malformation artério-veineuse utérine |
+   | « Faux anévrisme » | Faux anévrisme de l'artère utérine |
+   | « Généralités et stratégie (endométriose) » | Endométriose : généralités et stratégie diagnostique |
+   | « Repères et grades » et « (fiche Repères) » | Repères et grades de sévérité |
 
-5. **Liens de la page Ovaire** : les noms sont liés aux fichiers dans l'ordre (1er nom → fiche 01, … 20e → fiche 20). Le build s'arrête si le nombre de noms et de fichiers diffère.
-6. **Tableau des classifications** : seules les lignes « Rédigé » sont liées (O-RADS échographie v2022 → fiche 09, O-RADS IRM → fiche 10). La ligne « Classification FIGO des myomes » reste « À venir », comme dans votre texte, bien que le site ait déjà une fiche et un outil FIGO.
-7. **Fiche 08** : la ligne « *Schéma : voir schema-demarche-masse.jsx (arbre de décision IRM).* » est un renvoi au fichier ; elle est remplacée par le schéma lui-même.
-   - Mise en page ajustée, textes inchangés : boîtes de gauche ramenées de 260 à 244 de large, « oui » / « non » recentrés, car la police du site est plus large.
-   - Couleurs : vert pour les sorties à faible risque (O-RADS 2-3), puis ambre, orange et rouge pour les types 1, 2 et 3 ; la ligne « péritoine » est en rouge.
-8. **Classifications** : les fiches 09 et 10 y apparaissent en cartes avec lien, et non recopiées en entier. On évite ainsi deux copies du même texte.
-9. **Recherche** : elle porte sur les 20 fiches seulement, pas sur le sommaire ni sur les sources.
-10. **Textes d'interface ajoutés** (aucun texte médical) :
-    - libellés de navigation : « Rechercher dans les fiches », « Sommaire · Rechercher », « Fiche précédente / suivante », « Faites glisser le tableau → », « Pelvis · Ovaire · fiche N / 20 » ;
-    - étiquette « Imagerie de la femme » et titre « Classifications de la section Pelvis » ;
-    - texte des cartes Fiches rapides et Bosniak ;
-    - meta descriptions du sommaire, de la page Ovaire et des sources : votre texte d'introduction ; celle des classifications : rédigée par moi.
-11. **Fichiers source publiés** : les `.md`, le `.jsx` et `LISEZ-MOI-claude-code.md` restent dans `pelvis/`, comme demandé. À la mise en ligne, ils seront aussi lisibles tels quels, car le dépôt est public. Je peux les exclure de la branche en ligne si vous préférez.
-12. **Point de départ de la branche** : `section-pelvis` part de la branche de développement. Elle contient donc aussi le cours sur les ischio-jambiers, non validé, qui devra rester exclu de la mise en ligne comme d'habitude.
-13. **Consigne « sources de cours dans le dépôt privé »** : les fiches Markdown sont votre texte final destiné au site, pas des sources de cours. Elles sont dans le dépôt public, comme vous l'avez demandé.
+2. **« Page des classifications existante du site »** : le site n'a pas de page dédiée. La rangée d'outils des comptes rendus est le seul endroit qui réunit Bosniak et RECIST : j'y ai ajouté l'accès Pelvis.
+3. **« Recherche du site »** : le site n'a pas de recherche générale. La recherche porte donc sur les 83 fiches Pelvis. Elle est disponible dans le sommaire, les pages de chapitre, la page Classifications et le menu de chaque fiche.
+4. **Ajouts d'interface, sans texte médical** :
+   - le filet sous les titres, la carte verte de « Signes clés », la rangée de puces collée sur téléphone et les lignes alternées des tableaux, demandés par vos consignes ;
+   - les boutons du haut de fiche (Imprimer / PDF, Dans le compte rendu, Sources) ;
+   - les textes d'interface : « Faites glisser le tableau », « Tout décocher », « Classifications de la section Pelvis », « Autres classifications du site ».
+5. **Menu principal** : toujours pas d'entrée « Pelvis », car le menu déborderait. La section reste rattachée à Fiches rapides, avec une carte « Pelvis : 10 chapitres, 83 fiches » dans l'onglet Imagerie de la femme.
+6. **Chapitres 06 à 10** : leurs pages n'ont pas de sous-titres, la liste des fiches suit directement l'introduction. Elle est affichée dans une carte, sans titre ajouté.
 
 ## Problèmes restants
 
-1. **Anomalie dans la fiche 11** (`ovaire/11-tumeurs-epitheliales-sereuses.md`) : dans le tableau « Imagerie », la 1re ligne n'a que 2 cellules sur 3. La cellule « Forme » manque, et le texte commence par un « x » : « xKyste uniloculaire, rond, liquidien pur… | Aucune ».
-   - Rien n'est corrigé dans le texte : les deux cellules sont placées sous « Aspect » et « Portion tissulaire », et la cellule « Forme » reste vide, hachurée.
-   - Le build affiche un avertissement, et un test le contrôle.
-   - **À compléter par vous dans le `.md`**, puis `npm run build` ; le test « anomalies » sera alors à mettre à jour.
-2. **Correspondance des blocs du sommaire** : voir la décision 4, à confirmer.
-3. **Chapitres « À venir »** : affichés sans lien, en attente de rédaction.
-4. **Téléphone, tableau des chapitres** : la colonne « État » est hors de l'écran tant qu'on ne fait pas glisser le tableau. C'est le comportement voulu pour les tableaux.
-5. **Redirection `/pelvis` → `/pelvis/`** : c'est GitHub Pages qui la fait. Je n'ai pas pu la reproduire dans le navigateur de test ; les adresses avec la barre finale ont été vérifiées.
-6. **Sans rapport avec Pelvis, déjà présent avant** : 19 images d'exemple pas encore fournies dans les fiches pancréas, myocardite et Crohn. Elles sont masquées sur le site ; `npm run liens -- --details` les liste.
+- Aucune anomalie dans les fichiers : la cellule manquante de la fiche 11, signalée dans la version précédente, est corrigée dans ce zip.
+- Les correspondances de noms ci-dessus sont à confirmer.
+- La redirection `/pelvis` → `/pelvis/` est faite par GitHub Pages. Elle n'est pas reproductible dans le navigateur de test ; les adresses avec la barre finale ont été vérifiées.
 
-## Comment voir le résultat en local
+## Voir le résultat
 
-```
-git fetch origin section-pelvis
-git checkout section-pelvis
-npm run build        # régénère les pages (déjà à jour dans la branche)
-npm test             # 192 tests
-npm run liens        # liens internes de tout le site
-python3 -m http.server 8000
-```
+- **Prévisualisation**, servie directement depuis la branche sur GitHub :
+  https://raw.githack.com/nodbysmilii-prog/radiologic-hub/pelvis-fiches/pelvis/index.html
+  - Les liens fonctionnent. Les adresses sans `.html` ne marchent qu'une fois le site en ligne.
+- **En local** :
 
-Puis ouvrir **http://localhost:8000/pelvis/index.html**. L'onglet Imagerie de la femme des Fiches rapides se trouve à http://localhost:8000/fiches-rapides.html#femme.
+  ```
+  git fetch origin pelvis-fiches && git checkout pelvis-fiches
+  npm run build      # régénère les pages (déjà à jour)
+  npm test           # 194 tests
+  npm run liens      # liens internes du site
+  python3 -m http.server 8000
+  ```
 
-Ouvrir `pelvis/index.html` directement dans le navigateur, sans serveur, fonctionne aussi : recherche, liens et styles. Avec `python3 -m http.server`, les adresses sans `.html` (`/pelvis/classifications`) ne marchent pas ; GitHub Pages, lui, les sert.
+  Ouvrir ensuite http://localhost:8000/pelvis/index.html.
 
-## Pour mettre en ligne, après validation
+## Mise en ligne, après validation
 
-Fusionner `section-pelvis` dans la branche en ligne, comme pour les mises en ligne précédentes. Le cours sur les ischio-jambiers reste exclu : son retrait est déjà dans la branche en ligne, et seules les nouveautés Pelvis arrivent. Ensuite :
-- vérifier `npm test` et `npm run liens` sur le résultat ;
-- pousser ;
-- vérifier la publication GitHub Pages.
-
-## Commits de la branche
-
-- `db99599` Pelvis : import des fiches Markdown de l'auteur (sans modification)
-- `f390e71` Pelvis : pages HTML générées depuis les fiches Markdown
-- `f1531b5` Pelvis : tests (texte mot pour mot, pages à jour, liens, recherche)
-- dernier commit : documentation (README, ce rapport)
+Fusionner `pelvis-fiches` dans la branche en ligne, toujours sans le cours d'échoanatomie : son retrait est déjà dans la branche en ligne. Vérifier ensuite `npm test` et `npm run liens`, pousser, puis contrôler la publication GitHub Pages.
