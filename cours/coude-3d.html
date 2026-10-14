@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Échographie du coude et du nerf ulnaire — RadiologicHub</title>
+  <meta name="description" content="Cours RadiologicHub d'échographie du coude : le coude en 3D (tendons des quatre loges, ligaments, nerfs, vaisseaux) et la fiche « Échographie du nerf ulnaire : coude et canal de Guyon » — coupes de référence, critères de mesure, étiologies et comptes rendus standardisés.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="../assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=20261013020000">
+  <link rel="stylesheet" href="../fiche.css?v=20261012150000">
+  <link rel="stylesheet" href="cours.css?v=20261014233000">
+  <script type="importmap">{ "imports": { "three": "../vendor/three-0.170.0/three.module.min.js", "three/addons/": "../vendor/three-0.170.0/addons/" } }</script>
+</head>
+<body class="fiche-page cours-page">
+
+  <div class="read-progress" aria-hidden="true"><span></span></div>
+
+  <header class="site-header is-scrolled" id="top">
+    <div class="container header-inner">
+      <span class="brand" aria-label="RadiologicHub">
+        <img src="../assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </span>
+    </div>
+  </header>
+
+  <main id="coude-3d" data-modeles="../public/models/coude/">
+    <section class="fiche-hero sec-down">
+      <div class="container">
+        <p class="marker-tag">Cours · Échographie du coude (en préparation)</p>
+        <h1>Échographie du <span class="hl-navy">coude</span> et du <span class="hl-red">nerf ulnaire</span></h1>
+        <p class="fiche-sub">Le coude en 3D (tendons des quatre loges, ligaments, nerfs, artères et veines), puis la fiche « Échographie du nerf ulnaire : coude et canal de Guyon » : coupes de référence, critères de mesure, étiologies et <span class="hl-red">comptes rendus standardisés</span>.</p>
+
+        <div class="legend" role="group" aria-label="Code couleur — cliquez pour isoler une catégorie">
+          <span class="legend-label">Code couleur :</span>
+          <button class="chip k-ddx" data-k="ddx" aria-pressed="false">Anatomie / repères</button>
+          <button class="chip k-sign" data-k="sign" aria-pressed="false">Aspect normal</button>
+          <button class="chip k-grave" data-k="grave" aria-pressed="false">Pathologique</button>
+          <button class="chip k-key" data-k="key" aria-pressed="false">Chiffres et seuils</button>
+          <button class="chip k-tech" data-k="tech" aria-pressed="false">Technique / manœuvre</button>
+        </div>
+        <p class="legend-hint">Astuce : cliquez sur une couleur pour n'afficher qu'elle.</p>
+
+        <div class="fiche-actions">
+          <button class="btn btn-outline btn-sm" id="print-btn">Imprimer / PDF</button>
+          <a href="#modele-3d" class="btn btn-outline btn-sm">Coude en 3D</a>
+          <a href="#coude" class="btn btn-outline btn-sm">Tunnel cubital</a>
+          <a href="#guyon" class="btn btn-outline btn-sm">Canal de Guyon</a>
+          <a href="#cr" class="btn btn-ink btn-sm">Comptes rendus →</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="container fiche-layout">
+      <!-- Sommaire -->
+      <aside class="toc" aria-label="Sommaire">
+        <p class="toc-title">Sommaire</p>
+        <ol>
+          <li><a href="#modele-3d" style="--c: var(--cornflower)"><b>3D</b>Le coude en 3D</a></li>
+          <li><a href="#coude" style="--c: var(--steel)"><b>1</b>Nerf ulnaire au coude (tunnel cubital)</a></li>
+          <li><a href="#guyon" style="--c: var(--teal)"><b>2</b>Nerf ulnaire au poignet (canal de Guyon)</a></li>
+          <li><a href="#cr" style="--c: var(--plum)"><b>3</b>Comptes rendus standardisés</a></li>
+        </ol>
+      </aside>
+
+      <div class="fiche-body" id="fiche-body">
+
+        <!-- 3D -->
+        <section class="fsec" id="modele-3d" style="--c: var(--cornflower)">
+          <h2 class="fsec-title"><span class="fnum">3D</span>Coude droit, position anatomique</h2>
+          <p class="v3d-aide coude-intro">Coude en extension, avant-bras en supination ; 12 cm de bras et 12 cm d'avant-bras autour de l'interligne. Faites glisser pour tourner, pincez ou utilisez la molette pour zoomer, touchez une structure pour la mettre en surbrillance. « Tendons seuls » retire les corps charnus pour suivre chaque tendon jusqu'à son insertion.</p>
+          <div class="v3d" id="v3d">
+            <div class="v3d-scene" id="v3d-scene"></div>
+            <div class="v3d-panneau" id="v3d-panneau" hidden></div>
+          </div>
+          <p class="v3d-attribution">
+            <b>Modèles 3D</b> : <a href="https://github.com/Z-Anatomy/Models-of-human-anatomy" rel="noopener" target="_blank">Z-Anatomy</a> (G. Kervyn, M. Zielinski), licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="noopener license" target="_blank">CC BY-SA 4.0</a>, d'après <a href="https://dbarchive.biosciencedbc.jp/en/bodyparts3d/download.html" rel="noopener" target="_blank">BodyParts3D</a> © The Database Center for Life Science (CC BY-SA 2.1 Japon).
+            Extraits, coupés et simplifiés par RadiologicHub : <a href="../public/models/coude/LICENSE">licence et liste des modifications</a>. Représentation pédagogique approximative (diamètres des nerfs calés à titre indicatif).
+          </p>
+        </section>
+
+        <!-- Fiche : nerf ulnaire -->
+        <div class="callout cours-fiche-tete" id="nerf-ulnaire">
+          <p class="cours-fiche-eyebrow">Échographie MSK · Nerfs périphériques · Membre supérieur</p>
+          <h2 class="cours-fiche-titre">Échographie du nerf ulnaire : coude et canal de Guyon</h2>
+          <p>Fiche de cours complète : anatomie échographique, coupes de référence, critères de mesure, étiologies et comptes rendus standardisés, illustrée par les clichés de référence.</p>
+          <p class="cours-fiche-lien"><button type="button" class="btn btn-outline btn-sm" data-voir="nerf-ulnaire">Voir le nerf ulnaire en 3D</button></p>
+        </div>
+
+        <!-- PARTIE 1 -->
+        <section class="fsec cours-partie" id="coude" style="--c: var(--steel)">
+        <p class="cours-partie-num">Partie 1</p>
+        <h2 class="fsec-title"><span class="fnum">1</span>Nerf ulnaire au coude : le tunnel cubital</h2>
+        <p class="fintro">Deuxième syndrome canalaire du membre supérieur. Atteinte souvent idiopathique ou dynamique.</p>
+
+        <h3 class="marker-sub cours-h3">1. Place de l'échographie</h3>
+        <p>L'échographie est l'examen d'imagerie de <b>première intention</b> devant un syndrome canalaire ulnaire au coude, en <b>complément de l'ENMG</b> (l'ENMG localise et quantifie l'atteinte, l'échographie en montre la cause). Elle associe une <mark class="k-tech">haute résolution spatiale</mark> à une <mark class="k-tech">étude dynamique</mark> irremplaçable.</p>
+
+        <h3 class="marker-sub cours-h3">2. Prérequis techniques et positionnement</h3>
+        <ul class="fl">
+          <li><b>Sonde</b> : <mark class="k-tech">linéaire haute fréquence</mark> (<mark class="k-key">12 à 18 MHz</mark>).</li>
+          <li><b>Gel en couche épaisse</b> (ou coussinet d'eau) pour éviter une <mark class="k-grave">compression iatrogène</mark> du nerf et limiter l'<mark class="k-grave">anisotropie</mark> sur les reliefs osseux.</li>
+          <li><b>Position du patient</b> :
+            <ul class="fl">
+              <li><mark class="k-tech">Décubitus dorsal</mark> : bras en abduction à <mark class="k-key">90°</mark>, rotation externe d'épaule, coude en légère flexion (<mark class="k-key">20 à 30°</mark>) pour l'étude statique.</li>
+              <li><mark class="k-tech">Assis face à l'opérateur</mark> : avant-bras sur la table en supination, coude fléchi. Position ergonomique pour les <mark class="k-tech">manœuvres dynamiques</mark>.</li>
+            </ul>
+          </li>
+        </ul>
+
+        <h3 class="marker-sub cours-h3">3. Les 4 coupes de référence</h3>
+        <p>L'examen commence toujours en <mark class="k-tech">petit axe (axial)</mark> par un balayage continu de proximal en distal, la <mark class="k-tech">technique de l'ascenseur</mark>. On complète en <mark class="k-tech">grand axe (longitudinal)</mark> sur toute zone suspecte.</p>
+
+        <div class="ftable-wrap"><table class="ftable cours-tableau">
+        <thead><tr><th>Coupe</th><th>Repères anatomiques</th><th>Aspect normal du nerf</th></tr></thead>
+        <tbody>
+        <tr><td>1. Axiale brachiale distale<br><small>(en amont du coude)</small></td>
+        <td><mark class="k-ddx">Septum intermusculaire médial</mark> en avant, <mark class="k-ddx">chef médial du triceps</mark> en arrière</td>
+        <td>Nerf <mark class="k-sign">arrondi ou ovalaire</mark>, qui traverse le septum d'avant en arrière (zone de l'<mark class="k-ddx">arcade de Struthers</mark>). Aspect fasciculaire en <mark class="k-sign">rayon de miel</mark>.</td></tr>
+        <tr><td>2. Axiale épicondylo-olécrânienne<br><small>(tunnel cubital proximal)</small></td>
+        <td><mark class="k-ddx">Épicondyle médial</mark> en dedans/avant, <mark class="k-ddx">olécrane</mark> en dehors/arrière, <mark class="k-ddx">ligament d'Osborne</mark> (rétinaculum, toit), <mark class="k-ddx">LCU</mark> (plancher)</td>
+        <td>Nerf plaqué dans la gouttière sous le rétinaculum. <mark class="k-sign">Physiologiquement plus hypoéchogène et oligofasciculaire</mark> (<mark class="k-key">1 à 3 fascicules</mark>) par raréfaction de l'épinèvre interne.</td></tr>
+        <tr><td>3. Axiale antébrachiale proximale<br><small>(tunnel cubital distal)</small></td>
+        <td>Entre les <mark class="k-ddx">chefs huméral et ulnaire du FCU</mark>, sous le <mark class="k-ddx">fascia d'Osborne</mark> (arcade fibreuse qui les réunit)</td>
+        <td>Le nerf plonge en profondeur entre les deux chefs et <mark class="k-sign">retrouve son aspect polyfasciculaire</mark>.</td></tr>
+        <tr><td>4. Longitudinale<br><small>(grand axe, centrée sur le coude)</small></td>
+        <td>Nerf suivi sur <mark class="k-key">5 à 10 cm</mark> de part et d'autre de l'épicondyle médial</td>
+        <td><mark class="k-sign">Calibre régulier, bords parallèles</mark>, sans incisure ni renflement. Structure fibrillaire continue.</td></tr>
+        </tbody></table></div>
+
+        <div class="callout callout-warn"><p><b>Piège :</b> Dans la gouttière, le nerf est <mark class="k-sign">normalement</mark> plus hypoéchogène et pauvre en fascicules. Ne pas conclure à une neuropathie sur l'échogénicité seule à ce niveau : c'est la <mark class="k-grave">CSA</mark> et la comparaison qui tranchent.</p></div>
+
+        <h4 class="cours-h4">Coupe 1 : bras</h4>
+        <figure class="cfig" id="fig-1"><span class="cfig-num" aria-hidden="true">1</span><div class="cfig-paire"><div><svg viewBox="0 0 320 420" role="img" aria-label="Membre supérieur droit de face, sonde transversale à la face médiale du bras sous la ligne axillaire antérieure, trajet du nerf ulnaire en pointillés">
+<style>
+  .lb{paint-order:stroke;stroke:#e9f0f2;stroke-width:4px;stroke-linejoin:round;font:700 13px Montserrat, "Atkinson Hyperlegible", Arial, sans-serif; fill:#141414}
+  .lm{paint-order:stroke;stroke:#e9f0f2;stroke-width:4px;stroke-linejoin:round;font:800 14px Montserrat, "Atkinson Hyperlegible", Arial, sans-serif; fill:#141414}
+  .sm{paint-order:stroke;stroke:#e9f0f2;stroke-width:4px;stroke-linejoin:round;font:600 11.5px Montserrat, "Atkinson Hyperlegible", Arial, sans-serif; fill:#3a4650}
+</style>
+<rect width="320" height="420" fill="#e9f0f2"/>
+<path d="M-4 30 C 40 22, 92 30, 122 56 C 132 110, 138 160, 140 205 C 128 260, 112 330, 104 424 L -4 424 Z" fill="#e2ad86" stroke="#141414" stroke-width="3.2" stroke-linejoin="round"/>
+<path d="M22 120 C 50 132, 80 136, 104 128" fill="none" stroke="#141414" stroke-width="2" opacity=".45"/>
+<path d="M120 56 C 152 36, 204 40, 218 84 C 226 112, 222 152, 216 192 L 208 250 C 205 262, 206 272, 208 282 L 216 372 C 218 392, 208 404, 196 406 L 168 406 C 156 404, 150 394, 152 380 L 154 286 C 154 272, 151 262, 148 252 L 140 192 C 135 150, 130 104, 120 56 Z" fill="#f1c7a3" stroke="#141414" stroke-width="3.2" stroke-linejoin="round"/>
+<path d="M126 128 C 132 136, 138 140, 144 140" fill="none" stroke="#141414" stroke-width="2.4"/>
+
+  <path d="M146 112 C 148 150, 150 200, 156 246 C 160 268, 162 300, 166 340 L 172 396" fill="none" stroke="#141414" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M146 112 C 148 150, 150 200, 156 246 C 160 268, 162 300, 166 340 L 172 396" fill="none" stroke="#f6c945" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 5"/>
+
+  <ellipse cx="152" cy="256" rx="9" ry="7" fill="#fffaf0" stroke="#141414" stroke-width="2.5"/>
+  <text x="128" y="262" text-anchor="end" class="lm">EM</text>
+
+  <line x1="132" y1="150" x2="228" y2="150" stroke="#141414" stroke-width="17" stroke-linecap="round"/>
+  <line x1="132" y1="150" x2="228" y2="150" stroke="#2b3138" stroke-width="11" stroke-linecap="round"/>
+  <line x1="132" y1="150" x2="228" y2="150" stroke="#5a6672" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 5"/>
+  <text x="236" y="146" text-anchor="start" class="lb">Sonde</text>
+<text x="236" y="162" class="sm">petit axe</text>
+<path d="M98 110 L 126 136" stroke="#141414" stroke-width="1.6" stroke-dasharray="3 3"/>
+<text x="8" y="100" class="sm">Ligne axillaire</text>
+<text x="8" y="114" class="sm">antérieure</text>
+<text x="176" y="236" class="sm" text-anchor="start">Nerf ulnaire</text>
+<path d="M174 232 L 158 222" stroke="#141414" stroke-width="1.4"/>
+</svg><span class="cfig-lettre" aria-hidden="true">A</span></div><div><button type="button" class="cfig-zoom" aria-label="Agrandir l'image"><img src="coude/images/fig01-bras-axial.png" alt="Coupe axiale du paquet vasculo-nerveux à la partie proximale du bras" width="807" height="479" loading="lazy" decoding="async"></button><span class="cfig-lettre" aria-hidden="true">B</span></div></div>
+        <figcaption><b class="cfig-label">FIG. 1 :</b> A. Sonde transversale (petit axe) à la face médiale du bras, au bord inférieur de la ligne axillaire antérieure ; trajet du nerf ulnaire en pointillés jaunes, jusqu'à l'épicondyle médial (EM). B. Paquet vasculo-nerveux à la partie proximale du bras : nerfs médian (M), ulnaire (U), radial (R), musculocutané (MC) ; artère brachiale (AB), biceps brachial (B), coracobrachial (CB).</figcaption></figure>
+        <p>En descendant vers le coude, on suit le nerf ulnaire qui quitte le paquet brachial pour traverser le <mark class="k-ddx">septum intermusculaire médial</mark> et passer en loge postérieure.</p>
+
+        <h4 class="cours-h4">Coupe 2 : gouttière épitrochléo-olécrânienne</h4>
+        <figure class="cfig" id="fig-2"><span class="cfig-num" aria-hidden="true">2</span><div class="cfig-paire"><div><svg viewBox="0 0 320 420" role="img" aria-label="Coude fléchi vu par sa face postéro-médiale, sonde transversale posée entre épicondyle médial et olécrane">
+<style>
+  .lb{paint-order:stroke;stroke:#e9f0f2;stroke-width:4px;stroke-linejoin:round;font:700 13px Montserrat, "Atkinson Hyperlegible", Arial, sans-serif; fill:#141414}
+  .lm{paint-order:stroke;stroke:#e9f0f2;stroke-width:4px;stroke-linejoin:round;font:800 14px Montserrat, "Atkinson Hyperlegible", Arial, sans-serif; fill:#141414}
+  .sm{paint-order:stroke;stroke:#e9f0f2;stroke-width:4px;stroke-linejoin:round;font:600 11.5px Montserrat, "Atkinson Hyperlegible", Arial, sans-serif; fill:#3a4650}
+</style>
+<rect width="320" height="420" fill="#e9f0f2"/>
+<path d="M104 -4 L 214 -4 C 214 80, 216 170, 226 214 C 238 236, 268 246, 324 248 L 324 352 C 276 352, 232 360, 186 368 C 142 376, 108 356, 100 318 C 92 260, 98 120, 104 -4 Z" fill="#f1c7a3" stroke="#141414" stroke-width="3.2" stroke-linejoin="round"/>
+<path d="M226 214 C 236 250, 250 270, 268 290" fill="none" stroke="#141414" stroke-width="2" opacity=".35"/>
+
+  <path d="M160 -4 C 160 90, 162 200, 166 268 C 170 300, 196 316, 236 318 L 324 312" fill="none" stroke="#141414" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M160 -4 C 160 90, 162 200, 166 268 C 170 300, 196 316, 236 318 L 324 312" fill="none" stroke="#f6c945" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 5"/>
+
+  <line x1="202" y1="260" x2="122" y2="324" stroke="#141414" stroke-width="17" stroke-linecap="round"/>
+  <line x1="202" y1="260" x2="122" y2="324" stroke="#2b3138" stroke-width="11" stroke-linecap="round"/>
+  <line x1="202" y1="260" x2="122" y2="324" stroke="#5a6672" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 5"/>
+  <text x="0" y="0" text-anchor="start" class="lb"></text>
+
+  <ellipse cx="210" cy="254" rx="9" ry="7" fill="#fffaf0" stroke="#141414" stroke-width="2.5"/>
+  <text x="230" y="236" text-anchor="start" class="lm">EM</text>
+
+  <ellipse cx="116" cy="330" rx="9" ry="7" fill="#fffaf0" stroke="#141414" stroke-width="2.5"/>
+  <text x="96" y="352" text-anchor="end" class="lm">OL</text>
+<text x="12" y="236" class="lb">Sonde</text>
+<text x="12" y="251" class="sm">transversale,</text>
+<text x="12" y="265" class="sm">de EM à OL</text>
+<path d="M70 246 L 146 298" stroke="#141414" stroke-width="1.4"/>
+<text x="174" y="60" class="sm">Nerf ulnaire</text>
+<path d="M172 56 L 162 52" stroke="#141414" stroke-width="1.4"/>
+<text x="12" y="404" class="sm">Coude fléchi, face postéro-médiale</text>
+</svg><span class="cfig-lettre" aria-hidden="true">A</span></div><div><button type="button" class="cfig-zoom" aria-label="Agrandir l'image"><img src="coude/images/fig02-gouttiere-axial.png" alt="Coupe axiale de la gouttière épitrochléo-olécrânienne montrant le nerf ulnaire" width="728" height="559" loading="lazy" decoding="async"></button><span class="cfig-lettre" aria-hidden="true">B</span></div></div>
+        <figcaption><b class="cfig-label">FIG. 2 :</b> A. Sonde transversale posée en pont entre l'épicondyle médial (EM) et l'olécrane (OL), en regard de la gouttière épitrochléo-olécrânienne. B. Nerf ulnaire (flèche) au sein de la gouttière, entre l'épicondyle médial (EM) et l'olécrane (OL).</figcaption></figure>
+
+        <h4 class="cours-h4">Coupe 3 : avant-bras proximal</h4>
+        <figure class="cfig" id="fig-3"><span class="cfig-num" aria-hidden="true">3</span><div class="cfig-paire"><div><svg viewBox="0 0 320 420" role="img" aria-label="Avant-bras en supination, sonde transversale au tiers proximal du versant antéro-médial">
+<style>
+  .lb{paint-order:stroke;stroke:#e9f0f2;stroke-width:4px;stroke-linejoin:round;font:700 13px Montserrat, "Atkinson Hyperlegible", Arial, sans-serif; fill:#141414}
+  .lm{paint-order:stroke;stroke:#e9f0f2;stroke-width:4px;stroke-linejoin:round;font:800 14px Montserrat, "Atkinson Hyperlegible", Arial, sans-serif; fill:#141414}
+  .sm{paint-order:stroke;stroke:#e9f0f2;stroke-width:4px;stroke-linejoin:round;font:600 11.5px Montserrat, "Atkinson Hyperlegible", Arial, sans-serif; fill:#3a4650}
+</style>
+<rect width="320" height="420" fill="#e9f0f2"/>
+<path d="M-4 150 C 60 136, 140 140, 200 152 C 222 156, 236 158, 250 156 C 270 150, 300 146, 316 158 C 326 170, 322 200, 316 214 C 304 236, 270 238, 252 232 C 236 230, 222 232, 200 240 C 140 262, 60 262, -4 252 Z" fill="#f1c7a3" stroke="#141414" stroke-width="3.2" stroke-linejoin="round"/>
+<path d="M262 154 C 272 132, 292 122, 304 128 C 312 132, 306 142, 296 150" fill="#f1c7a3" stroke="#141414" stroke-width="3" stroke-linejoin="round"/>
+<path d="M258 196 C 276 192, 292 194, 306 200" fill="none" stroke="#141414" stroke-width="1.8" opacity=".45"/>
+
+  <path d="M-4 236 C 60 238, 140 234, 200 226 C 222 222, 240 220, 258 218" fill="none" stroke="#141414" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M-4 236 C 60 238, 140 234, 200 226 C 222 222, 240 220, 258 218" fill="none" stroke="#f6c945" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 5"/>
+
+  <line x1="76" y1="136" x2="76" y2="268" stroke="#141414" stroke-width="17" stroke-linecap="round"/>
+  <line x1="76" y1="136" x2="76" y2="268" stroke="#2b3138" stroke-width="11" stroke-linecap="round"/>
+  <line x1="76" y1="136" x2="76" y2="268" stroke="#5a6672" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 5"/>
+  <text x="90" y="124" text-anchor="start" class="lb">Sonde</text>
+<text x="90" y="108" class="sm">petit axe, tiers proximal</text>
+<text x="110" y="296" class="sm">Nerf ulnaire (bord ulnaire)</text>
+<path d="M164 280 L 168 236" stroke="#141414" stroke-width="1.4"/>
+<text x="58" y="40" class="sm">Avant-bras en supination,</text>
+<text x="58" y="54" class="sm">versant antéro-médial</text>
+<text x="292" y="114" class="sm" text-anchor="middle">Pouce</text>
+</svg><span class="cfig-lettre" aria-hidden="true">A</span></div><div><button type="button" class="cfig-zoom" aria-label="Agrandir l'image"><img src="coude/images/fig03-avant-bras-axial.png" alt="Coupe axiale de l'avant-bras proximal : nerf ulnaire entre FCU et FDP" width="765" height="565" loading="lazy" decoding="async"></button><span class="cfig-lettre" aria-hidden="true">B</span></div></div>
+        <figcaption><b class="cfig-label">FIG. 3 :</b> A. Sonde transversale au tiers proximal de l'avant-bras, versant antéro-médial, avant-bras en supination. B. Nerf ulnaire (flèche) le long de l'artère ulnaire (AU), dans l'interstice entre fléchisseur ulnaire du carpe (FCU) et fléchisseur profond des doigts (FDP) ; U, cortex de l'ulna.</figcaption></figure>
+
+        <h3 class="marker-sub cours-h3">4. Sémiologie : normal vs pathologique</h3>
+
+        <h4 class="cours-h4">Critère quantitatif : surface de section transversale (CSA)</h4>
+        <ul class="fl">
+          <li><b>Mesure</b> : plan <mark class="k-tech">strictement axial</mark>, <mark class="k-tech">tracé manuel continu</mark> en dedans de la <mark class="k-ddx">couronne hyperéchogène épineurale</mark>. Coude en extension ou flexion légère constante : la <mark class="k-grave">flexion complète diminue la CSA</mark> par étirement.</li>
+          <li><b>Normale</b> : <mark class="k-key">&lt; 8 à 9 mm²</mark> (moyenne physiologique <mark class="k-key">6 à 7 mm²</mark>).</li>
+          <li><b>Seuil pathologique</b> : <mark class="k-grave">CSA</mark> <mark class="k-key">≥ 10 mm²</mark> dans la gouttière épitrochléo-olécrânienne. C'est le <b>critère diagnostique majeur</b> (sensibilité et spécificité de l'ordre de <mark class="k-key">85 à 90 %</mark>).</li>
+          <li><b>Ratio de gonflement</b> (swelling ratio) = CSA maximale au coude / CSA à distance (tiers moyen du bras ou de l'avant-bras). <mark class="k-grave">Ratio</mark> <mark class="k-key">&gt; 1,5</mark> = souffrance focale. Utile chez les patients <b>grands ou musclés</b> aux nerfs constitutionnellement larges.</li>
+        </ul>
+
+        <figure class="cfig" id="fig-4"><span class="cfig-num" aria-hidden="true">4</span><button type="button" class="cfig-zoom" aria-label="Agrandir l'image"><img src="coude/images/fig04-tunnel-cubital-csa-10-4.png" alt="Coupe axiale du tunnel cubital avec nerf épaissi de 10,4 mm² et coupe longitudinale avec épaississement segmentaire" width="1362" height="448" loading="lazy" decoding="async"></button>
+        <figcaption><b class="cfig-label">FIG. 4 :</b> Neuropathie ulnaire chez une femme de 25 ans. A. Petit axe : nerf <mark class="k-grave">hypoéchogène et épaissi</mark> (astérisque) entre épicondyle médial (EM) et olécrane (O), CSA <mark class="k-key">10,4 mm²</mark> ; rétinaculum du tunnel cubital (têtes de flèche) en bande hyperéchogène qui ferme le tunnel. B. Grand axe : épaississement segmentaire à la partie proximale du tunnel ; en distal, le nerf garde une échostructure fasciculaire normale (flèches).</figcaption></figure>
+
+        <h4 class="cours-h4">Critères qualitatifs</h4>
+        <ul class="fl">
+          <li><b>Morphologie (petit axe)</b> : <mark class="k-grave">dédifférenciation fasciculaire</mark> (perte du rayon de miel), nerf <mark class="k-grave">hypoéchogène et œdématié</mark> par congestion intraneurale en amont de l'obstacle.</li>
+          <li><b>Signe de l'encoche (grand axe)</b> : perte brutale du parallélisme des bords, <mark class="k-grave">rétrécissement</mark> au site exact de la compression et <mark class="k-grave">renflement fusiforme en amont</mark> : aspect en <mark class="k-grave">sablier</mark> (hourglass).</li>
+          <li><b>Hyperhémie intraneurale</b> : spots vasculaires intra- ou épineuraux en <mark class="k-tech">Doppler puissance / micro-Doppler</mark>. Signe de souffrance inflammatoire active, <b>corrélé à la sévérité électrique</b>.</li>
+        </ul>
+
+        <h4 class="cours-h4">Les 4 stades de dédifférenciation fasciculaire</h4>
+        <figure class="cfig" id="fig-5"><span class="cfig-num" aria-hidden="true">5</span><div class="cfig-stades">
+          <div><button type="button" class="cfig-zoom" aria-label="Agrandir l'image"><img src="coude/images/fig05-stade1.png" alt="Stade 1 : schéma et échographie d'un nerf fasciculé normal" width="810" height="309" loading="lazy" decoding="async"></button><span>Stade 1 – Coupe transversale d'un nerf périphérique d'échostructure fasciculaire normale (aspect en « rayon de miel ») : A. schéma ; B. image échographique.</span></div>
+          <div><button type="button" class="cfig-zoom" aria-label="Agrandir l'image"><img src="coude/images/fig05-stade2.png" alt="Stade 2 : échostructure floue" width="837" height="340" loading="lazy" decoding="async"></button><span>Stade 2 – Coupe transversale d'un nerf périphérique avec échostructure floue : A. schéma ; B. image échographique.</span></div>
+          <div><button type="button" class="cfig-zoom" aria-label="Agrandir l'image"><img src="coude/images/fig05-stade3.png" alt="Stade 3 : effacement partiel de l'échostructure" width="801" height="305" loading="lazy" decoding="async"></button><span>Stade 3 – Coupe transversale d'un nerf périphérique avec effacement partiel de l'échostructure : A. schéma ; B. image échographique.</span></div>
+          <div><button type="button" class="cfig-zoom" aria-label="Agrandir l'image"><img src="coude/images/fig05-stade4.png" alt="Stade 4 : disparition complète de l'échostructure" width="785" height="300" loading="lazy" decoding="async"></button><span>Stade 4 – Coupe transversale d'un nerf périphérique avec disparition complète de l'échostructure : A. schéma ; B. image échographique.</span></div>
+        </div>
+        <figcaption><b class="cfig-label">FIG. 5 :</b> Coupes transversales d'un nerf périphérique : schéma (gauche) et image échographique (droite). De la fasciculation <mark class="k-sign">normale</mark> à la <mark class="k-grave">perte complète</mark> de l'architecture fasciculaire.</figcaption></figure>
+
+        <h4 class="cours-h4">Signe de l'encoche en grand axe</h4>
+        <figure class="cfig" id="fig-6"><span class="cfig-num" aria-hidden="true">6</span><button type="button" class="cfig-zoom" aria-label="Agrandir l'image"><img src="coude/images/fig06-signe-encoche.png" alt="Coupe longitudinale du nerf ulnaire avec encoche focale et renflement d'amont" width="1618" height="810" loading="lazy" decoding="async"></button>
+        <figcaption><b class="cfig-label">FIG. 6 :</b> Signe de l'encoche (notch sign) sur le nerf ulnaire (flèches), aspect en <mark class="k-grave">sablier</mark> ; chefs huméral et ulnaire du FCU (astérisques).</figcaption></figure>
+
+        <h4 class="cours-h4">Cas illustratif : épaississement au relief osseux</h4>
+        <figure class="cfig" id="fig-7"><span class="cfig-num" aria-hidden="true">7</span><button type="button" class="cfig-zoom" aria-label="Agrandir l'image"><img src="coude/images/fig07-cas-epaississement-annote.png" alt="Coupe longitudinale du nerf ulnaire très épaissi et hypoéchogène en regard du relief osseux, calibre normal en aval" width="1562" height="720" loading="lazy" decoding="async"></button>
+        <figcaption><b class="cfig-label">FIG. 7 :</b> Grand axe : nerf <mark class="k-grave">très épais et très hypoéchogène</mark> en regard du relief osseux de la gouttière, alors que le nerf retrouve un <mark class="k-sign">calibre normal</mark> à distance. C'est la disparité de calibre qui signe la souffrance focale.</figcaption></figure>
+        <figure class="cfig is-etroite" id="fig-8"><span class="cfig-num" aria-hidden="true">8</span><button type="button" class="cfig-zoom" aria-label="Agrandir l'image"><img src="coude/images/fig08-cas-sans-annotation.png" alt="Même examen, image sans annotation" width="714" height="467" loading="lazy" decoding="async"></button>
+        <figcaption><b class="cfig-label">FIG. 8 :</b> Même examen, image sans annotation : s'entraîner à repérer le segment épaissi hypoéchogène et le retour au calibre normal.</figcaption></figure>
+
+        <h3 class="marker-sub cours-h3">5. Étiologies au coude</h3>
+
+        <h4 class="cours-h4">A. Compressions idiopathiques (syndrome du tunnel cubital)</h4>
+        <ul class="fl">
+          <li><mark class="k-ddx">Rétinaculum d'Osborne</mark> : épaississement fibreux du toit de la gouttière. <b>Site le plus fréquent.</b></li>
+          <li><mark class="k-ddx">Arcade du FCU (fascia d'Osborne)</mark> : compression distale sous l'aponévrose qui réunit les chefs huméral et ulnaire du FCU.</li>
+          <li><mark class="k-ddx">Arcade de Struthers</mark> : compression haute, à <mark class="k-key">8 cm</mark> en amont de l'épicondyle médial, par épaississement du septum intermusculaire médial et des fibres du triceps.</li>
+        </ul>
+
+        <h4 class="cours-h4">B. Instabilité dynamique et ressaut</h4>
+        <p><mark class="k-tech">Manœuvre</mark> : flexion active ou passive, de l'extension jusqu'à <mark class="k-key">90 à 120°</mark>, <b>sans appuyer avec la sonde</b> (une pression excessive bloque artificiellement le nerf dans la gouttière). Classification d'<b>Okamoto</b> :</p>
+        <div class="cours-grades">
+          <div class="cours-grade"><span class="cours-g is-n">Type N</span><p><mark class="k-sign">Normal</mark> : le nerf reste stable au fond de la gouttière.</p></div>
+          <div class="cours-grade"><span class="cours-g is-s">Type S</span><p><mark class="k-grave">Subluxation</mark> : en flexion, le nerf migre en dedans et se perche sur le <mark class="k-ddx">sommet de l'épicondyle médial</mark> sans le franchir.</p></div>
+          <div class="cours-grade"><span class="cours-g is-d">Type D</span><p><mark class="k-grave">Luxation complète</mark> : le nerf franchit la pointe de l'épicondyle médial en claquant et se plaque à la face superficielle du <mark class="k-ddx">tendon commun des épicondyliens médiaux</mark>.</p></div>
+          <div class="cours-grade"><span class="cours-g is-x">Triceps</span><p><mark class="k-grave">Snapping triceps</mark> : après la luxation du nerf, un <b>second ressaut</b> correspond au passage du <mark class="k-ddx">chef médial du triceps</mark> par-dessus l'épicondyle médial.</p></div>
+        </div>
+        <figure class="cfig is-etroite" id="fig-9"><span class="cfig-num" aria-hidden="true">9</span><button type="button" class="cfig-zoom" aria-label="Agrandir l'image"><img src="coude/images/fig09-luxation-type-D.png" alt="Écran partagé : nerf ulnaire en place puis luxé hors de la gouttière" width="888" height="528" loading="lazy" decoding="async"></button>
+        <figcaption><b class="cfig-label">FIG. 9 :</b> Luxation dynamique (type D) en écran partagé : nerf ulnaire (flèche) en position normale à gauche, <mark class="k-grave">luxé hors de la gouttière</mark> à droite ; épicondyle médial de l'humérus (astérisque).</figcaption></figure>
+        <div class="callout callout-warn"><p><b>Piège diagnostique :</b> Une instabilité du nerf ulnaire existe chez <mark class="k-key">15 à 20 %</mark> des sujets asymptomatiques, souvent bilatérale. On ne la retient comme pathologique (<mark class="k-grave">névrite de friction</mark>) que si elle <b>reproduit la douleur</b> au passage de la sonde ou s'accompagne d'un <mark class="k-grave">épaississement hypoéchogène</mark> du nerf.</p></div>
+
+        <h4 class="cours-h4">C. Compressions extrinsèques</h4>
+        <ul class="fl">
+          <li><mark class="k-ddx">Muscle épitrochléo-anconé</mark> (anconeus epitrochlearis) : muscle accessoire présent chez <mark class="k-key">10 à 25 %</mark> de la population, qui <b>remplace le ligament d'Osborne</b>. Structure charnue hypoéchogène tendue entre épicondyle médial et olécrane, qui comprime le nerf surtout <mark class="k-tech">en extension ou à la contraction</mark>.</li>
+          <li><b>Pathologie articulaire et synoviale</b> : <mark class="k-grave">kyste arthro-synovial</mark> du récessus postéro-médial huméro-ulnaire, pannus (polyarthrite rhumatoïde), épanchement sous tension, corps étrangers (ostéochondromatose).</li>
+          <li><b>Remaniements osseux et post-traumatiques</b> : <mark class="k-grave">ostéophytes</mark> comblant le plancher de la gouttière, cal vicieux, pseudarthrose, séquelles de fracture de la palette humérale avec <mark class="k-grave">cubitus valgus</mark> (neuropathie tardive par étirement chronique).</li>
+          <li><b>Pathologie tendineuse de voisinage</b> : épicondylopathie médiale floride, rupture du <mark class="k-ddx">LCU</mark> avec remaniements inflammatoires.</li>
+        </ul>
+        <figure class="cfig is-etroite" id="fig-10"><span class="cfig-num" aria-hidden="true">10</span><button type="button" class="cfig-zoom" aria-label="Agrandir l'image"><img src="coude/images/fig10-ancone-epitrochleen.png" alt="Muscle anconé épitrochléen au contact d'un nerf ulnaire épaissi" width="964" height="494" loading="lazy" decoding="async"></button>
+        <figcaption><b class="cfig-label">FIG. 10 :</b> <mark class="k-ddx">Muscle anconé épitrochléen</mark> (tête de flèche) au contact immédiat d'un nerf ulnaire <mark class="k-grave">épaissi et tuméfié</mark> (flèche).</figcaption></figure>
+
+        <h4 class="cours-h4">D. Pathologies intrinsèques et retentissement musculaire</h4>
+        <ul class="fl">
+          <li><b>Tumeurs des gaines nerveuses</b> : <mark class="k-grave">schwannome</mark> (masse bien limitée, <b>excentrée</b> par rapport à l'axe du nerf, souvent hypervasculaire et remaniée) ; <mark class="k-grave">neurofibrome</mark> (masse fusiforme <b>centrée</b>).</li>
+          <li><mark class="k-grave">Kyste intraneural</mark> : dégénérescence mucoïde dans l'épinèvre, parfois alimentée par un rameau articulaire.</li>
+          <li><b>Dénervation en aval</b> : <mark class="k-grave">amyotrophie et hyperéchogénicité</mark> diffuse par infiltration graisseuse du <mark class="k-ddx">chef ulnaire du FCU</mark>, des <mark class="k-ddx">chefs médiaux du FDP</mark>, du <mark class="k-ddx">1er interosseux dorsal</mark> et de l'<mark class="k-ddx">éminence hypothénar</mark>.</li>
+        </ul>
+        </section>
+
+        <!-- PARTIE 2 -->
+        <section class="fsec cours-partie" id="guyon" style="--c: var(--teal)">
+        <p class="cours-partie-num">Partie 2</p>
+        <h2 class="fsec-title"><span class="fnum">2</span>Nerf ulnaire au poignet : le canal de Guyon</h2>
+        <p class="fintro">Presque toujours secondaire à une cause locale organique : masse, anomalie vasculaire, fracture ou muscle accessoire.</p>
+
+        <h3 class="marker-sub cours-h3">1. Rappels anatomiques</h3>
+        <p>La <b>loge de Guyon</b> est un tunnel ostéo-fibreux d'environ <mark class="k-key">4 cm</mark> au bord antéro-médial du carpe.</p>
+        <div class="ftable-wrap"><table class="ftable cours-tableau">
+        <thead><tr><th>Élément</th><th>Constitution</th></tr></thead>
+        <tbody>
+        <tr><td>Plancher</td><td><mark class="k-ddx">Rétinaculum des fléchisseurs</mark>, ligaments <mark class="k-ddx">piso-hamatum</mark> et <mark class="k-ddx">piso-métacarpien</mark></td></tr>
+        <tr><td>Toit</td><td><mark class="k-ddx">Ligament carpien palmaire</mark> (expansion du fascia antébrachial et du tendon du FCU), puis <mark class="k-ddx">muscle court palmaire</mark> en aval</td></tr>
+        <tr><td>Paroi médiale (ulnaire)</td><td><mark class="k-ddx">Pisiforme</mark> en proximal et tendon du <mark class="k-ddx">FCU</mark></td></tr>
+        <tr><td>Paroi latérale (radiale)</td><td><mark class="k-ddx">Hamulus de l'hamatum</mark> en distal</td></tr>
+        <tr><td>Contenu</td><td><b>Nerf ulnaire</b> en dedans, contre le pisiforme ; <b>artère ulnaire</b> en dehors (côté radial) du nerf</td></tr>
+        </tbody></table></div>
+
+        <div class="callout"><p><b>Point sémiologique fondamental :</b> La <mark class="k-ddx">branche cutanée dorsale</mark> (sensitive pure du bord dorso-ulnaire de la main) naît à l'avant-bras, environ <mark class="k-key">5 cm</mark> en amont du pisiforme, et contourne l'ulna <b>sans passer dans le canal de Guyon</b>. Une <mark class="k-grave">hypoesthésie dorso-ulnaire</mark> exclut donc une atteinte isolée au canal de Guyon.</p></div>
+
+        <figure class="cfig is-schema" id="fig-11"><span class="cfig-num" aria-hidden="true">11</span><button type="button" class="cfig-zoom" aria-label="Agrandir l'image"><img src="coude/images/nerf-ulnaire-anatomie-fr.png" alt="Schéma du nerf ulnaire de l'avant-bras à la main, vue antérieure : branches cutanées dorsale et palmaire, canal de Guyon, branches superficielle et profonde" width="864" height="1926" loading="lazy" decoding="async"></button>
+<figcaption><b class="cfig-label">FIG. 11 :</b> Trajet du nerf ulnaire de l'avant-bras à la main (vue antérieure). Les <mark class="k-ddx">branches cutanées dorsale et palmaire</mark> naissent à l'avant-bras, en amont du <mark class="k-ddx">canal de Guyon</mark> : une atteinte isolée au canal <mark class="k-sign">les épargne</mark>. À la sortie du canal, le nerf se divise en <mark class="k-ddx">branche superficielle</mark> (sensitive) et <mark class="k-ddx">branche profonde</mark> (motrice).</figcaption></figure>
+
+        <h3 class="marker-sub cours-h3">2. Protocole et 4 coupes de référence</h3>
+        <ul class="fl">
+          <li><b>Sonde</b> : <mark class="k-tech">linéaire très haute fréquence</mark> (<mark class="k-key">15 à 22 MHz</mark>) ou sonde <mark class="k-tech">club de golf</mark> (hockey-stick).</li>
+          <li><b>Position</b> : main à plat en supination, poignet neutre ou en très légère extension.</li>
+        </ul>
+        <div class="ftable-wrap"><table class="ftable cours-tableau">
+        <thead><tr><th>Coupe</th><th>Repères</th><th>Analyse normale</th></tr></thead>
+        <tbody>
+        <tr><td>1. Axiale antébrachiale distale<br><small>(5 cm en amont du pli)</small></td>
+        <td><mark class="k-ddx">Tendon du FCU</mark> en avant et en dedans, <mark class="k-ddx">carré pronateur</mark> en profondeur, <mark class="k-ddx">artère ulnaire</mark> (repère pulsatile)</td>
+        <td>Tronc du nerf <mark class="k-sign">entre l'artère (en dehors) et le FCU (en dedans)</mark>. Repérer l'émergence de la <mark class="k-ddx">branche cutanée dorsale</mark> qui part en dedans et en arrière sous le FCU.</td></tr>
+        <tr><td>2. Entrée du canal, zone I<br><small>(niveau du pisiforme)</small></td>
+        <td><mark class="k-ddx">Pisiforme</mark> (cortex hyperéchogène arrondi, cône d'ombre) en dedans, <mark class="k-ddx">rétinaculum des fléchisseurs</mark> en profondeur</td>
+        <td>Tronc <mark class="k-sign">ovalaire ou triangulaire, polyfasciculaire</mark>, entre pisiforme (dedans) et artère ulnaire (dehors). <b>Site de mesure de la CSA de référence.</b></td></tr>
+        <tr><td>3. Sortie du canal, zones II et III<br><small>(niveau de l'hamulus)</small></td>
+        <td><mark class="k-ddx">Hamulus de l'hamatum</mark> (crochet en aileron de requin), <mark class="k-ddx">arcade des hypothénariens</mark> (arcade piso-hamatum)</td>
+        <td>Division en <mark class="k-ddx">branche superficielle sensitive</mark> (reste au contact de l'artère) et <mark class="k-ddx">branche profonde motrice</mark> (plonge contre le versant médial de l'hamulus sous l'arcade).</td></tr>
+        <tr><td>4. Longitudinale<br><small>(axe piso-hamatum)</small></td>
+        <td>Sur le nerf (en dedans) puis sur l'artère (en dehors)</td>
+        <td>Vérifie la <mark class="k-sign">continuité fasciculaire</mark>, cherche une encoche extrinsèque (kyste, arcade), analyse la paroi artérielle en <mark class="k-tech">Doppler couleur</mark>.</td></tr>
+        </tbody></table></div>
+
+        <h4 class="cours-h4">Coupe 1 : pli de flexion distal</h4>
+        <figure class="cfig" id="fig-12"><span class="cfig-num" aria-hidden="true">12</span><button type="button" class="cfig-zoom" aria-label="Agrandir l'image"><img src="coude/images/fig11-guyon-pli-distal.png" alt="Coupe axiale au pli de flexion distal : artère ulnaire, nerf ulnaire entouré, FCU et son tendon" width="1576" height="752" loading="lazy" decoding="async"></button>
+        <figcaption><b class="cfig-label">FIG. 12 :</b> Nerf ulnaire au pli de flexion distal du poignet (entouré). AU, artère ulnaire ; FCU, fléchisseur ulnaire du carpe ; T, tendon du FCU ; A1, aire de mesure ; U, versant ulnaire (médial) ; R, versant radial (latéral).</figcaption></figure>
+
+        <h4 class="cours-h4">Coupe 2 : zone I, niveau du pisiforme</h4>
+        <figure class="cfig" id="fig-13"><span class="cfig-num" aria-hidden="true">13</span><button type="button" class="cfig-zoom" aria-label="Agrandir l'image"><img src="coude/images/fig12-guyon-pisiforme.png" alt="Coupe axiale au niveau du pisiforme montrant le nerf ulnaire" width="1598" height="752" loading="lazy" decoding="async"></button>
+        <figcaption><b class="cfig-label">FIG. 13 :</b> Nerf ulnaire (flèche) en regard du <mark class="k-ddx">pisiforme</mark> (P). C'est ici que l'on mesure la CSA de référence. U, versant ulnaire (médial) ; R, versant radial (latéral).</figcaption></figure>
+
+        <h4 class="cours-h4">Coupe 3 : zones II et III, bifurcation</h4>
+        <figure class="cfig" id="fig-14"><span class="cfig-num" aria-hidden="true">14</span><button type="button" class="cfig-zoom" aria-label="Agrandir l'image"><img src="coude/images/fig13-guyon-bifurcation.png" alt="Coupe axiale après la bifurcation : branches superficielle et profonde à côté de l'artère ulnaire" width="1578" height="804" loading="lazy" decoding="async"></button>
+        <figcaption><b class="cfig-label">FIG. 14 :</b> Nerf ulnaire dans la loge de Guyon <b>après sa bifurcation</b>. AU, artère ulnaire ; BS, <mark class="k-ddx">branche superficielle</mark> (sensitive) ; BP, <mark class="k-ddx">branche profonde</mark> (motrice) ; A1 et A2, aires de mesure ; U, versant ulnaire ; R, versant radial.</figcaption></figure>
+        <figure class="cfig" id="fig-15"><span class="cfig-num" aria-hidden="true">15</span><button type="button" class="cfig-zoom" aria-label="Agrandir l'image"><img src="coude/images/fig14-guyon-branche-superficielle-hamulus.png" alt="Branche superficielle du nerf ulnaire en regard de l'hamulus de l'hamatum" width="1544" height="742" loading="lazy" decoding="async"></button>
+        <figcaption><b class="cfig-label">FIG. 15 :</b> Branche superficielle (BS) en regard de l'<mark class="k-ddx">hamulus de l'hamatum</mark> (H), en petit axe. AU, artère ulnaire ; A1, aire de mesure.</figcaption></figure>
+
+        <h4 class="cours-h4">Coupe 4 : grand axe</h4>
+        <figure class="cfig" id="fig-16"><span class="cfig-num" aria-hidden="true">16</span><button type="button" class="cfig-zoom" aria-label="Agrandir l'image"><img src="coude/images/fig15-guyon-grand-axe.png" alt="Coupe longitudinale du nerf ulnaire en regard du pisiforme" width="1592" height="814" loading="lazy" decoding="async"></button>
+        <figcaption><b class="cfig-label">FIG. 16 :</b> Nerf ulnaire en regard du pisiforme, coupe longitudinale (flèches) : bords <mark class="k-sign">parallèles</mark>, structure fibrillaire continue.</figcaption></figure>
+
+        <h3 class="marker-sub cours-h3">3. Sémiologie et classification de Shea et McClain</h3>
+        <ul class="fl">
+          <li><b>CSA</b> mesurée au pisiforme (zone I). <mark class="k-sign">Normale</mark> : <mark class="k-key">4 à 6 mm²</mark>. <mark class="k-grave">Pathologique</mark> : <mark class="k-key">≥ 8 mm²</mark> ou asymétrie <mark class="k-key">&gt; 2 mm²</mark> avec le côté sain.</li>
+          <li><b>Branche profonde motrice</b> (<mark class="k-key">1 à 2 mm</mark> de diamètre) : suivie contre la corticale médiale de l'hamulus. Un <mark class="k-grave">épaississement focal hypoéchogène</mark> au contact du crochet signe un conflit en zone II.</li>
+        </ul>
+        <div class="cours-grades">
+          <div class="cours-grade"><span class="cours-g is-s">Zone I</span><p><b>Tronc commun</b>, en amont de la bifurcation : atteinte <mark class="k-grave">mixte sensitivo-motrice</mark> (tous les intrinsèques ulnaires + hypoesthésie palmaire des 4e et 5e doigts).</p></div>
+          <div class="cours-grade"><span class="cours-g is-d">Zone II</span><p><b>Branche profonde motrice isolée</b> : atteinte <mark class="k-grave">purement motrice</mark>, sensibilité respectée, abducteur du 5e parfois épargné. <b>Forme la plus fréquente.</b></p></div>
+          <div class="cours-grade"><span class="cours-g is-x">Zone III</span><p><b>Branche superficielle sensitive isolée</b> : atteinte <mark class="k-grave">purement sensitive</mark> palmaire (4e et 5e doigts), sans déficit moteur (sauf le court palmaire).</p></div>
+        </div>
+
+        <h3 class="marker-sub cours-h3">4. Étiologies au canal de Guyon</h3>
+        <ol class="fl">
+          <li><b>Masses compressives : <mark class="k-grave">kystes arthro-synoviaux</mark></b>, cause n°1 (<mark class="k-key">&gt; 50 %</mark>). Formation <mark class="k-grave">anéchogène</mark> bien limitée, renforcement postérieur, non compressible, <b>avasculaire</b> au Doppler. Toujours chercher le <mark class="k-tech">collet de communication</mark> : interligne <mark class="k-ddx">piso-triquétral</mark> (zone I) ou interlignes carpiens distaux / carpo-métacarpiens (zone II).</li>
+          <li><b><mark class="k-grave">Syndrome du marteau hypothénar</mark></b> : microtraumatismes répétés écrasant l'artère ulnaire contre l'hamulus (travailleurs manuels, sportifs). Artère <mark class="k-grave">tortueuse en tire-bouchon</mark>, ectasique ou anévrysmale, avec <mark class="k-grave">thrombose</mark> qui comprime la branche superficielle (zone III) ou le tronc.</li>
+          <li><b><mark class="k-ddx">Muscle abducteur du petit doigt accessoire</mark></b> (<mark class="k-key">20 à 25 %</mark> des sujets) : corps charnu hypoéchogène qui coiffe en pont l'artère et le nerf dans le toit de la loge. <b>Pathogène seulement</b> si hypertrophie marquée avec aplatissement nerveux et gonflement d'amont.</li>
+          <li><b>Causes osseuses et traumatiques</b>
+            <ul class="fl">
+              <li><mark class="k-grave">Fracture de l'hamulus</mark> : sports à manche (golf, tennis, baseball) ou chute. Solution de continuité corticale, douleur élective au passage de la sonde, hématome ou cal irritant la branche motrice (zone II).</li>
+              <li><mark class="k-grave">Paralysie des cyclistes</mark> (handlebar palsy) : compression chronique de la branche profonde (zone II) ou du tronc (zone I) contre le guidon.</li>
+              <li><b>Arthropathie piso-triquétrale</b> : ostéophytes saillants, instabilité du pisiforme, tendinopathie calcifiante du FCU (calcification péri-pisiformienne).</li>
+            </ul></li>
+          <li><b>Tumeurs des parties molles</b> : lipome intracanalaire, schwannome, tumeur à cellules géantes des gaines tendineuses.</li>
+        </ol>
+        <figure class="cfig is-etroite" id="fig-17"><span class="cfig-num" aria-hidden="true">17</span><button type="button" class="cfig-zoom" aria-label="Agrandir l'image"><img src="coude/images/fig16-kyste-guyon.png" alt="Kyste arthro-synovial entre hamulus et pisiforme avec nerf ulnaire cerclé" width="964" height="494" loading="lazy" decoding="async"></button>
+        <figcaption><b class="cfig-label">FIG. 17 :</b> <mark class="k-grave">Kyste arthro-synovial</mark> (K) et nerf ulnaire (cercle) dans la loge, entre l'<mark class="k-ddx">hamulus de l'hamatum</mark> (HAM) et le pisiforme.</figcaption></figure>
+
+        <h3 class="marker-sub cours-h3">5. Synthèse : coude vs poignet</h3>
+        <div class="ftable-wrap"><table class="ftable cours-tableau">
+        <thead><tr><th>Critère</th><th>Tunnel cubital (coude)</th><th>Canal de Guyon (poignet)</th></tr></thead>
+        <tbody>
+        <tr><td>Étiologie dominante</td><td>Idiopathique (<mark class="k-ddx">ligament d'Osborne</mark>) ou instabilité dynamique</td><td>Compression extrinsèque secondaire (<mark class="k-grave">kyste</mark>, artère, os)</td></tr>
+        <tr><td>Seuil CSA pathologique</td><td><mark class="k-key">≥ 10 mm²</mark></td><td><mark class="k-key">≥ 8 mm²</mark> (ou Δ <mark class="k-key">&gt; 2 mm²</mark>)</td></tr>
+        <tr><td>Manœuvre dynamique clé</td><td><mark class="k-tech">Flexion-extension du coude</mark> (subluxation, luxation)</td><td><mark class="k-tech">Contraction contre résistance du 5e doigt</mark> (muscle accessoire) + Doppler artériel</td></tr>
+        <tr><td>Branche cutanée dorsale</td><td><mark class="k-grave">Atteinte</mark> (hypoesthésie dorso-ulnaire)</td><td><mark class="k-sign">Épargnée</mark> (naît 5 cm en amont)</td></tr>
+        </tbody></table></div>
+        </section>
+
+        <!-- PARTIE 3 -->
+        <section class="fsec cours-partie" id="cr" style="--c: var(--plum)">
+        <p class="cours-partie-num">Partie 3</p>
+        <h2 class="fsec-title"><span class="fnum">3</span>Comptes rendus standardisés</h2>
+        <p class="fintro">Les champs entre crochets sont à adapter. Le bouton copie le texte du modèle.</p>
+
+        <!-- Compte rendu 1 -->
+        <article class="cours-cr" id="cr-echo-ulnaire-coude" style="--c: var(--green)">
+        <div class="cours-cr-tete"><h3>Coude · modèle normal</h3><div class="cours-cr-actions"><span class="cours-cr-tag is-normal">Normal</span><button class="btn btn-ink btn-sm cours-cr-copier" type="button" data-cible="cr1">Copier</button></div></div>
+        <div class="cours-cr-corps" id="cr1">
+        <p class="cours-cr-titre">ÉCHOGRAPHIE DU NERF ULNAIRE AU COUDE <span class="cr-champ">[DROIT / GAUCHE]</span></p>
+        <h4 class="cours-cr-rubrique">Indication</h4>
+        <p>Paresthésies du territoire ulnaire de la main <span class="cr-champ">[droite / gauche]</span>. Recherche d'un syndrome du tunnel cubital. Corrélation à l'ENMG du <span class="cr-champ">[date]</span>.</p>
+        <h4 class="cours-cr-rubrique">Technique</h4>
+        <p>Exploration haute fréquence (sonde linéaire <span class="cr-champ">[15-18]</span> MHz) du nerf ulnaire au coude dans les plans axial et longitudinal, complétée par un mode Doppler puissance et des manœuvres dynamiques de flexion-extension. Examen comparatif.</p>
+        <h4 class="cours-cr-rubrique">Résultats</h4>
+        <ul>
+        <li><b>Morphologie et biométrie</b> : le nerf ulnaire est suivi de la région brachiale distale (arcade de Struthers) jusqu'à son passage entre les deux chefs du muscle fléchisseur ulnaire du carpe (FCU). Il conserve un calibre régulier, sans encoche ni disparité de calibre en coupe longitudinale. Son architecture fasciculaire est respectée.</li>
+        <li><b>Surface de section transversale (CSA)</b> : <span class="cr-champ">[6]</span> mm² dans la gouttière épitrochléo-olécrânienne (normale inférieure à 9-10 mm²), contre <span class="cr-champ">[6]</span> mm² au tiers distal du bras (ratio de gonflement normal à <span class="cr-champ">[1,0]</span>).</li>
+        <li><b>Doppler</b> : absence d'hyperhémie intraneurale ou épineurale en mode Doppler puissance.</li>
+        <li><b>Contenant ostéo-fibreux et variantes</b> : finesse normale du rétinaculum d'Osborne et du fascia du FCU. Absence de muscle épitrochléo-anconé accessoire. Pas d'épanchement ni de kyste arthro-synovial du récessus postéro-médial huméro-ulnaire. Régularité des corticales osseuses de la gouttière.</li>
+        <li><b>Étude dynamique</b> : en flexion complète du coude, le nerf ulnaire demeure stable au fond de la gouttière épitrochléo-olécrânienne, sans subluxation sur l'épicondyle médial ni ressaut du chef médial du triceps brachial (type N d'Okamoto).</li>
+        <li><b>Trophicité musculaire</b> : trophicité et échostructure normales du FCU et des muscles intrinsèques ulnaires de la main (premier interosseux dorsal et loge hypothénar).</li>
+        </ul>
+        <h4 class="cours-cr-rubrique">Conclusion</h4>
+        <p class="cours-cr-conclusion">Examen échographique statique et dynamique normal du nerf ulnaire au coude <span class="cr-champ">[droit / gauche]</span>, sans argument pour un syndrome canalaire ni instabilité nerveuse.</p>
+        </div></article>
+
+        <!-- Compte rendu 2 -->
+        <article class="cours-cr" id="cr-echo-ulnaire-coude-patho" style="--c: var(--k-grave)">
+        <div class="cours-cr-tete"><h3>Coude · trame pathologique modulaire</h3><div class="cours-cr-actions"><span class="cours-cr-tag is-patho">Pathologique</span><button class="btn btn-ink btn-sm cours-cr-copier" type="button" data-cible="cr2">Copier</button></div></div>
+        <div class="cours-cr-corps" id="cr2">
+        <p class="cours-cr-titre">ÉCHOGRAPHIE DU NERF ULNAIRE AU COUDE <span class="cr-champ">[DROIT / GAUCHE]</span></p>
+        <h4 class="cours-cr-rubrique">Indication</h4>
+        <p>Syndrome canalaire ulnaire au coude <span class="cr-champ">[droit / gauche]</span> documenté à l'ENMG. Bilan étiologique et recherche d'instabilité avant prise en charge.</p>
+        <h4 class="cours-cr-rubrique">Technique</h4>
+        <p>Exploration haute fréquence (sonde linéaire <span class="cr-champ">[15-18]</span> MHz) dans les plans axial et longitudinal, mode Doppler puissance et manœuvres dynamiques de flexion-extension, comparativement au côté controlatéral.</p>
+        <h4 class="cours-cr-rubrique">Résultats</h4>
+        <ul>
+        <li><b>Morphologie et biométrie</b> : souffrance focale du nerf ulnaire au niveau du tunnel cubital. En coupe axiale, le nerf est nettement épaissi, hypoéchogène et dédifférencié (perte de l'architecture fasciculaire).</li>
+        <li><b>CSA</b> : maximale à <span class="cr-champ">[14]</span> mm² <span class="cr-champ">[en amont immédiat du rétinaculum d'Osborne / au sommet de l'épicondyle médial]</span>, contre <span class="cr-champ">[6]</span> mm² au bras (ratio de gonflement pathologique à <span class="cr-champ">[2,3]</span>) et <span class="cr-champ">[7]</span> mm² du côté controlatéral asymptomatique.</li>
+        <li><b>Coupe longitudinale</b> : aspect en sablier avec encoche focale sous <span class="cr-champ">[le rétinaculum d'Osborne épaissi / l'arcade fibreuse du FCU]</span> et renflement fusiforme d'amont sur <span class="cr-champ">[25]</span> mm.</li>
+        <li><b>Doppler</b> : hyperhémie intraneurale <span class="cr-champ">[discrète / franche]</span> au Doppler puissance au site de souffrance maximale, témoignant d'une névrite active.</li>
+        <li><b>Bilan étiologique local</b> (choisir) :
+          <div class="cours-cr-option"><b>Option 1, forme idiopathique</b> : épaississement fibreux du rétinaculum d'Osborne comprimant le nerf contre le plancher osseux, sans masse intrinsèque ou extrinsèque ni variante musculaire.</div>
+          <div class="cours-cr-option"><b>Option 2, muscle accessoire</b> : muscle épitrochléo-anconé accessoire charnu de <span class="cr-champ">[X]</span> mm d'épaisseur, coiffant la gouttière et réduisant l'espace disponible pour le nerf en extension.</div>
+          <div class="cours-cr-option"><b>Option 3, cause articulaire / extrinsèque</b> : <span class="cr-champ">[kyste arthro-synovial de X x Y mm issu du récessus huméro-ulnaire postéro-médial / ostéophyte marginal huméro-ulnaire saillant]</span> refoulant et comprimant le nerf dans la gouttière.</div></li>
+        <li><b>Étude dynamique (flexion du coude)</b> :
+          <div class="cours-cr-option"><b>Si stable</b> : le nerf demeure stable dans sa gouttière lors de la flexion.</div>
+          <div class="cours-cr-option"><b>Si subluxation (type S)</b> : migration antéro-médiale du nerf qui se perche sur l'apex de l'épicondyle médial à partir de <span class="cr-champ">[90]</span>° de flexion.</div>
+          <div class="cours-cr-option"><b>Si luxation (type D)</b> : luxation antérieure complète et reproductible du nerf, qui franchit la pointe de l'épicondyle médial avec un ressaut palpable et douloureux à <span class="cr-champ">[100]</span>° de flexion pour se plaquer à la face superficielle du tendon commun des épicondyliens médiaux, <span class="cr-champ">[associée / non associée]</span> à un ressaut secondaire du chef médial du triceps brachial.</div></li>
+        <li><b>Retentissement musculaire d'aval</b> :
+          <div class="cours-cr-option"><b>Absence</b> : trophicité et échogénicité conservées du FCU et des muscles intrinsèques de la main (premier interosseux dorsal).</div>
+          <div class="cours-cr-option"><b>Présence</b> : signes de dénervation chronique, amyotrophie et hyperéchogénicité diffuse du <span class="cr-champ">[chef ulnaire du FCU / premier interosseux dorsal et loge hypothénar]</span> comparativement au côté sain.</div></li>
+        </ul>
+        <h4 class="cours-cr-rubrique">Conclusion</h4>
+        <div class="cours-cr-conclusion"><p>Neuropathie ulnaire au coude <span class="cr-champ">[droit / gauche]</span> (CSA maximale à <span class="cr-champ">[14]</span> mm² avec hyperhémie intraneurale), secondaire à :</p>
+        <ul>
+        <li><span class="cr-champ">[une compression sous le rétinaculum d'Osborne / l'arcade du FCU (forme idiopathique)]</span></li>
+        <li><span class="cr-champ">[OU une compression extrinsèque par un muscle épitrochléo-anconé accessoire / un kyste arthro-synovial]</span></li>
+        <li><span class="cr-champ">[OU une névrite de friction sur luxation dynamique antérieure complète du nerf en flexion (type D)]</span></li>
+        </ul>
+        <p><span class="cr-champ">[Absence / Présence]</span> de signes échographiques de dénervation musculaire en aval.</p></div>
+        </div></article>
+
+        <!-- Compte rendu 3 -->
+        <article class="cours-cr" id="cr-echo-ulnaire-guyon" style="--c: var(--green)">
+        <div class="cours-cr-tete"><h3>Canal de Guyon · modèle normal</h3><div class="cours-cr-actions"><span class="cours-cr-tag is-normal">Normal</span><button class="btn btn-ink btn-sm cours-cr-copier" type="button" data-cible="cr3">Copier</button></div></div>
+        <div class="cours-cr-corps" id="cr3">
+        <p class="cours-cr-titre">ÉCHOGRAPHIE DU NERF ULNAIRE AU POIGNET <span class="cr-champ">[DROIT / GAUCHE]</span> (LOGE DE GUYON)</p>
+        <h4 class="cours-cr-rubrique">Indication</h4>
+        <p>Troubles sensitivo-moteurs du territoire ulnaire distal de la main <span class="cr-champ">[droite / gauche]</span>. Exploration de la loge de Guyon.</p>
+        <h4 class="cours-cr-rubrique">Technique</h4>
+        <p>Exploration très haute fréquence (sonde linéaire <span class="cr-champ">[18-22]</span> MHz) dans les plans axial et longitudinal, centrée sur le bord médial du poignet et de la paume, complétée par une étude écho-Doppler de l'artère ulnaire.</p>
+        <h4 class="cours-cr-rubrique">Résultats</h4>
+        <ul>
+        <li><b>En amont du canal (tiers distal de l'avant-bras)</b> : tronc du nerf ulnaire d'échostructure et de calibre normaux. Branche cutanée dorsale individualisée à environ 5 cm en amont du pisiforme, de calibre normal.</li>
+        <li><b>Loge de Guyon (zone I, pisiforme)</b> : tronc du nerf ulnaire ovalaire régulier, architecture fasciculaire préservée. CSA à <span class="cr-champ">[4,5]</span> mm² (normale inférieure à 8 mm²), symétrique au côté controlatéral.</li>
+        <li><b>Division terminale (zones II et III, hamulus)</b> : bifurcation normale. Branche superficielle sensitive et branche profonde motrice (suivie sous l'arcade fibreuse des hypothénariens contre la corticale médiale de l'hamulus) fines, sans épaississement hypoéchogène focal ni perte de continuité.</li>
+        <li><b>Contenant et rapports vasculo-osseux</b> : absence de masse kystique (notamment en regard de l'interligne piso-triquétral) ou tissulaire intracanalaire ; absence de muscle abducteur du petit doigt accessoire dans le toit du canal ; intégrité corticale du pisiforme et de l'hamulus de l'hamatum ; artère ulnaire de calibre régulier, perméable en Doppler couleur, sans ectasie ni thrombose pariétale.</li>
+        <li><b>Trophicité musculaire</b> : volume et échostructure normaux des muscles hypothénariens, des interosseux et de l'adducteur du pouce.</li>
+        </ul>
+        <h4 class="cours-cr-rubrique">Conclusion</h4>
+        <p class="cours-cr-conclusion">Exploration échographique et Doppler normale de la loge de Guyon <span class="cr-champ">[droite / gauche]</span>. Intégrité du tronc du nerf ulnaire et de ses branches de division, sans syndrome de masse ni anomalie de l'artère ulnaire.</p>
+        </div></article>
+
+        <!-- Compte rendu 4 -->
+        <article class="cours-cr" id="cr-echo-ulnaire-guyon-patho" style="--c: var(--k-grave)">
+        <div class="cours-cr-tete"><h3>Canal de Guyon · trame pathologique modulaire</h3><div class="cours-cr-actions"><span class="cours-cr-tag is-patho">Pathologique</span><button class="btn btn-ink btn-sm cours-cr-copier" type="button" data-cible="cr4">Copier</button></div></div>
+        <div class="cours-cr-corps" id="cr4">
+        <p class="cours-cr-titre">ÉCHOGRAPHIE DU NERF ULNAIRE AU POIGNET <span class="cr-champ">[DROIT / GAUCHE]</span> (LOGE DE GUYON)</p>
+        <h4 class="cours-cr-rubrique">Indication</h4>
+        <p>Déficit <span class="cr-champ">[moteur pur des intrinsèques / sensitivo-moteur ulnaire distal]</span> de la main <span class="cr-champ">[droite / gauche]</span> avec respect de la sensibilité dorsale. Suspicion de syndrome du canal de Guyon.</p>
+        <h4 class="cours-cr-rubrique">Technique</h4>
+        <p>Exploration très haute fréquence (sonde linéaire <span class="cr-champ">[18-22]</span> MHz) de la loge de Guyon dans les plans axial et longitudinal, couplée au Doppler couleur et puissance.</p>
+        <h4 class="cours-cr-rubrique">Résultats</h4>
+        <ul>
+        <li><b>Segment pré-canalaire</b> : aspect normal du tronc du nerf ulnaire au quart distal de l'avant-bras et de sa branche cutanée dorsale.</li>
+        <li><b>Analyse lésionnelle intracanalaire</b> (choisir le scénario) :
+          <div class="cours-cr-option"><b>Scénario 1, kyste arthro-synovial (zone I ou II)</b> : formation kystique anéchogène bien limitée, <span class="cr-champ">[uniloculée / multiloculée]</span>, avasculaire au Doppler, de <span class="cr-champ">[12 x 6 x 8]</span> mm, dans la loge de Guyon, avec collet de communication avec l'articulation <span class="cr-champ">[piso-triquétrale / médio-carpienne]</span>. Effet de masse direct sur <span class="cr-champ">[le tronc du nerf ulnaire en zone I / la branche motrice profonde en zone II contre l'hamulus]</span>, laminé au contact du kyste et tuméfié, hypoéchogène et dédifférencié en amont immédiat (CSA <span class="cr-champ">[10]</span> mm² contre <span class="cr-champ">[4,5]</span> mm² du côté sain).</div>
+          <div class="cours-cr-option"><b>Scénario 2, syndrome du marteau hypothénar (zone I ou III)</b> : artère ulnaire tortueuse et ectasique en regard de l'hamulus (diamètre <span class="cr-champ">[5]</span> mm), siège d'une <span class="cr-champ">[thrombose endoluminale occlusive / sub-occlusive]</span> hypoéchogène sur <span class="cr-champ">[15]</span> mm, sans signal Doppler couleur interne. Ce segment thrombosé et induré comprime <span class="cr-champ">[la branche superficielle sensitive (zone III) / la bifurcation ulnaire]</span>, qui présente un épaississement hypoéchogène réactionnel au contact (douleur élective à la sono-palpation).</div>
+          <div class="cours-cr-option"><b>Scénario 3, fracture de l'hamulus (zone II)</b> : irrégularité et solution de continuité corticale de l'hamulus, entourée d'un remaniement hypoéchogène hyperhémique des tissus mous, très évocatrice d'une fracture <span class="cr-champ">[récente / pseudarthrosée]</span> (douleur exquise au passage de la sonde). Au contact, la branche profonde motrice est épaissie (<span class="cr-champ">[2,8]</span> mm contre <span class="cr-champ">[1,1]</span> mm du côté sain) et hypoéchogène, témoignant d'une neuropathie de contiguïté. Branche superficielle épargnée.</div></li>
+        <li><b>Retentissement musculaire intrinsèque</b> :
+          <div class="cours-cr-option"><b>Absence</b> : trophicité conservée des muscles hypothénariens et interosseux.</div>
+          <div class="cours-cr-option"><b>Présence</b> : amyotrophie et infiltration hyperéchogène de dénervation touchant <span class="cr-champ">[les interosseux et l'adducteur du pouce, avec respect relatif de l'abducteur du 5e doigt (atteinte distale en zone II) / l'ensemble des intrinsèques ulnaires (zone I)]</span>.</div></li>
+        </ul>
+        <h4 class="cours-cr-rubrique">Conclusion</h4>
+        <div class="cours-cr-conclusion"><p>Syndrome du canal de Guyon <span class="cr-champ">[droit / gauche]</span> en zone <span class="cr-champ">[I / II / III]</span> de Shea et McClain, secondaire à :</p>
+        <ul>
+        <li><span class="cr-champ">[une compression extrinsèque par un kyste arthro-synovial d'origine piso-triquétrale de X mm]</span></li>
+        <li><span class="cr-champ">[OU une thrombose anévrysmale de l'artère ulnaire dans le cadre d'un syndrome du marteau hypothénar]</span></li>
+        <li><span class="cr-champ">[OU un conflit mécanique sur fracture / pseudarthrose de l'hamulus de l'hamatum (à confirmer par un scanner du carpe en coupes fines)]</span></li>
+        </ul>
+        <p><span class="cr-champ">[Absence / Présence]</span> de signes échographiques de dénervation des muscles intrinsèques de la main.</p></div>
+        </div></article>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Image agrandie">
+    <button class="modal-close" aria-label="Fermer">&times;</button>
+    <img src="" alt="">
+    <p class="lightbox-cap"></p>
+  </dialog>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span class="brand">
+        <img src="../assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </span>
+      <p class="copyright">© <span id="year"></span> RadiologicHub · Formation en radiologie d'urgence</p>
+    </div>
+  </footer>
+
+  <script src="coude-3d.js?v=20261014220000"></script>
+  <script src="coude-fiche.js?v=20261014233000"></script>
+  <script src="../fiche.js?v=20261012150000"></script>
+</body>
+</html>
