@@ -144,6 +144,11 @@ test('installation d\'OHIF : correctifs précis, version et empreinte figées', 
   assert.deepEqual(I.appliquer('a X b X', 'X', 'Y'), { texte: 'a Y b Y', n: 2 });
   const modele = fs.readFileSync(path.join(RACINE, 'espace-dicom/visionneuse/index.html.modele'), 'utf8');
   assert.match(modele, /\{\{BUNDLE\}\}/);
+  assert.ok(modele.indexOf('theme-radiologichub.css') > modele.indexOf('app.bundle.css'), 'couleurs du site chargées après celles d\'OHIF');
+  const theme = fs.readFileSync(path.join(RACINE, 'espace-dicom/visionneuse/theme-radiologichub.css'), 'utf8');
+  assert.match(theme, /--background: 0 0% 0%;/, 'images toujours sur fond noir');
+  assert.match(theme, /--highlight: 38 88% 57%;/, 'outil actif : ambre du site (#f2ab2f)');
+  assert.match(theme, /--accent: 241 47% 31%;/, 'survol : marine du site (#2b2a74)');
   assert.match(modele, /\^\\\/viewer\\\/\(dicomjson\|dicomweb\)\\\?/, 'seules les adresses de la visionneuse sont acceptées');
   // Visionneuse installée (npm run visionneuse) : vérifier ce qui a été produit
   const ohif = path.join(RACINE, 'dicom', 'ohif');
@@ -151,6 +156,7 @@ test('installation d\'OHIF : correctifs précis, version et empreinte figées', 
     assert.match(fs.readFileSync(path.join(ohif, 'VERSION.txt'), 'utf8'), /3\.13\.12[\s\S]*blob-meme-origine : 1/);
     assert.ok(!fs.existsSync(path.join(ohif, 'ort')) && !fs.existsSync(path.join(ohif, 'sw.js')), 'modules inutiles retirés');
     assert.ok(fs.existsSync(path.join(ohif, 'LICENSE')));
+    assert.equal(fs.readFileSync(path.join(ohif, 'theme-radiologichub.css'), 'utf8'), theme, 'thème copié par l\'installation');
     const index = fs.readFileSync(path.join(ohif, 'index.html'), 'utf8');
     const bundle = /src="(app\.bundle\.[0-9a-f]+\.js)"/.exec(index)[1];
     assert.ok(fs.readFileSync(path.join(ohif, bundle), 'utf8').includes(I.CHEMIN_PUBLIC_CORRIGE));
