@@ -3,8 +3,9 @@
    Chargé après app.bundle.css (voir index.html.modele, copié par
    installer-ohif.js). Les images restent sur fond NOIR (lecture
    radiologique) ; seuls le cadre et les commandes prennent la charte :
-   police Montserrat, encre et bleu marine du site, ambre pour l'outil
-   actif et le focus, rouge du site pour les actions destructives.
+   police Montserrat, bleu marine du site pour les barres et les menus
+   (un ton plus foncé pour les panneaux), bleu roi au survol, ambre pour
+   l'outil actif et le focus, rouge du site pour les suppressions.
    Couleurs du site (styles.css) : encre #111114, marine #2b2a74,
    bleu roi #2a39a3, bleuet #5273bf, ambre #f2ab2f, rouge #a8172d.
    ========================================================= */
@@ -13,31 +14,32 @@
   /* Fond des images : noir */
   --background: 0 0% 0%;
   --foreground: 0 0% 98%;
-  /* Panneaux et barres : marine très sombre */
-  --card: 241 40% 11%;
+  /* Barres d'outils et menus : bleu marine du site (#2b2a74) ;
+     panneaux : le même bleu, un ton plus foncé (#1f1e5c) */
+  --card: 241 50% 24%;
   --card-foreground: 0 0% 98%;
-  --popover: 241 45% 15%;
+  --popover: 241 47% 31%;
   --popover-foreground: 0 0% 98%;
-  --muted: 241 40% 11%;
-  --muted-foreground: 232 22% 72%;
+  --muted: 241 50% 24%;
+  --muted-foreground: 232 40% 82%;
   /* Icônes et textes d'accent : bleuet clair */
   --primary: 224 70% 78%;
   --primary-foreground: 0 0% 98%;
-  --secondary: 241 40% 30%;
-  --secondary-foreground: 230 50% 88%;
-  /* Survol : marine du site */
-  --accent: 241 47% 31%;
+  --secondary: 241 42% 40%;
+  --secondary-foreground: 230 50% 90%;
+  /* Survol : bleu roi du site (#2a39a3) */
+  --accent: 233 59% 40%;
   --accent-foreground: 0 0% 98%;
   /* Outil actif, sélection, focus : ambre du site */
   --highlight: 38 88% 57%;
   --ring: 38 88% 57%;
   --destructive: 351 76% 37%;
   --destructive-foreground: 0 0% 98%;
-  --border: 241 25% 20%;
-  --input: 241 35% 30%;
-  --neutral: 232 18% 62%;
-  --neutral-light: 228 60% 86%;
-  --neutral-dark: 241 25% 20%;
+  --border: 241 35% 38%;
+  --input: 241 40% 42%;
+  --neutral: 232 25% 70%;
+  --neutral-light: 228 60% 88%;
+  --neutral-dark: 241 45% 20%;
 }
 
 /* Police du site (Montserrat, chargée par index.html) à la place d'Inter */
@@ -47,9 +49,9 @@ html, body, #root, .font-sans, button, input, select, textarea, [class*="text-"]
 .font-mono { font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important; }
 
 /* Anciennes classes d'OHIF à couleur fixe */
-.bg-primary-dark { background-color: #111127 !important; }
-.text-primary-dark { color: #111127 !important; }
-.border-primary-dark { border-color: #111127 !important; }
+.bg-primary-dark { background-color: #1f1e5c !important; }
+.text-primary-dark { color: #1f1e5c !important; }
+.border-primary-dark { border-color: #1f1e5c !important; }
 .bg-primary-main, .group-hover\:bg-primary-main:hover { background-color: #2a39a3 !important; }
 .text-primary-main { color: #2a39a3 !important; }
 .border-primary-main { border-color: #2a39a3 !important; }
@@ -58,12 +60,12 @@ html, body, #root, .font-sans, button, input, select, textarea, [class*="text-"]
 .border-primary-light { border-color: #a9bdf0 !important; }
 .text-primary-active { color: #f2ab2f !important; }
 .border-primary-active { border-color: #f2ab2f !important; }
-.bg-secondary-dark { background-color: #16163d !important; }
-.bg-secondary-light { background-color: #2b2a74 !important; }
-.border-secondary-light, .border-inputfield-main { border-color: #2b2a74 !important; }
-.text-secondary-light { color: #8b8fd6 !important; }
-.border-secondary-main { border-color: #2b2a74 !important; }
-.stroke-secondary-light { stroke: #2b2a74 !important; }
+.bg-secondary-dark { background-color: #2b2a74 !important; }
+.bg-secondary-light { background-color: #2a39a3 !important; }
+.border-secondary-light, .border-inputfield-main { border-color: #4b4aa0 !important; }
+.text-secondary-light { color: #a9bdf0 !important; }
+.border-secondary-main { border-color: #4b4aa0 !important; }
+.stroke-secondary-light { stroke: #4b4aa0 !important; }
 
 /* Outil actif : icône foncée sur ambre (comme les étiquettes du site) */
 .bg-highlight { color: #111114; }
