@@ -149,6 +149,8 @@ test('installation d\'OHIF : correctifs précis, version et empreinte figées', 
   assert.match(theme, /--background: 0 0% 0%;/, 'images toujours sur fond noir');
   assert.match(theme, /--highlight: 38 88% 57%;/, 'outil actif : ambre du site (#f2ab2f)');
   assert.match(theme, /--accent: 241 47% 31%;/, 'survol : marine du site (#2b2a74)');
+  assert.match(theme, /font-family: "Montserrat"/, 'police du site');
+  assert.match(modele, /fonts\.googleapis\.com\/css2\?family=Montserrat/, 'Montserrat chargée comme sur le site');
   assert.match(modele, /\^\\\/viewer\\\/\(dicomjson\|dicomweb\)\\\?/, 'seules les adresses de la visionneuse sont acceptées');
   // Visionneuse installée (npm run visionneuse) : vérifier ce qui a été produit
   const ohif = path.join(RACINE, 'dicom', 'ohif');
