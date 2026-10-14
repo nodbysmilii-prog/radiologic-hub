@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no,maximum-scale=1.0,user-scalable=no">
+<meta name="robots" content="noindex">
+<title>Visionneuse — Espace DICOM</title>
+<!-- OHIF Viewer 3.13.12 (licence MIT, voir LICENSE), préparé par espace-dicom/visionneuse/installer-ohif.js -->
+<script>
+  (function () {
+    // Dossier de la visionneuse : OHIF fonctionne dans n'importe quel sous-dossier (hébergeur interchangeable)
+    var base = location.pathname.replace(/[^/]*$/, '');
+    window.PUBLIC_URL = base;
+    window.RH_OHIF_BASE = base;
+    document.write('<base href="' + base + '">');
+    // Interface en français par défaut
+    try { if (!localStorage.getItem('i18nextLng')) localStorage.setItem('i18nextLng', 'fr'); } catch (e) { /* stockage indisponible */ }
+    // Adresse interne d'OHIF transmise par la page de l'Espace DICOM (?route=/viewer/…) :
+    // un hébergement statique ne sait pas servir directement ces adresses
+    var route = new URLSearchParams(location.search).get('route');
+    if (route && /^\/viewer\/(dicomjson|dicomweb)\?/.test(route)) history.replaceState(null, '', base.replace(/\/$/, '') + route);
+  })();
+  function browserImportFunction(n) { return import(n); }
+</script>
+<script src="app-config.js"></script>
+<script defer src="app.bundle.6a81f993cea1dd8b.js"></script>
+<link href="app.bundle.css" rel="stylesheet">
+<style>
+  /* Pas de liste d'études d'OHIF : la liste est celle de l'Espace DICOM */
+  [data-cy="return-to-work-list"] { display: none !important; }
+  /* Téléphone : barre d'outils allégée (capture, rotation 3D et repère restent sur ordinateur et tablette) */
+  @media (max-width: 759px) {
+    [data-cy="Capture"], [data-cy="TrackballRotate"], [data-cy="Crosshairs"],
+    [data-cy="undo-btn"], [data-cy="redo-btn"], .h-\[48px\] .absolute.right-0 .hover\:bg-muted.gap-1 { display: none !important; }
+  }
+</style>
+</head>
+<body><noscript>JavaScript est nécessaire pour la visionneuse.</noscript><div id="react-portal"></div><div id="root"></div>
+<script>
+  // Petits écrans : panneau des études replié au départ, l'image prend toute la largeur
+  if (innerWidth < 760) {
+    var repli = new MutationObserver(function () {
+      var bouton = document.querySelector('[data-cy="side-panel-header-left"]');
+      if (bouton && document.querySelector('[data-cy="viewport-pane"]')) { repli.disconnect(); setTimeout(function () { bouton.click(); }, 400); }
+    });
+    repli.observe(document.documentElement, { childList: true, subtree: true });
+    setTimeout(function () { repli.disconnect(); }, 60000);
+  }
+</script>
+</body>
+</html>
