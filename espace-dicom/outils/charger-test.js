@@ -15,7 +15,14 @@ const path = require('node:path');
 const { creerOrthanc } = require('../src/orthanc.js');
 const { creerSupabase } = require('../src/supabase.js');
 const { lireConfig } = require('../src/config.js');
-const { lireArguments } = require('./generer-dicom-test.js');
+
+function lireArguments(argv) {
+  const a = {};
+  for (let i = 0; i < argv.length; i++) {
+    if (argv[i].startsWith('--')) a[argv[i].slice(2)] = argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[++i] : true;
+  }
+  return a;
+}
 
 async function principal() {
   const a = lireArguments(process.argv.slice(3));

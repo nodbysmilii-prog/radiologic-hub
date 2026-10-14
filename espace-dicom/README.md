@@ -2,7 +2,10 @@
 
 Recevoir, visualiser et partager des examens d'imagerie, à côté du site actuel (qui reste sur GitHub Pages).
 
-> **État : étapes 0 et 1 sur 7 terminées (14 octobre 2026)** : socle Docker, droits d'accès, relais sécurisé des images.
+> **État (14 octobre 2026)** :
+> - étapes 0 et 1 terminées : socle Docker, droits d'accès, relais sécurisé des images ;
+> - **démonstration des étapes 2 et 3 dans le navigateur** : import (fichiers, dossier de CD, `.zip`) et visionneuse OHIF avec le compte rendu à côté, sans serveur (voir [Démonstration dans le navigateur](#démonstration-dans-le-navigateur)).
+>
 > Rien n'est encore visible sur le site : la rubrique du menu viendra à l'étape 7.
 > Plan complet et décisions : [`PLAN.md`](PLAN.md).
 
@@ -14,15 +17,16 @@ Recevoir, visualiser et partager des examens d'imagerie, à côté du site actue
 
 1. [Architecture](#architecture)
 2. [Qui accède à quoi](#qui-accède-à-quoi)
-3. [Essayer en local](#essayer-en-local)
-4. [Tests](#tests)
-5. [Configuration (`.env`)](#configuration-env)
-6. [Changer de domaine ou d'hébergeur](#changer-de-domaine-ou-dhébergeur)
-7. [Mise en production sur un VPS](#mise-en-production-sur-un-vps)
-8. [Sécurité et données de santé](#sécurité-et-données-de-santé)
-9. [Performances mesurées](#performances-mesurées)
-10. [Fichiers](#fichiers)
-11. [Étapes suivantes](#étapes-suivantes)
+3. [Démonstration dans le navigateur](#démonstration-dans-le-navigateur)
+4. [Essayer le serveur en local](#essayer-le-serveur-en-local)
+5. [Tests](#tests)
+6. [Configuration (`.env`)](#configuration-env)
+7. [Changer de domaine ou d'hébergeur](#changer-de-domaine-ou-dhébergeur)
+8. [Mise en production sur un VPS](#mise-en-production-sur-un-vps)
+9. [Sécurité et données de santé](#sécurité-et-données-de-santé)
+10. [Performances mesurées](#performances-mesurées)
+11. [Fichiers](#fichiers)
+12. [Étapes suivantes](#étapes-suivantes)
 
 ---
 
@@ -66,9 +70,48 @@ Calculé par la base (fonctions `dc_role` et `dc_droits`), vérifié par `tests/
 - Un compte suspendu, une structure suspendue : plus aucun accès (au plus 60 s après, durée du cache des droits).
 - Confrères non inscrits et patients : seulement par lien de partage (étape 4).
 
-## Essayer en local
+## Démonstration dans le navigateur
 
-Prérequis : **Docker** (avec docker compose v2), **Node.js 22** et **openssl** (sinon celui de l'image Orthanc est utilisé).
+Pour essayer l'import et la visionneuse **sans serveur**, tant que le VPS n'est pas en service.
+
+**Pages du site** :
+- `espace-dicom.html` : « Importer des examens » et « Mes examens » ;
+- `espace-dicom-visionneuse.html?etude=…` : OHIF, avec le compte rendu à côté (onglet sur téléphone).
+
+Elles ne sont pas encore dans le menu, et ne sont pas indexées.
+
+**Mode démonstration** (`dicom/config.js` sans adresse de serveur) :
+- les fichiers sont lus et gardés **dans le navigateur** (IndexedDB) ; rien n'est envoyé ;
+- « Supprimer » et « Tout supprimer » effacent tout.
+
+| Fonction | Détail |
+|---|---|
+| **Sources** | Fichiers DICOM, **dossier d'un CD** (tous les fichiers sont lus : le DICOMDIR est reconnu, les fichiers non DICOM sont ignorés), **archives `.zip`** (stockées, compressées, ZIP64), glisser-déposer de fichiers et de dossiers. |
+| **Analyse avant import** | En-têtes lus par dcmjs (`vendor/dcmjs-0.52.0`, MIT), 4 fichiers à la fois, barre de progression. Tableau par examen : patient, date, examen, nombre d'images, taille. **Examen non marqué « identité retirée »** : avertissement, et import bloqué tant qu'on n'a pas confirmé utiliser des fichiers de test ou anonymisés. |
+| **Import** | Par lots de 20 images. Un import interrompu reprend sans doublon : les images déjà gardées sont reconnues. Même chose pour un CD importé deux fois. |
+| **Mes examens** | Liste, recherche (nom, identifiant, examen), suppression, espace utilisé dans le navigateur. |
+| **Visionneuse** | **OHIF 3.13.12** en français : défilement, fenêtrage et préréglages, zoom, mesures, **MPR** (bouton « Disposition »). Sur téléphone, le panneau des études est replié et la barre d'outils allégée. |
+| **Compte rendu** | Texte gardé avec l'examen, enregistré automatiquement. En service, ce sera la copie PDF jointe depuis l'éditeur. |
+| **Scanner de test** | Fantôme synthétique de 120 coupes (`dicom/generateur.js`, le même générateur que les tests du serveur). Deux boutons : « Charger » ou « Télécharger (.zip) », pour essayer l'import d'une archive. |
+
+**Visionneuse OHIF** : application déjà construite, téléchargée à version figée par `npm run visionneuse` (`espace-dicom/visionneuse/installer-ohif.js`).
+- **Empreinte** sha512 vérifiée.
+- **Modules inutiles retirés** : 48 Mo au lieu de 200.
+- **Trois correctifs vérifiés** :
+  - OHIF fonctionne dans un sous-dossier ;
+  - la police est chargée par une adresse relative ;
+  - les images en adresses `blob:` du **même site** sont acceptées ; rien d'autre n'est ouvert.
+- **Hors de la branche principale** : le résultat (`dicom/ohif/`) est ignoré par git. Il n'est publié que sur la branche d'aperçu `apercu/espace-dicom`, qui n'est jamais fusionnée et peut être supprimée après validation. Sur le serveur, Nginx le servira.
+
+**Limites de la démonstration** :
+- pas de comptes, de partage, de QR code ni de télé-expertise ;
+- les examens ne sont visibles que dans le navigateur qui les a importés ;
+- l'espace disponible dépend du navigateur ;
+- sur l'aperçu (raw.githack.com), le stockage du navigateur est partagé avec les autres pages de ce service : **fichiers de test seulement**.
+
+## Essayer le serveur en local
+
+Le serveur seul : prérequis **Docker** (avec docker compose v2), **Node.js 22** et **openssl** (sinon celui de l'image Orthanc est utilisé).
 
 ### Le plus simple : le test complet, en gardant la pile ouverte
 
@@ -106,6 +149,8 @@ Appliquer d'abord la migration `20261014090000_espace_dicom.sql` dans Supabase, 
 | `npm test` | `tests/dicom-api.test.js` : jetons (HS256, ES256, RS256, « alg: none », expiration, audience, confusion d'algorithme), analyse des requêtes DICOMweb (chemins autorisés, recherches sans filtre, filtre d'une autre étude, chemins détournés, écritures), cache des droits (une seule question à Supabase pour 50 requêtes simultanées), journal, configuration, serveur | 12 tests ✓ |
 | `npm run test:sql` | `tests/sql/rls-dicom.js` : rôles, validation des résidents par un senior, droits par examen, écritures réservées au serveur, unicité d'un examen, liens sans empreintes lisibles, journal en ajout seul, **aucune colonne d'identité du patient**. `tests/sql/droits.js` : liste exacte des droits accordés | 20 vérifications ✓ |
 | `npm run test:dicom` | `tests/integration.js`, la pile Docker complète (voir ci-dessous) | 51 vérifications ✓ |
+| `npm test` | `tests/dicom-site.test.js` (démonstration) : scanner de test valide et synthétique, lecture des en-têtes (données binaires retirées, DICOMDIR reconnu), regroupement par examen (doublons, identité non retirée), `.zip` écrits et relus (et créés par `zip`, ZIP64), liste des images pour OHIF, correctifs d'OHIF (seules les adresses `blob:` du même site sont acceptées), pages | 8 tests ✓ |
+| Parcours Chromium | démonstration servie comme sur raw.githack.com, ordinateur (1366 px) et téléphone (390 px) : scanner de test, `.zip` téléchargé puis importé (puis réimporté : « déjà importé »), dossier de CD avec DICOMDIR et fichier texte, avertissement « non anonymisé », recherche, image affichée par OHIF, OHIF en français, **MPR à 3 vues**, compte rendu gardé après rechargement, onglets sur téléphone, suppression, sans débordement ni erreur | 40 vérifications ✓ |
 
 Le test Docker vérifie notamment :
 - **Orthanc injoignable** : seul Nginx publie des ports ; l'API d'Orthanc (`/instances`, `/tools/find`, `/system`, son interface…) répond 404 par Nginx ; Orthanc n'a **aucun accès à Internet** ;
@@ -215,10 +260,15 @@ espace-dicom/
     └── supabase-simule/init.sh   simulation de Supabase + migrations du dépôt
 ```
 
+Dans `espace-dicom/visionneuse/` : `installer-ohif.js` (OHIF à version figée), `index.html.modele` et `app-config.js` (OHIF de l'Espace DICOM).
+
 Hors du dossier :
+- `espace-dicom.html`, `espace-dicom-visionneuse.html` : pages du site ;
+- `dicom/` : `config.js` (démonstration ou serveur), `espace.js` (import, Mes examens), `visionneuse.js`, `lecture.js` (en-têtes DICOM), `zip.js`, `generateur.js` (scanner de test), `manifeste.js` (liste des images pour OHIF), `stockage-demo.js` (navigateur), `espace.css` ; `dicom/ohif/` produit par `npm run visionneuse` (non versionné) ;
+- `vendor/dcmjs-0.52.0/` : lecteur DICOM (MIT) ;
 - `supabase/migrations/20261014090000_espace_dicom.sql` : tables `dc_*`, rôles et droits ;
 - `tests/sql/rls-dicom.js` : test de la migration ;
-- `tests/dicom-api.test.js` : tests unitaires de dicom-api.
+- `tests/dicom-api.test.js` : tests unitaires de dicom-api ; `tests/dicom-site.test.js` : démonstration.
 
 ## Étapes suivantes
 
@@ -226,8 +276,8 @@ Hors du dossier :
 |---|---|---|
 | 0. Socle | Docker, configuration, données synthétiques, migration | ✓ |
 | 1. Orthanc en local | réception, JPEG-LS, DICOMweb seulement par Nginx et dicom-api, refus sans droit | ✓ |
-| 2. Importer | dossier, `.zip`, DICOMDIR ; envois parallèles avec reprise (tus) ; « Mes examens » ; passerelle de clinique | à faire |
-| 3. Visualiser | OHIF intégré, compte rendu à côté, MPR sur tablette et ordinateur, **mesures en 4G** | à faire |
+| 2. Importer | dossier, `.zip`, DICOMDIR ; envois parallèles avec reprise (tus) ; « Mes examens » ; passerelle de clinique | démonstration dans le navigateur ✓ ; envoi au serveur et passerelle à faire |
+| 3. Visualiser | OHIF intégré, compte rendu à côté, MPR sur tablette et ordinateur, **mesures en 4G** | démonstration ✓ ; lecture depuis le serveur (DICOMweb, jeton) et mesures en 4G à faire |
 | 4. Partager | lien (24 h, 7 j, 30 j), code d'accès à essais limités, révocation, page publique | à faire |
 | 5. E-mail, QR, comptes rendus | Brevo, QR imprimable, bouton « Joindre les images » (PDF encapsulé dans Orthanc) | à faire |
 | 6. Télé-expertise et administration | invitations, commentaires (sur le VPS), validation des résidents, espace disque, conservation et purge, suppression | à faire |

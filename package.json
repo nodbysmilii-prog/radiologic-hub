@@ -8,6 +8,7 @@
     "test:integration": "node tests/sql/integration.js",
     "backend:preparer": "node scripts/preparer-backend.js",
     "test:bib-reel": "node tests/bibliotheque-reel.js",
-    "test:dicom": "node espace-dicom/tests/integration.js"
+    "test:dicom": "node espace-dicom/tests/integration.js",
+    "visionneuse": "node espace-dicom/visionneuse/installer-ohif.js"
   }
 }

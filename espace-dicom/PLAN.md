@@ -143,6 +143,8 @@ Restent **sur le VPS** :
 6. **Télé-expertise et administration** : invitation d'un radiologue inscrit, commentaires horodatés (gardés sur le VPS), validation des résidents, anonymisation avant partage, espace disque, liens actifs, durée de conservation et purge automatique, suppression sur demande (droit de suppression).
 7. **Menu, README et déploiement** : rubrique « Espace DICOM » dans le menu des 24 pages, `espace-dicom/README.md` (installation locale, déploiement sur VPS, sauvegardes, mises à jour), puis contrôle de l'ensemble.
 
+**Démonstration dans le navigateur (14 octobre 2026)** : pour essayer l'import et la visionneuse avant la mise en service du VPS, les étapes 2 et 3 existent aussi en mode démonstration (fichiers gardés dans le navigateur, OHIF lisant ces fichiers). Le parcours et l'interface sont les mêmes qu'en service ; seul le stockage change.
+
 À chaque étape :
 - tests Node (`npm test`) et tests d'intégration Docker ;
 - parcours Chromium sur ordinateur et téléphone ;

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Espace DICOM — RadiologicHub</title>
+  <meta name="description" content="Espace DICOM de RadiologicHub : importer, visualiser et partager des examens d'imagerie entre radiologues.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261013020000">
+  <link rel="stylesheet" href="fiche.css?v=20261012150000">
+  <link rel="stylesheet" href="dicom/espace.css?v=20261014150000">
+</head>
+<body>
+
+  <header class="site-header is-scrolled" id="top">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="RadiologicHub — accueil">
+        <img src="assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+        <a href="index.html#masterclass">Masterclass</a>
+        <a href="fiches-rapides.html">Fiches rapides</a>
+        <a href="bibliotheque.html">Bibliothèque</a>
+        <a href="comptes-rendus.html">Comptes rendus</a>
+        <a href="remplacements.html">Remplacements</a>
+        <a href="communaute.html">Communauté</a>
+        <a href="index.html#tarifs">Tarifs</a>
+        <a href="index.html#inscription" class="btn btn-ink btn-sm">S'inscrire</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="fiche-hero sec-down">
+      <div class="container">
+        <p class="marker-tag">Espace DICOM</p>
+        <h1>Vos examens d'imagerie, <span class="hl-navy">visualisés et partagés</span></h1>
+        <p class="fiche-sub">Importer un CD, un dossier ou une archive, ouvrir l'examen dans la visionneuse (fenêtrage, mesures, <span class="hl-red">reconstructions MPR</span>) avec le compte rendu à côté.</p>
+      </div>
+    </section>
+
+    <section class="section sec-up dc-section">
+      <div class="container">
+
+        <div class="callout callout-warn dc-demo" id="dc-demo">
+          <p><b>Version de démonstration.</b> Les fichiers sont lus et gardés <b>dans ce navigateur</b> : rien n'est envoyé à un serveur, et vous pouvez tout supprimer à tout moment.
+          Utilisez des <b>examens de test ou anonymisés</b>. Comptes, partage par lien, QR code et télé-expertise arriveront avec le serveur sécurisé.</p>
+        </div>
+
+        <div class="dc-grille">
+          <div class="fcard dc-import" style="--c: var(--navy)">
+            <h2>Importer des examens</h2>
+            <div class="dc-depot" id="dc-depot">
+              <svg class="dc-depot-icone" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 31V9m0 0-8 8m8-8 8 8M10 29v8a3 3 0 0 0 3 3h22a3 3 0 0 0 3-3v-8" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <p><b>Déposez ici</b> des fichiers DICOM, le dossier d'un CD ou une archive <b>.zip</b></p>
+              <div class="dc-boutons">
+                <label class="btn btn-ink btn-sm" for="dc-fichiers">Choisir des fichiers</label>
+                <label class="btn btn-outline btn-sm" for="dc-dossier" id="dc-choisir-dossier">Choisir un dossier (CD)</label>
+              </div>
+              <input type="file" id="dc-fichiers" multiple class="dc-cache" accept=".dcm,.dicom,.zip,application/dicom,application/zip,*/*">
+              <input type="file" id="dc-dossier" webkitdirectory multiple class="dc-cache">
+              <p class="dc-petit">CD avec DICOMDIR : choisissez le dossier du CD, toutes les images sont retrouvées. Les fichiers qui ne sont pas des images DICOM sont ignorés.</p>
+            </div>
+
+            <div class="dc-test">
+              <p><b>Pas d'examen sous la main ?</b> Un scanner de test <b>synthétique</b> (fantôme calculé : corps, poumons, rachis, foie avec un kyste ; aucune donnée réelle), 120 coupes.</p>
+              <div class="dc-boutons">
+                <button type="button" class="btn btn-ink btn-sm" id="dc-test">Charger le scanner de test</button>
+                <button type="button" class="btn btn-outline btn-sm" id="dc-test-zip">Télécharger le scanner de test (.zip)</button>
+              </div>
+            </div>
+
+            <div class="dc-progression" id="dc-progression" hidden>
+              <div class="dc-barre" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="dc-barre-remplie"></div></div>
+              <p class="dc-progression-texte" aria-live="polite"></p>
+            </div>
+            <p class="dc-erreur" id="dc-erreur" role="alert" hidden></p>
+            <div class="dc-resume" id="dc-resume" hidden></div>
+          </div>
+
+          <div class="fcard dc-aide" style="--c: var(--green)">
+            <h2>Dans la visionneuse</h2>
+            <ul class="fl">
+              <li><b>Défilement</b> des coupes (molette, glisser), <b>fenêtrage</b> et préréglages (poumon, os, cerveau…).</li>
+              <li><b>Zoom</b>, déplacement, rotation, retournement.</li>
+              <li><b>Mesures</b> : longueur, angle, ellipse, rectangle, flèche annotée.</li>
+              <li><b>MPR</b> (bouton « Disposition » → MPR) : coupes sagittales et coronales, sur ordinateur et tablette.</li>
+              <li><b>Compte rendu</b> à côté des images (onglet sur téléphone).</li>
+            </ul>
+            <p class="dc-petit">Visionneuse : OHIF 3.13 (logiciel libre), en français.</p>
+          </div>
+        </div>
+
+        <p class="dc-annonce" id="dc-annonce" role="status" hidden></p>
+
+        <div class="dc-mes-examens" id="mes-examens">
+          <div class="dc-titre-liste">
+            <h2>Mes examens <small id="dc-compte"></small></h2>
+            <input type="search" id="dc-recherche" placeholder="Rechercher (nom, identifiant, examen)" aria-label="Rechercher un examen">
+          </div>
+          <div class="dc-examens" id="dc-examens"></div>
+          <p class="dc-petit" id="dc-espace"></p>
+          <button type="button" class="btn btn-outline btn-sm" id="dc-tout-supprimer" hidden>Tout supprimer de ce navigateur</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="index.html" class="brand">
+        <img src="assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav aria-label="Liens de pied de page">
+        <a href="index.html#masterclass">Masterclass</a>
+        <a href="fiches-rapides.html">Fiches rapides</a>
+        <a href="bibliotheque.html">Bibliothèque</a>
+        <a href="comptes-rendus.html">Comptes rendus</a>
+        <a href="communaute.html">Communauté</a>
+        <a href="remplacements.html">Remplacements</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="index.html#inscription">Contact</a>
+      </nav>
+      <p class="copyright">© <span id="year"></span> RadiologicHub · Formation en radiologie d'urgence</p>
+    </div>
+  </footer>
+
+  <script src="fiche.js?v=20261012150000"></script>
+  <script src="dicom/config.js?v=20261014150000"></script>
+  <script src="dicom/lecture.js?v=20261014150000"></script>
+  <script src="dicom/zip.js?v=20261014150000"></script>
+  <script src="dicom/generateur.js?v=20261014150000"></script>
+  <script src="dicom/stockage-demo.js?v=20261014150000"></script>
+  <script src="dicom/espace.js?v=20261014150000"></script>
+</body>
+</html>

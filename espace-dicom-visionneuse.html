@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visionneuse — Espace DICOM — RadiologicHub</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261013020000">
+  <link rel="stylesheet" href="dicom/espace.css?v=20261014150000">
+</head>
+<body class="dv-page">
+  <div class="dv-barre">
+    <img src="assets/emblem.svg" alt="" class="brand-mark" width="34" height="31">
+    <a class="btn btn-outline btn-sm dv-retour" href="espace-dicom.html#mes-examens">← Mes examens</a>
+    <div class="dv-titre"><b id="dv-patient">Chargement…</b><small id="dv-examen"></small></div>
+    <span class="dv-demo" title="Les images sont lues dans ce navigateur, rien n'est envoyé">Démonstration</span>
+    <button type="button" class="btn btn-ink btn-sm dv-basculer" id="dv-basculer" aria-pressed="true">Compte rendu</button>
+  </div>
+  <div class="dv-onglets" role="tablist" aria-label="Affichage">
+    <button type="button" role="tab" class="is-actif" id="dv-onglet-images" aria-selected="true">Images</button>
+    <button type="button" role="tab" id="dv-onglet-cr" aria-selected="false">Compte rendu</button>
+  </div>
+  <div class="dv-corps">
+    <div class="dv-images">
+      <iframe id="dv-ohif" title="Visionneuse DICOM (OHIF)" allow="fullscreen; clipboard-write"></iframe>
+      <p class="dv-message" id="dv-message" hidden></p>
+    </div>
+    <aside class="dv-cr" id="dv-cr" aria-labelledby="dv-cr-titre">
+      <div class="dv-cr-tete">
+        <h2 id="dv-cr-titre">Compte rendu</h2>
+        <p>Démonstration : texte gardé dans ce navigateur avec l'examen. En service, la copie jointe depuis l'éditeur (« Joindre les images ») s'affichera ici.</p>
+      </div>
+      <textarea id="dv-cr-texte" placeholder="Collez ou rédigez le compte rendu de cet examen…" aria-label="Compte rendu de l'examen"></textarea>
+      <div class="dv-cr-pied">
+        <button type="button" class="btn btn-ink btn-sm" id="dv-cr-enregistrer">Enregistrer</button>
+        <a class="btn btn-outline btn-sm" href="comptes-rendus.html" target="_blank" rel="noopener">Éditeur</a>
+        <span class="dv-cr-etat" id="dv-cr-etat" aria-live="polite"></span>
+      </div>
+    </aside>
+  </div>
+
+  <script src="dicom/config.js?v=20261014150000"></script>
+  <script src="dicom/lecture.js?v=20261014150000"></script>
+  <script src="dicom/manifeste.js?v=20261014150000"></script>
+  <script src="dicom/stockage-demo.js?v=20261014150000"></script>
+  <script src="dicom/visionneuse.js?v=20261014150000"></script>
+</body>
+</html>
