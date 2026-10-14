@@ -175,3 +175,10 @@ Pas de déploiement en production sans votre accord.
 | **Brotli** | Absent de l'image officielle de Nginx : gzip pour les métadonnées, images déjà compressées sans perte (JPEG-LS). |
 | **Commentaires de télé-expertise** | Texte médical : gardés sur le VPS (point 5), pas dans Supabase. |
 | **Adresse e-mail du destinataire d'un lien** | Envoyée à Brevo pour l'envoi, jamais enregistrée. |
+
+### Outils d'IRM demandés (14 octobre 2026)
+
+| Demande | Ce qui est fait ou proposé |
+|---|---|
+| **Courbe de perfusion tracée sur les images** (IRM General Electric) | Fait (démonstration) : région tracée dans OHIF → courbe signal-temps de la coupe sur toutes les phases, chute / temps du minimum / PSR en T2\*, rehaussement / type de courbe I-II-III en T1, export CSV. Aide visuelle : pas de déconvolution (rCBV, CBF, MTT) ni de correction de fuite ; les cartes de la console GE restent la référence. |
+| **Spectroscopie** | OHIF n'affiche pas de spectre. Le format d'export de l'IRM GE (P-file `P*.7`, captures d'écran ou DICOM « MR Spectroscopy ») et un exemple **anonymisé** sont nécessaires avant de coder un lecteur de spectre. |

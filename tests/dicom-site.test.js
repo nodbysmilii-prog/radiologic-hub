@@ -1,7 +1,7 @@
-/* Tests de l'Espace DICOM côté site (mode démonstration) : scanner de test
-   synthétique, lecture des en-têtes, regroupement par examen, archives .zip,
-   liste des images pour OHIF, installation d'OHIF, pages. Données
-   synthétiques uniquement. */
+/* Tests de l'Espace DICOM côté site (mode démonstration) : scanner et
+   perfusion IRM de test synthétiques, lecture des en-têtes, regroupement par
+   examen, archives .zip, liste des images pour OHIF, courbe de perfusion,
+   installation d'OHIF, pages. Données synthétiques uniquement. */
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -13,6 +13,7 @@ const G = require('../dicom/generateur.js');
 const L = require('../dicom/lecture.js');
 const Z = require('../dicom/zip.js');
 const M = require('../dicom/manifeste.js');
+const P = require('../dicom/perfusion.js');
 const I = require('../espace-dicom/visionneuse/installer-ohif.js');
 const outil = require('../espace-dicom/outils/generer-dicom-test.js');
 
@@ -127,6 +128,152 @@ test('liste des images pour OHIF (dicomjson) : séries et coupes dans l\'ordre, 
   assert.deepEqual(e.series[1].instances.map(i => i.metadata.InstanceNumber), [1, 2, 3, 4]);
   assert.equal(e.series[1].instances[0].url, `dicomweb:blob:https://site.test/${r.instances[0].sopUid}`);
   assert.throws(() => M.construireManifeste([], () => ''), /sans image/);
+});
+
+/* ---------- Courbe de perfusion ---------- */
+const lirePerfusion = r => r.instances.map(i => {
+  const d = dcmjs.data.DicomMessage.readFile(tampon(i.octets));
+  return { id: i.sopUid, meta: L.lireEntete(dcmjs, tampon(i.octets)).metadata,
+    pixels: new Uint16Array(dcmjs.data.DicomMetaDictionary.naturalizeDataset(d.dict).PixelData[0]) };
+});
+
+test('perfusion IRM de test : séries multiphases type GE (MR, TriggerTime, positions temporelles)', () => {
+  const r = G.genererPerfusion({ coupes: 4, phases: 12, taille: 32, tr: 2, graine: 5, date: '20261014', heure: '235950' });
+  assert.equal(r.instances.length, 48);
+  assert.equal(new Set(r.instances.map(i => i.sopUid)).size, 48, 'UID uniques');
+  const images = lirePerfusion(r);
+  const m = images[4 * 3 + 2].meta;                       // phase 4, coupe 3
+  assert.equal(m.SOPClassUID, '1.2.840.10008.5.1.4.1.1.4');
+  assert.equal(m.Modality, 'MR');
+  assert.equal(m.PatientIdentityRemoved, 'YES');
+  assert.deepEqual([m.InstanceNumber, m.TemporalPositionIdentifier, m.NumberOfTemporalPositions], [15, 4, 12]);
+  assert.equal(m.TriggerTime, 6000 + 1000, 'phase × TR + décalage de la coupe dans le TR (ms)');
+  assert.equal(m.RepetitionTime, 2000);
+  assert.equal(m.ScanningSequence, 'EP');
+  assert.deepEqual(m.ImagePositionPatient, [-115, -115, 10]);
+  assert.equal(new Set(images.map(i => i.meta.SeriesInstanceUID)).size, 1, 'une seule série');
+  assert.deepEqual(images[14].pixels, G.pixelsPerfusion(2, 4, 3, 32, 2, 5), 'pixels du fantôme');
+  // Signal des tissus : chute marquée dans la lésion, aucune dans les ventricules
+  assert.equal(G.signalPerfusion(0, 'lesion'), 1);
+  assert.ok(G.signalPerfusion(22, 'lesion') < 0.45 && G.signalPerfusion(22, 'parenchyme') > 0.69);
+  assert.equal(G.signalPerfusion(22, 'ventricule'), 1);
+});
+
+test('courbe : phases d\'une coupe retrouvées et ordonnées (TriggerTime, heure, phase × TR, ordre)', () => {
+  const images = lirePerfusion(G.genererPerfusion({ coupes: 3, phases: 6, taille: 16, tr: 1.5, heure: '235958' }));
+  const ref = images[4 * 3 + 1];                           // phase 5, coupe 2
+  const groupe = P.phasesDeLaCoupe(images.slice().reverse(), ref);
+  assert.equal(groupe.length, 6);
+  assert.ok(groupe.every(i => i.meta.ImagePositionPatient[2] === 5));
+  let axe = P.axeTemps(groupe);
+  assert.deepEqual([axe.source, axe.unite, axe.temps], ['TriggerTime', 's', [0, 1.5, 3, 4.5, 6, 7.5]]);
+  assert.deepEqual(axe.images.map(i => i.meta.TemporalPositionIdentifier), [1, 2, 3, 4, 5, 6], 'ordre du temps, pas celui des fichiers');
+  // Sans TriggerTime (souvent le cas en DSC) : heure d'acquisition, passage de minuit compris
+  const sans = (l, ...cles) => l.map(i => { const meta = { ...i.meta }; cles.forEach(c => delete meta[c]); return { ...i, meta }; });
+  axe = P.axeTemps(sans(groupe, 'TriggerTime'));
+  assert.equal(axe.source, 'AcquisitionTime');
+  assert.deepEqual(axe.temps, [0, 1.5, 3, 4.5, 6, 7.5]);
+  assert.equal(P.secondes('235959.5'), 86399.5);
+  // Heure identique pour toutes les images (fréquent sur les EPI GE) : numéro de phase × TR
+  const memeHeure = sans(groupe, 'TriggerTime').map(i => ({ ...i, meta: { ...i.meta, AcquisitionTime: '120000' } }));
+  axe = P.axeTemps(memeHeure);
+  assert.deepEqual([axe.source, axe.unite, axe.temps], ['TemporalPositionIdentifier × TR', 's', [0, 1.5, 3, 4.5, 6, 7.5]]);
+  // Hors EPI, sans heure : phases numérotées
+  axe = P.axeTemps(memeHeure.map(i => ({ ...i, meta: { ...i.meta, ScanningSequence: 'GR' } })));
+  assert.deepEqual([axe.source, axe.unite, axe.temps], ['TemporalPositionIdentifier', 'phase', [1, 2, 3, 4, 5, 6]]);
+  axe = P.axeTemps(sans(memeHeure, 'TemporalPositionIdentifier', 'ScanningSequence'));
+  assert.deepEqual([axe.source, axe.temps], ['InstanceNumber', [1, 2, 3, 4, 5, 6]]);
+  // Série non dynamique (scanner) : une image par position
+  const scanner = G.genererEtude({ coupes: 3, taille: 16 }).instances.map(i => ({ meta: L.lireEntete(dcmjs, tampon(i.octets)).metadata }));
+  assert.equal(P.phasesDeLaCoupe(scanner, scanner[1]).length, 1);
+});
+
+test('courbe : régions tracées → pixels (ellipse, cercle, rectangle, contour, plan oblique)', () => {
+  const plan = P.plan({ ImagePositionPatient: [-50, -50, 0], ImageOrientationPatient: [1, 0, 0, 0, 1, 0], PixelSpacing: [1, 1], Rows: 100, Columns: 100 });
+  const monde = (c, l) => [-50 + c, -50 + l, 0];
+  const ellipse = P.masque(plan, { forme: 'ellipse', points: [monde(50, 60), monde(50, 40), monde(30, 50), monde(70, 50)] });
+  assert.ok(Math.abs(ellipse.length - Math.PI * 10 * 20) < 12, `ellipse 20 × 10 : ${ellipse.length} pixels`);
+  assert.ok(ellipse.includes(50 * 100 + 50) && !ellipse.includes(50 * 100 + 75) && !ellipse.includes(62 * 100 + 50));
+  const k = Math.SQRT1_2, tournee = P.masque(plan, { forme: 'ellipse', points: [monde(50 - 10 * k, 50 - 10 * k), monde(50 + 10 * k, 50 + 10 * k), monde(50 + 5 * k, 50 - 5 * k), monde(50 - 5 * k, 50 + 5 * k)] });
+  assert.ok(Math.abs(tournee.length - Math.PI * 50) < 10 && tournee.includes(57 * 100 + 57) && !tournee.includes(57 * 100 + 43), `ellipse tournée de 45° : ${tournee.length}`);
+  const cercle = P.masque(plan, { forme: 'cercle', points: [monde(20, 20), monde(28, 20)] });
+  assert.ok(Math.abs(cercle.length - Math.PI * 64) < 8, `cercle r = 8 : ${cercle.length}`);
+  assert.equal(P.masque(plan, { forme: 'rectangle', points: [monde(10, 10), monde(19, 10), monde(10, 14), monde(19, 14)] }).length, 50, 'rectangle dans l\'axe : bords compris (10 × 5)');
+  assert.equal(P.masque(plan, { forme: 'polygone', points: [monde(0, 0), monde(9, 0), monde(0, 9)] }).length, 45, 'triangle : centres strictement sous l\'hypoténuse');
+  assert.equal(P.masque(plan, { forme: 'cercle', points: [monde(-30, -30), monde(-25, -30)] }).length, 0, 'hors de l\'image');
+  // Pixels rectangulaires et plan sagittal : la région reste un cercle en millimètres
+  const sagittal = P.plan({ ImagePositionPatient: [10, -100, 100], ImageOrientationPatient: [0, 1, 0, 0, 0, -1], PixelSpacing: [2, 1], Rows: 100, Columns: 200 });
+  const m = P.masque(sagittal, { forme: 'cercle', points: [[10, 0, 50], [10, 10, 50]] });
+  assert.ok(Math.abs(m.length - (Math.PI * 100) / 2) < 8, `cercle de 10 mm sur pixels de 1 × 2 mm : ${m.length}`);
+  assert.ok(m.includes(25 * 200 + 100), 'centre : colonne 100, ligne 25');
+  // Annotations de la visionneuse (cornerstone) → régions
+  const ann = (toolName, data) => ({ metadata: { toolName }, data });
+  assert.deepEqual(P.regionDepuisAnnotation(ann('EllipticalROI', { handles: { points: [[1, 2, 3], [4, 5, 6], [0, 0, 0], [1, 1, 1]] } })).forme, 'ellipse');
+  assert.deepEqual(P.regionDepuisAnnotation(ann('PlanarFreehandROI', { contour: { polyline: [[0, 0, 0], [1, 0, 0], [0, 1, 0]] }, handles: { points: [] } })),
+    { forme: 'polygone', points: [[0, 0, 0], [1, 0, 0], [0, 1, 0]] });
+  assert.equal(P.regionDepuisAnnotation(ann('Length', { handles: { points: [[0, 0, 0], [1, 1, 1]] } })), null, 'une longueur n\'est pas une région');
+  assert.equal(P.moyenne(new Uint16Array([10, 20, 30, 40]), Int32Array.from([1, 3]), 2, -5), 55, 'pente et ordonnée appliquées');
+});
+
+test('courbe : T2* dynamique synthétique → chute, minimum et PSR attendus', () => {
+  const r = G.genererPerfusion({ graine: 7 });
+  const images = lirePerfusion(r);
+  const ref = images[20 * 8 + 3];                          // phase 21, coupe 4 (la lésion est sur les coupes du milieu)
+  const axe = P.axeTemps(P.phasesDeLaCoupe(images, ref));
+  const plan = P.plan(ref.meta), esp = 230 / 96;
+  const monde = (c, l) => [plan.origine[0] + c * esp, plan.origine[1] + l * esp, plan.origine[2]];
+  const courbe = (cx, cy, rayon) => {
+    const ind = P.masque(plan, { forme: 'cercle', points: [monde(cx, cy), monde(cx + rayon, cy)] });
+    const valeurs = axe.images.map(im => P.moyenne(im.pixels, ind));
+    return P.analyserCourbe(axe.temps, valeurs, axe.unite);
+  };
+  const lesion = courbe(0.3 * 96 - 0.5, 0.42 * 96 - 0.5, 5);
+  assert.equal(lesion.type, 'chute');
+  assert.ok(Math.abs(lesion.chute - 0.60) < 0.03, `chute ${lesion.chute}`);
+  assert.ok(Math.abs(lesion.psr - 0.70) < 0.05, `PSR ${lesion.psr}`);
+  assert.ok(lesion.tempsMinimum >= 21 && lesion.tempsMinimum <= 24, `minimum à ${lesion.tempsMinimum} s`);
+  assert.ok(lesion.arrivee >= 15 && lesion.arrivee <= 19, `arrivée à ${lesion.arrivee} s`);
+  assert.equal(lesion.phasesBase[0], 1, 'première phase écartée de la ligne de base');
+  const sain = courbe(0.7 * 96, 0.42 * 96, 5);
+  assert.ok(Math.abs(sain.chute - 0.30) < 0.03 && Math.abs(sain.psr - 0.95) < 0.04, `parenchyme : ${sain.chute} / ${sain.psr}`);
+  const ventricule = courbe(0.45 * 96 - 0.5, 0.48 * 96 - 0.5, 2);
+  assert.equal(ventricule.type, 'stable');
+  // Export tableur : virgule décimale, une colonne par région
+  const csv = P.versCsv([{ nom: 'Région 1', temps: axe.temps, valeurs: axe.temps.map(() => 900), analyse: { relatif: axe.temps.map(() => 1) } }], 's');
+  const lignes = csv.trim().split('\r\n');
+  assert.equal(lignes.length, 51);
+  assert.equal(lignes[0], 'Temps (s);Région 1 : signal moyen;Région 1 : % de la ligne de base');
+  assert.equal(lignes[2], '1,5;900;100');
+});
+
+test('courbe : T1 dynamique → rehaussement et type de courbe (I, II, III)', () => {
+  const temps = Array.from({ length: 40 }, (_, i) => i * 10);           // 10 s par phase, 6 min 30
+  const courbe = fin => temps.map(t => (t < 50 ? 400 : t < 110 ? 400 + (t - 40) * 8 : 880 + ((t - 110) / 280) * fin));
+  const types = [[200, 'I'], [20, 'II'], [-200, 'III']].map(([fin, attendu]) => {
+    const a = P.analyserCourbe(temps, courbe(fin), 's');
+    assert.equal(a.type, 'rehaussement');
+    assert.ok(Math.abs(a.rehaussement - (Math.max(880, 880 + fin) / 400 - 1)) < 0.02);
+    assert.equal(a.arrivee, 50);
+    return a.typeCourbe === attendu;
+  });
+  assert.deepEqual(types, [true, true, true]);
+  const courte = P.analyserCourbe(temps.slice(0, 15), courbe(0).slice(0, 15), 's');
+  assert.equal(courte.typeCourbe, null, 'moins d\'une minute après le pic : non classée');
+  assert.equal(P.analyserCourbe([1, 2, 3, 4, 5, 6], [100, 101, 99, 100, 102, 100], 'phase').type, 'stable');
+  assert.equal(P.analyserCourbe([1, 2], [1, 2]).type, 'insuffisant');
+});
+
+test('configuration de la visionneuse : services exposés pour la courbe, mesures suivies sans question', () => {
+  const window = { RH_OHIF_BASE: '/depot/abc/dicom/ohif/' };
+  new Function('window', fs.readFileSync(path.join(RACINE, 'espace-dicom/visionneuse/app-config.js'), 'utf8'))(window);
+  assert.equal(typeof window.config, 'function', 'configuration sous forme de fonction (prévu par OHIF)');
+  assert.equal(window.RH_OHIF.pret, false);
+  assert.equal(window.config.defaultDataSourceName, 'dicomjson', 'réglages lisibles comme propriétés');
+  const c = window.config({ servicesManager: 'services' });
+  assert.deepEqual([window.RH_OHIF.pret, window.RH_OHIF.servicesManager], [true, 'services']);
+  assert.equal(c.routerBasename, '/depot/abc/dicom/ohif');
+  assert.equal(c.measurementTrackingMode, 'simplified');
+  assert.equal(c.showStudyList, false);
 });
 
 test('installation d\'OHIF : correctifs précis, version et empreinte figées', () => {

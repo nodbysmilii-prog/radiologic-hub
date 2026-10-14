@@ -87,7 +87,7 @@
 .dv-images { flex: 1 1 auto; position: relative; min-width: 0; }
 .dv-images iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000; }
 .dv-message { position: absolute; inset: 0; display: grid; place-items: center; padding: 24px; text-align: center; color: #fff; font-weight: 600; }
-.dv-cr { flex: 0 0 360px; display: flex; flex-direction: column; background: #f6f4ef; color: var(--ink); border-left: 3px solid var(--ink); min-height: 0; }
+.dv-cr, .dv-courbe { flex: 0 0 360px; display: flex; flex-direction: column; background: #f6f4ef; color: var(--ink); border-left: 3px solid var(--ink); min-height: 0; }
 .dv-cr-tete { padding: 14px 16px 6px; }
 .dv-cr-tete h2 { margin: 0; font-size: 1.05rem; }
 .dv-cr-tete p { margin: 6px 0 0; font-size: .8rem; color: var(--muted); }
@@ -95,14 +95,45 @@
 .dv-cr-pied { display: flex; align-items: center; gap: 10px; padding: 12px 16px 16px; }
 .dv-cr-etat { font-size: .8rem; color: var(--muted); }
 
+/* Panneau « Courbe » (courbe de perfusion) */
+.dv-courbe { flex-basis: 380px; overflow-y: auto; }
+.dv-courbe .dv-cr-tete p { font-size: .76rem; line-height: 1.45; }
+.dv-courbe-corps { padding: 8px 16px 18px; }
+.dv-courbe-vide { margin: 4px 0; padding: 16px; border-radius: 14px; border: 3px dashed rgba(17, 17, 20, .25); background: #fff; color: var(--muted); font-weight: 600; font-size: .86rem; text-align: center; }
+.dv-courbe-options { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin: 2px 0 10px; }
+.dv-segment { display: inline-flex; border: 3px solid var(--ink); border-radius: 999px; overflow: hidden; background: #fff; }
+.dv-segment button { border: 0; background: none; padding: 6px 11px; font: 800 .7rem var(--font); letter-spacing: .04em; text-transform: uppercase; color: var(--muted); cursor: pointer; }
+.dv-segment button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+.dv-courbe-graphe svg { display: block; width: 100%; height: auto; background: #fff; border: 3px solid var(--ink); border-radius: 14px; }
+.dv-graphe text { font: 600 10px var(--font); fill: var(--muted); }
+.dv-graphe .dv-legende-axe { font-weight: 800; fill: var(--ink); }
+.dv-grille { stroke: rgba(17, 17, 20, .08); }
+.dv-trait { stroke: var(--ink); stroke-width: 1.5; }
+.dv-base { stroke: var(--ink); stroke-width: 1; stroke-dasharray: 4 3; opacity: .45; }
+.dv-phase { stroke: var(--navy); stroke-width: 1.5; stroke-dasharray: 2 2; }
+.dv-ligne { fill: none; stroke: var(--c); stroke-width: 2.4; stroke-linejoin: round; }
+.dv-point { fill: var(--c); cursor: pointer; }
+.dv-point:hover { stroke: var(--ink); stroke-width: 2; }
+.dv-extreme { stroke: var(--ink); stroke-width: 1.5; }
+.dv-region { margin-top: 12px; padding: 10px 12px; background: #fff; border: 3px solid var(--ink); border-left: 8px solid var(--c); border-radius: 12px; }
+.dv-region h3 { display: flex; align-items: center; gap: 8px; margin: 0 0 6px; font-size: .9rem; overflow-wrap: anywhere; }
+.dv-region-couleur { flex: 0 0 auto; width: 12px; height: 12px; border-radius: 50%; background: var(--c); border: 2px solid var(--ink); }
+.dv-region dl { display: grid; gap: 3px; margin: 0; }
+.dv-region dl div { display: flex; justify-content: space-between; gap: 10px; font-size: .8rem; }
+.dv-region dt { color: var(--muted); font-weight: 600; }
+.dv-region dd { margin: 0; font-weight: 800; text-align: right; }
+.dv-region-note { margin: 6px 0 0; font-size: .76rem; color: var(--muted); }
+.dv-courbe-avis { margin: 14px 0 0; font-size: .74rem; line-height: 1.45; color: var(--muted); }
+.dv-pastille { display: inline-grid; place-items: center; min-width: 18px; height: 18px; margin-left: 4px; padding: 0 5px; border-radius: 999px; background: var(--amber); color: var(--ink); font-size: .7rem; letter-spacing: 0; }
+
 @media (max-width: 760px) {
   .dv-barre { gap: 10px; padding: 6px 10px; }
   .dv-barre .brand-mark, .dv-demo, .dv-basculer { display: none; }
   .dv-onglets { display: flex; flex: 0 0 auto; background: #f6f4ef; border-bottom: 3px solid var(--ink); }
-  .dv-onglets button { flex: 1; padding: 10px; border: 0; background: none; font: 800 .8rem var(--font); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); border-bottom: 4px solid transparent; }
+  .dv-onglets button { flex: 1; padding: 10px 4px; border: 0; background: none; font: 800 .76rem var(--font); letter-spacing: .04em; text-transform: uppercase; color: var(--muted); border-bottom: 4px solid transparent; }
   .dv-onglets button.is-actif { color: var(--ink); border-bottom-color: var(--navy); }
   .dv-corps { position: relative; }
-  .dv-cr { position: absolute; inset: 0; flex: none; border-left: 0; }
-  .dv-page:not(.voir-cr) .dv-cr { display: none; }
-  .dv-page.voir-cr .dv-cr { display: flex !important; }
+  .dv-cr, .dv-courbe { position: absolute; inset: 0; flex: none; border-left: 0; }
+  .dv-page:not(.voir-cr) .dv-cr, .dv-page:not(.voir-courbe) .dv-courbe { display: none; }
+  .dv-page.voir-cr .dv-cr, .dv-page.voir-courbe .dv-courbe { display: flex !important; }
 }
