@@ -1,0 +1,25 @@
+<svg viewBox="0 0 320 420" role="img" aria-label="Avant-bras en supination, sonde transversale au tiers proximal du versant antéro-médial">
+<style>
+  .lb{paint-order:stroke;stroke:#e9f0f2;stroke-width:4px;stroke-linejoin:round;font:700 13px Montserrat, "Atkinson Hyperlegible", Arial, sans-serif; fill:#141414}
+  .lm{paint-order:stroke;stroke:#e9f0f2;stroke-width:4px;stroke-linejoin:round;font:800 14px Montserrat, "Atkinson Hyperlegible", Arial, sans-serif; fill:#141414}
+  .sm{paint-order:stroke;stroke:#e9f0f2;stroke-width:4px;stroke-linejoin:round;font:600 11.5px Montserrat, "Atkinson Hyperlegible", Arial, sans-serif; fill:#3a4650}
+</style>
+<rect width="320" height="420" fill="#e9f0f2"/>
+<path d="M-4 150 C 60 136, 140 140, 200 152 C 222 156, 236 158, 250 156 C 270 150, 300 146, 316 158 C 326 170, 322 200, 316 214 C 304 236, 270 238, 252 232 C 236 230, 222 232, 200 240 C 140 262, 60 262, -4 252 Z" fill="#f1c7a3" stroke="#141414" stroke-width="3.2" stroke-linejoin="round"/>
+<path d="M262 154 C 272 132, 292 122, 304 128 C 312 132, 306 142, 296 150" fill="#f1c7a3" stroke="#141414" stroke-width="3" stroke-linejoin="round"/>
+<path d="M258 196 C 276 192, 292 194, 306 200" fill="none" stroke="#141414" stroke-width="1.8" opacity=".45"/>
+
+  <path d="M-4 236 C 60 238, 140 234, 200 226 C 222 222, 240 220, 258 218" fill="none" stroke="#141414" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M-4 236 C 60 238, 140 234, 200 226 C 222 222, 240 220, 258 218" fill="none" stroke="#f6c945" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 5"/>
+
+  <line x1="76" y1="136" x2="76" y2="268" stroke="#141414" stroke-width="17" stroke-linecap="round"/>
+  <line x1="76" y1="136" x2="76" y2="268" stroke="#2b3138" stroke-width="11" stroke-linecap="round"/>
+  <line x1="76" y1="136" x2="76" y2="268" stroke="#5a6672" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 5"/>
+  <text x="90" y="124" text-anchor="start" class="lb">Sonde</text>
+<text x="90" y="108" class="sm">petit axe, tiers proximal</text>
+<text x="110" y="296" class="sm">Nerf ulnaire (bord ulnaire)</text>
+<path d="M164 280 L 168 236" stroke="#141414" stroke-width="1.4"/>
+<text x="58" y="40" class="sm">Avant-bras en supination,</text>
+<text x="58" y="54" class="sm">versant antéro-médial</text>
+<text x="292" y="114" class="sm" text-anchor="middle">Pouce</text>
+</svg>

@@ -7,7 +7,9 @@
    vue antérieure, étiquettes sur la face externe des structures.
    Panneau : catégories affichées, tendons seuls, loge, vues, liste des
    structures par loge. Chargement à l'ouverture sur ordinateur, au clic
-   sur « Voir en 3D » sur téléphone.
+   sur « Voir en 3D » sur téléphone. La fiche peut demander une
+   structure (« Voir le nerf ulnaire en 3D ») : événement
+   « rh-3d-selectionner » sur <main>.
    ========================================================= */
 (function () {
   'use strict';
@@ -31,7 +33,14 @@
     recul: 1.3,
   };
 
-  let manifeste = null, visionneuse = null, enCours = false;
+  let manifeste = null, visionneuse = null, enCours = false, aSelectionner = null;
+
+  // Demande d'une autre partie de la page (fiche) : sélectionner une structure, après chargement si besoin
+  main.addEventListener('rh-3d-selectionner', e => {
+    aSelectionner = e.detail;
+    if (visionneuse) visionneuse.selectionner(aSelectionner);
+    else if (manifeste) charger();
+  });
 
   async function demarrer() {
     const scene = $('#v3d-scene');
@@ -121,7 +130,7 @@
       }
       if (b.dataset.structure) v.selectionner(v.selection === b.dataset.structure ? null : b.dataset.structure);
     });
-    const choisie = new URLSearchParams(location.search).get('structure');
+    const choisie = aSelectionner || new URLSearchParams(location.search).get('structure');
     if (choisie) v.selectionner(choisie);
   }
 

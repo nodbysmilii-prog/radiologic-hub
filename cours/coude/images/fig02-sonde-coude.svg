@@ -1,0 +1,31 @@
+<svg viewBox="0 0 320 420" role="img" aria-label="Coude fléchi vu par sa face postéro-médiale, sonde transversale posée entre épicondyle médial et olécrane">
+<style>
+  .lb{paint-order:stroke;stroke:#e9f0f2;stroke-width:4px;stroke-linejoin:round;font:700 13px Montserrat, "Atkinson Hyperlegible", Arial, sans-serif; fill:#141414}
+  .lm{paint-order:stroke;stroke:#e9f0f2;stroke-width:4px;stroke-linejoin:round;font:800 14px Montserrat, "Atkinson Hyperlegible", Arial, sans-serif; fill:#141414}
+  .sm{paint-order:stroke;stroke:#e9f0f2;stroke-width:4px;stroke-linejoin:round;font:600 11.5px Montserrat, "Atkinson Hyperlegible", Arial, sans-serif; fill:#3a4650}
+</style>
+<rect width="320" height="420" fill="#e9f0f2"/>
+<path d="M104 -4 L 214 -4 C 214 80, 216 170, 226 214 C 238 236, 268 246, 324 248 L 324 352 C 276 352, 232 360, 186 368 C 142 376, 108 356, 100 318 C 92 260, 98 120, 104 -4 Z" fill="#f1c7a3" stroke="#141414" stroke-width="3.2" stroke-linejoin="round"/>
+<path d="M226 214 C 236 250, 250 270, 268 290" fill="none" stroke="#141414" stroke-width="2" opacity=".35"/>
+
+  <path d="M160 -4 C 160 90, 162 200, 166 268 C 170 300, 196 316, 236 318 L 324 312" fill="none" stroke="#141414" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M160 -4 C 160 90, 162 200, 166 268 C 170 300, 196 316, 236 318 L 324 312" fill="none" stroke="#f6c945" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 5"/>
+
+  <line x1="202" y1="260" x2="122" y2="324" stroke="#141414" stroke-width="17" stroke-linecap="round"/>
+  <line x1="202" y1="260" x2="122" y2="324" stroke="#2b3138" stroke-width="11" stroke-linecap="round"/>
+  <line x1="202" y1="260" x2="122" y2="324" stroke="#5a6672" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 5"/>
+  <text x="0" y="0" text-anchor="start" class="lb"></text>
+
+  <ellipse cx="210" cy="254" rx="9" ry="7" fill="#fffaf0" stroke="#141414" stroke-width="2.5"/>
+  <text x="230" y="236" text-anchor="start" class="lm">EM</text>
+
+  <ellipse cx="116" cy="330" rx="9" ry="7" fill="#fffaf0" stroke="#141414" stroke-width="2.5"/>
+  <text x="96" y="352" text-anchor="end" class="lm">OL</text>
+<text x="12" y="236" class="lb">Sonde</text>
+<text x="12" y="251" class="sm">transversale,</text>
+<text x="12" y="265" class="sm">de EM à OL</text>
+<path d="M70 246 L 146 298" stroke="#141414" stroke-width="1.4"/>
+<text x="174" y="60" class="sm">Nerf ulnaire</text>
+<path d="M172 56 L 162 52" stroke="#141414" stroke-width="1.4"/>
+<text x="12" y="404" class="sm">Coude fléchi, face postéro-médiale</text>
+</svg>
