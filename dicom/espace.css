@@ -74,7 +74,7 @@
 }
 
 /* ---------- Visionneuse ---------- */
-.dv-page { margin: 0; height: 100vh; height: 100dvh; display: flex; flex-direction: column; background: #1f1e5c; color: #fff; font-family: var(--font); overflow: hidden; }
+.dv-page { margin: 0; height: 100vh; height: 100dvh; display: flex; flex-direction: column; background: #111127; color: #fff; font-family: var(--font); overflow: hidden; }
 .dv-barre { flex: 0 0 auto; display: flex; align-items: center; gap: 14px; padding: 8px 14px; background: #f6f4ef; color: var(--ink); border-bottom: 3px solid var(--ink); min-width: 0; }
 .dv-barre .brand-mark { width: 34px; height: auto; flex: 0 0 auto; }
 .dv-retour { flex: 0 0 auto; }

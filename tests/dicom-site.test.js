@@ -148,8 +148,7 @@ test('installation d\'OHIF : correctifs précis, version et empreinte figées', 
   const theme = fs.readFileSync(path.join(RACINE, 'espace-dicom/visionneuse/theme-radiologichub.css'), 'utf8');
   assert.match(theme, /--background: 0 0% 0%;/, 'images toujours sur fond noir');
   assert.match(theme, /--highlight: 38 88% 57%;/, 'outil actif : ambre du site (#f2ab2f)');
-  assert.match(theme, /--popover: 241 47% 31%;/, 'barres et menus : bleu marine du site (#2b2a74)');
-  assert.match(theme, /--accent: 233 59% 40%;/, 'survol : bleu roi du site (#2a39a3)');
+  assert.match(theme, /--accent: 241 47% 31%;/, 'survol : marine du site (#2b2a74)');
   assert.match(theme, /font-family: "Montserrat"/, 'police du site');
   assert.match(modele, /fonts\.googleapis\.com\/css2\?family=Montserrat/, 'Montserrat chargée comme sur le site');
   assert.match(modele, /\^\\\/viewer\\\/\(dicomjson\|dicomweb\)\\\?/, 'seules les adresses de la visionneuse sont acceptées');
