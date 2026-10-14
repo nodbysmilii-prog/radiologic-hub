@@ -176,6 +176,9 @@
 .cfig { position: relative; margin: 24px 0 34px; overflow: hidden; border: 4px solid var(--ink); border-radius: var(--radius); background: #000;
   box-shadow: 8px 8px 0 color-mix(in srgb, var(--c, var(--amber)) 45%, transparent); }
 .cfig.is-etroite { max-width: 640px; }
+/* Schéma anatomique (fond transparent, étiquettes noires) : fond clair, 520 px centré ; pleine largeur sur téléphone */
+.cfig.is-schema { max-width: 520px; margin-left: auto; margin-right: auto; background: var(--card); }
+.cfig.is-schema .cfig-zoom { background: var(--card); }
 .cfig-num { position: absolute; top: 10px; left: 10px; z-index: 2; width: 36px; height: 36px; border-radius: 50%; background: var(--amber); border: 3px solid var(--ink);
   color: var(--ink); font: 900 1rem/30px var(--font); text-align: center; }
 .cfig-zoom { display: block; width: 100%; padding: 0; border: 0; background: #000; cursor: zoom-in; }
@@ -231,6 +234,7 @@
   .cfig-paire > div:first-child { border-right: 0; border-bottom: 3px solid var(--ink); }
   .cfig-paire > div:first-child svg { max-width: 300px; }
   .cfig-stades { grid-template-columns: 1fr; }
+  .cfig.is-schema { max-width: none; }
   .cfig { box-shadow: 5px 5px 0 color-mix(in srgb, var(--c, var(--amber)) 45%, transparent); }
   .cours-grade { grid-template-columns: 1fr; gap: 8px; }
   .cours-g { justify-self: start; padding: 4px 12px; }

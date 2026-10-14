@@ -32,21 +32,22 @@ test('cours du coude : sommaire (3D puis les 3 parties de la fiche), code couleu
   assert.deepEqual(puces, [['k-ddx', 'ddx', 'Anatomie / repères'], ['k-sign', 'sign', 'Aspect normal'], ['k-grave', 'grave', 'Pathologique'],
     ['k-key', 'key', 'Chiffres et seuils'], ['k-tech', 'tech', 'Technique / manœuvre']]);
   const marques = [...page.matchAll(/<mark class="(k-[a-z]+)">/g)].map(m => m[1]);
-  assert.equal(marques.length, 158, 'mots-clés colorés de la page de référence');
+  assert.equal(marques.length, 158 + 5, 'mots-clés colorés de la page de référence, plus les 5 de la légende du schéma');
   assert.ok(marques.every(k => ['k-ddx', 'k-sign', 'k-grave', 'k-key', 'k-tech'].includes(k)));
   assert.match(page, /id="fiche-body"/, 'filtre du code couleur (fiche.js)');
   assert.match(page, /data-voir="nerf-ulnaire"/, 'lien vers le nerf ulnaire en 3D');
   assert.doesNotMatch(page, /class="(an|ok|pa|val|tq|box|tbl|part|fig|pair|stages|grades|cr|copy|ph)[ "]/, 'aucune classe de la page de référence');
 });
 
-test('figures : 16 dans l\'ordre, cadre du site, 22 visuels copiés tels quels et tous utilisés', () => {
-  const figs = [...page.matchAll(/<figure class="cfig( is-etroite)?" id="fig-(\d+)"><span class="cfig-num" aria-hidden="true">(\d+)<\/span>([\s\S]*?)<\/figure>/g)];
-  assert.deepEqual(figs.map(f => Number(f[2])), Array.from({ length: 16 }, (_, i) => i + 1));
+test('figures : 17 dans l\'ordre, cadre du site, 22 visuels de la fiche + le schéma anatomique, tous utilisés', () => {
+  const figs = [...page.matchAll(/<figure class="cfig( is-etroite| is-schema)?" id="fig-(\d+)"><span class="cfig-num" aria-hidden="true">(\d+)<\/span>([\s\S]*?)<\/figure>/g)];
+  assert.deepEqual(figs.map(f => Number(f[2])), Array.from({ length: 17 }, (_, i) => i + 1));
   figs.forEach(f => {
     assert.equal(f[2], f[3], 'pastille = numéro');
     assert.match(f[4], new RegExp(`<figcaption><b class="cfig-label">FIG\\. ${f[2]} :</b>`), `légende FIG. ${f[2]}`);
   });
-  assert.deepEqual(figs.filter(f => f[1]).map(f => Number(f[2])), [8, 9, 10, 16], 'figures étroites');
+  assert.deepEqual(figs.filter(f => f[1] === ' is-etroite').map(f => Number(f[2])), [8, 9, 10, 17], 'figures étroites');
+  assert.deepEqual(figs.filter(f => f[1] === ' is-schema').map(f => Number(f[2])), [11], 'schéma anatomique');
   // Paires A / B (sonde + coupe) : figures 1 à 3
   for (const n of [1, 2, 3]) {
     const f = figs[n - 1][4];
@@ -55,9 +56,9 @@ test('figures : 16 dans l\'ordre, cadre du site, 22 visuels copiés tels quels e
   assert.equal((figs[4][4].match(/<img /g) || []).length, 4, 'figure 5 : 4 stades');
   // Visuels : 19 images référencées (dimensions exactes) + 3 SVG intégrés tels quels
   const fichiers = fs.readdirSync(IMAGES).sort();
-  assert.equal(fichiers.length, 22);
+  assert.equal(fichiers.length, 23);
   const srcs = [...page.matchAll(/<img src="coude\/images\/([^"]+)" alt="[^"]+" width="(\d+)" height="(\d+)" loading="lazy"/g)];
-  assert.equal(srcs.length, 19);
+  assert.equal(srcs.length, 20);
   for (const [, nom, w, h] of srcs) {
     const d = fs.readFileSync(path.join(IMAGES, nom));
     assert.deepEqual([d.readUInt32BE(16), d.readUInt32BE(20)], [Number(w), Number(h)], nom);
@@ -65,10 +66,19 @@ test('figures : 16 dans l\'ordre, cadre du site, 22 visuels copiés tels quels e
   const svgs = fichiers.filter(f => f.endsWith('.svg'));
   for (const f of svgs) assert.ok(page.includes(fs.readFileSync(path.join(IMAGES, f), 'utf8').trim()), `${f} intégré sans modification`);
   assert.deepEqual([...new Set([...srcs.map(s => s[1]), ...svgs])].sort(), fichiers, 'chaque visuel est utilisé une fois');
-  // Ordre des fichiers = numéro de figure
-  const ordre = srcs.map(s => Number(s[1].slice(3, 5)));
+  // Ordre des fichiers figNN de la fiche = ordre des figures (le schéma, ajouté ensuite, est la figure 11)
+  const ordre = srcs.filter(s => /^fig\d\d/.test(s[1])).map(s => Number(s[1].slice(3, 5)));
   assert.deepEqual(ordre, [...ordre].sort((a, b) => a - b));
   assert.match(page, /<dialog class="lightbox" id="lightbox"/, 'agrandissement des images');
+  // Schéma anatomique : après le « Point sémiologique fondamental », avant « 2. Protocole… » ; légende colorée
+  const schema = figs[10][4];
+  assert.ok(page.indexOf('Point sémiologique fondamental') < page.indexOf('id="fig-11"') && page.indexOf('id="fig-11"') < page.indexOf('2. Protocole et 4 coupes de référence'));
+  assert.match(schema, /src="coude\/images\/nerf-ulnaire-anatomie-fr\.png"/);
+  const fichierSchema = fs.readFileSync(path.join(IMAGES, 'nerf-ulnaire-anatomie-fr.png'));
+  assert.equal(fichierSchema[25], 6, 'PNG avec transparence (fond blanc retiré)');
+  assert.deepEqual([...schema.matchAll(/<mark class="(k-[a-z]+)">([^<]+)<\/mark>/g)].map(m => [m[1], m[2]]),
+    [['k-ddx', 'branches cutanées dorsale et palmaire'], ['k-ddx', 'canal de Guyon'], ['k-sign', 'les épargne'], ['k-ddx', 'branche superficielle'], ['k-ddx', 'branche profonde']]);
+  assert.equal(texte(schema.match(/<figcaption>([\s\S]*)<\/figcaption>/)[1]), "FIG. 11 : Trajet du nerf ulnaire de l'avant-bras à la main (vue antérieure). Les branches cutanées dorsale et palmaire naissent à l'avant-bras, en amont du canal de Guyon : une atteinte isolée au canal les épargne. À la sortie du canal, le nerf se divise en branche superficielle (sensitive) et branche profonde (motrice).");
 });
 
 test('fiche : tableaux, encadrés, classifications, corrections terminologiques', () => {

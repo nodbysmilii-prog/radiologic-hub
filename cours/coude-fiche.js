@@ -21,6 +21,8 @@
       const img = $('img', btn), fig = btn.closest('figure');
       $('img', boite).src = img.src;
       $('img', boite).alt = img.alt;
+      // Schéma à fond transparent et étiquettes noires : fond clair (la boîte est noire)
+      $('img', boite).style.background = fig && fig.classList.contains('is-schema') ? '#f0f1f1' : '';
       const cap = fig && $('figcaption', fig);
       $('.lightbox-cap', boite).innerHTML = cap ? cap.innerHTML : '';
       boite.showModal();
