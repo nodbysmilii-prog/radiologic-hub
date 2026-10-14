@@ -16,7 +16,8 @@
       • blob-meme-origine : la source « dicomjson » accepte une liste
         d'images en adresse blob: du MÊME site (mode démonstration :
         examens gardés dans le navigateur) ; rien d'autre n'est ouvert ;
-   4. écrit index.html et app-config.js de l'Espace DICOM et la LICENSE.
+   4. écrit index.html, app-config.js et theme-radiologichub.css (couleurs
+      du site) de l'Espace DICOM, et la LICENSE.
    Sortie : dicom/ohif/ (ignoré par git ; publié seulement sur la
    branche d'aperçu, et servi par Nginx sur le serveur).
    Usage : node espace-dicom/visionneuse/installer-ohif.js [--sortie <dossier>]
@@ -118,6 +119,7 @@ function installer(sortie) {
   fs.writeFileSync(path.join(sortie, 'index.html'),
     fs.readFileSync(path.join(ICI, 'index.html.modele'), 'utf8').replace('{{BUNDLE}}', bundle).replace('{{VERSION}}', VERSION));
   fs.copyFileSync(path.join(ICI, 'app-config.js'), path.join(sortie, 'app-config.js'));
+  fs.copyFileSync(path.join(ICI, 'theme-radiologichub.css'), path.join(sortie, 'theme-radiologichub.css'));
   fs.copyFileSync(path.join(paquet, 'LICENSE'), path.join(sortie, 'LICENSE'));
   fs.writeFileSync(path.join(sortie, 'VERSION.txt'),
     `OHIF Viewer @ohif/app ${VERSION} (licence MIT, voir LICENSE)\n${INTEGRITE}\nCorrectifs : ${rapport.join(' ; ')}\n`
