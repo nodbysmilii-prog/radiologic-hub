@@ -185,12 +185,14 @@ test('modèles 3D du coude : fichiers, empreintes, catégories, loges, repères,
   const licence = fs.readFileSync(path.join(dossier, 'LICENSE'), 'utf8');
   assert.match(licence, /CC BY-SA 4\.0[\s\S]*Z-Anatomy[\s\S]*BodyParts3D/);
   assert.match(licence, /41 structures/);
-  // Page d'aperçu
+  // Page du cours (publiée le 14/10/2026)
   const page = 'cours/coude-3d.html', html = fs.readFileSync(path.join(RACINE, page), 'utf8');
   for (const [, lien] of html.matchAll(/(?:src|href)="([^"#?:]+\.(?:js|css|svg))(?:\?v=\d+)?"/g)) {
     assert.ok(fs.existsSync(path.join(RACINE, 'cours', lien)), `${page} : ${lien} introuvable`);
   }
-  assert.match(html, /name="robots" content="noindex"/);
+  assert.doesNotMatch(html, /noindex/, 'cours publié : page indexable');
+  const cartes = fs.readFileSync(path.join(RACINE, 'fiches-rapides.html'), 'utf8');
+  assert.match(cartes, /<a class="fiche-card" data-spe="osteo" href="cours\/coude-3d\.html"/, 'carte dans les Fiches rapides (Ostéo-articulaire)');
   assert.match(html, /data-modeles="\.\.\/public\/models\/coude\/"/);
   assert.match(html, /Z-Anatomy[\s\S]*CC BY-SA 4\.0[\s\S]*BodyParts3D[\s\S]*public\/models\/coude\/LICENSE/, 'attribution visible');
   const script = fs.readFileSync(path.join(RACINE, 'cours/coude-3d.js'), 'utf8');
