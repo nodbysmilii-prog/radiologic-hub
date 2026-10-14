@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Assistant IA de rédaction — RadiologicHub</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Outil privé : vos notes en vrac et le modèle normal du service deviennent un compte rendu à relire et signer.">
+  <link rel="icon" type="image/svg+xml" href="assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261013020000">
+  <link rel="stylesheet" href="fiche.css?v=20261012150000">
+  <link rel="stylesheet" href="assistant-ia/ia.css?v=20261014090000">
+</head>
+<body>
+
+  <header class="site-header is-scrolled" id="top">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" aria-label="RadiologicHub — accueil">
+        <img src="assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+        <a href="index.html#masterclass">Masterclass</a>
+        <a href="fiches-rapides.html">Fiches rapides</a>
+        <a href="bibliotheque.html">Bibliothèque</a>
+        <a href="comptes-rendus.html">Comptes rendus</a>
+        <a href="remplacements.html">Remplacements</a>
+        <a href="communaute.html">Communauté</a>
+        <a href="index.html#tarifs">Tarifs</a>
+        <a href="index.html#inscription" class="btn btn-ink btn-sm">S'inscrire</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="fiche-hero sec-down">
+      <div class="container">
+        <p class="marker-tag">Outil privé</p>
+        <h1>Assistant <span class="hl-navy">IA</span> de rédaction</h1>
+        <p class="fiche-sub">Vos notes en vrac et le <span class="hl-navy">modèle normal</span> du service deviennent un compte rendu à relire et signer. Les coupes clés éventuelles donnent un <span class="hl-red">second regard</span>, toujours à part.</p>
+      </div>
+    </section>
+
+    <section class="sec-up ia-app" aria-label="Assistant de rédaction">
+      <div class="container">
+
+        <div class="ia-acces" id="ia-acces" aria-live="polite">
+          <p id="ia-acces-texte">Connexion…</p>
+          <form id="ia-connexion" hidden>
+            <label class="sr-only" for="ia-email">Adresse e-mail</label>
+            <input type="email" id="ia-email" required autocomplete="email" placeholder="votre@adresse.com">
+            <button class="btn btn-ink btn-sm" type="submit">Recevoir le lien de connexion</button>
+          </form>
+          <button class="btn btn-outline btn-sm" type="button" id="ia-deconnexion" hidden>Se déconnecter</button>
+        </div>
+
+        <div class="ia-grid">
+          <form class="ia-panel" id="ia-form" autocomplete="off">
+            <h2>Saisie</h2>
+
+            <div class="field">
+              <label for="ia-modele">Modèle normal</label>
+              <select id="ia-modele"></select>
+            </div>
+            <details class="ia-modele">
+              <summary>Voir ou ajuster le modèle pour ce compte rendu</summary>
+              <div class="field">
+                <label for="ia-modele-texte">Texte du modèle</label>
+                <textarea id="ia-modele-texte" spellcheck="false"></textarea>
+              </div>
+              <button class="btn btn-outline btn-sm" type="button" id="ia-modele-garder">Enregistrer dans « Mes modèles »</button>
+              <span class="ia-statut" id="ia-modele-statut" role="status"></span>
+            </details>
+
+            <div class="field">
+              <label id="ia-sexe-l">Patient(e)</label>
+              <div class="ia-chips" role="radiogroup" aria-labelledby="ia-sexe-l">
+                <label><input type="radio" name="ia-sexe" id="ia-sexe-f" value="F"><span>Femme</span></label>
+                <label><input type="radio" name="ia-sexe" id="ia-sexe-h" value="H"><span>Homme</span></label>
+                <label><input type="radio" name="ia-sexe" id="ia-sexe-n" value="" checked><span>Non précisé</span></label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="ia-indication">Indication</label>
+              <input type="text" id="ia-indication" maxlength="300" placeholder="ex. douleur FID fébrile, CRP 85">
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="ia-pdl">PDL (mGy·cm)</label>
+                <input type="text" id="ia-pdl" inputmode="decimal" maxlength="8" placeholder="facultatif">
+              </div>
+              <div class="field">
+                <label for="ia-anterieur">Examen antérieur</label>
+                <input type="text" id="ia-anterieur" maxlength="300" placeholder="facultatif">
+              </div>
+            </div>
+            <div class="field">
+              <label for="ia-technique">Technique, si différente du modèle</label>
+              <input type="text" id="ia-technique" maxlength="300" placeholder="ex. temps artériel et portal">
+            </div>
+
+            <div class="field">
+              <label for="ia-notes">Constatations (en vrac)</label>
+              <textarea id="ia-notes" spellcheck="false" maxlength="6000"></textarea>
+            </div>
+            <p class="ia-hint">Une anomalie par ligne, abréviations acceptées. Dictée : <kbd>Win</kbd> + <kbd>H</kbd> sous Windows, deux fois <kbd>Fn</kbd> sur Mac.</p>
+
+            <label class="ia-check"><input type="checkbox" id="ia-normal" checked>
+              <span>Je n'ai noté que les anomalies : garder le modèle normal pour le reste.</span></label>
+
+            <div class="field">
+              <label for="ia-fichiers">Coupes clés pour un second regard (facultatif, 5 au plus)</label>
+              <input type="file" id="ia-fichiers" class="ia-file" accept="image/png,image/jpeg,image/webp" multiple>
+            </div>
+            <p class="ia-hint" id="ia-images-aide" hidden>Glissez sur une image pour masquer en noir un nom, une date ou un numéro incrustés.</p>
+            <div class="ia-images" id="ia-images"></div>
+
+            <div class="ia-alerte" id="ia-alerte" hidden></div>
+
+            <label class="ia-check"><input type="checkbox" id="ia-anonyme">
+              <span>Aucune donnée identifiante dans le texte ni sur les images (nom, date de naissance, n° de dossier, CIN).</span></label>
+
+            <div class="ia-actions">
+              <button class="btn btn-ink" type="submit" id="ia-go" disabled>Rédiger le compte rendu</button>
+              <span class="ia-statut" id="ia-statut" role="status"></span>
+            </div>
+          </form>
+
+          <section class="ia-panel" aria-labelledby="ia-cr-titre">
+            <h2 id="ia-cr-titre">Compte rendu</h2>
+            <label class="sr-only" for="ia-cr">Compte rendu modifiable</label>
+            <textarea id="ia-cr" spellcheck="true" placeholder="Le brouillon apparaîtra ici. Corrigez-le directement avant de le copier."></textarea>
+            <div class="ia-actions">
+              <button class="btn btn-ink btn-sm" type="button" id="ia-copier" disabled>Copier</button>
+              <button class="btn btn-outline btn-sm" type="button" id="ia-editeur" disabled>Ouvrir dans l'éditeur</button>
+              <span class="ia-statut" id="ia-cr-statut" role="status"></span>
+            </div>
+
+            <div class="ia-bloc ia-verifier" id="ia-verifier" hidden>
+              <h3>À vérifier avant signature</h3>
+              <ul id="ia-verifier-liste"></ul>
+            </div>
+
+            <div class="ia-bloc ia-regard" id="ia-regard" hidden>
+              <h3>Second regard sur les images</h3>
+              <p class="ia-regard-note">Lecture IA non validée : à confronter à votre lecture, jamais à recopier telle quelle.</p>
+              <pre id="ia-regard-texte"></pre>
+            </div>
+          </section>
+        </div>
+
+        <p class="ia-avert">Aide à la rédaction : le compte rendu est construit à partir de vos seules notes ; le second regard sur les images vient d'un modèle d'IA non validé pour le diagnostic. Relecture et signature par le radiologue obligatoires. Les textes et images envoyés transitent par le serveur du site et le service d'IA ; ne les envoyez qu'anonymisés.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="index.html" class="brand">
+        <img src="assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav aria-label="Liens de pied de page">
+        <a href="index.html#masterclass">Masterclass</a>
+        <a href="fiches-rapides.html">Fiches rapides</a>
+        <a href="bibliotheque.html">Bibliothèque</a>
+        <a href="comptes-rendus.html">Comptes rendus</a>
+        <a href="suivi-oncologique.html">Suivi oncologique</a>
+        <a href="communaute.html">Communauté</a>
+        <a href="remplacements.html">Remplacements</a>
+        <a href="index.html#cas-du-jour">Cas du jour</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="index.html#inscription">Contact</a>
+      </nav>
+      <p class="copyright">© <span id="year"></span> RadiologicHub · Formation en radiologie d'urgence</p>
+    </div>
+  </footer>
+
+  <script src="fiche.js?v=20261012150000"></script>
+  <script src="cr-data.js?v=20261012150000"></script>
+  <script src="remplacements/config.js?v=20261014090000"></script>
+  <script src="assistant-ia/config.js?v=20261014090000"></script>
+  <script src="assistant-ia/noyau/consigne.js?v=20261014090000"></script>
+  <script src="assistant-ia/api.js?v=20261014090000"></script>
+  <script src="assistant-ia/app.js?v=20261014090000"></script>
+</body>
+</html>
