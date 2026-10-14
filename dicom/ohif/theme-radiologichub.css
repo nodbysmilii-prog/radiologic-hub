@@ -3,8 +3,8 @@
    Chargé après app.bundle.css (voir index.html.modele, copié par
    installer-ohif.js). Les images restent sur fond NOIR (lecture
    radiologique) ; seuls le cadre et les commandes prennent la charte :
-   encre et bleu marine du site, ambre pour l'outil actif et le focus,
-   rouge du site pour les actions destructives.
+   police Montserrat, encre et bleu marine du site, ambre pour l'outil
+   actif et le focus, rouge du site pour les actions destructives.
    Couleurs du site (styles.css) : encre #111114, marine #2b2a74,
    bleu roi #2a39a3, bleuet #5273bf, ambre #f2ab2f, rouge #a8172d.
    ========================================================= */
@@ -39,6 +39,12 @@
   --neutral-light: 228 60% 86%;
   --neutral-dark: 241 25% 20%;
 }
+
+/* Police du site (Montserrat, chargée par index.html) à la place d'Inter */
+html, body, #root, .font-sans, button, input, select, textarea, [class*="text-"] {
+  font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif !important;
+}
+.font-mono { font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important; }
 
 /* Anciennes classes d'OHIF à couleur fixe */
 .bg-primary-dark { background-color: #111127 !important; }
