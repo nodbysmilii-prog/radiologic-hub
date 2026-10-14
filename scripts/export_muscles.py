@@ -1,62 +1,72 @@
 """
 =========================================================
-RadiologicHub — export des modèles 3D d'un cours d'échoanatomie
+RadiologicHub — export des modèles 3D des cours d'échoanatomie
 ---------------------------------------------------------
-Groupe : ischio-jambiers (membre inférieur DROIT).
+Groupes (membre DROIT) :
+  ischio-jambiers   cuisse et fosse poplitée
+  coude             partie distale du bras et proximale de l'avant-bras :
+                    tendons des quatre loges, ligaments, bourses, nerfs
+                    ulnaire, médian et radial, artères et veines
 
 Source : pack Z-Anatomy (CC BY-SA 4.0), lui-même dérivé de BodyParts3D
 (CC BY-SA 2.1 Japon). Téléchargement : bash scripts/telecharger_z_anatomy.sh
 
 Usage (Blender sans interface, scripts du fichier .blend désactivés) :
-    blender -b --disable-autoexec assets-sources/z-anatomy/Z-Anatomy/Startup.blend \
-            -P scripts/export_muscles.py
+    blender -b --disable-autoexec --python-exit-code 1 assets-sources/z-anatomy/Z-Anatomy/Startup.blend \
+            -P scripts/export_muscles.py -- <groupe>       (ischio-jambiers par défaut)
 
 Étapes :
-  1. liste FERMÉE d'objets (STRUCTURES) ; refus de tout objet rangé dans une
-     collection sous licence NC du pack (oreille interne, rein) ;
+  1. liste FERMÉE d'objets (STRUCTURES du groupe) ; refus de tout objet rangé
+     dans une collection sous licence NC du pack (oreille interne, rein) ;
+     une structure peut réunir plusieurs objets du pack (chefs d'un muscle) ;
   2. géométrie évaluée en coordonnées monde ; nerfs et vaisseaux sont des
      courbes dont le pack règle l'épaisseur point par point : elle est gardée
      pour les vaisseaux ; les nerfs sont calés sur un diamètre d'AFFICHAGE
-     réaliste approximatif (sciatique au tiers moyen de la cuisse, tibial et
-     fibulaire commun dans la fosse poplitée), mesuré après export ;
-  3. coupe horizontale sous le genou (tibia et fibula proximaux, nerf tibial),
-     section refermée ;
+     réaliste approximatif, mesuré après export à un niveau donné ;
+  3. coupes horizontales (ischio-jambiers : sous le genou ; coude : au-dessus
+     et au-dessous de l'interligne), sections refermées ;
   4. simplification (décimation) : nombre de triangles visé, ou proportion gardée ;
-  5. matériaux simplifiés (muscle / tendon / os / cartilage / nerf / artère / veine) ;
-  6. recentrage commun (tous les fichiers restent alignés entre eux) ;
+  5. matériaux simplifiés (muscle / tendon / os / cartilage / ligament / capsule /
+     bourse / nerf / artère / veine) ;
+  6. recentrage commun (tous les fichiers d'un groupe restent alignés entre eux) ;
   7. un .glb par structure, puis compression meshopt (gltf-transform) ;
   8. manifest.json (version = empreinte du fichier, sert à la validation).
 
 Sorties :
-  assets-sources/build/ischio-jambiers/*.glb   non compressés (aperçus ; ignorés par git)
-  public/models/ischio-jambiers/*.glb          compressés, publiés avec LICENSE et manifest.json
+  assets-sources/build/<groupe>/*.glb   non compressés (aperçus ; ignorés par git)
+  public/models/<groupe>/*.glb          compressés, publiés avec LICENSE et manifest.json
 =========================================================
 """
 import bpy, bmesh, hashlib, json, math, os, re, shutil, subprocess, sys
 from mathutils import Matrix, Vector
 
-GROUPE = 'ischio-jambiers'
+GROUPE = sys.argv[sys.argv.index('--') + 1] if '--' in sys.argv[:-1] else 'ischio-jambiers'
 RACINE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 DOSSIER_BRUT = os.path.join(RACINE, 'assets-sources', 'build', GROUPE)
 DOSSIER_PUBLIC = os.path.join(RACINE, 'public', 'models', GROUPE)
 GLTF_TRANSFORM = '@gltf-transform/cli@4.5.1'
 Z_ANATOMY_COMMIT = '2b6cf98a8ca012571ecb252e5c077b42a21b3b61'
 
-# Collections du pack sous licence NC (non commerciale) : rien ne doit en venir.
-NC = re.compile(r'(ear|cochlea|labyrinth|vestibul|kidney|renal)', re.I)
+# Collections du pack sous licence NC (non commerciale) : oreille interne (CC BY-NC-SA 4.0) et rein
+# (CC BY-NC 4.0), voir License.txt du pack. Rien ne doit en venir. « ear » en mot entier : « forearm »
+# (avant-bras) n'est pas concerné.
+NC = re.compile(r'(\bear\b|cochlea|labyrinth|vestibul|kidney|renal)', re.I)
 
+# ---------- Ischio-jambiers ----------
 # Distance gardée sous le sommet du tibia (plateau) pour la jambe : 12 cm (la tête fibulaire reste entière)
 JAMBE_GARDEE = 0.12
 # Altitudes de mesure des nerfs (repère du pack, m) : milieu du fémur (0,430-0,884) et fosse poplitée
 Z_TIERS_MOYEN = 0.657
 Z_FOSSE_POPLITEE = 0.47
 
-# id (nom du fichier) · objet source · nom français · catégorie · simplification · diamètre des courbes
+# id (nom du fichier) · objet(s) source · nom français · catégorie · simplification · diamètre des courbes [· loge]
+#   objet(s) source : un nom, ou un tuple de noms réunis en une structure (chefs d'un muscle)
 #   simplification : entier = triangles visés ; décimal ≤ 1 = proportion gardée ; None = aucune
-#   diamètre : None = épaisseur du pack ; (mm, rayon_pack_min, z_mesure) = diamètre d'affichage imposé
-#              aux points dont le rayon dans le pack est ≥ rayon_pack_min (le tronc, pas les racines),
-#              mesuré à l'altitude z_mesure (repère du pack, en mètres)
-STRUCTURES = [
+#   diamètre : None = épaisseur du pack ; (mm, rayon_pack_min, z_mesure[, lieu]) = diamètre d'affichage
+#              imposé aux points dont le rayon dans le pack est ≥ rayon_pack_min (le tronc, pas les
+#              racines), mesuré à l'altitude z_mesure (repère du pack, en mètres) ; lieu : texte
+#   loge (facultatif) : loge du coude (anterieure, laterale, mediale, posterieure)
+STRUCTURES_ISCHIO = [
     ('biceps-long',           'Long head of biceps femoris.r',  'Longue portion du biceps fémoral', 'muscle',   0.8,  None),
     ('biceps-court',          'Short head of biceps femoris.r', 'Courte portion du biceps fémoral', 'muscle',   None, None),
     ('semi-tendineux',        'Semitendinosus muscle.r',        'Semi-tendineux',                   'muscle',   None, None),
@@ -77,6 +87,80 @@ STRUCTURES = [
     ('veine-poplitee',        'Popliteal vein.r',               'Veine poplitée',                   'veine',    None, None),
 ]
 
+# ---------- Coude ----------
+# Distance gardée au-dessus et au-dessous de l'interligne (point le plus bas de l'humérus, z ≈ 1,087 dans le pack)
+COUDE_GARDE = 0.12
+# Altitudes de mesure des nerfs (repère du pack, m) : épicondyles (≈ 1,11), pli du coude, 4 cm au-dessus,
+# col du radius (2,5 cm sous l'interligne : branches du nerf radial)
+Z_EPICONDYLES = 1.11
+Z_PLI_COUDE = 1.10
+Z_SUPRA_COUDE = 1.13
+Z_COL_RADIUS = 1.06
+
+STRUCTURES_COUDE = [
+    # Os
+    ('humerus-distal',            'Humerus.r',                         'Humérus (partie distale)',              'os',       None, None),
+    ('radius-proximal',           'Radius.r',                          'Radius (partie proximale)',             'os',       None, None),
+    ('ulna-proximale',            'Ulna.r',                            'Ulna (partie proximale)',               'os',       None, None),
+    # Loge antérieure
+    ('biceps-brachial',           ('Long head of biceps brachii.r', 'Short head of biceps brachii.r'),
+                                                                       'Biceps brachial',                       'muscle',   4000, None, 'anterieure'),
+    ('brachial',                  'Brachialis muscle.r',               'Brachial',                              'muscle',   3000, None, 'anterieure'),
+    # Loge latérale : brachio-radial, épicondyliens latéraux, supinateur
+    ('brachio-radial',            'Brachioradialis muscle.r',          'Brachio-radial',                        'muscle',   3000, None, 'laterale'),
+    ('long-extenseur-radial-carpe', 'Extensor carpi radialis longus.r', 'Long extenseur radial du carpe',       'muscle',   2500, None, 'laterale'),
+    ('court-extenseur-radial-carpe', 'Extensor carpi radialis brevis.r', 'Court extenseur radial du carpe',     'muscle',   2500, None, 'laterale'),
+    ('extenseur-doigts',          'Extensor digitorum.r',              'Extenseur des doigts',                  'muscle',   2500, None, 'laterale'),
+    ('extenseur-petit-doigt',     'Extensor digiti minimi.r',          'Extenseur du petit doigt',              'muscle',   1500, None, 'laterale'),
+    ('extenseur-ulnaire-carpe',   ('Humeral head of extensor carpi ulnaris.r', 'Ulnar head of extensor carpi ulnaris.r'),
+                                                                       'Extenseur ulnaire du carpe',            'muscle',   2000, None, 'laterale'),
+    ('supinateur',                'Supinator.r',                       'Supinateur',                            'muscle',   2500, None, 'laterale'),
+    # Loge médiale : épicondyliens médiaux
+    ('rond-pronateur',            ('Superficial head of pronator teres.r', 'Deep head of pronator teres.r'),
+                                                                       'Rond pronateur',                        'muscle',   3000, None, 'mediale'),
+    ('flechisseur-radial-carpe',  'Flexor carpi radialis.r',           'Fléchisseur radial du carpe',           'muscle',   2000, None, 'mediale'),
+    ('long-palmaire',             'Palmaris longus muscle.r',          'Long palmaire',                         'muscle',   2000, None, 'mediale'),
+    ('flechisseur-superficiel-doigts', ('Humero-ulnar head of flexor digitorum superficialis.r', 'Radial head of flexor digitorum superficialis.r'),
+                                                                       'Fléchisseur superficiel des doigts',    'muscle',   3500, None, 'mediale'),
+    ('flechisseur-ulnaire-carpe', ('Humeral head of flexor carpi ulnaris.r', 'Ulnar head of flexor carpi ulnaris.r'),
+                                                                       'Fléchisseur ulnaire du carpe',          'muscle',   3000, None, 'mediale'),
+    ('flechisseur-profond-doigts', 'Flexor digitorum profundus.r',     'Fléchisseur profond des doigts',        'contexte', 2000, None, 'mediale'),
+    # Loge postérieure
+    ('triceps-brachial',          ('Long head of triceps brachii.r', 'Lateral head of triceps brachii.r', 'Medial head of triceps brachii.r'),
+                                                                       'Triceps brachial',                      'muscle',   4500, None, 'posterieure'),
+    ('ancone',                    'Anconeus muscle.r',                 'Anconé',                                'muscle',   None, None, 'posterieure'),
+    # Ligaments, capsule, bourses
+    ('ligament-collateral-ulnaire', 'Ulnar collateral ligament.r',     'Ligament collatéral ulnaire (médial)',  'ligament', None, None, 'mediale'),
+    ('ligament-collateral-radial', 'Radial collateral ligament.r',     'Ligament collatéral radial (latéral)',  'ligament', None, None, 'laterale'),
+    ('ligament-annulaire',        'Annular ligament of radius.r',      'Ligament annulaire du radius',          'ligament', None, None, 'laterale'),
+    ('capsule-articulaire',       'Articular capsule of elbow joint.r', 'Capsule articulaire du coude',         'capsule',  None, None),
+    ('bourse-bicipito-radiale',   'Bicipitoradial bursa.r',            'Bourse bicipito-radiale',               'bourse',   None, None, 'anterieure'),
+    ('bourse-tricipitale',        'Subtendinous bursa of triceps brachii muscle.r', 'Bourse sous-tendineuse du triceps', 'bourse', None, None, 'posterieure'),
+    # Nerfs (diamètres d'affichage approximatifs, voir LICENSE)
+    ('nerf-ulnaire',              'Ulnar nerve.r',                     'Nerf ulnaire',                          'nerf',     None, (3, 0, Z_EPICONDYLES, 'au niveau des épicondyles'), 'mediale'),
+    ('nerf-median',               'Median nerve.r',                    'Nerf médian',                           'nerf',     None, (3.5, 0, Z_PLI_COUDE, 'au pli du coude'), 'anterieure'),
+    ('nerf-radial',               'Radial nerve.r',                    'Nerf radial',                           'nerf',     None, (3, 0, Z_SUPRA_COUDE, '2 cm au-dessus des épicondyles'), 'laterale'),
+    ('nerf-radial-profond',       'Deep branch of radial nerve.r',     'Branche profonde du nerf radial (nerf interosseux postérieur)',
+                                                                                                                'nerf',     None, (2, 0, Z_COL_RADIUS, 'au col du radius'), 'laterale'),
+    ('nerf-radial-superficiel',   'Superficial branch of radial nerve.r', 'Branche superficielle du nerf radial', 'nerf',   None, (1.5, 0, Z_COL_RADIUS, 'au col du radius'), 'laterale'),
+    # Artères et veines (épaisseur du pack)
+    ('artere-brachiale',          'Brachial artery.r',                 'Artère brachiale',                      'artere',   None, None, 'anterieure'),
+    ('artere-radiale',            'Radial artery.r',                   'Artère radiale',                        'artere',   None, None, 'anterieure'),
+    ('artere-ulnaire',            'Ulnar artery.r',                    'Artère ulnaire',                        'artere',   None, None, 'anterieure'),
+    ('artere-collaterale-ulnaire-superieure', 'Superior ulnar collateral artery.r', 'Artère collatérale ulnaire supérieure', 'artere', None, None, 'mediale'),
+    ('veines-brachiales',         'Brachial veins.r',                  'Veines brachiales',                     'veine',    None, None, 'anterieure'),
+    ('veines-radiales',           'Radial veins.r',                    'Veines radiales',                       'veine',    None, None, 'anterieure'),
+    ('veines-ulnaires',           'Ulnar veins.r',                     'Veines ulnaires',                       'veine',    None, None, 'anterieure'),
+    ('veine-cephalique',          'Cephalic vein.r',                   'Veine céphalique',                      'veine',    None, None, 'laterale'),
+    ('veine-basilique',           'Basilic vein.r',                    'Veine basilique',                       'veine',    None, None, 'mediale'),
+    ('veine-mediane-coude',       'Median cubital vein.r',             'Veine médiane du coude',                'veine',    None, None, 'anterieure'),
+]
+
+STRUCTURES = {'ischio-jambiers': STRUCTURES_ISCHIO, 'coude': STRUCTURES_COUDE}.get(GROUPE)
+if STRUCTURES is None:
+    print(f'ERREUR : groupe inconnu : {GROUPE}')
+    sys.exit(1)
+
 # Couleurs des matériaux (la visionneuse du site peut les remplacer)
 MATERIAUX = {
     'muscle':    ((0.62, 0.20, 0.15), 1.0),
@@ -84,6 +168,9 @@ MATERIAUX = {
     'tendon':    ((0.93, 0.91, 0.85), 1.0),
     'os':        ((0.90, 0.85, 0.74), 1.0),
     'cartilage': ((0.78, 0.86, 0.90), 1.0),
+    'ligament':  ((0.66, 0.74, 0.80), 1.0),
+    'capsule':   ((0.70, 0.80, 0.86), 0.30),
+    'bourse':    ((0.45, 0.70, 0.90), 0.55),
     'nerf':      ((0.95, 0.76, 0.19), 1.0),
     'artere':    ((0.84, 0.21, 0.18), 1.0),
     'veine':     ((0.24, 0.39, 0.79), 1.0),
@@ -111,15 +198,20 @@ def collections_ancetres(obj):
     return vus
 
 
+def noms_sources(nom):
+    return list(nom) if isinstance(nom, tuple) else [nom]
+
+
 def verifier_licences():
-    for _id, nom, *_ in STRUCTURES:
+    noms = [n for _id, nom, *_ in STRUCTURES for n in noms_sources(nom)]
+    for nom in noms:
         obj = bpy.data.objects.get(nom)
         if obj is None:
             arreter(f'objet absent du pack : {nom}')
         interdites = sorted(c for c in collections_ancetres(obj) if NC.search(c))
         if interdites or NC.search(nom):
             arreter(f'{nom} appartient à une collection NC : {interdites}')
-    print(f'Licences : {len(STRUCTURES)} objets, aucun dans une collection NC.')
+    print(f'Licences : {len(noms)} objets, aucun dans une collection NC.')
 
 
 def materiau(categorie):
@@ -154,7 +246,7 @@ def maillage_monde(obj, diametre):
     if obj.type == 'CURVE':
         cu = obj.data
         if diametre:
-            mm, rayon_min, _z = diametre
+            mm, rayon_min = diametre[:2]
             for sp in cu.splines:
                 for p in list(sp.points) + list(sp.bezier_points):
                     if p.radius >= rayon_min:
@@ -171,14 +263,17 @@ def maillage_monde(obj, diametre):
     return me
 
 
-def couper_sous(me, z):
-    """Supprime tout ce qui est sous l'altitude z et referme la section. Renvoie True si coupé."""
-    if min(v.co.z for v in me.vertices) >= z:
+def couper(me, z, retirer='dessous'):
+    """Supprime tout ce qui est sous (ou au-dessus de) l'altitude z et referme la section. Renvoie True si coupé."""
+    if retirer == 'dessous' and min(v.co.z for v in me.vertices) >= z:
+        return False
+    if retirer == 'dessus' and max(v.co.z for v in me.vertices) <= z:
         return False
     bm = bmesh.new()
     bm.from_mesh(me)
     res = bmesh.ops.bisect_plane(bm, geom=bm.verts[:] + bm.edges[:] + bm.faces[:],
-                                 plane_co=(0, 0, z), plane_no=(0, 0, 1), clear_inner=True)
+                                 plane_co=(0, 0, z), plane_no=(0, 0, 1),
+                                 clear_inner=retirer == 'dessous', clear_outer=retirer == 'dessus')
     bord = [e for e in res['geom_cut'] if isinstance(e, bmesh.types.BMEdge) and e.is_valid and e.is_boundary]
     if bord:
         rempli = bmesh.ops.holes_fill(bm, edges=bord, sides=0)
@@ -186,6 +281,35 @@ def couper_sous(me, z):
     bm.to_mesh(me)
     bm.free()
     return True
+
+
+def fusionner(maillages):
+    """Réunit plusieurs maillages (chefs d'un muscle) en un seul, matériaux compris."""
+    if len(maillages) == 1:
+        return maillages[0]
+    mats = []
+    for me in maillages:
+        for m in me.materials:
+            if m not in mats:
+                mats.append(m)
+    bm = bmesh.new()
+    for me in maillages:
+        avant = len(bm.faces)
+        bm.from_mesh(me)
+        bm.faces.ensure_lookup_table()
+        if len(bm.faces) != avant + len(me.polygons):
+            arreter('fusion des maillages : faces perdues')
+        remap = [mats.index(m) for m in me.materials] or [0]
+        for f in bm.faces[avant:]:
+            f.material_index = remap[min(f.material_index, len(remap) - 1)]
+    fusion = bpy.data.meshes.new('fusion')
+    bm.to_mesh(fusion)
+    bm.free()
+    for m in mats:
+        fusion.materials.append(m)
+    for me in maillages:
+        bpy.data.meshes.remove(me)
+    return fusion
 
 
 def triangles(me):
@@ -271,6 +395,25 @@ def gltf_transform(*args):
     return r.stdout
 
 
+def coupes_du_groupe():
+    """[(altitude, côté retiré, texte de la modification)] selon le groupe."""
+    if GROUPE == 'ischio-jambiers':
+        tibia = bpy.data.objects['Tibia.r']
+        sommet_tibia = max((tibia.matrix_world @ v.co).z for v in tibia.data.vertices)
+        return [(sommet_tibia - JAMBE_GARDEE, 'dessous', f'coupé {JAMBE_GARDEE * 100:.0f} cm sous le sommet du tibia, section refermée')]
+    humerus = bpy.data.objects['Humerus.r']
+    interligne = min((humerus.matrix_world @ v.co).z for v in humerus.data.vertices)
+    cm = f'{COUDE_GARDE * 100:.0f} cm'
+    return [(interligne + COUDE_GARDE, 'dessus', f'coupé {cm} au-dessus de l\'interligne du coude, section refermée'),
+            (interligne - COUDE_GARDE, 'dessous', f'coupé {cm} au-dessous de l\'interligne du coude, section refermée')]
+
+
+def lieu_de_mesure(diametre):
+    if len(diametre) > 3:
+        return diametre[3]
+    return 'au tiers moyen de la cuisse' if diametre[2] == Z_TIERS_MOYEN else 'dans la fosse poplitée'
+
+
 def main():
     verifier_licences()
     os.makedirs(DOSSIER_BRUT, exist_ok=True)
@@ -279,28 +422,34 @@ def main():
     sortie = bpy.data.collections.new('RH-export')
     bpy.context.scene.collection.children.link(sortie)
 
-    tibia = bpy.data.objects['Tibia.r']
-    sommet_tibia = max((tibia.matrix_world @ v.co).z for v in tibia.data.vertices)
-    z_coupe = sommet_tibia - JAMBE_GARDEE
+    coupes = coupes_du_groupe()
 
     objets = []
-    for ident, nom, libelle, categorie, cible, diametre in STRUCTURES:
-        src = bpy.data.objects[nom]
-        if src.type == 'CURVE':
-            rayons = [p.radius for sp in src.data.splines for p in list(sp.points) + list(sp.bezier_points)]
-            pack = [2000 * src.data.bevel_depth * r for r in (min(rayons), max(rayons))]
-        me = maillage_monde(src, diametre)
-        modifs = []
+    for ident, nom, libelle, categorie, cible, diametre, *reste in STRUCTURES:
+        loge = reste[0] if reste else None
+        maillages, modifs, pack = [], [], None
+        for n in noms_sources(nom):
+            src = bpy.data.objects[n]
+            if src.type == 'CURVE':
+                rayons = [p.radius for sp in src.data.splines for p in list(sp.points) + list(sp.bezier_points)]
+                pack = [2000 * src.data.bevel_depth * r for r in (min(rayons), max(rayons))]
+            maillages.append(maillage_monde(src, diametre))
+        me = fusionner(maillages)
+        if len(maillages) > 1:
+            modifs.append(f'{len(maillages)} objets du pack réunis')
         if diametre:
-            mm, _rmin, z = diametre
+            mm, _rmin, z = diametre[:3]
             mesure = largeur_a(me, z)
-            ou = 'au tiers moyen de la cuisse' if z == Z_TIERS_MOYEN else 'dans la fosse poplitée'
+            ou = lieu_de_mesure(diametre)
             modifs.append(f'diamètre d\'affichage {mm:g} mm {ou} (mesuré : {mesure:.1f} mm ; pack : {pack[0]:.0f} à {pack[1]:.0f} mm ; section ronde ; approximatif)')
             print(f'  mesure {ident} : {mesure:.1f} mm {ou} (visé {mm:g} mm)')
-        elif src.type == 'CURVE':
+        elif pack:
             modifs.append(f'épaisseur du pack ({pack[0]:.0f} à {pack[1]:.0f} mm de diamètre)')
-        if couper_sous(me, z_coupe):
-            modifs.append(f'coupé {JAMBE_GARDEE * 100:.0f} cm sous le sommet du tibia, section refermée')
+        for z, retirer, texte in coupes:
+            if couper(me, z, retirer):
+                modifs.append(texte)
+        if not me.polygons:
+            arreter(f'{ident} : rien ne reste après les coupes')
         me.name = ident
         obj = bpy.data.objects.new(ident, me)
         sortie.objects.link(obj)
@@ -310,21 +459,37 @@ def main():
             modifs.append(f'simplifié de {tris_source} à {triangles(obj.data)} triangles ({(1 - triangles(obj.data) / tris_source) * 100:.0f} %)')
         mats = remplacer_materiaux(obj.data, categorie)
         lisser(obj.data)
-        objets.append(dict(id=ident, obj=obj, nom=libelle, categorie=categorie, source=nom,
-                           materiaux=mats, modifications=modifs))
+        objets.append(dict(id=ident, obj=obj, nom=libelle, categorie=categorie, loge=loge,
+                           source=' + '.join(noms_sources(nom)), materiaux=mats, modifications=modifs))
 
     # Recentrage commun : centre de la boîte englobante de l'ensemble
     pts = [v.co for o in objets for v in o['obj'].data.vertices]
     mn = Vector((min(p.x for p in pts), min(p.y for p in pts), min(p.z for p in pts)))
     mx = Vector((max(p.x for p in pts), max(p.y for p in pts), max(p.z for p in pts)))
     centre = (mn + mx) / 2
-    # Repères de hauteur pour le plan de coupe de la visionneuse (repère glTF : y = z du pack - centre)
-    coxal = next(o['obj'] for o in objets if o['id'] == 'os-coxal')
-    tibia_obj = next(o['obj'] for o in objets if o['id'] == 'tibia-proximal')
-    reperes = dict(
-        ischion_y=round(min(v.co.z for v in coxal.data.vertices) - centre.z, 5),
-        plateau_tibial_y=round(max(v.co.z for v in tibia_obj.data.vertices) - centre.z, 5),
-    )
+    # Repères pour la visionneuse (repère glTF : x, z du pack, -y du pack, après recentrage)
+    gltf = lambda p: [round(p.x - centre.x, 5), round(p.z - centre.z, 5), round(-(p.y - centre.y), 5)]
+    if GROUPE == 'ischio-jambiers':
+        coxal = next(o['obj'] for o in objets if o['id'] == 'os-coxal')
+        tibia_obj = next(o['obj'] for o in objets if o['id'] == 'tibia-proximal')
+        reperes = dict(
+            ischion_y=round(min(v.co.z for v in coxal.data.vertices) - centre.z, 5),
+            plateau_tibial_y=round(max(v.co.z for v in tibia_obj.data.vertices) - centre.z, 5),
+        )
+    else:
+        hum = [v.co for v in next(o['obj'] for o in objets if o['id'] == 'humerus-distal').data.vertices]
+        interligne = min(p.z for p in hum)
+        bas = [p for p in hum if p.z < interligne + 0.06]
+        lateral, medial = min(bas, key=lambda p: p.x), max(bas, key=lambda p: p.x)   # membre droit : latéral = x minimal
+        olecrane = max((v.co for v in next(o['obj'] for o in objets if o['id'] == 'ulna-proximale').data.vertices), key=lambda p: p.z)
+        reperes = dict(
+            interligne_y=round(interligne - centre.z, 5) + 0.0,     # + 0.0 : jamais « -0.0 »
+            epicondyle_lateral=gltf(lateral),
+            epicondyle_medial=gltf(medial),
+            olecrane=gltf(olecrane),
+            coupe_proximale_y=round(coupes[0][0] - centre.z, 5),
+            coupe_distale_y=round(coupes[1][0] - centre.z, 5),
+        )
     for o in objets:
         o['obj'].data.transform(Matrix.Translation(-centre))
         o['obj'].data.update()
@@ -350,10 +515,12 @@ def main():
         erreurs = [l for l in rapport.splitlines() if ',1,' in l or 'error' in l.lower()]
         if erreurs:
             arreter(f'validation glTF de {o["id"]} : {erreurs[:3]}')
-        modeles.append(dict(
-            id=o['id'], fichier=o['id'] + '.glb', nom=o['nom'], categorie=o['categorie'],
-            source=o['source'], materiaux=o['materiaux'], triangles=triangles(obj.data),
-            octets=os.path.getsize(final), version=empreinte(final), modifications=o['modifications']))
+        modele = dict(id=o['id'], fichier=o['id'] + '.glb', nom=o['nom'], categorie=o['categorie'])
+        if o['loge']:
+            modele['loge'] = o['loge']
+        modele.update(source=o['source'], materiaux=o['materiaux'], triangles=triangles(obj.data),
+                      octets=os.path.getsize(final), version=empreinte(final), modifications=o['modifications'])
+        modeles.append(modele)
         print(f"  {o['id']:24} {modeles[-1]['triangles']:6} triangles  {modeles[-1]['octets'] / 1024:7.1f} Ko")
 
     total = sum(m['octets'] for m in modeles)
@@ -362,8 +529,13 @@ def main():
     manifeste = dict(
         groupe=GROUPE, cote='droit', unite='mètre',
         axes='glTF : +Y vers le haut, +Z vers l\'avant du patient, -X vers le côté latéral (membre droit)',
-        centre_source=[round(c, 5) for c in centre],
-        coupe_jambe='%.0f cm sous le sommet du tibia' % (JAMBE_GARDEE * 100),
+        centre_source=[round(c, 5) for c in centre])
+    if GROUPE == 'ischio-jambiers':
+        manifeste['coupe_jambe'] = '%.0f cm sous le sommet du tibia' % (JAMBE_GARDEE * 100)
+    else:
+        manifeste['position'] = 'anatomique : coude en extension, avant-bras en supination'
+        manifeste['coupes'] = '%.0f cm au-dessus et au-dessous de l\'interligne du coude' % (COUDE_GARDE * 100)
+    manifeste.update(
         reperes=reperes,
         source=dict(nom='Z-Anatomy', depot='https://github.com/Z-Anatomy/Models-of-human-anatomy',
                     commit=Z_ANATOMY_COMMIT, licence='CC BY-SA 4.0',

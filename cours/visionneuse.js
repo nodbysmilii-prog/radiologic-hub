@@ -14,6 +14,10 @@
      droite, comme les schémas par défaut (médial à gauche).
    Repère des modèles (manifest.json) : +Y haut, +Z avant du patient,
    -X côté latéral du membre droit, unités en mètres.
+   Réglages par groupe de modèles (option « reglages ») : étiquettes
+   permanentes, hauteur de leurs ancres, côté des ancres, vue de départ,
+   texte d'accessibilité ; par défaut ceux des ischio-jambiers. Coude :
+   ligaments, capsule et bourses (« articulaire »), filtre par loge.
    ========================================================= */
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -27,17 +31,32 @@ const STYLES = {
   'rh-contexte': { color: 0xc58b7c, roughness: 0.8, transparent: true, opacity: 0.22 },
   'rh-os': { color: 0xeee6d2, roughness: 0.6 },
   'rh-cartilage': { color: 0xbcd7e4, roughness: 0.5 },
+  'rh-ligament': { color: 0x9fb6c6, roughness: 0.5 },
+  'rh-capsule': { color: 0xb7cfdc, roughness: 0.6, transparent: true, opacity: 0.25 },
+  'rh-bourse': { color: 0x6fb0e8, roughness: 0.4, transparent: true, opacity: 0.6 },
   'rh-nerf': { color: 0xf3c21b, roughness: 0.5 },
   'rh-artere': { color: 0xd8342e, roughness: 0.45 },
   'rh-veine': { color: 0x3a66d8, roughness: 0.45 },
 };
 const COULEUR_COUPE = 0xf5a524;
-/* Structures étiquetées en permanence (les autres : quand elles sont choisies) */
-const TOUJOURS_ETIQUETEES = new Set(['biceps-long', 'biceps-court', 'semi-tendineux', 'semi-membraneux', 'nerf-sciatique']);
-/* Hauteur de l'ancre des étiquettes dans la structure (0 = bas, 1 = haut), pour qu'elles ne se superposent pas */
-const HAUTEUR_ANCRE = { 'biceps-long': 0.66, 'biceps-court': 0.28, 'semi-tendineux': 0.8, 'semi-membraneux': 0.46, 'nerf-sciatique': 0.9 };
+/* Réglages par défaut (ischio-jambiers)
+   etiquettes : structures étiquetées en permanence (les autres : quand elles sont choisies) ;
+   hauteursAncre : hauteur de l'ancre des étiquettes dans la structure (0 = bas, 1 = haut), pour qu'elles ne se superposent pas ;
+   ancre : 'posterieure' (point le plus postérieur, vue de dos) ou 'exterieure' (face de la structure tournée vers l'extérieur du membre) */
+const REGLAGES = {
+  etiquettes: ['biceps-long', 'biceps-court', 'semi-tendineux', 'semi-membraneux', 'nerf-sciatique'],
+  hauteursAncre: { 'biceps-long': 0.66, 'biceps-court': 0.28, 'semi-tendineux': 0.8, 'semi-membraneux': 0.46, 'nerf-sciatique': 0.9 },
+  ancre: 'posterieure',
+  vueInitiale: 'posterieure',
+  libelle: 'Modèle 3D des ischio-jambiers',
+  recul: 1,          // distance de la caméra (1 : le modèle remplit la vue)
+};
+/* Catégorie d'affichage d'une structure (cases « Afficher ») */
+const CATEGORIE_AFFICHAGE = { artere: 'vaisseau', veine: 'vaisseau', ligament: 'articulaire', capsule: 'articulaire', bourse: 'articulaire' };
 
-export async function creerVisionneuse(conteneur, { base, manifeste, ids, onProgression = () => {}, onSelection = () => {} }) {
+export async function creerVisionneuse(conteneur, { base, manifeste, ids, onProgression = () => {}, onSelection = () => {}, reglages = {} }) {
+  const R = { ...REGLAGES, ...reglages };
+  const TOUJOURS_ETIQUETEES = new Set(R.etiquettes), HAUTEUR_ANCRE = R.hauteursAncre;
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0xf4f3ef);
   const camera = new THREE.PerspectiveCamera(32, 1, 0.01, 20);
@@ -45,7 +64,7 @@ export async function creerVisionneuse(conteneur, { base, manifeste, ids, onProg
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.localClippingEnabled = true;
   renderer.domElement.className = 'v3d-canvas';
-  renderer.domElement.setAttribute('aria-label', 'Modèle 3D des ischio-jambiers : faites glisser pour tourner, pincez ou utilisez la molette pour zoomer');
+  renderer.domElement.setAttribute('aria-label', `${R.libelle} : faites glisser pour tourner, pincez ou utilisez la molette pour zoomer`);
   renderer.domElement.setAttribute('role', 'img');
   conteneur.appendChild(renderer.domElement);
   const calque = document.createElement('div');
@@ -81,7 +100,8 @@ export async function creerVisionneuse(conteneur, { base, manifeste, ids, onProg
       const maillages = [];
       objet.traverse(o => { if (o.isMesh) maillages.push(o); });
       maillages.forEach(o => {
-        const style = STYLES[o.material && o.material.name] || STYLES['rh-muscle'];
+        o.userData.materiau = (o.material && o.material.name) || '';
+        const style = STYLES[o.userData.materiau] || STYLES['rh-muscle'];
         o.material = new THREE.MeshStandardMaterial({ ...style, metalness: 0, side: THREE.FrontSide, depthWrite: !style.transparent });
         o.material.userData.base = { opacity: style.opacity ?? 1, transparent: !!style.transparent, color: style.color };
         o.userData.structure = m.id;
@@ -94,7 +114,7 @@ export async function creerVisionneuse(conteneur, { base, manifeste, ids, onProg
         }
       });
       scene.add(objet);
-      structures.set(m.id, { id: m.id, nom: m.nom, categorie: m.categorie, objet, maillages });
+      structures.set(m.id, { id: m.id, nom: m.nom, categorie: m.categorie, loge: m.loge || null, objet, maillages });
       onProgression(++fait, aCharger.length);
       resolve();
     }, undefined, err => reject(new Error(`Modèle illisible : ${m.fichier} (${(err && err.message) || err})`)));
@@ -107,18 +127,24 @@ export async function creerVisionneuse(conteneur, { base, manifeste, ids, onProg
   const centre = boite.getCenter(new THREE.Vector3()), taille = boite.getSize(new THREE.Vector3());
   const v = new THREE.Vector3();
   structures.forEach(s => {
-    // Ancre : point le plus postérieur (z minimal) à la hauteur choisie (muscles), sinon le point le plus proche de cette hauteur
+    // Ancre : point le plus postérieur (z minimal) à la hauteur choisie (muscles), sinon le point le plus proche de cette hauteur ;
+    // réglage « exterieure » : point de la structure le plus tourné vers l'extérieur du membre, à cette hauteur
     const b = new THREE.Box3().setFromObject(s.objet), c = b.getCenter(new THREE.Vector3());
     c.y = b.min.y + (HAUTEUR_ANCRE[s.id] ?? 0.5) * (b.max.y - b.min.y);
+    const dehors = new THREE.Vector3(c.x - centre.x, 0, c.z - centre.z);
+    if (dehors.lengthSq() < 1e-8) dehors.set(0, 0, 1);
+    dehors.normalize();
     let meilleur = null, score = Infinity;
     s.maillages.forEach(mesh => {
       const pos = mesh.geometry.attributes.position;
       const pas = Math.max(1, Math.floor(pos.count / 1500));
       for (let i = 0; i < pos.count; i += pas) {
         v.fromBufferAttribute(pos, i).applyMatrix4(mesh.matrixWorld);
-        const sc = s.categorie === 'muscle' || s.categorie === 'contexte'
-          ? Math.abs(v.y - c.y) * 4 + v.z
-          : v.distanceToSquared(c);
+        const sc = R.ancre === 'exterieure'
+          ? Math.abs(v.y - c.y) * 4 - ((v.x - centre.x) * dehors.x + (v.z - centre.z) * dehors.z)
+          : s.categorie === 'muscle' || s.categorie === 'contexte'
+            ? Math.abs(v.y - c.y) * 4 + v.z
+            : v.distanceToSquared(c);
         if (sc < score) { score = sc; meilleur = v.clone(); }
       }
     });
@@ -227,13 +253,15 @@ export async function creerVisionneuse(conteneur, { base, manifeste, ids, onProg
 
   /* ---------- Vues ---------- */
   const rayonVue = Math.max(taille.x, taille.y, taille.z) * 0.5;
-  const distance = rayonVue / Math.sin(THREE.MathUtils.degToRad(camera.fov / 2)) * 0.9;
+  const distance = rayonVue / Math.sin(THREE.MathUtils.degToRad(camera.fov / 2)) * 0.9 * R.recul;
   function vue(nom) {
     const cible = centre.clone();
     let pos;
     // Vue de la coupe : le plan coloré et le boîtier de la sonde masqueraient la section (contour et repère gardés)
     quad.visible = sonde.visible = nom !== 'coupe';
     if (nom === 'laterale') pos = new THREE.Vector3(centre.x - distance, centre.y, centre.z);
+    else if (nom === 'mediale') pos = new THREE.Vector3(centre.x + distance, centre.y, centre.z);
+    else if (nom === 'anterieure') pos = new THREE.Vector3(centre.x, centre.y, centre.z + distance);
     else if (nom === 'coupe') {
       // D'en bas et de l'arrière : superficiel en haut de l'écran, latéral à droite
       const y = groupeSonde.visible ? -plan.constant : centre.y;
@@ -246,10 +274,22 @@ export async function creerVisionneuse(conteneur, { base, manifeste, ids, onProg
     demander();
   }
 
+  /* ---------- Visibilité : catégories masquées et loge choisie ---------- */
+  const masquees = new Set();
+  let logeChoisie = null;
+  function appliquerVisibilite() {
+    structures.forEach(s => {
+      const cat = CATEGORIE_AFFICHAGE[s.categorie] || s.categorie;
+      s.objet.visible = !masquees.has(cat) && (!logeChoisie || !s.loge || s.loge === logeChoisie);
+    });
+    if (api.selection && !structures.get(api.selection).objet.visible) api.selectionner(null);
+    demander();
+  }
+
   /* ---------- Interface publique ---------- */
   const api = {
     selection: null,
-    structures: [...structures.values()].map(({ id, nom, categorie }) => ({ id, nom, categorie })),
+    structures: [...structures.values()].map(({ id, nom, categorie, loge }) => ({ id, nom, categorie, loge })),
     reperes: manifeste.reperes,
     selectionner(id) {
       api.selection = id && structures.has(id) ? id : null;
@@ -265,14 +305,29 @@ export async function creerVisionneuse(conteneur, { base, manifeste, ids, onProg
       onSelection(api.selection ? structures.get(api.selection) : null);
       demander();
     },
-    /* Afficher / masquer une catégorie : 'os', 'nerf', 'vaisseau' (artère + veine), 'contexte' */
+    /* Afficher / masquer une catégorie : 'os', 'nerf', 'vaisseau' (artère + veine), 'contexte', 'muscle',
+       'articulaire' (ligaments, capsule, bourses) */
     afficher(categorie, visible) {
-      structures.forEach(s => {
-        const cat = s.categorie === 'artere' || s.categorie === 'veine' ? 'vaisseau' : s.categorie;
-        if (cat === categorie) s.objet.visible = visible;
-      });
-      if (api.selection && !structures.get(api.selection).objet.visible) api.selectionner(null);
-      demander();
+      masquees[visible ? 'delete' : 'add'](categorie);
+      appliquerVisibilite();
+    },
+    /* Corps charnus des muscles affichés ou non (non : tendons seuls, os translucides pour ne pas les confondre) */
+    corpsCharnus(visible) {
+      structures.forEach(s => s.maillages.forEach(mesh => {
+        const mat = mesh.userData.materiau, b = mesh.material.userData.base;
+        if (mat === 'rh-muscle' || mat === 'rh-contexte') mesh.visible = visible;
+        if (mat === 'rh-os' || mat === 'rh-cartilage') {
+          if (!b.origine) b.origine = { opacity: b.opacity, transparent: b.transparent };
+          b.opacity = visible ? b.origine.opacity : 0.3;
+          b.transparent = visible ? b.origine.transparent : true;
+        }
+      }));
+      api.selectionner(api.selection);
+    },
+    /* Ne montrer qu'une loge (null : toutes) ; les structures sans loge (os, capsule) restent affichées */
+    loge(nom) {
+      logeChoisie = nom || null;
+      appliquerVisibilite();
     },
     /* Plan de la sonde à l'altitude y (null : masqué) ; couper : retirer ce qui est sous la sonde */
     sonde(y, { couper = true } = {}) {
@@ -303,6 +358,6 @@ export async function creerVisionneuse(conteneur, { base, manifeste, ids, onProg
     },
   };
   redimensionner();
-  vue('posterieure');
+  vue(R.vueInitiale);
   return api;
 }

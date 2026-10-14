@@ -5,11 +5,12 @@ RadiologicHub — aperçus PNG des modèles 3D exportés
 Réimporte chaque .glb NON compressé (assets-sources/build/<groupe>/, produit
 par scripts/export_muscles.py ; Blender ne lit pas la compression meshopt) et
 en fait un rendu Cycles (processeur, sans écran). Vérifie du même coup que
-l'export se relit. Trois vues d'ensemble en plus : postérieure, latérale,
-postérieure sans les muscles de contexte.
+l'export se relit. Vues d'ensemble en plus : ischio-jambiers — postérieure,
+latérale, postérieure sans les muscles de contexte ; coude — antérieure,
+postérieure, latérale, médiale, et antérieure sans les muscles.
 
 Usage :
-    blender -b --factory-startup -P scripts/rendu_apercus.py -- ischio-jambiers
+    blender -b --factory-startup -P scripts/rendu_apercus.py -- <groupe>
 Sortie : assets-sources/apercus/<groupe>/*.png (ignoré par git)
 =========================================================
 """
@@ -28,7 +29,24 @@ ECHANTILLONS = 32
 VUES = {
     'posterieure': dict(rotation=(math.pi / 2, 0, math.pi), horizontal=0),       # regarde vers -Y (de derrière)
     'laterale':    dict(rotation=(math.pi / 2, 0, -math.pi / 2), horizontal=1),  # regarde vers +X (du côté latéral)
+    'anterieure':  dict(rotation=(math.pi / 2, 0, 0), horizontal=0),            # regarde vers +Y (de face)
+    'mediale':     dict(rotation=(math.pi / 2, 0, math.pi / 2), horizontal=1),   # regarde vers -X (du côté médial)
 }
+# Vue de chaque structure, vues d'ensemble : (nom, vue, catégories exclues)
+VUE_STRUCTURE = 'anterieure' if GROUPE == 'coude' else 'posterieure'
+ENSEMBLES = {
+    'coude': [
+        ('ensemble-anterieur', 'anterieure', ()),
+        ('ensemble-posterieur', 'posterieure', ()),
+        ('ensemble-lateral', 'laterale', ()),
+        ('ensemble-medial', 'mediale', ()),
+        ('ensemble-anterieur-sans-muscles', 'anterieure', ('muscle', 'contexte', 'capsule')),
+    ],
+}.get(GROUPE, [
+    ('ensemble-posterieur', 'posterieure', ()),
+    ('ensemble-lateral', 'laterale', ()),
+    ('ensemble-posterieur-sans-contexte', 'posterieure', ('contexte',)),
+])
 
 
 def scene_vide():
@@ -108,18 +126,13 @@ def main():
         if not objets:
             raise SystemExit(f"Aucun maillage relu dans {m['fichier']}")
         tris = sum(len(p.vertices) - 2 for o in objets for p in o.data.polygons)
-        cadrer_et_rendre(sc, objets, 'posterieure', os.path.join(SORTIE, m['id'] + '.png'))
+        cadrer_et_rendre(sc, objets, VUE_STRUCTURE, os.path.join(SORTIE, m['id'] + '.png'))
         print(f"APERCU {m['id']:24} relu : {tris} triangles (manifeste : {m['triangles']})")
-    ensembles = [
-        ('ensemble-posterieur', 'posterieure', None),
-        ('ensemble-lateral', 'laterale', None),
-        ('ensemble-posterieur-sans-contexte', 'posterieure', 'contexte'),
-    ]
-    for nom, vue, exclu in ensembles:
+    for nom, vue, exclues in ENSEMBLES:
         sc = scene_vide()
         objets = []
         for m in modeles:
-            if m['categorie'] != exclu:
+            if m['categorie'] not in exclues:
                 objets += importer(os.path.join(BRUT, m['fichier']), opaque=False)
         cadrer_et_rendre(sc, objets, vue, os.path.join(SORTIE, nom + '.png'), hauteur=1400)
         print(f'APERCU {nom}')

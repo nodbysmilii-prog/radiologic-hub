@@ -73,6 +73,11 @@
 .v3d-structures .v3d-artere { border-color: #d8342e !important; }
 .v3d-structures .v3d-veine { border-color: #3a66d8 !important; }
 .v3d-structures .v3d-os, .v3d-structures .v3d-contexte { border-color: #9a948a !important; }
+.v3d-structures .v3d-ligament { border-color: #6f8ea3 !important; }
+.v3d-structures .v3d-capsule, .v3d-structures .v3d-bourse { border-color: #6fb0e8 !important; }
+.v3d-structures-groupes { display: grid; gap: 12px; }
+.v3d-groupe-titre { margin: 0 0 6px !important; font-weight: 900; font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.coude-intro { max-width: 900px; margin: 0 0 18px; }
 .v3d-curseur { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px; margin: 10px 0; font-weight: 700; font-size: .75rem; }
 .v3d-curseur input { width: 100%; accent-color: var(--amber); }
 .v3d-aide { color: var(--muted); font-size: .8rem; }

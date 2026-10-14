@@ -142,3 +142,58 @@ test('pages du cours : fichiers référencés présents, moteur 3D et licences',
   assert.equal((html.match(/data-texte/g) || []).length, 6, 'blocs de texte soumis à validation');
   assert.match(fs.readFileSync(path.join(RACINE, 'public/models/ischio-jambiers/LICENSE'), 'utf8'), /CC BY-SA 4\.0/);
 });
+
+test('modèles 3D du coude : fichiers, empreintes, catégories, loges, repères, licence et page d\'aperçu', () => {
+  const crypto = require('crypto');
+  const dossier = path.join(RACINE, 'public/models/coude');
+  const m = JSON.parse(fs.readFileSync(path.join(dossier, 'manifest.json'), 'utf8'));
+  assert.equal(m.groupe, 'coude');
+  assert.equal(m.cote, 'droit');
+  assert.equal(m.modeles.length, 41);
+  assert.equal(new Set(m.modeles.map(x => x.id)).size, 41, 'identifiants uniques');
+  let total = 0;
+  for (const x of m.modeles) {
+    const octets = fs.readFileSync(path.join(dossier, x.fichier));
+    assert.equal(octets.length, x.octets, `${x.id} : taille`);
+    assert.equal(crypto.createHash('sha256').update(octets).digest('hex').slice(0, 12), x.version, `${x.id} : empreinte`);
+    assert.equal(octets.toString('latin1', 0, 4), 'glTF', `${x.id} : glTF binaire`);
+    assert.equal(octets.readUInt32LE(4), 2, `${x.id} : glTF 2.0`);
+    assert.match(octets.toString('latin1', 20, 20 + octets.readUInt32LE(12)), /EXT_meshopt_compression/, `${x.id} : compression meshopt`);
+    assert.doesNotMatch(x.source, /(\bear\b|cochlea|labyrinth|kidney|renal)/i, `${x.id} : aucune source sous licence non commerciale`);
+    total += x.octets;
+  }
+  assert.equal(total, m.total_octets);
+  assert.ok(total < 1.5 * 1048576, `poids total ${total}`);
+  const compte = c => m.modeles.filter(x => x.categorie === c).length;
+  assert.deepEqual(['os', 'muscle', 'contexte', 'ligament', 'capsule', 'bourse', 'nerf', 'artere', 'veine'].map(compte), [3, 16, 1, 3, 1, 2, 5, 4, 6]);
+  const LOGES = ['anterieure', 'laterale', 'mediale', 'posterieure'];
+  for (const x of m.modeles) {
+    if (x.loge !== undefined) assert.ok(LOGES.includes(x.loge), `${x.id} : loge ${x.loge}`);
+    if (['muscle', 'contexte', 'nerf', 'artere', 'veine', 'ligament', 'bourse'].includes(x.categorie)) assert.ok(x.loge, `${x.id} : loge attendue`);
+  }
+  const par = id => m.modeles.find(x => x.id === id);
+  assert.equal(par('nerf-ulnaire').loge, 'mediale');
+  assert.match(par('nerf-ulnaire').modifications.join(' '), /diamètre d'affichage 3 mm au niveau des épicondyles/);
+  assert.match(par('triceps-brachial').modifications.join(' '), /3 objets du pack réunis/);
+  assert.ok(par('biceps-brachial').materiaux.includes('tendon') && par('triceps-brachial').materiaux.includes('tendon'), 'tendons distaux');
+  // Repères (membre droit : latéral vers -X) et coupes à 12 cm de l'interligne
+  const r = m.reperes;
+  assert.ok(Object.is(r.interligne_y, 0), 'interligne à l\'altitude 0 (et non -0)');
+  assert.ok(r.epicondyle_medial[0] > r.epicondyle_lateral[0], 'épicondyle médial du côté +X');
+  assert.ok(r.olecrane[2] < 0, 'olécrâne en arrière');
+  assert.deepEqual([r.coupe_proximale_y, r.coupe_distale_y], [0.12, -0.12]);
+  const licence = fs.readFileSync(path.join(dossier, 'LICENSE'), 'utf8');
+  assert.match(licence, /CC BY-SA 4\.0[\s\S]*Z-Anatomy[\s\S]*BodyParts3D/);
+  assert.match(licence, /41 structures/);
+  // Page d'aperçu
+  const page = 'cours/coude-3d.html', html = fs.readFileSync(path.join(RACINE, page), 'utf8');
+  for (const [, lien] of html.matchAll(/(?:src|href)="([^"#?:]+\.(?:js|css|svg))(?:\?v=\d+)?"/g)) {
+    assert.ok(fs.existsSync(path.join(RACINE, 'cours', lien)), `${page} : ${lien} introuvable`);
+  }
+  assert.match(html, /name="robots" content="noindex"/);
+  assert.match(html, /data-modeles="\.\.\/public\/models\/coude\/"/);
+  assert.match(html, /Z-Anatomy[\s\S]*CC BY-SA 4\.0[\s\S]*BodyParts3D[\s\S]*public\/models\/coude\/LICENSE/, 'attribution visible');
+  const script = fs.readFileSync(path.join(RACINE, 'cours/coude-3d.js'), 'utf8');
+  const etiquettes = JSON.parse(script.match(/etiquettes: (\[[^\]]+\])/)[1].replace(/'/g, '"'));
+  for (const id of etiquettes) assert.ok(par(id), `étiquette permanente inconnue : ${id}`);
+});
