@@ -92,7 +92,10 @@ test('fiche : tableaux, encadrés, classifications, corrections terminologiques'
     const n = sansAccents(contenu);
     assert.ok(!n.includes('tenosynovite'), `${nom} : « ténosynovite » remplacé`);
     assert.ok(!n.includes('bouvier'), `${nom} : pas d'éponyme « Bouvier »`);
+    assert.ok(!/abductor|digiti|minimi/.test(n), `${nom} : terme anglais « abductor digiti minimi » remplacé`);
+    assert.ok(n.includes('absence de muscle abducteur du petit doigt accessoire dans le toit du canal'), `${nom} : compte rendu corrigé`);
   }
+  assert.match(page, /<li><b><mark class="k-ddx">Muscle abducteur du petit doigt accessoire<\/mark><\/b> \(<mark class="k-key">20 à 25 %<\/mark> des sujets\)/);
   assert.equal((page.match(/tendinopathie calcifiante du FCU \(calcification péri-pisiformienne\)/g) || []).length, 1);
   assert.match(page, /<mark class="k-ddx">arcade des hypothénariens<\/mark> \(arcade piso-hamatum\)/);
 });
