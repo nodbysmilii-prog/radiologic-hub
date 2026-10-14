@@ -1,0 +1,6 @@
+# Configuration et secrets de la machine (voir .env.example)
+.env
+# Certificats, images et bases : jamais dans git
+certs/
+donnees/
+donnees-test/

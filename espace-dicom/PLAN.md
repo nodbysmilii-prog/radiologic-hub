@@ -1,6 +1,6 @@
-# Espace DICOM — analyse du site et plan d'intégration (à valider)
+# Espace DICOM — analyse du site et plan d'intégration
 
-Branche `feature/espace-dicom`, créée depuis la branche de développement `claude/bold-gates-vm47yj`, indépendamment de la section Pelvis non encore validée. **Aucun code n'est écrit avant votre validation.**
+Branche `feature/espace-dicom`, créée depuis la branche de développement `claude/bold-gates-vm47yj`, indépendamment de la section Pelvis non encore validée. **Plan validé le 14 octobre 2026** : vos décisions sont en section 5, et le plan ci-dessous en tient compte.
 
 ---
 
@@ -86,40 +86,51 @@ Clinique : modalités / PACS ── C-STORE ──▶ Orthanc passerelle ── 
   - anonymisation (API Orthanc) et purge selon la durée de conservation.
 - **OHIF v3** : construit avec seulement les extensions utiles ; source DICOMweb `/dicomweb` ; jeton passé dans l'en-tête de chaque requête ; affiché dans un **iframe** au sein de la page du site, avec le compte rendu à côté (en onglet sur téléphone).
 
-### Nouvelles tables Supabase (migration `…_espace_dicom.sql`, préfixe `dc_`, RLS et tests SQL)
+### Nouvelles tables Supabase (migration `20261014090000_espace_dicom.sql`, préfixe `dc_`, RLS et tests SQL)
+
+Supabase ne garde **que des identifiants techniques, des droits, des dates et des journaux**. Aucune identité de patient (nom, identifiant, date de naissance), aucune description d'examen, aucun texte médical : tout cela reste dans Orthanc, sur le VPS.
 
 | Table | Contenu |
 |---|---|
-| `dc_examens` | examen (UID d'étude, identifiant Orthanc), structure, déposant, date, modalités, région, nombre d'images, taille, date de purge — **sans identité du patient** |
-| `dc_comptes_rendus` | copie du compte rendu jointe à un examen |
-| `dc_partages` | lien : **empreinte** du jeton (le jeton de 256 bits n'est jamais stocké), expiration (24 h, 7 j, 30 j), empreinte du code, révocation, copie anonymisée, destinataire |
-| `dc_expertises`, `dc_commentaires` | télé-expertise entre radiologues inscrits, commentaires horodatés |
+| `dc_examens` | identifiant Orthanc, UID d'étude, structure (ou espace personnel), déposant, date de dépôt, nombre d'images, taille, date de purge, copie anonymisée oui / non |
+| `dc_residents` | demande d'accès d'un résident à une structure, validée par un radiologue senior de la structure ou un administrateur |
+| `dc_partages` | lien : **empreinte** du jeton (le jeton de 256 bits n'est jamais stocké), expiration (24 h, 7 j, 30 j), empreinte du code, essais échoués, révocation, copie anonymisée. **Pas l'adresse du destinataire** (souvent celle du patient) : le lien lui est envoyé, l'adresse n'est pas gardée |
+| `dc_expertises` | invitation d'un radiologue inscrit à donner son avis sur un examen |
+| `dc_passerelles` | passerelle de clinique : structure, **empreinte** de la clé, dernière réception |
 | `dc_journal` | audit en ajout seul : qui, quoi, quand, IP, navigateur |
-| `dc_reglages` | durée de conservation, quotas |
-| `dc_televersements` | sessions de téléversement (reprise) |
+| `dc_reglages` | durée de conservation, taille maximale d'un envoi |
 
-### Qui accède à quoi (à confirmer)
+Restent **sur le VPS** :
+- dans Orthanc : les images, l'identité du patient, et la **copie du compte rendu en PDF encapsulé DICOM** rattachée à l'étude ;
+- dans une petite base du VPS gérée par dicom-api : les **commentaires de télé-expertise** (texte médical) et les sessions de téléversement (reprise).
 
-- **Espace DICOM** :
-  - radiologues **validés** : remplaçant spécialiste validé, ou membre de la Communauté vérifié Dr / Pr ;
-  - membres d'une **clinique ou d'un cabinet validé** ;
-  - administrateurs.
+### Qui accède à quoi (décidé le 14 octobre 2026)
 
-  Question : les **résidents** ont-ils accès ?
-- **Un examen** : son déposant, les membres de sa structure, les radiologues invités en télé-expertise, les administrateurs.
-- **Confrères et patients** : uniquement par lien de partage (code d'accès en option), sans compte.
+**Rôle de chacun dans l'Espace DICOM** (calculé par la base, fonction `dc_role()`) :
+
+| Rôle | Qui | Ce qu'il peut faire |
+|---|---|---|
+| `admin` | administrateurs (`rp_admins`) | tout, y compris l'administration |
+| `radiologue` | remplaçant **spécialiste validé**, ou membre de la Communauté **vérifié** (spécialiste, titre Dr / Pr, non suspendu) | importer (espace personnel ou structure), voir, partager, inviter, commenter |
+| `membre` | membre d'une **clinique ou d'un cabinet validé** (`rp_membres`), qui n'est pas résident | importer pour la structure, voir, partager, inviter, commenter |
+| `resident` | résident **validé pour une structure** par un radiologue senior de cette structure ou un administrateur (`dc_residents`) | voir les examens de cette structure, commenter en télé-expertise. **Ni import, ni lien de partage, ni invitation, ni suppression** |
+
+- Une personne déclarée résidente (Remplacements ou Communauté) n'obtient jamais le rôle `membre` par son rattachement à une structure : elle doit être validée comme résidente.
+- **Supprimer un examen** : son déposant, le responsable de sa structure ou un administrateur.
+- **Un examen** est visible de son déposant, des membres, radiologues et résidents validés de sa structure, des radiologues invités en télé-expertise et des administrateurs.
+- **Confrères non inscrits et patients** : uniquement par lien de partage (code d'accès en option), sans compte.
 
 ---
 
 ## 4. Plan par étapes (tests, instructions et commit à chaque étape)
 
-0. **Squelette** : `docker-compose.yml` (Orthanc, PostgreSQL, Nginx, dicom-api), configuration, script de démarrage, données de test **synthétiques** générées par script (aucun patient réel ; pas de téléchargement de jeux de données dont la licence serait à vérifier), migration `dc_*` et tests SQL.
+0. **Squelette** : `docker-compose.yml` (Orthanc, PostgreSQL, Nginx, dicom-api), configuration par `.env` (domaine et hébergeur interchangeables), script d'initialisation, données de test **synthétiques** générées par script (aucun patient réel ; pas de téléchargement de jeux de données dont la licence serait à vérifier), migration `dc_*` et tests SQL.
 1. **Orthanc en local** : réception, compression JPEG-LS vérifiée, DICOMweb (QIDO, WADO-RS) accessible **seulement** par Nginx et dicom-api. Tests d'intégration en Docker : une requête sans droit est refusée.
 2. **Importer** :
    - sources : dossier, `.zip`, CD avec DICOMDIR (lecture des en-têtes dans le navigateur pour regrouper par examen) ;
    - téléversements **en parallèle** (4 à 6), barre de progression, **reprise après coupure** (tus) ;
    - « **Mes examens** » : liste, recherche, filtres ;
-   - passerelle C-STORE : configuration fournie et testée avec un second Orthanc.
+   - passerelle de clinique : un petit Orthanc sur place reçoit le C-STORE et transfère en HTTPS avec la clé de la clinique ; configuration fournie et testée avec un second Orthanc.
 3. **Visualiser** :
    - OHIF intégré, compte rendu à côté ;
    - fenêtrage, zoom, mesures ; MPR sur tablette et ordinateur ;
@@ -128,8 +139,8 @@ Clinique : modalités / PACS ── C-STORE ──▶ Orthanc passerelle ── 
 5. **E-mail, QR code et comptes rendus** :
    - envoi du lien (Brevo) ;
    - QR code imprimable ;
-   - bouton **« Joindre les images / QR code »** dans l'éditeur des comptes rendus, seule modification d'une fonctionnalité existante.
-6. **Télé-expertise et administration** : invitation d'un radiologue inscrit, commentaires horodatés, anonymisation avant partage, espace disque, liens actifs, durée de conservation et purge automatique, suppression sur demande (droit de suppression).
+   - bouton **« Joindre les images / QR code »** dans l'éditeur des comptes rendus, seule modification d'une fonctionnalité existante ; la copie du compte rendu est enregistrée dans Orthanc en **PDF encapsulé DICOM** rattaché à l'étude.
+6. **Télé-expertise et administration** : invitation d'un radiologue inscrit, commentaires horodatés (gardés sur le VPS), validation des résidents, anonymisation avant partage, espace disque, liens actifs, durée de conservation et purge automatique, suppression sur demande (droit de suppression).
 7. **Menu, README et déploiement** : rubrique « Espace DICOM » dans le menu des 24 pages, `espace-dicom/README.md` (installation locale, déploiement sur VPS, sauvegardes, mises à jour), puis contrôle de l'ensemble.
 
 À chaque étape :
@@ -142,12 +153,23 @@ Pas de déploiement en production sans votre accord.
 
 ---
 
-## 5. Décisions attendues
+## 5. Décisions (14 octobre 2026)
 
-1. **Hébergement** : un VPS est-il possible (fournisseur, de préférence en Tunisie) ? Avez-vous un **nom de domaine** ?
-2. **Performance** : acceptez-vous l'objectif reformulé (première image en moins de 3 s, chargement progressif, chiffres mesurés à l'étape 3) ?
-3. **C-STORE** : passerelle locale (recommandée) ou VPN ?
-4. **Accès** : quels rôles ont accès (les résidents ? toute structure validée ?) ?
-5. **Identité du patient** : d'accord pour qu'elle reste uniquement dans Orthanc, sur le VPS, et jamais dans Supabase ?
-6. **Comptes rendus** : d'accord pour enregistrer une **copie** du compte rendu avec l'examen lorsqu'on clique sur « Joindre les images » ?
-7. **Supabase** : on le met en service en parallèle (prérequis pour la production) ? D'ici là, je développe et je teste en local.
+1. **Hébergement** : un VPS, de préférence **hébergé en Tunisie**. Développement et tests en local d'abord. Nom de domaine : à préciser. Tout ce qui dépend du domaine ou de l'hébergeur est dans un seul fichier `.env` (domaine, ports, origine du site, Supabase, Brevo, dossiers de données) : changer de domaine ou d'hébergeur ne demande aucune modification du code.
+2. **Performance** : objectif reformulé accepté (première image en moins de 3 s, chargement progressif, chiffres mesurés et notés dans le README).
+3. **Images de la clinique** : **passerelle locale** (petit Orthanc sur place qui transfère vers le serveur en HTTPS avec une clé par clinique). Pas de VPN. Le serveur central n'a **aucun port DICOM ouvert**.
+4. **Accès** : radiologues validés, membres de structure validés, administrateurs ; **résidents avec un rôle limité**, validés par un radiologue senior ou un administrateur (tableau en section 3).
+5. **Identité du patient** : uniquement dans Orthanc, jamais dans Supabase.
+6. **Comptes rendus** : copie enregistrée au clic sur « Joindre les images », **dans Orthanc, en PDF encapsulé DICOM rattaché à l'étude**. Rien dans Supabase.
+7. **Supabase** : mis en service en parallèle. En attendant, les tests utilisent une simulation locale (PostgreSQL + PostgREST, mêmes migrations).
+
+### Points apparus en préparant le socle
+
+| Point | Ce que je fais |
+|---|---|
+| **Même examen déposé deux fois** : Orthanc regroupe les images par UID d'étude. Un fichier forgé avec l'UID d'un examen d'autrui pourrait s'ajouter à cet examen. | Un UID d'étude n'appartient qu'à un espace (contrainte d'unicité). Un envoi vers un examen existant est **refusé** si l'expéditeur n'a pas le droit de le gérer (contrôle avant l'enregistrement, étape 2). |
+| **Recherche DICOMweb** (`/studies?…`) : sans filtre, elle listerait tous les examens du serveur. | Le relais n'accepte une recherche que **limitée à un UID d'étude autorisé**. « Mes examens » passe par dicom-api, qui filtre selon les droits. |
+| **Cache des images** sur le VPS | Le droit est vérifié **avant** le cache, à chaque requête : une image en cache n'est jamais servie sans droit. À la suppression d'un examen, ses images en cache sont effacées (étape 6). |
+| **Brotli** | Absent de l'image officielle de Nginx : gzip pour les métadonnées, images déjà compressées sans perte (JPEG-LS). |
+| **Commentaires de télé-expertise** | Texte médical : gardés sur le VPS (point 5), pas dans Supabase. |
+| **Adresse e-mail du destinataire d'un lien** | Envoyée à Brevo pour l'envoi, jamais enregistrée. |

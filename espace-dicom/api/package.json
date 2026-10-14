@@ -1,0 +1,10 @@
+{
+  "name": "dicom-api",
+  "private": true,
+  "description": "Espace DICOM de RadiologicHub : vérification des droits avant Orthanc, API du site. Sans dépendance pour l'instant.",
+  "main": "src/serveur.js",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node src/serveur.js"
+  }
+}

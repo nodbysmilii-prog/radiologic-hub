@@ -4,7 +4,7 @@
 
 🌐 **Site en ligne :** https://nodbysmilii-prog.github.io/radiologic-hub/
 
-> Dernière mise à jour du README : 13 octobre 2026
+> Dernière mise à jour du README : 14 octobre 2026
 
 ---
 
@@ -18,14 +18,15 @@
 6. [Communauté (réseau des radiologues)](#communauté-réseau-des-radiologues)
 7. [Bibliothèque (articles en accès libre)](#bibliothèque-articles-en-accès-libre)
 8. [Cours d'échoanatomie (validation par l'auteur)](#cours-déchoanatomie-validation-par-lauteur)
-9. [Charte graphique](#charte-graphique)
-10. [Code couleur des fiches](#code-couleur-des-fiches)
-11. [Organisation des fichiers](#organisation-des-fichiers)
-12. [Ajouter ou modifier du contenu](#ajouter-ou-modifier-du-contenu)
-13. [Mise en ligne](#mise-en-ligne)
-14. [Tests](#tests)
-15. [À faire / points en attente](#à-faire--points-en-attente)
-16. [Historique des modifications](#historique-des-modifications)
+9. [Espace DICOM (en préparation)](#espace-dicom-en-préparation)
+10. [Charte graphique](#charte-graphique)
+11. [Code couleur des fiches](#code-couleur-des-fiches)
+12. [Organisation des fichiers](#organisation-des-fichiers)
+13. [Ajouter ou modifier du contenu](#ajouter-ou-modifier-du-contenu)
+14. [Mise en ligne](#mise-en-ligne)
+15. [Tests](#tests)
+16. [À faire / points en attente](#à-faire--points-en-attente)
+17. [Historique des modifications](#historique-des-modifications)
 
 ---
 
@@ -334,6 +335,20 @@ Premier module : **ischio-jambiers** (`cours/ischio-jambiers.html`). Les autres 
 
 ---
 
+## Espace DICOM (en préparation)
+
+Recevoir, visualiser et partager des examens d'imagerie (branche `feature/espace-dicom`, **pas encore sur le site**). Le site reste sur GitHub Pages ; les images sont sur un **serveur à part (VPS, Docker)**, de préférence hébergé en Tunisie. Documentation complète : [`espace-dicom/README.md`](espace-dicom/README.md) ; plan et décisions : [`espace-dicom/PLAN.md`](espace-dicom/PLAN.md).
+
+| Élément | Détail |
+|---|---|
+| **Serveur** | `espace-dicom/docker-compose.yml` : **Nginx** (seule porte ouverte, HTTPS, cache, limitation de débit), **dicom-api** (Node, vérifie la session Supabase et le droit sur l'étude **à chaque requête d'image**, journal d'audit), **Orthanc** (compression sans perte JPEG-LS, DICOMweb ; aucun port publié, aucun accès à Internet) et sa base PostgreSQL. Domaine, ports, dossiers et secrets dans un seul fichier `.env` : changer de domaine ou d'hébergeur ne touche pas au code. |
+| **Comptes et droits** | Mêmes comptes que les autres modules. Migration `20261014090000_espace_dicom.sql` (tables `dc_*`) : radiologues validés, membres de structures validées, administrateurs ; **résidents** avec un rôle limité (voir et commenter les examens de leur structure), validés par un radiologue senior de la structure ou un administrateur. |
+| **Données de santé** | L'**identité du patient reste dans Orthanc** (sur le VPS), jamais dans Supabase, qui ne garde que des identifiants techniques, les droits et le journal des accès. Copie du compte rendu (étape 5) : PDF encapsulé DICOM dans Orthanc. Démarches INPDP à valider avant la mise en production. |
+| **Avancement** | Étapes 0 (socle) et 1 (Orthanc en local, relais sécurisé) terminées ; à venir : import, visionneuse OHIF, liens de partage, e-mail / QR / « Joindre les images », télé-expertise et administration, rubrique du menu. |
+| **Tests** | Données **synthétiques** seulement (`espace-dicom/outils/generer-dicom-test.js`). `npm run test:dicom` (pile Docker complète, 51 vérifications), `tests/dicom-api.test.js`, `tests/sql/rls-dicom.js`. |
+
+---
+
 ## Charte graphique
 
 Reprise des visuels RadiologicHub.
@@ -457,8 +472,9 @@ radiologic-hub/
 │   ├── reponse.js          Page de réponse aux boutons des e-mails
 │   ├── rp.css              Styles du module et des mentions légales
 │   └── INSTALLATION.md     Mise en service (Supabase, Brevo, secrets, planification, administrateur)
+├── espace-dicom/           Espace DICOM (serveur d'images, en préparation) : docker-compose, Nginx, Orthanc, dicom-api, outils et tests ; voir son README
 ├── supabase/
-│   ├── migrations/         Remplacements (rp_*), Communauté (rs_* : membres, cas, messagerie, notifications, signalements, stockage, temps réel), droits explicites (GRANT des fonctions des règles d'accès), Bibliothèque (bib_*), Cours (cours_* : validations, images, crédits, stockage cours-images)
+│   ├── migrations/         Remplacements (rp_*), Communauté (rs_* : membres, cas, messagerie, notifications, signalements, stockage, temps réel), droits explicites (GRANT des fonctions des règles d'accès), Bibliothèque (bib_*), Cours (cours_* : validations, images, crédits, stockage cours-images), Espace DICOM (dc_* : examens, résidents, partages, expertises, passerelles, journal, réglages)
 │   ├── functions/          Fonctions serveur rp-agent, rp-lien, rp-taches (+ _shared, généré en partie ; _shared/reseau.ts : rappels des messages non lus)
 │   ├── sql/planification.sql  Tâche planifiée (pg_cron) et déclaration de l'administrateur
 │   └── config.toml         Réglages des fonctions
@@ -536,11 +552,14 @@ Les règles de calcul du suivi oncologique, les recommandations Fleischner, la c
 
 ```
 npm test                  # ou : node --test tests/*.test.js
-npm run test:sql          # schémas Supabase des Remplacements, de la Communauté, de la Bibliothèque et des cours sur un PostgreSQL local (droits d'accès, liste des GRANT)
+npm run test:sql          # schémas Supabase des Remplacements, de la Communauté, de la Bibliothèque, des cours et de l'Espace DICOM sur un PostgreSQL local (droits d'accès, liste des GRANT)
+npm run test:dicom        # Espace DICOM : pile Docker complète avec une simulation de Supabase et des scanners synthétiques (Docker nécessaire ; ignoré sinon)
 npm run test:bib-reel     # Bibliothèque : import réel de 5 DOI (réseau nécessaire ; ignoré sinon, rien n'est simulé)
 npm run test:integration  # agent + base réelle (PostgreSQL + PostgREST, sous Deno) — variables POSTGREST_BIN et DENO_BIN
 npm run backend:preparer  # recopie le noyau et les modèles dans supabase/functions/_shared (avant déploiement)
 ```
+
+Espace DICOM : `tests/dicom-api.test.js` (12 tests : jetons HS256 / ES256 / RS256, analyse des requêtes DICOMweb, cache des droits, journal, serveur) ; `tests/sql/rls-dicom.js` (20 vérifications : rôles, validation des résidents, droits par examen, écritures réservées au serveur, journal en ajout seul, aucune colonne d'identité du patient) ; `npm run test:dicom` (51 vérifications : Orthanc injoignable et sans Internet, JPEG-LS sans perte au pixel près, refus sans session ou sans droit y compris depuis le cache, recherches limitées à une étude, rôles, gzip, en-têtes, limitation de débit, journal). Détails : `espace-dicom/README.md`.
 
 Cours d'échoanatomie : `tests/ischio-jambiers.test.js` (13 tests) vérifie les 6 coupes (repères demandés présents dans chacune, relations anatomiques corrigées d'après Balius et al. 2019 dans S1, S3, S4 et S5, même légende partout, M / L / S / P, médial à gauche par défaut et inversion sans retourner le texte, étiquettes dans l'image et sans chevauchement, version téléphone numérotée, version stable qui change à la moindre modification) et que `cours/ischio-jambiers/A-VERIFIER.md` est à jour. `tests/cours.test.js` (7 tests) : catalogue des éléments et versions, visibilité (seulement approuvé dans la version actuelle, « modifié depuis l'approbation », à corriger), version du texte, plan de coupe (hauteur ↔ altitude, schéma le plus proche parmi les approuvés, tiers), étiquettes des images (bornes, 30 au plus), mode démonstration (lectures des élèves, révisions d'image, crédits), fichiers de la page (moteur 3D, licences, attribution, « Source / crédits »). `tests/sql/rls-cours.js` (8 vérifications) : rien de visible avant approbation, commentaire jamais lisible des élèves, image invisible tant que sa révision actuelle n'est pas approuvée, écriture réservée à l'auteur, contraintes, stockage. Parcours vérifié dans Chromium (33 vérifications, 1366 px et 390 px) : élève sans rien d'approuvé, approbations, visionneuse (étiquettes, surbrillance, os masqués, positions prédéfinies, curseur, inversion), « à corriger », envoi d'image avec étiquette glissée et orientation, approbation puis modification, crédits, aperçu de l'auteur, téléphone (3D au clic, schémas numérotés, sans débordement).
 
@@ -600,6 +619,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 - [ ] **Communauté — mise en service** : appliquer la seconde migration, créer l'identifiant **Google OAuth** (console Google Cloud) et l'activer dans Supabase, ajouter `communaute.html` aux adresses de redirection, vérifier le temps réel (guide : `remplacements/INSTALLATION.md`, étape 4 bis).
 - [ ] **Communauté — juridique** : faire relire les conditions d'utilisation (`mentions-legales.html#conditions`) et la section des données ; déclarer ce traitement à l'INPDP ; fixer les durées entre crochets (signalements, justificatifs).
 - [ ] **Communauté — plus tard** : vérification du téléphone par SMS (colonne `telephone_verifie` prête), suppression automatique des justificatifs après décision, purge des anciens signalements, conversations de groupe, notifications push, import des cas de la page Instagram (choix de la méthode en attente).
+- [ ] **Espace DICOM** (branche `feature/espace-dicom`) : étapes 2 à 7 (import, visionneuse et mesures en 4G, partage, e-mail / QR / « Joindre les images », télé-expertise et administration, menu et déploiement) ; choisir le **VPS** (de préférence en Tunisie) et le **sous-domaine** (`DICOM_DOMAINE`) ; appliquer la migration `20261014090000_espace_dicom.sql` lors de la mise en service de Supabase ; **démarches INPDP** (traitement de données de santé, transferts hors de Tunisie) à valider par un juriste avant d'y mettre de vraies images.
 - [ ] **Nom de domaine** `www.radiologichub.com` : à acheter et configurer (DNS + réglages GitHub Pages), puis mettre à jour le lien « Site en ligne » ci-dessus.
 
 ---
@@ -608,6 +628,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 14/10/2026 | **Espace DICOM, étapes 0 et 1** (branche `feature/espace-dicom`, rien de visible sur le site) : plan mis à jour avec les décisions (VPS de préférence en Tunisie, passerelle de clinique, résidents à rôle limité validés par un senior, identité du patient seulement dans Orthanc, copie du compte rendu en PDF encapsulé) ; **socle Docker** dans `espace-dicom/` (Nginx avec vérification de chaque requête d'image, dicom-api, Orthanc en JPEG-LS sans perte sans port publié ni accès à Internet, PostgreSQL ; tout réglable dans `.env`) ; migration Supabase `dc_*` (rôles, droits par examen, partages, expertises, passerelles, journal en ajout seul, aucune identité de patient) ; générateur de scanners **synthétiques** ; tests : 12 unitaires, 20 SQL, 51 dans Docker. |
 | 13/10/2026 | **Bosniak dans l'éditeur des comptes rendus** : nouvel outil parmi les schémas et calculateurs (mêmes règles et schémas que la page), examen repris du compte rendu type, jusqu'à 4 lésions (côté, siège, taille, développement + critères), schéma de chaque lésion ; **description insérée sous la ligne des reins** (phrase « sans masse solide ou kystique décelable » retirée ou gardée pour l'autre rein) et **conclusion « … classée Bosniak X (version 2019) : conduite à tenir »** dans AU TOTAL, conseils IRM au choix ; `regles/bosniak-cr.js` et `tests/bosniak-cr.test.js`. **Nouvelle fiche rapide « Masses rénales kystiques : Bosniak 2019 »** (Fiches rapides › Uro) : vocabulaire 2019, les 5 catégories avec les schémas de l'auteur, kyste hyperdense, rehaussement, pièges, conduite à tenir, checklist du CR, 8 cartes « Testez-vous » ; liens entre la fiche, la page et l'éditeur |
 | 12/10/2026 | Bosniak : **le choix de la protrusion ne changeait pas le résultat** (« Rehaussée » restait sur « non ») — une protrusion, une paroi épaissie ou des cloisons choisies sont désormais « rehaussées » par défaut avec injection ; une structure marquée « non rehaussée » est signalée comme non prise en compte ; « classement impossible » liste tout ce qu'il manque ; mise en ligne (toujours sans le cours d'échoanatomie) |
 | 12/10/2026 | Nouvelle page **Classification de Bosniak 2019** (`/outils/bosniak`), rattachée à la section Comptes rendus comme OsteoGamme : les 5 schémas de l'auteur (I, II, IIF, III, IV) avec critères et conduite, en défilement horizontal sur téléphone ; **calculateur à boutons** en direct (TDM / IRM, paroi, cloisons, protrusion, calcifications, densités et delta, signaux IRM, exclusions) avec catégorie, schéma, critères retenus, conduite et conseils ; règles dans `outils/bosniak-rules.js` (ordre 2019, seuils de rehaussement réglables) et `tests/bosniak.test.js` (dont les pièges cloison lisse de 3 mm = IIF et protrusion de 2 mm à angle aigu = IV) ; avertissement et source Silverman 2019 ; notes et schémas d'origine rangés dans le dépôt privé ; lien depuis la rangée d'outils des comptes rendus |
