@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=20261013020000">
   <link rel="stylesheet" href="fiche.css?v=20261012150000">
-  <link rel="stylesheet" href="dicom/espace.css?v=20261014150000">
+  <link rel="stylesheet" href="dicom/espace.css?v=20261014180000">
 </head>
 <body>
 
@@ -71,9 +71,10 @@
             </div>
 
             <div class="dc-test">
-              <p><b>Pas d'examen sous la main ?</b> Un scanner de test <b>synthétique</b> (fantôme calculé : corps, poumons, rachis, foie avec un kyste ; aucune donnée réelle), 120 coupes.</p>
+              <p><b>Pas d'examen sous la main ?</b> Des examens de test <b>synthétiques</b> (fantômes calculés, aucune donnée réelle) : un scanner de 120 coupes (corps, poumons, rachis, foie avec un kyste) et une IRM de perfusion T2* (cerveau, 8 coupes × 50 phases, avec une lésion à forte chute de signal) pour essayer la courbe de perfusion.</p>
               <div class="dc-boutons">
                 <button type="button" class="btn btn-ink btn-sm" id="dc-test">Charger le scanner de test</button>
+                <button type="button" class="btn btn-ink btn-sm" id="dc-test-perf">Charger la perfusion IRM de test</button>
                 <button type="button" class="btn btn-outline btn-sm" id="dc-test-zip">Télécharger le scanner de test (.zip)</button>
               </div>
             </div>
@@ -93,6 +94,7 @@
               <li><b>Zoom</b>, déplacement, rotation, retournement.</li>
               <li><b>Mesures</b> : longueur, angle, ellipse, rectangle, flèche annotée.</li>
               <li><b>MPR</b> (bouton « Disposition » → MPR) : coupes sagittales et coronales, sur ordinateur et tablette.</li>
+              <li><b>Courbe de perfusion</b> (bouton « Courbe ») : tracez une ellipse sur une série dynamique (perfusion T2*, T1 dynamique), la courbe signal-temps de la région s'affiche avec la chute de signal, le PSR ou le type de courbe.</li>
               <li><b>Compte rendu</b> à côté des images (onglet sur téléphone).</li>
             </ul>
             <p class="dc-petit">Visionneuse : OHIF 3.13 (logiciel libre), en français.</p>
@@ -138,8 +140,8 @@
   <script src="dicom/config.js?v=20261014150000"></script>
   <script src="dicom/lecture.js?v=20261014150000"></script>
   <script src="dicom/zip.js?v=20261014150000"></script>
-  <script src="dicom/generateur.js?v=20261014150000"></script>
+  <script src="dicom/generateur.js?v=20261014180000"></script>
   <script src="dicom/stockage-demo.js?v=20261014150000"></script>
-  <script src="dicom/espace.js?v=20261014150000"></script>
+  <script src="dicom/espace.js?v=20261014180000"></script>
 </body>
 </html>

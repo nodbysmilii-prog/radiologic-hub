@@ -4,7 +4,8 @@ Recevoir, visualiser et partager des examens d'imagerie, à côté du site actue
 
 > **État (14 octobre 2026)** :
 > - étapes 0 et 1 terminées : socle Docker, droits d'accès, relais sécurisé des images ;
-> - **démonstration des étapes 2 et 3 dans le navigateur** : import (fichiers, dossier de CD, `.zip`) et visionneuse OHIF avec le compte rendu à côté, sans serveur (voir [Démonstration dans le navigateur](#démonstration-dans-le-navigateur)).
+> - **démonstration des étapes 2 et 3 dans le navigateur** : import (fichiers, dossier de CD, `.zip`) et visionneuse OHIF avec le compte rendu à côté, sans serveur (voir [Démonstration dans le navigateur](#démonstration-dans-le-navigateur)) ;
+> - **courbe de perfusion tracée sur les images** (IRM dynamiques, dont General Electric) : voir [Courbe de perfusion](#courbe-de-perfusion). Spectroscopie : en attente du format d'export de l'IRM GE.
 >
 > Rien n'est encore visible sur le site : la rubrique du menu viendra à l'étape 7.
 > Plan complet et décisions : [`PLAN.md`](PLAN.md).
@@ -76,7 +77,7 @@ Pour essayer l'import et la visionneuse **sans serveur**, tant que le VPS n'est 
 
 **Pages du site** :
 - `espace-dicom.html` : « Importer des examens » et « Mes examens » ;
-- `espace-dicom-visionneuse.html?etude=…` : OHIF, avec le compte rendu à côté (onglet sur téléphone).
+- `espace-dicom-visionneuse.html?etude=…` : OHIF, avec la courbe de perfusion ou le compte rendu à côté (onglets sur téléphone).
 
 Elles ne sont pas encore dans le menu, et ne sont pas indexées.
 
@@ -91,8 +92,25 @@ Elles ne sont pas encore dans le menu, et ne sont pas indexées.
 | **Import** | Par lots de 20 images. Un import interrompu reprend sans doublon : les images déjà gardées sont reconnues. Même chose pour un CD importé deux fois. |
 | **Mes examens** | Liste, recherche (nom, identifiant, examen), suppression, espace utilisé dans le navigateur. |
 | **Visionneuse** | **OHIF 3.13.12** en français : défilement, fenêtrage et préréglages, zoom, mesures, **MPR** (bouton « Disposition »). Sur téléphone, le panneau des études est replié et la barre d'outils allégée. **Charte du site** (`visionneuse/theme-radiologichub.css`) : police Montserrat, cadre bleu marine, outil actif et image sélectionnée en ambre ; images sur fond noir. |
+| **Courbe de perfusion** | Bouton « Courbe » (onglet sur téléphone) : une ellipse tracée sur une série dynamique donne la courbe signal-temps de la région et ses paramètres. Détails ci-dessous. |
 | **Compte rendu** | Texte gardé avec l'examen, enregistré automatiquement. En service, ce sera la copie PDF jointe depuis l'éditeur. |
-| **Scanner de test** | Fantôme synthétique de 120 coupes (`dicom/generateur.js`, le même générateur que les tests du serveur). Deux boutons : « Charger » ou « Télécharger (.zip) », pour essayer l'import d'une archive. |
+| **Examens de test** | Synthétiques (`dicom/generateur.js`, le même générateur que les tests du serveur). **Scanner** de 120 coupes : « Charger » ou « Télécharger (.zip) », pour essayer l'import d'une archive. **Perfusion IRM T2\*** (cerveau, 8 coupes × 50 phases, TR 1,5 s, en-têtes comme une IRM GE : MR, EPI, Trigger Time, positions temporelles) avec une lésion à forte chute de signal et fuite (chute 60 %, PSR 70 %), parenchyme (30 %, 95 %), artère et ventricules. |
+
+### Courbe de perfusion
+
+Demandée pour les IRM **General Electric** : courbe tracée directement sur les images, sans logiciel à installer.
+
+- **Utilisation** : ouvrir la série dynamique (perfusion T2\* DSC ou T1 dynamique DCE ; OHIF la reconnaît et affiche le lecteur des phases), choisir l'**ellipse** dans les outils de mesure (cercle, rectangle et contour libre marchent aussi) et la tracer sur une coupe. Le panneau « Courbe » s'ouvre : signal moyen de la région à **chaque phase de cette coupe**. Une région par tissu : la lésion, puis le parenchyme sain controlatéral, chacune dans sa couleur (la même dans l'image et sur la courbe).
+- **Paramètres** (`dicom/perfusion.js`, calcul pur testé en Node) :
+  - ligne de base (la première phase est écartée : aimantation pas encore à l'équilibre) et arrivée du produit de contraste ;
+  - **T2\* (chute de signal)** : chute maximale, temps du minimum, **PSR** (pourcentage de récupération du signal, sur les 15 % dernières phases) ;
+  - **T1 (rehaussement)** : rehaussement maximal, temps du pic, **type de courbe I, II ou III** (progressive, plateau, lavage ; ± 10 % entre le pic des 2 premières minutes et la fin, si au moins une minute après le pic).
+- **Temps** : Trigger Time, sinon heure d'acquisition (minuit compris), sinon heure de création ; sans heure dans les images (fréquent en EPI GE : la même pour toutes), numéro de phase × TR, signalé sous la courbe.
+- **Commandes** : échelle « % de la base » ou « Signal », **export CSV** (tableur, virgule décimale), **clic sur un point → la visionneuse affiche cette phase** ; repère de la phase affichée sur la courbe.
+- **Pixels** : ceux déjà décodés par la visionneuse (tous les formats, dont JPEG-LS du serveur), pente et ordonnée appliquées ; la région est calculée en millimètres (pixels rectangulaires, plans obliques).
+- **Limites** (rappelées sous la courbe) : **aide visuelle**, signal non calibré ; pas de déconvolution (rCBV, CBF, MTT), de correction de fuite ni de Ktrans. Les cartes de la console de l'IRM (GE READY View) restent la référence ; une carte rCBV exportée en DICOM peut être lue avec l'ellipse (moyenne de la région).
+- **Branchement** : `espace-dicom/visionneuse/app-config.js` donne la configuration à OHIF sous forme de fonction (prévu par OHIF) pour garder ses services dans `window.RH_OHIF` ; `dicom/courbe.js` (page de la visionneuse, même site) écoute les mesures. Les mesures sont suivies sans la question « Suivre les mesures ? » (elle masquait le lecteur des phases). Même fonctionnement quand les images viendront du serveur.
+- **Spectroscopie** (à venir) : OHIF n'affiche pas les spectres. Sur une IRM GE, la spectroscopie est le plus souvent exportée en fichier **P-file** (`P*.7`, format propre à GE), en captures d'écran, ou en DICOM « MR Spectroscopy » selon la version. Le format exact (et un exemple **anonymisé**) est demandé avant de coder la lecture du spectre.
 
 **Visionneuse OHIF** : application déjà construite, téléchargée à version figée par `npm run visionneuse` (`espace-dicom/visionneuse/installer-ohif.js`).
 - **Empreinte** sha512 vérifiée.
@@ -150,8 +168,8 @@ Appliquer d'abord la migration `20261014090000_espace_dicom.sql` dans Supabase, 
 | `npm test` | `tests/dicom-api.test.js` : jetons (HS256, ES256, RS256, « alg: none », expiration, audience, confusion d'algorithme), analyse des requêtes DICOMweb (chemins autorisés, recherches sans filtre, filtre d'une autre étude, chemins détournés, écritures), cache des droits (une seule question à Supabase pour 50 requêtes simultanées), journal, configuration, serveur | 12 tests ✓ |
 | `npm run test:sql` | `tests/sql/rls-dicom.js` : rôles, validation des résidents par un senior, droits par examen, écritures réservées au serveur, unicité d'un examen, liens sans empreintes lisibles, journal en ajout seul, **aucune colonne d'identité du patient**. `tests/sql/droits.js` : liste exacte des droits accordés | 20 vérifications ✓ |
 | `npm run test:dicom` | `tests/integration.js`, la pile Docker complète (voir ci-dessous) | 51 vérifications ✓ |
-| `npm test` | `tests/dicom-site.test.js` (démonstration) : scanner de test valide et synthétique, lecture des en-têtes (données binaires retirées, DICOMDIR reconnu), regroupement par examen (doublons, identité non retirée), `.zip` écrits et relus (et créés par `zip`, ZIP64), liste des images pour OHIF, correctifs d'OHIF (seules les adresses `blob:` du même site sont acceptées), pages | 8 tests ✓ |
-| Parcours Chromium | démonstration servie comme sur raw.githack.com, ordinateur (1366 px) et téléphone (390 px) : scanner de test, `.zip` téléchargé puis importé (puis réimporté : « déjà importé »), dossier de CD avec DICOMDIR et fichier texte, avertissement « non anonymisé », recherche, image affichée par OHIF, OHIF en français, **MPR à 3 vues**, compte rendu gardé après rechargement, onglets sur téléphone, police et couleurs du site dans OHIF, suppression, sans débordement ni erreur | 42 vérifications ✓ |
+| `npm test` | `tests/dicom-site.test.js` (démonstration) : scanner de test valide et synthétique, lecture des en-têtes (données binaires retirées, DICOMDIR reconnu), regroupement par examen (doublons, identité non retirée), `.zip` écrits et relus (et créés par `zip`, ZIP64), liste des images pour OHIF, **perfusion de test** (en-têtes de type GE), **courbe de perfusion** (phases et temps : Trigger Time, heure d'acquisition avec passage de minuit, phase × TR ; régions : ellipse droite ou tournée, cercle, rectangle, contour, pixels rectangulaires, plan sagittal ; chute, minimum et PSR attendus sur la perfusion de test ; types de courbe I, II, III), configuration d'OHIF (services exposés, mesures suivies sans question), correctifs d'OHIF (seules les adresses `blob:` du même site sont acceptées), pages | 14 tests ✓ |
+| Parcours Chromium | démonstration servie comme sur raw.githack.com, ordinateur (1366 px) et téléphone (390 px) : scanner de test, `.zip` téléchargé puis importé (puis réimporté : « déjà importé »), dossier de CD avec DICOMDIR et fichier texte, avertissement « non anonymisé », recherche, image affichée par OHIF, OHIF en français, **MPR à 3 vues**, compte rendu gardé après rechargement, onglets sur téléphone, police et couleurs du site dans OHIF, **perfusion IRM de test reconnue comme série dynamique (50 phases), ellipse tracée sur la lésion → courbe de 50 phases (chute 61 %, PSR 70 %), couleur identique dans l'image, panneau ouvert d'office, clic sur le minimum → phase affichée, échelle, export CSV, 2e région (parenchyme : 30 %, 95 %), mesure supprimée → courbe retirée, scanner → « série non dynamique », pastille et onglet sur téléphone**, suppression, sans débordement ni erreur | 71 vérifications ✓ |
 
 Le test Docker vérifie notamment :
 - **Orthanc injoignable** : seul Nginx publie des ports ; l'API d'Orthanc (`/instances`, `/tools/find`, `/system`, son interface…) répond 404 par Nginx ; Orthanc n'a **aucun accès à Internet** ;
@@ -265,7 +283,7 @@ Dans `espace-dicom/visionneuse/` : `installer-ohif.js` (OHIF à version figée),
 
 Hors du dossier :
 - `espace-dicom.html`, `espace-dicom-visionneuse.html` : pages du site ;
-- `dicom/` : `config.js` (démonstration ou serveur), `espace.js` (import, Mes examens), `visionneuse.js`, `lecture.js` (en-têtes DICOM), `zip.js`, `generateur.js` (scanner de test), `manifeste.js` (liste des images pour OHIF), `stockage-demo.js` (navigateur), `espace.css` ; `dicom/ohif/` produit par `npm run visionneuse` (non versionné) ;
+- `dicom/` : `config.js` (démonstration ou serveur), `espace.js` (import, Mes examens), `visionneuse.js`, `courbe.js` (panneau « Courbe »), `perfusion.js` (calcul de la courbe), `lecture.js` (en-têtes DICOM), `zip.js`, `generateur.js` (scanner et perfusion de test), `manifeste.js` (liste des images pour OHIF), `stockage-demo.js` (navigateur), `espace.css` ; `dicom/ohif/` produit par `npm run visionneuse` (non versionné) ;
 - `vendor/dcmjs-0.52.0/` : lecteur DICOM (MIT) ;
 - `supabase/migrations/20261014090000_espace_dicom.sql` : tables `dc_*`, rôles et droits ;
 - `tests/sql/rls-dicom.js` : test de la migration ;
@@ -278,7 +296,7 @@ Hors du dossier :
 | 0. Socle | Docker, configuration, données synthétiques, migration | ✓ |
 | 1. Orthanc en local | réception, JPEG-LS, DICOMweb seulement par Nginx et dicom-api, refus sans droit | ✓ |
 | 2. Importer | dossier, `.zip`, DICOMDIR ; envois parallèles avec reprise (tus) ; « Mes examens » ; passerelle de clinique | démonstration dans le navigateur ✓ ; envoi au serveur et passerelle à faire |
-| 3. Visualiser | OHIF intégré, compte rendu à côté, MPR sur tablette et ordinateur, **mesures en 4G** | démonstration ✓ ; lecture depuis le serveur (DICOMweb, jeton) et mesures en 4G à faire |
+| 3. Visualiser | OHIF intégré, compte rendu à côté, MPR sur tablette et ordinateur, **mesures en 4G** ; courbe de perfusion, spectroscopie | démonstration ✓, courbe de perfusion ✓ ; lecture depuis le serveur (DICOMweb, jeton) et mesures en 4G à faire ; spectroscopie : format GE à préciser |
 | 4. Partager | lien (24 h, 7 j, 30 j), code d'accès à essais limités, révocation, page publique | à faire |
 | 5. E-mail, QR, comptes rendus | Brevo, QR imprimable, bouton « Joindre les images » (PDF encapsulé dans Orthanc) | à faire |
 | 6. Télé-expertise et administration | invitations, commentaires (sur le VPS), validation des résidents, espace disque, conservation et purge, suppression | à faire |

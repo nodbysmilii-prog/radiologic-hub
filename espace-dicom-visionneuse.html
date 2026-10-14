@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=20261013020000">
-  <link rel="stylesheet" href="dicom/espace.css?v=20261014150000">
+  <link rel="stylesheet" href="dicom/espace.css?v=20261014180000">
 </head>
 <body class="dv-page">
   <div class="dv-barre">
@@ -18,10 +18,12 @@
     <a class="btn btn-outline btn-sm dv-retour" href="espace-dicom.html#mes-examens">← Mes examens</a>
     <div class="dv-titre"><b id="dv-patient">Chargement…</b><small id="dv-examen"></small></div>
     <span class="dv-demo" title="Les images sont lues dans ce navigateur, rien n'est envoyé">Démonstration</span>
-    <button type="button" class="btn btn-ink btn-sm dv-basculer" id="dv-basculer" aria-pressed="true">Compte rendu</button>
+    <button type="button" class="btn btn-outline btn-sm dv-basculer" id="dv-basculer-courbe" aria-pressed="false" aria-controls="dv-courbe">Courbe</button>
+    <button type="button" class="btn btn-ink btn-sm dv-basculer" id="dv-basculer" aria-pressed="true" aria-controls="dv-cr">Compte rendu</button>
   </div>
   <div class="dv-onglets" role="tablist" aria-label="Affichage">
     <button type="button" role="tab" class="is-actif" id="dv-onglet-images" aria-selected="true">Images</button>
+    <button type="button" role="tab" id="dv-onglet-courbe" aria-selected="false">Courbe <span class="dv-pastille" id="dv-pastille" hidden></span></button>
     <button type="button" role="tab" id="dv-onglet-cr" aria-selected="false">Compte rendu</button>
   </div>
   <div class="dv-corps">
@@ -29,6 +31,25 @@
       <iframe id="dv-ohif" title="Visionneuse DICOM (OHIF)" allow="fullscreen; clipboard-write"></iframe>
       <p class="dv-message" id="dv-message" hidden></p>
     </div>
+    <aside class="dv-courbe" id="dv-courbe" aria-labelledby="dv-courbe-titre" hidden>
+      <div class="dv-cr-tete">
+        <h2 id="dv-courbe-titre">Courbe de perfusion</h2>
+        <p>Tracez une <b>ellipse</b> (outils de mesure ; cercle, rectangle ou contour libre aussi) sur une coupe d'une <b>série dynamique</b> : perfusion T2* (DSC) ou T1 dynamique (DCE). Le signal moyen de la région à chaque phase s'affiche ici. Une région par tissu : la lésion, puis le parenchyme sain controlatéral.</p>
+      </div>
+      <div class="dv-courbe-corps">
+        <p class="dv-courbe-vide" id="dv-courbe-vide">Visionneuse en cours de chargement…</p>
+        <div class="dv-courbe-options" id="dv-courbe-options" hidden>
+          <div class="dv-segment" role="group" aria-label="Échelle de la courbe">
+            <button type="button" data-echelle="relatif" aria-pressed="true">% de la base</button>
+            <button type="button" data-echelle="brut" aria-pressed="false">Signal</button>
+          </div>
+          <button type="button" class="btn btn-outline btn-sm" id="dv-courbe-csv" title="Exporter les valeurs de la courbe (tableur)">CSV</button>
+        </div>
+        <div class="dv-courbe-graphe" id="dv-courbe-graphe"></div>
+        <div class="dv-courbe-regions" id="dv-courbe-regions"></div>
+        <p class="dv-courbe-avis"><b>Aide visuelle</b> : signal moyen de la région, non calibré ; pas de déconvolution (rCBV, CBF, MTT), de correction de fuite ni de Ktrans. Les cartes de la console de l'IRM restent la référence. Cliquez un point de la courbe pour afficher la phase.</p>
+      </div>
+    </aside>
     <aside class="dv-cr" id="dv-cr" aria-labelledby="dv-cr-titre">
       <div class="dv-cr-tete">
         <h2 id="dv-cr-titre">Compte rendu</h2>
@@ -47,6 +68,8 @@
   <script src="dicom/lecture.js?v=20261014150000"></script>
   <script src="dicom/manifeste.js?v=20261014150000"></script>
   <script src="dicom/stockage-demo.js?v=20261014150000"></script>
-  <script src="dicom/visionneuse.js?v=20261014150000"></script>
+  <script src="dicom/perfusion.js?v=20261014180000"></script>
+  <script src="dicom/visionneuse.js?v=20261014180000"></script>
+  <script src="dicom/courbe.js?v=20261014180000"></script>
 </body>
 </html>

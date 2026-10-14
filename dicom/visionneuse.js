@@ -1,7 +1,8 @@
 /* =========================================================
    Espace DICOM — page de la visionneuse : OHIF (dicom/ohif/, préparé
-   par espace-dicom/visionneuse/installer-ohif.js) dans un cadre, le
-   compte rendu à côté (onglet sur téléphone).
+   par espace-dicom/visionneuse/installer-ohif.js) dans un cadre, la
+   courbe de perfusion (dicom/courbe.js) ou le compte rendu à côté
+   (onglets sur téléphone).
    Mode démonstration : les images de l'examen, gardées dans ce
    navigateur, reçoivent des adresses blob: du même site ; OHIF les lit
    par sa source « dicomjson ». En service (étape 3), OHIF lira le
@@ -39,22 +40,34 @@
   q('#dv-cr-enregistrer').addEventListener('click', enregistrer);
   window.addEventListener('pagehide', () => { if (texte.value !== dernier) S.enregistrerCompteRendu(etude, texte.value); });
 
-  // Ordinateur : afficher ou masquer le compte rendu ; téléphone : onglets
-  const panneau = q('#dv-cr'), basculer = q('#dv-basculer');
-  basculer.addEventListener('click', () => {
-    panneau.hidden = !panneau.hidden;
-    basculer.setAttribute('aria-pressed', String(!panneau.hidden));
-  });
-  const ongletImages = q('#dv-onglet-images'), ongletCr = q('#dv-onglet-cr');
-  function onglet(cr) {
-    document.body.classList.toggle('voir-cr', cr);
-    ongletImages.classList.toggle('is-actif', !cr);
-    ongletCr.classList.toggle('is-actif', cr);
-    ongletImages.setAttribute('aria-selected', String(!cr));
-    ongletCr.setAttribute('aria-selected', String(cr));
+  /* ---------- Panneaux à côté des images : courbe de perfusion, compte rendu ----------
+     Ordinateur : un panneau à la fois (boutons de la barre, un second clic le masque) ; téléphone : onglets */
+  const panneaux = { courbe: q('#dv-courbe'), cr: q('#dv-cr') };
+  const boutons = { courbe: q('#dv-basculer-courbe'), cr: q('#dv-basculer') };
+  let ouvert = 'cr';
+  function ouvrirPanneau(nom) {
+    ouvert = nom;
+    for (const n of Object.keys(panneaux)) {
+      panneaux[n].hidden = n !== nom;
+      boutons[n].setAttribute('aria-pressed', String(n === nom));
+      boutons[n].classList.toggle('btn-ink', n === nom);
+      boutons[n].classList.toggle('btn-outline', n !== nom);
+    }
   }
-  ongletImages.addEventListener('click', () => onglet(false));
-  ongletCr.addEventListener('click', () => onglet(true));
+  Object.keys(boutons).forEach(n => boutons[n].addEventListener('click', () => ouvrirPanneau(ouvert === n ? null : n)));
+  const onglets = { images: q('#dv-onglet-images'), courbe: q('#dv-onglet-courbe'), cr: q('#dv-onglet-cr') };
+  function onglet(nom) {
+    document.body.classList.toggle('voir-cr', nom === 'cr');
+    document.body.classList.toggle('voir-courbe', nom === 'courbe');
+    for (const n of Object.keys(onglets)) {
+      onglets[n].classList.toggle('is-actif', n === nom);
+      onglets[n].setAttribute('aria-selected', String(n === nom));
+    }
+  }
+  Object.keys(onglets).forEach(n => onglets[n].addEventListener('click', () => onglet(n)));
+  // Première courbe calculée : panneau « Courbe » ouvert d'office sur ordinateur (sur téléphone, pastille sur l'onglet)
+  const telephone = window.matchMedia('(max-width: 760px)');
+  document.addEventListener('rh-courbe-premiere', () => { if (!telephone.matches && ouvert !== 'courbe') ouvrirPanneau('courbe'); });
 
   /* ---------- Ouverture de l'examen ---------- */
   async function ouvrir() {

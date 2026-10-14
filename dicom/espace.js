@@ -5,7 +5,8 @@
    envoyé. En service, l'enregistrement passera par le serveur de
    l'Espace DICOM (envois parallèles avec reprise) : même parcours.
    Sources acceptées : fichiers DICOM, dossier (CD avec DICOMDIR : tous
-   les fichiers du CD sont lus), archives .zip ; scanner de test.
+   les fichiers du CD sont lus), archives .zip ; examens de test
+   synthétiques (scanner, perfusion IRM T2*).
    ========================================================= */
 (function () {
   'use strict';
@@ -249,21 +250,22 @@
           <a class="btn btn-ink btn-sm" href="espace-dicom-visionneuse.html?etude=${encodeURIComponent(e.etudeUid)}">Visualiser</a>
           <button type="button" class="btn btn-outline btn-sm" data-supprimer="${esc(e.etudeUid)}">Supprimer</button>
         </div>
-      </article>`).join('') : `<p class="dc-vide">${examens.length ? 'Aucun examen ne correspond à la recherche.' : 'Aucun examen pour l\'instant : importez des fichiers ou chargez le scanner de test.'}</p>`;
+      </article>`).join('') : `<p class="dc-vide">${examens.length ? 'Aucun examen ne correspond à la recherche.' : 'Aucun examen pour l\'instant : importez des fichiers ou chargez un examen de test.'}</p>`;
     const e = await S.espace();
     q('#dc-espace').textContent = e && e.usage !== undefined ? `Espace utilisé par ce site dans ce navigateur : ${taille(e.usage)}${e.quota ? ` sur ${taille(e.quota)} disponibles` : ''}.` : '';
   }
 
-  /* ---------- Scanner de test (synthétique) ---------- */
+  /* ---------- Examens de test (synthétiques) : scanner, perfusion IRM T2* ---------- */
   const aujourdhui = () => new Date().toISOString().slice(0, 10).replace(/-/g, '');
-  const scannerTest = () => G.genererEtude({ coupes: 120, taille: 256, graine: 1 + Math.floor(Math.random() * 999), date: aujourdhui(), description: 'TDM TEST SYNTHETIQUE' });
+  const graine = () => 1 + Math.floor(Math.random() * 999);
+  const scannerTest = () => G.genererEtude({ coupes: 120, taille: 256, graine: graine(), date: aujourdhui(), description: 'TDM TEST SYNTHETIQUE' });
+  const perfusionTest = () => G.genererPerfusion({ graine: graine(), date: aujourdhui() });
 
-  async function chargerScannerTest() {
-    const bouton = q('#dc-test');
+  async function chargerTest(bouton, fabriquer) {
     bouton.disabled = true;
     try {
       await new Promise(r => setTimeout(r, 30));
-      const r = scannerTest();
+      const r = fabriquer();
       await analyser(r.instances.map(i => ({ nom: i.nom, obtenir: async () => new Blob([i.octets], { type: 'application/dicom' }) })));
     } finally {
       bouton.disabled = false;
@@ -306,7 +308,8 @@
       e.preventDefault();
       try { analyser(await depuisDepot(e.dataTransfer)); } catch (err) { montrerErreur(err.message); }
     });
-    q('#dc-test').addEventListener('click', chargerScannerTest);
+    q('#dc-test').addEventListener('click', () => chargerTest(q('#dc-test'), scannerTest));
+    q('#dc-test-perf').addEventListener('click', () => chargerTest(q('#dc-test-perf'), perfusionTest));
     q('#dc-test-zip').addEventListener('click', telechargerScannerTest);
     q('#dc-recherche').addEventListener('input', afficherExamens);
     q('#dc-examens').addEventListener('click', async e => {
