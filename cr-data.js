@@ -1198,7 +1198,7 @@ RÉSULTATS :
 • Morphologie et biométrie : le nerf ulnaire est suivi de la région brachiale distale (arcade de Struthers) jusqu'à son passage entre les deux chefs du muscle fléchisseur ulnaire du carpe (FCU). Il conserve un calibre régulier, sans encoche ni disparité de calibre en coupe longitudinale. Son architecture fasciculaire est respectée.
 • Surface de section transversale (CSA) : [6] mm² dans la gouttière épitrochléo-olécrânienne (normale inférieure à 9-10 mm²), contre [6] mm² au tiers distal du bras (ratio de gonflement normal à [1,0]).
 • Doppler : absence d'hyperhémie intraneurale ou épineurale en mode Doppler puissance.
-• Contenant ostéo-fibreux et variantes : finesse normale du rétinaculum d'Osborne et du fascia du FCU. Absence de muscle épitrochléo-anconé accessoire. Pas d'épanchement ni de kyste arthro-synovial du récessus postéro-médial huméro-ulnaire. Régularité des corticales osseuses de la gouttière.
+• Contenant ostéo-fibreux et variantes : finesse normale du rétinaculum du tunnel cubital et de l'arcade d'Osborne. Absence de muscle anconé épitrochléen accessoire. Pas d'épanchement ni de kyste arthro-synovial du récessus postéro-médial huméro-ulnaire. Régularité des corticales osseuses de la gouttière.
 • Étude dynamique : en flexion complète du coude, le nerf ulnaire demeure stable au fond de la gouttière épitrochléo-olécrânienne, sans subluxation sur l'épicondyle médial ni ressaut du chef médial du triceps brachial (type N d'Okamoto).
 • Trophicité musculaire : trophicité et échostructure normales du FCU et des muscles intrinsèques ulnaires de la main (premier interosseux dorsal et loge hypothénar).
 
@@ -1218,12 +1218,12 @@ Exploration haute fréquence (sonde linéaire [15-18] MHz) dans les plans axial 
 
 RÉSULTATS :
 • Morphologie et biométrie : souffrance focale du nerf ulnaire au niveau du tunnel cubital. En coupe axiale, le nerf est nettement épaissi, hypoéchogène et dédifférencié (perte de l'architecture fasciculaire).
-• CSA : maximale à [14] mm² [en amont immédiat du rétinaculum d'Osborne / au sommet de l'épicondyle médial], contre [6] mm² au bras (ratio de gonflement pathologique à [2,3]) et [7] mm² du côté controlatéral asymptomatique.
-• Coupe longitudinale : aspect en sablier avec encoche focale sous [le rétinaculum d'Osborne épaissi / l'arcade fibreuse du FCU] et renflement fusiforme d'amont sur [25] mm.
+• CSA : maximale à [14] mm² [en amont immédiat du rétinaculum du tunnel cubital / au sommet de l'épicondyle médial / en amont immédiat de l'arcade d'Osborne], contre [6] mm² au bras (ratio de gonflement pathologique à [2,3]) et [7] mm² du côté controlatéral asymptomatique.
+• Coupe longitudinale : aspect en sablier avec encoche focale sous [le rétinaculum du tunnel cubital épaissi (gouttière) / l'arcade d'Osborne (entrée du tunnel)] et renflement fusiforme d'amont sur [25] mm.
 • Doppler : hyperhémie intraneurale [discrète / franche] au Doppler puissance au site de souffrance maximale, témoignant d'une névrite active.
 • Bilan étiologique local (choisir) :
-  – Option 1, forme idiopathique : épaississement fibreux du rétinaculum d'Osborne comprimant le nerf contre le plancher osseux, sans masse intrinsèque ou extrinsèque ni variante musculaire.
-  – Option 2, muscle accessoire : muscle épitrochléo-anconé accessoire charnu de [X] mm d'épaisseur, coiffant la gouttière et réduisant l'espace disponible pour le nerf en extension.
+  – Option 1, forme idiopathique : compression [sous le rétinaculum du tunnel cubital (gouttière) / sous l'arcade d'Osborne (entrée du tunnel)], sans masse intrinsèque ou extrinsèque ni variante musculaire.
+  – Option 2, muscle accessoire : muscle anconé épitrochléen accessoire charnu de [X] mm d'épaisseur, coiffant la gouttière et réduisant l'espace disponible pour le nerf en flexion et lors de sa contraction.
   – Option 3, cause articulaire / extrinsèque : [kyste arthro-synovial de X x Y mm issu du récessus huméro-ulnaire postéro-médial / ostéophyte marginal huméro-ulnaire saillant] refoulant et comprimant le nerf dans la gouttière.
 • Étude dynamique (flexion du coude) :
   – Si stable : le nerf demeure stable dans sa gouttière lors de la flexion.
@@ -1235,8 +1235,8 @@ RÉSULTATS :
 
 CONCLUSION :
 Neuropathie ulnaire au coude [droit / gauche] (CSA maximale à [14] mm² avec hyperhémie intraneurale), secondaire à :
-• [une compression sous le rétinaculum d'Osborne / l'arcade du FCU (forme idiopathique)]
-• [OU une compression extrinsèque par un muscle épitrochléo-anconé accessoire / un kyste arthro-synovial]
+• [une compression sous le rétinaculum du tunnel cubital (gouttière) / sous l'arcade d'Osborne (entrée du tunnel), forme idiopathique]
+• [OU une compression extrinsèque par un muscle anconé épitrochléen accessoire / un kyste arthro-synovial]
 • [OU une névrite de friction sur luxation dynamique antérieure complète du nerf en flexion (type D)]
 [Absence / Présence] de signes échographiques de dénervation musculaire en aval.`,
   },
@@ -1283,7 +1283,7 @@ RÉSULTATS :
   – Présence : amyotrophie et infiltration hyperéchogène de dénervation touchant [les interosseux et l'adducteur du pouce, avec respect relatif de l'abducteur du 5e doigt (atteinte distale en zone II) / l'ensemble des intrinsèques ulnaires (zone I)].
 
 CONCLUSION :
-Syndrome du canal de Guyon [droit / gauche] en zone [I / II / III] de Shea et McClain, secondaire à :
+Syndrome du canal de Guyon [droit / gauche] en zone [I / II / III] de Gross et Gelberman, secondaire à :
 • [une compression extrinsèque par un kyste arthro-synovial d'origine piso-triquétrale de X mm]
 • [OU une thrombose anévrysmale de l'artère ulnaire dans le cadre d'un syndrome du marteau hypothénar]
 • [OU un conflit mécanique sur fracture / pseudarthrose de l'hamulus de l'hamatum (à confirmer par un scanner du carpe en coupes fines)]
@@ -1588,7 +1588,7 @@ const CR_PHRASES = [
   { k: 'dopplerulnaire', alias: [], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'normal', label: 'Nerf ulnaire : pas d\'hyperhémie au Doppler',
     text: `Doppler : absence d'hyperhémie intraneurale ou épineurale en mode Doppler puissance.` },
   { k: 'tunnelcubitalnormal', alias: ['osbornenormal'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'normal', label: 'Tunnel cubital : contenant ostéo-fibreux normal, pas de variante',
-    text: `Contenant ostéo-fibreux et variantes : finesse normale du rétinaculum d'Osborne et du fascia du FCU. Absence de muscle épitrochléo-anconé accessoire. Pas d'épanchement ni de kyste arthro-synovial du récessus postéro-médial huméro-ulnaire. Régularité des corticales osseuses de la gouttière.` },
+    text: `Contenant ostéo-fibreux et variantes : finesse normale du rétinaculum du tunnel cubital et de l'arcade d'Osborne. Absence de muscle anconé épitrochléen accessoire. Pas d'épanchement ni de kyste arthro-synovial du récessus postéro-médial huméro-ulnaire. Régularité des corticales osseuses de la gouttière.` },
   { k: 'ulnairestable', alias: ['okamoton', 'typen'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'normal', label: 'Étude dynamique : nerf ulnaire stable (type N d\'Okamoto)',
     text: `Étude dynamique : en flexion complète du coude, le nerf ulnaire demeure stable au fond de la gouttière épitrochléo-olécrânienne, sans subluxation sur l'épicondyle médial ni ressaut du chef médial du triceps brachial (type N d'Okamoto).` },
   { k: 'trophiciteulnaire', alias: [], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'normal', label: 'Trophicité normale du FCU et des muscles intrinsèques ulnaires',
@@ -1598,15 +1598,15 @@ const CR_PHRASES = [
   { k: 'ulnaireepaissi', alias: ['neuropathieulnairecoude'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'lesion', label: 'Nerf ulnaire au coude : souffrance focale (épaissi, hypoéchogène, dédifférencié)',
     text: `Morphologie et biométrie : souffrance focale du nerf ulnaire au niveau du tunnel cubital. En coupe axiale, le nerf est nettement épaissi, hypoéchogène et dédifférencié (perte de l'architecture fasciculaire).` },
   { k: 'csaulnaire', alias: ['csaaugmentee'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'lesion', label: 'Nerf ulnaire au coude : CSA augmentée (ratio de gonflement)',
-    text: `CSA : maximale à [14] mm² [en amont immédiat du rétinaculum d'Osborne / au sommet de l'épicondyle médial], contre [6] mm² au bras (ratio de gonflement pathologique à [2,3]) et [7] mm² du côté controlatéral asymptomatique.` },
+    text: `CSA : maximale à [14] mm² [en amont immédiat du rétinaculum du tunnel cubital / au sommet de l'épicondyle médial / en amont immédiat de l'arcade d'Osborne], contre [6] mm² au bras (ratio de gonflement pathologique à [2,3]) et [7] mm² du côté controlatéral asymptomatique.` },
   { k: 'sablier', alias: ['encoche', 'notch'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'lesion', label: 'Aspect en sablier : encoche focale et renflement d\'amont',
-    text: `Coupe longitudinale : aspect en sablier avec encoche focale sous [le rétinaculum d'Osborne épaissi / l'arcade fibreuse du FCU] et renflement fusiforme d'amont sur [25] mm.` },
+    text: `Coupe longitudinale : aspect en sablier avec encoche focale sous [le rétinaculum du tunnel cubital épaissi (gouttière) / l'arcade d'Osborne (entrée du tunnel)] et renflement fusiforme d'amont sur [25] mm.` },
   { k: 'hyperhemieulnaire', alias: [], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'lesion', label: 'Hyperhémie intraneurale au Doppler (névrite active)',
     text: `Doppler : hyperhémie intraneurale [discrète / franche] au Doppler puissance au site de souffrance maximale, témoignant d'une névrite active.` },
-  { k: 'osborne', alias: ['tunnelcubital'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'lesion', label: 'Forme idiopathique : rétinaculum d\'Osborne épaissi',
-    text: `Bilan étiologique local : épaississement fibreux du rétinaculum d'Osborne comprimant le nerf contre le plancher osseux, sans masse intrinsèque ou extrinsèque ni variante musculaire.` },
-  { k: 'epitrochleoancone', alias: ['anconeepitrochleen'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'lesion', label: 'Muscle épitrochléo-anconé accessoire',
-    text: `Bilan étiologique local : muscle épitrochléo-anconé accessoire charnu de [X] mm d'épaisseur, coiffant la gouttière et réduisant l'espace disponible pour le nerf en extension.` },
+  { k: 'osborne', alias: ['tunnelcubital'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'lesion', label: 'Forme idiopathique : rétinaculum du tunnel cubital ou arcade d\'Osborne',
+    text: `Bilan étiologique local : compression [sous le rétinaculum du tunnel cubital (gouttière) / sous l'arcade d'Osborne (entrée du tunnel)], sans masse intrinsèque ou extrinsèque ni variante musculaire.` },
+  { k: 'anconeepitrochleen', alias: ['epitrochleoancone'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'lesion', label: 'Muscle anconé épitrochléen accessoire',
+    text: `Bilan étiologique local : muscle anconé épitrochléen accessoire charnu de [X] mm d'épaisseur, coiffant la gouttière et réduisant l'espace disponible pour le nerf en flexion et lors de sa contraction.` },
   { k: 'kystecoude', alias: ['osteophytecoude'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'lesion', label: 'Cause articulaire / extrinsèque au coude (kyste, ostéophyte)',
     text: `Bilan étiologique local : [kyste arthro-synovial de X x Y mm issu du récessus huméro-ulnaire postéro-médial / ostéophyte marginal huméro-ulnaire saillant] refoulant et comprimant le nerf dans la gouttière.` },
   { k: 'subluxationulnaire', alias: ['okamotos', 'types'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'lesion', label: 'Subluxation du nerf ulnaire en flexion (type S)',
@@ -1641,14 +1641,14 @@ const CR_PHRASES = [
     text: `Examen échographique statique et dynamique normal du nerf ulnaire au coude [droit / gauche], sans argument pour un syndrome canalaire ni instabilité nerveuse.` },
   { k: 'conclusionneuropathieulnaire', alias: ['neuropathieulnaire'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'conclusion', label: 'Conclusion : neuropathie ulnaire au coude (causes à choisir)',
     text: `Neuropathie ulnaire au coude [droit / gauche] (CSA maximale à [14] mm² avec hyperhémie intraneurale), secondaire à :
-• [une compression sous le rétinaculum d'Osborne / l'arcade du FCU (forme idiopathique)]
-• [OU une compression extrinsèque par un muscle épitrochléo-anconé accessoire / un kyste arthro-synovial]
+• [une compression sous le rétinaculum du tunnel cubital (gouttière) / sous l'arcade d'Osborne (entrée du tunnel), forme idiopathique]
+• [OU une compression extrinsèque par un muscle anconé épitrochléen accessoire / un kyste arthro-synovial]
 • [OU une névrite de friction sur luxation dynamique antérieure complète du nerf en flexion (type D)]
 [Absence / Présence] de signes échographiques de dénervation musculaire en aval.` },
   { k: 'conclusionguyon', alias: ['guyonnormalconclusion'], organ: 'Nerf ulnaire (Guyon)', mod: 'Écho', type: 'conclusion', label: 'Conclusion : loge de Guyon normale',
     text: `Exploration échographique et Doppler normale de la loge de Guyon [droite / gauche]. Intégrité du tronc du nerf ulnaire et de ses branches de division, sans syndrome de masse ni anomalie de l'artère ulnaire.` },
   { k: 'conclusionsyndromeguyon', alias: ['syndromeguyon'], organ: 'Nerf ulnaire (Guyon)', mod: 'Écho', type: 'conclusion', label: 'Conclusion : syndrome du canal de Guyon (causes à choisir)',
-    text: `Syndrome du canal de Guyon [droit / gauche] en zone [I / II / III] de Shea et McClain, secondaire à :
+    text: `Syndrome du canal de Guyon [droit / gauche] en zone [I / II / III] de Gross et Gelberman, secondaire à :
 • [une compression extrinsèque par un kyste arthro-synovial d'origine piso-triquétrale de X mm]
 • [OU une thrombose anévrysmale de l'artère ulnaire dans le cadre d'un syndrome du marteau hypothénar]
 • [OU un conflit mécanique sur fracture / pseudarthrose de l'hamulus de l'hamatum (à confirmer par un scanner du carpe en coupes fines)]
