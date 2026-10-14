@@ -12,3 +12,7 @@ verify_jwt = false
 
 [functions.rp-agent]
 verify_jwt = true
+
+# Assistant IA de rédaction : utilisateurs connectés, e-mails de IA_EMAILS
+[functions.cr-ia]
+verify_jwt = true
