@@ -1,0 +1,40 @@
+Modèles 3D — fiche « Échographie du coude » — coude droit
+==========================================================
+
+Licence : Creative Commons Attribution – Partage dans les mêmes conditions 4.0 International (CC BY-SA 4.0)
+Résumé : https://creativecommons.org/licenses/by-sa/4.0/deed.fr
+Texte juridique : https://creativecommons.org/licenses/by-sa/4.0/legalcode.fr
+
+Cette licence s'applique UNIQUEMENT aux fichiers de ce dossier (*.glb et manifest.json).
+Le reste du site RadiologicHub (textes, schémas, images, code) n'est pas concerné.
+
+Attribution
+-----------
+- « Z-Anatomy – The libre 3D atlas of anatomy » — Gauthier Kervyn (design, 3D, anatomie),
+  Marcin Zielinski (module Blender) — CC BY-SA 4.0
+  https://github.com/Z-Anatomy/Models-of-human-anatomy (version 2b6cf98a8ca012571ecb252e5c077b42a21b3b61)
+- lui-même dérivé de « BodyParts3D » — The Database Center for Life Science (DBCLS), Kousaku Okubo —
+  CC BY-SA 2.1 Japon
+  https://dbarchive.biosciencedbc.jp/en/bodyparts3d/download.html
+
+Aucun objet ne provient des parties du pack sous licence non commerciale (oreille interne, rein).
+
+Modifications apportées par RadiologicHub (octobre 2026)
+--------------------------------------------------------
+- extraction de 41 structures du coude droit, en position anatomique (liste et détail par fichier :
+  manifest.json) ; chefs d'un même muscle réunis en un fichier (biceps brachial, triceps brachial,
+  rond pronateur, fléchisseur superficiel des doigts, fléchisseur ulnaire du carpe, extenseur ulnaire
+  du carpe) ;
+- toutes les structures coupées 12 cm au-dessus et 12 cm au-dessous de l'interligne du coude
+  (point le plus bas de l'humérus), sections refermées ;
+- nerfs calés sur des diamètres d'affichage approximatifs (ulnaire 3 mm au niveau des épicondyles,
+  médian 3,5 mm au pli du coude, radial 3 mm 2 cm au-dessus des épicondyles, branches profonde 2 mm
+  et superficielle 1,5 mm du nerf radial au col du radius) ; artères et veines à l'épaisseur du pack ;
+- simplification des maillages (décimation), matériaux simplifiés (muscle, tendon, os, cartilage,
+  ligament, capsule, bourse, nerf, artère, veine), recentrage commun à tous les fichiers ;
+- conversion en glTF binaire (.glb) et compression meshopt.
+Script de production : scripts/export_muscles.py (groupe « coude »),
+dépôt https://github.com/nodbysmilii-prog/radiologic-hub
+
+Ces modèles sont des représentations pédagogiques approximatives, fournies sans garantie,
+non destinées à un usage diagnostique.

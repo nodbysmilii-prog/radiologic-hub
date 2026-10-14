@@ -3,6 +3,7 @@
    ---------------------------------------------------------
    • CR_TEMPLATES : comptes rendus types (bibliothèque de gauche) —
                     uniquement les formules fournies par le service
+                    et par l'auteur des cours (nerf ulnaire)
    • CR_PHRASES   : phrases automatiques (mot-clé → description)
 
    Les éléments à compléter s'écrivent entre crochets : [x] mm,
@@ -1183,6 +1184,112 @@ AU TOTAL :
 [conclusion]`,
   },
   {
+    id: 'echo-ulnaire-coude', spe: 'osteo', mod: 'Écho',
+    title: 'Échographie du nerf ulnaire au coude — normale',
+    text: `ÉCHOGRAPHIE DU NERF ULNAIRE AU COUDE [DROIT / GAUCHE]
+
+INDICATION :
+Paresthésies du territoire ulnaire de la main [droite / gauche]. Recherche d'un syndrome du tunnel cubital. Corrélation à l'ENMG du [date].
+
+TECHNIQUE :
+Exploration haute fréquence (sonde linéaire [15-18] MHz) du nerf ulnaire au coude dans les plans axial et longitudinal, complétée par un mode Doppler puissance et des manœuvres dynamiques de flexion-extension. Examen comparatif.
+
+RÉSULTATS :
+• Morphologie et biométrie : le nerf ulnaire est suivi de la région brachiale distale (arcade de Struthers) jusqu'à son passage entre les deux chefs du muscle fléchisseur ulnaire du carpe (FCU). Il conserve un calibre régulier, sans encoche ni disparité de calibre en coupe longitudinale. Son architecture fasciculaire est respectée.
+• Surface de section transversale (CSA) : [6] mm² dans la gouttière épitrochléo-olécrânienne (normale inférieure à 9-10 mm²), contre [6] mm² au tiers distal du bras (ratio de gonflement normal à [1,0]).
+• Doppler : absence d'hyperhémie intraneurale ou épineurale en mode Doppler puissance.
+• Contenant ostéo-fibreux et variantes : finesse normale du rétinaculum du tunnel cubital et de l'arcade d'Osborne. Absence de muscle anconé épitrochléen accessoire. Pas d'épanchement ni de kyste arthro-synovial du récessus postéro-médial huméro-ulnaire. Régularité des corticales osseuses de la gouttière.
+• Étude dynamique : en flexion complète du coude, le nerf ulnaire demeure stable au fond de la gouttière épitrochléo-olécrânienne, sans subluxation sur l'épicondyle médial ni ressaut du chef médial du triceps brachial (type N d'Okamoto).
+• Trophicité musculaire : trophicité et échostructure normales du FCU et des muscles intrinsèques ulnaires de la main (premier interosseux dorsal et loge hypothénar).
+
+CONCLUSION :
+Examen échographique statique et dynamique normal du nerf ulnaire au coude [droit / gauche], sans argument pour un syndrome canalaire ni instabilité nerveuse.`,
+  },
+  {
+    id: 'echo-ulnaire-coude-patho', spe: 'osteo', mod: 'Écho',
+    title: 'Échographie du nerf ulnaire au coude — trame pathologique modulaire',
+    text: `ÉCHOGRAPHIE DU NERF ULNAIRE AU COUDE [DROIT / GAUCHE]
+
+INDICATION :
+Syndrome canalaire ulnaire au coude [droit / gauche] documenté à l'ENMG. Bilan étiologique et recherche d'instabilité avant prise en charge.
+
+TECHNIQUE :
+Exploration haute fréquence (sonde linéaire [15-18] MHz) dans les plans axial et longitudinal, mode Doppler puissance et manœuvres dynamiques de flexion-extension, comparativement au côté controlatéral.
+
+RÉSULTATS :
+• Morphologie et biométrie : souffrance focale du nerf ulnaire au niveau du tunnel cubital. En coupe axiale, le nerf est nettement épaissi, hypoéchogène et dédifférencié (perte de l'architecture fasciculaire).
+• CSA : maximale à [14] mm² [en amont immédiat du rétinaculum du tunnel cubital / au sommet de l'épicondyle médial / en amont immédiat de l'arcade d'Osborne], contre [6] mm² au bras (ratio de gonflement pathologique à [2,3]) et [7] mm² du côté controlatéral asymptomatique.
+• Coupe longitudinale : aspect en sablier avec encoche focale sous [le rétinaculum du tunnel cubital épaissi (gouttière) / l'arcade d'Osborne (entrée du tunnel)] et renflement fusiforme d'amont sur [25] mm.
+• Doppler : hyperhémie intraneurale [discrète / franche] au Doppler puissance au site de souffrance maximale, témoignant d'une névrite active.
+• Bilan étiologique local (choisir) :
+  – Option 1, forme idiopathique : compression [sous le rétinaculum du tunnel cubital (gouttière) / sous l'arcade d'Osborne (entrée du tunnel)], sans masse intrinsèque ou extrinsèque ni variante musculaire.
+  – Option 2, muscle accessoire : muscle anconé épitrochléen accessoire charnu de [X] mm d'épaisseur, coiffant la gouttière et réduisant l'espace disponible pour le nerf en flexion et lors de sa contraction.
+  – Option 3, cause articulaire / extrinsèque : [kyste arthro-synovial de X x Y mm issu du récessus huméro-ulnaire postéro-médial / ostéophyte marginal huméro-ulnaire saillant] refoulant et comprimant le nerf dans la gouttière.
+• Étude dynamique (flexion du coude) :
+  – Si stable : le nerf demeure stable dans sa gouttière lors de la flexion.
+  – Si subluxation (type S) : migration antéro-médiale du nerf qui se perche sur l'apex de l'épicondyle médial à partir de [90]° de flexion.
+  – Si luxation (type D) : luxation antérieure complète et reproductible du nerf, qui franchit la pointe de l'épicondyle médial avec un ressaut palpable et douloureux à [100]° de flexion pour se plaquer à la face superficielle du tendon commun des épicondyliens médiaux, [associée / non associée] à un ressaut secondaire du chef médial du triceps brachial.
+• Retentissement musculaire d'aval :
+  – Absence : trophicité et échogénicité conservées du FCU et des muscles intrinsèques de la main (premier interosseux dorsal).
+  – Présence : signes de dénervation chronique, amyotrophie et hyperéchogénicité diffuse du [chef ulnaire du FCU / premier interosseux dorsal et loge hypothénar] comparativement au côté sain.
+
+CONCLUSION :
+Neuropathie ulnaire au coude [droit / gauche] (CSA maximale à [14] mm² avec hyperhémie intraneurale), secondaire à :
+• [une compression sous le rétinaculum du tunnel cubital (gouttière) / sous l'arcade d'Osborne (entrée du tunnel), forme idiopathique]
+• [OU une compression extrinsèque par un muscle anconé épitrochléen accessoire / un kyste arthro-synovial]
+• [OU une névrite de friction sur luxation dynamique antérieure complète du nerf en flexion (type D)]
+[Absence / Présence] de signes échographiques de dénervation musculaire en aval.`,
+  },
+  {
+    id: 'echo-ulnaire-guyon', spe: 'osteo', mod: 'Écho',
+    title: 'Échographie du nerf ulnaire au poignet (loge de Guyon) — normale',
+    text: `ÉCHOGRAPHIE DU NERF ULNAIRE AU POIGNET [DROIT / GAUCHE] (LOGE DE GUYON)
+
+INDICATION :
+Troubles sensitivo-moteurs du territoire ulnaire distal de la main [droite / gauche]. Exploration de la loge de Guyon.
+
+TECHNIQUE :
+Exploration très haute fréquence (sonde linéaire [18-22] MHz) dans les plans axial et longitudinal, centrée sur le bord médial du poignet et de la paume, complétée par une étude écho-Doppler de l'artère ulnaire.
+
+RÉSULTATS :
+• En amont du canal (tiers distal de l'avant-bras) : tronc du nerf ulnaire d'échostructure et de calibre normaux. Branche cutanée dorsale individualisée à environ 5 cm en amont du pisiforme, de calibre normal.
+• Loge de Guyon (zone I, pisiforme) : tronc du nerf ulnaire ovalaire régulier, architecture fasciculaire préservée. CSA à [4,5] mm² (normale inférieure à 8 mm²), symétrique au côté controlatéral.
+• Division terminale (zones II et III, hamulus) : bifurcation normale. Branche superficielle sensitive et branche profonde motrice (suivie sous l'arcade fibreuse des hypothénariens contre la corticale médiale de l'hamulus) fines, sans épaississement hypoéchogène focal ni perte de continuité.
+• Contenant et rapports vasculo-osseux : absence de masse kystique (notamment en regard de l'interligne piso-triquétral) ou tissulaire intracanalaire ; absence de muscle abducteur du petit doigt accessoire dans le toit du canal ; intégrité corticale du pisiforme et de l'hamulus de l'hamatum ; artère ulnaire de calibre régulier, perméable en Doppler couleur, sans ectasie ni thrombose pariétale.
+• Trophicité musculaire : volume et échostructure normaux des muscles hypothénariens, des interosseux et de l'adducteur du pouce.
+
+CONCLUSION :
+Exploration échographique et Doppler normale de la loge de Guyon [droite / gauche]. Intégrité du tronc du nerf ulnaire et de ses branches de division, sans syndrome de masse ni anomalie de l'artère ulnaire.`,
+  },
+  {
+    id: 'echo-ulnaire-guyon-patho', spe: 'osteo', mod: 'Écho',
+    title: 'Échographie du nerf ulnaire au poignet (loge de Guyon) — trame pathologique modulaire',
+    text: `ÉCHOGRAPHIE DU NERF ULNAIRE AU POIGNET [DROIT / GAUCHE] (LOGE DE GUYON)
+
+INDICATION :
+Déficit [moteur pur des intrinsèques / sensitivo-moteur ulnaire distal] de la main [droite / gauche] avec respect de la sensibilité dorsale. Suspicion de syndrome du canal de Guyon.
+
+TECHNIQUE :
+Exploration très haute fréquence (sonde linéaire [18-22] MHz) de la loge de Guyon dans les plans axial et longitudinal, couplée au Doppler couleur et puissance.
+
+RÉSULTATS :
+• Segment pré-canalaire : aspect normal du tronc du nerf ulnaire au quart distal de l'avant-bras et de sa branche cutanée dorsale.
+• Analyse lésionnelle intracanalaire (choisir le scénario) :
+  – Scénario 1, kyste arthro-synovial (zone I ou II) : formation kystique anéchogène bien limitée, [uniloculée / multiloculée], avasculaire au Doppler, de [12 x 6 x 8] mm, dans la loge de Guyon, avec collet de communication avec l'articulation [piso-triquétrale / médio-carpienne]. Effet de masse direct sur [le tronc du nerf ulnaire en zone I / la branche motrice profonde en zone II contre l'hamulus], laminé au contact du kyste et tuméfié, hypoéchogène et dédifférencié en amont immédiat (CSA [10] mm² contre [4,5] mm² du côté sain).
+  – Scénario 2, syndrome du marteau hypothénar (zone I ou III) : artère ulnaire tortueuse et ectasique en regard de l'hamulus (diamètre [5] mm), siège d'une [thrombose endoluminale occlusive / sub-occlusive] hypoéchogène sur [15] mm, sans signal Doppler couleur interne. Ce segment thrombosé et induré comprime [la branche superficielle sensitive (zone III) / la bifurcation ulnaire], qui présente un épaississement hypoéchogène réactionnel au contact (douleur élective à la sono-palpation).
+  – Scénario 3, fracture de l'hamulus (zone II) : irrégularité et solution de continuité corticale de l'hamulus, entourée d'un remaniement hypoéchogène hyperhémique des tissus mous, très évocatrice d'une fracture [récente / pseudarthrosée] (douleur exquise au passage de la sonde). Au contact, la branche profonde motrice est épaissie ([2,8] mm contre [1,1] mm du côté sain) et hypoéchogène, témoignant d'une neuropathie de contiguïté. Branche superficielle épargnée.
+• Retentissement musculaire intrinsèque :
+  – Absence : trophicité conservée des muscles hypothénariens et interosseux.
+  – Présence : amyotrophie et infiltration hyperéchogène de dénervation touchant [les interosseux et l'adducteur du pouce, avec respect relatif de l'abducteur du 5e doigt (atteinte distale en zone II) / l'ensemble des intrinsèques ulnaires (zone I)].
+
+CONCLUSION :
+Syndrome du canal de Guyon [droit / gauche] en zone [I / II / III] de Gross et Gelberman, secondaire à :
+• [une compression extrinsèque par un kyste arthro-synovial d'origine piso-triquétrale de X mm]
+• [OU une thrombose anévrysmale de l'artère ulnaire dans le cadre d'un syndrome du marteau hypothénar]
+• [OU un conflit mécanique sur fracture / pseudarthrose de l'hamulus de l'hamatum (à confirmer par un scanner du carpe en coupes fines)]
+[Absence / Présence] de signes échographiques de dénervation des muscles intrinsèques de la main.`,
+  },
+  {
     id: 'doppler-tsa', spe: 'vasculaire', mod: 'Écho',
     title: 'Écho-doppler des troncs supra-aortiques — normal',
     text: `ÉCHO-DOPPLER DES TRONCS SUPRA-AORTIQUES
@@ -1472,6 +1579,80 @@ const CR_PHRASES = [
     text: 'Formation [sous-cutanée / intramusculaire] [localisation] de [x] mm, bien limitée, de densité et de signal graisseux homogènes identiques à la graisse sous-cutanée, sans cloison épaisse, composante tissulaire ni rehaussement, en faveur d\'un lipome.' },
   { k: 'fracture', alias: [], organ: 'Squelette', mod: 'Radio / TDM', type: 'aigu', label: 'Fracture',
     text: 'Fracture [non déplacée / déplacée de … mm] [simple / comminutive] de [os, segment], [sans / avec] extension articulaire.' },
+
+  /* ----- Nerf ulnaire : coude et canal de Guyon (échographie) — descriptions des comptes rendus types ----- */
+  { k: 'ulnairenormal', alias: [], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'normal', label: 'Nerf ulnaire au coude : morphologie normale',
+    text: `Morphologie et biométrie : le nerf ulnaire est suivi de la région brachiale distale (arcade de Struthers) jusqu'à son passage entre les deux chefs du muscle fléchisseur ulnaire du carpe (FCU). Il conserve un calibre régulier, sans encoche ni disparité de calibre en coupe longitudinale. Son architecture fasciculaire est respectée.` },
+  { k: 'csaulnairenormale', alias: ['csanormale'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'normal', label: 'Nerf ulnaire au coude : CSA normale',
+    text: `Surface de section transversale (CSA) : [6] mm² dans la gouttière épitrochléo-olécrânienne (normale inférieure à 9-10 mm²), contre [6] mm² au tiers distal du bras (ratio de gonflement normal à [1,0]).` },
+  { k: 'dopplerulnaire', alias: [], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'normal', label: 'Nerf ulnaire : pas d\'hyperhémie au Doppler',
+    text: `Doppler : absence d'hyperhémie intraneurale ou épineurale en mode Doppler puissance.` },
+  { k: 'tunnelcubitalnormal', alias: ['osbornenormal'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'normal', label: 'Tunnel cubital : contenant ostéo-fibreux normal, pas de variante',
+    text: `Contenant ostéo-fibreux et variantes : finesse normale du rétinaculum du tunnel cubital et de l'arcade d'Osborne. Absence de muscle anconé épitrochléen accessoire. Pas d'épanchement ni de kyste arthro-synovial du récessus postéro-médial huméro-ulnaire. Régularité des corticales osseuses de la gouttière.` },
+  { k: 'ulnairestable', alias: ['okamoton', 'typen'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'normal', label: 'Étude dynamique : nerf ulnaire stable (type N d\'Okamoto)',
+    text: `Étude dynamique : en flexion complète du coude, le nerf ulnaire demeure stable au fond de la gouttière épitrochléo-olécrânienne, sans subluxation sur l'épicondyle médial ni ressaut du chef médial du triceps brachial (type N d'Okamoto).` },
+  { k: 'trophiciteulnaire', alias: [], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'normal', label: 'Trophicité normale du FCU et des muscles intrinsèques ulnaires',
+    text: `Trophicité musculaire : trophicité et échostructure normales du FCU et des muscles intrinsèques ulnaires de la main (premier interosseux dorsal et loge hypothénar).` },
+  { k: 'pasdenervationulnaire', alias: [], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'normal', label: 'Pas de retentissement musculaire d\'aval (coude)',
+    text: `Retentissement musculaire d'aval : trophicité et échogénicité conservées du FCU et des muscles intrinsèques de la main (premier interosseux dorsal).` },
+  { k: 'ulnaireepaissi', alias: ['neuropathieulnairecoude'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'lesion', label: 'Nerf ulnaire au coude : souffrance focale (épaissi, hypoéchogène, dédifférencié)',
+    text: `Morphologie et biométrie : souffrance focale du nerf ulnaire au niveau du tunnel cubital. En coupe axiale, le nerf est nettement épaissi, hypoéchogène et dédifférencié (perte de l'architecture fasciculaire).` },
+  { k: 'csaulnaire', alias: ['csaaugmentee'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'lesion', label: 'Nerf ulnaire au coude : CSA augmentée (ratio de gonflement)',
+    text: `CSA : maximale à [14] mm² [en amont immédiat du rétinaculum du tunnel cubital / au sommet de l'épicondyle médial / en amont immédiat de l'arcade d'Osborne], contre [6] mm² au bras (ratio de gonflement pathologique à [2,3]) et [7] mm² du côté controlatéral asymptomatique.` },
+  { k: 'sablier', alias: ['encoche', 'notch'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'lesion', label: 'Aspect en sablier : encoche focale et renflement d\'amont',
+    text: `Coupe longitudinale : aspect en sablier avec encoche focale sous [le rétinaculum du tunnel cubital épaissi (gouttière) / l'arcade d'Osborne (entrée du tunnel)] et renflement fusiforme d'amont sur [25] mm.` },
+  { k: 'hyperhemieulnaire', alias: [], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'lesion', label: 'Hyperhémie intraneurale au Doppler (névrite active)',
+    text: `Doppler : hyperhémie intraneurale [discrète / franche] au Doppler puissance au site de souffrance maximale, témoignant d'une névrite active.` },
+  { k: 'osborne', alias: ['tunnelcubital'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'lesion', label: 'Forme idiopathique : rétinaculum du tunnel cubital ou arcade d\'Osborne',
+    text: `Bilan étiologique local : compression [sous le rétinaculum du tunnel cubital (gouttière) / sous l'arcade d'Osborne (entrée du tunnel)], sans masse intrinsèque ou extrinsèque ni variante musculaire.` },
+  { k: 'anconeepitrochleen', alias: ['epitrochleoancone'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'lesion', label: 'Muscle anconé épitrochléen accessoire',
+    text: `Bilan étiologique local : muscle anconé épitrochléen accessoire charnu de [X] mm d'épaisseur, coiffant la gouttière et réduisant l'espace disponible pour le nerf en flexion et lors de sa contraction.` },
+  { k: 'kystecoude', alias: ['osteophytecoude'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'lesion', label: 'Cause articulaire / extrinsèque au coude (kyste, ostéophyte)',
+    text: `Bilan étiologique local : [kyste arthro-synovial de X x Y mm issu du récessus huméro-ulnaire postéro-médial / ostéophyte marginal huméro-ulnaire saillant] refoulant et comprimant le nerf dans la gouttière.` },
+  { k: 'subluxationulnaire', alias: ['okamotos', 'types'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'lesion', label: 'Subluxation du nerf ulnaire en flexion (type S)',
+    text: `Étude dynamique (flexion du coude) : migration antéro-médiale du nerf qui se perche sur l'apex de l'épicondyle médial à partir de [90]° de flexion.` },
+  { k: 'luxationulnaire', alias: ['okamotod', 'typed'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'lesion', label: 'Luxation du nerf ulnaire en flexion (type D)',
+    text: `Étude dynamique (flexion du coude) : luxation antérieure complète et reproductible du nerf, qui franchit la pointe de l'épicondyle médial avec un ressaut palpable et douloureux à [100]° de flexion pour se plaquer à la face superficielle du tendon commun des épicondyliens médiaux, [associée / non associée] à un ressaut secondaire du chef médial du triceps brachial.` },
+  { k: 'denervationulnaire', alias: [], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'lesion', label: 'Dénervation musculaire d\'aval (coude)',
+    text: `Retentissement musculaire d'aval : signes de dénervation chronique, amyotrophie et hyperéchogénicité diffuse du [chef ulnaire du FCU / premier interosseux dorsal et loge hypothénar] comparativement au côté sain.` },
+  { k: 'guyonamont', alias: [], organ: 'Nerf ulnaire (Guyon)', mod: 'Écho', type: 'normal', label: 'Nerf ulnaire en amont du canal de Guyon : normal',
+    text: `En amont du canal (tiers distal de l'avant-bras) : tronc du nerf ulnaire d'échostructure et de calibre normaux. Branche cutanée dorsale individualisée à environ 5 cm en amont du pisiforme, de calibre normal.` },
+  { k: 'guyonnormal', alias: ['guyon'], organ: 'Nerf ulnaire (Guyon)', mod: 'Écho', type: 'normal', label: 'Loge de Guyon (zone I) : nerf ulnaire normal',
+    text: `Loge de Guyon (zone I, pisiforme) : tronc du nerf ulnaire ovalaire régulier, architecture fasciculaire préservée. CSA à [4,5] mm² (normale inférieure à 8 mm²), symétrique au côté controlatéral.` },
+  { k: 'guyondivision', alias: [], organ: 'Nerf ulnaire (Guyon)', mod: 'Écho', type: 'normal', label: 'Division terminale normale du nerf ulnaire (zones II et III)',
+    text: `Division terminale (zones II et III, hamulus) : bifurcation normale. Branche superficielle sensitive et branche profonde motrice (suivie sous l'arcade fibreuse des hypothénariens contre la corticale médiale de l'hamulus) fines, sans épaississement hypoéchogène focal ni perte de continuité.` },
+  { k: 'guyoncontenant', alias: [], organ: 'Nerf ulnaire (Guyon)', mod: 'Écho', type: 'normal', label: 'Loge de Guyon : contenant et rapports vasculo-osseux normaux',
+    text: `Contenant et rapports vasculo-osseux : absence de masse kystique (notamment en regard de l'interligne piso-triquétral) ou tissulaire intracanalaire ; absence de muscle abducteur du petit doigt accessoire dans le toit du canal ; intégrité corticale du pisiforme et de l'hamulus de l'hamatum ; artère ulnaire de calibre régulier, perméable en Doppler couleur, sans ectasie ni thrombose pariétale.` },
+  { k: 'trophiciteintrinseques', alias: [], organ: 'Nerf ulnaire (Guyon)', mod: 'Écho', type: 'normal', label: 'Trophicité normale des muscles hypothénariens et interosseux',
+    text: `Trophicité musculaire : volume et échostructure normaux des muscles hypothénariens, des interosseux et de l'adducteur du pouce.` },
+  { k: 'precanalaire', alias: [], organ: 'Nerf ulnaire (Guyon)', mod: 'Écho', type: 'normal', label: 'Segment pré-canalaire du nerf ulnaire normal',
+    text: `Segment pré-canalaire : aspect normal du tronc du nerf ulnaire au quart distal de l'avant-bras et de sa branche cutanée dorsale.` },
+  { k: 'pasdenervationintrinseques', alias: [], organ: 'Nerf ulnaire (Guyon)', mod: 'Écho', type: 'normal', label: 'Pas de retentissement sur les muscles intrinsèques',
+    text: `Retentissement musculaire intrinsèque : trophicité conservée des muscles hypothénariens et interosseux.` },
+  { k: 'kysteguyon', alias: [], organ: 'Nerf ulnaire (Guyon)', mod: 'Écho', type: 'lesion', label: 'Kyste arthro-synovial de la loge de Guyon',
+    text: `Analyse lésionnelle intracanalaire : formation kystique anéchogène bien limitée, [uniloculée / multiloculée], avasculaire au Doppler, de [12 x 6 x 8] mm, dans la loge de Guyon, avec collet de communication avec l'articulation [piso-triquétrale / médio-carpienne]. Effet de masse direct sur [le tronc du nerf ulnaire en zone I / la branche motrice profonde en zone II contre l'hamulus], laminé au contact du kyste et tuméfié, hypoéchogène et dédifférencié en amont immédiat (CSA [10] mm² contre [4,5] mm² du côté sain).` },
+  { k: 'marteauhypothenar', alias: ['hypothenarhammer'], organ: 'Nerf ulnaire (Guyon)', mod: 'Écho', type: 'lesion', label: 'Syndrome du marteau hypothénar (thrombose de l\'artère ulnaire)',
+    text: `Analyse lésionnelle intracanalaire : artère ulnaire tortueuse et ectasique en regard de l'hamulus (diamètre [5] mm), siège d'une [thrombose endoluminale occlusive / sub-occlusive] hypoéchogène sur [15] mm, sans signal Doppler couleur interne. Ce segment thrombosé et induré comprime [la branche superficielle sensitive (zone III) / la bifurcation ulnaire], qui présente un épaississement hypoéchogène réactionnel au contact (douleur élective à la sono-palpation).` },
+  { k: 'fracturehamulus', alias: ['hamulus'], organ: 'Nerf ulnaire (Guyon)', mod: 'Écho', type: 'lesion', label: 'Fracture de l\'hamulus de l\'hamatum avec neuropathie de contiguïté',
+    text: `Analyse lésionnelle intracanalaire : irrégularité et solution de continuité corticale de l'hamulus, entourée d'un remaniement hypoéchogène hyperhémique des tissus mous, très évocatrice d'une fracture [récente / pseudarthrosée] (douleur exquise au passage de la sonde). Au contact, la branche profonde motrice est épaissie ([2,8] mm contre [1,1] mm du côté sain) et hypoéchogène, témoignant d'une neuropathie de contiguïté. Branche superficielle épargnée.` },
+  { k: 'denervationintrinseques', alias: [], organ: 'Nerf ulnaire (Guyon)', mod: 'Écho', type: 'lesion', label: 'Dénervation des muscles intrinsèques de la main',
+    text: `Retentissement musculaire intrinsèque : amyotrophie et infiltration hyperéchogène de dénervation touchant [les interosseux et l'adducteur du pouce, avec respect relatif de l'abducteur du 5e doigt (atteinte distale en zone II) / l'ensemble des intrinsèques ulnaires (zone I)].` },
+  { k: 'conclusionulnairecoude', alias: ['ulnairecoudenormal'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'conclusion', label: 'Conclusion : nerf ulnaire au coude normal',
+    text: `Examen échographique statique et dynamique normal du nerf ulnaire au coude [droit / gauche], sans argument pour un syndrome canalaire ni instabilité nerveuse.` },
+  { k: 'conclusionneuropathieulnaire', alias: ['neuropathieulnaire'], organ: 'Nerf ulnaire (coude)', mod: 'Écho', type: 'conclusion', label: 'Conclusion : neuropathie ulnaire au coude (causes à choisir)',
+    text: `Neuropathie ulnaire au coude [droit / gauche] (CSA maximale à [14] mm² avec hyperhémie intraneurale), secondaire à :
+• [une compression sous le rétinaculum du tunnel cubital (gouttière) / sous l'arcade d'Osborne (entrée du tunnel), forme idiopathique]
+• [OU une compression extrinsèque par un muscle anconé épitrochléen accessoire / un kyste arthro-synovial]
+• [OU une névrite de friction sur luxation dynamique antérieure complète du nerf en flexion (type D)]
+[Absence / Présence] de signes échographiques de dénervation musculaire en aval.` },
+  { k: 'conclusionguyon', alias: ['guyonnormalconclusion'], organ: 'Nerf ulnaire (Guyon)', mod: 'Écho', type: 'conclusion', label: 'Conclusion : loge de Guyon normale',
+    text: `Exploration échographique et Doppler normale de la loge de Guyon [droite / gauche]. Intégrité du tronc du nerf ulnaire et de ses branches de division, sans syndrome de masse ni anomalie de l'artère ulnaire.` },
+  { k: 'conclusionsyndromeguyon', alias: ['syndromeguyon'], organ: 'Nerf ulnaire (Guyon)', mod: 'Écho', type: 'conclusion', label: 'Conclusion : syndrome du canal de Guyon (causes à choisir)',
+    text: `Syndrome du canal de Guyon [droit / gauche] en zone [I / II / III] de Gross et Gelberman, secondaire à :
+• [une compression extrinsèque par un kyste arthro-synovial d'origine piso-triquétrale de X mm]
+• [OU une thrombose anévrysmale de l'artère ulnaire dans le cadre d'un syndrome du marteau hypothénar]
+• [OU un conflit mécanique sur fracture / pseudarthrose de l'hamulus de l'hamatum (à confirmer par un scanner du carpe en coupes fines)]
+[Absence / Présence] de signes échographiques de dénervation des muscles intrinsèques de la main.` },
 
   /* ----- Conclusions et formules ----- */
   { k: 'conclusionnormale', alias: [], organ: 'Formules', mod: 'Tous', type: 'conclusion', label: 'Conclusion : examen normal',

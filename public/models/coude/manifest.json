@@ -1,0 +1,773 @@
+{
+ "groupe": "coude",
+ "cote": "droit",
+ "unite": "mètre",
+ "axes": "glTF : +Y vers le haut, +Z vers l'avant du patient, -X vers le côté latéral (membre droit)",
+ "centre_source": [
+  -0.22271,
+  0.03051,
+  1.08703
+ ],
+ "position": "anatomique : coude en extension, avant-bras en supination",
+ "coupes": "12 cm au-dessus et au-dessous de l'interligne du coude",
+ "reperes": {
+  "interligne_y": 0.0,
+  "epicondyle_lateral": [
+   -0.02612,
+   0.02578,
+   -0.01279
+  ],
+  "epicondyle_medial": [
+   0.03921,
+   0.01997,
+   -0.00505
+  ],
+  "olecrane": [
+   0.00978,
+   0.02399,
+   -0.01703
+  ],
+  "coupe_proximale_y": 0.12,
+  "coupe_distale_y": -0.12
+ },
+ "source": {
+  "nom": "Z-Anatomy",
+  "depot": "https://github.com/Z-Anatomy/Models-of-human-anatomy",
+  "commit": "2b6cf98a8ca012571ecb252e5c077b42a21b3b61",
+  "licence": "CC BY-SA 4.0",
+  "origine": "BodyParts3D, The Database Center for Life Science (CC BY-SA 2.1 Japon)"
+ },
+ "licence": "CC BY-SA 4.0",
+ "compression": "EXT_meshopt_compression (gltf-transform meshopt)",
+ "total_octets": 523196,
+ "modeles": [
+  {
+   "id": "humerus-distal",
+   "fichier": "humerus-distal.glb",
+   "nom": "Humérus (partie distale)",
+   "categorie": "os",
+   "source": "Humerus.r",
+   "materiaux": [
+    "os",
+    "cartilage"
+   ],
+   "triangles": 2014,
+   "octets": 18036,
+   "version": "8d96da0f8d01",
+   "modifications": [
+    "coupé 12 cm au-dessus de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "radius-proximal",
+   "fichier": "radius-proximal.glb",
+   "nom": "Radius (partie proximale)",
+   "categorie": "os",
+   "source": "Radius.r",
+   "materiaux": [
+    "os",
+    "cartilage"
+   ],
+   "triangles": 404,
+   "octets": 6304,
+   "version": "e389df0aa132",
+   "modifications": [
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "ulna-proximale",
+   "fichier": "ulna-proximale.glb",
+   "nom": "Ulna (partie proximale)",
+   "categorie": "os",
+   "source": "Ulna.r",
+   "materiaux": [
+    "os",
+    "cartilage"
+   ],
+   "triangles": 660,
+   "octets": 8336,
+   "version": "4ed4ad938d3a",
+   "modifications": [
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "biceps-brachial",
+   "fichier": "biceps-brachial.glb",
+   "nom": "Biceps brachial",
+   "categorie": "muscle",
+   "loge": "anterieure",
+   "source": "Long head of biceps brachii.r + Short head of biceps brachii.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 2888,
+   "octets": 27456,
+   "version": "c0d7678b7735",
+   "modifications": [
+    "2 objets du pack réunis",
+    "coupé 12 cm au-dessus de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "brachial",
+   "fichier": "brachial.glb",
+   "nom": "Brachial",
+   "categorie": "muscle",
+   "loge": "anterieure",
+   "source": "Brachialis muscle.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 2854,
+   "octets": 25600,
+   "version": "02650ce252f6",
+   "modifications": [
+    "coupé 12 cm au-dessus de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "brachio-radial",
+   "fichier": "brachio-radial.glb",
+   "nom": "Brachio-radial",
+   "categorie": "muscle",
+   "loge": "laterale",
+   "source": "Brachioradialis muscle.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 3000,
+   "octets": 27020,
+   "version": "f60e630f007e",
+   "modifications": [
+    "coupé 12 cm au-dessus de l'interligne du coude, section refermée",
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée",
+    "simplifié de 6156 à 3000 triangles (51 %)"
+   ]
+  },
+  {
+   "id": "long-extenseur-radial-carpe",
+   "fichier": "long-extenseur-radial-carpe.glb",
+   "nom": "Long extenseur radial du carpe",
+   "categorie": "muscle",
+   "loge": "laterale",
+   "source": "Extensor carpi radialis longus.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 2500,
+   "octets": 21116,
+   "version": "ec4654c6c221",
+   "modifications": [
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée",
+    "simplifié de 2814 à 2500 triangles (11 %)"
+   ]
+  },
+  {
+   "id": "court-extenseur-radial-carpe",
+   "fichier": "court-extenseur-radial-carpe.glb",
+   "nom": "Court extenseur radial du carpe",
+   "categorie": "muscle",
+   "loge": "laterale",
+   "source": "Extensor carpi radialis brevis.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 2166,
+   "octets": 19992,
+   "version": "f5255458063d",
+   "modifications": [
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "extenseur-doigts",
+   "fichier": "extenseur-doigts.glb",
+   "nom": "Extenseur des doigts",
+   "categorie": "muscle",
+   "loge": "laterale",
+   "source": "Extensor digitorum.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 1824,
+   "octets": 16924,
+   "version": "47009e863126",
+   "modifications": [
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "extenseur-petit-doigt",
+   "fichier": "extenseur-petit-doigt.glb",
+   "nom": "Extenseur du petit doigt",
+   "categorie": "muscle",
+   "loge": "laterale",
+   "source": "Extensor digiti minimi.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 1002,
+   "octets": 10836,
+   "version": "c0e5166715a4",
+   "modifications": [
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "extenseur-ulnaire-carpe",
+   "fichier": "extenseur-ulnaire-carpe.glb",
+   "nom": "Extenseur ulnaire du carpe",
+   "categorie": "muscle",
+   "loge": "laterale",
+   "source": "Humeral head of extensor carpi ulnaris.r + Ulnar head of extensor carpi ulnaris.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 844,
+   "octets": 9012,
+   "version": "43d56775f579",
+   "modifications": [
+    "2 objets du pack réunis",
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "supinateur",
+   "fichier": "supinateur.glb",
+   "nom": "Supinateur",
+   "categorie": "muscle",
+   "loge": "laterale",
+   "source": "Supinator.r",
+   "materiaux": [
+    "muscle"
+   ],
+   "triangles": 2500,
+   "octets": 22148,
+   "version": "3bf0289bbe2e",
+   "modifications": [
+    "simplifié de 2754 à 2500 triangles (9 %)"
+   ]
+  },
+  {
+   "id": "rond-pronateur",
+   "fichier": "rond-pronateur.glb",
+   "nom": "Rond pronateur",
+   "categorie": "muscle",
+   "loge": "mediale",
+   "source": "Superficial head of pronator teres.r + Deep head of pronator teres.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 3000,
+   "octets": 27236,
+   "version": "a67c93e62dab",
+   "modifications": [
+    "2 objets du pack réunis",
+    "simplifié de 3660 à 3000 triangles (18 %)"
+   ]
+  },
+  {
+   "id": "flechisseur-radial-carpe",
+   "fichier": "flechisseur-radial-carpe.glb",
+   "nom": "Fléchisseur radial du carpe",
+   "categorie": "muscle",
+   "loge": "mediale",
+   "source": "Flexor carpi radialis.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 1230,
+   "octets": 12968,
+   "version": "fe24e4617f19",
+   "modifications": [
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "long-palmaire",
+   "fichier": "long-palmaire.glb",
+   "nom": "Long palmaire",
+   "categorie": "muscle",
+   "loge": "mediale",
+   "source": "Palmaris longus muscle.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 1488,
+   "octets": 15652,
+   "version": "3e92120ee5b0",
+   "modifications": [
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "flechisseur-superficiel-doigts",
+   "fichier": "flechisseur-superficiel-doigts.glb",
+   "nom": "Fléchisseur superficiel des doigts",
+   "categorie": "muscle",
+   "loge": "mediale",
+   "source": "Humero-ulnar head of flexor digitorum superficialis.r + Radial head of flexor digitorum superficialis.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 3500,
+   "octets": 31396,
+   "version": "caa6ce3849b7",
+   "modifications": [
+    "2 objets du pack réunis",
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée",
+    "simplifié de 6360 à 3500 triangles (45 %)"
+   ]
+  },
+  {
+   "id": "flechisseur-ulnaire-carpe",
+   "fichier": "flechisseur-ulnaire-carpe.glb",
+   "nom": "Fléchisseur ulnaire du carpe",
+   "categorie": "muscle",
+   "loge": "mediale",
+   "source": "Humeral head of flexor carpi ulnaris.r + Ulnar head of flexor carpi ulnaris.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 3000,
+   "octets": 27288,
+   "version": "80f83fac8753",
+   "modifications": [
+    "2 objets du pack réunis",
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée",
+    "simplifié de 3648 à 3000 triangles (18 %)"
+   ]
+  },
+  {
+   "id": "flechisseur-profond-doigts",
+   "fichier": "flechisseur-profond-doigts.glb",
+   "nom": "Fléchisseur profond des doigts",
+   "categorie": "contexte",
+   "loge": "mediale",
+   "source": "Flexor digitorum profundus.r",
+   "materiaux": [
+    "contexte",
+    "tendon"
+   ],
+   "triangles": 2000,
+   "octets": 19644,
+   "version": "879a17f48deb",
+   "modifications": [
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée",
+    "simplifié de 2172 à 2000 triangles (8 %)"
+   ]
+  },
+  {
+   "id": "triceps-brachial",
+   "fichier": "triceps-brachial.glb",
+   "nom": "Triceps brachial",
+   "categorie": "muscle",
+   "loge": "posterieure",
+   "source": "Long head of triceps brachii.r + Lateral head of triceps brachii.r + Medial head of triceps brachii.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 4500,
+   "octets": 39224,
+   "version": "4164a0592054",
+   "modifications": [
+    "3 objets du pack réunis",
+    "coupé 12 cm au-dessus de l'interligne du coude, section refermée",
+    "simplifié de 5522 à 4500 triangles (19 %)"
+   ]
+  },
+  {
+   "id": "ancone",
+   "fichier": "ancone.glb",
+   "nom": "Anconé",
+   "categorie": "muscle",
+   "loge": "posterieure",
+   "source": "Anconeus muscle.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 1442,
+   "octets": 16616,
+   "version": "6a6d57401905",
+   "modifications": []
+  },
+  {
+   "id": "ligament-collateral-ulnaire",
+   "fichier": "ligament-collateral-ulnaire.glb",
+   "nom": "Ligament collatéral ulnaire (médial)",
+   "categorie": "ligament",
+   "loge": "mediale",
+   "source": "Ulnar collateral ligament.r",
+   "materiaux": [
+    "ligament"
+   ],
+   "triangles": 152,
+   "octets": 3936,
+   "version": "73bf13434752",
+   "modifications": []
+  },
+  {
+   "id": "ligament-collateral-radial",
+   "fichier": "ligament-collateral-radial.glb",
+   "nom": "Ligament collatéral radial (latéral)",
+   "categorie": "ligament",
+   "loge": "laterale",
+   "source": "Radial collateral ligament.r",
+   "materiaux": [
+    "ligament"
+   ],
+   "triangles": 96,
+   "octets": 3104,
+   "version": "b5349faab82e",
+   "modifications": []
+  },
+  {
+   "id": "ligament-annulaire",
+   "fichier": "ligament-annulaire.glb",
+   "nom": "Ligament annulaire du radius",
+   "categorie": "ligament",
+   "loge": "laterale",
+   "source": "Annular ligament of radius.r",
+   "materiaux": [
+    "ligament"
+   ],
+   "triangles": 376,
+   "octets": 5744,
+   "version": "c5145fa56cbe",
+   "modifications": []
+  },
+  {
+   "id": "capsule-articulaire",
+   "fichier": "capsule-articulaire.glb",
+   "nom": "Capsule articulaire du coude",
+   "categorie": "capsule",
+   "source": "Articular capsule of elbow joint.r",
+   "materiaux": [
+    "capsule"
+   ],
+   "triangles": 1728,
+   "octets": 16716,
+   "version": "36336d80fda2",
+   "modifications": []
+  },
+  {
+   "id": "bourse-bicipito-radiale",
+   "fichier": "bourse-bicipito-radiale.glb",
+   "nom": "Bourse bicipito-radiale",
+   "categorie": "bourse",
+   "loge": "anterieure",
+   "source": "Bicipitoradial bursa.r",
+   "materiaux": [
+    "bourse"
+   ],
+   "triangles": 1472,
+   "octets": 11976,
+   "version": "76576600e7be",
+   "modifications": []
+  },
+  {
+   "id": "bourse-tricipitale",
+   "fichier": "bourse-tricipitale.glb",
+   "nom": "Bourse sous-tendineuse du triceps",
+   "categorie": "bourse",
+   "loge": "posterieure",
+   "source": "Subtendinous bursa of triceps brachii muscle.r",
+   "materiaux": [
+    "bourse"
+   ],
+   "triangles": 1472,
+   "octets": 12416,
+   "version": "a61526e0eb53",
+   "modifications": []
+  },
+  {
+   "id": "nerf-ulnaire",
+   "fichier": "nerf-ulnaire.glb",
+   "nom": "Nerf ulnaire",
+   "categorie": "nerf",
+   "loge": "mediale",
+   "source": "Ulnar nerve.r",
+   "materiaux": [
+    "nerf"
+   ],
+   "triangles": 284,
+   "octets": 3876,
+   "version": "373243fa052e",
+   "modifications": [
+    "diamètre d'affichage 3 mm au niveau des épicondyles (mesuré : 2.8 mm ; pack : 1 à 2 mm ; section ronde ; approximatif)",
+    "coupé 12 cm au-dessus de l'interligne du coude, section refermée",
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "nerf-median",
+   "fichier": "nerf-median.glb",
+   "nom": "Nerf médian",
+   "categorie": "nerf",
+   "loge": "anterieure",
+   "source": "Median nerve.r",
+   "materiaux": [
+    "nerf"
+   ],
+   "triangles": 684,
+   "octets": 6404,
+   "version": "744e5eeda863",
+   "modifications": [
+    "diamètre d'affichage 3.5 mm au pli du coude (mesuré : 3.3 mm ; pack : 1 à 2 mm ; section ronde ; approximatif)",
+    "coupé 12 cm au-dessus de l'interligne du coude, section refermée",
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "nerf-radial",
+   "fichier": "nerf-radial.glb",
+   "nom": "Nerf radial",
+   "categorie": "nerf",
+   "loge": "laterale",
+   "source": "Radial nerve.r",
+   "materiaux": [
+    "nerf"
+   ],
+   "triangles": 252,
+   "octets": 3760,
+   "version": "53ac2fde357d",
+   "modifications": [
+    "diamètre d'affichage 3 mm 2 cm au-dessus des épicondyles (mesuré : 2.8 mm ; pack : 1 à 2 mm ; section ronde ; approximatif)",
+    "coupé 12 cm au-dessus de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "nerf-radial-profond",
+   "fichier": "nerf-radial-profond.glb",
+   "nom": "Branche profonde du nerf radial (nerf interosseux postérieur)",
+   "categorie": "nerf",
+   "loge": "laterale",
+   "source": "Deep branch of radial nerve.r",
+   "materiaux": [
+    "nerf"
+   ],
+   "triangles": 300,
+   "octets": 4092,
+   "version": "9bff184a6326",
+   "modifications": [
+    "diamètre d'affichage 2 mm au col du radius (mesuré : 1.8 mm ; pack : 0 à 1 mm ; section ronde ; approximatif)",
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "nerf-radial-superficiel",
+   "fichier": "nerf-radial-superficiel.glb",
+   "nom": "Branche superficielle du nerf radial",
+   "categorie": "nerf",
+   "loge": "laterale",
+   "source": "Superficial branch of radial nerve.r",
+   "materiaux": [
+    "nerf"
+   ],
+   "triangles": 268,
+   "octets": 3868,
+   "version": "04d95b683e2c",
+   "modifications": [
+    "diamètre d'affichage 1.5 mm au col du radius (mesuré : 1.4 mm ; pack : 0 à 1 mm ; section ronde ; approximatif)",
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "artere-brachiale",
+   "fichier": "artere-brachiale.glb",
+   "nom": "Artère brachiale",
+   "categorie": "artere",
+   "loge": "anterieure",
+   "source": "Brachial artery.r",
+   "materiaux": [
+    "artere"
+   ],
+   "triangles": 326,
+   "octets": 4308,
+   "version": "48524e3c95f7",
+   "modifications": [
+    "épaisseur du pack (4 à 5 mm de diamètre)",
+    "coupé 12 cm au-dessus de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "artere-radiale",
+   "fichier": "artere-radiale.glb",
+   "nom": "Artère radiale",
+   "categorie": "artere",
+   "loge": "anterieure",
+   "source": "Radial artery.r",
+   "materiaux": [
+    "artere"
+   ],
+   "triangles": 268,
+   "octets": 3896,
+   "version": "3769a6d4dd29",
+   "modifications": [
+    "épaisseur du pack (2 à 4 mm de diamètre)",
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "artere-ulnaire",
+   "fichier": "artere-ulnaire.glb",
+   "nom": "Artère ulnaire",
+   "categorie": "artere",
+   "loge": "anterieure",
+   "source": "Ulnar artery.r",
+   "materiaux": [
+    "artere"
+   ],
+   "triangles": 284,
+   "octets": 3948,
+   "version": "66c06175348a",
+   "modifications": [
+    "épaisseur du pack (3 à 4 mm de diamètre)",
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "artere-collaterale-ulnaire-superieure",
+   "fichier": "artere-collaterale-ulnaire-superieure.glb",
+   "nom": "Artère collatérale ulnaire supérieure",
+   "categorie": "artere",
+   "loge": "mediale",
+   "source": "Superior ulnar collateral artery.r",
+   "materiaux": [
+    "artere"
+   ],
+   "triangles": 396,
+   "octets": 4692,
+   "version": "c62b2a4dca10",
+   "modifications": [
+    "épaisseur du pack (1 à 2 mm de diamètre)"
+   ]
+  },
+  {
+   "id": "veines-brachiales",
+   "fichier": "veines-brachiales.glb",
+   "nom": "Veines brachiales",
+   "categorie": "veine",
+   "loge": "anterieure",
+   "source": "Brachial veins.r",
+   "materiaux": [
+    "veine"
+   ],
+   "triangles": 316,
+   "octets": 4160,
+   "version": "cfca4092db5c",
+   "modifications": [
+    "épaisseur du pack (4 à 6 mm de diamètre)",
+    "coupé 12 cm au-dessus de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "veines-radiales",
+   "fichier": "veines-radiales.glb",
+   "nom": "Veines radiales",
+   "categorie": "veine",
+   "loge": "anterieure",
+   "source": "Radial veins.r",
+   "materiaux": [
+    "veine"
+   ],
+   "triangles": 268,
+   "octets": 3924,
+   "version": "9832a4909a80",
+   "modifications": [
+    "épaisseur du pack (1 à 4 mm de diamètre)",
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "veines-ulnaires",
+   "fichier": "veines-ulnaires.glb",
+   "nom": "Veines ulnaires",
+   "categorie": "veine",
+   "loge": "anterieure",
+   "source": "Ulnar veins.r",
+   "materiaux": [
+    "veine"
+   ],
+   "triangles": 220,
+   "octets": 3552,
+   "version": "4999f5965ada",
+   "modifications": [
+    "épaisseur du pack (1 à 4 mm de diamètre)",
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "veine-cephalique",
+   "fichier": "veine-cephalique.glb",
+   "nom": "Veine céphalique",
+   "categorie": "veine",
+   "loge": "laterale",
+   "source": "Cephalic vein.r",
+   "materiaux": [
+    "veine"
+   ],
+   "triangles": 540,
+   "octets": 5496,
+   "version": "fcf3bc1fc91b",
+   "modifications": [
+    "épaisseur du pack (3 à 5 mm de diamètre)",
+    "coupé 12 cm au-dessus de l'interligne du coude, section refermée",
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "veine-basilique",
+   "fichier": "veine-basilique.glb",
+   "nom": "Veine basilique",
+   "categorie": "veine",
+   "loge": "mediale",
+   "source": "Basilic vein.r",
+   "materiaux": [
+    "veine"
+   ],
+   "triangles": 542,
+   "octets": 5600,
+   "version": "6d710238d732",
+   "modifications": [
+    "épaisseur du pack (3 à 6 mm de diamètre)",
+    "coupé 12 cm au-dessus de l'interligne du coude, section refermée",
+    "coupé 12 cm au-dessous de l'interligne du coude, section refermée"
+   ]
+  },
+  {
+   "id": "veine-mediane-coude",
+   "fichier": "veine-mediane-coude.glb",
+   "nom": "Veine médiane du coude",
+   "categorie": "veine",
+   "loge": "anterieure",
+   "source": "Median cubital vein.r",
+   "materiaux": [
+    "veine"
+   ],
+   "triangles": 408,
+   "octets": 4924,
+   "version": "52e1673b7fda",
+   "modifications": [
+    "épaisseur du pack (3 à 4 mm de diamètre)"
+   ]
+  }
+ ]
+}
