@@ -90,7 +90,7 @@ Elles ne sont pas encore dans le menu, et ne sont pas indexées.
 | **Analyse avant import** | En-têtes lus par dcmjs (`vendor/dcmjs-0.52.0`, MIT), 4 fichiers à la fois, barre de progression. Tableau par examen : patient, date, examen, nombre d'images, taille. **Examen non marqué « identité retirée »** : avertissement, et import bloqué tant qu'on n'a pas confirmé utiliser des fichiers de test ou anonymisés. |
 | **Import** | Par lots de 20 images. Un import interrompu reprend sans doublon : les images déjà gardées sont reconnues. Même chose pour un CD importé deux fois. |
 | **Mes examens** | Liste, recherche (nom, identifiant, examen), suppression, espace utilisé dans le navigateur. |
-| **Visionneuse** | **OHIF 3.13.12** en français : défilement, fenêtrage et préréglages, zoom, mesures, **MPR** (bouton « Disposition »). Sur téléphone, le panneau des études est replié et la barre d'outils allégée. **Couleurs du site** (`visionneuse/theme-radiologichub.css`) : cadre bleu marine, outil actif et image sélectionnée en ambre ; images sur fond noir. |
+| **Visionneuse** | **OHIF 3.13.12** en français : défilement, fenêtrage et préréglages, zoom, mesures, **MPR** (bouton « Disposition »). Sur téléphone, le panneau des études est replié et la barre d'outils allégée. **Charte du site** (`visionneuse/theme-radiologichub.css`) : police Montserrat, cadre bleu marine, outil actif et image sélectionnée en ambre ; images sur fond noir. |
 | **Compte rendu** | Texte gardé avec l'examen, enregistré automatiquement. En service, ce sera la copie PDF jointe depuis l'éditeur. |
 | **Scanner de test** | Fantôme synthétique de 120 coupes (`dicom/generateur.js`, le même générateur que les tests du serveur). Deux boutons : « Charger » ou « Télécharger (.zip) », pour essayer l'import d'une archive. |
 
@@ -101,7 +101,7 @@ Elles ne sont pas encore dans le menu, et ne sont pas indexées.
   - OHIF fonctionne dans un sous-dossier ;
   - la police est chargée par une adresse relative ;
   - les images en adresses `blob:` du **même site** sont acceptées ; rien d'autre n'est ouvert.
-- **Couleurs du site** : `theme-radiologichub.css`, copié par l'installation et chargé après les styles d'OHIF.
+- **Charte du site** : `theme-radiologichub.css` (police Montserrat et couleurs), copié par l'installation et chargé après les styles d'OHIF.
 - **Hors de la branche principale** : le résultat (`dicom/ohif/`) est ignoré par git. Il n'est publié que sur la branche d'aperçu `apercu/espace-dicom`, qui n'est jamais fusionnée et peut être supprimée après validation. Sur le serveur, Nginx le servira.
 
 **Limites de la démonstration** :
@@ -151,7 +151,7 @@ Appliquer d'abord la migration `20261014090000_espace_dicom.sql` dans Supabase, 
 | `npm run test:sql` | `tests/sql/rls-dicom.js` : rôles, validation des résidents par un senior, droits par examen, écritures réservées au serveur, unicité d'un examen, liens sans empreintes lisibles, journal en ajout seul, **aucune colonne d'identité du patient**. `tests/sql/droits.js` : liste exacte des droits accordés | 20 vérifications ✓ |
 | `npm run test:dicom` | `tests/integration.js`, la pile Docker complète (voir ci-dessous) | 51 vérifications ✓ |
 | `npm test` | `tests/dicom-site.test.js` (démonstration) : scanner de test valide et synthétique, lecture des en-têtes (données binaires retirées, DICOMDIR reconnu), regroupement par examen (doublons, identité non retirée), `.zip` écrits et relus (et créés par `zip`, ZIP64), liste des images pour OHIF, correctifs d'OHIF (seules les adresses `blob:` du même site sont acceptées), pages | 8 tests ✓ |
-| Parcours Chromium | démonstration servie comme sur raw.githack.com, ordinateur (1366 px) et téléphone (390 px) : scanner de test, `.zip` téléchargé puis importé (puis réimporté : « déjà importé »), dossier de CD avec DICOMDIR et fichier texte, avertissement « non anonymisé », recherche, image affichée par OHIF, OHIF en français, **MPR à 3 vues**, compte rendu gardé après rechargement, onglets sur téléphone, suppression, sans débordement ni erreur | 40 vérifications ✓ |
+| Parcours Chromium | démonstration servie comme sur raw.githack.com, ordinateur (1366 px) et téléphone (390 px) : scanner de test, `.zip` téléchargé puis importé (puis réimporté : « déjà importé »), dossier de CD avec DICOMDIR et fichier texte, avertissement « non anonymisé », recherche, image affichée par OHIF, OHIF en français, **MPR à 3 vues**, compte rendu gardé après rechargement, onglets sur téléphone, police et couleurs du site dans OHIF, suppression, sans débordement ni erreur | 42 vérifications ✓ |
 
 Le test Docker vérifie notamment :
 - **Orthanc injoignable** : seul Nginx publie des ports ; l'API d'Orthanc (`/instances`, `/tools/find`, `/system`, son interface…) répond 404 par Nginx ; Orthanc n'a **aucun accès à Internet** ;
