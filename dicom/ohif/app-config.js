@@ -7,8 +7,13 @@
    • En service (étape 3) : source DICOMweb du serveur de l'Espace DICOM,
      avec le jeton de session — ajoutée à la mise en service.
    Interface en français, sans liste d'études d'OHIF.
+   • La configuration est donnée sous forme de fonction (prévu par OHIF :
+     appInit reçoit alors les services) : elle garde servicesManager dans
+     window.RH_OHIF, pour les outils de l'Espace DICOM (courbe de
+     perfusion) affichés à côté des images. Les réglages restent aussi
+     lisibles comme propriétés (window.config.dataSources…).
    ========================================================= */
-window.config = {
+var RH_CONFIG = {
   name: 'espace-dicom',
   routerBasename: window.RH_OHIF_BASE.replace(/\/$/, ''),
   extensions: [],
@@ -21,6 +26,8 @@ window.config = {
   showLoadingIndicator: true,
   strictZSpacingForVolumeViewport: true,
   investigationalUseDialog: { option: 'never' },
+  // Mesures suivies d'office, sans la question « Suivre les mesures ? » (elle masquait le lecteur des phases des séries dynamiques)
+  measurementTrackingMode: 'simplified',
   maxNumRequests: { interaction: 100, thumbnail: 5, prefetch: 10 },
   showErrorDetails: 'production',
   whiteLabeling: {
@@ -39,3 +46,12 @@ window.config = {
     },
   ],
 };
+
+window.RH_OHIF = { pret: false };
+window.config = function (contexte) {
+  window.RH_OHIF.servicesManager = contexte.servicesManager;
+  window.RH_OHIF.pret = true;
+  return RH_CONFIG;
+};
+// Réglages aussi lisibles comme propriétés (« name » et « length » d'une fonction ne s'écrivent pas)
+Object.keys(RH_CONFIG).forEach(function (cle) { if (cle !== 'name' && cle !== 'length') window.config[cle] = RH_CONFIG[cle]; });
