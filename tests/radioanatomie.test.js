@@ -178,6 +178,32 @@ test('mode test : banque de questions vérifiée sur la carte du sujet (structur
     assert.match(js, motif);
 });
 
+test('menu principal et pied de page : entrée « Radioanatomie » sur toutes les pages', () => {
+  const pages = [];
+  const parcourirDossier = d => {
+    for (const f of fs.readdirSync(path.join(RACINE, d), { withFileTypes: true })) {
+      const rel = path.join(d, f.name);
+      if (f.isDirectory()) { if (!['node_modules', 'vendor', '.git', 'assets-sources'].includes(f.name)) parcourirDossier(rel); }
+      else if (f.name.endsWith('.html')) pages.push(rel);
+    }
+  };
+  parcourirDossier('.');
+  let n = 0;
+  for (const p of pages) {
+    const html = fs.readFileSync(path.join(RACINE, p), 'utf8');
+    if (!html.includes('id="main-nav"')) continue;
+    n++;
+    const prefixe = '../'.repeat(p.split(path.sep).length - 1).replace(/^\.\/$/, '');
+    const debut = html.indexOf('id="main-nav"'), menu = html.slice(debut, html.indexOf('</nav>', debut));
+    const courant = p.startsWith('radioanatomie') ? ' class="is-current"' : '';
+    assert.ok(menu.includes(`<a href="${prefixe}radioanatomie/index.html"${courant}>Radioanatomie</a>`), `${p} : entrée du menu`);
+    assert.match(menu, /Fiches rapides<\/a>\n\s*<a href="[^"]*radioanatomie\/index\.html"/, `${p} : juste après « Fiches rapides »`);
+    const pied = html.indexOf('<nav aria-label="Liens de pied de page">');
+    if (pied >= 0) assert.ok(html.slice(pied, html.indexOf('</nav>', pied)).includes(`<a href="${prefixe}radioanatomie/index.html">Radioanatomie</a>`), `${p} : pied de page`);
+  }
+  assert.ok(n >= 20, `${n} pages avec le menu principal`);
+});
+
 test('licences et crédits : IRM IBC (CC0), atlas CC BY-SA 4.0 (Liu et al. 2023), Colin 27', () => {
   const atlas = fs.readFileSync(path.join(DONNEES, 'LICENSE-atlas-CC-BY-SA-4.0.txt'), 'utf8');
   const colin = fs.readFileSync(path.join(DONNEES, 'LICENSE-colin27.txt'), 'utf8');

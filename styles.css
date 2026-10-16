@@ -790,9 +790,13 @@ p { margin: 0 0 1em; }
 }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 1212px) {
+@media (max-width: 1366px) {
   .main-nav { gap: 11px; }
   .main-nav a:not(.btn) { font-size: .69rem; letter-spacing: .03em; }
+}
+@media (max-width: 1212px) {
+  .main-nav { gap: 8px; }
+  .main-nav a:not(.btn) { font-size: .66rem; letter-spacing: .02em; }
 }
 
 @media (max-width: 980px) {
