@@ -90,6 +90,34 @@ test('orientation : gauche et droite, territoires au bon endroit (espace MNI)', 
   assert.ok(n[lcs] > 5000, 'LCS profond identifié');
 });
 
+test('recalages d\'après les coupes de référence : territoire profond de l\'ACM, tête du caudé, ACP', () => {
+  const v = (x, y, z) => carte[(x - M.origine_mm[0]) + nx * ((y - M.origine_mm[1]) + ny * (z - M.origine_mm[2]))];
+  const id = (code, cote) => M.territoires.find(t => t.code === code && t.cote === cote).id;
+  for (const [s, cote] of [[1, 'D'], [-1, 'G']]) {
+    assert.equal(v(25 * s, 2, 4), id('LSL', cote), `putamen ${cote} : territoire profond de l'ACM`);
+    assert.equal(v(12 * s, 12, 10), id('LSM', cote), `tête du caudé ${cote} : lenticulo-striées médiales et Heubner`);
+    assert.equal(v(38 * s, -2, 4), id('ACM', cote), `insula ${cote} : territoire superficiel de l'ACM`);
+    assert.equal(v(6 * s, 28, 10), id('ACA', cote), `genou du corps calleux ${cote} : ACA`);
+    assert.equal(v(6 * s, -65, 40), id('ACA', cote), `précunéus ${cote} : ACA (plus d'ACP au-dessus des ventricules)`);
+  }
+  // Territoire profond de l'ACM : petit, en dedans de l'insula ; tête du caudé limitée aux noyaux gris
+  let lsl = 0, lslHaut = -Infinity, lslLat = 0, lsmHaut = -Infinity, acpHaut = -Infinity, acpPole24 = 0;
+  for (let z = 0, p = 0; z < nz; z++) for (let y = 0; y < ny; y++) for (let x = 0; x < nx; x++, p++) {
+    const t = carte[p], xm = x + M.origine_mm[0], ym = y + M.origine_mm[1], zm = z + M.origine_mm[2];
+    if (t === 5 || t === 6) { lsl++; lslHaut = Math.max(lslHaut, zm); lslLat = Math.max(lslLat, Math.abs(xm)); }
+    if (t === 3 || t === 4) lsmHaut = Math.max(lsmHaut, zm);
+    if (t === 17 || t === 18) { acpHaut = Math.max(acpHaut, zm); if (zm === 24 && ym < -85) acpPole24++; }
+  }
+  assert.ok(lsl < 40000, `territoire profond de l'ACM : ${lsl} voxels (atlas : 56 000)`);
+  assert.ok(lslHaut <= 30 && lslLat <= 36, `territoire profond de l'ACM : z ≤ +30, |x| ≤ 36 mm (${lslHaut}, ${lslLat})`);
+  assert.ok(lsmHaut <= 22, `lenticulo-striées médiales sous z = +22 mm (${lsmHaut})`);
+  // ACP superficielle : absente au-dessus du toit des ventricules latéraux, présente au pôle occipital à z = +24 mm
+  assert.ok(acpHaut <= 30, `ACP jusqu'à z = ${acpHaut} mm`);
+  assert.ok(acpPole24 > 50, `ACP au pôle occipital à z = +24 mm (${acpPole24} voxels)`);
+  assert.match(M.territoires.find(t => t.code === 'LSM').nom, /Heubner/);
+  assert.match(M.territoires.find(t => t.code === 'LSL').precision, /noyau lenticulaire/);
+});
+
 test('licences et crédits : Colin 27 (MNI) et atlas CC BY-SA 4.0 (Liu et al. 2023)', () => {
   const atlas = fs.readFileSync(path.join(DONNEES, 'LICENSE-atlas-CC-BY-SA-4.0.txt'), 'utf8');
   const colin = fs.readFileSync(path.join(DONNEES, 'LICENSE-colin27.txt'), 'utf8');

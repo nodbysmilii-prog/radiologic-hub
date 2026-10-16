@@ -15,6 +15,9 @@ Traitement :
      le LCS des sillons) ; chaque voxel du masque prend le territoire le plus proche : les
      territoires suivent ainsi exactement le contour de ce cerveau ;
   3. ventricules et citernes profondes (LCS de Colin 27) : non colorés ;
+  3 bis. recalages d'après les coupes de référence de l'auteur : basilaire limité au tronc cérébral,
+     territoires profonds sur l'anatomie de Colin 27 (noyau lenticulaire, tête du caudé, corps calleux),
+     ACP superficielle absente au-dessus des ventricules latéraux ; petits îlots rattachés au voisin ;
   4. export : IRM en octets (0–255) et carte des territoires (octets), compressées (gzip), x le plus
      rapide puis y puis z, + manifest.json (grille, noms français, couleurs, regroupements) et licences.
 
@@ -57,12 +60,15 @@ GROUPES = {
 TERRITOIRES = [
     # (id gauche, code, groupe, nom, nom court (étiquettes), couleur, précision) ; l'ordre est celui de la légende
     (1, 'ACA', 'ACA', "Territoire superficiel de l'ACA", "ACA (superficiel)", '#3fbf52', ''),
-    (3, 'LSM', 'ACA', "Lenticulo-striées médiales (ACA)", "Lenticulo-striées médiales", '#2ec4c4',
-     "Territoire peu exposé aux infarctus : l'atlas le définit sur la topographie du corps calleux et de la région septale."),
+    (3, 'LSM', 'ACA', "Lenticulo-striées médiales et artère de Heubner (ACA)", "Lenticulo-striées médiales", '#2ec4c4',
+     "Artère récurrente de Heubner et lenticulo-striées médiales : tête du noyau caudé et partie antérieure de la capsule interne."),
     (7, 'ACM', 'ACM', "Territoire superficiel de l'ACM", "ACM (superficiel)", '#ea5a3d', ''),
     (5, 'LSL', 'ACM', "Territoire profond de l'ACM", "ACM (profond)", '#d6336c',
-     "Artères lenticulo-striées latérales, branches perforantes de l'ACM : noyaux gris centraux et capsule interne."),
-    (17, 'ACP', 'ACP', "Territoire superficiel de l'ACP", "ACP (superficiel)", '#3f86e0', ''),
+     "Artères lenticulo-striées latérales, branches perforantes de l'ACM : noyau lenticulaire (putamen et pallidum) et, "
+     "au-dessus, couronne rayonnante le long du ventricule latéral."),
+    (17, 'ACP', 'ACP', "Territoire superficiel de l'ACP", "ACP (superficiel)", '#3f86e0',
+     "Lobe occipital et face inférieure du lobe temporal. Absent au-dessus des ventricules latéraux : il apparaît au pôle "
+     "occipital au niveau du corps des ventricules et s'étend vers l'avant en descendant."),
     (21, 'THP', 'ACP', "Thalamo-perforantes et choroïdiennes postérieures (ACP)", "Thalamo-perforantes postérieures", '#9a5cf0', "Thalamus."),
     (23, 'THA', 'ACP', "Choroïdienne antérieure et thalamo-perforantes antérieures", "Choroïdienne antérieure", '#c84fe0',
      "Territoire peu exposé aux infarctus : l'atlas le définit sur la région temporale mésiale et l'hippocampe, et le rattache à l'ACP."),
@@ -185,7 +191,106 @@ def preparer():
     cerebelleuses = np.isin(carte, (27, 28, 29, 30))
     _, (jx, jy, jz) = ndi.distance_transform_edt(~cerebelleuses, return_indices=True)
     carte[hors_tronc] = carte[jx, jy, jz][hors_tronc]
-    return t1u8, carte, {'seuil_lcs': float(seuil), 'haut': float(haut), 'basilaire_reattribue': int(hors_tronc.sum())}
+    info = {'seuil_lcs': float(seuil), 'haut': float(haut), 'basilaire_reattribue': int(hors_tronc.sum())}
+    info.update(recaler_territoires_profonds(carte, c, a, haut))
+    info['acp_retiree'] = limiter_acp(carte)
+    info['ilots_rattaches'] = rattacher_ilots(carte)
+    return t1u8, carte, info
+
+
+def grilles():
+    """Coordonnées en mm (x, y, z) diffusables sur la grille 181 × 217 × 181."""
+    return ((np.arange(181) - 90)[:, None, None], (np.arange(217) - 126)[None, :, None],
+            (np.arange(181) - 72)[None, None, :])
+
+
+def recaler_territoires_profonds(carte, c, a, haut):
+    """Territoires profonds recalés sur l'anatomie de Colin 27 (coupes de référence de l'auteur).
+
+    L'atlas donne aux lenticulo-striées latérales tout le bloc noyaux gris + capsule interne + couronne
+    rayonnante, et aux lenticulo-striées médiales le corps calleux et la région septale. Ici :
+      • territoire profond de l'ACM = noyau lenticulaire (putamen, pallidum) et, au-dessus du putamen, une
+        bande de 6 mm le long du ventricule latéral ; ce qui est en dehors du putamen (capsule externe,
+        claustrum) et le reste de la couronne rayonnante reviennent au territoire superficiel de l'ACM ;
+      • tête du noyau caudé et partie médiale du bras antérieur de la capsule interne (en dedans de la crête
+        de substance blanche qui sépare caudé et putamen, en avant du genou) : lenticulo-striées médiales
+        et artère de Heubner ;
+      • corps calleux et région septale (lenticulo-striées médiales de l'atlas) : territoire superficiel de l'ACA.
+    """
+    X, Y, Z = grilles()
+    AX = np.abs(X)
+    tl = ndi.gaussian_filter(c / haut, 0.7)
+    # ventricules latéraux : LCS de Colin 27 autour de l'étiquette de l'atlas (composante principale)
+    etiq, _ = ndi.label((c / haut < 0.36) & ndi.binary_dilation(np.isin(a, (31, 32)), iterations=3))
+    tailles = np.bincount(etiq.ravel()); tailles[0] = 0
+    vl = etiq == np.argmax(tailles)
+    dvl = ndi.distance_transform_edt(~vl)
+    lsm_atlas = np.where(np.isin(carte, (3, 4)), carte, 0)        # avant recalage (ligne médiane comprise)
+    info = {}
+    for lsa_id, lsm_id, acm_id, aca_id, cote in ((5, 3, 7, 1, X < 0), (6, 4, 8, 2, X > 0)):
+        lsa = carte == lsa_id
+        # crête du bras antérieur de la capsule interne : |x| du voxel le plus clair de chaque ligne (y, z)
+        ix = np.argmax(np.where(lsa, tl, -np.inf), axis=0)
+        ok = (lsa.sum(axis=0) >= 4) & (Y[0] > -6)
+        crete = np.where(ok, np.abs(ix - 90), 0).astype(float)
+        crete = ndi.gaussian_filter(crete, 2) / np.maximum(ndi.gaussian_filter(ok.astype(float), 2), 1e-6)
+        # en dedans de la crête ; limite postérieure oblique (genou de la capsule interne en dehors, trou de
+        # Monro en dedans), puis contour adouci
+        caude = lsa & ok[None] & (AX < crete[None]) & (Y > 4 - 0.8 * (crete[None] - AX)) & (Z <= 22)
+        caude = lsa & (ndi.gaussian_filter(caude.astype(np.float32), 1.2) > 0.5) & (AX < crete[None] + 1) & ok[None]
+        # putamen : substance grise profonde en dehors de la crête, loin du ventricule (composante principale)
+        gris = (tl > 0.40) & (tl < 0.645) & ndi.binary_dilation(lsa, iterations=2) & ~caude & (dvl > 4) & cote
+        etiq, _ = ndi.label(gris)
+        recouvre = np.bincount(etiq.ravel(), weights=lsa.ravel().astype(float)); recouvre[0] = 0
+        putamen = ndi.binary_closing(etiq == np.argmax(recouvre), iterations=2)
+        bord = np.where(putamen.any(axis=0), np.max(np.where(putamen, AX, 0), axis=0), 999)
+        z_haut = int(np.nonzero(putamen.any(axis=(0, 1)))[0].max()) - 72
+        dehors = lsa & (AX > bord[None] + 1)
+        couronne = lsa & (Z > z_haut) & (dvl > 6)
+        carte[caude] = lsm_id
+        carte[(dehors | couronne) & ~caude] = acm_id
+        # lenticulo-striées médiales de l'atlas : seule la partie en dehors de la corne frontale (tête du caudé) reste
+        x_vl = np.max(np.where(vl & cote, AX, 0), axis=0)
+        lsm_ici = lsm_atlas == lsm_id
+        reste = lsm_ici & cote & (AX > x_vl[None]) & (x_vl[None] > 0) & (dvl <= 8) & (Z <= 20) & (Y > -5)
+        carte[lsm_ici & ~reste] = aca_id
+        cle = 'G' if lsa_id == 5 else 'D'
+        info[f'profond_ACM_{cle}'] = {'avant': int(lsa.sum()), 'apres': int((carte == lsa_id).sum()),
+                                      'caude': int(caude.sum()), 'putamen': int(putamen.sum()), 'z_haut_putamen': z_haut}
+    return info
+
+
+def limiter_acp(carte):
+    """ACP superficielle : rien au-dessus des ventricules latéraux ; elle apparaît au pôle occipital au niveau
+    du toit des ventricules (z ≈ +28 mm) et s'étend vers l'avant en descendant (coupes de référence de l'auteur).
+    Limite arrondie : distance au pôle occipital médial (x = ±6, y = −110 mm, écart latéral compté 1,5 fois, d'où
+    un lobe plus étroit que haut : l'ACM garde la convexité occipitale) inférieure à un rayon qui croît vers le bas.
+    Les voxels retirés reviennent au territoire superficiel le plus proche (ACA en dedans, ACM en dehors)."""
+    X, Y, Z = grilles()
+    rayon = np.interp(Z, [-100, -6, 0, 4, 8, 12, 16, 20, 24, 28, 30], [400, 400, 110, 70, 56, 46, 37, 30, 22, 13, 0])
+    retire = np.isin(carte, (17, 18)) & (np.hypot(1.5 * (np.abs(X) - 6), Y + 110) > rayon)
+    superficiels = np.isin(carte, (1, 2, 7, 8))
+    # distance latérale comptée triple : chaque voxel prolonge le territoire situé à la même distance de la
+    # ligne médiane (ACA sur la face médiale, ACM sur la convexité)
+    _, (ix, iy, iz) = ndi.distance_transform_edt(~superficiels, sampling=(3, 1, 1), return_indices=True)
+    carte[retire] = carte[ix, iy, iz][retire]
+    return int(retire.sum())
+
+
+def rattacher_ilots(carte, seuil=60):
+    """Îlots de moins de `seuil` voxels laissés par les recalages : rattachés au territoire voisin le plus proche."""
+    ilots = np.zeros(carte.shape, bool)
+    for ident in [t[0] for t in TERRITOIRES] + [t[0] + 1 for t in TERRITOIRES]:
+        etiq, n = ndi.label(carte == ident)
+        if n > 1:
+            tailles = np.bincount(etiq.ravel()); tailles[0] = 0
+            petits = tailles < seuil
+            petits[np.argmax(tailles)] = False
+            ilots |= petits[etiq] & (etiq > 0)
+    sources = (carte > 0) & (carte != VENTRICULE) & ~ilots
+    _, (ix, iy, iz) = ndi.distance_transform_edt(~sources, return_indices=True)
+    carte[ilots] = carte[ix, iy, iz][ilots]
+    return int(ilots.sum())
 
 
 def exporter(t1u8, carte):
@@ -226,7 +331,8 @@ def exporter(t1u8, carte):
             'atlas': "Digital 3D Brain MRI Arterial Territories Atlas (Liu C-F, Hsu J, Xu X et al., Scientific Data 2023, "
                      "doi:10.1038/s41597-022-01923-0), © 2021 The Johns Hopkins University, licence CC BY-SA 4.0. "
                      "Adapté par RadiologicHub : remis sur la grille de Colin 27, territoires étendus au contour de ce cerveau, "
-                     "LCS profond retiré, noms traduits ; la carte dérivée est diffusée sous la même licence.",
+                     "LCS profond retiré, territoires profonds et limite supérieure de l'ACP recalés sur l'anatomie de Colin 27, "
+                     "noms traduits ; la carte dérivée est diffusée sous la même licence.",
         },
     }
     with open(os.path.join(SORTIE, 'manifest.json'), 'w', encoding='utf-8') as f:

@@ -23,7 +23,7 @@
  },
  "empreintes_sha256_decompresse": {
   "irm": "4dbe902308aaa4ae46ef212311e318d8ef9b93fc78690d9aaf60875092a6caeb",
-  "territoires": "9f4086a7447e57e0a0bde873a146dcb8035d58c9fdfb6b87d20259988b8c1d27"
+  "territoires": "3b013dfe5dc5dd7180780eb609be50253b9b6a5d34de301aa780412c4d78562e"
  },
  "fenetres": [
   {
@@ -90,20 +90,20 @@
    "code": "LSM",
    "cote": "G",
    "groupe": "ACA",
-   "nom": "Lenticulo-striées médiales (ACA)",
+   "nom": "Lenticulo-striées médiales et artère de Heubner (ACA)",
    "court": "Lenticulo-striées médiales",
    "couleur": "#2ec4c4",
-   "precision": "Territoire peu exposé aux infarctus : l'atlas le définit sur la topographie du corps calleux et de la région septale."
+   "precision": "Artère récurrente de Heubner et lenticulo-striées médiales : tête du noyau caudé et partie antérieure de la capsule interne."
   },
   {
    "id": 4,
    "code": "LSM",
    "cote": "D",
    "groupe": "ACA",
-   "nom": "Lenticulo-striées médiales (ACA)",
+   "nom": "Lenticulo-striées médiales et artère de Heubner (ACA)",
    "court": "Lenticulo-striées médiales",
    "couleur": "#2ec4c4",
-   "precision": "Territoire peu exposé aux infarctus : l'atlas le définit sur la topographie du corps calleux et de la région septale."
+   "precision": "Artère récurrente de Heubner et lenticulo-striées médiales : tête du noyau caudé et partie antérieure de la capsule interne."
   },
   {
    "id": 7,
@@ -133,7 +133,7 @@
    "nom": "Territoire profond de l'ACM",
    "court": "ACM (profond)",
    "couleur": "#d6336c",
-   "precision": "Artères lenticulo-striées latérales, branches perforantes de l'ACM : noyaux gris centraux et capsule interne."
+   "precision": "Artères lenticulo-striées latérales, branches perforantes de l'ACM : noyau lenticulaire (putamen et pallidum) et, au-dessus, couronne rayonnante le long du ventricule latéral."
   },
   {
    "id": 6,
@@ -143,7 +143,7 @@
    "nom": "Territoire profond de l'ACM",
    "court": "ACM (profond)",
    "couleur": "#d6336c",
-   "precision": "Artères lenticulo-striées latérales, branches perforantes de l'ACM : noyaux gris centraux et capsule interne."
+   "precision": "Artères lenticulo-striées latérales, branches perforantes de l'ACM : noyau lenticulaire (putamen et pallidum) et, au-dessus, couronne rayonnante le long du ventricule latéral."
   },
   {
    "id": 17,
@@ -153,7 +153,7 @@
    "nom": "Territoire superficiel de l'ACP",
    "court": "ACP (superficiel)",
    "couleur": "#3f86e0",
-   "precision": ""
+   "precision": "Lobe occipital et face inférieure du lobe temporal. Absent au-dessus des ventricules latéraux : il apparaît au pôle occipital au niveau du corps des ventricules et s'étend vers l'avant en descendant."
   },
   {
    "id": 18,
@@ -163,7 +163,7 @@
    "nom": "Territoire superficiel de l'ACP",
    "court": "ACP (superficiel)",
    "couleur": "#3f86e0",
-   "precision": ""
+   "precision": "Lobe occipital et face inférieure du lobe temporal. Absent au-dessus des ventricules latéraux : il apparaît au pôle occipital au niveau du corps des ventricules et s'étend vers l'avant en descendant."
   },
   {
    "id": 21,
@@ -274,6 +274,6 @@
  ],
  "credits": {
   "irm": "Colin 27 Average Brain (Holmes CJ et al., J Comput Assist Tomogr 1998). Copyright (C) 1993–2009 Louis Collins, McConnell Brain Imaging Centre, Montreal Neurological Institute, McGill University. Distribué via TemplateFlow.",
-  "atlas": "Digital 3D Brain MRI Arterial Territories Atlas (Liu C-F, Hsu J, Xu X et al., Scientific Data 2023, doi:10.1038/s41597-022-01923-0), © 2021 The Johns Hopkins University, licence CC BY-SA 4.0. Adapté par RadiologicHub : remis sur la grille de Colin 27, territoires étendus au contour de ce cerveau, LCS profond retiré, noms traduits ; la carte dérivée est diffusée sous la même licence."
+  "atlas": "Digital 3D Brain MRI Arterial Territories Atlas (Liu C-F, Hsu J, Xu X et al., Scientific Data 2023, doi:10.1038/s41597-022-01923-0), © 2021 The Johns Hopkins University, licence CC BY-SA 4.0. Adapté par RadiologicHub : remis sur la grille de Colin 27, territoires étendus au contour de ce cerveau, LCS profond retiré, territoires profonds et limite supérieure de l'ACP recalés sur l'anatomie de Colin 27, noms traduits ; la carte dérivée est diffusée sous la même licence."
  }
 }
