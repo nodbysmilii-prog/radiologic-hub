@@ -70,8 +70,8 @@
    "code": "ACA",
    "cote": "G",
    "groupe": "ACA",
-   "nom": "ACA, branches corticales",
-   "court": "ACA (corticale)",
+   "nom": "Territoire superficiel de l'ACA",
+   "court": "ACA (superficiel)",
    "couleur": "#3fbf52",
    "precision": ""
   },
@@ -80,8 +80,8 @@
    "code": "ACA",
    "cote": "D",
    "groupe": "ACA",
-   "nom": "ACA, branches corticales",
-   "court": "ACA (corticale)",
+   "nom": "Territoire superficiel de l'ACA",
+   "court": "ACA (superficiel)",
    "couleur": "#3fbf52",
    "precision": ""
   },
@@ -106,32 +106,12 @@
    "precision": "Territoire peu exposé aux infarctus : l'atlas le définit sur la topographie du corps calleux et de la région septale."
   },
   {
-   "id": 5,
-   "code": "LSL",
-   "cote": "G",
-   "groupe": "ACM",
-   "nom": "Lenticulo-striées latérales (ACM)",
-   "court": "Lenticulo-striées latérales",
-   "couleur": "#d6336c",
-   "precision": "Branches perforantes de l'ACM : noyaux gris centraux et capsule interne."
-  },
-  {
-   "id": 6,
-   "code": "LSL",
-   "cote": "D",
-   "groupe": "ACM",
-   "nom": "Lenticulo-striées latérales (ACM)",
-   "court": "Lenticulo-striées latérales",
-   "couleur": "#d6336c",
-   "precision": "Branches perforantes de l'ACM : noyaux gris centraux et capsule interne."
-  },
-  {
    "id": 7,
    "code": "ACM",
    "cote": "G",
    "groupe": "ACM",
-   "nom": "ACM, branches corticales",
-   "court": "ACM (corticale)",
+   "nom": "Territoire superficiel de l'ACM",
+   "court": "ACM (superficiel)",
    "couleur": "#ea5a3d",
    "precision": ""
   },
@@ -140,18 +120,38 @@
    "code": "ACM",
    "cote": "D",
    "groupe": "ACM",
-   "nom": "ACM, branches corticales",
-   "court": "ACM (corticale)",
+   "nom": "Territoire superficiel de l'ACM",
+   "court": "ACM (superficiel)",
    "couleur": "#ea5a3d",
    "precision": ""
+  },
+  {
+   "id": 5,
+   "code": "LSL",
+   "cote": "G",
+   "groupe": "ACM",
+   "nom": "Territoire profond de l'ACM",
+   "court": "ACM (profond)",
+   "couleur": "#d6336c",
+   "precision": "Artères lenticulo-striées latérales, branches perforantes de l'ACM : noyaux gris centraux et capsule interne."
+  },
+  {
+   "id": 6,
+   "code": "LSL",
+   "cote": "D",
+   "groupe": "ACM",
+   "nom": "Territoire profond de l'ACM",
+   "court": "ACM (profond)",
+   "couleur": "#d6336c",
+   "precision": "Artères lenticulo-striées latérales, branches perforantes de l'ACM : noyaux gris centraux et capsule interne."
   },
   {
    "id": 17,
    "code": "ACP",
    "cote": "G",
    "groupe": "ACP",
-   "nom": "ACP, branches corticales",
-   "court": "ACP (corticale)",
+   "nom": "Territoire superficiel de l'ACP",
+   "court": "ACP (superficiel)",
    "couleur": "#3f86e0",
    "precision": ""
   },
@@ -160,8 +160,8 @@
    "code": "ACP",
    "cote": "D",
    "groupe": "ACP",
-   "nom": "ACP, branches corticales",
-   "court": "ACP (corticale)",
+   "nom": "Territoire superficiel de l'ACP",
+   "court": "ACP (superficiel)",
    "couleur": "#3f86e0",
    "precision": ""
   },

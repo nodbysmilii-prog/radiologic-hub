@@ -55,13 +55,14 @@ GROUPES = {
     'VB': {'nom': 'Système vertébro-basilaire', 'court': 'Vertébro-basilaire', 'couleur': '#e8c13a'},
 }
 TERRITOIRES = [
-    # (id gauche, code, groupe, nom, nom court (étiquettes), couleur, précision)
-    (1, 'ACA', 'ACA', "ACA, branches corticales", "ACA (corticale)", '#3fbf52', ''),
+    # (id gauche, code, groupe, nom, nom court (étiquettes), couleur, précision) ; l'ordre est celui de la légende
+    (1, 'ACA', 'ACA', "Territoire superficiel de l'ACA", "ACA (superficiel)", '#3fbf52', ''),
     (3, 'LSM', 'ACA', "Lenticulo-striées médiales (ACA)", "Lenticulo-striées médiales", '#2ec4c4',
      "Territoire peu exposé aux infarctus : l'atlas le définit sur la topographie du corps calleux et de la région septale."),
-    (5, 'LSL', 'ACM', "Lenticulo-striées latérales (ACM)", "Lenticulo-striées latérales", '#d6336c', "Branches perforantes de l'ACM : noyaux gris centraux et capsule interne."),
-    (7, 'ACM', 'ACM', "ACM, branches corticales", "ACM (corticale)", '#ea5a3d', ''),
-    (17, 'ACP', 'ACP', "ACP, branches corticales", "ACP (corticale)", '#3f86e0', ''),
+    (7, 'ACM', 'ACM', "Territoire superficiel de l'ACM", "ACM (superficiel)", '#ea5a3d', ''),
+    (5, 'LSL', 'ACM', "Territoire profond de l'ACM", "ACM (profond)", '#d6336c',
+     "Artères lenticulo-striées latérales, branches perforantes de l'ACM : noyaux gris centraux et capsule interne."),
+    (17, 'ACP', 'ACP', "Territoire superficiel de l'ACP", "ACP (superficiel)", '#3f86e0', ''),
     (21, 'THP', 'ACP', "Thalamo-perforantes et choroïdiennes postérieures (ACP)", "Thalamo-perforantes postérieures", '#9a5cf0', "Thalamus."),
     (23, 'THA', 'ACP', "Choroïdienne antérieure et thalamo-perforantes antérieures", "Choroïdienne antérieure", '#c84fe0',
      "Territoire peu exposé aux infarctus : l'atlas le définit sur la région temporale mésiale et l'hippocampe, et le rattache à l'ACP."),
@@ -72,7 +73,7 @@ TERRITOIRES = [
 ]
 VENTRICULE = 31          # identifiant exporté pour le LCS profond (non coloré)
 # Segmentation vasculaire seule : les secteurs lobaires de l'atlas (ACM frontal, pariétal, temporal, occipital,
-# insulaire ; ACP temporal, occipital) sont réunis en un territoire cortical par artère (les lobes feront l'objet
+# insulaire ; ACP temporal, occipital) sont réunis en un territoire superficiel par artère (les lobes feront l'objet
 # d'une segmentation à part). Identifiant d'origine → identifiant exporté (même parité : impair = gauche).
 FUSION = {**{i: 7 + (i + 1) % 2 for i in range(7, 17)}, **{i: 17 + (i + 1) % 2 for i in range(17, 21)}}
 

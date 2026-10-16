@@ -35,7 +35,7 @@ test('données : grille, empreintes, taille des fichiers', () => {
 test('territoires : 10 × 2 côtés (segmentation vasculaire, sans secteurs lobaires), noms français, couleurs, présents dans la carte', () => {
   assert.deepEqual(Object.keys(M.groupes), ['ACA', 'ACM', 'ACP', 'VB']);
   assert.equal(M.territoires.length, 20);
-  assert.deepEqual(M.territoires.map(t => t.id), [1, 2, 3, 4, 5, 6, 7, 8, 17, 18, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]);
+  assert.deepEqual(M.territoires.map(t => t.id), [1, 2, 3, 4, 7, 8, 5, 6, 17, 18, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]);
   const presents = new Set(carte);
   for (const t of M.territoires) {
     assert.equal(t.cote, t.id % 2 ? 'G' : 'D', `${t.id} : impair = gauche, pair = droit`);
@@ -47,9 +47,15 @@ test('territoires : 10 × 2 côtés (segmentation vasculaire, sans secteurs loba
   const autorises = new Set([0, ...M.territoires.map(t => t.id), ...M.non_colores.map(x => x.id)]);
   for (const v of presents) assert.ok(autorises.has(v), `valeur inconnue dans la carte : ${v}`);
   const codes = [...new Set(M.territoires.map(t => t.code))];
-  assert.deepEqual(codes, ['ACA', 'LSM', 'LSL', 'ACM', 'ACP', 'THP', 'THA', 'BAS', 'ACS', 'ACI']);
+  assert.deepEqual(codes, ['ACA', 'LSM', 'ACM', 'LSL', 'ACP', 'THP', 'THA', 'BAS', 'ACS', 'ACI']);
   assert.ok(!M.territoires.some(t => /secteur|frontal|pariétal|temporal|occipital|insulaire/.test(t.nom)), 'pas de secteurs lobaires');
   assert.match(M.territoires.find(t => t.code === 'ACI').nom, /antéro-inférieure et postéro-inférieure/);
+  // Vocabulaire de l'auteur : territoires superficiel et profond (pas « cortical »)
+  assert.ok(!M.territoires.some(t => /cortica/i.test(t.nom + t.court)), 'superficiel plutôt que cortical');
+  for (const g of ['ACA', 'ACM', 'ACP']) assert.equal(M.territoires.find(t => t.code === g).nom, `Territoire superficiel de l'${g}`);
+  const profond = M.territoires.find(t => t.code === 'LSL');
+  assert.equal(profond.nom, "Territoire profond de l'ACM");
+  assert.match(profond.precision, /lenticulo-striées latérales/);
 });
 
 test('orientation : gauche et droite, territoires au bon endroit (espace MNI)', () => {
@@ -65,7 +71,7 @@ test('orientation : gauche et droite, territoires au bon endroit (espace MNI)', 
   const [acaG] = par('ACA'), [lslG] = par('LSL'), [acmG] = par('ACM'), [acpG] = par('ACP'), [basG] = par('BAS'), [acsG] = par('ACS'), [aciG] = par('ACI'), [thpG] = par('THP');
   assert.ok(c(acpG)[1] < -50 && c(acmG)[1] > c(acpG)[1] && Math.abs(c(acmG)[0]) > 35, 'ACP postérieure, ACM latérale');
   assert.ok(c(acaG)[2] > 20 && Math.abs(c(acaG)[0]) < 20, 'ACA : haute et paramédiane');
-  assert.ok(Math.abs(c(lslG)[0]) < 30 && Math.abs(c(lslG)[2] - 5) < 15, 'lenticulo-striées latérales : noyaux gris centraux');
+  assert.ok(Math.abs(c(lslG)[0]) < 30 && Math.abs(c(lslG)[2] - 5) < 15, 'territoire profond de l\'ACM : noyaux gris centraux');
   assert.ok(Math.abs(c(thpG)[0]) < 20 && c(thpG)[1] < -10, 'thalamo-perforantes postérieures : thalamus');
   assert.ok(c(basG)[2] < -20 && Math.abs(c(basG)[0]) < 12, 'basilaire : tronc cérébral');
   assert.ok(c(acsG)[2] > c(aciG)[2], 'cérébelleuse supérieure au-dessus des cérébelleuses inférieures');
