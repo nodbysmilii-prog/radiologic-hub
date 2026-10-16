@@ -1,0 +1,379 @@
+{
+ "titre": "Territoires artériels du cerveau",
+ "sequence": "IRM T1 (Colin 27, 27 acquisitions moyennées d'un même sujet)",
+ "dimensions": [
+  181,
+  217,
+  181
+ ],
+ "espacement_mm": [
+  1,
+  1,
+  1
+ ],
+ "origine_mm": [
+  -90,
+  -126,
+  -72
+ ],
+ "orientation": "RAS (x vers la droite du patient, y vers l'avant, z vers le haut) ; x varie le plus vite, puis y, puis z",
+ "fichiers": {
+  "irm": "irm-t1.u8.gz",
+  "territoires": "territoires.u8.gz"
+ },
+ "empreintes_sha256_decompresse": {
+  "irm": "4dbe902308aaa4ae46ef212311e318d8ef9b93fc78690d9aaf60875092a6caeb",
+  "territoires": "160a3f9f3bb1f4e5bc0e7d9c761a949a37b99b5c911acadd91f05bf9cd85ccf8"
+ },
+ "fenetres": [
+  {
+   "nom": "Standard",
+   "largeur": 255,
+   "niveau": 128
+  },
+  {
+   "nom": "Cerveau (substance grise / blanche)",
+   "largeur": 150,
+   "niveau": 140
+  },
+  {
+   "nom": "Large",
+   "largeur": 400,
+   "niveau": 160
+  }
+ ],
+ "groupes": {
+  "ACA": {
+   "nom": "Artère cérébrale antérieure (ACA)",
+   "court": "ACA",
+   "couleur": "#3fbf52"
+  },
+  "ACM": {
+   "nom": "Artère cérébrale moyenne (ACM)",
+   "court": "ACM",
+   "couleur": "#ea5a3d"
+  },
+  "ACP": {
+   "nom": "Artère cérébrale postérieure (ACP)",
+   "court": "ACP",
+   "couleur": "#3f86e0"
+  },
+  "VB": {
+   "nom": "Système vertébro-basilaire",
+   "court": "Vertébro-basilaire",
+   "couleur": "#e8c13a"
+  }
+ },
+ "territoires": [
+  {
+   "id": 1,
+   "code": "ACA",
+   "cote": "G",
+   "groupe": "ACA",
+   "nom": "ACA, branches corticales",
+   "court": "ACA (corticale)",
+   "couleur": "#3fbf52",
+   "precision": ""
+  },
+  {
+   "id": 2,
+   "code": "ACA",
+   "cote": "D",
+   "groupe": "ACA",
+   "nom": "ACA, branches corticales",
+   "court": "ACA (corticale)",
+   "couleur": "#3fbf52",
+   "precision": ""
+  },
+  {
+   "id": 3,
+   "code": "LSM",
+   "cote": "G",
+   "groupe": "ACA",
+   "nom": "Lenticulo-striées médiales (ACA)",
+   "court": "Lenticulo-striées médiales",
+   "couleur": "#2ec4c4",
+   "precision": "Territoire peu exposé aux infarctus : l'atlas le définit sur la topographie du corps calleux et de la région septale."
+  },
+  {
+   "id": 4,
+   "code": "LSM",
+   "cote": "D",
+   "groupe": "ACA",
+   "nom": "Lenticulo-striées médiales (ACA)",
+   "court": "Lenticulo-striées médiales",
+   "couleur": "#2ec4c4",
+   "precision": "Territoire peu exposé aux infarctus : l'atlas le définit sur la topographie du corps calleux et de la région septale."
+  },
+  {
+   "id": 5,
+   "code": "LSL",
+   "cote": "G",
+   "groupe": "ACM",
+   "nom": "Lenticulo-striées latérales (ACM)",
+   "court": "Lenticulo-striées latérales",
+   "couleur": "#d6336c",
+   "precision": "Branches perforantes de l'ACM : noyaux gris centraux et capsule interne."
+  },
+  {
+   "id": 6,
+   "code": "LSL",
+   "cote": "D",
+   "groupe": "ACM",
+   "nom": "Lenticulo-striées latérales (ACM)",
+   "court": "Lenticulo-striées latérales",
+   "couleur": "#d6336c",
+   "precision": "Branches perforantes de l'ACM : noyaux gris centraux et capsule interne."
+  },
+  {
+   "id": 7,
+   "code": "ACM-F",
+   "cote": "G",
+   "groupe": "ACM",
+   "nom": "ACM, branches corticales : secteur frontal",
+   "court": "ACM, secteur frontal",
+   "couleur": "#ef6a3a",
+   "precision": ""
+  },
+  {
+   "id": 8,
+   "code": "ACM-F",
+   "cote": "D",
+   "groupe": "ACM",
+   "nom": "ACM, branches corticales : secteur frontal",
+   "court": "ACM, secteur frontal",
+   "couleur": "#ef6a3a",
+   "precision": ""
+  },
+  {
+   "id": 9,
+   "code": "ACM-P",
+   "cote": "G",
+   "groupe": "ACM",
+   "nom": "ACM, branches corticales : secteur pariétal",
+   "court": "ACM, secteur pariétal",
+   "couleur": "#f39b3a",
+   "precision": ""
+  },
+  {
+   "id": 10,
+   "code": "ACM-P",
+   "cote": "D",
+   "groupe": "ACM",
+   "nom": "ACM, branches corticales : secteur pariétal",
+   "court": "ACM, secteur pariétal",
+   "couleur": "#f39b3a",
+   "precision": ""
+  },
+  {
+   "id": 11,
+   "code": "ACM-T",
+   "cote": "G",
+   "groupe": "ACM",
+   "nom": "ACM, branches corticales : secteur temporal",
+   "court": "ACM, secteur temporal",
+   "couleur": "#e4502b",
+   "precision": ""
+  },
+  {
+   "id": 12,
+   "code": "ACM-T",
+   "cote": "D",
+   "groupe": "ACM",
+   "nom": "ACM, branches corticales : secteur temporal",
+   "court": "ACM, secteur temporal",
+   "couleur": "#e4502b",
+   "precision": ""
+  },
+  {
+   "id": 13,
+   "code": "ACM-O",
+   "cote": "G",
+   "groupe": "ACM",
+   "nom": "ACM, branches corticales : secteur occipital",
+   "court": "ACM, secteur occipital",
+   "couleur": "#f5b85a",
+   "precision": ""
+  },
+  {
+   "id": 14,
+   "code": "ACM-O",
+   "cote": "D",
+   "groupe": "ACM",
+   "nom": "ACM, branches corticales : secteur occipital",
+   "court": "ACM, secteur occipital",
+   "couleur": "#f5b85a",
+   "precision": ""
+  },
+  {
+   "id": 15,
+   "code": "ACM-I",
+   "cote": "G",
+   "groupe": "ACM",
+   "nom": "ACM, branches corticales : secteur insulaire",
+   "court": "ACM, secteur insulaire",
+   "couleur": "#e84a9a",
+   "precision": ""
+  },
+  {
+   "id": 16,
+   "code": "ACM-I",
+   "cote": "D",
+   "groupe": "ACM",
+   "nom": "ACM, branches corticales : secteur insulaire",
+   "court": "ACM, secteur insulaire",
+   "couleur": "#e84a9a",
+   "precision": ""
+  },
+  {
+   "id": 17,
+   "code": "ACP-T",
+   "cote": "G",
+   "groupe": "ACP",
+   "nom": "ACP, branches corticales : secteur temporal",
+   "court": "ACP, secteur temporal",
+   "couleur": "#5b7fe8",
+   "precision": ""
+  },
+  {
+   "id": 18,
+   "code": "ACP-T",
+   "cote": "D",
+   "groupe": "ACP",
+   "nom": "ACP, branches corticales : secteur temporal",
+   "court": "ACP, secteur temporal",
+   "couleur": "#5b7fe8",
+   "precision": ""
+  },
+  {
+   "id": 19,
+   "code": "ACP-O",
+   "cote": "G",
+   "groupe": "ACP",
+   "nom": "ACP, branches corticales : secteur occipital",
+   "court": "ACP, secteur occipital",
+   "couleur": "#3f9be0",
+   "precision": ""
+  },
+  {
+   "id": 20,
+   "code": "ACP-O",
+   "cote": "D",
+   "groupe": "ACP",
+   "nom": "ACP, branches corticales : secteur occipital",
+   "court": "ACP, secteur occipital",
+   "couleur": "#3f9be0",
+   "precision": ""
+  },
+  {
+   "id": 21,
+   "code": "THP",
+   "cote": "G",
+   "groupe": "ACP",
+   "nom": "Thalamo-perforantes et choroïdiennes postérieures (ACP)",
+   "court": "Thalamo-perforantes postérieures",
+   "couleur": "#9a5cf0",
+   "precision": "Thalamus."
+  },
+  {
+   "id": 22,
+   "code": "THP",
+   "cote": "D",
+   "groupe": "ACP",
+   "nom": "Thalamo-perforantes et choroïdiennes postérieures (ACP)",
+   "court": "Thalamo-perforantes postérieures",
+   "couleur": "#9a5cf0",
+   "precision": "Thalamus."
+  },
+  {
+   "id": 23,
+   "code": "THA",
+   "cote": "G",
+   "groupe": "ACP",
+   "nom": "Choroïdienne antérieure et thalamo-perforantes antérieures",
+   "court": "Choroïdienne antérieure",
+   "couleur": "#c84fe0",
+   "precision": "Territoire peu exposé aux infarctus : l'atlas le définit sur la région temporale mésiale et l'hippocampe, et le rattache à l'ACP."
+  },
+  {
+   "id": 24,
+   "code": "THA",
+   "cote": "D",
+   "groupe": "ACP",
+   "nom": "Choroïdienne antérieure et thalamo-perforantes antérieures",
+   "court": "Choroïdienne antérieure",
+   "couleur": "#c84fe0",
+   "precision": "Territoire peu exposé aux infarctus : l'atlas le définit sur la région temporale mésiale et l'hippocampe, et le rattache à l'ACP."
+  },
+  {
+   "id": 25,
+   "code": "BAS",
+   "cote": "G",
+   "groupe": "VB",
+   "nom": "Branches de l'artère basilaire (tronc cérébral)",
+   "court": "Basilaire (tronc cérébral)",
+   "couleur": "#e9d84a",
+   "precision": ""
+  },
+  {
+   "id": 26,
+   "code": "BAS",
+   "cote": "D",
+   "groupe": "VB",
+   "nom": "Branches de l'artère basilaire (tronc cérébral)",
+   "court": "Basilaire (tronc cérébral)",
+   "couleur": "#e9d84a",
+   "precision": ""
+  },
+  {
+   "id": 27,
+   "code": "ACS",
+   "cote": "G",
+   "groupe": "VB",
+   "nom": "Artère cérébelleuse supérieure",
+   "court": "Cérébelleuse supérieure",
+   "couleur": "#e0a92f",
+   "precision": ""
+  },
+  {
+   "id": 28,
+   "code": "ACS",
+   "cote": "D",
+   "groupe": "VB",
+   "nom": "Artère cérébelleuse supérieure",
+   "court": "Cérébelleuse supérieure",
+   "couleur": "#e0a92f",
+   "precision": ""
+  },
+  {
+   "id": 29,
+   "code": "ACI",
+   "cote": "G",
+   "groupe": "VB",
+   "nom": "Artères cérébelleuses inférieures (antéro-inférieure et postéro-inférieure)",
+   "court": "Cérébelleuses inférieures",
+   "couleur": "#e98ac5",
+   "precision": "L'atlas réunit les territoires des artères cérébelleuses antéro-inférieure (AICA) et postéro-inférieure (PICA)."
+  },
+  {
+   "id": 30,
+   "code": "ACI",
+   "cote": "D",
+   "groupe": "VB",
+   "nom": "Artères cérébelleuses inférieures (antéro-inférieure et postéro-inférieure)",
+   "court": "Cérébelleuses inférieures",
+   "couleur": "#e98ac5",
+   "precision": "L'atlas réunit les territoires des artères cérébelleuses antéro-inférieure (AICA) et postéro-inférieure (PICA)."
+  }
+ ],
+ "non_colores": [
+  {
+   "id": 31,
+   "nom": "Ventricules et citernes (LCS)"
+  }
+ ],
+ "credits": {
+  "irm": "Colin 27 Average Brain (Holmes CJ et al., J Comput Assist Tomogr 1998). Copyright (C) 1993–2009 Louis Collins, McConnell Brain Imaging Centre, Montreal Neurological Institute, McGill University. Distribué via TemplateFlow.",
+  "atlas": "Digital 3D Brain MRI Arterial Territories Atlas (Liu C-F, Hsu J, Xu X et al., Scientific Data 2023, doi:10.1038/s41597-022-01923-0), © 2021 The Johns Hopkins University, licence CC BY-SA 4.0. Adapté par RadiologicHub : remis sur la grille de Colin 27, territoires étendus au contour de ce cerveau, LCS profond retiré, noms traduits ; la carte dérivée est diffusée sous la même licence."
+ }
+}
