@@ -150,6 +150,34 @@ test('zones jonctionnelles : calque à part, corticale entre territoires superfi
   assert.equal(horsD, 0, 'zone profonde dans le territoire superficiel de l\'ACM, de z = +14 à +34 mm');
 });
 
+test('mode test : banque de questions vérifiée sur la carte du sujet (structure, territoire, deux côtés)', () => {
+  const Q = M.questions;
+  assert.ok(Q.length >= 20, `${Q.length} questions`);
+  assert.equal(new Set(Q.map(q => q.structure)).size, Q.length, 'structures toutes différentes');
+  const categories = {};
+  for (const q of Q) {
+    assert.ok(['profond', 'cortical', 'fosse'].includes(q.categorie), q.structure);
+    categories[q.categorie] = (categories[q.categorie] || 0) + 1;
+    assert.ok(q.rayon_mm >= 3 && q.rayon_mm <= 15, q.structure);
+    assert.ok(q.note && q.note.length > 10, q.structure);
+    for (const cote of ['D', 'G']) {
+      const [x, y, z] = q.cibles_mm[cote];
+      assert.ok(cote === 'D' ? x > 0 : x < 0, `${q.structure} ${cote} : x = ${x}`);
+      const v = carte[(x - ox) + nx * ((y - oy) + ny * (z - oz))];
+      assert.equal(v, id(q.territoire, cote), `${q.structure} ${cote} : la cible est dans le territoire ${q.territoire}`);
+    }
+  }
+  // assez de structures par catégorie pour proposer trois mauvaises réponses
+  for (const [c, nb] of Object.entries(categories)) assert.ok(nb >= 4, `${c} : ${nb} structures`);
+  const page = fs.readFileSync(path.join(DOSSIER, 'territoires-arteriels.html'), 'utf8');
+  assert.match(page, /data-action="test"/);
+  assert.match(page, /<div class="ra-bloc ra-test" id="ra-test" aria-live="polite" hidden><\/div>/);
+  assert.equal((page.match(/class="ra-bloc ra-hors-test"/g) || []).length, 3, 'territoires, légende et territoire choisi masqués pendant le test');
+  const js = fs.readFileSync(path.join(DOSSIER, 'visionneuse.js'), 'utf8');
+  for (const motif of [/function demarrerTest/, /function creerLesion/, /function appliquerLesion/, /function validerTest/, /NB_QUESTIONS = 10/])
+    assert.match(js, motif);
+});
+
 test('licences et crédits : IRM IBC (CC0), atlas CC BY-SA 4.0 (Liu et al. 2023), Colin 27', () => {
   const atlas = fs.readFileSync(path.join(DONNEES, 'LICENSE-atlas-CC-BY-SA-4.0.txt'), 'utf8');
   const colin = fs.readFileSync(path.join(DONNEES, 'LICENSE-colin27.txt'), 'utf8');

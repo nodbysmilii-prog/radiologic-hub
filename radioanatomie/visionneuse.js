@@ -14,6 +14,9 @@
      fenêtrage, clic du milieu glissé = déplacement, clic gauche = outil choisi.
      Tactile : un doigt = outil choisi (défilement par défaut), deux doigts = zoom
      et déplacement, toucher bref = identifier. Clavier : ↑ ↓, Page ↑ ↓, + −, 0, P (pondération).
+   • Mode test : territoires, étiquettes et légende masqués ; une lésion ischémique est simulée
+     dans un territoire (hypersignal FLAIR et T2, hyposignal T1) ; l'étudiant choisit la structure
+     atteinte et le territoire artériel, puis la correction révèle le territoire. Score sur 10 questions.
    ========================================================= */
 (function () {
   'use strict';
@@ -150,10 +153,11 @@
 
   /* ---------- Coupe agrandie (mise en cache) ---------- */
   function coupe() {
-    const k = etat.coupes[etat.plan], cle = etat.plan + ':' + k, cleSerie = etat.serie + ':' + cle;
+    const k = etat.coupes[etat.plan], cle = etat.plan + ':' + k, cleSerie = etat.serie + ':' + cle + ':' + (lesion ? lesion.cle : '');
     if (cache.cleSerie === cleSerie) return cache;
     const [w, h] = taillePlan(etat.plan);
     const gris = extraire(vols[etat.serie], etat.plan, k);
+    if (lesion) appliquerLesion(gris, w, h, k);
     const lab = cache.cle === cle ? cache.lab : extraire(carte, etat.plan, k);
     const labJ = cache.cle === cle ? cache.labJ : extraire(jon, etat.plan, k);
     const kx = noyau(w), ky = noyau(h), W = kx.N, H = ky.N;
@@ -526,10 +530,141 @@
     ctx.moveTo(x, y - 9); ctx.lineTo(x, y - 3); ctx.moveTo(x, y + 3); ctx.lineTo(x, y + 9); ctx.stroke();
   }
 
+  /* ---------- Mode test : lésion simulée ---------- */
+  let lesion = null;
+  // Poids de la lésion dans une boîte autour de la cible : voxels du territoire à moins du rayon, bord adouci,
+  // puis léger flou (1-2-1) pour un contour naturel qui suit tout de même le territoire.
+  function creerLesion(q, cote) {
+    const [x0, y0, z0] = q.cibles_mm[cote].map((v, a) => Math.round((v - M.origine_mm[a]) / M.espacement_mm[a]));
+    const ident = territoires.find(t => t.code === q.territoire && t.cote === cote).id;
+    const R = q.rayon_mm, B = Math.ceil(R) + 3, n = 2 * B + 1, [nx, ny, nz] = dims;
+    let p = new Float32Array(n * n * n);
+    for (let dz = -B; dz <= B; dz++) for (let dy = -B; dy <= B; dy++) for (let dx = -B; dx <= B; dx++) {
+      const x = x0 + dx, y = y0 + dy, z = z0 + dz;
+      if (x < 0 || y < 0 || z < 0 || x >= nx || y >= ny || z >= nz || carte[x + nx * (y + ny * z)] !== ident) continue;
+      const d = Math.hypot(dx, dy, dz);
+      p[(dx + B) + n * ((dy + B) + n * (dz + B))] = Math.max(0, Math.min(1, (R - d) / 2.5));
+    }
+    for (const pas of [1, n, n * n]) {
+      const q2 = new Float32Array(p.length);
+      for (let i = 0; i < p.length; i++) q2[i] = 0.5 * p[i] + 0.25 * ((p[i - pas] || 0) + (p[i + pas] || 0));
+      p = q2;
+    }
+    return { cle: q.structure + cote, x0, y0, z0, B, n, poids: p };
+  }
+  // Signal de la lésion selon la pondération : hypersignal en FLAIR et en T2, hyposignal modéré en T1
+  function appliquerLesion(gris, w, h, k) {
+    const { x0, y0, z0, B, n, poids } = lesion;
+    for (let v = 0; v < h; v++) for (let u = 0; u < w; u++) {
+      const [x, y, z] = voxel(etat.plan, k, u, v), dx = x - x0, dy = y - y0, dz = z - z0;
+      if (Math.abs(dx) > B || Math.abs(dy) > B || Math.abs(dz) > B) continue;
+      const a = poids[(dx + B) + n * ((dy + B) + n * (dz + B))];
+      if (!a) continue;
+      const i = v * w + u, g = gris[i];
+      gris[i] = etat.serie === 'T1' ? Math.round(g * (1 - 0.38 * a))
+        : Math.round(g + a * ((etat.serie === 'FLAIR' ? 215 : 205) - g) * 0.85);
+    }
+  }
+
+  /* ---------- Mode test : questions ---------- */
+  const NB_QUESTIONS = 10;
+  const POOLS = { profond: ['LSM', 'LSL', 'ChA', 'ACP', 'ACM', 'ACA'], cortical: ['ACA', 'ACM', 'ACP', 'LSL'], fosse: ['BAS', 'ACS', 'AICA', 'PICA', 'VERT', 'ACP'] };
+  const melanger = l => { const a = l.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const boiteTest = $('#ra-test', station);
+  const nomCode = code => territoires.find(t => t.code === code).nom;
+  function demarrerTest() {
+    if (!M || !M.questions) return;
+    const avant = etat.test ? etat.test.avant : { territoires: etat.territoires, etiquettes: etat.etiquettes, jonctions: etat.jonctions, cote: etat.cote, detail: etat.detail, serie: etat.serie };
+    const liste = melanger(M.questions).slice(0, NB_QUESTIONS).map(q => ({ q, cote: Math.random() < 0.5 ? 'D' : 'G' }));
+    etat.test = { liste, i: 0, points: 0, avant };
+    etat.detail = 'detail'; etat.choisi = null;
+    station.classList.add('is-test');
+    if (M.series.some(s => s.code === 'FLAIR')) changerSerie('FLAIR');
+    poserQuestion();
+  }
+  function quitterTest() {
+    if (!etat.test) return;
+    const a = etat.test.avant;
+    etat.test = null; lesion = null; etat.point = null; etat.choisi = null;
+    Object.assign(etat, { territoires: a.territoires, etiquettes: a.etiquettes, jonctions: a.jonctions, cote: a.cote, detail: a.detail });
+    station.classList.remove('is-test');
+    if (boiteTest) { boiteTest.hidden = true; boiteTest.innerHTML = ''; }
+    construireLegende(); afficherInfo(); synchroniserCommandes(); demander();
+  }
+  function poserQuestion() {
+    const T = etat.test, { q, cote } = T.liste[T.i];
+    T.reponse = { structure: null, territoire: null }; T.valide = false;
+    etat.territoires = false; etat.etiquettes = false; etat.jonctions = false; etat.choisi = null; etat.point = null;
+    etat.cote = cote;
+    lesion = creerLesion(q, cote);
+    etat.plan = 'axial'; etat.zoom = 1; etat.panX = etat.panY = 0;
+    etat.coupes.axial = lesion.z0; etat.coupes.coronal = lesion.y0; etat.coupes.sagittal = lesion.x0;
+    // structures proposées : la bonne et trois de la même catégorie ; territoires : le bon et trois plausibles
+    const autres = melanger(M.questions.filter(x => x.categorie === q.categorie && x.structure !== q.structure).map(x => x.structure));
+    T.choixStructure = melanger([q.structure, ...autres.slice(0, 3)]);
+    const pool = melanger(POOLS[q.categorie].filter(c => c !== q.territoire));
+    T.choixTerritoire = melanger([q.territoire, ...pool.slice(0, 3)]);
+    afficherTest(); synchroniserCommandes(); demander();
+  }
+  function afficherTest() {
+    if (!boiteTest) return;
+    const T = etat.test;
+    boiteTest.hidden = false;
+    if (T.fini) {
+      boiteTest.innerHTML = `<h2>Mode test</h2><p class="ra-test-resultat">Résultat : <b>${T.points} / ${2 * T.liste.length}</b></p>
+        <p class="ra-test-consigne">Un point par structure et un point par territoire.</p>
+        <div class="ra-test-actions"><button type="button" class="ra-btn" data-test="recommencer">Recommencer</button>
+        <button type="button" class="ra-btn" data-test="quitter">Quitter le test</button></div>`;
+      return;
+    }
+    const { q, cote } = T.liste[T.i];
+    const bouton = (type, val, texte) => {
+      const choisi = T.reponse[type] === val, juste = type === 'structure' ? q.structure : q.territoire;
+      const etatCls = T.valide ? (val === juste ? ' is-juste' : choisi ? ' is-faux' : '') : '';
+      return `<button type="button" class="ra-choix${etatCls}" data-type="${type}" data-val="${val.replace(/"/g, '&quot;')}" aria-pressed="${choisi}"${T.valide ? ' disabled' : ''}>${texte}</button>`;
+    };
+    const correction = T.valide ? `<div class="ra-test-correction"><p><b>${T.reponse.structure === q.structure ? '✓' : '✗'} ${q.structure}</b>, côté ${cote === 'D' ? 'droit' : 'gauche'}</p>
+      <p><b>${T.reponse.territoire === q.territoire ? '✓' : '✗'} ${nomCode(q.territoire)}</b></p><p>${q.note}</p></div>` : '';
+    boiteTest.innerHTML = `<h2>Mode test</h2>
+      <p class="ra-test-score">Question <b>${T.i + 1}</b> / ${T.liste.length} · Score <b>${T.points}</b> / ${2 * T.i + (T.valide ? 2 : 0)}</p>
+      <p class="ra-test-consigne">Une lésion ischémique est simulée sur cette IRM (hypersignal en FLAIR et en T2, hyposignal en T1). Faites défiler les coupes, changez de plan ou de pondération, puis répondez.</p>
+      <fieldset><legend>Structure atteinte</legend><div class="ra-test-choix">${T.choixStructure.map(v => bouton('structure', v, v)).join('')}</div></fieldset>
+      <fieldset><legend>Territoire artériel atteint</legend><div class="ra-test-choix">${T.choixTerritoire.map(v => bouton('territoire', v, nomCode(v))).join('')}</div></fieldset>
+      ${correction}
+      <div class="ra-test-actions">${T.valide
+        ? `<button type="button" class="ra-btn is-primaire" data-test="suivante">${T.i + 1 < T.liste.length ? 'Question suivante' : 'Voir le résultat'}</button>`
+        : `<button type="button" class="ra-btn is-primaire" data-test="valider"${T.reponse.structure && T.reponse.territoire ? '' : ' disabled'}>Valider</button>`}
+        <button type="button" class="ra-btn" data-test="quitter">Quitter le test</button></div>`;
+  }
+  function validerTest() {
+    const T = etat.test, { q } = T.liste[T.i];
+    if (!T.reponse.structure || !T.reponse.territoire || T.valide) return;
+    T.valide = true;
+    T.points += (T.reponse.structure === q.structure) + (T.reponse.territoire === q.territoire);
+    // correction : territoire révélé (les autres atténués), étiquettes, repère sur la lésion
+    etat.territoires = true; etat.etiquettes = true;
+    etat.choisi = { type: 'territoire', code: q.territoire };
+    etat.point = [lesion.x0, lesion.y0, lesion.z0];
+    afficherTest(); synchroniserCommandes(); demander();
+    station.dispatchEvent(new CustomEvent('ra-test-valide', { detail: { points: T.points } }));
+  }
+  function questionSuivante() {
+    const T = etat.test;
+    if (T.i + 1 < T.liste.length) { T.i++; poserQuestion(); }
+    else { T.fini = true; lesion = null; etat.point = null; afficherTest(); demander(); }
+  }
+  if (boiteTest) boiteTest.addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if (!b || !etat.test) return;
+    if (b.classList.contains('ra-choix')) { etat.test.reponse[b.dataset.type] = b.dataset.val; afficherTest(); return; }
+    ({ valider: validerTest, suivante: questionSuivante, quitter: quitterTest, recommencer: demarrerTest })[b.dataset.test]?.();
+  });
+  const enTest = () => !!(etat.test && !etat.test.valide && !etat.test.fini);
+
   const signe = n => (n > 0 ? '+' : n < 0 ? '−' : '') + Math.abs(n);
   function majTextes() {
     const P = PLANS[etat.plan], k = etat.coupes[etat.plan], n = nbCoupes(etat.plan);
-    info.hg.innerHTML = `<span class="ra-coin-long">RadiologicHub · Radioanatomie<br></span>IRM ${serie().nom} · volontaire sain<br>${P.nom}`;
+    info.hg.innerHTML = `<span class="ra-coin-long">RadiologicHub · Radioanatomie<br></span>IRM ${serie().nom} · ${etat.test ? 'mode test' : 'volontaire sain'}<br>${P.nom}`;
     info.hd.innerHTML = `Coupe ${k + 1} / ${n}<br>${AXES[P.axe]} = ${signe(mm(P.axe, k))} mm (MNI)<br>Épaisseur 1 mm`;
     info.bg.innerHTML = `F ${Math.round(etat.largeur)} · N ${Math.round(etat.niveau)}${pointeur.texte ? '<br>' + pointeur.texte : ''}`;
     info.bd.innerHTML = `Zoom ${etat.zoom.toFixed(1).replace('.', ',')}×`;
@@ -564,7 +699,7 @@
     return pos;
   }
   function nomTerritoire(r) {
-    if (!r || !r.t) return '';
+    if (!r || !r.t || enTest()) return '';
     if (r.t.nonColore) return r.t.nom;
     const cote = r.t.cote === 'D' ? 'droit' : 'gauche';
     const j = r.jonction ? ` · ${r.jonction.nom.toLowerCase()}` : '';
@@ -582,7 +717,7 @@
   function identifier(px, py, epingle) {
     const r = sonder(px, py);
     pointeur.texte = decrire(r);
-    if (epingle) {
+    if (epingle && !etat.test) {
       if (r) etat.point = [r.x, r.y, r.z];
       if (r && r.t && !r.t.nonColore) choisir(etat.detail === 'detail' ? { type: 'territoire', code: r.t.code } : { type: 'groupe', code: r.t.groupe }, false);
       else if (etat.choisi) choisir(null, false);
@@ -718,7 +853,7 @@
       PageUp: () => allerCoupe(k + 10), PageDown: () => allerCoupe(k - 10), Home: () => allerCoupe(0), End: () => allerCoupe(nbCoupes(etat.plan) - 1),
       '+': () => zoomer(1.25, largeurEcran / 2, hauteurEcran / 2), '-': () => zoomer(0.8, largeurEcran / 2, hauteurEcran / 2), '0': reinitialiser,
       a: () => changerPlan('axial'), c: () => changerPlan('coronal'), s: () => changerPlan('sagittal'),
-      t: () => basculer('territoires'), e: () => basculer('etiquettes'), j: () => basculer('jonctions'),
+      t: () => enTest() || basculer('territoires'), e: () => enTest() || basculer('etiquettes'), j: () => enTest() || basculer('jonctions'),
       p: () => { const l = M.series.map(s => s.code); changerSerie(l[(l.indexOf(etat.serie) + 1) % l.length]); },
     };
     const f = touches[e.key];
@@ -827,6 +962,7 @@
     $$('[data-plan]', station).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.plan === etat.plan)));
     $$('[data-outil]', station).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.outil === etat.outil)));
     ecran.dataset.outil = etat.outil;
+    $$('[data-action="test"]', station).forEach(b => b.setAttribute('aria-pressed', String(!!etat.test)));
     $$('[data-detail]', station).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.detail === etat.detail)));
     $$('[data-cote]', station).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.cote === etat.cote)));
     $$('[data-serie]', station).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.serie === etat.serie)));
@@ -855,6 +991,7 @@
     const f = serie().fenetres[Number(fenetres.value)];
     if (f) { etat.largeur = f.largeur; etat.niveau = f.niveau; synchroniserFenetre(); demander(); }
   });
+  $$('[data-action="test"]', station).forEach(b => b.addEventListener('click', () => (etat.test ? quitterTest() : demarrerTest())));
   const reinit = $('[data-action="reinitialiser"]', station);
   if (reinit) reinit.addEventListener('click', reinitialiser);
   const plein = $('[data-action="plein-ecran"]', station);
@@ -888,5 +1025,5 @@
     }
   })();
 
-  window.RHRadioanatomie = { etat, demander, changerPlan, changerSerie, allerCoupe, sonder: (x, y) => sonder(x, y), cadre: () => cadre() };
+  window.RHRadioanatomie = { etat, demander, changerPlan, changerSerie, allerCoupe, demarrerTest, quitterTest, sonder: (x, y) => sonder(x, y), cadre: () => cadre() };
 })();

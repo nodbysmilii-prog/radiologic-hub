@@ -370,6 +370,426 @@
    "nom": "Ventricules et citernes (LCS)"
   }
  ],
+ "questions": [
+  {
+   "structure": "Tête du noyau caudé",
+   "territoire": "LSM",
+   "categorie": "profond",
+   "rayon_mm": 6,
+   "cibles_mm": {
+    "D": [
+     12,
+     14,
+     8
+    ],
+    "G": [
+     -12,
+     14,
+     8
+    ]
+   },
+   "note": "Artère récurrente de Heubner et lenticulo-striées médiales, branches de l'ACA."
+  },
+  {
+   "structure": "Putamen (noyau lenticulaire)",
+   "territoire": "LSL",
+   "categorie": "profond",
+   "rayon_mm": 7,
+   "cibles_mm": {
+    "D": [
+     25,
+     2,
+     2
+    ],
+    "G": [
+     -25,
+     2,
+     2
+    ]
+   },
+   "note": "Lenticulo-striées latérales : infarctus du territoire profond de l'ACM (striato-capsulaire)."
+  },
+  {
+   "structure": "Bras postérieur de la capsule interne",
+   "territoire": "ChA",
+   "categorie": "profond",
+   "rayon_mm": 5,
+   "cibles_mm": {
+    "D": [
+     22,
+     -12,
+     8
+    ],
+    "G": [
+     -22,
+     -12,
+     8
+    ]
+   },
+   "note": "Artère choroïdienne antérieure (carotide interne) : hémiplégie proportionnelle controlatérale."
+  },
+  {
+   "structure": "Thalamus",
+   "territoire": "ACP",
+   "categorie": "profond",
+   "rayon_mm": 7,
+   "cibles_mm": {
+    "D": [
+     10,
+     -18,
+     6
+    ],
+    "G": [
+     -10,
+     -18,
+     6
+    ]
+   },
+   "note": "Perforantes thalamiques (thalamo-perforantes et thalamo-genouillées), branches de l'ACP."
+  },
+  {
+   "structure": "Uncus et tête de l'hippocampe",
+   "territoire": "ChA",
+   "categorie": "profond",
+   "rayon_mm": 5,
+   "cibles_mm": {
+    "D": [
+     27,
+     -13,
+     -22
+    ],
+    "G": [
+     -27,
+     -14,
+     -21
+    ]
+   },
+   "note": "Artère choroïdienne antérieure : uncus, amygdale et tête de l'hippocampe."
+  },
+  {
+   "structure": "Corps de l'hippocampe",
+   "territoire": "ACP",
+   "categorie": "profond",
+   "rayon_mm": 6,
+   "cibles_mm": {
+    "D": [
+     30,
+     -28,
+     -10
+    ],
+    "G": [
+     -30,
+     -28,
+     -8
+    ]
+   },
+   "note": "Branches temporales de l'ACP."
+  },
+  {
+   "structure": "Insula",
+   "territoire": "ACM",
+   "categorie": "cortical",
+   "rayon_mm": 11,
+   "cibles_mm": {
+    "D": [
+     38,
+     -2,
+     6
+    ],
+    "G": [
+     -38,
+     -2,
+     6
+    ]
+   },
+   "note": "Branches insulaires de l'ACM (segment M2)."
+  },
+  {
+   "structure": "Gyrus précentral (cortex moteur)",
+   "territoire": "ACM",
+   "categorie": "cortical",
+   "rayon_mm": 13,
+   "cibles_mm": {
+    "D": [
+     42,
+     -15,
+     48
+    ],
+    "G": [
+     -42,
+     -15,
+     48
+    ]
+   },
+   "note": "Branches corticales de l'ACM : déficit moteur controlatéral à prédominance brachio-faciale."
+  },
+  {
+   "structure": "Lobule paracentral",
+   "territoire": "ACA",
+   "categorie": "cortical",
+   "rayon_mm": 11,
+   "cibles_mm": {
+    "D": [
+     6,
+     -25,
+     62
+    ],
+    "G": [
+     -6,
+     -25,
+     62
+    ]
+   },
+   "note": "Branches corticales de l'ACA : déficit moteur controlatéral à prédominance crurale."
+  },
+  {
+   "structure": "Gyrus cingulaire (face médiale du lobe frontal)",
+   "territoire": "ACA",
+   "categorie": "cortical",
+   "rayon_mm": 11,
+   "cibles_mm": {
+    "D": [
+     6,
+     30,
+     28
+    ],
+    "G": [
+     -6,
+     30,
+     28
+    ]
+   },
+   "note": "Branches corticales de l'ACA (péricalleuse et calloso-marginale)."
+  },
+  {
+   "structure": "Cortex calcarin (lobe occipital)",
+   "territoire": "ACP",
+   "categorie": "cortical",
+   "rayon_mm": 12,
+   "cibles_mm": {
+    "D": [
+     8,
+     -85,
+     6
+    ],
+    "G": [
+     -8,
+     -85,
+     6
+    ]
+   },
+   "note": "Artère calcarine (ACP) : hémianopsie latérale homonyme controlatérale."
+  },
+  {
+   "structure": "Gyrus fusiforme (face inférieure du lobe temporal)",
+   "territoire": "ACP",
+   "categorie": "cortical",
+   "rayon_mm": 11,
+   "cibles_mm": {
+    "D": [
+     35,
+     -55,
+     -14
+    ],
+    "G": [
+     -35,
+     -55,
+     -14
+    ]
+   },
+   "note": "Branches temporales inférieures de l'ACP."
+  },
+  {
+   "structure": "Gyrus temporal supérieur",
+   "territoire": "ACM",
+   "categorie": "cortical",
+   "rayon_mm": 13,
+   "cibles_mm": {
+    "D": [
+     55,
+     -30,
+     8
+    ],
+    "G": [
+     -55,
+     -30,
+     8
+    ]
+   },
+   "note": "Division inférieure de l'ACM : aphasie de Wernicke si l'hémisphère est dominant."
+  },
+  {
+   "structure": "Gyrus frontal inférieur",
+   "territoire": "ACM",
+   "categorie": "cortical",
+   "rayon_mm": 12,
+   "cibles_mm": {
+    "D": [
+     48,
+     20,
+     10
+    ],
+    "G": [
+     -48,
+     20,
+     10
+    ]
+   },
+   "note": "Division supérieure de l'ACM : aphasie de Broca si l'hémisphère est dominant."
+  },
+  {
+   "structure": "Centre semi-ovale (substance blanche frontale)",
+   "territoire": "ACM",
+   "categorie": "cortical",
+   "rayon_mm": 9,
+   "cibles_mm": {
+    "D": [
+     28,
+     10,
+     32
+    ],
+    "G": [
+     -28,
+     10,
+     32
+    ]
+   },
+   "note": "Branches médullaires (perforantes corticales) de l'ACM."
+  },
+  {
+   "structure": "Précunéus (face médiale du lobe pariétal)",
+   "territoire": "ACA",
+   "categorie": "cortical",
+   "rayon_mm": 11,
+   "cibles_mm": {
+    "D": [
+     6,
+     -60,
+     45
+    ],
+    "G": [
+     -6,
+     -60,
+     45
+    ]
+   },
+   "note": "Branches pariétales de l'ACA (au-dessus du sillon pariéto-occipital)."
+  },
+  {
+   "structure": "Mésencéphale (pédoncule cérébral)",
+   "territoire": "ACP",
+   "categorie": "fosse",
+   "rayon_mm": 5,
+   "cibles_mm": {
+    "D": [
+     12,
+     -18,
+     -10
+    ],
+    "G": [
+     -12,
+     -18,
+     -10
+    ]
+   },
+   "note": "Perforantes mésencéphaliques de l'ACP (P1) : syndrome de Weber."
+  },
+  {
+   "structure": "Pont (protubérance)",
+   "territoire": "BAS",
+   "categorie": "fosse",
+   "rayon_mm": 6,
+   "cibles_mm": {
+    "D": [
+     4,
+     -24,
+     -32
+    ],
+    "G": [
+     -4,
+     -24,
+     -32
+    ]
+   },
+   "note": "Branches paramédianes de l'artère basilaire."
+  },
+  {
+   "structure": "Bulbe (moelle allongée)",
+   "territoire": "VERT",
+   "categorie": "fosse",
+   "rayon_mm": 4,
+   "cibles_mm": {
+    "D": [
+     3,
+     -38,
+     -50
+    ],
+    "G": [
+     -3,
+     -37,
+     -51
+    ]
+   },
+   "note": "Artère vertébrale et spinale antérieure : syndrome bulbaire médian (Dejerine)."
+  },
+  {
+   "structure": "Face supérieure du cervelet (vermis supérieur)",
+   "territoire": "ACS",
+   "categorie": "fosse",
+   "rayon_mm": 10,
+   "cibles_mm": {
+    "D": [
+     10,
+     -62,
+     -20
+    ],
+    "G": [
+     -10,
+     -62,
+     -20
+    ]
+   },
+   "note": "Artère cérébelleuse supérieure : syndrome cérébelleux."
+  },
+  {
+   "structure": "Face antérieure de l'hémisphère cérébelleux",
+   "territoire": "AICA",
+   "categorie": "fosse",
+   "rayon_mm": 6,
+   "cibles_mm": {
+    "D": [
+     36,
+     -40,
+     -42
+    ],
+    "G": [
+     -30,
+     -43,
+     -43
+    ]
+   },
+   "note": "Artère cérébelleuse antéro-inférieure (AICA) : vertige, surdité et paralysie faciale homolatérales."
+  },
+  {
+   "structure": "Face inférieure de l'hémisphère cérébelleux",
+   "territoire": "PICA",
+   "categorie": "fosse",
+   "rayon_mm": 11,
+   "cibles_mm": {
+    "D": [
+     25,
+     -72,
+     -45
+    ],
+    "G": [
+     -25,
+     -72,
+     -45
+    ]
+   },
+   "note": "Artère cérébelleuse postéro-inférieure (PICA) ; atteinte du bulbe latéral : syndrome de Wallenberg."
+  }
+ ],
  "credits": {
   "irm": "Individual Brain Charting (IBC), sujet 01, séance 00 : T1 (MPRAGE), T2 (SPACE) et FLAIR 3D, Siemens Prisma 3 T (Pinho AL, Amadon A, Ruest T et al., Scientific Data 2018 ; doi:10.1038/sdata.2018.105). OpenNeuro ds002685, licence CC0. Recalé sur l'espace MNI, rééchantillonné à 1 mm, intensités corrigées (N4) et ramenées à 0–255.",
   "atlas": "Digital 3D Brain MRI Arterial Territories Atlas (Liu C-F, Hsu J, Xu X et al., Scientific Data 2023, doi:10.1038/s41597-022-01923-0), © 2021 The Johns Hopkins University, licence CC BY-SA 4.0. Adapté par RadiologicHub : territoires recalés sur l'anatomie (Colin 27) d'après des coupes de référence, puis transportés sur le sujet IBC (recalage non linéaire) et étendus au contour de son cerveau ; zones jonctionnelles ajoutées ; noms traduits. La carte dérivée est diffusée sous la même licence.",

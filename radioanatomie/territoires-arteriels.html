@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css?v=20261013020000">
   <link rel="stylesheet" href="../fiche.css?v=20261012150000">
-  <link rel="stylesheet" href="radioanatomie.css?v=20261016234000">
+  <link rel="stylesheet" href="radioanatomie.css?v=20261017003000">
 </head>
 <body class="fiche-page">
 
@@ -79,6 +79,8 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v6M12 7.5v.5"/></svg><span class="ra-btn-texte">Identifier</span></button>
             </div>
             <div class="ra-groupe">
+              <button type="button" class="ra-btn ra-btn-test" data-action="test" aria-pressed="false" title="Mode test : territoires et étiquettes masqués, lésion simulée à identifier">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5 12 5l9 4.5-9 4.5z"/><path d="M7 11.5v4.5c3 2 7 2 10 0v-4.5M21 9.5v5"/></svg><span class="ra-btn-texte">Mode test</span></button>
               <button type="button" class="ra-btn" data-action="reinitialiser" title="Réinitialiser le zoom et le fenêtrage (double-clic sur l'image)">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4"/></svg><span class="ra-btn-texte">Réinitialiser</span></button>
               <button type="button" class="ra-btn" data-action="plein-ecran" title="Plein écran">
@@ -107,7 +109,8 @@
           </div>
 
           <aside class="ra-panneau" aria-label="Territoires et réglages">
-            <div class="ra-bloc">
+            <div class="ra-bloc ra-test" id="ra-test" aria-live="polite" hidden></div>
+            <div class="ra-bloc ra-hors-test">
               <h2>Territoires</h2>
               <label class="ra-interrupteur"><input type="checkbox" id="ra-territoires" checked> Afficher les territoires</label>
               <div class="ra-groupe" role="group" aria-label="Niveau de détail">
@@ -125,11 +128,11 @@
               <label class="ra-interrupteur"><input type="checkbox" id="ra-etiquettes" checked> Étiquettes</label>
               <label class="ra-interrupteur"><input type="checkbox" id="ra-jonctions" checked> Zones jonctionnelles (hachurées)</label>
             </div>
-            <div class="ra-bloc">
+            <div class="ra-bloc ra-hors-test">
               <h2>Légende</h2>
               <div class="ra-legende"></div>
             </div>
-            <div class="ra-bloc">
+            <div class="ra-bloc ra-hors-test">
               <h2>Territoire choisi</h2>
               <div class="ra-info" aria-live="polite"></div>
             </div>
@@ -180,6 +183,9 @@
           </div>
         </div>
         <div class="callout" style="margin-top: 26px">
+          <p><b>Mode test :</b> le bouton « Mode test » masque les territoires, les étiquettes et la légende, et simule une lésion ischémique dans un territoire (hypersignal en FLAIR et en T2, hyposignal en T1, limitée au territoire). Faites défiler les coupes, changez de plan ou de pondération, puis choisissez la structure atteinte et le territoire artériel : la correction révèle le territoire et explique la réponse. Dix questions tirées au hasard, côté droit ou gauche, un point par bonne réponse.</p>
+        </div>
+        <div class="callout" style="margin-top: 14px">
           <p><b>À savoir :</b> convention radiologique, la droite du patient est à gauche de l'écran (en sagittal, l'avant est à gauche). Les trois pondérations viennent de la même séance d'IRM et sont superposées exactement ; les positions sont données en millimètres dans l'espace MNI (recalage affine). Les territoires partent d'un atlas construit sur les infarctus de 1 298 patients, redécoupé selon les coupes de référence classiques (territoires profonds, choroïdienne antérieure, ACP, cervelet, tronc cérébral) puis transporté sur ce cerveau ; les zones jonctionnelles sont tracées le long des limites de ces territoires. Chez un individu donné, les limites varient avec l'anatomie du polygone de Willis.</p>
         </div>
       </div>
@@ -217,7 +223,7 @@
     </div>
   </footer>
 
-  <script src="visionneuse.js?v=20261016234000"></script>
+  <script src="visionneuse.js?v=20261017003000"></script>
   <script src="../fiche.js?v=20261012150000"></script>
 </body>
 </html>

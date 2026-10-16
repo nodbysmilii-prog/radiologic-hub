@@ -524,6 +524,82 @@ def zones_jonctionnelles(carte, t1n):
     return j
 
 
+# ---------------------------------------------------------------------------
+# Mode test : structures cibles (coordonnées MNI du côté droit, le gauche en miroir), territoire attendu, rayon de la
+# lésion simulée (mm), catégorie (pour les mauvaises réponses proposées) et explication montrée à la correction.
+# Chaque cible est vérifiée sur la carte du sujet ; si elle tombe à côté du territoire attendu, le voxel le plus proche
+# de ce territoire (à moins de 8 mm, à 1,5 mm au moins de ses limites) la remplace.
+# ---------------------------------------------------------------------------
+QUESTIONS = [
+    ("Tête du noyau caudé", 'LSM', (12, 14, 8), 6, 'profond',
+     "Artère récurrente de Heubner et lenticulo-striées médiales, branches de l'ACA."),
+    ("Putamen (noyau lenticulaire)", 'LSL', (25, 2, 2), 7, 'profond',
+     "Lenticulo-striées latérales : infarctus du territoire profond de l'ACM (striato-capsulaire)."),
+    ("Bras postérieur de la capsule interne", 'ChA', (22, -12, 8), 5, 'profond',
+     "Artère choroïdienne antérieure (carotide interne) : hémiplégie proportionnelle controlatérale."),
+    ("Thalamus", 'ACP', (10, -18, 6), 7, 'profond',
+     "Perforantes thalamiques (thalamo-perforantes et thalamo-genouillées), branches de l'ACP."),
+    ("Uncus et tête de l'hippocampe", 'ChA', (25, -8, -20), 5, 'profond',
+     "Artère choroïdienne antérieure : uncus, amygdale et tête de l'hippocampe."),
+    ("Corps de l'hippocampe", 'ACP', (30, -28, -8), 6, 'profond',
+     "Branches temporales de l'ACP."),
+    ("Insula", 'ACM', (38, -2, 6), 11, 'cortical',
+     "Branches insulaires de l'ACM (segment M2)."),
+    ("Gyrus précentral (cortex moteur)", 'ACM', (42, -15, 48), 13, 'cortical',
+     "Branches corticales de l'ACM : déficit moteur controlatéral à prédominance brachio-faciale."),
+    ("Lobule paracentral", 'ACA', (6, -25, 62), 11, 'cortical',
+     "Branches corticales de l'ACA : déficit moteur controlatéral à prédominance crurale."),
+    ("Gyrus cingulaire (face médiale du lobe frontal)", 'ACA', (6, 30, 28), 11, 'cortical',
+     "Branches corticales de l'ACA (péricalleuse et calloso-marginale)."),
+    ("Cortex calcarin (lobe occipital)", 'ACP', (8, -85, 6), 12, 'cortical',
+     "Artère calcarine (ACP) : hémianopsie latérale homonyme controlatérale."),
+    ("Gyrus fusiforme (face inférieure du lobe temporal)", 'ACP', (35, -55, -14), 11, 'cortical',
+     "Branches temporales inférieures de l'ACP."),
+    ("Gyrus temporal supérieur", 'ACM', (55, -30, 8), 13, 'cortical',
+     "Division inférieure de l'ACM : aphasie de Wernicke si l'hémisphère est dominant."),
+    ("Gyrus frontal inférieur", 'ACM', (48, 20, 10), 12, 'cortical',
+     "Division supérieure de l'ACM : aphasie de Broca si l'hémisphère est dominant."),
+    ("Centre semi-ovale (substance blanche frontale)", 'ACM', (28, 10, 32), 9, 'cortical',
+     "Branches médullaires (perforantes corticales) de l'ACM."),
+    ("Précunéus (face médiale du lobe pariétal)", 'ACA', (6, -60, 45), 11, 'cortical',
+     "Branches pariétales de l'ACA (au-dessus du sillon pariéto-occipital)."),
+    ("Mésencéphale (pédoncule cérébral)", 'ACP', (12, -18, -10), 5, 'fosse',
+     "Perforantes mésencéphaliques de l'ACP (P1) : syndrome de Weber."),
+    ("Pont (protubérance)", 'BAS', (4, -24, -32), 6, 'fosse',
+     "Branches paramédianes de l'artère basilaire."),
+    ("Bulbe (moelle allongée)", 'VERT', (3, -38, -50), 4, 'fosse',
+     "Artère vertébrale et spinale antérieure : syndrome bulbaire médian (Dejerine)."),
+    ("Face supérieure du cervelet (vermis supérieur)", 'ACS', (10, -62, -20), 10, 'fosse',
+     "Artère cérébelleuse supérieure : syndrome cérébelleux."),
+    ("Face antérieure de l'hémisphère cérébelleux", 'AICA', (30, -48, -38), 6, 'fosse',
+     "Artère cérébelleuse antéro-inférieure (AICA) : vertige, surdité et paralysie faciale homolatérales."),
+    ("Face inférieure de l'hémisphère cérébelleux", 'PICA', (25, -72, -45), 11, 'fosse',
+     "Artère cérébelleuse postéro-inférieure (PICA) ; atteinte du bulbe latéral : syndrome de Wallenberg."),
+]
+
+
+def preparer_questions(carte):
+    """Banque du mode test : cibles vérifiées sur la carte du sujet, des deux côtés."""
+    ids = {(t[1], c): t[0] + (c == 'D') for t in TERRITOIRES for c in ('G', 'D')}
+    sortie = []
+    for structure, code, (x, y, z), rayon, categorie, note in QUESTIONS:
+        cibles = {}
+        for cote, s in (('D', 1), ('G', -1)):
+            ident = ids[(code, cote)]
+            v = (s * x + 90, y + 126, z + 72)
+            if carte[v] != ident:
+                interieur = ndi.binary_erosion(carte == ident, iterations=1)
+                zone = np.zeros(carte.shape, bool)
+                zone[v[0] - 8:v[0] + 9, v[1] - 8:v[1] + 9, v[2] - 8:v[2] + 9] = True
+                candidats = np.argwhere(interieur & zone)
+                assert len(candidats), (structure, cote)
+                v = tuple(candidats[np.argmin(((candidats - np.array(v)) ** 2).sum(axis=1))])
+            cibles[cote] = [int(v[0]) - 90, int(v[1]) - 126, int(v[2]) - 72]
+        sortie.append({'structure': structure, 'territoire': code, 'categorie': categorie, 'rayon_mm': rayon,
+                       'cibles_mm': cibles, 'note': note})
+    return sortie
+
+
 SERIES = [
     ('T1', 'T1', "T1 3D (MPRAGE), 1 × 1 × 1,1 mm", 'irm-t1.u8.gz'),
     ('T2', 'T2', "T2 3D (SPACE), 0,9 mm isotrope", 'irm-t2.u8.gz'),
@@ -590,6 +666,7 @@ def exporter(series, carte, jonctions):
         'territoires': territoires,
         'jonctions': JONCTIONS,
         'non_colores': [{'id': VENTRICULE, 'nom': 'Ventricules et citernes (LCS)'}],
+        'questions': preparer_questions(carte),
         'credits': {
             'irm': "Individual Brain Charting (IBC), sujet 01, séance 00 : T1 (MPRAGE), T2 (SPACE) et FLAIR 3D, Siemens Prisma 3 T "
                    "(Pinho AL, Amadon A, Ruest T et al., Scientific Data 2018 ; doi:10.1038/sdata.2018.105). OpenNeuro ds002685, "
