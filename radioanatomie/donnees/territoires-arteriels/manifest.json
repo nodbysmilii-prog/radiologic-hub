@@ -31,8 +31,8 @@
     },
     {
      "nom": "Cerveau (substance grise / blanche)",
-     "largeur": 123,
-     "niveau": 130
+     "largeur": 124,
+     "niveau": 132
     },
     {
      "nom": "Large",
@@ -54,7 +54,7 @@
     },
     {
      "nom": "Cerveau (substance grise / blanche)",
-     "largeur": 94,
+     "largeur": 97,
      "niveau": 87
     },
     {
@@ -77,8 +77,8 @@
     },
     {
      "nom": "Cerveau (substance grise / blanche)",
-     "largeur": 112,
-     "niveau": 158
+     "largeur": 121,
+     "niveau": 154
     },
     {
      "nom": "Large",
@@ -93,11 +93,11 @@
   "jonctions": "jonctions.u8.gz"
  },
  "empreintes_sha256_decompresse": {
-  "T1": "38cbc158a0ab4c4a4b433f47445b09288da9a945c53ea841403358fe3cc4bb37",
-  "T2": "8a0c40bae003f03f81210b08603ff6449c0e9ab8b1187727d6417b125cd8b24a",
-  "FLAIR": "d2115d0a93eaf42edfc52960636a14c3db8abf451fa9cfd87eb6a923bcc11193",
-  "territoires": "8a0af4af32777c667900cf2aaaf66d9cebb0affa429ea31b8be6484024a6934a",
-  "jonctions": "1f8083d0b3f05fcb206d6e324671630b2b81ab841f27b795134cb0a243ecb95d"
+  "T1": "0badb2e92c77731acb029f057a0d8afd7de668174a48bdb36fa5a340516ede9b",
+  "T2": "abaf9a8cb91d3277ba513598544877b95b865d82d7d95d79fb73774be1a58847",
+  "FLAIR": "8b407019460be020646ac863a9cce4fa3b6036ac4fae174a1b19b7c1b8e708f7",
+  "territoires": "0b7130aaf3201ba1c0a36baf55c492ac47ee2f044272757e901184f911767ce3",
+  "jonctions": "451d13925cf04be437dbc90cce06b887ccd4c651530f12f8a74177a7a37de33e"
  },
  "groupes": {
   "ACA": {
