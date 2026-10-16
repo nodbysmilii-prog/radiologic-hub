@@ -1,0 +1,11 @@
+Images IRM : Individual Brain Charting (IBC), sujet 01, séance 00 (T1w, acq-spc T2w, FLAIR)
+OpenNeuro ds002685 (doi:10.18112/openneuro.ds002685.v1.3.1), licence CC0 1.0 Universal (domaine public).
+https://creativecommons.org/publicdomain/zero/1.0/
+
+Référence : Pinho AL, Amadon A, Ruest T, Fabre M, Dohmatob E, Denghien I, Ginisty C, Becuwe-Desmidt S, Roger S,
+Laurier L, Joly-Testault V, Mediouni-Cloarec G, Double C, Martins B, Pinel P, Eger E, Varoquaux G, Pallier C,
+Dehaene S, Hertz-Pannier L, Thirion B. Individual Brain Charting, a high-resolution fMRI dataset for cognitive
+mapping. Sci Data. 2018;5:180105.
+
+Transformations par RadiologicHub : recalage (T2 et FLAIR sur T1, puis espace MNI), rééchantillonnage à 1 mm,
+correction d'inhomogénéité (N4), intensités ramenées à 0–255, voxels hors de la tête mis à zéro.

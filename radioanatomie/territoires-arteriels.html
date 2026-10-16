@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Territoires artériels du cerveau (IRM) — Radioanatomie — RadiologicHub</title>
-  <meta name="description" content="Radioanatomie RadiologicHub : naviguez coupe par coupe dans une IRM cérébrale T1 de haute qualité, comme sur une console (défilement, fenêtrage, zoom, trois plans), avec les territoires artériels du cerveau colorés et nommés.">
+  <meta name="description" content="Radioanatomie RadiologicHub : naviguez coupe par coupe dans une IRM cérébrale de haute qualité en T1, T2 et FLAIR, comme sur une console (défilement, fenêtrage, zoom, trois plans), avec les territoires artériels du cerveau et les zones jonctionnelles colorés et nommés.">
   <link rel="icon" type="image/svg+xml" href="../assets/emblem.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css?v=20261013020000">
   <link rel="stylesheet" href="../fiche.css?v=20261012150000">
-  <link rel="stylesheet" href="radioanatomie.css?v=20261016180000">
+  <link rel="stylesheet" href="radioanatomie.css?v=20261016234000">
 </head>
 <body class="fiche-page">
 
@@ -45,7 +45,7 @@
         </nav>
         <p class="marker-tag">Radioanatomie · IRM</p>
         <h1>Territoires <span class="hl-red">artériels</span> du <span class="hl-navy">cerveau</span></h1>
-        <p class="fiche-sub">Naviguez coupe par coupe dans une IRM T1 de haute qualité, comme sur une console : défilement, fenêtrage, zoom, trois plans. Les territoires artériels sont colorés et nommés ; touchez une région pour l'identifier.</p>
+        <p class="fiche-sub">Naviguez coupe par coupe dans l'IRM cérébrale d'un volontaire sain, en T1, T2 et FLAIR, comme sur une console : défilement, fenêtrage, zoom, trois plans. Les territoires artériels et les zones jonctionnelles sont colorés et nommés ; touchez une région pour l'identifier.</p>
       </div>
     </section>
 
@@ -58,6 +58,12 @@
               <button type="button" class="ra-btn" data-plan="axial" aria-pressed="true">Axial</button>
               <button type="button" class="ra-btn" data-plan="coronal" aria-pressed="false">Coronal</button>
               <button type="button" class="ra-btn" data-plan="sagittal" aria-pressed="false">Sagittal</button>
+            </div>
+            <div class="ra-groupe" role="group" aria-label="Pondération">
+              <span class="ra-groupe-titre">Pondération</span>
+              <button type="button" class="ra-btn" data-serie="T1" aria-pressed="true">T1</button>
+              <button type="button" class="ra-btn" data-serie="T2" aria-pressed="false">T2</button>
+              <button type="button" class="ra-btn" data-serie="FLAIR" aria-pressed="false">FLAIR</button>
             </div>
             <div class="ra-groupe" role="group" aria-label="Outil du clic gauche ou du doigt">
               <span class="ra-groupe-titre">Outil</span>
@@ -81,7 +87,7 @@
           </div>
 
           <div class="ra-ecran" tabindex="0" data-outil="defiler" aria-describedby="ra-aide-clavier">
-            <canvas id="ra-toile" role="img" aria-label="IRM T1"></canvas>
+            <canvas id="ra-toile" role="img" aria-label="IRM cérébrale"></canvas>
             <div class="ra-coin ra-coin-hg"></div>
             <div class="ra-coin ra-coin-hd"></div>
             <div class="ra-coin ra-coin-bg"></div>
@@ -105,7 +111,7 @@
               <h2>Territoires</h2>
               <label class="ra-interrupteur"><input type="checkbox" id="ra-territoires" checked> Afficher les territoires</label>
               <div class="ra-groupe" role="group" aria-label="Niveau de détail">
-                <button type="button" class="ra-btn" data-detail="grands" aria-pressed="false">4 grands territoires</button>
+                <button type="button" class="ra-btn" data-detail="grands" aria-pressed="false">Grands territoires</button>
                 <button type="button" class="ra-btn" data-detail="detail" aria-pressed="true">Détaillés</button>
               </div>
               <div class="ra-groupe" role="group" aria-label="Hémisphère coloré">
@@ -117,6 +123,7 @@
               <label class="ra-reglage" for="ra-opacite">Opacité <input type="range" id="ra-opacite" min="10" max="90" value="45"></label>
               <label class="ra-interrupteur"><input type="checkbox" id="ra-contours" checked> Contours</label>
               <label class="ra-interrupteur"><input type="checkbox" id="ra-etiquettes" checked> Étiquettes</label>
+              <label class="ra-interrupteur"><input type="checkbox" id="ra-jonctions" checked> Zones jonctionnelles (hachurées)</label>
             </div>
             <div class="ra-bloc">
               <h2>Légende</h2>
@@ -158,7 +165,8 @@
               <li><kbd>↑</kbd> <kbd>↓</kbd> : coupe suivante ou précédente ; <kbd>Page ↑</kbd> <kbd>Page ↓</kbd> : 10 par 10.</li>
               <li><kbd>A</kbd> <kbd>C</kbd> <kbd>S</kbd> : plan axial, coronal, sagittal.</li>
               <li><kbd>+</kbd> <kbd>−</kbd> : zoom ; <kbd>0</kbd> : réinitialiser.</li>
-              <li><kbd>T</kbd> : territoires ; <kbd>E</kbd> : étiquettes.</li>
+              <li><kbd>T</kbd> : territoires ; <kbd>E</kbd> : étiquettes ; <kbd>J</kbd> : zones jonctionnelles.</li>
+              <li><kbd>P</kbd> : pondération suivante (T1, T2, FLAIR).</li>
             </ul>
           </div>
           <div class="fcard">
@@ -172,7 +180,7 @@
           </div>
         </div>
         <div class="callout" style="margin-top: 26px">
-          <p><b>À savoir :</b> convention radiologique, la droite du patient est à gauche de l'écran (en sagittal, l'avant est à gauche). Les positions sont données en millimètres dans l'espace MNI. Les limites des territoires sont celles d'un atlas construit sur les infarctus de 1 298 patients : chez un individu donné, elles varient avec l'anatomie du polygone de Willis et des zones jonctionnelles. Les territoires profonds et la limite supérieure de l'ACP ont été ajustés sur l'anatomie de cette IRM.</p>
+          <p><b>À savoir :</b> convention radiologique, la droite du patient est à gauche de l'écran (en sagittal, l'avant est à gauche). Les trois pondérations viennent de la même séance d'IRM et sont superposées exactement ; les positions sont données en millimètres dans l'espace MNI (recalage affine). Les territoires partent d'un atlas construit sur les infarctus de 1 298 patients, redécoupé selon les coupes de référence classiques (territoires profonds, choroïdienne antérieure, ACP, cervelet, tronc cérébral) puis transporté sur ce cerveau ; les zones jonctionnelles sont tracées le long des limites de ces territoires. Chez un individu donné, les limites varient avec l'anatomie du polygone de Willis.</p>
         </div>
       </div>
     </section>
@@ -180,8 +188,9 @@
     <section class="section sec-up">
       <div class="container ra-credits">
         <h2 class="marker-sub">Source et licences</h2>
-        <p><b>IRM</b> : « Colin 27 Average Brain », moyenne de 27 acquisitions T1 d'un même sujet, 1 mm, espace MNI (Holmes CJ et al., <i>J Comput Assist Tomogr</i> 1998). Copyright (C) 1993–2009 Louis Collins, McConnell Brain Imaging Centre, Montreal Neurological Institute, McGill University ; utilisation et diffusion libres avec cette mention (<a href="donnees/territoires-arteriels/LICENSE-colin27.txt">licence</a>). Fichier obtenu via <a href="https://www.templateflow.org/" rel="noopener" target="_blank">TemplateFlow</a>.</p>
-        <p><b>Territoires artériels</b> : « Digital 3D Brain MRI Arterial Territories Atlas », Liu C-F, Hsu J, Xu X et al., <i>Scientific Data</i> 2023 (<a href="https://doi.org/10.1038/s41597-022-01923-0" rel="noopener" target="_blank">doi:10.1038/s41597-022-01923-0</a>), © 2021 The Johns Hopkins University, licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="noopener" target="_blank">CC BY-SA 4.0</a> (<a href="https://github.com/Chin-Fu-Liu/Arterial_Atlas" rel="noopener" target="_blank">dépôt des auteurs</a>). Adapté par RadiologicHub : atlas remis sur la grille de Colin 27, territoires étendus au contour de ce cerveau, liquide cérébro-spinal profond laissé sans couleur, territoires profonds (noyau lenticulaire, tête du noyau caudé), basilaire et limite supérieure de l'ACP recalés sur l'anatomie de Colin 27, noms traduits en français. Cette carte dérivée est diffusée sous la même licence CC BY-SA 4.0 (<a href="donnees/territoires-arteriels/LICENSE-atlas-CC-BY-SA-4.0.txt">texte de la licence</a>).</p>
+        <p><b>IRM</b> : projet « Individual Brain Charting » (IBC), sujet 01 (volontaire sain), T1 3D (MPRAGE), T2 3D (SPACE) et FLAIR 3D, IRM 3 T Siemens Prisma (Pinho AL, Amadon A, Ruest T et al., <i>Scientific Data</i> 2018, <a href="https://doi.org/10.1038/sdata.2018.105" rel="noopener" target="_blank">doi:10.1038/sdata.2018.105</a>). Données publiques anonymisées <a href="https://openneuro.org/datasets/ds002685" rel="noopener" target="_blank">OpenNeuro ds002685</a>, licence <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.fr" rel="noopener" target="_blank">CC0</a> (<a href="donnees/territoires-arteriels/LICENSE-irm-IBC-CC0.txt">mention</a>). Recalées sur l'espace MNI, rééchantillonnées à 1 mm, intensités corrigées.</p>
+        <p><b>Recalage</b> : « Colin 27 Average Brain » (Holmes CJ et al., <i>J Comput Assist Tomogr</i> 1998), support de l'atlas puis relais pour le transporter sur le sujet IBC. Copyright (C) 1993–2009 Louis Collins, McConnell Brain Imaging Centre, Montreal Neurological Institute, McGill University (<a href="donnees/territoires-arteriels/LICENSE-colin27.txt">licence</a>), via <a href="https://www.templateflow.org/" rel="noopener" target="_blank">TemplateFlow</a>.</p>
+        <p><b>Territoires artériels</b> : « Digital 3D Brain MRI Arterial Territories Atlas », Liu C-F, Hsu J, Xu X et al., <i>Scientific Data</i> 2023 (<a href="https://doi.org/10.1038/s41597-022-01923-0" rel="noopener" target="_blank">doi:10.1038/s41597-022-01923-0</a>), © 2021 The Johns Hopkins University, licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="noopener" target="_blank">CC BY-SA 4.0</a> (<a href="https://github.com/Chin-Fu-Liu/Arterial_Atlas" rel="noopener" target="_blank">dépôt des auteurs</a>). Adapté par RadiologicHub : territoires redécoupés sur l'anatomie selon des coupes de référence (territoires profonds, choroïdienne antérieure, ACP, AICA et PICA, tronc cérébral), transportés sur le sujet IBC par recalage non linéaire et étendus au contour de son cerveau, liquide cérébro-spinal profond laissé sans couleur, zones jonctionnelles ajoutées, noms traduits en français. Cette carte dérivée est diffusée sous la même licence CC BY-SA 4.0 (<a href="donnees/territoires-arteriels/LICENSE-atlas-CC-BY-SA-4.0.txt">texte de la licence</a>).</p>
         <p>Données et script de préparation : <code>radioanatomie/donnees/territoires-arteriels/</code>, <code>scripts/radioanatomie/preparer_territoires.py</code>.</p>
       </div>
     </section>
@@ -208,7 +217,7 @@
     </div>
   </footer>
 
-  <script src="visionneuse.js?v=20261016220000"></script>
+  <script src="visionneuse.js?v=20261016234000"></script>
   <script src="../fiche.js?v=20261012150000"></script>
 </body>
 </html>

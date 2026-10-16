@@ -1,6 +1,6 @@
 {
  "titre": "Territoires artériels du cerveau",
- "sequence": "IRM T1 (Colin 27, 27 acquisitions moyennées d'un même sujet)",
+ "sujet": "Volontaire sain, projet Individual Brain Charting (IBC), sujet 01 ; IRM 3 T (Siemens Prisma)",
  "dimensions": [
   181,
   217,
@@ -16,32 +16,89 @@
   -126,
   -72
  ],
- "orientation": "RAS (x vers la droite du patient, y vers l'avant, z vers le haut) ; x varie le plus vite, puis y, puis z",
- "fichiers": {
-  "irm": "irm-t1.u8.gz",
-  "territoires": "territoires.u8.gz"
- },
- "empreintes_sha256_decompresse": {
-  "irm": "4dbe902308aaa4ae46ef212311e318d8ef9b93fc78690d9aaf60875092a6caeb",
-  "territoires": "3b013dfe5dc5dd7180780eb609be50253b9b6a5d34de301aa780412c4d78562e"
- },
- "fenetres": [
+ "orientation": "RAS (x vers la droite du patient, y vers l'avant, z vers le haut) ; x varie le plus vite, puis y, puis z ; sujet recalé sur l'espace MNI (transformation affine)",
+ "series": [
   {
-   "nom": "Standard",
-   "largeur": 255,
-   "niveau": 128
+   "code": "T1",
+   "nom": "T1",
+   "description": "T1 3D (MPRAGE), 1 × 1 × 1,1 mm",
+   "fichier": "irm-t1.u8.gz",
+   "fenetres": [
+    {
+     "nom": "Standard",
+     "largeur": 255,
+     "niveau": 128
+    },
+    {
+     "nom": "Cerveau (substance grise / blanche)",
+     "largeur": 123,
+     "niveau": 130
+    },
+    {
+     "nom": "Large",
+     "largeur": 400,
+     "niveau": 160
+    }
+   ]
   },
   {
-   "nom": "Cerveau (substance grise / blanche)",
-   "largeur": 150,
-   "niveau": 140
+   "code": "T2",
+   "nom": "T2",
+   "description": "T2 3D (SPACE), 0,9 mm isotrope",
+   "fichier": "irm-t2.u8.gz",
+   "fenetres": [
+    {
+     "nom": "Standard",
+     "largeur": 255,
+     "niveau": 128
+    },
+    {
+     "nom": "Cerveau (substance grise / blanche)",
+     "largeur": 94,
+     "niveau": 87
+    },
+    {
+     "nom": "Large",
+     "largeur": 400,
+     "niveau": 160
+    }
+   ]
   },
   {
-   "nom": "Large",
-   "largeur": 400,
-   "niveau": 160
+   "code": "FLAIR",
+   "nom": "FLAIR",
+   "description": "FLAIR 3D, 0,45 × 0,45 × 0,9 mm",
+   "fichier": "irm-flair.u8.gz",
+   "fenetres": [
+    {
+     "nom": "Standard",
+     "largeur": 255,
+     "niveau": 128
+    },
+    {
+     "nom": "Cerveau (substance grise / blanche)",
+     "largeur": 112,
+     "niveau": 158
+    },
+    {
+     "nom": "Large",
+     "largeur": 400,
+     "niveau": 160
+    }
+   ]
   }
  ],
+ "fichiers": {
+  "territoires": "territoires.u8.gz",
+  "jonctions": "jonctions.u8.gz"
+ },
+ "empreintes_sha256_decompresse": {
+  "T1": "38cbc158a0ab4c4a4b433f47445b09288da9a945c53ea841403358fe3cc4bb37",
+  "T2": "8a0c40bae003f03f81210b08603ff6449c0e9ab8b1187727d6417b125cd8b24a",
+  "FLAIR": "d2115d0a93eaf42edfc52960636a14c3db8abf451fa9cfd87eb6a923bcc11193",
+  "territoires": "8a0af4af32777c667900cf2aaaf66d9cebb0affa429ea31b8be6484024a6934a",
+  "jonctions": "1f8083d0b3f05fcb206d6e324671630b2b81ab841f27b795134cb0a243ecb95d"
+ },
  "groupes": {
   "ACA": {
    "nom": "Artère cérébrale antérieure (ACA)",
@@ -52,6 +109,11 @@
    "nom": "Artère cérébrale moyenne (ACM)",
    "court": "ACM",
    "couleur": "#ea5a3d"
+  },
+  "ChA": {
+   "nom": "Artère choroïdienne antérieure (carotide interne)",
+   "court": "Choroïdienne antérieure",
+   "couleur": "#9a5cf0"
   },
   "ACP": {
    "nom": "Artère cérébrale postérieure (ACP)",
@@ -73,7 +135,7 @@
    "nom": "Territoire superficiel de l'ACA",
    "court": "ACA (superficiel)",
    "couleur": "#3fbf52",
-   "precision": ""
+   "precision": "Branches corticales : face médiale des lobes frontal et pariétal, bord supérieur de la convexité, corps calleux."
   },
   {
    "id": 2,
@@ -83,7 +145,7 @@
    "nom": "Territoire superficiel de l'ACA",
    "court": "ACA (superficiel)",
    "couleur": "#3fbf52",
-   "precision": ""
+   "precision": "Branches corticales : face médiale des lobes frontal et pariétal, bord supérieur de la convexité, corps calleux."
   },
   {
    "id": 3,
@@ -113,7 +175,7 @@
    "nom": "Territoire superficiel de l'ACM",
    "court": "ACM (superficiel)",
    "couleur": "#ea5a3d",
-   "precision": ""
+   "precision": "Branches corticales : convexité des lobes frontal, pariétal et temporal, insula."
   },
   {
    "id": 8,
@@ -123,7 +185,7 @@
    "nom": "Territoire superficiel de l'ACM",
    "court": "ACM (superficiel)",
    "couleur": "#ea5a3d",
-   "precision": ""
+   "precision": "Branches corticales : convexité des lobes frontal, pariétal et temporal, insula."
   },
   {
    "id": 5,
@@ -146,124 +208,160 @@
    "precision": "Artères lenticulo-striées latérales, branches perforantes de l'ACM : noyau lenticulaire (putamen et pallidum) et, au-dessus, couronne rayonnante le long du ventricule latéral."
   },
   {
+   "id": 23,
+   "code": "ChA",
+   "cote": "G",
+   "groupe": "ChA",
+   "nom": "Territoire de l'artère choroïdienne antérieure",
+   "court": "Choroïdienne antérieure",
+   "couleur": "#9a5cf0",
+   "precision": "Branche de la carotide interne : bras postérieur de la capsule interne, uncus, amygdale et tête de l'hippocampe."
+  },
+  {
+   "id": 24,
+   "code": "ChA",
+   "cote": "D",
+   "groupe": "ChA",
+   "nom": "Territoire de l'artère choroïdienne antérieure",
+   "court": "Choroïdienne antérieure",
+   "couleur": "#9a5cf0",
+   "precision": "Branche de la carotide interne : bras postérieur de la capsule interne, uncus, amygdale et tête de l'hippocampe."
+  },
+  {
    "id": 17,
    "code": "ACP",
    "cote": "G",
    "groupe": "ACP",
-   "nom": "Territoire superficiel de l'ACP",
-   "court": "ACP (superficiel)",
+   "nom": "Territoire de l'ACP",
+   "court": "ACP",
    "couleur": "#3f86e0",
-   "precision": "Lobe occipital et face inférieure du lobe temporal. Absent au-dessus des ventricules latéraux : il apparaît au pôle occipital au niveau du corps des ventricules et s'étend vers l'avant en descendant."
+   "precision": "Branches corticales (lobe occipital, faces inférieure et médiale du lobe temporal) et perforantes (thalamus, mésencéphale). Absent au-dessus des ventricules latéraux : il apparaît au pôle occipital au niveau du corps des ventricules et s'étend vers l'avant en descendant."
   },
   {
    "id": 18,
    "code": "ACP",
    "cote": "D",
    "groupe": "ACP",
-   "nom": "Territoire superficiel de l'ACP",
-   "court": "ACP (superficiel)",
+   "nom": "Territoire de l'ACP",
+   "court": "ACP",
    "couleur": "#3f86e0",
-   "precision": "Lobe occipital et face inférieure du lobe temporal. Absent au-dessus des ventricules latéraux : il apparaît au pôle occipital au niveau du corps des ventricules et s'étend vers l'avant en descendant."
-  },
-  {
-   "id": 21,
-   "code": "THP",
-   "cote": "G",
-   "groupe": "ACP",
-   "nom": "Thalamo-perforantes et choroïdiennes postérieures (ACP)",
-   "court": "Thalamo-perforantes postérieures",
-   "couleur": "#9a5cf0",
-   "precision": "Thalamus."
-  },
-  {
-   "id": 22,
-   "code": "THP",
-   "cote": "D",
-   "groupe": "ACP",
-   "nom": "Thalamo-perforantes et choroïdiennes postérieures (ACP)",
-   "court": "Thalamo-perforantes postérieures",
-   "couleur": "#9a5cf0",
-   "precision": "Thalamus."
-  },
-  {
-   "id": 23,
-   "code": "THA",
-   "cote": "G",
-   "groupe": "ACP",
-   "nom": "Choroïdienne antérieure et thalamo-perforantes antérieures",
-   "court": "Choroïdienne antérieure",
-   "couleur": "#c84fe0",
-   "precision": "Territoire peu exposé aux infarctus : l'atlas le définit sur la région temporale mésiale et l'hippocampe, et le rattache à l'ACP."
-  },
-  {
-   "id": 24,
-   "code": "THA",
-   "cote": "D",
-   "groupe": "ACP",
-   "nom": "Choroïdienne antérieure et thalamo-perforantes antérieures",
-   "court": "Choroïdienne antérieure",
-   "couleur": "#c84fe0",
-   "precision": "Territoire peu exposé aux infarctus : l'atlas le définit sur la région temporale mésiale et l'hippocampe, et le rattache à l'ACP."
+   "precision": "Branches corticales (lobe occipital, faces inférieure et médiale du lobe temporal) et perforantes (thalamus, mésencéphale). Absent au-dessus des ventricules latéraux : il apparaît au pôle occipital au niveau du corps des ventricules et s'étend vers l'avant en descendant."
   },
   {
    "id": 25,
    "code": "BAS",
    "cote": "G",
    "groupe": "VB",
-   "nom": "Branches de l'artère basilaire (tronc cérébral)",
-   "court": "Basilaire (tronc cérébral)",
+   "nom": "Territoire des branches de l'artère basilaire",
+   "court": "Basilaire (pont)",
    "couleur": "#e9d84a",
-   "precision": ""
+   "precision": "Pont (protubérance)."
   },
   {
    "id": 26,
    "code": "BAS",
    "cote": "D",
    "groupe": "VB",
-   "nom": "Branches de l'artère basilaire (tronc cérébral)",
-   "court": "Basilaire (tronc cérébral)",
+   "nom": "Territoire des branches de l'artère basilaire",
+   "court": "Basilaire (pont)",
    "couleur": "#e9d84a",
-   "precision": ""
+   "precision": "Pont (protubérance)."
   },
   {
    "id": 27,
    "code": "ACS",
    "cote": "G",
    "groupe": "VB",
-   "nom": "Artère cérébelleuse supérieure",
+   "nom": "Territoire de l'artère cérébelleuse supérieure",
    "court": "Cérébelleuse supérieure",
    "couleur": "#e0a92f",
-   "precision": ""
+   "precision": "Face supérieure du cervelet et vermis supérieur."
   },
   {
    "id": 28,
    "code": "ACS",
    "cote": "D",
    "groupe": "VB",
-   "nom": "Artère cérébelleuse supérieure",
+   "nom": "Territoire de l'artère cérébelleuse supérieure",
    "court": "Cérébelleuse supérieure",
    "couleur": "#e0a92f",
-   "precision": ""
+   "precision": "Face supérieure du cervelet et vermis supérieur."
+  },
+  {
+   "id": 33,
+   "code": "AICA",
+   "cote": "G",
+   "groupe": "VB",
+   "nom": "Territoire de l'artère cérébelleuse antéro-inférieure (AICA)",
+   "court": "AICA",
+   "couleur": "#c3d65f",
+   "precision": "Face antérieure (pétreuse) de l'hémisphère cérébelleux, flocculus, pédoncule cérébelleux moyen."
+  },
+  {
+   "id": 34,
+   "code": "AICA",
+   "cote": "D",
+   "groupe": "VB",
+   "nom": "Territoire de l'artère cérébelleuse antéro-inférieure (AICA)",
+   "court": "AICA",
+   "couleur": "#c3d65f",
+   "precision": "Face antérieure (pétreuse) de l'hémisphère cérébelleux, flocculus, pédoncule cérébelleux moyen."
   },
   {
    "id": 29,
-   "code": "ACI",
+   "code": "PICA",
    "cote": "G",
    "groupe": "VB",
-   "nom": "Artères cérébelleuses inférieures (antéro-inférieure et postéro-inférieure)",
-   "court": "Cérébelleuses inférieures",
+   "nom": "Territoire de l'artère cérébelleuse postéro-inférieure (PICA)",
+   "court": "PICA",
    "couleur": "#e98ac5",
-   "precision": "L'atlas réunit les territoires des artères cérébelleuses antéro-inférieure (AICA) et postéro-inférieure (PICA)."
+   "precision": "Face inférieure (sous-occipitale) de l'hémisphère cérébelleux, vermis inférieur, partie postérieure du bulbe."
   },
   {
    "id": 30,
-   "code": "ACI",
+   "code": "PICA",
    "cote": "D",
    "groupe": "VB",
-   "nom": "Artères cérébelleuses inférieures (antéro-inférieure et postéro-inférieure)",
-   "court": "Cérébelleuses inférieures",
+   "nom": "Territoire de l'artère cérébelleuse postéro-inférieure (PICA)",
+   "court": "PICA",
    "couleur": "#e98ac5",
-   "precision": "L'atlas réunit les territoires des artères cérébelleuses antéro-inférieure (AICA) et postéro-inférieure (PICA)."
+   "precision": "Face inférieure (sous-occipitale) de l'hémisphère cérébelleux, vermis inférieur, partie postérieure du bulbe."
+  },
+  {
+   "id": 35,
+   "code": "VERT",
+   "cote": "G",
+   "groupe": "VB",
+   "nom": "Territoire des branches de l'artère vertébrale et de l'artère spinale antérieure",
+   "court": "Vertébrale et spinale antérieure",
+   "couleur": "#d63fb4",
+   "precision": "Bulbe (moelle allongée) : partie antérieure et médiane."
+  },
+  {
+   "id": 36,
+   "code": "VERT",
+   "cote": "D",
+   "groupe": "VB",
+   "nom": "Territoire des branches de l'artère vertébrale et de l'artère spinale antérieure",
+   "court": "Vertébrale et spinale antérieure",
+   "couleur": "#d63fb4",
+   "precision": "Bulbe (moelle allongée) : partie antérieure et médiane."
+  }
+ ],
+ "jonctions": [
+  {
+   "id": 1,
+   "code": "JC",
+   "nom": "Zone jonctionnelle corticale",
+   "court": "Jonctionnel cortical",
+   "precision": "Bande de 7 mm à cheval sur la limite de deux territoires superficiels (ACA / ACM, ACM / ACP, ACA / ACP) : siège des infarctus jonctionnels corticaux (externes), en cas de bas débit."
+  },
+  {
+   "id": 2,
+   "code": "JP",
+   "nom": "Zone jonctionnelle profonde",
+   "court": "Jonctionnel profond",
+   "precision": "Substance blanche de la couronne rayonnante et du centre semi-ovale, en dehors du ventricule latéral, entre les perforantes et les branches superficielles de l'ACM : siège des infarctus jonctionnels internes (en chapelet)."
   }
  ],
  "non_colores": [
@@ -273,7 +371,8 @@
   }
  ],
  "credits": {
-  "irm": "Colin 27 Average Brain (Holmes CJ et al., J Comput Assist Tomogr 1998). Copyright (C) 1993–2009 Louis Collins, McConnell Brain Imaging Centre, Montreal Neurological Institute, McGill University. Distribué via TemplateFlow.",
-  "atlas": "Digital 3D Brain MRI Arterial Territories Atlas (Liu C-F, Hsu J, Xu X et al., Scientific Data 2023, doi:10.1038/s41597-022-01923-0), © 2021 The Johns Hopkins University, licence CC BY-SA 4.0. Adapté par RadiologicHub : remis sur la grille de Colin 27, territoires étendus au contour de ce cerveau, LCS profond retiré, territoires profonds et limite supérieure de l'ACP recalés sur l'anatomie de Colin 27, noms traduits ; la carte dérivée est diffusée sous la même licence."
+  "irm": "Individual Brain Charting (IBC), sujet 01, séance 00 : T1 (MPRAGE), T2 (SPACE) et FLAIR 3D, Siemens Prisma 3 T (Pinho AL, Amadon A, Ruest T et al., Scientific Data 2018 ; doi:10.1038/sdata.2018.105). OpenNeuro ds002685, licence CC0. Recalé sur l'espace MNI, rééchantillonné à 1 mm, intensités corrigées (N4) et ramenées à 0–255.",
+  "atlas": "Digital 3D Brain MRI Arterial Territories Atlas (Liu C-F, Hsu J, Xu X et al., Scientific Data 2023, doi:10.1038/s41597-022-01923-0), © 2021 The Johns Hopkins University, licence CC BY-SA 4.0. Adapté par RadiologicHub : territoires recalés sur l'anatomie (Colin 27) d'après des coupes de référence, puis transportés sur le sujet IBC (recalage non linéaire) et étendus au contour de son cerveau ; zones jonctionnelles ajoutées ; noms traduits. La carte dérivée est diffusée sous la même licence.",
+  "colin27": "Colin 27 Average Brain (Holmes CJ et al., J Comput Assist Tomogr 1998), relais du recalage. Copyright (C) 1993–2009 Louis Collins, McConnell Brain Imaging Centre, Montreal Neurological Institute, McGill University."
  }
 }

@@ -1,16 +1,19 @@
 /* =========================================================
    RadiologicHub — Espace radioanatomie : visionneuse type console (« DICOM »)
    ---------------------------------------------------------
-   • Volume IRM (octets 0–255) et carte des territoires (octets), grille de 1 mm,
-     décrits par manifest.json (dossier indiqué par data-donnees sur #ra-station).
+   • Volumes IRM d'un même sujet (T1, T2, FLAIR ; octets 0–255), carte des territoires et
+     calque des zones jonctionnelles (octets), grille de 1 mm, décrits par manifest.json
+     (dossier indiqué par data-donnees sur #ra-station). Le T1 est chargé d'abord, les
+     autres pondérations à la demande.
    • Trois plans (axial, coronal, sagittal), convention radiologique : droite du
      patient à gauche de l'écran ; en sagittal, l'avant à gauche.
    • Image agrandie par interpolation bicubique (×4), fenêtrage sur l'image
-     agrandie ; territoires lissés (vote pondéré des 4 voxels voisins) et contours.
+     agrandie ; territoires lissés (vote pondéré des 4 voxels voisins) et contours ;
+     zones jonctionnelles hachurées (corticale /, profonde \).
    • Souris : molette = coupe suivante, Ctrl + molette = zoom, clic droit glissé =
      fenêtrage, clic du milieu glissé = déplacement, clic gauche = outil choisi.
      Tactile : un doigt = outil choisi (défilement par défaut), deux doigts = zoom
-     et déplacement, toucher bref = identifier. Clavier : ↑ ↓, Page ↑ ↓, + −, 0.
+     et déplacement, toucher bref = identifier. Clavier : ↑ ↓, Page ↑ ↓, + −, 0, P (pondération).
    ========================================================= */
 (function () {
   'use strict';
@@ -87,15 +90,20 @@
   const etat = {
     plan: 'axial', coupes: {}, zoom: 1, panX: 0, panY: 0, largeur: 255, niveau: 128,
     territoires: true, detail: 'detail', cote: 'D', opacite: 0.45, contours: true, etiquettes: true,
-    choisi: null, outil: 'defiler', point: null,
+    choisi: null, outil: 'defiler', point: null, serie: null, jonctions: true,
   };
 
-  let M, irm, carte, dims, groupes, territoires, parId;
+  let M, carte, jon, dims, groupes, territoires, parId, parJonction, base;
+  const vols = {}, enCours = {};             // volumes IRM chargés, par pondération (T1, T2, FLAIR)
   let cache = { cle: null };                 // coupe courante agrandie (IRM)
   let cacheT = { cle: null };                // territoires lissés de la coupe courante
+  let cacheJ = { cle: null };                // zones jonctionnelles lissées de la coupe courante
+  const serie = () => M.series.find(s => s.code === etat.serie);
 
-  function initialiser(manifest, volIrm, volCarte) {
-    M = manifest; irm = volIrm; carte = volCarte; dims = M.dimensions;
+  function initialiser(manifest, volIrm, volCarte, volJonctions) {
+    M = manifest; carte = volCarte; jon = volJonctions; dims = M.dimensions;
+    etat.serie = M.series[0].code; vols[etat.serie] = volIrm;
+    parJonction = new Map((M.jonctions || []).map(j => [j.id, j]));
     groupes = Object.entries(M.groupes).map(([code, g], i) => ({ code, ...g, rang: i }));
     territoires = M.territoires;
     parId = new Map(territoires.map(t => [t.id, t]));
@@ -103,11 +111,9 @@
     // coupes de départ : axiale à z = +12 mm (noyaux gris), coronale à y = −10 mm, sagittale dans l'hémisphère droit (x = +28 mm)
     const indice = (axe, v) => Math.round((v - M.origine_mm[axe]) / M.espacement_mm[axe]);
     etat.coupes = { axial: indice(2, 12), coronal: indice(1, -10), sagittal: indice(0, 28) };
-    const f0 = M.fenetres[0]; etat.largeur = f0.largeur; etat.niveau = f0.niveau;
     // Grand écran : côté droit coloré et étiquettes ; téléphone : étiquettes masquées par défaut
     if (ecran.clientWidth < 640) etat.etiquettes = false;
-    const choixFenetre = $('#ra-fenetres', station);
-    if (choixFenetre) choixFenetre.innerHTML = M.fenetres.map((f, i) => `<option value="${i}">${f.nom}</option>`).join('');
+    remplirFenetres();
     construireLegende();
     synchroniserCommandes();
     redimensionner();
@@ -144,10 +150,12 @@
 
   /* ---------- Coupe agrandie (mise en cache) ---------- */
   function coupe() {
-    const k = etat.coupes[etat.plan], cle = etat.plan + ':' + k;
-    if (cache.cle === cle) return cache;
+    const k = etat.coupes[etat.plan], cle = etat.plan + ':' + k, cleSerie = etat.serie + ':' + cle;
+    if (cache.cleSerie === cleSerie) return cache;
     const [w, h] = taillePlan(etat.plan);
-    const gris = extraire(irm, etat.plan, k), lab = extraire(carte, etat.plan, k);
+    const gris = extraire(vols[etat.serie], etat.plan, k);
+    const lab = cache.cle === cle ? cache.lab : extraire(carte, etat.plan, k);
+    const labJ = cache.cle === cle ? cache.labJ : extraire(jon, etat.plan, k);
     const kx = noyau(w), ky = noyau(h), W = kx.N, H = ky.N;
     // Bicubique séparable : lignes puis colonnes
     const tmp = new Float32Array(W * h), grand = new Float32Array(W * H);
@@ -166,8 +174,44 @@
     }
     const toileGris = document.createElement('canvas');
     toileGris.width = W; toileGris.height = H;
-    cache = { cle, w, h, W, H, gris, lab, grand, toileGris, fenetre: null };
+    cache = { cle, cleSerie, w, h, W, H, gris, lab, labJ, grand, toileGris, fenetre: null };
     return cache;
+  }
+
+  // Zones jonctionnelles lissées de la même façon que les territoires (1 = corticale, 2 = profonde)
+  function calqueJonctions(c) {
+    const fc = etat.rapide ? 2 : F, cle = c.cle + ':' + fc;
+    if (cacheJ.cle === cle) return cacheJ;
+    const W = c.w * fc, H = c.h * fc;
+    const { top1, top2, marge } = territoiresLisses(c.labJ, c.w, c.h, W, H, fc);
+    const toileCalque = document.createElement('canvas');
+    toileCalque.width = W; toileCalque.height = H;
+    cacheJ = { cle, coupe: c.cle, fc, W, H, labG: top1, lab2: top2, marge, toileCalque, calque: null };
+    return cacheJ;
+  }
+  // Côté affiché : en axial et en coronal, l'hémisphère droit du patient est à gauche de l'écran (u < largeur / 2) ;
+  // en sagittal, le côté est celui de la coupe
+  function coteJonction(u, largeur) {
+    if (etat.cote === 'DG') return true;
+    if (etat.plan === 'sagittal') return (mm(0, etat.coupes.sagittal) >= 0 ? 'D' : 'G') === etat.cote;
+    return (u < largeur / 2) === (etat.cote === 'D');
+  }
+  // Hachures sombres : « / » pour la zone corticale, « \ » pour la zone profonde (pas de 1,25 mm)
+  function peindreJonctions(j) {
+    const cle = etat.cote;
+    if (j.calque === cle) return;
+    const img = new ImageData(j.W, j.H), d = img.data, P = Math.max(4, Math.round(1.25 * j.fc)), FONDU = 1.0 * j.fc / F;
+    for (let y = 0, p = 0; y < j.H; y++) for (let x = 0; x < j.W; x++, p++) {
+      const t = j.labG[p];
+      if (!t || !coteJonction(x, j.W)) continue;
+      const raie = (t === 1 ? (x + y) : (x - y + 4 * j.W)) % P < P * 0.45;
+      let a = raie ? 0.62 : 0.16;
+      if (j.lab2[p] !== t) a *= Math.min(1, 0.35 + 0.65 * j.marge[p] / FONDU);
+      const q = p * 4;
+      d[q] = 12; d[q + 1] = 12; d[q + 2] = 16; d[q + 3] = 255 * a;
+    }
+    j.toileCalque.getContext('2d').putImageData(img, 0, 0);
+    j.calque = cle;
   }
 
   // Territoires lissés : chaque étiquette devient un champ (indicatrice floutée, σ ≈ 1 mm), interpolé
@@ -300,7 +344,7 @@
     return parId.get(cle);
   }
   function estChoisi(cle) {
-    if (!etat.choisi) return true;
+    if (!etat.choisi || etat.choisi.type === 'jonction') return true;
     const t = infoAffichage(cle);
     return etat.choisi.type === 'groupe' ? t.groupe === etat.choisi.code : (t.code === etat.choisi.code);
   }
@@ -376,42 +420,53 @@
       const t = calqueTerritoires(c);
       peindreCalque(t);
       ctx.drawImage(t.toileCalque, g.ox, g.oy, g.w * g.s, g.h * g.s);
-      if (etat.etiquettes) dessinerEtiquettes(c, t, g);
     }
+    let tj = null;
+    if (etat.jonctions && jon) {
+      tj = calqueJonctions(c);
+      peindreJonctions(tj);
+      ctx.drawImage(tj.toileCalque, g.ox, g.oy, g.w * g.s, g.h * g.s);
+    }
+    if (etat.territoires && etat.etiquettes) dessinerEtiquettes(c, cacheT, g, tj);
     dessinerRepere(g);
     majTextes();
   }
 
   // Étiquettes à lignes de rappel, dans les marges gauche et droite (comme un atlas)
-  function dessinerEtiquettes(c, tc, g) {
-    const { w, h, lab } = c, table = tc.table;
+  function dessinerEtiquettes(c, tc, g, tj) {
+    const { w, h, lab, labJ } = c, table = tc.table;
+    // clé d'étiquette : territoire affiché, ou zone jonctionnelle (1000 + type) sur le côté affiché
+    const cleDe = p => table[lab[p]] || 0;
+    const cleJ = p => (tj && labJ[p] && coteJonction(p % w, w) ? 1000 + labJ[p] : 0);
     const sommes = new Map();
-    for (let v = 0; v < h; v++) for (let u = 0; u < w; u++) {
-      const k = table[lab[v * w + u]];
-      if (!k) continue;
-      let s = sommes.get(k);
-      if (!s) sommes.set(k, s = { n: 0, su: 0, sv: 0, px: [] });
-      s.n++; s.su += u; s.sv += v;
-      if ((u + v) % 2 === 0) s.px.push(v * w + u);
+    for (const fonction of [cleDe, cleJ]) {
+      for (let v = 0; v < h; v++) for (let u = 0; u < w; u++) {
+        const p = v * w + u, k = fonction(p);
+        if (!k) continue;
+        let s = sommes.get(k);
+        if (!s) sommes.set(k, s = { n: 0, su: 0, sv: 0, px: [], f: fonction });
+        s.n++; s.su += u; s.sv += v;
+        if ((u + v) % 2 === 0) s.px.push(p);
+      }
     }
     const items = [];
     for (const [k, s] of sommes) {
       if (s.n < 30) continue;
-      const cu = s.su / s.n, cv = s.sv / s.n;
+      const cu = s.su / s.n, cv = s.sv / s.n, f = s.f;
       // point d'ancrage : pixel intérieur le plus proche du centre de gravité
       let best = s.px[0], dmin = Infinity;
       for (const p of s.px) {
         const u = p % w, v = (p - u) / w;
         if (u < 1 || v < 1 || u >= w - 1 || v >= h - 1) continue;
-        if (table[lab[p - 1]] !== k || table[lab[p + 1]] !== k || table[lab[p - w]] !== k || table[lab[p + w]] !== k) continue;
+        if (f(p - 1) !== k || f(p + 1) !== k || f(p - w) !== k || f(p + w) !== k) continue;
         const d = (u - cu) ** 2 + (v - cv) ** 2;
         if (d < dmin) { dmin = d; best = p; }
       }
       const u = best % w, v = (best - u) / w;
-      const t = infoAffichage(tc.cles.get(k));
+      const t = k >= 1000 ? { court: parJonction.get(k - 1000).court, couleur: '#d6d6dc' } : infoAffichage(tc.cles.get(k));
       const xe = g.ox + (u + 0.5) * g.s, ye = g.oy + (v + 0.5) * g.s;
       if (xe < 0 || ye < 0 || xe > largeurEcran || ye > hauteurEcran) continue;   // hors de l'écran (zoom)
-      items.push({ k, x: xe, y: ye, t, choisi: estChoisi(tc.cles.get(k)) });
+      items.push({ k, x: xe, y: ye, t, choisi: k >= 1000 || estChoisi(tc.cles.get(k)) });
     }
     const taille = largeurEcran < 900 ? 11 : 12.5;
     ctx.font = `700 ${taille}px Montserrat, system-ui, sans-serif`;
@@ -474,14 +529,14 @@
   const signe = n => (n > 0 ? '+' : n < 0 ? '−' : '') + Math.abs(n);
   function majTextes() {
     const P = PLANS[etat.plan], k = etat.coupes[etat.plan], n = nbCoupes(etat.plan);
-    info.hg.innerHTML = `<span class="ra-coin-long">RadiologicHub · Radioanatomie<br></span>IRM T1 · Colin 27<br>${P.nom}`;
+    info.hg.innerHTML = `<span class="ra-coin-long">RadiologicHub · Radioanatomie<br></span>IRM ${serie().nom} · volontaire sain<br>${P.nom}`;
     info.hd.innerHTML = `Coupe ${k + 1} / ${n}<br>${AXES[P.axe]} = ${signe(mm(P.axe, k))} mm (MNI)<br>Épaisseur 1 mm`;
     info.bg.innerHTML = `F ${Math.round(etat.largeur)} · N ${Math.round(etat.niveau)}${pointeur.texte ? '<br>' + pointeur.texte : ''}`;
     info.bd.innerHTML = `Zoom ${etat.zoom.toFixed(1).replace('.', ',')}×`;
     info.oh.textContent = P.haut; info.ob.textContent = P.bas; info.og.textContent = P.gauche; info.od.textContent = P.droite;
     curseur.max = n; curseur.value = k + 1;
     compteur.textContent = `${k + 1} / ${n}`;
-    toile.setAttribute('aria-label', `IRM T1, coupe ${P.nom.toLowerCase()} ${k + 1} sur ${n}`);
+    toile.setAttribute('aria-label', `IRM ${serie().nom}, coupe ${P.nom.toLowerCase()} ${k + 1} sur ${n}`);
   }
 
   /* ---------- Identifier sous le pointeur ---------- */
@@ -496,7 +551,12 @@
       const i = Math.min(c.W - 1, Math.floor((px - g.ox) / g.s * c.fc)), j = Math.min(c.H - 1, Math.floor((py - g.oy) / g.s * c.fc));
       id = c.labG[j * c.W + i];
     }
-    return { x, y, z, id, t: parId.get(id) };
+    let jid = jon ? jon[x + dims[0] * (y + dims[1] * z)] : 0;
+    if (cacheJ.coupe === etat.plan + ':' + k) {
+      const i = Math.min(cacheJ.W - 1, Math.floor((px - g.ox) / g.s * cacheJ.fc)), j = Math.min(cacheJ.H - 1, Math.floor((py - g.oy) / g.s * cacheJ.fc));
+      jid = cacheJ.labG[j * cacheJ.W + i];
+    }
+    return { x, y, z, id, t: parId.get(id), jonction: etat.jonctions && jid ? parJonction.get(jid) : null };
   }
   function decrire(r) {
     if (!r) return '';
@@ -507,8 +567,9 @@
     if (!r || !r.t) return '';
     if (r.t.nonColore) return r.t.nom;
     const cote = r.t.cote === 'D' ? 'droit' : 'gauche';
-    if (etat.detail !== 'detail') return `${M.groupes[r.t.groupe].nom}, côté ${cote}`;
-    return `${r.t.nom}, côté ${cote}`;
+    const j = r.jonction ? ` · ${r.jonction.nom.toLowerCase()}` : '';
+    if (etat.detail !== 'detail') return `${M.groupes[r.t.groupe].nom}, côté ${cote}${j}`;
+    return `${r.t.nom}, côté ${cote}${j}`;
   }
   function montrerBulle(px, py, texte, epingle) {
     if (!texte) { bulle.hidden = true; return; }
@@ -551,7 +612,36 @@
     etat.panX = mx - (mx - etat.panX) * r; etat.panY = my - (my - etat.panY) * r;
     demander();
   }
-  function reinitialiser() { etat.zoom = 1; etat.panX = etat.panY = 0; const f0 = M.fenetres[0]; etat.largeur = f0.largeur; etat.niveau = f0.niveau; demander(); synchroniserCommandes(); }
+  function reinitialiser() { etat.zoom = 1; etat.panX = etat.panY = 0; const f0 = serie().fenetres[0]; etat.largeur = f0.largeur; etat.niveau = f0.niveau; demander(); synchroniserCommandes(); }
+  function remplirFenetres() {
+    const choix = $('#ra-fenetres', station), f0 = serie().fenetres[0];
+    etat.largeur = f0.largeur; etat.niveau = f0.niveau;
+    if (choix) choix.innerHTML = serie().fenetres.map((f, i) => `<option value="${i}">${f.nom}</option>`).join('');
+  }
+  // Pondération : volume chargé à la demande (barre de progression), fenêtre par défaut de la série
+  async function changerSerie(code) {
+    if (!M || code === etat.serie || !M.series.some(s => s.code === code)) return;
+    if (!vols[code]) {
+      const s = M.series.find(x => x.code === code);
+      chargement.hidden = false;
+      chargement.innerHTML = `Chargement du ${s.nom}… <span>0 %</span>`;
+      try {
+        enCours[code] = enCours[code] || charger(base + s.fichier, p => { const e = chargement.querySelector('span'); if (e) e.textContent = Math.round(p * 100) + ' %'; });
+        const v = await enCours[code];
+        if (v.length !== dims[0] * dims[1] * dims[2]) throw new Error('taille du volume inattendue');
+        vols[code] = v;
+      } catch (err) {
+        chargement.innerHTML = `Impossible de charger le ${s.nom}.<br><small>${String(err.message || err)}</small>`;
+        delete enCours[code];
+        setTimeout(() => { chargement.hidden = true; }, 2500);
+        return;
+      }
+      chargement.hidden = true;
+    }
+    etat.serie = code;
+    remplirFenetres(); synchroniserCommandes(); demander();
+    station.dispatchEvent(new CustomEvent('ra-serie', { detail: code }));
+  }
 
   let cumul = 0;
   ecran.addEventListener('wheel', e => {
@@ -628,7 +718,8 @@
       PageUp: () => allerCoupe(k + 10), PageDown: () => allerCoupe(k - 10), Home: () => allerCoupe(0), End: () => allerCoupe(nbCoupes(etat.plan) - 1),
       '+': () => zoomer(1.25, largeurEcran / 2, hauteurEcran / 2), '-': () => zoomer(0.8, largeurEcran / 2, hauteurEcran / 2), '0': reinitialiser,
       a: () => changerPlan('axial'), c: () => changerPlan('coronal'), s: () => changerPlan('sagittal'),
-      t: () => basculer('territoires'), e: () => basculer('etiquettes'),
+      t: () => basculer('territoires'), e: () => basculer('etiquettes'), j: () => basculer('jonctions'),
+      p: () => { const l = M.series.map(s => s.code); changerSerie(l[(l.indexOf(etat.serie) + 1) % l.length]); },
     };
     const f = touches[e.key];
     if (f) { e.preventDefault(); f(); }
@@ -691,11 +782,33 @@
       }
       liste.append(bloc);
     }
+    if (M.jonctions && M.jonctions.length) {
+      const bloc = document.createElement('div');
+      bloc.className = 'ra-legende-groupe';
+      const tete = document.createElement('p');
+      tete.className = 'ra-legende-titre';
+      tete.textContent = 'Zones jonctionnelles';
+      bloc.append(tete);
+      for (const j of M.jonctions) {
+        const b = document.createElement('button');
+        b.type = 'button'; b.className = 'ra-legende-item';
+        b.innerHTML = `<span class="ra-pastille ra-hachure ra-hachure-${j.id}"></span>${j.nom}`;
+        b.setAttribute('aria-pressed', String(!!(etat.choisi && etat.choisi.type === 'jonction' && etat.choisi.code === j.code)));
+        b.addEventListener('click', () => choisir({ type: 'jonction', code: j.code }, false));
+        bloc.append(b);
+      }
+      liste.append(bloc);
+    }
   }
   function afficherInfo() {
     const boite = $('.ra-info', station);
     if (!boite) return;
     if (!etat.choisi) { boite.innerHTML = '<p class="ra-info-vide">Touchez un territoire sur l\'image ou dans la légende pour le mettre en évidence et aller à la coupe où il est le plus étendu.</p>'; return; }
+    if (etat.choisi.type === 'jonction') {
+      const j = M.jonctions.find(x => x.code === etat.choisi.code);
+      boite.innerHTML = `<p class="ra-info-titre" style="--c:#8a8a94">${j.nom}</p><p>${j.precision}</p>`;
+      return;
+    }
     if (etat.choisi.type === 'groupe') {
       const g = M.groupes[etat.choisi.code];
       boite.innerHTML = `<p class="ra-info-titre" style="--c:${g.couleur}">${g.nom}</p>`;
@@ -716,16 +829,18 @@
     ecran.dataset.outil = etat.outil;
     $$('[data-detail]', station).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.detail === etat.detail)));
     $$('[data-cote]', station).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.cote === etat.cote)));
-    for (const cle of ['territoires', 'etiquettes', 'contours']) { const c = $(`#ra-${cle}`, station); if (c) c.checked = etat[cle]; }
+    $$('[data-serie]', station).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.serie === etat.serie)));
+    for (const cle of ['territoires', 'etiquettes', 'contours', 'jonctions']) { const c = $(`#ra-${cle}`, station); if (c) c.checked = etat[cle]; }
     const o = $('#ra-opacite', station); if (o) o.value = Math.round(etat.opacite * 100);
     synchroniserFenetre();
   }
 
   $$('[data-plan]', station).forEach(b => b.addEventListener('click', () => changerPlan(b.dataset.plan)));
+  $$('[data-serie]', station).forEach(b => b.addEventListener('click', () => changerSerie(b.dataset.serie)));
   $$('[data-outil]', station).forEach(b => b.addEventListener('click', () => { etat.outil = b.dataset.outil; synchroniserCommandes(); }));
   $$('[data-detail]', station).forEach(b => b.addEventListener('click', () => { etat.detail = b.dataset.detail; etat.choisi = null; construireLegende(); afficherInfo(); synchroniserCommandes(); demander(); }));
   $$('[data-cote]', station).forEach(b => b.addEventListener('click', () => { etat.cote = b.dataset.cote; synchroniserCommandes(); demander(); }));
-  for (const cle of ['territoires', 'etiquettes', 'contours']) {
+  for (const cle of ['territoires', 'etiquettes', 'contours', 'jonctions']) {
     const c = $(`#ra-${cle}`, station);
     if (c) c.addEventListener('change', () => { etat[cle] = c.checked; demander(); });
   }
@@ -737,7 +852,7 @@
   }
   const fenetres = $('#ra-fenetres', station);
   if (fenetres) fenetres.addEventListener('change', () => {
-    const f = M.fenetres[Number(fenetres.value)];
+    const f = serie().fenetres[Number(fenetres.value)];
     if (f) { etat.largeur = f.largeur; etat.niveau = f.niveau; synchroniserFenetre(); demander(); }
   });
   const reinit = $('[data-action="reinitialiser"]', station);
@@ -750,19 +865,20 @@
 
   /* ---------- Démarrage ---------- */
   (async () => {
-    const base = station.dataset.donnees;
+    base = station.dataset.donnees;
     try {
       const manifest = await (await fetch(base + 'manifest.json')).json();
-      let p1 = 0, p2 = 0;
-      const montrer = () => { chargement.querySelector('span').textContent = Math.round((p1 * 0.97 + p2 * 0.03) * 100) + ' %'; };
-      const [a, b] = await Promise.all([
-        charger(base + manifest.fichiers.irm, p => { p1 = p; montrer(); }),
+      let p1 = 0, p2 = 0, p3 = 0;
+      const montrer = () => { chargement.querySelector('span').textContent = Math.round((p1 * 0.93 + p2 * 0.05 + p3 * 0.02) * 100) + ' %'; };
+      const [a, b, j] = await Promise.all([
+        charger(base + manifest.series[0].fichier, p => { p1 = p; montrer(); }),
         charger(base + manifest.fichiers.territoires, p => { p2 = p; montrer(); }),
+        charger(base + manifest.fichiers.jonctions, p => { p3 = p; montrer(); }),
       ]);
       const n = manifest.dimensions[0] * manifest.dimensions[1] * manifest.dimensions[2];
-      if (a.length !== n || b.length !== n) throw new Error('taille des volumes inattendue');
+      if (a.length !== n || b.length !== n || j.length !== n) throw new Error('taille des volumes inattendue');
       chargement.hidden = true;
-      initialiser(manifest, a, b);
+      initialiser(manifest, a, b, j);
       afficherInfo();
       station.classList.add('is-pret');
       station.dispatchEvent(new CustomEvent('ra-pret'));
@@ -772,5 +888,5 @@
     }
   })();
 
-  window.RHRadioanatomie = { etat, demander, changerPlan, allerCoupe, sonder: (x, y) => sonder(x, y), cadre: () => cadre() };
+  window.RHRadioanatomie = { etat, demander, changerPlan, changerSerie, allerCoupe, sonder: (x, y) => sonder(x, y), cadre: () => cadre() };
 })();

@@ -80,6 +80,9 @@
 .ra-legende-item:hover { border-color: #3a3b45; }
 .ra-legende-item[aria-pressed="true"] { border-color: var(--c); background: color-mix(in srgb, var(--c) 18%, transparent); }
 .ra-pastille { flex: none; width: 12px; height: 12px; margin-top: 1px; border-radius: 4px; background: var(--c); box-shadow: 0 0 0 1.5px rgba(255, 255, 255, .35); }
+.ra-legende-titre { margin: 10px 0 2px; color: #fff; font: 800 .74rem/1.3 var(--font); }
+.ra-hachure-1 { background: repeating-linear-gradient(-45deg, #0c0c10 0 2px, #a3a4ae 2px 4px); }
+.ra-hachure-2 { background: repeating-linear-gradient(45deg, #0c0c10 0 2px, #a3a4ae 2px 4px); }
 
 .ra-info { padding: 10px 12px; border: 1.5px solid #2f303a; border-radius: 12px; background: #181920; color: #cfd0d6; line-height: 1.45; }
 .ra-info p { margin: 0 0 .4em; }
