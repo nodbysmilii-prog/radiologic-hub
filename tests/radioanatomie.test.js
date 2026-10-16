@@ -32,10 +32,10 @@ test('données : grille, empreintes, taille des fichiers', () => {
   assert.equal(irm[irm.length - 1], 0);
 });
 
-test('territoires : 15 × 2 côtés, noms français, couleurs, regroupements, présents dans la carte', () => {
+test('territoires : 10 × 2 côtés (segmentation vasculaire, sans secteurs lobaires), noms français, couleurs, présents dans la carte', () => {
   assert.deepEqual(Object.keys(M.groupes), ['ACA', 'ACM', 'ACP', 'VB']);
-  assert.equal(M.territoires.length, 30);
-  assert.deepEqual(M.territoires.map(t => t.id), Array.from({ length: 30 }, (_, i) => i + 1));
+  assert.equal(M.territoires.length, 20);
+  assert.deepEqual(M.territoires.map(t => t.id), [1, 2, 3, 4, 5, 6, 7, 8, 17, 18, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]);
   const presents = new Set(carte);
   for (const t of M.territoires) {
     assert.equal(t.cote, t.id % 2 ? 'G' : 'D', `${t.id} : impair = gauche, pair = droit`);
@@ -47,7 +47,8 @@ test('territoires : 15 × 2 côtés, noms français, couleurs, regroupements, pr
   const autorises = new Set([0, ...M.territoires.map(t => t.id), ...M.non_colores.map(x => x.id)]);
   for (const v of presents) assert.ok(autorises.has(v), `valeur inconnue dans la carte : ${v}`);
   const codes = [...new Set(M.territoires.map(t => t.code))];
-  assert.deepEqual(codes, ['ACA', 'LSM', 'LSL', 'ACM-F', 'ACM-P', 'ACM-T', 'ACM-O', 'ACM-I', 'ACP-T', 'ACP-O', 'THP', 'THA', 'BAS', 'ACS', 'ACI']);
+  assert.deepEqual(codes, ['ACA', 'LSM', 'LSL', 'ACM', 'ACP', 'THP', 'THA', 'BAS', 'ACS', 'ACI']);
+  assert.ok(!M.territoires.some(t => /secteur|frontal|pariétal|temporal|occipital|insulaire/.test(t.nom)), 'pas de secteurs lobaires');
   assert.match(M.territoires.find(t => t.code === 'ACI').nom, /antéro-inférieure et postéro-inférieure/);
 });
 
@@ -61,13 +62,23 @@ test('orientation : gauche et droite, territoires au bon endroit (espace MNI)', 
   const c = id => [sx[id] / n[id] + M.origine_mm[0], sy[id] / n[id] + M.origine_mm[1], sz[id] / n[id] + M.origine_mm[2]];
   const par = code => M.territoires.filter(t => t.code === code).map(t => t.id);
   for (const t of M.territoires) assert.ok(t.cote === 'G' ? c(t.id)[0] < 0 : c(t.id)[0] > 0, `${t.code} ${t.cote} : x = ${c(t.id)[0].toFixed(0)}`);
-  const [acaG] = par('ACA'), [lslG] = par('LSL'), [acmOG] = par('ACM-O'), [acpOG] = par('ACP-O'), [basG] = par('BAS'), [acsG] = par('ACS'), [aciG] = par('ACI'), [thpG] = par('THP');
-  assert.ok(c(acpOG)[1] < -55 && c(acmOG)[1] < -55, 'secteurs occipitaux en arrière');
+  const [acaG] = par('ACA'), [lslG] = par('LSL'), [acmG] = par('ACM'), [acpG] = par('ACP'), [basG] = par('BAS'), [acsG] = par('ACS'), [aciG] = par('ACI'), [thpG] = par('THP');
+  assert.ok(c(acpG)[1] < -50 && c(acmG)[1] > c(acpG)[1] && Math.abs(c(acmG)[0]) > 35, 'ACP postérieure, ACM latérale');
   assert.ok(c(acaG)[2] > 20 && Math.abs(c(acaG)[0]) < 20, 'ACA : haute et paramédiane');
   assert.ok(Math.abs(c(lslG)[0]) < 30 && Math.abs(c(lslG)[2] - 5) < 15, 'lenticulo-striées latérales : noyaux gris centraux');
   assert.ok(Math.abs(c(thpG)[0]) < 20 && c(thpG)[1] < -10, 'thalamo-perforantes postérieures : thalamus');
   assert.ok(c(basG)[2] < -20 && Math.abs(c(basG)[0]) < 12, 'basilaire : tronc cérébral');
   assert.ok(c(acsG)[2] > c(aciG)[2], 'cérébelleuse supérieure au-dessus des cérébelleuses inférieures');
+  // Basilaire limité au tronc cérébral : rien en arrière du plancher du 4e ventricule ni à plus de 20 mm de la ligne médiane
+  for (let z = 0, p = 0; z < nz; z++) for (let y = 0; y < ny; y++) for (let x = 0; x < nx; x++, p++) {
+    if (carte[p] !== 25 && carte[p] !== 26) continue;
+    assert.ok(Math.abs(x + M.origine_mm[0]) <= 20, `basilaire à x = ${x + M.origine_mm[0]} mm`);
+  }
+  const zPont = -32 - M.origine_mm[2];
+  let basArriere = 0, v4Avant = -Infinity;
+  for (let y = 0; y < ny; y++) for (let x = 78; x < 103; x++) { if (carte[x + nx * (y + ny * zPont)] === 31 && y + M.origine_mm[1] < -25) v4Avant = Math.max(v4Avant, y); }
+  for (let y = 0; y < v4Avant; y++) for (let x = 0; x < nx; x++) { const v = carte[x + nx * (y + ny * zPont)]; if (v === 25 || v === 26) basArriere++; }
+  assert.equal(basArriere, 0, 'pont (z = −32 mm) : pas de basilaire en arrière du plancher du 4e ventricule');
   // Le LCS des ventricules latéraux n'est pas coloré
   const lcs = M.non_colores[0].id;
   assert.ok(n[lcs] > 5000, 'LCS profond identifié');

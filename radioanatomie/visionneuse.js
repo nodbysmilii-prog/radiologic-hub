@@ -91,7 +91,8 @@
   };
 
   let M, irm, carte, dims, groupes, territoires, parId;
-  let cache = { cle: null };                 // coupe courante agrandie
+  let cache = { cle: null };                 // coupe courante agrandie (IRM)
+  let cacheT = { cle: null };                // territoires lissés de la coupe courante
 
   function initialiser(manifest, volIrm, volCarte) {
     M = manifest; irm = volIrm; carte = volCarte; dims = M.dimensions;
@@ -163,28 +164,114 @@
       const w0 = ky.w[b], w1 = ky.w[b + 1], w2 = ky.w[b + 2], w3 = ky.w[b + 3], o = j * W;
       for (let i = 0; i < W; i++) grand[o + i] = w0 * tmp[l0 + i] + w1 * tmp[l1 + i] + w2 * tmp[l2 + i] + w3 * tmp[l3 + i];
     }
-    // Territoires agrandis : pour chaque pixel, l'étiquette au plus fort poids bilinéaire
-    const labG = new Uint8Array(W * H);
-    for (let j = 0; j < H; j++) {
-      const sy = (j + 0.5) / F - 0.5, y0 = Math.max(0, Math.floor(sy)), y1 = Math.min(h - 1, y0 + 1), fy = Math.min(1, Math.max(0, sy - y0));
-      for (let i = 0; i < W; i++) {
-        const sx = (i + 0.5) / F - 0.5, x0 = Math.max(0, Math.floor(sx)), x1 = Math.min(w - 1, x0 + 1), fx = Math.min(1, Math.max(0, sx - x0));
-        const a = lab[y0 * w + x0], b = lab[y0 * w + x1], c = lab[y1 * w + x0], d = lab[y1 * w + x1];
-        if (a === b && b === c && c === d) { labG[j * W + i] = a; continue; }
-        const cand = [a, b, c, d], poids = [(1 - fx) * (1 - fy), fx * (1 - fy), (1 - fx) * fy, fx * fy];
-        let meilleur = a, max = -1;
-        for (let q = 0; q < 4; q++) {
-          let s = 0;
-          for (let r = 0; r < 4; r++) if (cand[r] === cand[q]) s += poids[r];
-          if (s > max) { max = s; meilleur = cand[q]; }
+    const toileGris = document.createElement('canvas');
+    toileGris.width = W; toileGris.height = H;
+    cache = { cle, w, h, W, H, gris, lab, grand, toileGris, fenetre: null };
+    return cache;
+  }
+
+  // Territoires lissés : chaque étiquette devient un champ (indicatrice floutée, σ ≈ 1 mm), interpolé
+  // linéairement à l'échelle de l'image ; le pixel prend l'étiquette au champ le plus fort. Les limites
+  // sont ainsi des courbes lisses (et non des marches de 1 mm) ; la marge entre les deux champs les plus
+  // forts sert à adoucir les bords et à tracer des contours anticrénelés. Pendant un défilement rapide,
+  // calcul à ½ mm ; à l'arrêt, à ¼ mm.
+  function calqueTerritoires(c) {
+    const fc = etat.rapide ? 2 : F, cle = c.cle + ':' + fc;
+    if (cacheT.cle === cle) return cacheT;
+    const W = c.w * fc, H = c.h * fc;
+    const { top1, top2, marge } = territoiresLisses(c.lab, c.w, c.h, W, H, fc);
+    const toileCalque = document.createElement('canvas');
+    toileCalque.width = W; toileCalque.height = H;
+    cacheT = { cle, coupe: c.cle, fc, W, H, labG: top1, lab2: top2, marge, toileCalque, calque: null };
+    return cacheT;
+  }
+
+  const SIGMA = 1.0, RAYON = 3, NOYAU_G = (() => {
+    const g = []; let t = 0;
+    for (let i = -RAYON; i <= RAYON; i++) { const v = Math.exp(-(i * i) / (2 * SIGMA * SIGMA)); g.push(v); t += v; }
+    return g.map(v => v / t);
+  })();
+  function territoiresLisses(lab, w, h, W, H, fc) {
+    // 1) Pixels proches d'une limite (à moins de RAYON pixels d'une étiquette différente)
+    const bord = new Uint8Array(w * h);
+    for (let v = 0; v < h; v++) for (let u = 0; u < w; u++) {
+      const p = v * w + u, a = lab[p];
+      if ((u + 1 < w && lab[p + 1] !== a) || (v + 1 < h && lab[p + w] !== a)) { bord[p] = 1; if (u + 1 < w) bord[p + 1] = 1; if (v + 1 < h) bord[p + w] = 1; }
+    }
+    const proche = new Uint8Array(w * h), ligne = new Uint8Array(w * h);
+    for (let v = 0; v < h; v++) for (let u = 0; u < w; u++) {          // dilatation horizontale puis verticale
+      let m = 0; for (let k = -RAYON; k <= RAYON && !m; k++) { const uu = u + k; if (uu >= 0 && uu < w && bord[v * w + uu]) m = 1; }
+      ligne[v * w + u] = m;
+    }
+    for (let v = 0; v < h; v++) for (let u = 0; u < w; u++) {
+      let m = 0; for (let k = -RAYON; k <= RAYON && !m; k++) { const vv = v + k; if (vv >= 0 && vv < h && ligne[vv * w + u]) m = 1; }
+      proche[v * w + u] = m;
+    }
+    // 2) Près d'une limite : champ de chaque étiquette du voisinage = somme gaussienne 7 × 7 de son indicatrice
+    //    (au plus 4 étiquettes par pixel) ; ailleurs, une seule étiquette de champ 1
+    const cid = new Uint8Array(w * h * 4), cval = new Float32Array(w * h * 4), nc = new Uint8Array(w * h);
+    for (let v = 0; v < h; v++) for (let u = 0; u < w; u++) {
+      const p = v * w + u, b = p * 4;
+      if (!proche[p]) { cid[b] = lab[p]; cval[b] = 1; nc[p] = 1; continue; }
+      let n = 0;
+      for (let dv = -RAYON; dv <= RAYON; dv++) {
+        const vv = v + dv < 0 ? 0 : v + dv >= h ? h - 1 : v + dv, gv = NOYAU_G[dv + RAYON];
+        for (let du = -RAYON; du <= RAYON; du++) {
+          const uu = u + du < 0 ? 0 : u + du >= w ? w - 1 : u + du, id = lab[vv * w + uu], g = gv * NOYAU_G[du + RAYON];
+          let r = 0; while (r < n && cid[b + r] !== id) r++;
+          if (r === n) { if (n === 4) continue; cid[b + n] = id; cval[b + n] = 0; n++; }
+          cval[b + r] += g;
         }
-        labG[j * W + i] = meilleur;
+      }
+      nc[p] = n;
+    }
+    // 3) Par cellule (4 voxels voisins) près d'une limite : étiquettes possibles (au plus 6) et leur champ aux 4 coins
+    const NMAX = 6, cn = new Uint8Array(w * h), cids = new Uint8Array(w * h * NMAX), cv = new Float32Array(w * h * NMAX * 4);
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+      const c = y * w + x, x1 = Math.min(w - 1, x + 1), y1 = Math.min(h - 1, y + 1);
+      const coins = [c, y * w + x1, y1 * w + x, y1 * w + x1];
+      if (!proche[coins[0]] && !proche[coins[1]] && !proche[coins[2]] && !proche[coins[3]]) continue;
+      let n = 0;
+      for (let k = 0; k < 4; k++) {
+        const p = coins[k], b = p * 4;
+        for (let r = 0; r < nc[p]; r++) {
+          const id = cid[b + r]; let t = 0;
+          while (t < n && cids[c * NMAX + t] !== id) t++;
+          if (t === n) { if (n === NMAX) continue; cids[c * NMAX + n] = id; n++; }
+          cv[(c * NMAX + t) * 4 + k] = cval[b + r];
+        }
+      }
+      cn[c] = n;
+    }
+    // 4) Interpolation à l'échelle de l'image : étiquette au champ le plus fort, et marge avec la deuxième
+    const X0 = new Int32Array(W), FX = new Float32Array(W), Y0 = new Int32Array(H), FY = new Float32Array(H);
+    for (let i = 0; i < W; i++) { const sx = (i + 0.5) / fc - 0.5; X0[i] = Math.max(0, Math.min(w - 1, Math.floor(sx))); FX[i] = Math.min(1, Math.max(0, sx - X0[i])); }
+    for (let j = 0; j < H; j++) { const sy = (j + 0.5) / fc - 0.5; Y0[j] = Math.max(0, Math.min(h - 1, Math.floor(sy))); FY[j] = Math.min(1, Math.max(0, sy - Y0[j])); }
+    const top1 = new Uint8Array(W * H), top2 = new Uint8Array(W * H), marge = new Float32Array(W * H).fill(1);
+    for (let j = 0; j < H; j++) {
+      const y0 = Y0[j], fy = FY[j];
+      for (let i = 0; i < W; i++) {
+        const c = y0 * w + X0[i], q = j * W + i, n = cn[c];
+        if (n < 2) { top1[q] = top2[q] = n ? cids[c * NMAX] : lab[c]; continue; }
+        const fx = FX[i], w00 = (1 - fx) * (1 - fy), w10 = fx * (1 - fy), w01 = (1 - fx) * fy, w11 = fx * fy;
+        let b1 = -1, b2 = -1, i1 = 0, i2 = 0;
+        for (let r = 0; r < n; r++) {
+          const o = (c * NMAX + r) * 4, val = w00 * cv[o] + w10 * cv[o + 1] + w01 * cv[o + 2] + w11 * cv[o + 3];
+          if (val > b1) { b2 = b1; i2 = i1; b1 = val; i1 = cids[c * NMAX + r]; } else if (val > b2) { b2 = val; i2 = cids[c * NMAX + r]; }
+        }
+        top1[q] = i1; top2[q] = i2; marge[q] = b1 - b2;
       }
     }
-    const toileGris = document.createElement('canvas'), toileCalque = document.createElement('canvas');
-    toileGris.width = toileCalque.width = W; toileGris.height = toileCalque.height = H;
-    cache = { cle, w, h, W, H, gris, lab, grand, labG, toileGris, toileCalque, fenetre: null, calque: null };
-    return cache;
+    // Distance approximative à la limite, en pixels agrandis : marge / pente locale de la marge.
+    // Contours et fondus gardent ainsi une épaisseur régulière, quelle que soit la forme de la limite.
+    const dist = new Float32Array(W * H).fill(99);
+    for (let j = 1; j < H - 1; j++) for (let i = 1; i < W - 1; i++) {
+      const q = j * W + i, m = marge[q];
+      if (m >= 0.5 || top1[q] === top2[q]) continue;
+      const g = Math.max(Math.abs(marge[q + 1] - m), Math.abs(m - marge[q - 1]), Math.abs(marge[q + W] - m), Math.abs(m - marge[q - W]), 1e-4);
+      dist[q] = m / g;
+    }
+    return { top1, top2, marge: dist };
   }
 
   function peindreGris(c) {
@@ -233,24 +320,26 @@
       couleurs.set(rgb, compacte * 3);
       alpha[compacte] = estChoisi(k) ? etat.opacite : etat.opacite * 0.25;
     }
-    const img = new ImageData(c.W, c.H), d = img.data, L = c.labG, W = c.W, H = c.H;
-    for (let j = 0; j < H; j++) for (let i = 0; i < W; i++) {
-      const p = j * W + i, k = table[L[p]];
-      let bord = false;
-      if (etat.contours) {
-        const kd = i + 1 < W ? table[L[p + 1]] : k, kb = j + 1 < H ? table[L[p + W]] : k;
-        const kg = i > 0 ? table[L[p - 1]] : k, kh = j > 0 ? table[L[p - W]] : k;
-        bord = kd !== k || kb !== k || kg !== k || kh !== k;
+    const img = new ImageData(c.W, c.H), d = img.data, L1 = c.labG, L2 = c.lab2, MG = c.marge;
+    const BORD = 1.6 * c.fc / F, FONDU = 1.0 * c.fc / F;   // demi-largeur du contour et du fondu (0,4 et 0,25 mm), en pixels du calque
+    for (let p = 0; p < L1.length; p++) {
+      const k1 = table[L1[p]], k2 = table[L2[p]];
+      if (!k1 && !k2) continue;
+      let k = k1, a = k1 ? alpha[k1] : 0;
+      if (k1 !== k2) {
+        const m = MG[p];
+        // fondu du remplissage à la limite d'une zone non colorée
+        if (k1 && !k2) a *= 0.5 + 0.5 * Math.min(1, m / FONDU);
+        else if (!k1 && k2) { k = k2; a = alpha[k2] * 0.5 * Math.max(0, 1 - m / FONDU); }
+        // contour : plus opaque près de la limite, dans la couleur du territoire de ce côté
+        if (etat.contours) {
+          const t = Math.max(0, 1 - m / BORD);
+          if (t > 0) { const kc = k1 || k2; k = kc; a = Math.max(a, Math.min(1, alpha[kc] + 0.5) * t); }
+        }
       }
-      if (!k && !bord) continue;
+      if (a <= 0.004) continue;
       const q = p * 4;
-      if (k) {
-        d[q] = couleurs[k * 3]; d[q + 1] = couleurs[k * 3 + 1]; d[q + 2] = couleurs[k * 3 + 2];
-        d[q + 3] = 255 * (bord ? Math.min(1, alpha[k] + 0.45) : alpha[k]);
-      } else if (bord) {
-        // bord extérieur d'un territoire coloré (côté non coloré) : laissé transparent
-        continue;
-      }
+      d[q] = couleurs[k * 3]; d[q + 1] = couleurs[k * 3 + 1]; d[q + 2] = couleurs[k * 3 + 2]; d[q + 3] = 255 * a;
     }
     c.toileCalque.getContext('2d').putImageData(img, 0, 0);
     c.calque = cle; c.cles = cles; c.table = table;
@@ -284,17 +373,18 @@
     ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
     ctx.drawImage(c.toileGris, g.ox, g.oy, g.w * g.s, g.h * g.s);
     if (etat.territoires) {
-      peindreCalque(c);
-      ctx.drawImage(c.toileCalque, g.ox, g.oy, g.w * g.s, g.h * g.s);
-      if (etat.etiquettes) dessinerEtiquettes(c, g);
+      const t = calqueTerritoires(c);
+      peindreCalque(t);
+      ctx.drawImage(t.toileCalque, g.ox, g.oy, g.w * g.s, g.h * g.s);
+      if (etat.etiquettes) dessinerEtiquettes(c, t, g);
     }
     dessinerRepere(g);
     majTextes();
   }
 
   // Étiquettes à lignes de rappel, dans les marges gauche et droite (comme un atlas)
-  function dessinerEtiquettes(c, g) {
-    const { w, h, lab, table } = c;
+  function dessinerEtiquettes(c, tc, g) {
+    const { w, h, lab } = c, table = tc.table;
     const sommes = new Map();
     for (let v = 0; v < h; v++) for (let u = 0; u < w; u++) {
       const k = table[lab[v * w + u]];
@@ -318,8 +408,10 @@
         if (d < dmin) { dmin = d; best = p; }
       }
       const u = best % w, v = (best - u) / w;
-      const t = infoAffichage(c.cles.get(k));
-      items.push({ k, x: g.ox + (u + 0.5) * g.s, y: g.oy + (v + 0.5) * g.s, t, choisi: estChoisi(c.cles.get(k)) });
+      const t = infoAffichage(tc.cles.get(k));
+      const xe = g.ox + (u + 0.5) * g.s, ye = g.oy + (v + 0.5) * g.s;
+      if (xe < 0 || ye < 0 || xe > largeurEcran || ye > hauteurEcran) continue;   // hors de l'écran (zoom)
+      items.push({ k, x: xe, y: ye, t, choisi: estChoisi(tc.cles.get(k)) });
     }
     const taille = largeurEcran < 900 ? 11 : 12.5;
     ctx.font = `700 ${taille}px Montserrat, system-ui, sans-serif`;
@@ -398,7 +490,12 @@
     const g = cadre(), u = Math.floor((px - g.ox) / g.s), v = Math.floor((py - g.oy) / g.s);
     if (u < 0 || v < 0 || u >= g.w || v >= g.h) return null;
     const k = etat.coupes[etat.plan], [x, y, z] = voxel(etat.plan, k, u, v);
-    const id = carte[x + dims[0] * (y + dims[1] * z)];
+    let id = carte[x + dims[0] * (y + dims[1] * z)];
+    const c = cacheT;
+    if (c.coupe === etat.plan + ':' + k) {        // étiquette du rendu lissé (sous-millimétrique)
+      const i = Math.min(c.W - 1, Math.floor((px - g.ox) / g.s * c.fc)), j = Math.min(c.H - 1, Math.floor((py - g.oy) / g.s * c.fc));
+      id = c.labG[j * c.W + i];
+    }
     return { x, y, z, id, t: parId.get(id) };
   }
   function decrire(r) {
@@ -435,7 +532,16 @@
 
   /* ---------- Interactions ---------- */
   const limiter = (v, a, b) => Math.min(b, Math.max(a, v));
-  function allerCoupe(k) { etat.coupes[etat.plan] = limiter(Math.round(k), 0, nbCoupes(etat.plan) - 1); demander(); }
+  let dernierChangement = 0, minuterie = 0;
+  function allerCoupe(k) {
+    const n = limiter(Math.round(k), 0, nbCoupes(etat.plan) - 1);
+    if (n === etat.coupes[etat.plan]) return;
+    const t = performance.now();
+    etat.rapide = t - dernierChangement < 250; dernierChangement = t;
+    clearTimeout(minuterie);
+    minuterie = setTimeout(() => { if (etat.rapide) { etat.rapide = false; demander(); } }, 260);
+    etat.coupes[etat.plan] = n; demander();
+  }
   function zoomer(f, cx, cy) {
     const avant = etat.zoom;
     etat.zoom = limiter(etat.zoom * f, 0.5, 12);

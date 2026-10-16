@@ -60,13 +60,8 @@ TERRITOIRES = [
     (3, 'LSM', 'ACA', "Lenticulo-striées médiales (ACA)", "Lenticulo-striées médiales", '#2ec4c4',
      "Territoire peu exposé aux infarctus : l'atlas le définit sur la topographie du corps calleux et de la région septale."),
     (5, 'LSL', 'ACM', "Lenticulo-striées latérales (ACM)", "Lenticulo-striées latérales", '#d6336c', "Branches perforantes de l'ACM : noyaux gris centraux et capsule interne."),
-    (7, 'ACM-F', 'ACM', "ACM, branches corticales : secteur frontal", "ACM, secteur frontal", '#ef6a3a', ''),
-    (9, 'ACM-P', 'ACM', "ACM, branches corticales : secteur pariétal", "ACM, secteur pariétal", '#f39b3a', ''),
-    (11, 'ACM-T', 'ACM', "ACM, branches corticales : secteur temporal", "ACM, secteur temporal", '#e4502b', ''),
-    (13, 'ACM-O', 'ACM', "ACM, branches corticales : secteur occipital", "ACM, secteur occipital", '#f5b85a', ''),
-    (15, 'ACM-I', 'ACM', "ACM, branches corticales : secteur insulaire", "ACM, secteur insulaire", '#e84a9a', ''),
-    (17, 'ACP-T', 'ACP', "ACP, branches corticales : secteur temporal", "ACP, secteur temporal", '#5b7fe8', ''),
-    (19, 'ACP-O', 'ACP', "ACP, branches corticales : secteur occipital", "ACP, secteur occipital", '#3f9be0', ''),
+    (7, 'ACM', 'ACM', "ACM, branches corticales", "ACM (corticale)", '#ea5a3d', ''),
+    (17, 'ACP', 'ACP', "ACP, branches corticales", "ACP (corticale)", '#3f86e0', ''),
     (21, 'THP', 'ACP', "Thalamo-perforantes et choroïdiennes postérieures (ACP)", "Thalamo-perforantes postérieures", '#9a5cf0', "Thalamus."),
     (23, 'THA', 'ACP', "Choroïdienne antérieure et thalamo-perforantes antérieures", "Choroïdienne antérieure", '#c84fe0',
      "Territoire peu exposé aux infarctus : l'atlas le définit sur la région temporale mésiale et l'hippocampe, et le rattache à l'ACP."),
@@ -76,6 +71,10 @@ TERRITOIRES = [
      "L'atlas réunit les territoires des artères cérébelleuses antéro-inférieure (AICA) et postéro-inférieure (PICA)."),
 ]
 VENTRICULE = 31          # identifiant exporté pour le LCS profond (non coloré)
+# Segmentation vasculaire seule : les secteurs lobaires de l'atlas (ACM frontal, pariétal, temporal, occipital,
+# insulaire ; ACP temporal, occipital) sont réunis en un territoire cortical par artère (les lobes feront l'objet
+# d'une segmentation à part). Identifiant d'origine → identifiant exporté (même parité : impair = gauche).
+FUSION = {**{i: 7 + (i + 1) % 2 for i in range(7, 17)}, **{i: 17 + (i + 1) % 2 for i in range(17, 21)}}
 
 
 def telecharger():
@@ -106,8 +105,8 @@ def preparer():
     # L'atlas est stocké avec x inversé (gauche ↔ droite) et sans origine : même grille que Colin 27
     a = np.asarray(atlas.dataobj)[..., 0].astype(np.int16)[::-1].copy()
     # Contrôle d'orientation : territoire 1 (ACA gauche) à gauche (x < 0), 2 (ACA droite) à droite
-    xs = {l: np.argwhere(a == l)[:, 0].mean() - 90 for l in (1, 2, 7, 8)}
-    assert xs[1] < 0 < xs[2] and xs[7] < 0 < xs[8], xs
+    xs = {l: np.argwhere(a == l)[:, 0].mean() - 90 for l in (1, 2, 7, 8, 17, 18)}
+    assert xs[1] < 0 < xs[2] and xs[7] < 0 < xs[8] and xs[17] < 0 < xs[18], xs
 
     # Intensités : substance blanche ≈ 180 / 255, graisse du scalp saturée
     territoires_atlas = (a >= 1) & (a <= 30)
@@ -150,6 +149,8 @@ def preparer():
             coupe &= etiq > 0
         masque[:, :, k] = coupe
 
+    for avant, apres in FUSION.items():
+        a[a == avant] = apres
     # Territoire le plus proche pour chaque voxel du masque
     _, (ix, iy, iz) = ndi.distance_transform_edt(~territoires_atlas, return_indices=True)
     carte = np.where(masque, a[ix, iy, iz], 0).astype(np.uint8)
@@ -160,7 +161,30 @@ def preparer():
     x_mm = np.abs(np.arange(181) - 90)[:, None, None]
     ventricules = sombre & (ndi.binary_dilation(np.isin(a, (31, 32)), boule(3)) | ((profondeur > 10) & (x_mm < 10)))
     carte[ventricules] = VENTRICULE
-    return t1u8, carte, {'seuil_lcs': float(seuil), 'haut': float(haut)}
+
+    # Territoire basilaire limité au tronc cérébral : l'atlas l'étend aux pédoncules cérébelleux moyens et
+    # au cervelet, en arrière du plancher du 4e ventricule. Ces voxels reviennent à la cérébelleuse la plus proche.
+    x_mm = np.arange(181) - 90
+    y_mm = np.arange(217) - 126
+    v4 = (carte == VENTRICULE) & (np.abs(x_mm)[:, None, None] < 12) & (y_mm[None, :, None] < -25) & ((np.arange(181) - 72)[None, None, :] < -10)
+    plancher = np.full(181, np.nan)
+    for k in range(181):
+        ys = np.nonzero(v4[:, :, k].any(axis=0))[0]
+        if len(ys):
+            plancher[k] = y_mm[ys.max()]
+    ks = np.nonzero(~np.isnan(plancher))[0]
+    plancher = np.interp(np.arange(181), ks, plancher[ks], left=-np.inf, right=-np.inf)   # hors du 4e ventricule : pas de limite
+    plancher = ndi.median_filter(np.where(np.isfinite(plancher), plancher, -999), size=5)
+    basilaire = np.isin(carte, (25, 26))
+    # limite postérieure : plancher du 4e ventricule sur la ligne médiane, qui s'incurve vers l'avant en dehors
+    # (jonction pont / pédoncule cérébelleux moyen) ; largeur au plus 20 mm de chaque côté
+    rx = np.minimum(np.abs(x_mm) / 20.0, 1.0)[:, None, None]
+    limite = plancher[None, None, :] + 9 * rx ** 2
+    hors_tronc = basilaire & ((y_mm[None, :, None] < limite) | (np.abs(x_mm)[:, None, None] > 20))
+    cerebelleuses = np.isin(carte, (27, 28, 29, 30))
+    _, (jx, jy, jz) = ndi.distance_transform_edt(~cerebelleuses, return_indices=True)
+    carte[hors_tronc] = carte[jx, jy, jz][hors_tronc]
+    return t1u8, carte, {'seuil_lcs': float(seuil), 'haut': float(haut), 'basilaire_reattribue': int(hors_tronc.sum())}
 
 
 def exporter(t1u8, carte):

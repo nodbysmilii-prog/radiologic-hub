@@ -23,7 +23,7 @@
  },
  "empreintes_sha256_decompresse": {
   "irm": "4dbe902308aaa4ae46ef212311e318d8ef9b93fc78690d9aaf60875092a6caeb",
-  "territoires": "160a3f9f3bb1f4e5bc0e7d9c761a949a37b99b5c911acadd91f05bf9cd85ccf8"
+  "territoires": "9f4086a7447e57e0a0bde873a146dcb8035d58c9fdfb6b87d20259988b8c1d27"
  },
  "fenetres": [
   {
@@ -127,142 +127,42 @@
   },
   {
    "id": 7,
-   "code": "ACM-F",
+   "code": "ACM",
    "cote": "G",
    "groupe": "ACM",
-   "nom": "ACM, branches corticales : secteur frontal",
-   "court": "ACM, secteur frontal",
-   "couleur": "#ef6a3a",
+   "nom": "ACM, branches corticales",
+   "court": "ACM (corticale)",
+   "couleur": "#ea5a3d",
    "precision": ""
   },
   {
    "id": 8,
-   "code": "ACM-F",
+   "code": "ACM",
    "cote": "D",
    "groupe": "ACM",
-   "nom": "ACM, branches corticales : secteur frontal",
-   "court": "ACM, secteur frontal",
-   "couleur": "#ef6a3a",
-   "precision": ""
-  },
-  {
-   "id": 9,
-   "code": "ACM-P",
-   "cote": "G",
-   "groupe": "ACM",
-   "nom": "ACM, branches corticales : secteur pariétal",
-   "court": "ACM, secteur pariétal",
-   "couleur": "#f39b3a",
-   "precision": ""
-  },
-  {
-   "id": 10,
-   "code": "ACM-P",
-   "cote": "D",
-   "groupe": "ACM",
-   "nom": "ACM, branches corticales : secteur pariétal",
-   "court": "ACM, secteur pariétal",
-   "couleur": "#f39b3a",
-   "precision": ""
-  },
-  {
-   "id": 11,
-   "code": "ACM-T",
-   "cote": "G",
-   "groupe": "ACM",
-   "nom": "ACM, branches corticales : secteur temporal",
-   "court": "ACM, secteur temporal",
-   "couleur": "#e4502b",
-   "precision": ""
-  },
-  {
-   "id": 12,
-   "code": "ACM-T",
-   "cote": "D",
-   "groupe": "ACM",
-   "nom": "ACM, branches corticales : secteur temporal",
-   "court": "ACM, secteur temporal",
-   "couleur": "#e4502b",
-   "precision": ""
-  },
-  {
-   "id": 13,
-   "code": "ACM-O",
-   "cote": "G",
-   "groupe": "ACM",
-   "nom": "ACM, branches corticales : secteur occipital",
-   "court": "ACM, secteur occipital",
-   "couleur": "#f5b85a",
-   "precision": ""
-  },
-  {
-   "id": 14,
-   "code": "ACM-O",
-   "cote": "D",
-   "groupe": "ACM",
-   "nom": "ACM, branches corticales : secteur occipital",
-   "court": "ACM, secteur occipital",
-   "couleur": "#f5b85a",
-   "precision": ""
-  },
-  {
-   "id": 15,
-   "code": "ACM-I",
-   "cote": "G",
-   "groupe": "ACM",
-   "nom": "ACM, branches corticales : secteur insulaire",
-   "court": "ACM, secteur insulaire",
-   "couleur": "#e84a9a",
-   "precision": ""
-  },
-  {
-   "id": 16,
-   "code": "ACM-I",
-   "cote": "D",
-   "groupe": "ACM",
-   "nom": "ACM, branches corticales : secteur insulaire",
-   "court": "ACM, secteur insulaire",
-   "couleur": "#e84a9a",
+   "nom": "ACM, branches corticales",
+   "court": "ACM (corticale)",
+   "couleur": "#ea5a3d",
    "precision": ""
   },
   {
    "id": 17,
-   "code": "ACP-T",
+   "code": "ACP",
    "cote": "G",
    "groupe": "ACP",
-   "nom": "ACP, branches corticales : secteur temporal",
-   "court": "ACP, secteur temporal",
-   "couleur": "#5b7fe8",
+   "nom": "ACP, branches corticales",
+   "court": "ACP (corticale)",
+   "couleur": "#3f86e0",
    "precision": ""
   },
   {
    "id": 18,
-   "code": "ACP-T",
+   "code": "ACP",
    "cote": "D",
    "groupe": "ACP",
-   "nom": "ACP, branches corticales : secteur temporal",
-   "court": "ACP, secteur temporal",
-   "couleur": "#5b7fe8",
-   "precision": ""
-  },
-  {
-   "id": 19,
-   "code": "ACP-O",
-   "cote": "G",
-   "groupe": "ACP",
-   "nom": "ACP, branches corticales : secteur occipital",
-   "court": "ACP, secteur occipital",
-   "couleur": "#3f9be0",
-   "precision": ""
-  },
-  {
-   "id": 20,
-   "code": "ACP-O",
-   "cote": "D",
-   "groupe": "ACP",
-   "nom": "ACP, branches corticales : secteur occipital",
-   "court": "ACP, secteur occipital",
-   "couleur": "#3f9be0",
+   "nom": "ACP, branches corticales",
+   "court": "ACP (corticale)",
+   "couleur": "#3f86e0",
    "precision": ""
   },
   {
