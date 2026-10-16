@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Territoires artériels du cerveau (IRM) — Radioanatomie — RadiologicHub</title>
+  <meta name="description" content="Radioanatomie RadiologicHub : naviguez coupe par coupe dans une IRM cérébrale de haute qualité en T1, T2 et FLAIR, comme sur une console (défilement, fenêtrage, zoom, trois plans), avec les territoires artériels du cerveau et les zones jonctionnelles colorés et nommés.">
+  <link rel="icon" type="image/svg+xml" href="../assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=20261017003500">
+  <link rel="stylesheet" href="../fiche.css?v=20261012150000">
+  <link rel="stylesheet" href="radioanatomie.css?v=20261017003000">
+</head>
+<body class="fiche-page">
+
+  <header class="site-header is-scrolled" id="top">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="RadiologicHub — accueil">
+        <img src="../assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+        <a href="../index.html#masterclass">Masterclass</a>
+        <a href="../fiches-rapides.html">Fiches rapides</a>
+        <a href="../radioanatomie/index.html" class="is-current">Radioanatomie</a>
+        <a href="../bibliotheque.html">Bibliothèque</a>
+        <a href="../comptes-rendus.html">Comptes rendus</a>
+        <a href="../remplacements.html">Remplacements</a>
+        <a href="../communaute.html">Communauté</a>
+        <a href="../index.html#tarifs">Tarifs</a>
+        <a href="../index.html#inscription" class="btn btn-ink btn-sm">S'inscrire</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="fiche-hero sec-down">
+      <div class="container">
+        <nav class="crumbs" aria-label="Fil d'Ariane">
+          <a href="index.html">Espace radioanatomie</a> › <span>Territoires artériels du cerveau</span>
+        </nav>
+        <p class="marker-tag">Radioanatomie · IRM</p>
+        <h1>Territoires <span class="hl-red">artériels</span> du <span class="hl-navy">cerveau</span></h1>
+        <p class="fiche-sub">Naviguez coupe par coupe dans l'IRM cérébrale d'un volontaire sain, en T1, T2 et FLAIR, comme sur une console : défilement, fenêtrage, zoom, trois plans. Les territoires artériels et les zones jonctionnelles sont colorés et nommés ; touchez une région pour l'identifier.</p>
+      </div>
+    </section>
+
+    <section class="section sec-up">
+      <div class="container">
+        <div class="ra-station" id="ra-station" data-donnees="donnees/territoires-arteriels/">
+          <div class="ra-barre" role="toolbar" aria-label="Outils de la visionneuse">
+            <div class="ra-groupe" role="group" aria-label="Plan de coupe">
+              <span class="ra-groupe-titre">Plan</span>
+              <button type="button" class="ra-btn" data-plan="axial" aria-pressed="true">Axial</button>
+              <button type="button" class="ra-btn" data-plan="coronal" aria-pressed="false">Coronal</button>
+              <button type="button" class="ra-btn" data-plan="sagittal" aria-pressed="false">Sagittal</button>
+            </div>
+            <div class="ra-groupe" role="group" aria-label="Pondération">
+              <span class="ra-groupe-titre">Pondération</span>
+              <button type="button" class="ra-btn" data-serie="T1" aria-pressed="true">T1</button>
+              <button type="button" class="ra-btn" data-serie="T2" aria-pressed="false">T2</button>
+              <button type="button" class="ra-btn" data-serie="FLAIR" aria-pressed="false">FLAIR</button>
+            </div>
+            <div class="ra-groupe" role="group" aria-label="Outil du clic gauche ou du doigt">
+              <span class="ra-groupe-titre">Outil</span>
+              <button type="button" class="ra-btn" data-outil="defiler" aria-pressed="true" title="Défiler : glisser vers le haut ou le bas">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M7 8l5-5 5 5M7 16l5 5 5-5"/></svg><span class="ra-btn-texte">Défiler</span></button>
+              <button type="button" class="ra-btn" data-outil="fenetrage" aria-pressed="false" title="Fenêtrage : glisser (horizontal = largeur, vertical = niveau)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg><span class="ra-btn-texte">Fenêtrage</span></button>
+              <button type="button" class="ra-btn" data-outil="zoom" aria-pressed="false" title="Zoom : glisser vers le haut ou le bas">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21M10.5 7.5v6M7.5 10.5h6"/></svg><span class="ra-btn-texte">Zoom</span></button>
+              <button type="button" class="ra-btn" data-outil="deplacer" aria-pressed="false" title="Déplacer l'image">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M3 12h18M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3"/></svg><span class="ra-btn-texte">Déplacer</span></button>
+              <button type="button" class="ra-btn" data-outil="identifier" aria-pressed="false" title="Identifier : nom du territoire sous le doigt">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v6M12 7.5v.5"/></svg><span class="ra-btn-texte">Identifier</span></button>
+            </div>
+            <div class="ra-groupe">
+              <button type="button" class="ra-btn ra-btn-test" data-action="test" aria-pressed="false" title="Mode test : territoires et étiquettes masqués, lésion simulée à identifier">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.5 12 5l9 4.5-9 4.5z"/><path d="M7 11.5v4.5c3 2 7 2 10 0v-4.5M21 9.5v5"/></svg><span class="ra-btn-texte">Mode test</span></button>
+              <button type="button" class="ra-btn" data-action="reinitialiser" title="Réinitialiser le zoom et le fenêtrage (double-clic sur l'image)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4"/></svg><span class="ra-btn-texte">Réinitialiser</span></button>
+              <button type="button" class="ra-btn" data-action="plein-ecran" title="Plein écran">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span class="ra-btn-texte">Plein écran</span></button>
+            </div>
+          </div>
+
+          <div class="ra-ecran" tabindex="0" data-outil="defiler" aria-describedby="ra-aide-clavier">
+            <canvas id="ra-toile" role="img" aria-label="IRM cérébrale"></canvas>
+            <div class="ra-coin ra-coin-hg"></div>
+            <div class="ra-coin ra-coin-hd"></div>
+            <div class="ra-coin ra-coin-bg"></div>
+            <div class="ra-coin ra-coin-bd"></div>
+            <span class="ra-or ra-or-haut" aria-hidden="true"></span>
+            <span class="ra-or ra-or-bas" aria-hidden="true"></span>
+            <span class="ra-or ra-or-gauche" aria-hidden="true"></span>
+            <span class="ra-or ra-or-droite" aria-hidden="true"></span>
+            <div class="ra-bulle" role="status" hidden></div>
+            <div class="ra-chargement">Chargement de l'IRM… <span>0 %</span></div>
+          </div>
+
+          <div class="ra-defilement">
+            <label for="ra-coupe" class="ra-groupe-titre">Coupe</label>
+            <input type="range" id="ra-coupe" min="1" max="181" value="85" step="1">
+            <span class="ra-compteur" aria-hidden="true"></span>
+          </div>
+
+          <aside class="ra-panneau" aria-label="Territoires et réglages">
+            <div class="ra-bloc ra-test" id="ra-test" aria-live="polite" hidden></div>
+            <div class="ra-bloc ra-hors-test">
+              <h2>Territoires</h2>
+              <label class="ra-interrupteur"><input type="checkbox" id="ra-territoires" checked> Afficher les territoires</label>
+              <div class="ra-groupe" role="group" aria-label="Niveau de détail">
+                <button type="button" class="ra-btn" data-detail="grands" aria-pressed="false">Grands territoires</button>
+                <button type="button" class="ra-btn" data-detail="detail" aria-pressed="true">Détaillés</button>
+              </div>
+              <div class="ra-groupe" role="group" aria-label="Hémisphère coloré">
+                <span class="ra-groupe-titre">Côté</span>
+                <button type="button" class="ra-btn" data-cote="D" aria-pressed="true">Droit</button>
+                <button type="button" class="ra-btn" data-cote="G" aria-pressed="false">Gauche</button>
+                <button type="button" class="ra-btn" data-cote="DG" aria-pressed="false">Les deux</button>
+              </div>
+              <label class="ra-reglage" for="ra-opacite">Opacité <input type="range" id="ra-opacite" min="10" max="90" value="45"></label>
+              <label class="ra-interrupteur"><input type="checkbox" id="ra-contours" checked> Contours</label>
+              <label class="ra-interrupteur"><input type="checkbox" id="ra-etiquettes" checked> Étiquettes</label>
+              <label class="ra-interrupteur"><input type="checkbox" id="ra-jonctions" checked> Zones jonctionnelles (hachurées)</label>
+            </div>
+            <div class="ra-bloc ra-hors-test">
+              <h2>Légende</h2>
+              <div class="ra-legende"></div>
+            </div>
+            <div class="ra-bloc ra-hors-test">
+              <h2>Territoire choisi</h2>
+              <div class="ra-info" aria-live="polite"></div>
+            </div>
+            <div class="ra-bloc">
+              <h2>Fenêtrage</h2>
+              <label class="ra-reglage" for="ra-fenetres">Préréglage <select id="ra-fenetres"></select></label>
+              <label class="ra-reglage" for="ra-largeur">Largeur <input type="number" id="ra-largeur" min="2" max="600" step="1"></label>
+              <label class="ra-reglage" for="ra-niveau">Niveau <input type="number" id="ra-niveau" min="-100" max="400" step="1"></label>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section sec-down">
+      <div class="container">
+        <h2 class="marker-sub">Comment naviguer</h2>
+        <div class="ra-aide" id="ra-aide-clavier">
+          <div class="fcard">
+            <h3>À la souris</h3>
+            <ul>
+              <li><b>Molette</b> : coupe suivante ou précédente (avec <kbd>Maj</kbd> : 5 par 5).</li>
+              <li><b>Clic gauche glissé</b> : l'outil choisi (défiler par défaut).</li>
+              <li><b>Clic droit glissé</b> : fenêtrage (horizontal = largeur, vertical = niveau).</li>
+              <li><b>Ctrl + molette</b> : zoom ; <b>clic du milieu glissé</b> : déplacer.</li>
+              <li><b>Clic</b> sur une région : nom du territoire et repère jaune, conservé quand on change de plan.</li>
+              <li><b>Double-clic</b> : réinitialiser.</li>
+            </ul>
+          </div>
+          <div class="fcard">
+            <h3>Au clavier</h3>
+            <ul>
+              <li><kbd>↑</kbd> <kbd>↓</kbd> : coupe suivante ou précédente ; <kbd>Page ↑</kbd> <kbd>Page ↓</kbd> : 10 par 10.</li>
+              <li><kbd>A</kbd> <kbd>C</kbd> <kbd>S</kbd> : plan axial, coronal, sagittal.</li>
+              <li><kbd>+</kbd> <kbd>−</kbd> : zoom ; <kbd>0</kbd> : réinitialiser.</li>
+              <li><kbd>T</kbd> : territoires ; <kbd>E</kbd> : étiquettes ; <kbd>J</kbd> : zones jonctionnelles.</li>
+              <li><kbd>P</kbd> : pondération suivante (T1, T2, FLAIR).</li>
+            </ul>
+          </div>
+          <div class="fcard">
+            <h3>Sur téléphone ou tablette</h3>
+            <ul>
+              <li><b>Un doigt glissé</b> : l'outil choisi (défiler par défaut).</li>
+              <li><b>Deux doigts</b> : zoom et déplacement.</li>
+              <li><b>Toucher bref</b> : nom du territoire.</li>
+              <li>La barre sous l'image permet aussi d'aller directement à une coupe.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout" style="margin-top: 26px">
+          <p><b>Mode test :</b> le bouton « Mode test » masque les territoires, les étiquettes et la légende, et simule une lésion ischémique dans un territoire (hypersignal en FLAIR et en T2, hyposignal en T1, limitée au territoire). Faites défiler les coupes, changez de plan ou de pondération, puis choisissez la structure atteinte et le territoire artériel : la correction révèle le territoire et explique la réponse. Dix questions tirées au hasard, côté droit ou gauche, un point par bonne réponse.</p>
+        </div>
+        <div class="callout" style="margin-top: 14px">
+          <p><b>À savoir :</b> convention radiologique, la droite du patient est à gauche de l'écran (en sagittal, l'avant est à gauche). Les trois pondérations viennent de la même séance d'IRM et sont superposées exactement ; les positions sont données en millimètres dans l'espace MNI (recalage affine). Les territoires partent d'un atlas construit sur les infarctus de 1 298 patients, redécoupé selon les coupes de référence classiques (territoires profonds, choroïdienne antérieure, ACP, cervelet, tronc cérébral) puis transporté sur ce cerveau ; les zones jonctionnelles sont tracées le long des limites de ces territoires. Chez un individu donné, les limites varient avec l'anatomie du polygone de Willis.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section sec-up">
+      <div class="container ra-credits">
+        <h2 class="marker-sub">Source et licences</h2>
+        <p><b>IRM</b> : projet « Individual Brain Charting » (IBC), sujet 01 (volontaire sain), T1 3D (MPRAGE), T2 3D (SPACE) et FLAIR 3D, IRM 3 T Siemens Prisma (Pinho AL, Amadon A, Ruest T et al., <i>Scientific Data</i> 2018, <a href="https://doi.org/10.1038/sdata.2018.105" rel="noopener" target="_blank">doi:10.1038/sdata.2018.105</a>). Données publiques anonymisées <a href="https://openneuro.org/datasets/ds002685" rel="noopener" target="_blank">OpenNeuro ds002685</a>, licence <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.fr" rel="noopener" target="_blank">CC0</a> (<a href="donnees/territoires-arteriels/LICENSE-irm-IBC-CC0.txt">mention</a>). Recalées sur l'espace MNI, rééchantillonnées à 1 mm, intensités corrigées.</p>
+        <p><b>Recalage</b> : « Colin 27 Average Brain » (Holmes CJ et al., <i>J Comput Assist Tomogr</i> 1998), support de l'atlas puis relais pour le transporter sur le sujet IBC. Copyright (C) 1993–2009 Louis Collins, McConnell Brain Imaging Centre, Montreal Neurological Institute, McGill University (<a href="donnees/territoires-arteriels/LICENSE-colin27.txt">licence</a>), via <a href="https://www.templateflow.org/" rel="noopener" target="_blank">TemplateFlow</a>.</p>
+        <p><b>Territoires artériels</b> : « Digital 3D Brain MRI Arterial Territories Atlas », Liu C-F, Hsu J, Xu X et al., <i>Scientific Data</i> 2023 (<a href="https://doi.org/10.1038/s41597-022-01923-0" rel="noopener" target="_blank">doi:10.1038/s41597-022-01923-0</a>), © 2021 The Johns Hopkins University, licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr" rel="noopener" target="_blank">CC BY-SA 4.0</a> (<a href="https://github.com/Chin-Fu-Liu/Arterial_Atlas" rel="noopener" target="_blank">dépôt des auteurs</a>). Adapté par RadiologicHub : territoires redécoupés sur l'anatomie selon des coupes de référence (territoires profonds, choroïdienne antérieure, ACP, AICA et PICA, tronc cérébral), transportés sur le sujet IBC par recalage non linéaire et étendus au contour de son cerveau, liquide cérébro-spinal profond laissé sans couleur, zones jonctionnelles ajoutées, noms traduits en français. Cette carte dérivée est diffusée sous la même licence CC BY-SA 4.0 (<a href="donnees/territoires-arteriels/LICENSE-atlas-CC-BY-SA-4.0.txt">texte de la licence</a>).</p>
+        <p>Données et script de préparation : <code>radioanatomie/donnees/territoires-arteriels/</code>, <code>scripts/radioanatomie/preparer_territoires.py</code>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="../index.html" class="brand">
+        <img src="../assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav aria-label="Liens de pied de page">
+        <a href="../index.html#masterclass">Masterclass</a>
+        <a href="../fiches-rapides.html">Fiches rapides</a>
+        <a href="../radioanatomie/index.html">Radioanatomie</a>
+        <a href="../bibliotheque.html">Bibliothèque</a>
+        <a href="../comptes-rendus.html">Comptes rendus</a>
+        <a href="../communaute.html">Communauté</a>
+        <a href="../remplacements.html">Remplacements</a>
+        <a href="../index.html#cas-du-jour">Cas du jour</a>
+        <a href="../mentions-legales.html">Mentions légales</a>
+        <a href="../index.html#inscription">Contact</a>
+      </nav>
+      <p class="copyright">© <span id="year"></span> RadiologicHub · Formation en radiologie d'urgence</p>
+    </div>
+  </footer>
+
+  <script src="visionneuse.js?v=20261017003000"></script>
+  <script src="../fiche.js?v=20261012150000"></script>
+</body>
+</html>

@@ -1,0 +1,798 @@
+{
+ "titre": "Territoires artériels du cerveau",
+ "sujet": "Volontaire sain, projet Individual Brain Charting (IBC), sujet 01 ; IRM 3 T (Siemens Prisma)",
+ "dimensions": [
+  181,
+  217,
+  181
+ ],
+ "espacement_mm": [
+  1,
+  1,
+  1
+ ],
+ "origine_mm": [
+  -90,
+  -126,
+  -72
+ ],
+ "orientation": "RAS (x vers la droite du patient, y vers l'avant, z vers le haut) ; x varie le plus vite, puis y, puis z ; sujet recalé sur l'espace MNI (transformation affine)",
+ "series": [
+  {
+   "code": "T1",
+   "nom": "T1",
+   "description": "T1 3D (MPRAGE), 1 × 1 × 1,1 mm",
+   "fichier": "irm-t1.u8.gz",
+   "fenetres": [
+    {
+     "nom": "Standard",
+     "largeur": 255,
+     "niveau": 128
+    },
+    {
+     "nom": "Cerveau (substance grise / blanche)",
+     "largeur": 124,
+     "niveau": 132
+    },
+    {
+     "nom": "Large",
+     "largeur": 400,
+     "niveau": 160
+    }
+   ]
+  },
+  {
+   "code": "T2",
+   "nom": "T2",
+   "description": "T2 3D (SPACE), 0,9 mm isotrope",
+   "fichier": "irm-t2.u8.gz",
+   "fenetres": [
+    {
+     "nom": "Standard",
+     "largeur": 255,
+     "niveau": 128
+    },
+    {
+     "nom": "Cerveau (substance grise / blanche)",
+     "largeur": 97,
+     "niveau": 87
+    },
+    {
+     "nom": "Large",
+     "largeur": 400,
+     "niveau": 160
+    }
+   ]
+  },
+  {
+   "code": "FLAIR",
+   "nom": "FLAIR",
+   "description": "FLAIR 3D, 0,45 × 0,45 × 0,9 mm",
+   "fichier": "irm-flair.u8.gz",
+   "fenetres": [
+    {
+     "nom": "Standard",
+     "largeur": 255,
+     "niveau": 128
+    },
+    {
+     "nom": "Cerveau (substance grise / blanche)",
+     "largeur": 121,
+     "niveau": 154
+    },
+    {
+     "nom": "Large",
+     "largeur": 400,
+     "niveau": 160
+    }
+   ]
+  }
+ ],
+ "fichiers": {
+  "territoires": "territoires.u8.gz",
+  "jonctions": "jonctions.u8.gz"
+ },
+ "empreintes_sha256_decompresse": {
+  "T1": "0badb2e92c77731acb029f057a0d8afd7de668174a48bdb36fa5a340516ede9b",
+  "T2": "abaf9a8cb91d3277ba513598544877b95b865d82d7d95d79fb73774be1a58847",
+  "FLAIR": "8b407019460be020646ac863a9cce4fa3b6036ac4fae174a1b19b7c1b8e708f7",
+  "territoires": "0b7130aaf3201ba1c0a36baf55c492ac47ee2f044272757e901184f911767ce3",
+  "jonctions": "451d13925cf04be437dbc90cce06b887ccd4c651530f12f8a74177a7a37de33e"
+ },
+ "groupes": {
+  "ACA": {
+   "nom": "Artère cérébrale antérieure (ACA)",
+   "court": "ACA",
+   "couleur": "#3fbf52"
+  },
+  "ACM": {
+   "nom": "Artère cérébrale moyenne (ACM)",
+   "court": "ACM",
+   "couleur": "#ea5a3d"
+  },
+  "ChA": {
+   "nom": "Artère choroïdienne antérieure (carotide interne)",
+   "court": "Choroïdienne antérieure",
+   "couleur": "#9a5cf0"
+  },
+  "ACP": {
+   "nom": "Artère cérébrale postérieure (ACP)",
+   "court": "ACP",
+   "couleur": "#3f86e0"
+  },
+  "VB": {
+   "nom": "Système vertébro-basilaire",
+   "court": "Vertébro-basilaire",
+   "couleur": "#e8c13a"
+  }
+ },
+ "territoires": [
+  {
+   "id": 1,
+   "code": "ACA",
+   "cote": "G",
+   "groupe": "ACA",
+   "nom": "Territoire superficiel de l'ACA",
+   "court": "ACA (superficiel)",
+   "couleur": "#3fbf52",
+   "precision": "Branches corticales : face médiale des lobes frontal et pariétal, bord supérieur de la convexité, corps calleux."
+  },
+  {
+   "id": 2,
+   "code": "ACA",
+   "cote": "D",
+   "groupe": "ACA",
+   "nom": "Territoire superficiel de l'ACA",
+   "court": "ACA (superficiel)",
+   "couleur": "#3fbf52",
+   "precision": "Branches corticales : face médiale des lobes frontal et pariétal, bord supérieur de la convexité, corps calleux."
+  },
+  {
+   "id": 3,
+   "code": "LSM",
+   "cote": "G",
+   "groupe": "ACA",
+   "nom": "Lenticulo-striées médiales et artère de Heubner (ACA)",
+   "court": "Lenticulo-striées médiales",
+   "couleur": "#2ec4c4",
+   "precision": "Artère récurrente de Heubner et lenticulo-striées médiales : tête du noyau caudé et partie antérieure de la capsule interne."
+  },
+  {
+   "id": 4,
+   "code": "LSM",
+   "cote": "D",
+   "groupe": "ACA",
+   "nom": "Lenticulo-striées médiales et artère de Heubner (ACA)",
+   "court": "Lenticulo-striées médiales",
+   "couleur": "#2ec4c4",
+   "precision": "Artère récurrente de Heubner et lenticulo-striées médiales : tête du noyau caudé et partie antérieure de la capsule interne."
+  },
+  {
+   "id": 7,
+   "code": "ACM",
+   "cote": "G",
+   "groupe": "ACM",
+   "nom": "Territoire superficiel de l'ACM",
+   "court": "ACM (superficiel)",
+   "couleur": "#ea5a3d",
+   "precision": "Branches corticales : convexité des lobes frontal, pariétal et temporal, insula."
+  },
+  {
+   "id": 8,
+   "code": "ACM",
+   "cote": "D",
+   "groupe": "ACM",
+   "nom": "Territoire superficiel de l'ACM",
+   "court": "ACM (superficiel)",
+   "couleur": "#ea5a3d",
+   "precision": "Branches corticales : convexité des lobes frontal, pariétal et temporal, insula."
+  },
+  {
+   "id": 5,
+   "code": "LSL",
+   "cote": "G",
+   "groupe": "ACM",
+   "nom": "Territoire profond de l'ACM",
+   "court": "ACM (profond)",
+   "couleur": "#d6336c",
+   "precision": "Artères lenticulo-striées latérales, branches perforantes de l'ACM : noyau lenticulaire (putamen et pallidum) et, au-dessus, couronne rayonnante le long du ventricule latéral."
+  },
+  {
+   "id": 6,
+   "code": "LSL",
+   "cote": "D",
+   "groupe": "ACM",
+   "nom": "Territoire profond de l'ACM",
+   "court": "ACM (profond)",
+   "couleur": "#d6336c",
+   "precision": "Artères lenticulo-striées latérales, branches perforantes de l'ACM : noyau lenticulaire (putamen et pallidum) et, au-dessus, couronne rayonnante le long du ventricule latéral."
+  },
+  {
+   "id": 23,
+   "code": "ChA",
+   "cote": "G",
+   "groupe": "ChA",
+   "nom": "Territoire de l'artère choroïdienne antérieure",
+   "court": "Choroïdienne antérieure",
+   "couleur": "#9a5cf0",
+   "precision": "Branche de la carotide interne : bras postérieur de la capsule interne, uncus, amygdale et tête de l'hippocampe."
+  },
+  {
+   "id": 24,
+   "code": "ChA",
+   "cote": "D",
+   "groupe": "ChA",
+   "nom": "Territoire de l'artère choroïdienne antérieure",
+   "court": "Choroïdienne antérieure",
+   "couleur": "#9a5cf0",
+   "precision": "Branche de la carotide interne : bras postérieur de la capsule interne, uncus, amygdale et tête de l'hippocampe."
+  },
+  {
+   "id": 17,
+   "code": "ACP",
+   "cote": "G",
+   "groupe": "ACP",
+   "nom": "Territoire de l'ACP",
+   "court": "ACP",
+   "couleur": "#3f86e0",
+   "precision": "Branches corticales (lobe occipital, faces inférieure et médiale du lobe temporal) et perforantes (thalamus, mésencéphale). Absent au-dessus des ventricules latéraux : il apparaît au pôle occipital au niveau du corps des ventricules et s'étend vers l'avant en descendant."
+  },
+  {
+   "id": 18,
+   "code": "ACP",
+   "cote": "D",
+   "groupe": "ACP",
+   "nom": "Territoire de l'ACP",
+   "court": "ACP",
+   "couleur": "#3f86e0",
+   "precision": "Branches corticales (lobe occipital, faces inférieure et médiale du lobe temporal) et perforantes (thalamus, mésencéphale). Absent au-dessus des ventricules latéraux : il apparaît au pôle occipital au niveau du corps des ventricules et s'étend vers l'avant en descendant."
+  },
+  {
+   "id": 25,
+   "code": "BAS",
+   "cote": "G",
+   "groupe": "VB",
+   "nom": "Territoire des branches de l'artère basilaire",
+   "court": "Basilaire (pont)",
+   "couleur": "#e9d84a",
+   "precision": "Pont (protubérance)."
+  },
+  {
+   "id": 26,
+   "code": "BAS",
+   "cote": "D",
+   "groupe": "VB",
+   "nom": "Territoire des branches de l'artère basilaire",
+   "court": "Basilaire (pont)",
+   "couleur": "#e9d84a",
+   "precision": "Pont (protubérance)."
+  },
+  {
+   "id": 27,
+   "code": "ACS",
+   "cote": "G",
+   "groupe": "VB",
+   "nom": "Territoire de l'artère cérébelleuse supérieure",
+   "court": "Cérébelleuse supérieure",
+   "couleur": "#e0a92f",
+   "precision": "Face supérieure du cervelet et vermis supérieur."
+  },
+  {
+   "id": 28,
+   "code": "ACS",
+   "cote": "D",
+   "groupe": "VB",
+   "nom": "Territoire de l'artère cérébelleuse supérieure",
+   "court": "Cérébelleuse supérieure",
+   "couleur": "#e0a92f",
+   "precision": "Face supérieure du cervelet et vermis supérieur."
+  },
+  {
+   "id": 33,
+   "code": "AICA",
+   "cote": "G",
+   "groupe": "VB",
+   "nom": "Territoire de l'artère cérébelleuse antéro-inférieure (AICA)",
+   "court": "AICA",
+   "couleur": "#c3d65f",
+   "precision": "Face antérieure (pétreuse) de l'hémisphère cérébelleux, flocculus, pédoncule cérébelleux moyen."
+  },
+  {
+   "id": 34,
+   "code": "AICA",
+   "cote": "D",
+   "groupe": "VB",
+   "nom": "Territoire de l'artère cérébelleuse antéro-inférieure (AICA)",
+   "court": "AICA",
+   "couleur": "#c3d65f",
+   "precision": "Face antérieure (pétreuse) de l'hémisphère cérébelleux, flocculus, pédoncule cérébelleux moyen."
+  },
+  {
+   "id": 29,
+   "code": "PICA",
+   "cote": "G",
+   "groupe": "VB",
+   "nom": "Territoire de l'artère cérébelleuse postéro-inférieure (PICA)",
+   "court": "PICA",
+   "couleur": "#e98ac5",
+   "precision": "Face inférieure (sous-occipitale) de l'hémisphère cérébelleux, vermis inférieur, partie postérieure du bulbe."
+  },
+  {
+   "id": 30,
+   "code": "PICA",
+   "cote": "D",
+   "groupe": "VB",
+   "nom": "Territoire de l'artère cérébelleuse postéro-inférieure (PICA)",
+   "court": "PICA",
+   "couleur": "#e98ac5",
+   "precision": "Face inférieure (sous-occipitale) de l'hémisphère cérébelleux, vermis inférieur, partie postérieure du bulbe."
+  },
+  {
+   "id": 35,
+   "code": "VERT",
+   "cote": "G",
+   "groupe": "VB",
+   "nom": "Territoire des branches de l'artère vertébrale et de l'artère spinale antérieure",
+   "court": "Vertébrale et spinale antérieure",
+   "couleur": "#d63fb4",
+   "precision": "Bulbe (moelle allongée) : partie antérieure et médiane."
+  },
+  {
+   "id": 36,
+   "code": "VERT",
+   "cote": "D",
+   "groupe": "VB",
+   "nom": "Territoire des branches de l'artère vertébrale et de l'artère spinale antérieure",
+   "court": "Vertébrale et spinale antérieure",
+   "couleur": "#d63fb4",
+   "precision": "Bulbe (moelle allongée) : partie antérieure et médiane."
+  }
+ ],
+ "jonctions": [
+  {
+   "id": 1,
+   "code": "JC",
+   "nom": "Zone jonctionnelle corticale",
+   "court": "Jonctionnel cortical",
+   "precision": "Bande de 7 mm à cheval sur la limite de deux territoires superficiels (ACA / ACM, ACM / ACP, ACA / ACP) : siège des infarctus jonctionnels corticaux (externes), en cas de bas débit."
+  },
+  {
+   "id": 2,
+   "code": "JP",
+   "nom": "Zone jonctionnelle profonde",
+   "court": "Jonctionnel profond",
+   "precision": "Substance blanche de la couronne rayonnante et du centre semi-ovale, en dehors du ventricule latéral, entre les perforantes et les branches superficielles de l'ACM : siège des infarctus jonctionnels internes (en chapelet)."
+  }
+ ],
+ "non_colores": [
+  {
+   "id": 31,
+   "nom": "Ventricules et citernes (LCS)"
+  }
+ ],
+ "questions": [
+  {
+   "structure": "Tête du noyau caudé",
+   "territoire": "LSM",
+   "categorie": "profond",
+   "rayon_mm": 6,
+   "cibles_mm": {
+    "D": [
+     12,
+     14,
+     8
+    ],
+    "G": [
+     -12,
+     14,
+     8
+    ]
+   },
+   "note": "Artère récurrente de Heubner et lenticulo-striées médiales, branches de l'ACA."
+  },
+  {
+   "structure": "Putamen (noyau lenticulaire)",
+   "territoire": "LSL",
+   "categorie": "profond",
+   "rayon_mm": 7,
+   "cibles_mm": {
+    "D": [
+     25,
+     2,
+     2
+    ],
+    "G": [
+     -25,
+     2,
+     2
+    ]
+   },
+   "note": "Lenticulo-striées latérales : infarctus du territoire profond de l'ACM (striato-capsulaire)."
+  },
+  {
+   "structure": "Bras postérieur de la capsule interne",
+   "territoire": "ChA",
+   "categorie": "profond",
+   "rayon_mm": 5,
+   "cibles_mm": {
+    "D": [
+     22,
+     -12,
+     8
+    ],
+    "G": [
+     -22,
+     -12,
+     8
+    ]
+   },
+   "note": "Artère choroïdienne antérieure (carotide interne) : hémiplégie proportionnelle controlatérale."
+  },
+  {
+   "structure": "Thalamus",
+   "territoire": "ACP",
+   "categorie": "profond",
+   "rayon_mm": 7,
+   "cibles_mm": {
+    "D": [
+     10,
+     -18,
+     6
+    ],
+    "G": [
+     -10,
+     -18,
+     6
+    ]
+   },
+   "note": "Perforantes thalamiques (thalamo-perforantes et thalamo-genouillées), branches de l'ACP."
+  },
+  {
+   "structure": "Uncus et tête de l'hippocampe",
+   "territoire": "ChA",
+   "categorie": "profond",
+   "rayon_mm": 5,
+   "cibles_mm": {
+    "D": [
+     27,
+     -13,
+     -22
+    ],
+    "G": [
+     -27,
+     -14,
+     -21
+    ]
+   },
+   "note": "Artère choroïdienne antérieure : uncus, amygdale et tête de l'hippocampe."
+  },
+  {
+   "structure": "Corps de l'hippocampe",
+   "territoire": "ACP",
+   "categorie": "profond",
+   "rayon_mm": 6,
+   "cibles_mm": {
+    "D": [
+     30,
+     -28,
+     -10
+    ],
+    "G": [
+     -30,
+     -28,
+     -8
+    ]
+   },
+   "note": "Branches temporales de l'ACP."
+  },
+  {
+   "structure": "Insula",
+   "territoire": "ACM",
+   "categorie": "cortical",
+   "rayon_mm": 11,
+   "cibles_mm": {
+    "D": [
+     38,
+     -2,
+     6
+    ],
+    "G": [
+     -38,
+     -2,
+     6
+    ]
+   },
+   "note": "Branches insulaires de l'ACM (segment M2)."
+  },
+  {
+   "structure": "Gyrus précentral (cortex moteur)",
+   "territoire": "ACM",
+   "categorie": "cortical",
+   "rayon_mm": 13,
+   "cibles_mm": {
+    "D": [
+     42,
+     -15,
+     48
+    ],
+    "G": [
+     -42,
+     -15,
+     48
+    ]
+   },
+   "note": "Branches corticales de l'ACM : déficit moteur controlatéral à prédominance brachio-faciale."
+  },
+  {
+   "structure": "Lobule paracentral",
+   "territoire": "ACA",
+   "categorie": "cortical",
+   "rayon_mm": 11,
+   "cibles_mm": {
+    "D": [
+     6,
+     -25,
+     62
+    ],
+    "G": [
+     -6,
+     -25,
+     62
+    ]
+   },
+   "note": "Branches corticales de l'ACA : déficit moteur controlatéral à prédominance crurale."
+  },
+  {
+   "structure": "Gyrus cingulaire (face médiale du lobe frontal)",
+   "territoire": "ACA",
+   "categorie": "cortical",
+   "rayon_mm": 11,
+   "cibles_mm": {
+    "D": [
+     6,
+     30,
+     28
+    ],
+    "G": [
+     -6,
+     30,
+     28
+    ]
+   },
+   "note": "Branches corticales de l'ACA (péricalleuse et calloso-marginale)."
+  },
+  {
+   "structure": "Cortex calcarin (lobe occipital)",
+   "territoire": "ACP",
+   "categorie": "cortical",
+   "rayon_mm": 12,
+   "cibles_mm": {
+    "D": [
+     8,
+     -85,
+     6
+    ],
+    "G": [
+     -8,
+     -85,
+     6
+    ]
+   },
+   "note": "Artère calcarine (ACP) : hémianopsie latérale homonyme controlatérale."
+  },
+  {
+   "structure": "Gyrus fusiforme (face inférieure du lobe temporal)",
+   "territoire": "ACP",
+   "categorie": "cortical",
+   "rayon_mm": 11,
+   "cibles_mm": {
+    "D": [
+     35,
+     -55,
+     -14
+    ],
+    "G": [
+     -35,
+     -55,
+     -14
+    ]
+   },
+   "note": "Branches temporales inférieures de l'ACP."
+  },
+  {
+   "structure": "Gyrus temporal supérieur",
+   "territoire": "ACM",
+   "categorie": "cortical",
+   "rayon_mm": 13,
+   "cibles_mm": {
+    "D": [
+     55,
+     -30,
+     8
+    ],
+    "G": [
+     -55,
+     -30,
+     8
+    ]
+   },
+   "note": "Division inférieure de l'ACM : aphasie de Wernicke si l'hémisphère est dominant."
+  },
+  {
+   "structure": "Gyrus frontal inférieur",
+   "territoire": "ACM",
+   "categorie": "cortical",
+   "rayon_mm": 12,
+   "cibles_mm": {
+    "D": [
+     48,
+     20,
+     10
+    ],
+    "G": [
+     -48,
+     20,
+     10
+    ]
+   },
+   "note": "Division supérieure de l'ACM : aphasie de Broca si l'hémisphère est dominant."
+  },
+  {
+   "structure": "Centre semi-ovale (substance blanche frontale)",
+   "territoire": "ACM",
+   "categorie": "cortical",
+   "rayon_mm": 9,
+   "cibles_mm": {
+    "D": [
+     28,
+     10,
+     32
+    ],
+    "G": [
+     -28,
+     10,
+     32
+    ]
+   },
+   "note": "Branches médullaires (perforantes corticales) de l'ACM."
+  },
+  {
+   "structure": "Précunéus (face médiale du lobe pariétal)",
+   "territoire": "ACA",
+   "categorie": "cortical",
+   "rayon_mm": 11,
+   "cibles_mm": {
+    "D": [
+     6,
+     -60,
+     45
+    ],
+    "G": [
+     -6,
+     -60,
+     45
+    ]
+   },
+   "note": "Branches pariétales de l'ACA (au-dessus du sillon pariéto-occipital)."
+  },
+  {
+   "structure": "Mésencéphale (pédoncule cérébral)",
+   "territoire": "ACP",
+   "categorie": "fosse",
+   "rayon_mm": 5,
+   "cibles_mm": {
+    "D": [
+     12,
+     -18,
+     -10
+    ],
+    "G": [
+     -12,
+     -18,
+     -10
+    ]
+   },
+   "note": "Perforantes mésencéphaliques de l'ACP (P1) : syndrome de Weber."
+  },
+  {
+   "structure": "Pont (protubérance)",
+   "territoire": "BAS",
+   "categorie": "fosse",
+   "rayon_mm": 6,
+   "cibles_mm": {
+    "D": [
+     4,
+     -24,
+     -32
+    ],
+    "G": [
+     -4,
+     -24,
+     -32
+    ]
+   },
+   "note": "Branches paramédianes de l'artère basilaire."
+  },
+  {
+   "structure": "Bulbe (moelle allongée)",
+   "territoire": "VERT",
+   "categorie": "fosse",
+   "rayon_mm": 4,
+   "cibles_mm": {
+    "D": [
+     3,
+     -38,
+     -50
+    ],
+    "G": [
+     -3,
+     -37,
+     -51
+    ]
+   },
+   "note": "Artère vertébrale et spinale antérieure : syndrome bulbaire médian (Dejerine)."
+  },
+  {
+   "structure": "Face supérieure du cervelet (vermis supérieur)",
+   "territoire": "ACS",
+   "categorie": "fosse",
+   "rayon_mm": 10,
+   "cibles_mm": {
+    "D": [
+     10,
+     -62,
+     -20
+    ],
+    "G": [
+     -10,
+     -62,
+     -20
+    ]
+   },
+   "note": "Artère cérébelleuse supérieure : syndrome cérébelleux."
+  },
+  {
+   "structure": "Face antérieure de l'hémisphère cérébelleux",
+   "territoire": "AICA",
+   "categorie": "fosse",
+   "rayon_mm": 6,
+   "cibles_mm": {
+    "D": [
+     36,
+     -40,
+     -42
+    ],
+    "G": [
+     -30,
+     -43,
+     -43
+    ]
+   },
+   "note": "Artère cérébelleuse antéro-inférieure (AICA) : vertige, surdité et paralysie faciale homolatérales."
+  },
+  {
+   "structure": "Face inférieure de l'hémisphère cérébelleux",
+   "territoire": "PICA",
+   "categorie": "fosse",
+   "rayon_mm": 11,
+   "cibles_mm": {
+    "D": [
+     25,
+     -72,
+     -45
+    ],
+    "G": [
+     -25,
+     -72,
+     -45
+    ]
+   },
+   "note": "Artère cérébelleuse postéro-inférieure (PICA) ; atteinte du bulbe latéral : syndrome de Wallenberg."
+  }
+ ],
+ "credits": {
+  "irm": "Individual Brain Charting (IBC), sujet 01, séance 00 : T1 (MPRAGE), T2 (SPACE) et FLAIR 3D, Siemens Prisma 3 T (Pinho AL, Amadon A, Ruest T et al., Scientific Data 2018 ; doi:10.1038/sdata.2018.105). OpenNeuro ds002685, licence CC0. Recalé sur l'espace MNI, rééchantillonné à 1 mm, intensités corrigées (N4) et ramenées à 0–255.",
+  "atlas": "Digital 3D Brain MRI Arterial Territories Atlas (Liu C-F, Hsu J, Xu X et al., Scientific Data 2023, doi:10.1038/s41597-022-01923-0), © 2021 The Johns Hopkins University, licence CC BY-SA 4.0. Adapté par RadiologicHub : territoires recalés sur l'anatomie (Colin 27) d'après des coupes de référence, puis transportés sur le sujet IBC (recalage non linéaire) et étendus au contour de son cerveau ; zones jonctionnelles ajoutées ; noms traduits. La carte dérivée est diffusée sous la même licence.",
+  "colin27": "Colin 27 Average Brain (Holmes CJ et al., J Comput Assist Tomogr 1998), relais du recalage. Copyright (C) 1993–2009 Louis Collins, McConnell Brain Imaging Centre, Montreal Neurological Institute, McGill University."
+ }
+}
