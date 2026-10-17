@@ -76,18 +76,20 @@ DKT = [
     (10, 'isthmuscingulate', 'Système limbique', 'Isthme du gyrus cingulaire {c}', 'm', ''),
     (11, 'lateraloccipital', 'Gyri', 'Gyri occipitaux latéraux {c}', 'mp', ''),
     (12, 'lateralorbitofrontal', 'Gyri', 'Cortex orbitofrontal latéral {c}', 'm',
-     "Gyri orbitaires latéraux. Les coupes axiales basses (vers 24 mm sous le plan CA-CP) passent au ras du toit de "
-     "l'orbite : îlots de cortex entourés d'os, à contrôler en coronal."),
+     "Gyri orbitaires latéraux. Corrigé par l'auteur : îlots sans parenchyme retirés entre les orbites (coupe "
+     "z = −24,4 mm et au-dessous ; corrections-auteur.json)."),
     (13, 'lingual', 'Gyri', 'Gyrus lingual {c}', 'm', ''),
     (14, 'medialorbitofrontal', 'Gyri', 'Cortex orbitofrontal médial {c}', 'm',
-     "Gyrus droit (gyrus rectus) compris. FastSurfer n'a pas d'étiquette pour le bulbe et le tractus olfactifs : "
-     "dans la fosse olfactive (surtout à gauche, plus profonde chez ce sujet), la partie la plus basse de "
-     "l'étiquette peut être le bulbe olfactif, à retirer à la gomme."),
+     "Gyrus droit (gyrus rectus) compris. Corrigé par l'auteur : îlots sans parenchyme retirés entre les orbites "
+     "(coupe z = −24,4 mm et au-dessous ; corrections-auteur.json). FastSurfer n'a pas d'étiquette pour le bulbe "
+     "et le tractus olfactifs (structures manuelles)."),
     (15, 'middletemporal', 'Gyri', 'Gyrus temporal moyen {c}', 'm', ''),
     (16, 'parahippocampal', 'Système limbique', 'Gyrus parahippocampique {c}', 'm', ''),
     (17, 'paracentral', 'Gyri', 'Lobule paracentral {c}', 'm', ''),
     (18, 'parsopercularis', 'Gyri', 'Gyrus frontal inférieur {c}, partie operculaire', 'm', ''),
-    (19, 'parsorbitalis', 'Gyri', 'Gyrus frontal inférieur {c}, partie orbitaire', 'm', ''),
+    (19, 'parsorbitalis', 'Gyri', 'Gyrus frontal inférieur {c}, partie orbitaire', 'm',
+     "Corrigé par l'auteur : îlots sans cortex retirés au-dessus des toits des orbites (coupe z = −19,5 mm et "
+     "au-dessous ; corrections-auteur.json)."),
     (20, 'parstriangularis', 'Gyri', 'Gyrus frontal inférieur {c}, partie triangulaire', 'm', ''),
     (21, 'pericalcarine', 'Gyri', 'Cortex péricalcarin {c}', 'm',
      'Berges du sillon calcarin : cortex visuel primaire (V1).'),

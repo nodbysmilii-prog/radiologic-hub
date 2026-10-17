@@ -83,20 +83,20 @@
 | Gyrus temporal inférieur droit | droit | FastSurfer (DKT) | 2009 | ctx-rh-inferiortemporal | automatique |  |
 | Gyri occipitaux latéraux gauches | gauche | FastSurfer (DKT) | 1011 | ctx-lh-lateraloccipital | automatique |  |
 | Gyri occipitaux latéraux droits | droit | FastSurfer (DKT) | 2011 | ctx-rh-lateraloccipital | automatique |  |
-| Cortex orbitofrontal latéral gauche | gauche | FastSurfer (DKT) | 1012 | ctx-lh-lateralorbitofrontal | automatique | Gyri orbitaires latéraux. Les coupes axiales basses (vers 24 mm sous le plan CA-CP) passent au ras du toit de l'orbite : îlots de cortex entourés d'os, à contrôler en coronal. |
-| Cortex orbitofrontal latéral droit | droit | FastSurfer (DKT) | 2012 | ctx-rh-lateralorbitofrontal | automatique | Gyri orbitaires latéraux. Les coupes axiales basses (vers 24 mm sous le plan CA-CP) passent au ras du toit de l'orbite : îlots de cortex entourés d'os, à contrôler en coronal. |
+| Cortex orbitofrontal latéral gauche | gauche | FastSurfer (DKT) | 1012 | ctx-lh-lateralorbitofrontal | automatique | Gyri orbitaires latéraux. Corrigé par l'auteur : îlots sans parenchyme retirés entre les orbites (coupe z = −24,4 mm et au-dessous ; corrections-auteur.json). |
+| Cortex orbitofrontal latéral droit | droit | FastSurfer (DKT) | 2012 | ctx-rh-lateralorbitofrontal | automatique | Gyri orbitaires latéraux. Corrigé par l'auteur : îlots sans parenchyme retirés entre les orbites (coupe z = −24,4 mm et au-dessous ; corrections-auteur.json). |
 | Gyrus lingual gauche | gauche | FastSurfer (DKT) | 1013 | ctx-lh-lingual | automatique |  |
 | Gyrus lingual droit | droit | FastSurfer (DKT) | 2013 | ctx-rh-lingual | automatique |  |
-| Cortex orbitofrontal médial gauche | gauche | FastSurfer (DKT) | 1014 | ctx-lh-medialorbitofrontal | automatique | Gyrus droit (gyrus rectus) compris. FastSurfer n'a pas d'étiquette pour le bulbe et le tractus olfactifs : dans la fosse olfactive (surtout à gauche, plus profonde chez ce sujet), la partie la plus basse de l'étiquette peut être le bulbe olfactif, à retirer à la gomme. |
-| Cortex orbitofrontal médial droit | droit | FastSurfer (DKT) | 2014 | ctx-rh-medialorbitofrontal | automatique | Gyrus droit (gyrus rectus) compris. FastSurfer n'a pas d'étiquette pour le bulbe et le tractus olfactifs : dans la fosse olfactive (surtout à gauche, plus profonde chez ce sujet), la partie la plus basse de l'étiquette peut être le bulbe olfactif, à retirer à la gomme. |
+| Cortex orbitofrontal médial gauche | gauche | FastSurfer (DKT) | 1014 | ctx-lh-medialorbitofrontal | automatique | Gyrus droit (gyrus rectus) compris. Corrigé par l'auteur : îlots sans parenchyme retirés entre les orbites (coupe z = −24,4 mm et au-dessous ; corrections-auteur.json). FastSurfer n'a pas d'étiquette pour le bulbe et le tractus olfactifs (structures manuelles). |
+| Cortex orbitofrontal médial droit | droit | FastSurfer (DKT) | 2014 | ctx-rh-medialorbitofrontal | automatique | Gyrus droit (gyrus rectus) compris. Corrigé par l'auteur : îlots sans parenchyme retirés entre les orbites (coupe z = −24,4 mm et au-dessous ; corrections-auteur.json). FastSurfer n'a pas d'étiquette pour le bulbe et le tractus olfactifs (structures manuelles). |
 | Gyrus temporal moyen gauche | gauche | FastSurfer (DKT) | 1015 | ctx-lh-middletemporal | automatique |  |
 | Gyrus temporal moyen droit | droit | FastSurfer (DKT) | 2015 | ctx-rh-middletemporal | automatique |  |
 | Lobule paracentral gauche | gauche | FastSurfer (DKT) | 1017 | ctx-lh-paracentral | automatique |  |
 | Lobule paracentral droit | droit | FastSurfer (DKT) | 2017 | ctx-rh-paracentral | automatique |  |
 | Gyrus frontal inférieur gauche, partie operculaire | gauche | FastSurfer (DKT) | 1018 | ctx-lh-parsopercularis | automatique |  |
 | Gyrus frontal inférieur droit, partie operculaire | droit | FastSurfer (DKT) | 2018 | ctx-rh-parsopercularis | automatique |  |
-| Gyrus frontal inférieur gauche, partie orbitaire | gauche | FastSurfer (DKT) | 1019 | ctx-lh-parsorbitalis | automatique |  |
-| Gyrus frontal inférieur droit, partie orbitaire | droit | FastSurfer (DKT) | 2019 | ctx-rh-parsorbitalis | automatique |  |
+| Gyrus frontal inférieur gauche, partie orbitaire | gauche | FastSurfer (DKT) | 1019 | ctx-lh-parsorbitalis | automatique | Corrigé par l'auteur : îlots sans cortex retirés au-dessus des toits des orbites (coupe z = −19,5 mm et au-dessous ; corrections-auteur.json). |
+| Gyrus frontal inférieur droit, partie orbitaire | droit | FastSurfer (DKT) | 2019 | ctx-rh-parsorbitalis | automatique | Corrigé par l'auteur : îlots sans cortex retirés au-dessus des toits des orbites (coupe z = −19,5 mm et au-dessous ; corrections-auteur.json). |
 | Gyrus frontal inférieur gauche, partie triangulaire | gauche | FastSurfer (DKT) | 1020 | ctx-lh-parstriangularis | automatique |  |
 | Gyrus frontal inférieur droit, partie triangulaire | droit | FastSurfer (DKT) | 2020 | ctx-rh-parstriangularis | automatique |  |
 | Cortex péricalcarin gauche | gauche | FastSurfer (DKT) | 1021 | ctx-lh-pericalcarine | automatique | Berges du sillon calcarin : cortex visuel primaire (V1). |

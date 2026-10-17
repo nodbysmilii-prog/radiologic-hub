@@ -12,6 +12,8 @@ de l'étape 3. L'auteur y valide, corrige ou supprime chaque structure et y pose
   - chaque volume est écrit en mosaïques PNG en niveaux de gris (coupes axiales rangées en grille ; les pages
     publiées ne servent pas de fichiers binaires bruts, et le PNG compresse mieux que gzip ici), avec une somme de
     contrôle Adler-32 vérifiée par la page ;
+  - corrections de l'auteur (corrections_auteur.py, corrections-auteur.json) appliquées aux étiquettes avant
+    l'export (zones sans parenchyme) ;
   - manifest.json : grilles, séquences, couches et liste des structures (table de etiquettes.py, sans les lignes
     « non publié ») avec leur volume, un point intérieur et leur étendue dans chaque plan.
 Clé d'une structure (enregistrements de la page) : « couche-valeurs » (fines-17, sillons-51, faisceaux-AF_left…),
@@ -29,6 +31,7 @@ from scipy import ndimage as ndi
 ICI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, ICI)
 sys.path.insert(0, os.path.dirname(ICI))
+import corrections_auteur
 import etiquettes
 import preparer_territoires as territoires
 
@@ -53,6 +56,7 @@ SEQUENCES = [
     ('diffusion-fa-couleur', 'fa', 'FA couleur', ['axial'], 2, (0.0, 99.7, 'cerveau')),
 ]
 COUCHES = ['lobes', 'sillons', 'meninges', 'territoires', 'jonctions', 'arteres-tof']
+DERIVEES = ('lobes', 'sillons', 'territoires', 'jonctions')       # couches de parenchyme, corrigées avec fines
 # couleurs des territoires : celles de la couche « Territoires vasculaires » déjà en ligne (preparer_territoires.py)
 COULEURS = {('territoires', i + d): c for i, _, _, _, _, c, _ in territoires.TERRITOIRES for d in (0, 1)}
 COULEURS.update({('jonctions', 1): '#e9e9e9', ('jonctions', 2): '#ffcf5c'})
@@ -147,7 +151,7 @@ def sequences(sl, tete, cerveau):
     return sortie
 
 
-def bits_faisceaux(lo_mm, hi_mm):
+def bits_faisceaux(lo_mm, hi_mm, zone, a_grille):
     """Faisceaux de TractSeg (grille de 1,25 mm) recadrés sur la même boîte ; bit b dans le plan d'octets b // 8."""
     noms = sorted(f[:-7] for f in os.listdir(FAISCEAUX) if f.endswith('.nii.gz'))
     v0, a = lire(os.path.join(FAISCEAUX, noms[0] + '.nii.gz'))
@@ -157,9 +161,13 @@ def bits_faisceaux(lo_mm, hi_mm):
     sl = tuple(slice(l, h) for l, h in zip(lo, hi))
     forme = tuple(int(h - l) for l, h in zip(lo, hi))
     plans = np.zeros(forme + (int(np.ceil(len(noms) / 8)),), np.uint8)
+    # zone sans parenchyme de l'auteur, lue au voxel de 0,7 mm le plus proche du centre de chaque voxel de 1,25 mm
+    ax = [np.clip(np.round((orig[d] + (lo[d] + np.arange(forme[d])) * pas_f - a_grille[d, 3]) / a_grille[d, d]),
+                  0, zone.shape[d] - 1).astype(int) for d in range(3)]
+    hors = zone[np.ix_(*ax)]
     masques = {}
     for b, nom in enumerate(noms):
-        m = np.asanyarray(nib.load(os.path.join(FAISCEAUX, nom + '.nii.gz')).dataobj)[sl] > 0
+        m = (np.asanyarray(nib.load(os.path.join(FAISCEAUX, nom + '.nii.gz')).dataobj)[sl] > 0) & ~hors
         plans[..., b // 8] |= (m.astype(np.uint8) << (b % 8))
         masques[nom] = m
     info = ecrire_volume('faisceaux', plans)                       # un canal par plan de 8 faisceaux
@@ -260,21 +268,28 @@ def main():
     print('séquences…')
     seqs = sequences(sl, tete, cerveau_c)
     print('couches…')
-    fines_c = np.asarray(fines[sl]).astype(np.int32)
-    table = [int(x) for x in np.unique(fines_c)]
-    assert table[0] == 0 and len(table) <= 256
-    volumes = {'fines': np.searchsorted(table, fines_c).astype(np.uint8)}
-    couches = {'fines': dict(ecrire_volume('couche-fines', volumes['fines']), table=table)}
+    fines = np.asarray(fines).astype(np.int32)
+    zone, bilan = corrections_auteur.zone_sans_parenchyme(fines, a)
+    zone_c = zone[sl]
+    fines_c = fines[sl].copy()
+    autres = {}
     for nom in COUCHES:
         v, _ = lire(os.path.join(ETAPE3, nom + '.nii.gz'))
         v = np.asarray(v[sl])
         assert v.max() < 256
-        cle = 'arteres' if nom == 'arteres-tof' else nom
-        volumes[cle] = v.astype(np.uint8)
-        couches[cle] = ecrire_volume(f'couche-{cle}', volumes[cle])
+        autres['arteres' if nom == 'arteres-tof' else nom] = v.astype(np.uint8)
+    retires = corrections_auteur.appliquer(fines_c, {c: autres[c] for c in DERIVEES}, zone_c)
+    print('  corrections de l\'auteur :', bilan, '; voxels retirés de fines :', retires)
+    table = [int(x) for x in np.unique(fines_c)]
+    assert table[0] == 0 and len(table) <= 256
+    volumes = {'fines': np.searchsorted(table, fines_c).astype(np.uint8)}
+    couches = {'fines': dict(ecrire_volume('couche-fines', volumes['fines']), table=table)}
+    for cle, v in autres.items():
+        volumes[cle] = v
+        couches[cle] = ecrire_volume(f'couche-{cle}', v)
     for cle, c in couches.items():
         print(f"  {cle:12s} {c['octets'] / 1e6:6.2f} Mo")
-    couches['faisceaux'], masques_f = bits_faisceaux(lo_mm, hi_mm)
+    couches['faisceaux'], masques_f = bits_faisceaux(lo_mm, hi_mm, zone, a)
     print('structures…')
     liste = structures(volumes, table, couches['faisceaux'], masques_f, lo_mm)
     manifeste = {
@@ -282,6 +297,7 @@ def main():
         'grille': {'forme': forme, 'voxel_mm': PAS, 'origine_mm': [round(float(x), 4) for x in lo_mm],
                    'repere': 'RAS (x vers la droite du patient), aligné CA-CP, coordonnées MNI'},
         'sequences': seqs, 'couches': couches, 'categories': etiquettes.CATEGORIES, 'structures': liste,
+        'corrections_auteur': {'zones_sans_parenchyme': bilan, 'voxels_retires_fines': retires},
     }
     with open(os.path.join(SORTIE, 'manifest.json'), 'w', encoding='utf-8') as f:
         json.dump(manifeste, f, ensure_ascii=False, separators=(',', ':'))

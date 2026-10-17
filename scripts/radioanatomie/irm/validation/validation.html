@@ -1103,7 +1103,10 @@ function majFiche() {
   z.appendChild(bl);
 
   // points
-  const bp = el('div', 'bloc'); bp.appendChild(el('h3', '', s.manuel ? 'Points posés' : "Point d'étiquette imposé"));
+  const bp = el('div', 'bloc'); bp.appendChild(el('h3', '', s.manuel ? 'Points posés' : 'Points'));
+  if (!s.manuel && d.points && d.points.length) bp.appendChild(el('p', 'note', d.statut === 'valide'
+    ? "Structure validée : ces points fixent la place de l'étiquette."
+    : 'Ces points montrent la zone fausse à Claude (avec votre commentaire).'));
   if (d.points && d.points.length) {
     const ul = el('ul', 'points');
     d.points.forEach((pt, n) => {
@@ -1127,7 +1130,8 @@ function majFiche() {
       });
       bp.appendChild(tous);
     }
-  } else bp.appendChild(el('p', 'note', s.manuel ? 'Aucun point pour le moment.' : "Facultatif : l'étiquette sera placée automatiquement au centre de la structure."));
+  } else bp.appendChild(el('p', 'note', s.manuel ? 'Aucun point pour le moment.'
+    : "Facultatif : avec « Corriger », des points montrent la zone fausse ; sur une structure validée, un point fixe la place de l'étiquette (sinon elle est placée au centre)."));
   z.appendChild(bp);
 
   // commentaire et nom proposé
@@ -1187,10 +1191,11 @@ function poserPoint(ijk) {
   const pts = (d.points || []).concat([{ i: ijk[0], j: ijk[1], k: ijk[2], plan: E.plan }]);
   const patch = { points: pts };
   if (s.manuel && !d.statut) patch.statut = 'valide';
-  E.outil = 'naviguer'; E.repere = false;          // un point par appui sur « Poser un point »
+  if (s.manuel) { E.outil = 'naviguer'; E.repere = false; }    // structure manuelle : un point par appui
   decider(s.cle, patch); majOutil();
   const alerte = alerteLateralite(s, mm(...ijk)[0]);
-  toast(alerte || `Point ${pts.length} posé : ${s.nom}. Pour un autre point, touchez de nouveau « Poser un point ».`, alerte ? 5000 : 3200);
+  toast(alerte || (s.manuel ? `Point ${pts.length} posé : ${s.nom}. Pour un autre point, touchez de nouveau « Poser un point ».`
+    : `Point ${pts.length} : ${s.nom}`), alerte ? 5000 : 2600);
 }
 function retirerPoints(s, d, pts) {
   const patch = { points: pts };
