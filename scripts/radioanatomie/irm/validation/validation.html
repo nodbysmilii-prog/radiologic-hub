@@ -1138,7 +1138,12 @@ function majFiche() {
   const bc = el('div', 'bloc'); bc.appendChild(el('h3', '', 'Commentaire'));
   const ta = document.createElement('textarea'); ta.className = 'champ'; ta.id = 'commentaire'; ta.disabled = !ecr;
   ta.placeholder = 'Ce qui ne va pas, ce qu\'il faut changer…'; ta.value = d.commentaire || '';
-  ta.addEventListener('input', () => retarder('com', () => decider(s.cle, { commentaire: ta.value }, { garderFiche: true })));
+  ta.addEventListener('input', () => retarder('com', () => {
+    const patch = { commentaire: ta.value };
+    const actuel = decisions.get(s.cle) || {};
+    if (ta.value.trim() && !actuel.statut && !s.manuel) patch.statut = 'corriger';   // un commentaire signale une erreur
+    decider(s.cle, patch, { garderFiche: !!actuel.statut || s.manuel });
+  }));
   const nc = document.createElement('input'); nc.className = 'champ'; nc.id = 'nomCorrige'; nc.disabled = !ecr;
   nc.placeholder = 'Nom français proposé (si le nom est à changer)'; nc.value = d.nom_corrige || '';
   nc.addEventListener('input', () => retarder('nom', () => decider(s.cle, { nom_corrige: nc.value.trim() }, { garderFiche: true })));
@@ -1190,7 +1195,7 @@ function poserPoint(ijk) {
   const s = S[E.sel], d = decisions.get(s.cle) || {};
   const pts = (d.points || []).concat([{ i: ijk[0], j: ijk[1], k: ijk[2], plan: E.plan }]);
   const patch = { points: pts };
-  if (s.manuel && !d.statut) patch.statut = 'valide';
+  if (!d.statut) patch.statut = s.manuel ? 'valide' : 'corriger';   // automatique : un point signale une erreur
   if (s.manuel) { E.outil = 'naviguer'; E.repere = false; }    // structure manuelle : un point par appui
   decider(s.cle, patch); majOutil();
   const alerte = alerteLateralite(s, mm(...ijk)[0]);
