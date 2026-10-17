@@ -1,0 +1,382 @@
+"""Radioanatomie IRM cérébrale : table de correspondance des étiquettes (outil → nom français), à relire par l'auteur.
+
+Chaque structure est décrite une fois ; les structures paires sont déclinées à gauche et à droite, avec l'accord de
+l'adjectif (« gyrus précentral droit », « insula droite »). Colonnes écrites :
+  source          outil ou atlas d'origine (FastSurfer aseg / DKT, CerebNet, HypVINN, règle dérivée, atlas des
+                  territoires, masque TOF, points manuels de l'auteur) ;
+  id              numéro de l'étiquette dans l'outil (vide pour les structures dérivées ou manuelles) ;
+  nom_outil       nom anglais de l'outil ;
+  categorie       catégorie du menu de la visionneuse ;
+  nom_fr          nom affiché (latéralité comprise) ;
+  cote            gauche / droit / médian ;
+  statut          automatique, dérivé (règle écrite dans « remarque »), transporté (atlas recalé), manuel ;
+  remarque        précision anatomique ou point à vérifier.
+Usage : python3 -I -B scripts/radioanatomie/irm/etiquettes.py   → correspondance-etiquettes.csv et .md (même dossier)
+"""
+import csv, os
+
+ICI = os.path.dirname(os.path.abspath(__file__))
+
+CATEGORIES = ['Régions', 'Sillons', 'Gyri', 'Système limbique', 'Substance blanche', 'Ventricules et citernes',
+              'Noyaux gris centraux et structures apparentées', 'Voies optiques', 'Cervelet', 'Tronc cérébral',
+              'Artères', 'Sinus veineux', 'Glandes', 'Territoires vasculaires']
+
+ADJ = {('gauche', 'm'): 'gauche', ('gauche', 'f'): 'gauche', ('droit', 'm'): 'droit', ('droit', 'f'): 'droite',
+       ('gauche', 'mp'): 'gauches', ('droit', 'mp'): 'droits', ('gauche', 'fp'): 'gauches', ('droit', 'fp'): 'droites'}
+
+# ---------------------------------------------------------------------------
+# FastSurfer (aseg) : (id gauche, id droit, nom outil gauche, catégorie, modèle français, genre, remarque)
+# ---------------------------------------------------------------------------
+ASEG_PAIRES = [
+    (2, 41, 'Left-Cerebral-White-Matter', 'Substance blanche', 'Substance blanche cérébrale {c}', 'f',
+     "Ensemble de la substance blanche de l'hémisphère (les faisceaux ne sont pas distingués par l'outil)."),
+    (4, 43, 'Left-Lateral-Ventricle', 'Ventricules et citernes', 'Ventricule latéral {c}', 'm', ''),
+    (5, 44, 'Left-Inf-Lat-Vent', 'Ventricules et citernes', 'Corne temporale du ventricule latéral {c}', 'm', ''),
+    (31, 63, 'Left-choroid-plexus', 'Ventricules et citernes', 'Plexus choroïde du ventricule latéral {c}', 'm', ''),
+    (7, 46, 'Left-Cerebellum-White-Matter', 'Cervelet', "Substance blanche de l'hémisphère cérébelleux {c}", 'm',
+     'Remplacée par le corps médullaire de CerebNet là où CerebNet a une étiquette.'),
+    (8, 47, 'Left-Cerebellum-Cortex', 'Cervelet', "Cortex de l'hémisphère cérébelleux {c}", 'm',
+     'Subdivisé en lobules par CerebNet.'),
+    (10, 49, 'Left-Thalamus', 'Noyaux gris centraux et structures apparentées', 'Thalamus {c}', 'm', ''),
+    (11, 50, 'Left-Caudate', 'Noyaux gris centraux et structures apparentées', 'Noyau caudé {c}', 'm', ''),
+    (12, 51, 'Left-Putamen', 'Noyaux gris centraux et structures apparentées', 'Putamen {c}', 'm', ''),
+    (13, 52, 'Left-Pallidum', 'Noyaux gris centraux et structures apparentées', 'Globus pallidus {c}', 'm', ''),
+    (26, 58, 'Left-Accumbens-area', 'Noyaux gris centraux et structures apparentées', 'Noyau accumbens {c}', 'm', ''),
+    (28, 60, 'Left-VentralDC', 'Noyaux gris centraux et structures apparentées', 'Diencéphale ventral {c}', 'm',
+     "Étiquette globale de l'outil : hypothalamus, noyau sous-thalamique, substance noire, noyau rouge, partie "
+     "haute du pédoncule cérébral ; affinée par HypVINN pour l'hypothalamus. À relire : nom à garder ou à masquer."),
+    (17, 53, 'Left-Hippocampus', 'Système limbique', 'Hippocampe {c}', 'm', ''),
+    (18, 54, 'Left-Amygdala', 'Système limbique', 'Corps amygdaloïde (amygdale) {c}', 'm', ''),
+]
+ASEG_MEDIANS = [
+    (14, '3rd-Ventricle', 'Ventricules et citernes', 'Troisième ventricule (V3)', ''),
+    (15, '4th-Ventricle', 'Ventricules et citernes', 'Quatrième ventricule (V4)', ''),
+    (16, 'Brain-Stem', 'Régions', 'Tronc cérébral', 'Mésencéphale, pont et bulbe ensemble (non subdivisés par '
+                                                    "l'outil)."),
+    (24, 'CSF', 'Ventricules et citernes', 'Liquide cérébrospinal des citernes de la base',
+     "Étiquette globale de l'outil (LCS autour du tronc cérébral et à la base) : à relire, les citernes nommées "
+     'viendront des points manuels.'),
+]
+ASEG_EXCLUS = [(77, 'WM-hypointensities', "Hypo-intensités de la substance blanche : pas une structure anatomique, "
+                                          'non publiée.')]
+
+# ---------------------------------------------------------------------------
+# FastSurfer (DKT, 31 régions corticales par hémisphère ; gauche = 1000 + n, droit = 2000 + n)
+# ---------------------------------------------------------------------------
+DKT = [
+    (2, 'caudalanteriorcingulate', 'Système limbique', 'Gyrus cingulaire antérieur {c}, partie caudale', 'm', ''),
+    (3, 'caudalmiddlefrontal', 'Gyri', 'Gyrus frontal moyen {c}, partie caudale', 'm', ''),
+    (5, 'cuneus', 'Gyri', 'Cunéus {c}', 'm', ''),
+    (6, 'entorhinal', 'Système limbique', 'Cortex entorhinal {c}', 'm', ''),
+    (7, 'fusiform', 'Gyri', 'Gyrus fusiforme {c}', 'm', 'Gyrus temporo-occipital latéral.'),
+    (8, 'inferiorparietal', 'Gyri', 'Lobule pariétal inférieur {c} (gyrus angulaire)', 'm',
+     'Dans le protocole DKT, le gyrus supramarginal forme une région à part.'),
+    (9, 'inferiortemporal', 'Gyri', 'Gyrus temporal inférieur {c}', 'm', ''),
+    (10, 'isthmuscingulate', 'Système limbique', 'Isthme du gyrus cingulaire {c}', 'm', ''),
+    (11, 'lateraloccipital', 'Gyri', 'Gyri occipitaux latéraux {c}', 'mp', ''),
+    (12, 'lateralorbitofrontal', 'Gyri', 'Cortex orbitofrontal latéral {c}', 'm', 'Gyri orbitaires latéraux.'),
+    (13, 'lingual', 'Gyri', 'Gyrus lingual {c}', 'm', ''),
+    (14, 'medialorbitofrontal', 'Gyri', 'Cortex orbitofrontal médial {c}', 'm', 'Gyrus droit (gyrus rectus) compris.'),
+    (15, 'middletemporal', 'Gyri', 'Gyrus temporal moyen {c}', 'm', ''),
+    (16, 'parahippocampal', 'Système limbique', 'Gyrus parahippocampique {c}', 'm', ''),
+    (17, 'paracentral', 'Gyri', 'Lobule paracentral {c}', 'm', ''),
+    (18, 'parsopercularis', 'Gyri', 'Gyrus frontal inférieur {c}, partie operculaire', 'm', ''),
+    (19, 'parsorbitalis', 'Gyri', 'Gyrus frontal inférieur {c}, partie orbitaire', 'm', ''),
+    (20, 'parstriangularis', 'Gyri', 'Gyrus frontal inférieur {c}, partie triangulaire', 'm', ''),
+    (21, 'pericalcarine', 'Gyri', 'Cortex péricalcarin {c}', 'm',
+     'Berges du sillon calcarin : cortex visuel primaire (V1).'),
+    (22, 'postcentral', 'Gyri', 'Gyrus postcentral {c}', 'm', ''),
+    (23, 'posteriorcingulate', 'Système limbique', 'Gyrus cingulaire postérieur {c}', 'm', ''),
+    (24, 'precentral', 'Gyri', 'Gyrus précentral {c}', 'm', ''),
+    (25, 'precuneus', 'Gyri', 'Précunéus {c}', 'm', ''),
+    (26, 'rostralanteriorcingulate', 'Système limbique', 'Gyrus cingulaire antérieur {c}, partie rostrale', 'm', ''),
+    (27, 'rostralmiddlefrontal', 'Gyri', 'Gyrus frontal moyen {c}, partie rostrale', 'm', ''),
+    (28, 'superiorfrontal', 'Gyri', 'Gyrus frontal supérieur {c}', 'm', ''),
+    (29, 'superiorparietal', 'Gyri', 'Lobule pariétal supérieur {c}', 'm', ''),
+    (30, 'superiortemporal', 'Gyri', 'Gyrus temporal supérieur {c}', 'm', ''),
+    (31, 'supramarginal', 'Gyri', 'Gyrus supramarginal {c}', 'm', ''),
+    (34, 'transversetemporal', 'Gyri', 'Gyrus temporal transverse {c} (gyrus de Heschl)', 'm', ''),
+    (35, 'insula', 'Gyri', 'Cortex insulaire {c}', 'm', ''),
+]
+DKT_NUM = {nom: n for n, nom, *_ in DKT}
+
+# ---------------------------------------------------------------------------
+# Lobes : regroupement des régions DKT ; la substance blanche sous-jacente (5 mm) suit la région corticale la plus
+# proche, comme le fichier « wmparc » de FreeSurfer
+# ---------------------------------------------------------------------------
+LOBES = [
+    ('Lobe frontal {c}', 'm', ['superiorfrontal', 'caudalmiddlefrontal', 'rostralmiddlefrontal', 'parsopercularis',
+                               'parstriangularis', 'parsorbitalis', 'lateralorbitofrontal', 'medialorbitofrontal',
+                               'precentral', 'paracentral'],
+     'Le lobule paracentral, à cheval sur les lobes frontal et pariétal, est rattaché au lobe frontal : à valider.'),
+    ('Lobe pariétal {c}', 'm', ['postcentral', 'superiorparietal', 'inferiorparietal', 'supramarginal', 'precuneus'], ''),
+    ('Lobe temporal {c}', 'm', ['superiortemporal', 'middletemporal', 'inferiortemporal', 'transversetemporal',
+                                'fusiform'], ''),
+    ('Lobe occipital {c}', 'm', ['lateraloccipital', 'lingual', 'cuneus', 'pericalcarine'], ''),
+    ("Lobe de l'insula {c}", 'm', ['insula'], ''),
+    ('Lobe limbique {c}', 'm', ['rostralanteriorcingulate', 'caudalanteriorcingulate', 'posteriorcingulate',
+                                'isthmuscingulate', 'parahippocampal', 'entorhinal'],
+     'Définition classique française (gyrus cingulaire, isthme, gyrus parahippocampique) ; FreeSurfer range le '
+     'gyrus parahippocampique et le cortex entorhinal dans le lobe temporal : à valider.'),
+]
+
+# ---------------------------------------------------------------------------
+# Sillons dérivés : interface entre deux groupes de régions DKT (le protocole DKT trace ses limites au fond des
+# sillons ; Klein et Tourville 2012). Le sillon = LCS entre les deux berges + fond du sillon.
+# ---------------------------------------------------------------------------
+SILLONS = [
+    ('Sillon central {c}', ['precentral'], ['postcentral'], ''),
+    ('Sillon précentral {c}', ['precentral'], ['caudalmiddlefrontal', 'superiorfrontal', 'parsopercularis'], ''),
+    ('Sillon postcentral {c}', ['postcentral'], ['supramarginal', 'superiorparietal'], ''),
+    ('Sillon frontal supérieur {c}', ['superiorfrontal'], ['caudalmiddlefrontal', 'rostralmiddlefrontal'], ''),
+    ('Sillon frontal inférieur {c}', ['caudalmiddlefrontal', 'rostralmiddlefrontal'],
+     ['parsopercularis', 'parstriangularis', 'parsorbitalis'], ''),
+    ('Sillon intrapariétal {c}', ['superiorparietal'], ['inferiorparietal', 'supramarginal'], ''),
+    ('Sillon latéral {c} (fissure sylvienne)', ['superiortemporal', 'transversetemporal'],
+     ['parsopercularis', 'parstriangularis', 'precentral', 'postcentral', 'supramarginal'],
+     'Partie operculaire de la fissure ; la partie insulaire forme le sillon circulaire.'),
+    ("Sillon circulaire de l'insula {c}", ['insula'],
+     ['parsopercularis', 'parstriangularis', 'parsorbitalis', 'lateralorbitofrontal', 'precentral', 'postcentral',
+      'supramarginal', 'superiortemporal', 'transversetemporal'], ''),
+    ('Sillon temporal supérieur {c}', ['superiortemporal'], ['middletemporal'], ''),
+    ('Sillon temporal inférieur {c}', ['middletemporal'], ['inferiortemporal'], ''),
+    ('Sillon occipito-temporal {c}', ['inferiortemporal'], ['fusiform'], ''),
+    ('Sillon collatéral {c}', ['fusiform'], ['parahippocampal', 'lingual', 'entorhinal'], ''),
+    ('Sillon pariéto-occipital {c}', ['precuneus'], ['cuneus'], 'Partie médiale.'),
+    ('Sillon du cingulum {c}', ['superiorfrontal', 'paracentral'],
+     ['caudalanteriorcingulate', 'rostralanteriorcingulate', 'posteriorcingulate'], 'Sillon cingulaire.'),
+    ('Sillon calcarin {c}', ['pericalcarine'], ['pericalcarine'],
+     'Règle propre : LCS bordé des deux côtés par le cortex péricalcarin.'),
+]
+
+# ---------------------------------------------------------------------------
+# CerebNet (lobules du cervelet ; nomenclature de Larsell et noms classiques)
+# ---------------------------------------------------------------------------
+CEREBNET_PAIRES = [
+    (1, 2, 'I_IV', 'Lobules I à IV (lobe antérieur), hémisphère cérébelleux {c}', 'Comprend la partie vermienne.'),
+    (3, 4, 'V', 'Lobule V (lobe antérieur), hémisphère cérébelleux {c}', 'Comprend la partie vermienne.'),
+    (5, 7, 'VI', 'Lobule VI (lobule simple), hémisphère cérébelleux {c}', ''),
+    (8, 9, 'CrusI', 'Crus I (lobule semi-lunaire supérieur), hémisphère cérébelleux {c}', ''),
+    (10, 11, 'CrusII', 'Crus II (lobule semi-lunaire inférieur), hémisphère cérébelleux {c}', ''),
+    (12, 13, 'VIIb', 'Lobule VIIB (lobule gracile), hémisphère cérébelleux {c}', ''),
+    (15, 16, 'VIIIa', 'Lobule VIIIA (lobule biventral, partie antérieure), hémisphère cérébelleux {c}', ''),
+    (17, 18, 'VIIIb', 'Lobule VIIIB (lobule biventral, partie postérieure), hémisphère cérébelleux {c}', ''),
+    (20, 22, 'IX', 'Lobule IX (tonsille), hémisphère cérébelleux {c}', ''),
+    (23, 25, 'X', 'Lobule X (flocculus) {c}', ''),
+    (26, 27, 'Corpus_Medullare', "Corps médullaire de l'hémisphère cérébelleux {c}",
+     'Substance blanche du cervelet (noyaux du cervelet non distingués).'),
+]
+CEREBNET_VERMIS = [
+    (6, 'Vermis_VI', 'Vermis, lobule VI (déclive)'),
+    (14, 'Vermis_VII', 'Vermis, lobule VII (folium et tuber)'),
+    (19, 'Vermis_VIII', 'Vermis, lobule VIII (pyramide)'),
+    (21, 'Vermis_IX', 'Vermis, lobule IX (uvule)'),
+    (24, 'Vermis_X', 'Vermis, lobule X (nodule)'),
+]
+
+# ---------------------------------------------------------------------------
+# HypVINN (hypothalamus et structures voisines) : (id gauche, id droit, nom outil, catégorie, modèle, genre, remarque)
+# ---------------------------------------------------------------------------
+HYPVINN_PAIRES = [
+    (2, 1, 'N.opticus', 'Voies optiques', 'Nerf optique {c} (segment intracrânien)', 'm', ''),
+    (5, 4, 'Optic-tract', 'Voies optiques', 'Tractus optique {c}', 'm', ''),
+    (8, 7, 'Chiasma-Opticum', 'Voies optiques', 'Chiasma optique, moitié {c}', 'f', ''),
+    (6, 3, 'C.mammilare', 'Système limbique', 'Corps mamillaire {c}', 'm', ''),
+    (12, 11, 'Fornix', 'Système limbique', 'Fornix {c}', 'm',
+     "Partie proche de l'hypothalamus (colonne et corps) ; les piliers postérieurs ne sont pas segmentés."),
+    (128, 228, 'Ant-Hypothalamus', 'Noyaux gris centraux et structures apparentées', 'Hypothalamus antérieur {c}', 'm', ''),
+    (126, 226, 'Med-Hypothalamus', 'Noyaux gris centraux et structures apparentées', 'Hypothalamus médial {c}', 'm', ''),
+    (127, 227, 'Lat-Hypothalamus', 'Noyaux gris centraux et structures apparentées', 'Hypothalamus latéral {c}', 'm', ''),
+    (129, 229, 'Post-Hypothalamus', 'Noyaux gris centraux et structures apparentées', 'Hypothalamus postérieur {c}', 'm', ''),
+]
+HYPVINN_MEDIANS = [
+    (9, 'Ant-Commisure', 'Substance blanche', 'Commissure antérieure', ''),
+    (122, 'Tuberal-Region', 'Noyaux gris centraux et structures apparentées', "Région tubérale de l'hypothalamus", ''),
+    (14, 'Epiphysis', 'Glandes', 'Glande pinéale (épiphyse)', ''),
+    (16, 'Hypophysis', 'Glandes', 'Hypophyse', ''),
+    (17, 'Infundibulum', 'Glandes', 'Tige pituitaire (infundibulum)', ''),
+]
+HYPVINN_DOUBLONS = [(10, '3rd-Ventricle', "Doublon du troisième ventricule de FastSurfer (aseg), qui est retenu."),
+                    (13, 'R-Globus-Pallidus', 'Doublon du globus pallidus de FastSurfer (aseg), qui est retenu.'),
+                    (20, 'L-Globus-pallidus', 'Doublon du globus pallidus de FastSurfer (aseg), qui est retenu.')]
+
+# ---------------------------------------------------------------------------
+# Structures attendues des points manuels de l'auteur (étape 4) : liste de départ, à compléter ou corriger
+# ---------------------------------------------------------------------------
+MANUELLES_PAIRES = [
+    # Artères (ARM TOF 7 T : polygone de Willis et au-dessus)
+    ('Artères', 'Artère carotide interne {c} (segment supraclinoïdien)', 'f'),
+    ('Artères', 'Artère cérébrale antérieure {c}, segment A1', 'f'),
+    ('Artères', 'Artère cérébrale antérieure {c}, segment A2', 'f'),
+    ('Artères', 'Artère péricalleuse {c}', 'f'),
+    ('Artères', 'Artère calloso-marginale {c}', 'f'),
+    ('Artères', 'Artère cérébrale moyenne {c}, segment M1', 'f'),
+    ('Artères', 'Artère cérébrale moyenne {c}, segment M2 (branches insulaires)', 'f'),
+    ('Artères', 'Artères lenticulo-striées latérales {c}', 'fp'),
+    ('Artères', 'Artère communicante postérieure {c}', 'f'),
+    ('Artères', 'Artère choroïdienne antérieure {c}', 'f'),
+    ('Artères', 'Artère cérébrale postérieure {c}, segment P1', 'f'),
+    ('Artères', 'Artère cérébrale postérieure {c}, segment P2', 'f'),
+    ('Artères', 'Artère cérébelleuse supérieure {c}', 'f'),
+    # Sinus et veines (SWI, T1, T2)
+    ('Sinus veineux', 'Sinus transverse {c}', 'm'),
+    ('Sinus veineux', 'Sinus sigmoïde {c}', 'm'),
+    ('Sinus veineux', 'Sinus caverneux {c}', 'm'),
+    ('Sinus veineux', 'Veine cérébrale interne {c}', 'f'),
+    ('Sinus veineux', 'Veine basale {c} (de Rosenthal)', 'f'),
+    ('Sinus veineux', 'Veine thalamo-striée {c}', 'f'),
+    # Citernes
+    ('Ventricules et citernes', 'Citerne ambiante {c}', 'f'),
+    ("Ventricules et citernes", "Citerne de l'angle ponto-cérébelleux {c}", 'f'),
+    ('Ventricules et citernes', 'Citerne sylvienne {c}', 'f'),
+    # Nerfs crâniens (3D T2 0,7 mm)
+    ('Tronc cérébral', 'Nerf oculomoteur {c} (III)', 'm'),
+    ('Tronc cérébral', 'Nerf trijumeau {c} (V)', 'm'),
+    ('Tronc cérébral', 'Nerf abducens {c} (VI)', 'm'),
+    ('Tronc cérébral', 'Nerfs facial et vestibulocochléaire {c} (VII, VIII)', 'mp'),
+    # Tronc cérébral et cervelet
+    ('Tronc cérébral', 'Pédoncule cérébral {c}', 'm'),
+    ('Tronc cérébral', 'Pédoncule cérébelleux moyen {c}', 'm'),
+    ('Tronc cérébral', 'Pédoncule cérébelleux supérieur {c}', 'm'),
+    ('Tronc cérébral', 'Colliculus supérieur {c}', 'm'),
+    ('Tronc cérébral', 'Colliculus inférieur {c}', 'm'),
+    ('Tronc cérébral', 'Olive bulbaire {c}', 'f'),
+    ('Noyaux gris centraux et structures apparentées', 'Noyau rouge {c}', 'm'),
+    ('Noyaux gris centraux et structures apparentées', 'Substance noire {c}', 'f'),
+    ('Noyaux gris centraux et structures apparentées', 'Noyau sous-thalamique {c}', 'm'),
+    ('Noyaux gris centraux et structures apparentées', 'Claustrum {c}', 'm'),
+    ('Cervelet', 'Noyau dentelé {c}', 'm'),
+    # Voies optiques
+    ('Voies optiques', 'Corps géniculé latéral {c}', 'm'),
+    ('Voies optiques', 'Radiations optiques {c}', 'fp'),
+    # Substance blanche
+    ('Substance blanche', 'Capsule interne {c}, bras antérieur', 'f'),
+    ('Substance blanche', 'Capsule interne {c}, genou', 'f'),
+    ('Substance blanche', 'Capsule interne {c}, bras postérieur', 'f'),
+    ('Substance blanche', 'Capsule externe {c}', 'f'),
+    ('Substance blanche', 'Capsule extrême {c}', 'f'),
+    ('Substance blanche', 'Couronne rayonnante {c}', 'f'),
+    ('Substance blanche', 'Centre semi-ovale {c}', 'm'),
+    ('Substance blanche', 'Faisceau longitudinal supérieur {c}', 'm'),
+    ('Substance blanche', 'Faisceau arqué {c}', 'm'),
+    ('Substance blanche', 'Faisceau unciné {c}', 'm'),
+    ('Substance blanche', 'Faisceau longitudinal inférieur {c}', 'm'),
+    ('Substance blanche', 'Faisceau fronto-occipital inférieur {c}', 'm'),
+    ('Substance blanche', 'Cingulum {c}', 'm'),
+    ('Substance blanche', 'Faisceau corticospinal {c}', 'm'),
+    # Système limbique
+    ('Système limbique', 'Pilier postérieur du fornix {c}', 'm'),
+]
+MANUELLES_MEDIANES = [
+    ('Artères', 'Artère communicante antérieure'),
+    ('Artères', 'Artère basilaire (sommet)'),
+    ('Sinus veineux', 'Sinus sagittal supérieur'),
+    ('Sinus veineux', 'Sinus sagittal inférieur'),
+    ('Sinus veineux', 'Sinus droit'),
+    ('Sinus veineux', 'Confluent des sinus (torcular)'),
+    ('Sinus veineux', 'Grande veine cérébrale (veine de Galien)'),
+    ('Ventricules et citernes', 'Citerne prépontique'),
+    ('Ventricules et citernes', 'Citerne interpédonculaire'),
+    ('Ventricules et citernes', 'Citerne quadrigéminale'),
+    ('Ventricules et citernes', 'Citerne suprasellaire (chiasmatique)'),
+    ('Ventricules et citernes', 'Grande citerne (cisterna magna)'),
+    ('Ventricules et citernes', 'Aqueduc du mésencéphale'),
+    ('Ventricules et citernes', 'Septum pellucidum'),
+    ('Tronc cérébral', 'Mésencéphale'),
+    ('Tronc cérébral', 'Pont'),
+    ('Tronc cérébral', 'Bulbe (moelle allongée)'),
+    ('Tronc cérébral', 'Plancher du quatrième ventricule'),
+    ('Substance blanche', 'Corps calleux, rostrum'),
+    ('Substance blanche', 'Corps calleux, genou'),
+    ('Substance blanche', 'Corps calleux, tronc'),
+    ('Substance blanche', 'Corps calleux, splénium'),
+    ('Substance blanche', 'Commissure postérieure'),
+    ('Système limbique', 'Corps du fornix'),
+    ('Glandes', 'Hypophyse'),
+    ('Glandes', 'Glande pinéale (épiphyse)'),
+]
+
+
+def lignes():
+    sortie = []
+    cote = lambda modele, genre, c: modele.replace('{c}', ADJ[(c, genre)])
+    for g, d, nom, cat, mod, genre, rq in ASEG_PAIRES:
+        for ident, c, n in ((g, 'gauche', nom), (d, 'droit', nom.replace('Left', 'Right'))):
+            sortie.append(['FastSurfer (aseg)', ident, n, cat, cote(mod, genre, c), c, 'automatique', rq])
+    for ident, nom, cat, fr, rq in ASEG_MEDIANS:
+        sortie.append(['FastSurfer (aseg)', ident, nom, cat, fr, 'médian', 'automatique', rq])
+    for ident, nom, rq in ASEG_EXCLUS:
+        sortie.append(['FastSurfer (aseg)', ident, nom, '—', '—', '—', 'non publié', rq])
+    for n, nom, cat, mod, genre, rq in DKT:
+        for base, c, h in ((1000, 'gauche', 'lh'), (2000, 'droit', 'rh')):
+            sortie.append(['FastSurfer (DKT)', base + n, f'ctx-{h}-{nom}', cat, cote(mod, genre, c), c,
+                           'automatique', rq])
+    for mod, genre, regions, rq in LOBES:
+        for c in ('gauche', 'droit'):
+            sortie.append(['Règle (régions DKT)', '', '', 'Régions', cote(mod, genre, c), c, 'dérivé',
+                           ('Regroupement : ' + ', '.join(regions) + '. ' + rq).strip()])
+    for mod, a, b, rq in SILLONS:
+        for c in ('gauche', 'droit'):
+            sortie.append(['Règle (limites DKT)', '', '', 'Sillons', cote(mod, 'm', c), c, 'dérivé',
+                           (f"Interface {'/'.join(a)} | {'/'.join(b)}. " + rq).strip()])
+    for g, d, nom, mod, rq in CEREBNET_PAIRES:
+        for ident, c, pre in ((g, 'gauche', 'Left'), (d, 'droit', 'Right')):
+            sortie.append(['CerebNet', ident, f'{pre}_{nom}', 'Cervelet', cote(mod, 'm', c), c, 'automatique', rq])
+    for ident, nom, fr in CEREBNET_VERMIS:
+        sortie.append(['CerebNet', ident, nom, 'Cervelet', fr, 'médian', 'automatique', ''])
+    for g, d, nom, cat, mod, genre, rq in HYPVINN_PAIRES:
+        for ident, c, pre in ((g, 'gauche', 'L-'), (d, 'droit', 'R-')):
+            sortie.append(['HypVINN', ident, pre + nom, cat, cote(mod, genre, c), c, 'automatique', rq])
+    for ident, nom, cat, fr, rq in HYPVINN_MEDIANS:
+        sortie.append(['HypVINN', ident, nom, cat, fr, 'médian', 'automatique', rq])
+    for ident, nom, rq in HYPVINN_DOUBLONS:
+        sortie.append(['HypVINN', ident, nom, '—', '—', '—', 'non publié', rq])
+    import preparer_territoires as t
+    for ident, code, groupe, nom, court, couleur, precision in t.TERRITOIRES:
+        for i, c in ((ident, 'gauche'), (ident + 1, 'droit')):
+            sortie.append(['Atlas des territoires (Liu 2023, redécoupé)', i, code, 'Territoires vasculaires',
+                           f'{nom} ({c})', c, 'transporté', precision])
+    for i, nom in ((1, 'Zone jonctionnelle corticale'), (2, 'Zone jonctionnelle profonde')):
+        sortie.append(['Atlas des territoires (calque jonctionnel)', i, '', 'Territoires vasculaires', nom,
+                       'gauche et droit', 'transporté', ''])
+    sortie.append(['Masque TOF (seuil local)', 1, '', 'Artères', 'Artères (masque non nommé)', 'gauche et droit',
+                   'automatique', 'Vaisseaux du TOF, sans nom : les noms viennent des points manuels.'])
+    for cat, mod, genre in MANUELLES_PAIRES:
+        for c in ('gauche', 'droit'):
+            sortie.append(['Points manuels (3D Slicer)', '', '', cat, cote(mod, genre, c), c, 'manuel', ''])
+    for cat, fr in MANUELLES_MEDIANES:
+        rq = ('Déjà segmenté par HypVINN : point manuel facultatif (contrôle).'
+              if fr in ('Hypophyse', 'Glande pinéale (épiphyse)') else '')
+        sortie.append(['Points manuels (3D Slicer)', '', '', cat, fr, 'médian', 'manuel', rq])
+    return sortie
+
+
+def ecrire():
+    entete = ['source', 'id', 'nom_outil', 'categorie', 'nom_fr', 'cote', 'statut', 'remarque']
+    l = lignes()
+    with open(os.path.join(ICI, 'correspondance-etiquettes.csv'), 'w', encoding='utf-8-sig', newline='') as f:
+        w = csv.writer(f, delimiter=';')
+        w.writerow(entete)
+        w.writerows(l)
+    md = ['# Correspondance des étiquettes : à relire', '',
+          f'{len(l)} lignes. Générée par `etiquettes.py` (modifier ce script, pas ce fichier).', '']
+    for cat in CATEGORIES + ['—']:
+        rang = [r for r in l if r[3] == cat]
+        if not rang:
+            continue
+        md += [f'## {cat if cat != "—" else "Non publiées"} ({len(rang)})', '',
+               '| Nom français | Côté | Source | Id | Nom de l\'outil | Statut | Remarque |', '|---|---|---|---|---|---|---|']
+        md += [f'| {r[4]} | {r[5]} | {r[0]} | {r[1]} | {r[2]} | {r[6]} | {r[7]} |' for r in rang]
+        md.append('')
+    with open(os.path.join(ICI, 'correspondance-etiquettes.md'), 'w', encoding='utf-8') as f:
+        f.write('\n'.join(md))
+    return l
+
+
+if __name__ == '__main__':
+    import sys
+    sys.path.insert(0, os.path.dirname(ICI))
+    l = ecrire()
+    from collections import Counter
+    print(len(l), 'lignes ;', dict(Counter(r[3] for r in l)))
+    print(dict(Counter(r[6] for r in l)))
