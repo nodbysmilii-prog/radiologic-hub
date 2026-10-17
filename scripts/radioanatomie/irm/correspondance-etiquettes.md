@@ -1,6 +1,6 @@
 # Correspondance des étiquettes : à relire
 
-470 lignes. Générée par `etiquettes.py` (modifier ce script, pas ce fichier).
+474 lignes. Générée par `etiquettes.py` (modifier ce script, pas ce fichier).
 
 ## Régions (19)
 
@@ -26,7 +26,7 @@
 | Pôle occipital gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
 | Pôle occipital droit | droit | Points manuels (navigateur) |  |  | manuel |  |
 
-## Sillons (36)
+## Sillons (40)
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
@@ -42,8 +42,8 @@
 | Sillon frontal inférieur droit | droit | Règle (limites DKT) |  |  | dérivé | Interface caudalmiddlefrontal/rostralmiddlefrontal | parsopercularis/parstriangularis/parsorbitalis. |
 | Sillon intrapariétal gauche | gauche | Règle (limites DKT) |  |  | dérivé | Interface superiorparietal | inferiorparietal/supramarginal. |
 | Sillon intrapariétal droit | droit | Règle (limites DKT) |  |  | dérivé | Interface superiorparietal | inferiorparietal/supramarginal. |
-| Sillon latéral gauche (fissure sylvienne) | gauche | Règle (limites DKT) |  |  | dérivé | Interface superiortemporal/transversetemporal | parsopercularis/parstriangularis/precentral/postcentral/supramarginal. Partie operculaire de la fissure ; la partie insulaire forme le sillon circulaire. |
-| Sillon latéral droit (fissure sylvienne) | droit | Règle (limites DKT) |  |  | dérivé | Interface superiortemporal/transversetemporal | parsopercularis/parstriangularis/precentral/postcentral/supramarginal. Partie operculaire de la fissure ; la partie insulaire forme le sillon circulaire. |
+| Sillon latéral gauche (fissure sylvienne) | gauche | Règle (limites DKT) |  |  | dérivé | Interface superiortemporal/transversetemporal | parsopercularis/parstriangularis/precentral/postcentral/supramarginal. Partie operculaire de la fissure (rameau postérieur jusqu'à sa terminaison) ; la partie insulaire forme le sillon circulaire ; les rameaux antérieurs sont nommés à part. Le rameau postérieur monte vers l'arrière en restant presque parallèle au plan axial : en coupe axiale, il est coupé en biais (zone large et îlots). |
+| Sillon latéral droit (fissure sylvienne) | droit | Règle (limites DKT) |  |  | dérivé | Interface superiortemporal/transversetemporal | parsopercularis/parstriangularis/precentral/postcentral/supramarginal. Partie operculaire de la fissure (rameau postérieur jusqu'à sa terminaison) ; la partie insulaire forme le sillon circulaire ; les rameaux antérieurs sont nommés à part. Le rameau postérieur monte vers l'arrière en restant presque parallèle au plan axial : en coupe axiale, il est coupé en biais (zone large et îlots). |
 | Sillon circulaire de l'insula gauche | gauche | Règle (limites DKT) |  |  | dérivé | Interface insula | parsopercularis/parstriangularis/parsorbitalis/lateralorbitofrontal/precentral/postcentral/supramarginal/superiortemporal/transversetemporal. |
 | Sillon circulaire de l'insula droit | droit | Règle (limites DKT) |  |  | dérivé | Interface insula | parsopercularis/parstriangularis/parsorbitalis/lateralorbitofrontal/precentral/postcentral/supramarginal/superiortemporal/transversetemporal. |
 | Sillon temporal supérieur gauche | gauche | Règle (limites DKT) |  |  | dérivé | Interface superiortemporal | middletemporal. |
@@ -60,6 +60,10 @@
 | Sillon du cingulum droit | droit | Règle (limites DKT) |  |  | dérivé | Interface superiorfrontal/paracentral | caudalanteriorcingulate/rostralanteriorcingulate/posteriorcingulate. Sillon cingulaire. |
 | Sillon calcarin gauche | gauche | Règle (limites DKT) |  |  | dérivé | Interface pericalcarine | pericalcarine. Règle propre : LCS bordé des deux côtés par le cortex péricalcarin. |
 | Sillon calcarin droit | droit | Règle (limites DKT) |  |  | dérivé | Interface pericalcarine | pericalcarine. Règle propre : LCS bordé des deux côtés par le cortex péricalcarin. |
+| Sillon latéral gauche, rameau antérieur ascendant | gauche | Règle (limites DKT) |  |  | dérivé | Interface parstriangularis | parsopercularis. Limite entre les parties triangulaire et operculaire du gyrus frontal inférieur (protocole DKT). |
+| Sillon latéral droit, rameau antérieur ascendant | droit | Règle (limites DKT) |  |  | dérivé | Interface parstriangularis | parsopercularis. Limite entre les parties triangulaire et operculaire du gyrus frontal inférieur (protocole DKT). |
+| Sillon latéral gauche, rameau antérieur horizontal | gauche | Règle (limites DKT) |  |  | dérivé | Interface parstriangularis | parsorbitalis. Limite entre les parties triangulaire et orbitaire du gyrus frontal inférieur (protocole DKT). |
+| Sillon latéral droit, rameau antérieur horizontal | droit | Règle (limites DKT) |  |  | dérivé | Interface parstriangularis | parsorbitalis. Limite entre les parties triangulaire et orbitaire du gyrus frontal inférieur (protocole DKT). |
 | Fissure longitudinale du cerveau | médian | Règle (limites FastSurfer) |  |  | dérivé | LCS entre les hémisphères cérébraux gauche et droit. |
 | Sillon subpariétal gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
 | Sillon subpariétal droit | droit | Points manuels (navigateur) |  |  | manuel |  |

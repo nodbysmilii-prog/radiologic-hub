@@ -142,7 +142,9 @@ SILLONS = [
     ('Sillon intrapariétal {c}', ['superiorparietal'], ['inferiorparietal', 'supramarginal'], ''),
     ('Sillon latéral {c} (fissure sylvienne)', ['superiortemporal', 'transversetemporal'],
      ['parsopercularis', 'parstriangularis', 'precentral', 'postcentral', 'supramarginal'],
-     'Partie operculaire de la fissure ; la partie insulaire forme le sillon circulaire.'),
+     "Partie operculaire de la fissure (rameau postérieur jusqu'à sa terminaison) ; la partie insulaire forme le "
+     "sillon circulaire ; les rameaux antérieurs sont nommés à part. Le rameau postérieur monte vers l'arrière en "
+     "restant presque parallèle au plan axial : en coupe axiale, il est coupé en biais (zone large et îlots)."),
     ("Sillon circulaire de l'insula {c}", ['insula'],
      ['parsopercularis', 'parstriangularis', 'parsorbitalis', 'lateralorbitofrontal', 'precentral', 'postcentral',
       'supramarginal', 'superiortemporal', 'transversetemporal'], ''),
@@ -155,6 +157,11 @@ SILLONS = [
      ['caudalanteriorcingulate', 'rostralanteriorcingulate', 'posteriorcingulate'], 'Sillon cingulaire.'),
     ('Sillon calcarin {c}', ['pericalcarine'], ['pericalcarine'],
      'Règle propre : LCS bordé des deux côtés par le cortex péricalcarin.'),
+    # ajoutés le 17/10/2026 (précision demandée par l'auteur) ; à la fin de la liste pour garder les numéros
+    ('Sillon latéral {c}, rameau antérieur ascendant', ['parstriangularis'], ['parsopercularis'],
+     'Limite entre les parties triangulaire et operculaire du gyrus frontal inférieur (protocole DKT).'),
+    ('Sillon latéral {c}, rameau antérieur horizontal', ['parstriangularis'], ['parsorbitalis'],
+     'Limite entre les parties triangulaire et orbitaire du gyrus frontal inférieur (protocole DKT).'),
 ]
 
 # Regroupements dérivés de FastSurfer (aseg) : (modèle, genre, étiquettes aseg gauches, remarque)
