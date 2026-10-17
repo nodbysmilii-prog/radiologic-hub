@@ -165,7 +165,7 @@
 | Corps calleux, cinquième antérieur (genou) | médian | FastSurfer-CC | 255 | CC_Anterior | automatique | Découpage en cinquièmes égaux (convention FreeSurfer) : le genou en occupe la plus grande part. |
 | Corps calleux, deuxième cinquième (tronc, partie antérieure) | médian | FastSurfer-CC | 254 | CC_Mid_Anterior | automatique |  |
 | Corps calleux, cinquième central (tronc) | médian | FastSurfer-CC | 253 | CC_Central | automatique |  |
-| Corps calleux, quatrième cinquième (isthme) | médian | FastSurfer-CC | 252 | CC_Mid_Posterior | automatique |  |
+| Corps calleux, quatrième cinquième (tronc postérieur et isthme) | médian | FastSurfer-CC | 252 | CC_Mid_Posterior | automatique |  |
 | Corps calleux, cinquième postérieur (splénium) | médian | FastSurfer-CC | 251 | CC_Posterior | automatique |  |
 | Commissure antérieure | médian | HypVINN | 969 | Ant-Commisure | automatique |  |
 | Faisceau arqué gauche | gauche | TractSeg | AF_left | AF_left | automatique |  |

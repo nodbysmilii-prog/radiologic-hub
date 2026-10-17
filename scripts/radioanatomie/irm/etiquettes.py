@@ -195,7 +195,7 @@ CORPS_CALLEUX = [
      'Découpage en cinquièmes égaux (convention FreeSurfer) : le genou en occupe la plus grande part.'),
     (254, 'CC_Mid_Anterior', 'Substance blanche', 'Corps calleux, deuxième cinquième (tronc, partie antérieure)', ''),
     (253, 'CC_Central', 'Substance blanche', 'Corps calleux, cinquième central (tronc)', ''),
-    (252, 'CC_Mid_Posterior', 'Substance blanche', 'Corps calleux, quatrième cinquième (isthme)', ''),
+    (252, 'CC_Mid_Posterior', 'Substance blanche', 'Corps calleux, quatrième cinquième (tronc postérieur et isthme)', ''),
     (251, 'CC_Posterior', 'Substance blanche', 'Corps calleux, cinquième postérieur (splénium)', ''),
     (250, 'Fornix', 'Système limbique', 'Fornix (corps et piliers)', 'Segmenté par FastSurfer-CC avec le corps calleux.'),
 ]

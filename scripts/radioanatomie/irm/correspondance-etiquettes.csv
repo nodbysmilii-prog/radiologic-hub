@@ -164,7 +164,7 @@ CerebNet;627;Cbm_Vermis_X;Cervelet;Vermis, lobule X (nodule);médian;automatique
 FastSurfer-CC;255;CC_Anterior;Substance blanche;Corps calleux, cinquième antérieur (genou);médian;automatique;Découpage en cinquièmes égaux (convention FreeSurfer) : le genou en occupe la plus grande part.
 FastSurfer-CC;254;CC_Mid_Anterior;Substance blanche;Corps calleux, deuxième cinquième (tronc, partie antérieure);médian;automatique;
 FastSurfer-CC;253;CC_Central;Substance blanche;Corps calleux, cinquième central (tronc);médian;automatique;
-FastSurfer-CC;252;CC_Mid_Posterior;Substance blanche;Corps calleux, quatrième cinquième (isthme);médian;automatique;
+FastSurfer-CC;252;CC_Mid_Posterior;Substance blanche;Corps calleux, quatrième cinquième (tronc postérieur et isthme);médian;automatique;
 FastSurfer-CC;251;CC_Posterior;Substance blanche;Corps calleux, cinquième postérieur (splénium);médian;automatique;
 FastSurfer-CC;250;Fornix;Système limbique;Fornix (corps et piliers);médian;automatique;Segmenté par FastSurfer-CC avec le corps calleux.
 HypVINN;962;L-N.opticus;Voies optiques;Nerf optique gauche (segment intracrânien);gauche;automatique;
