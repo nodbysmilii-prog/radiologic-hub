@@ -1,8 +1,8 @@
 # Correspondance des étiquettes : à relire
 
-349 lignes. Générée par `etiquettes.py` (modifier ce script, pas ce fichier).
+416 lignes. Générée par `etiquettes.py` (modifier ce script, pas ce fichier).
 
-## Régions (13)
+## Régions (19)
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
@@ -19,8 +19,14 @@
 | Lobe de l'insula droit | droit | Règle (régions DKT) |  |  | dérivé | Regroupement : insula. |
 | Lobe limbique gauche | gauche | Règle (régions DKT) |  |  | dérivé | Regroupement : rostralanteriorcingulate, caudalanteriorcingulate, posteriorcingulate, isthmuscingulate, parahippocampal, entorhinal. Définition classique française (gyrus cingulaire, isthme, gyrus parahippocampique) ; FreeSurfer range le gyrus parahippocampique et le cortex entorhinal dans le lobe temporal : à valider. |
 | Lobe limbique droit | droit | Règle (régions DKT) |  |  | dérivé | Regroupement : rostralanteriorcingulate, caudalanteriorcingulate, posteriorcingulate, isthmuscingulate, parahippocampal, entorhinal. Définition classique française (gyrus cingulaire, isthme, gyrus parahippocampique) ; FreeSurfer range le gyrus parahippocampique et le cortex entorhinal dans le lobe temporal : à valider. |
+| Pôle frontal gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
+| Pôle frontal droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
+| Pôle temporal gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
+| Pôle temporal droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
+| Pôle occipital gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
+| Pôle occipital droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
 
-## Sillons (30)
+## Sillons (36)
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
@@ -54,8 +60,14 @@
 | Sillon du cingulum droit | droit | Règle (limites DKT) |  |  | dérivé | Interface superiorfrontal/paracentral | caudalanteriorcingulate/rostralanteriorcingulate/posteriorcingulate. Sillon cingulaire. |
 | Sillon calcarin gauche | gauche | Règle (limites DKT) |  |  | dérivé | Interface pericalcarine | pericalcarine. Règle propre : LCS bordé des deux côtés par le cortex péricalcarin. |
 | Sillon calcarin droit | droit | Règle (limites DKT) |  |  | dérivé | Interface pericalcarine | pericalcarine. Règle propre : LCS bordé des deux côtés par le cortex péricalcarin. |
+| Fissure longitudinale du cerveau | médian | Règle (limites FastSurfer) |  |  | dérivé | LCS entre les hémisphères cérébraux gauche et droit. |
+| Sillon subpariétal gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
+| Sillon subpariétal droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
+| Sillon paracentral gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
+| Sillon paracentral droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
+| Fissure transverse du cerveau | médian | Points manuels (3D Slicer) |  |  | manuel |  |
 
-## Gyri (50)
+## Gyri (56)
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
@@ -109,6 +121,12 @@
 | Gyrus temporal transverse droit (gyrus de Heschl) | droit | FastSurfer (DKT) | 2034 | ctx-rh-transversetemporal | automatique |  |
 | Cortex insulaire gauche | gauche | FastSurfer (DKT) | 1035 | ctx-lh-insula | automatique |  |
 | Cortex insulaire droit | droit | FastSurfer (DKT) | 2035 | ctx-rh-insula | automatique |  |
+| Opercule frontal gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
+| Opercule frontal droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
+| Opercule pariétal gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
+| Opercule pariétal droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
+| Opercule temporal gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
+| Opercule temporal droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
 
 ## Système limbique (23)
 
@@ -179,7 +197,7 @@
 | Corps calleux, splénium | médian | Points manuels (3D Slicer) |  |  | manuel |  |
 | Commissure postérieure | médian | Points manuels (3D Slicer) |  |  | manuel |  |
 
-## Ventricules et citernes (22)
+## Ventricules et citernes (32)
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
@@ -198,6 +216,8 @@
 | Citerne de l'angle ponto-cérébelleux droite | droit | Points manuels (3D Slicer) |  |  | manuel |  |
 | Citerne sylvienne gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
 | Citerne sylvienne droite | droit | Points manuels (3D Slicer) |  |  | manuel |  |
+| Ouverture latérale gauche du quatrième ventricule (foramen de Luschka) | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
+| Ouverture latérale droite du quatrième ventricule (foramen de Luschka) | droit | Points manuels (3D Slicer) |  |  | manuel |  |
 | Citerne prépontique | médian | Points manuels (3D Slicer) |  |  | manuel |  |
 | Citerne interpédonculaire | médian | Points manuels (3D Slicer) |  |  | manuel |  |
 | Citerne quadrigéminale | médian | Points manuels (3D Slicer) |  |  | manuel |  |
@@ -205,8 +225,16 @@
 | Grande citerne (cisterna magna) | médian | Points manuels (3D Slicer) |  |  | manuel |  |
 | Aqueduc du mésencéphale | médian | Points manuels (3D Slicer) |  |  | manuel |  |
 | Septum pellucidum | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Fosse rhomboïde | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Sillon médian de la fosse rhomboïde | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Voile médullaire supérieur | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Voile médullaire inférieur | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Fastigium | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Ouverture médiane du quatrième ventricule (foramen de Magendie) | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Toile choroïdienne du troisième ventricule | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Plexus choroïde du quatrième ventricule | médian | Points manuels (3D Slicer) |  |  | manuel |  |
 
-## Noyaux gris centraux et structures apparentées (29)
+## Noyaux gris centraux et structures apparentées (33)
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
@@ -231,6 +259,10 @@
 | Hypothalamus postérieur gauche | gauche | HypVINN | 129 | L-Post-Hypothalamus | automatique |  |
 | Hypothalamus postérieur droit | droit | HypVINN | 229 | R-Post-Hypothalamus | automatique |  |
 | Région tubérale de l'hypothalamus | médian | HypVINN | 122 | Tuberal-Region | automatique |  |
+| Corps strié gauche | gauche | Règle (étiquettes aseg) |  |  | dérivé | Regroupement : Left-Caudate, Left-Putamen, Left-Accumbens-area. Noyau caudé, putamen et noyau accumbens (striatum). |
+| Corps strié droit | droit | Règle (étiquettes aseg) |  |  | dérivé | Regroupement : Right-Caudate, Right-Putamen, Right-Accumbens-area. Noyau caudé, putamen et noyau accumbens (striatum). |
+| Noyau lenticulaire gauche | gauche | Règle (étiquettes aseg) |  |  | dérivé | Regroupement : Left-Putamen, Left-Pallidum. Putamen et globus pallidus. |
+| Noyau lenticulaire droit | droit | Règle (étiquettes aseg) |  |  | dérivé | Regroupement : Right-Putamen, Right-Pallidum. Putamen et globus pallidus. |
 | Noyau rouge gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
 | Noyau rouge droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
 | Substance noire gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
@@ -293,7 +325,7 @@
 | Noyau dentelé gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
 | Noyau dentelé droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
 
-## Tronc cérébral (24)
+## Tronc cérébral (47)
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
@@ -317,10 +349,33 @@
 | Colliculus inférieur droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
 | Olive bulbaire gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
 | Olive bulbaire droite | droit | Points manuels (3D Slicer) |  |  | manuel |  |
+| Pyramide bulbaire gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
+| Pyramide bulbaire droite | droit | Points manuels (3D Slicer) |  |  | manuel |  |
+| Sillon pré-olivaire gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
+| Sillon pré-olivaire droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
+| Sillon rétro-olivaire gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
+| Sillon rétro-olivaire droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
+| Faisceau gracile gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
+| Faisceau gracile droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
+| Faisceau cunéiforme gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
+| Faisceau cunéiforme droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
+| Tubercule gracile gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
+| Tubercule gracile droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
+| Tubercule cunéiforme gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
+| Tubercule cunéiforme droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
 | Mésencéphale | médian | Points manuels (3D Slicer) |  |  | manuel |  |
 | Pont | médian | Points manuels (3D Slicer) |  |  | manuel |  |
 | Bulbe (moelle allongée) | médian | Points manuels (3D Slicer) |  |  | manuel |  |
 | Plancher du quatrième ventricule | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Partie basilaire du pont | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Tegmentum du pont | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Tegmentum du mésencéphale | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Lame tectale (tectum) | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Fosse interpédonculaire | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Sillon basilaire | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Foramen cæcum | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Fissure médiane antérieure du bulbe | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Canal central du bulbe | médian | Points manuels (3D Slicer) |  |  | manuel |  |
 
 ## Artères (29)
 
@@ -416,6 +471,23 @@
 | Territoire des branches de l'artère vertébrale et de l'artère spinale antérieure (droit) | droit | Atlas des territoires (Liu 2023, redécoupé) | 36 | VERT | transporté | Bulbe (moelle allongée) : partie antérieure et médiane. |
 | Zone jonctionnelle corticale | gauche et droit | Atlas des territoires (calque jonctionnel) | 1 |  | transporté |  |
 | Zone jonctionnelle profonde | gauche et droit | Atlas des territoires (calque jonctionnel) | 2 |  | transporté |  |
+
+## Méninges (12)
+
+| Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
+|---|---|---|---|---|---|---|
+| Faux du cerveau | médian | Règle (limites FastSurfer) |  |  | dérivé | Surface à égale distance des deux hémisphères dans la fissure longitudinale, au-dessus du corps calleux : position déduite, la dure-mère n'est pas vue en tant que telle. |
+| Tente du cervelet | médian | Règle (limites FastSurfer) |  |  | dérivé | Surface à égale distance des hémisphères cérébraux et du cervelet, en dehors du tronc cérébral : position déduite, à valider. |
+| Cavum trigéminal gauche (cavum de Meckel) | gauche | Points manuels (3D Slicer) |  |  | manuel | Catégorie proposée : à valider. |
+| Cavum trigéminal droit (cavum de Meckel) | droit | Points manuels (3D Slicer) |  |  | manuel | Catégorie proposée : à valider. |
+| Dure-mère crânienne | médian | Points manuels (3D Slicer) |  |  | manuel | Catégorie proposée : à valider. |
+| Arachnoïde | médian | Points manuels (3D Slicer) |  |  | manuel | Catégorie proposée : à valider. |
+| Pie-mère crânienne | médian | Points manuels (3D Slicer) |  |  | manuel | Catégorie proposée : à valider. |
+| Espace épidural (virtuel) | médian | Points manuels (3D Slicer) |  |  | manuel | Catégorie proposée : à valider. |
+| Espace subdural (virtuel) | médian | Points manuels (3D Slicer) |  |  | manuel | Catégorie proposée : à valider. |
+| Espace subarachnoïdien | médian | Points manuels (3D Slicer) |  |  | manuel | Catégorie proposée : à valider. |
+| Granulations arachnoïdiennes | médian | Points manuels (3D Slicer) |  |  | manuel | Catégorie proposée : à valider. |
+| Incisure de la tente du cervelet | médian | Points manuels (3D Slicer) |  |  | manuel | Catégorie proposée : à valider. |
 
 ## Non publiées (4)
 

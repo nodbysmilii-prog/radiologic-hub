@@ -19,7 +19,8 @@ ICI = os.path.dirname(os.path.abspath(__file__))
 
 CATEGORIES = ['Régions', 'Sillons', 'Gyri', 'Système limbique', 'Substance blanche', 'Ventricules et citernes',
               'Noyaux gris centraux et structures apparentées', 'Voies optiques', 'Cervelet', 'Tronc cérébral',
-              'Artères', 'Sinus veineux', 'Glandes', 'Territoires vasculaires']
+              'Artères', 'Sinus veineux', 'Glandes', 'Territoires vasculaires', 'Méninges']
+# « Méninges » : catégorie absente de la liste de l'auteur, proposée d'après sa vidéo de référence du 17/10/2026
 
 ADJ = {('gauche', 'm'): 'gauche', ('gauche', 'f'): 'gauche', ('droit', 'm'): 'droit', ('droit', 'f'): 'droite',
        ('gauche', 'mp'): 'gauches', ('droit', 'mp'): 'droits', ('gauche', 'fp'): 'gauches', ('droit', 'fp'): 'droites'}
@@ -149,6 +150,22 @@ SILLONS = [
      'Règle propre : LCS bordé des deux côtés par le cortex péricalcarin.'),
 ]
 
+# Regroupements dérivés de FastSurfer (aseg) : (modèle, genre, étiquettes aseg gauches, remarque)
+REGROUPEMENTS = [
+    ('Corps strié {c}', 'm', ['Left-Caudate', 'Left-Putamen', 'Left-Accumbens-area'],
+     'Noyau caudé, putamen et noyau accumbens (striatum).'),
+    ('Noyau lenticulaire {c}', 'm', ['Left-Putamen', 'Left-Pallidum'], 'Putamen et globus pallidus.'),
+]
+# Structures médianes dérivées des limites entre hémisphères (FastSurfer : côtés gauche et droit des étiquettes)
+LIMITES_MEDIANES = [
+    ('Sillons', 'Fissure longitudinale du cerveau', 'LCS entre les hémisphères cérébraux gauche et droit.'),
+    ('Méninges', 'Faux du cerveau', "Surface à égale distance des deux hémisphères dans la fissure longitudinale, "
+                                    "au-dessus du corps calleux : position déduite, la dure-mère n'est pas vue "
+                                    'en tant que telle.'),
+    ('Méninges', 'Tente du cervelet', 'Surface à égale distance des hémisphères cérébraux et du cervelet, en '
+                                      "dehors du tronc cérébral : position déduite, à valider."),
+]
+
 # ---------------------------------------------------------------------------
 # CerebNet (lobules du cervelet ; nomenclature de Larsell et noms classiques)
 # ---------------------------------------------------------------------------
@@ -266,6 +283,26 @@ MANUELLES_PAIRES = [
     ('Substance blanche', 'Faisceau corticospinal {c}', 'm'),
     # Système limbique
     ('Système limbique', 'Pilier postérieur du fornix {c}', 'm'),
+    # Anatomie de surface du tronc cérébral (bulbe)
+    ('Tronc cérébral', 'Pyramide bulbaire {c}', 'f'),
+    ('Tronc cérébral', 'Sillon pré-olivaire {c}', 'm'),
+    ('Tronc cérébral', 'Sillon rétro-olivaire {c}', 'm'),
+    ('Tronc cérébral', 'Faisceau gracile {c}', 'm'),
+    ('Tronc cérébral', 'Faisceau cunéiforme {c}', 'm'),
+    ('Tronc cérébral', 'Tubercule gracile {c}', 'm'),
+    ('Tronc cérébral', 'Tubercule cunéiforme {c}', 'm'),
+    ('Ventricules et citernes', 'Ouverture latérale {c} du quatrième ventricule (foramen de Luschka)', 'f'),
+    # Méninges (catégorie proposée)
+    ('Méninges', 'Cavum trigéminal {c} (cavum de Meckel)', 'm'),
+    # Gyri et régions : repères de surface
+    ('Gyri', 'Opercule frontal {c}', 'm'),
+    ('Gyri', 'Opercule pariétal {c}', 'm'),
+    ('Gyri', 'Opercule temporal {c}', 'm'),
+    ('Régions', 'Pôle frontal {c}', 'm'),
+    ('Régions', 'Pôle temporal {c}', 'm'),
+    ('Régions', 'Pôle occipital {c}', 'm'),
+    ('Sillons', 'Sillon subpariétal {c}', 'm'),
+    ('Sillons', 'Sillon paracentral {c}', 'm'),
 ]
 MANUELLES_MEDIANES = [
     ('Artères', 'Artère communicante antérieure'),
@@ -292,6 +329,34 @@ MANUELLES_MEDIANES = [
     ('Substance blanche', 'Corps calleux, splénium'),
     ('Substance blanche', 'Commissure postérieure'),
     ('Système limbique', 'Corps du fornix'),
+    # Anatomie de surface et intérieur du tronc cérébral
+    ('Tronc cérébral', 'Partie basilaire du pont'),
+    ('Tronc cérébral', 'Tegmentum du pont'),
+    ('Tronc cérébral', 'Tegmentum du mésencéphale'),
+    ('Tronc cérébral', 'Lame tectale (tectum)'),
+    ('Tronc cérébral', 'Fosse interpédonculaire'),
+    ('Tronc cérébral', 'Sillon basilaire'),
+    ('Tronc cérébral', 'Foramen cæcum'),
+    ('Tronc cérébral', 'Fissure médiane antérieure du bulbe'),
+    ('Tronc cérébral', 'Canal central du bulbe'),
+    ('Ventricules et citernes', 'Fosse rhomboïde'),
+    ('Ventricules et citernes', 'Sillon médian de la fosse rhomboïde'),
+    ('Ventricules et citernes', 'Voile médullaire supérieur'),
+    ('Ventricules et citernes', 'Voile médullaire inférieur'),
+    ('Ventricules et citernes', 'Fastigium'),
+    ('Ventricules et citernes', 'Ouverture médiane du quatrième ventricule (foramen de Magendie)'),
+    ('Ventricules et citernes', 'Toile choroïdienne du troisième ventricule'),
+    ('Ventricules et citernes', 'Plexus choroïde du quatrième ventricule'),
+    ('Sillons', 'Fissure transverse du cerveau'),
+    # Méninges (catégorie proposée) : membranes et espaces au contact de la table interne
+    ('Méninges', 'Dure-mère crânienne'),
+    ('Méninges', 'Arachnoïde'),
+    ('Méninges', 'Pie-mère crânienne'),
+    ('Méninges', 'Espace épidural (virtuel)'),
+    ('Méninges', 'Espace subdural (virtuel)'),
+    ('Méninges', 'Espace subarachnoïdien'),
+    ('Méninges', 'Granulations arachnoïdiennes'),
+    ('Méninges', 'Incisure de la tente du cervelet'),
     ('Glandes', 'Hypophyse'),
     ('Glandes', 'Glande pinéale (épiphyse)'),
 ]
@@ -331,6 +396,13 @@ def lignes():
         sortie.append(['HypVINN', ident, nom, cat, fr, 'médian', 'automatique', rq])
     for ident, nom, rq in HYPVINN_DOUBLONS:
         sortie.append(['HypVINN', ident, nom, '—', '—', '—', 'non publié', rq])
+    for mod, genre, membres, rq in REGROUPEMENTS:
+        for c in ('gauche', 'droit'):
+            noms = [m.replace('Left', 'Right') if c == 'droit' else m for m in membres]
+            sortie.append(['Règle (étiquettes aseg)', '', '', 'Noyaux gris centraux et structures apparentées',
+                           cote(mod, genre, c), c, 'dérivé', ('Regroupement : ' + ', '.join(noms) + '. ' + rq).strip()])
+    for cat, fr, rq in LIMITES_MEDIANES:
+        sortie.append(['Règle (limites FastSurfer)', '', '', cat, fr, 'médian', 'dérivé', rq])
     import preparer_territoires as t
     for ident, code, groupe, nom, court, couleur, precision in t.TERRITOIRES:
         for i, c in ((ident, 'gauche'), (ident + 1, 'droit')):
@@ -343,10 +415,12 @@ def lignes():
                    'automatique', 'Vaisseaux du TOF, sans nom : les noms viennent des points manuels.'])
     for cat, mod, genre in MANUELLES_PAIRES:
         for c in ('gauche', 'droit'):
-            sortie.append(['Points manuels (3D Slicer)', '', '', cat, cote(mod, genre, c), c, 'manuel', ''])
+            sortie.append(['Points manuels (3D Slicer)', '', '', cat, cote(mod, genre, c), c, 'manuel',
+                           'Catégorie proposée : à valider.' if cat == 'Méninges' else ''])
     for cat, fr in MANUELLES_MEDIANES:
         rq = ('Déjà segmenté par HypVINN : point manuel facultatif (contrôle).'
-              if fr in ('Hypophyse', 'Glande pinéale (épiphyse)') else '')
+              if fr in ('Hypophyse', 'Glande pinéale (épiphyse)') else
+              'Catégorie proposée : à valider.' if cat == 'Méninges' else '')
         sortie.append(['Points manuels (3D Slicer)', '', '', cat, fr, 'médian', 'manuel', rq])
     return sortie
 

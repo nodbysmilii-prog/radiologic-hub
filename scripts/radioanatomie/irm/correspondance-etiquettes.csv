@@ -189,6 +189,13 @@ HypVINN;17;Infundibulum;Glandes;Tige pituitaire (infundibulum);médian;automatiq
 HypVINN;10;3rd-Ventricle;—;—;—;non publié;Doublon du troisième ventricule de FastSurfer (aseg), qui est retenu.
 HypVINN;13;R-Globus-Pallidus;—;—;—;non publié;Doublon du globus pallidus de FastSurfer (aseg), qui est retenu.
 HypVINN;20;L-Globus-pallidus;—;—;—;non publié;Doublon du globus pallidus de FastSurfer (aseg), qui est retenu.
+Règle (étiquettes aseg);;;Noyaux gris centraux et structures apparentées;Corps strié gauche;gauche;dérivé;Regroupement : Left-Caudate, Left-Putamen, Left-Accumbens-area. Noyau caudé, putamen et noyau accumbens (striatum).
+Règle (étiquettes aseg);;;Noyaux gris centraux et structures apparentées;Corps strié droit;droit;dérivé;Regroupement : Right-Caudate, Right-Putamen, Right-Accumbens-area. Noyau caudé, putamen et noyau accumbens (striatum).
+Règle (étiquettes aseg);;;Noyaux gris centraux et structures apparentées;Noyau lenticulaire gauche;gauche;dérivé;Regroupement : Left-Putamen, Left-Pallidum. Putamen et globus pallidus.
+Règle (étiquettes aseg);;;Noyaux gris centraux et structures apparentées;Noyau lenticulaire droit;droit;dérivé;Regroupement : Right-Putamen, Right-Pallidum. Putamen et globus pallidus.
+Règle (limites FastSurfer);;;Sillons;Fissure longitudinale du cerveau;médian;dérivé;LCS entre les hémisphères cérébraux gauche et droit.
+Règle (limites FastSurfer);;;Méninges;Faux du cerveau;médian;dérivé;Surface à égale distance des deux hémisphères dans la fissure longitudinale, au-dessus du corps calleux : position déduite, la dure-mère n'est pas vue en tant que telle.
+Règle (limites FastSurfer);;;Méninges;Tente du cervelet;médian;dérivé;Surface à égale distance des hémisphères cérébraux et du cervelet, en dehors du tronc cérébral : position déduite, à valider.
 Atlas des territoires (Liu 2023, redécoupé);1;ACA;Territoires vasculaires;Territoire superficiel de l'ACA (gauche);gauche;transporté;Branches corticales : face médiale des lobes frontal et pariétal, bord supérieur de la convexité, corps calleux.
 Atlas des territoires (Liu 2023, redécoupé);2;ACA;Territoires vasculaires;Territoire superficiel de l'ACA (droit);droit;transporté;Branches corticales : face médiale des lobes frontal et pariétal, bord supérieur de la convexité, corps calleux.
 Atlas des territoires (Liu 2023, redécoupé);3;LSM;Territoires vasculaires;Lenticulo-striées médiales et artère de Heubner (ACA) (gauche);gauche;transporté;Artère récurrente de Heubner et lenticulo-striées médiales : tête du noyau caudé et partie antérieure de la capsule interne.
@@ -322,6 +329,40 @@ Points manuels (3D Slicer);;;Substance blanche;Faisceau corticospinal gauche;gau
 Points manuels (3D Slicer);;;Substance blanche;Faisceau corticospinal droit;droit;manuel;
 Points manuels (3D Slicer);;;Système limbique;Pilier postérieur du fornix gauche;gauche;manuel;
 Points manuels (3D Slicer);;;Système limbique;Pilier postérieur du fornix droit;droit;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Pyramide bulbaire gauche;gauche;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Pyramide bulbaire droite;droit;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Sillon pré-olivaire gauche;gauche;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Sillon pré-olivaire droit;droit;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Sillon rétro-olivaire gauche;gauche;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Sillon rétro-olivaire droit;droit;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Faisceau gracile gauche;gauche;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Faisceau gracile droit;droit;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Faisceau cunéiforme gauche;gauche;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Faisceau cunéiforme droit;droit;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Tubercule gracile gauche;gauche;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Tubercule gracile droit;droit;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Tubercule cunéiforme gauche;gauche;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Tubercule cunéiforme droit;droit;manuel;
+Points manuels (3D Slicer);;;Ventricules et citernes;Ouverture latérale gauche du quatrième ventricule (foramen de Luschka);gauche;manuel;
+Points manuels (3D Slicer);;;Ventricules et citernes;Ouverture latérale droite du quatrième ventricule (foramen de Luschka);droit;manuel;
+Points manuels (3D Slicer);;;Méninges;Cavum trigéminal gauche (cavum de Meckel);gauche;manuel;Catégorie proposée : à valider.
+Points manuels (3D Slicer);;;Méninges;Cavum trigéminal droit (cavum de Meckel);droit;manuel;Catégorie proposée : à valider.
+Points manuels (3D Slicer);;;Gyri;Opercule frontal gauche;gauche;manuel;
+Points manuels (3D Slicer);;;Gyri;Opercule frontal droit;droit;manuel;
+Points manuels (3D Slicer);;;Gyri;Opercule pariétal gauche;gauche;manuel;
+Points manuels (3D Slicer);;;Gyri;Opercule pariétal droit;droit;manuel;
+Points manuels (3D Slicer);;;Gyri;Opercule temporal gauche;gauche;manuel;
+Points manuels (3D Slicer);;;Gyri;Opercule temporal droit;droit;manuel;
+Points manuels (3D Slicer);;;Régions;Pôle frontal gauche;gauche;manuel;
+Points manuels (3D Slicer);;;Régions;Pôle frontal droit;droit;manuel;
+Points manuels (3D Slicer);;;Régions;Pôle temporal gauche;gauche;manuel;
+Points manuels (3D Slicer);;;Régions;Pôle temporal droit;droit;manuel;
+Points manuels (3D Slicer);;;Régions;Pôle occipital gauche;gauche;manuel;
+Points manuels (3D Slicer);;;Régions;Pôle occipital droit;droit;manuel;
+Points manuels (3D Slicer);;;Sillons;Sillon subpariétal gauche;gauche;manuel;
+Points manuels (3D Slicer);;;Sillons;Sillon subpariétal droit;droit;manuel;
+Points manuels (3D Slicer);;;Sillons;Sillon paracentral gauche;gauche;manuel;
+Points manuels (3D Slicer);;;Sillons;Sillon paracentral droit;droit;manuel;
 Points manuels (3D Slicer);;;Artères;Artère communicante antérieure;médian;manuel;
 Points manuels (3D Slicer);;;Artères;Artère basilaire (sommet);médian;manuel;
 Points manuels (3D Slicer);;;Sinus veineux;Sinus sagittal supérieur;médian;manuel;
@@ -346,5 +387,31 @@ Points manuels (3D Slicer);;;Substance blanche;Corps calleux, tronc;médian;manu
 Points manuels (3D Slicer);;;Substance blanche;Corps calleux, splénium;médian;manuel;
 Points manuels (3D Slicer);;;Substance blanche;Commissure postérieure;médian;manuel;
 Points manuels (3D Slicer);;;Système limbique;Corps du fornix;médian;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Partie basilaire du pont;médian;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Tegmentum du pont;médian;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Tegmentum du mésencéphale;médian;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Lame tectale (tectum);médian;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Fosse interpédonculaire;médian;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Sillon basilaire;médian;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Foramen cæcum;médian;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Fissure médiane antérieure du bulbe;médian;manuel;
+Points manuels (3D Slicer);;;Tronc cérébral;Canal central du bulbe;médian;manuel;
+Points manuels (3D Slicer);;;Ventricules et citernes;Fosse rhomboïde;médian;manuel;
+Points manuels (3D Slicer);;;Ventricules et citernes;Sillon médian de la fosse rhomboïde;médian;manuel;
+Points manuels (3D Slicer);;;Ventricules et citernes;Voile médullaire supérieur;médian;manuel;
+Points manuels (3D Slicer);;;Ventricules et citernes;Voile médullaire inférieur;médian;manuel;
+Points manuels (3D Slicer);;;Ventricules et citernes;Fastigium;médian;manuel;
+Points manuels (3D Slicer);;;Ventricules et citernes;Ouverture médiane du quatrième ventricule (foramen de Magendie);médian;manuel;
+Points manuels (3D Slicer);;;Ventricules et citernes;Toile choroïdienne du troisième ventricule;médian;manuel;
+Points manuels (3D Slicer);;;Ventricules et citernes;Plexus choroïde du quatrième ventricule;médian;manuel;
+Points manuels (3D Slicer);;;Sillons;Fissure transverse du cerveau;médian;manuel;
+Points manuels (3D Slicer);;;Méninges;Dure-mère crânienne;médian;manuel;Catégorie proposée : à valider.
+Points manuels (3D Slicer);;;Méninges;Arachnoïde;médian;manuel;Catégorie proposée : à valider.
+Points manuels (3D Slicer);;;Méninges;Pie-mère crânienne;médian;manuel;Catégorie proposée : à valider.
+Points manuels (3D Slicer);;;Méninges;Espace épidural (virtuel);médian;manuel;Catégorie proposée : à valider.
+Points manuels (3D Slicer);;;Méninges;Espace subdural (virtuel);médian;manuel;Catégorie proposée : à valider.
+Points manuels (3D Slicer);;;Méninges;Espace subarachnoïdien;médian;manuel;Catégorie proposée : à valider.
+Points manuels (3D Slicer);;;Méninges;Granulations arachnoïdiennes;médian;manuel;Catégorie proposée : à valider.
+Points manuels (3D Slicer);;;Méninges;Incisure de la tente du cervelet;médian;manuel;Catégorie proposée : à valider.
 Points manuels (3D Slicer);;;Glandes;Hypophyse;médian;manuel;Déjà segmenté par HypVINN : point manuel facultatif (contrôle).
 Points manuels (3D Slicer);;;Glandes;Glande pinéale (épiphyse);médian;manuel;Déjà segmenté par HypVINN : point manuel facultatif (contrôle).
