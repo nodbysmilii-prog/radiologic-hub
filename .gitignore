@@ -1,2 +1,5 @@
 # Sources tierces lourdes (pack Z-Anatomy…) : retéléchargées par scripts/telecharger_z_anatomy.sh, jamais publiées
 assets-sources/
+
+# Cache Python des scripts de préparation
+__pycache__/
