@@ -16,9 +16,11 @@ Vérifications :
   2. texte incrusté dans les pixels : OCR (Tesseract, français + anglais) sur chaque coupe des trois plans
      de chaque séquence ; un mot est retenu s'il a au moins 3 caractères alphanumériques dont une lettre
      et une confiance ≥ 85 ; les coupes retenues sont enregistrées en vignettes pour contrôle visuel ;
-     contrôle positif préalable : un faux nom incrusté en caractères de 9 px doit être retrouvé ;
+     contrôle positif préalable : chacune des deux lignes d'un faux nom incrusté en caractères de 9 px
+     doit être signalée (au moins un mot lu par ligne) ;
   3. effacement du visage : (a) les voxels hors du masque d'effacement fourni sont bien nuls ;
-     (b) rendu 3D de la surface de la tête (face, trois quarts, profil) pour contrôle visuel.
+     (b) rendu 3D de la surface de la tête (face, trois quarts, profil) pour contrôle visuel ;
+     + coupes centrales de chaque séquence et projections (MIP) du TOF pour juger de la couverture.
 
 Sortie : assets-sources/radioanatomie/irm-cerebrale/etape1/ (rapport.json, rapport.md, images PNG).
 Usage : python3 -I scripts/radioanatomie/irm/etape1_anonymisation.py   (depuis la racine du dépôt)
@@ -200,8 +202,9 @@ def temoin_ocr():
     dessin.text((5, 5), 'PATIENT EXEMPLE 01/01/1970', fill=255, font=police)
     dessin.text((5, coupe.shape[0] - 14), 'HOPITAL FICTIF', fill=255, font=police)
     lus = {m['mot'] for m in ocr_coupe(('temoin', 0, 0, np.array(image)))[3]}
-    attendus = {'PATIENT', 'EXEMPLE', 'HOPITAL', 'FICTIF'}
-    return {'attendus': sorted(attendus), 'lus': sorted(lus), 'reussi': attendus <= lus}
+    # la coupe serait signalée dès qu'un mot est lu : il suffit qu'au moins un mot de chaque ligne le soit
+    lignes = ({'PATIENT', 'EXEMPLE'}, {'HOPITAL', 'FICTIF'})
+    return {'attendus': [sorted(l) for l in lignes], 'lus': sorted(lus), 'reussi': all(l & lus for l in lignes)}
 
 
 def verifier_texte():
@@ -341,6 +344,22 @@ def planche_sequences():
     return chemin
 
 
+def mip_tof():
+    """Projections d'intensité maximale du TOF : montre la hauteur couverte par le bloc."""
+    img, v = charger(P + 'angio.nii.gz')
+    v = np.asanyarray(nib.as_closest_canonical(nib.Nifti1Image(v, img.affine)).dataobj)
+    fig, axes = plt.subplots(1, 3, figsize=(15, 6), gridspec_kw={'width_ratios': [1, 1.4, 1.9]})
+    for a, axe, titre in zip(axes, (2, 1, 0), ('MIP axiale', 'MIP coronale', 'MIP sagittale')):
+        a.imshow(np.rot90(v.max(axis=axe)), cmap='gray', vmax=np.percentile(v, 99.9))
+        a.set_title(f'ARM TOF 7 T : {titre}', fontsize=10)
+        a.axis('off')
+    fig.tight_layout()
+    chemin = os.path.join(SORTIE, 'tof-mip.png')
+    fig.savefig(chemin, dpi=70)
+    plt.close(fig)
+    return chemin
+
+
 def ecrire_rapport(r):
     with open(os.path.join(SORTIE, 'rapport.json'), 'w', encoding='utf-8') as f:
         json.dump(r, f, ensure_ascii=False, indent=1)
@@ -379,7 +398,7 @@ def main():
     entetes, json_, participants = verifier_entetes()
     masques = verifier_masques()
     print('rendus de surface…')
-    images = [rendus_visage(), planche_sequences()]
+    images = [rendus_visage(), planche_sequences(), mip_tof()]
     print('OCR (quelques minutes)…')
     temoin = temoin_ocr()
     if not temoin['reussi']:
