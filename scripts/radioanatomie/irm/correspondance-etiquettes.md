@@ -19,12 +19,12 @@
 | Lobe de l'insula droit | droit | Règle (régions DKT) |  |  | dérivé | Regroupement : insula. |
 | Lobe limbique gauche | gauche | Règle (régions DKT) |  |  | dérivé | Regroupement : rostralanteriorcingulate, caudalanteriorcingulate, posteriorcingulate, isthmuscingulate, parahippocampal, entorhinal. Définition classique française (gyrus cingulaire, isthme, gyrus parahippocampique) ; FreeSurfer range le gyrus parahippocampique et le cortex entorhinal dans le lobe temporal : à valider. |
 | Lobe limbique droit | droit | Règle (régions DKT) |  |  | dérivé | Regroupement : rostralanteriorcingulate, caudalanteriorcingulate, posteriorcingulate, isthmuscingulate, parahippocampal, entorhinal. Définition classique française (gyrus cingulaire, isthme, gyrus parahippocampique) ; FreeSurfer range le gyrus parahippocampique et le cortex entorhinal dans le lobe temporal : à valider. |
-| Pôle frontal gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Pôle frontal droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Pôle temporal gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Pôle temporal droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Pôle occipital gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Pôle occipital droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
+| Pôle frontal gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Pôle frontal droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Pôle temporal gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Pôle temporal droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Pôle occipital gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Pôle occipital droit | droit | Points manuels (navigateur) |  |  | manuel |  |
 
 ## Sillons (36)
 
@@ -61,11 +61,11 @@
 | Sillon calcarin gauche | gauche | Règle (limites DKT) |  |  | dérivé | Interface pericalcarine | pericalcarine. Règle propre : LCS bordé des deux côtés par le cortex péricalcarin. |
 | Sillon calcarin droit | droit | Règle (limites DKT) |  |  | dérivé | Interface pericalcarine | pericalcarine. Règle propre : LCS bordé des deux côtés par le cortex péricalcarin. |
 | Fissure longitudinale du cerveau | médian | Règle (limites FastSurfer) |  |  | dérivé | LCS entre les hémisphères cérébraux gauche et droit. |
-| Sillon subpariétal gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Sillon subpariétal droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Sillon paracentral gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Sillon paracentral droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Fissure transverse du cerveau | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Sillon subpariétal gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Sillon subpariétal droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Sillon paracentral gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Sillon paracentral droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Fissure transverse du cerveau | médian | Points manuels (navigateur) |  |  | manuel |  |
 
 ## Gyri (56)
 
@@ -121,12 +121,12 @@
 | Gyrus temporal transverse droit (gyrus de Heschl) | droit | FastSurfer (DKT) | 2034 | ctx-rh-transversetemporal | automatique |  |
 | Cortex insulaire gauche | gauche | FastSurfer (DKT) | 1035 | ctx-lh-insula | automatique |  |
 | Cortex insulaire droit | droit | FastSurfer (DKT) | 2035 | ctx-rh-insula | automatique |  |
-| Opercule frontal gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Opercule frontal droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Opercule pariétal gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Opercule pariétal droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Opercule temporal gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Opercule temporal droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
+| Opercule frontal gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Opercule frontal droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Opercule pariétal gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Opercule pariétal droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Opercule temporal gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Opercule temporal droit | droit | Points manuels (navigateur) |  |  | manuel |  |
 
 ## Système limbique (23)
 
@@ -153,8 +153,8 @@
 | Corps mamillaire droit | droit | HypVINN | 963 | R-C.mammilare | automatique |  |
 | Fornix gauche, colonne | gauche | HypVINN | 972 | L-Fornix | automatique | Partie proche de l'hypothalamus (colonne) ; le corps et les piliers viennent de FastSurfer-CC. |
 | Fornix droit, colonne | droit | HypVINN | 971 | R-Fornix | automatique | Partie proche de l'hypothalamus (colonne) ; le corps et les piliers viennent de FastSurfer-CC. |
-| Pilier postérieur du fornix gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Pilier postérieur du fornix droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
+| Pilier postérieur du fornix gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Pilier postérieur du fornix droit | droit | Points manuels (navigateur) |  |  | manuel |  |
 
 ## Substance blanche (86)
 
@@ -230,22 +230,22 @@
 | Fibres calleuses du tronc, partie postérieure (CC 5, somesthésiques) | médian | TractSeg | CC_5 | CC_5 | automatique |  |
 | Fibres calleuses de l'isthme (CC 6) | médian | TractSeg | CC_6 | CC_6 | automatique |  |
 | Fibres calleuses du splénium (CC 7) | médian | TractSeg | CC_7 | CC_7 | automatique |  |
-| Capsule interne gauche, bras antérieur | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Capsule interne droite, bras antérieur | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Capsule interne gauche, genou | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Capsule interne droite, genou | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Capsule interne gauche, bras postérieur | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Capsule interne droite, bras postérieur | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Capsule externe gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Capsule externe droite | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Capsule extrême gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Capsule extrême droite | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Couronne rayonnante gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Couronne rayonnante droite | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Centre semi-ovale gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Centre semi-ovale droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Corps calleux, rostrum | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Commissure postérieure | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Capsule interne gauche, bras antérieur | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Capsule interne droite, bras antérieur | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Capsule interne gauche, genou | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Capsule interne droite, genou | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Capsule interne gauche, bras postérieur | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Capsule interne droite, bras postérieur | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Capsule externe gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Capsule externe droite | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Capsule extrême gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Capsule extrême droite | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Couronne rayonnante gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Couronne rayonnante droite | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Centre semi-ovale gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Centre semi-ovale droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Corps calleux, rostrum | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Commissure postérieure | médian | Points manuels (navigateur) |  |  | manuel |  |
 
 ## Ventricules et citernes (32)
 
@@ -260,29 +260,29 @@
 | Troisième ventricule (V3) | médian | FastSurfer (aseg) | 14 | 3rd-Ventricle | automatique |  |
 | Quatrième ventricule (V4) | médian | FastSurfer (aseg) | 15 | 4th-Ventricle | automatique |  |
 | Liquide cérébrospinal des citernes de la base | médian | FastSurfer (aseg) | 24 | CSF | automatique | Étiquette globale de l'outil (LCS autour du tronc cérébral et à la base) : à relire, les citernes nommées viendront des points manuels. |
-| Citerne ambiante gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Citerne ambiante droite | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Citerne de l'angle ponto-cérébelleux gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Citerne de l'angle ponto-cérébelleux droite | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Citerne sylvienne gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Citerne sylvienne droite | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Ouverture latérale gauche du quatrième ventricule (foramen de Luschka) | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Ouverture latérale droite du quatrième ventricule (foramen de Luschka) | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Citerne prépontique | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Citerne interpédonculaire | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Citerne quadrigéminale | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Citerne suprasellaire (chiasmatique) | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Grande citerne (cisterna magna) | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Aqueduc du mésencéphale | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Septum pellucidum | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Fosse rhomboïde | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Sillon médian de la fosse rhomboïde | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Voile médullaire supérieur | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Voile médullaire inférieur | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Fastigium | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Ouverture médiane du quatrième ventricule (foramen de Magendie) | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Toile choroïdienne du troisième ventricule | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Plexus choroïde du quatrième ventricule | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Citerne ambiante gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Citerne ambiante droite | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Citerne de l'angle ponto-cérébelleux gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Citerne de l'angle ponto-cérébelleux droite | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Citerne sylvienne gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Citerne sylvienne droite | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Ouverture latérale gauche du quatrième ventricule (foramen de Luschka) | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Ouverture latérale droite du quatrième ventricule (foramen de Luschka) | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Citerne prépontique | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Citerne interpédonculaire | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Citerne quadrigéminale | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Citerne suprasellaire (chiasmatique) | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Grande citerne (cisterna magna) | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Aqueduc du mésencéphale | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Septum pellucidum | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Fosse rhomboïde | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Sillon médian de la fosse rhomboïde | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Voile médullaire supérieur | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Voile médullaire inférieur | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Fastigium | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Ouverture médiane du quatrième ventricule (foramen de Magendie) | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Toile choroïdienne du troisième ventricule | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Plexus choroïde du quatrième ventricule | médian | Points manuels (navigateur) |  |  | manuel |  |
 
 ## Noyaux gris centraux et structures apparentées (33)
 
@@ -313,14 +313,14 @@
 | Corps strié droit | droit | Règle (étiquettes aseg) |  |  | dérivé | Regroupement : Right-Caudate, Right-Putamen, Right-Accumbens-area. Noyau caudé, putamen et noyau accumbens (striatum). |
 | Noyau lenticulaire gauche | gauche | Règle (étiquettes aseg) |  |  | dérivé | Regroupement : Left-Putamen, Left-Pallidum. Putamen et globus pallidus. |
 | Noyau lenticulaire droit | droit | Règle (étiquettes aseg) |  |  | dérivé | Regroupement : Right-Putamen, Right-Pallidum. Putamen et globus pallidus. |
-| Noyau rouge gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Noyau rouge droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Substance noire gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Substance noire droite | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Noyau sous-thalamique gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Noyau sous-thalamique droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Claustrum gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Claustrum droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
+| Noyau rouge gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Noyau rouge droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Substance noire gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Substance noire droite | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Noyau sous-thalamique gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Noyau sous-thalamique droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Claustrum gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Claustrum droit | droit | Points manuels (navigateur) |  |  | manuel |  |
 
 ## Voies optiques (10)
 
@@ -334,8 +334,8 @@
 | Chiasma optique, moitié droite | droit | HypVINN | 967 | R-Chiasma-Opticum | automatique |  |
 | Radiations optiques gauches | gauche | TractSeg | OR_left | OR_left | automatique |  |
 | Radiations optiques droites | droit | TractSeg | OR_right | OR_right | automatique |  |
-| Corps géniculé latéral gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Corps géniculé latéral droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
+| Corps géniculé latéral gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Corps géniculé latéral droit | droit | Points manuels (navigateur) |  |  | manuel |  |
 
 ## Cervelet (31)
 
@@ -370,8 +370,8 @@
 | Vermis, lobule VIII (pyramide) | médian | CerebNet | 631 | Cbm_Vermis_VIII | automatique |  |
 | Vermis, lobule IX (uvule) | médian | CerebNet | 624 | Cbm_Vermis_IX | automatique |  |
 | Vermis, lobule X (nodule) | médian | CerebNet | 627 | Cbm_Vermis_X | automatique |  |
-| Noyau dentelé gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Noyau dentelé droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
+| Noyau dentelé gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Noyau dentelé droit | droit | Points manuels (navigateur) |  |  | manuel |  |
 
 ## Tronc cérébral (48)
 
@@ -382,105 +382,105 @@
 | Pédoncule cérébelleux supérieur gauche | gauche | TractSeg | SCP_left | SCP_left | automatique |  |
 | Pédoncule cérébelleux supérieur droit | droit | TractSeg | SCP_right | SCP_right | automatique |  |
 | Pédoncules cérébelleux moyens | médian | TractSeg | MCP | MCP | automatique |  |
-| Nerf oculomoteur gauche (III) | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Nerf oculomoteur droit (III) | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Nerf trijumeau gauche (V) | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Nerf trijumeau droit (V) | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Nerf abducens gauche (VI) | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Nerf abducens droit (VI) | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Nerfs facial et vestibulocochléaire gauches (VII, VIII) | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Nerfs facial et vestibulocochléaire droits (VII, VIII) | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Pédoncule cérébral gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Pédoncule cérébral droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Colliculus supérieur gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Colliculus supérieur droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Colliculus inférieur gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Colliculus inférieur droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Olive bulbaire gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Olive bulbaire droite | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Pyramide bulbaire gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Pyramide bulbaire droite | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Sillon pré-olivaire gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Sillon pré-olivaire droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Sillon rétro-olivaire gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Sillon rétro-olivaire droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Faisceau gracile gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Faisceau gracile droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Faisceau cunéiforme gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Faisceau cunéiforme droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Tubercule gracile gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Tubercule gracile droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Tubercule cunéiforme gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Tubercule cunéiforme droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Mésencéphale | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Pont | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Bulbe (moelle allongée) | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Plancher du quatrième ventricule | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Partie basilaire du pont | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Tegmentum du pont | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Tegmentum du mésencéphale | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Lame tectale (tectum) | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Fosse interpédonculaire | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Sillon basilaire | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Foramen cæcum | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Fissure médiane antérieure du bulbe | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Canal central du bulbe | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Nerf oculomoteur gauche (III) | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Nerf oculomoteur droit (III) | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Nerf trijumeau gauche (V) | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Nerf trijumeau droit (V) | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Nerf abducens gauche (VI) | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Nerf abducens droit (VI) | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Nerfs facial et vestibulocochléaire gauches (VII, VIII) | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Nerfs facial et vestibulocochléaire droits (VII, VIII) | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Pédoncule cérébral gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Pédoncule cérébral droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Colliculus supérieur gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Colliculus supérieur droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Colliculus inférieur gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Colliculus inférieur droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Olive bulbaire gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Olive bulbaire droite | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Pyramide bulbaire gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Pyramide bulbaire droite | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Sillon pré-olivaire gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Sillon pré-olivaire droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Sillon rétro-olivaire gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Sillon rétro-olivaire droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Faisceau gracile gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Faisceau gracile droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Faisceau cunéiforme gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Faisceau cunéiforme droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Tubercule gracile gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Tubercule gracile droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Tubercule cunéiforme gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Tubercule cunéiforme droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Mésencéphale | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Pont | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Bulbe (moelle allongée) | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Plancher du quatrième ventricule | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Partie basilaire du pont | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Tegmentum du pont | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Tegmentum du mésencéphale | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Lame tectale (tectum) | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Fosse interpédonculaire | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Sillon basilaire | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Foramen cæcum | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Fissure médiane antérieure du bulbe | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Canal central du bulbe | médian | Points manuels (navigateur) |  |  | manuel |  |
 
 ## Artères (29)
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
 | Artères (masque non nommé) | gauche et droit | Masque TOF (seuil local) | 1 |  | automatique | Vaisseaux du TOF, sans nom : les noms viennent des points manuels. |
-| Artère carotide interne gauche (segment supraclinoïdien) | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère carotide interne droite (segment supraclinoïdien) | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère cérébrale antérieure gauche, segment A1 | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère cérébrale antérieure droite, segment A1 | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère cérébrale antérieure gauche, segment A2 | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère cérébrale antérieure droite, segment A2 | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère péricalleuse gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère péricalleuse droite | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère calloso-marginale gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère calloso-marginale droite | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère cérébrale moyenne gauche, segment M1 | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère cérébrale moyenne droite, segment M1 | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère cérébrale moyenne gauche, segment M2 (branches insulaires) | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère cérébrale moyenne droite, segment M2 (branches insulaires) | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artères lenticulo-striées latérales gauches | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artères lenticulo-striées latérales droites | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère communicante postérieure gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère communicante postérieure droite | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère choroïdienne antérieure gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère choroïdienne antérieure droite | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère cérébrale postérieure gauche, segment P1 | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère cérébrale postérieure droite, segment P1 | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère cérébrale postérieure gauche, segment P2 | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère cérébrale postérieure droite, segment P2 | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère cérébelleuse supérieure gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère cérébelleuse supérieure droite | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère communicante antérieure | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Artère basilaire (sommet) | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Artère carotide interne gauche (segment supraclinoïdien) | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Artère carotide interne droite (segment supraclinoïdien) | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Artère cérébrale antérieure gauche, segment A1 | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Artère cérébrale antérieure droite, segment A1 | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Artère cérébrale antérieure gauche, segment A2 | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Artère cérébrale antérieure droite, segment A2 | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Artère péricalleuse gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Artère péricalleuse droite | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Artère calloso-marginale gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Artère calloso-marginale droite | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Artère cérébrale moyenne gauche, segment M1 | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Artère cérébrale moyenne droite, segment M1 | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Artère cérébrale moyenne gauche, segment M2 (branches insulaires) | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Artère cérébrale moyenne droite, segment M2 (branches insulaires) | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Artères lenticulo-striées latérales gauches | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Artères lenticulo-striées latérales droites | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Artère communicante postérieure gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Artère communicante postérieure droite | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Artère choroïdienne antérieure gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Artère choroïdienne antérieure droite | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Artère cérébrale postérieure gauche, segment P1 | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Artère cérébrale postérieure droite, segment P1 | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Artère cérébrale postérieure gauche, segment P2 | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Artère cérébrale postérieure droite, segment P2 | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Artère cérébelleuse supérieure gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Artère cérébelleuse supérieure droite | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Artère communicante antérieure | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Artère basilaire (sommet) | médian | Points manuels (navigateur) |  |  | manuel |  |
 
 ## Sinus veineux (17)
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
-| Sinus transverse gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Sinus transverse droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Sinus sigmoïde gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Sinus sigmoïde droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Sinus caverneux gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Sinus caverneux droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Veine cérébrale interne gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Veine cérébrale interne droite | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Veine basale gauche (de Rosenthal) | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Veine basale droite (de Rosenthal) | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Veine thalamo-striée gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Veine thalamo-striée droite | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Sinus sagittal supérieur | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Sinus sagittal inférieur | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Sinus droit | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Confluent des sinus (torcular) | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Grande veine cérébrale (veine de Galien) | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Sinus transverse gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Sinus transverse droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Sinus sigmoïde gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Sinus sigmoïde droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Sinus caverneux gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Sinus caverneux droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Veine cérébrale interne gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Veine cérébrale interne droite | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Veine basale gauche (de Rosenthal) | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Veine basale droite (de Rosenthal) | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Veine thalamo-striée gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Veine thalamo-striée droite | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Sinus sagittal supérieur | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Sinus sagittal inférieur | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Sinus droit | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Confluent des sinus (torcular) | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Grande veine cérébrale (veine de Galien) | médian | Points manuels (navigateur) |  |  | manuel |  |
 
 ## Glandes (5)
 
@@ -489,8 +489,8 @@
 | Glande pinéale (épiphyse) | médian | HypVINN | 973 | Epiphysis | automatique |  |
 | Hypophyse | médian | HypVINN | 974 | Hypophysis | automatique |  |
 | Tige pituitaire (infundibulum) | médian | HypVINN | 975 | Infundibulum | automatique |  |
-| Hypophyse | médian | Points manuels (3D Slicer) |  |  | manuel | Déjà segmenté par HypVINN : point manuel facultatif (contrôle). |
-| Glande pinéale (épiphyse) | médian | Points manuels (3D Slicer) |  |  | manuel | Déjà segmenté par HypVINN : point manuel facultatif (contrôle). |
+| Hypophyse | médian | Points manuels (navigateur) |  |  | manuel | Déjà segmenté par HypVINN : point manuel facultatif (contrôle). |
+| Glande pinéale (épiphyse) | médian | Points manuels (navigateur) |  |  | manuel | Déjà segmenté par HypVINN : point manuel facultatif (contrôle). |
 
 ## Territoires vasculaires (24)
 
@@ -527,16 +527,16 @@
 |---|---|---|---|---|---|---|
 | Faux du cerveau | médian | Règle (limites FastSurfer) |  |  | dérivé | Surface à égale distance des deux hémisphères dans la fissure longitudinale, au-dessus du corps calleux : position déduite, la dure-mère n'est pas vue en tant que telle. |
 | Tente du cervelet | médian | Règle (limites FastSurfer) |  |  | dérivé | Surface à égale distance des hémisphères cérébraux et du cervelet, en dehors du tronc cérébral : position déduite, à valider. |
-| Cavum trigéminal gauche (cavum de Meckel) | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Cavum trigéminal droit (cavum de Meckel) | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Dure-mère crânienne | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Arachnoïde | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Pie-mère crânienne | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Espace épidural (virtuel) | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Espace subdural (virtuel) | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Espace subarachnoïdien | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Granulations arachnoïdiennes | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Incisure de la tente du cervelet | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Cavum trigéminal gauche (cavum de Meckel) | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Cavum trigéminal droit (cavum de Meckel) | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Dure-mère crânienne | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Arachnoïde | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Pie-mère crânienne | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Espace épidural (virtuel) | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Espace subdural (virtuel) | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Espace subarachnoïdien | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Granulations arachnoïdiennes | médian | Points manuels (navigateur) |  |  | manuel |  |
+| Incisure de la tente du cervelet | médian | Points manuels (navigateur) |  |  | manuel |  |
 
 ## Non publiées (5)
 

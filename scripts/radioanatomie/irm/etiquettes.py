@@ -406,73 +406,85 @@ MANUELLES_MEDIANES = [
 
 
 def lignes():
+    """Une ligne par structure : les 8 colonnes du fichier, puis la couche d'étiquettes de l'étape 3 qui la porte
+    (nom du volume, valeurs ; None pour les structures manuelles), lue par etape5_validation_donnees.py."""
     sortie = []
     cote = lambda modele, genre, c: modele.replace('{c}', ADJ[(c, genre)])
+    aseg = {}
     for g, d, nom, cat, mod, genre, rq in ASEG_PAIRES:
+        aseg[nom], aseg[nom.replace('Left', 'Right')] = g, d
         for ident, c, n in ((g, 'gauche', nom), (d, 'droit', nom.replace('Left', 'Right'))):
-            sortie.append(['FastSurfer (aseg)', ident, n, cat, cote(mod, genre, c), c, 'automatique', rq])
+            sortie.append(['FastSurfer (aseg)', ident, n, cat, cote(mod, genre, c), c, 'automatique', rq,
+                           ('fines', [ident])])
     for ident, nom, cat, fr, rq in ASEG_MEDIANS:
-        sortie.append(['FastSurfer (aseg)', ident, nom, cat, fr, 'médian', 'automatique', rq])
+        sortie.append(['FastSurfer (aseg)', ident, nom, cat, fr, 'médian', 'automatique', rq, ('fines', [ident])])
     for ident, nom, rq in ASEG_EXCLUS:
-        sortie.append(['FastSurfer (aseg)', ident, nom, '—', '—', '—', 'non publié', rq])
+        sortie.append(['FastSurfer (aseg)', ident, nom, '—', '—', '—', 'non publié', rq, ('fines', [ident])])
     for n, nom, cat, mod, genre, rq in DKT:
         for base, c, h in ((1000, 'gauche', 'lh'), (2000, 'droit', 'rh')):
             sortie.append(['FastSurfer (DKT)', base + n, f'ctx-{h}-{nom}', cat, cote(mod, genre, c), c,
-                           'automatique', rq])
-    for mod, genre, regions, rq in LOBES:
-        for c in ('gauche', 'droit'):
+                           'automatique', rq, ('fines', [base + n])])
+    for n, (mod, genre, regions, rq) in enumerate(LOBES, start=1):        # valeurs : n à gauche, 10 + n à droite
+        for c, v in (('gauche', n), ('droit', 10 + n)):
             sortie.append(['Règle (régions DKT)', '', '', 'Régions', cote(mod, genre, c), c, 'dérivé',
-                           ('Regroupement : ' + ', '.join(regions) + '. ' + rq).strip()])
-    for mod, a, b, rq in SILLONS:
-        for c in ('gauche', 'droit'):
+                           ('Regroupement : ' + ', '.join(regions) + '. ' + rq).strip(), ('lobes', [v])])
+    for n, (mod, a, b, rq) in enumerate(SILLONS, start=1):                # valeurs : n à gauche, 50 + n à droite
+        for c, v in (('gauche', n), ('droit', 50 + n)):
             sortie.append(['Règle (limites DKT)', '', '', 'Sillons', cote(mod, 'm', c), c, 'dérivé',
-                           (f"Interface {'/'.join(a)} | {'/'.join(b)}. " + rq).strip()])
+                           (f"Interface {'/'.join(a)} | {'/'.join(b)}. " + rq).strip(), ('sillons', [v])])
     for g, d, nom, mod, rq in CEREBNET_PAIRES:
         for ident, c, pre in ((g, 'gauche', 'Left'), (d, 'droit', 'Right')):
-            sortie.append(['CerebNet', ident, f'Cbm_{pre}_{nom}', 'Cervelet', cote(mod, 'm', c), c, 'automatique', rq])
+            sortie.append(['CerebNet', ident, f'Cbm_{pre}_{nom}', 'Cervelet', cote(mod, 'm', c), c, 'automatique', rq,
+                           ('fines', [ident])])
     for ident, nom, fr in CEREBNET_VERMIS:
-        sortie.append(['CerebNet', ident, nom, 'Cervelet', fr, 'médian', 'automatique', ''])
+        sortie.append(['CerebNet', ident, nom, 'Cervelet', fr, 'médian', 'automatique', '', ('fines', [ident])])
     for ident, nom, cat, fr, rq in CORPS_CALLEUX:
-        sortie.append(['FastSurfer-CC', ident, nom, cat, fr, 'médian', 'automatique', rq])
+        sortie.append(['FastSurfer-CC', ident, nom, cat, fr, 'médian', 'automatique', rq, ('fines', [ident])])
     for g, d, nom, cat, mod, genre, rq in HYPVINN_PAIRES:
         for ident, c, pre in ((g, 'gauche', 'L-'), (d, 'droit', 'R-')):
-            sortie.append(['HypVINN', ident, pre + nom, cat, cote(mod, genre, c), c, 'automatique', rq])
+            sortie.append(['HypVINN', ident, pre + nom, cat, cote(mod, genre, c), c, 'automatique', rq,
+                           ('fines', [ident])])
     for ident, nom, cat, fr, rq in HYPVINN_MEDIANS:
-        sortie.append(['HypVINN', ident, nom, cat, fr, 'médian', 'automatique', rq])
+        sortie.append(['HypVINN', ident, nom, cat, fr, 'médian', 'automatique', rq, ('fines', [ident])])
     for ident, nom, rq in HYPVINN_DOUBLONS:
-        sortie.append(['HypVINN', ident, nom, '—', '—', '—', 'non publié', rq])
+        sortie.append(['HypVINN', ident, nom, '—', '—', '—', 'non publié', rq, None])
     for mod, genre, membres, rq in REGROUPEMENTS:
         for c in ('gauche', 'droit'):
             noms = [m.replace('Left', 'Right') if c == 'droit' else m for m in membres]
             sortie.append(['Règle (étiquettes aseg)', '', '', 'Noyaux gris centraux et structures apparentées',
-                           cote(mod, genre, c), c, 'dérivé', ('Regroupement : ' + ', '.join(noms) + '. ' + rq).strip()])
+                           cote(mod, genre, c), c, 'dérivé', ('Regroupement : ' + ', '.join(noms) + '. ' + rq).strip(),
+                           ('fines', [aseg[m] for m in noms])])
+    couches_limites = {'Fissure longitudinale du cerveau': ('sillons', [100]), 'Faux du cerveau': ('meninges', [1]),
+                       'Tente du cervelet': ('meninges', [2])}
     for cat, fr, rq in LIMITES_MEDIANES:
-        sortie.append(['Règle (limites FastSurfer)', '', '', cat, fr, 'médian', 'dérivé', rq])
+        sortie.append(['Règle (limites FastSurfer)', '', '', cat, fr, 'médian', 'dérivé', rq, couches_limites[fr]])
     for nom, cat, mod, genre, rq in TRACTSEG_PAIRES:
         for c, suffixe in (('gauche', 'left'), ('droit', 'right')):
             publie = cat != '—'
             sortie.append(['TractSeg', f'{nom}_{suffixe}', f'{nom}_{suffixe}', cat, cote(mod, genre, c) if publie else '—',
-                           c if publie else '—', 'automatique' if publie else 'non publié', rq])
+                           c if publie else '—', 'automatique' if publie else 'non publié', rq,
+                           ('faisceaux', [f'{nom}_{suffixe}'])])
     for nom, cat, fr, rq in TRACTSEG_MEDIANS:
         publie = cat != '—'
-        sortie.append(['TractSeg', nom, nom, cat, fr, 'médian' if publie else '—', 'automatique' if publie else 'non publié', rq])
+        sortie.append(['TractSeg', nom, nom, cat, fr, 'médian' if publie else '—', 'automatique' if publie else 'non publié',
+                       rq, ('faisceaux', [nom])])
     import preparer_territoires as t
     for ident, code, groupe, nom, court, couleur, precision in t.TERRITOIRES:
         for i, c in ((ident, 'gauche'), (ident + 1, 'droit')):
             sortie.append(['Atlas des territoires (Liu 2023, redécoupé)', i, code, 'Territoires vasculaires',
-                           f'{nom} ({c})', c, 'transporté', precision])
+                           f'{nom} ({c})', c, 'transporté', precision, ('territoires', [i])])
     for i, nom in ((1, 'Zone jonctionnelle corticale'), (2, 'Zone jonctionnelle profonde')):
         sortie.append(['Atlas des territoires (calque jonctionnel)', i, '', 'Territoires vasculaires', nom,
-                       'gauche et droit', 'transporté', ''])
+                       'gauche et droit', 'transporté', '', ('jonctions', [i])])
     sortie.append(['Masque TOF (seuil local)', 1, '', 'Artères', 'Artères (masque non nommé)', 'gauche et droit',
-                   'automatique', 'Vaisseaux du TOF, sans nom : les noms viennent des points manuels.'])
+                   'automatique', 'Vaisseaux du TOF, sans nom : les noms viennent des points manuels.', ('arteres', [1])])
     for cat, mod, genre in MANUELLES_PAIRES:
         for c in ('gauche', 'droit'):
-            sortie.append(['Points manuels (3D Slicer)', '', '', cat, cote(mod, genre, c), c, 'manuel', ''])
+            sortie.append(['Points manuels (navigateur)', '', '', cat, cote(mod, genre, c), c, 'manuel', '', None])
     for cat, fr in MANUELLES_MEDIANES:
         rq = ('Déjà segmenté par HypVINN : point manuel facultatif (contrôle).'
               if fr in ('Hypophyse', 'Glande pinéale (épiphyse)') else '')
-        sortie.append(['Points manuels (3D Slicer)', '', '', cat, fr, 'médian', 'manuel', rq])
+        sortie.append(['Points manuels (navigateur)', '', '', cat, fr, 'médian', 'manuel', rq, None])
     return sortie
 
 
@@ -482,7 +494,7 @@ def ecrire():
     with open(os.path.join(ICI, 'correspondance-etiquettes.csv'), 'w', encoding='utf-8-sig', newline='') as f:
         w = csv.writer(f, delimiter=';')
         w.writerow(entete)
-        w.writerows(l)
+        w.writerows(r[:8] for r in l)
     md = ['# Correspondance des étiquettes : à relire', '',
           f'{len(l)} lignes. Générée par `etiquettes.py` (modifier ce script, pas ce fichier).', '']
     for cat in CATEGORIES + ['—']:
