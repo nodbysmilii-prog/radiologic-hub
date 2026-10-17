@@ -50,12 +50,12 @@ FastSurfer (DKT);1010;ctx-lh-isthmuscingulate;Système limbique;Isthme du gyrus 
 FastSurfer (DKT);2010;ctx-rh-isthmuscingulate;Système limbique;Isthme du gyrus cingulaire droit;droit;automatique;
 FastSurfer (DKT);1011;ctx-lh-lateraloccipital;Gyri;Gyri occipitaux latéraux gauches;gauche;automatique;
 FastSurfer (DKT);2011;ctx-rh-lateraloccipital;Gyri;Gyri occipitaux latéraux droits;droit;automatique;
-FastSurfer (DKT);1012;ctx-lh-lateralorbitofrontal;Gyri;Cortex orbitofrontal latéral gauche;gauche;automatique;Gyri orbitaires latéraux.
-FastSurfer (DKT);2012;ctx-rh-lateralorbitofrontal;Gyri;Cortex orbitofrontal latéral droit;droit;automatique;Gyri orbitaires latéraux.
+FastSurfer (DKT);1012;ctx-lh-lateralorbitofrontal;Gyri;Cortex orbitofrontal latéral gauche;gauche;automatique;Gyri orbitaires latéraux. Les coupes axiales basses (vers 24 mm sous le plan CA-CP) passent au ras du toit de l'orbite : îlots de cortex entourés d'os, à contrôler en coronal.
+FastSurfer (DKT);2012;ctx-rh-lateralorbitofrontal;Gyri;Cortex orbitofrontal latéral droit;droit;automatique;Gyri orbitaires latéraux. Les coupes axiales basses (vers 24 mm sous le plan CA-CP) passent au ras du toit de l'orbite : îlots de cortex entourés d'os, à contrôler en coronal.
 FastSurfer (DKT);1013;ctx-lh-lingual;Gyri;Gyrus lingual gauche;gauche;automatique;
 FastSurfer (DKT);2013;ctx-rh-lingual;Gyri;Gyrus lingual droit;droit;automatique;
-FastSurfer (DKT);1014;ctx-lh-medialorbitofrontal;Gyri;Cortex orbitofrontal médial gauche;gauche;automatique;Gyrus droit (gyrus rectus) compris.
-FastSurfer (DKT);2014;ctx-rh-medialorbitofrontal;Gyri;Cortex orbitofrontal médial droit;droit;automatique;Gyrus droit (gyrus rectus) compris.
+FastSurfer (DKT);1014;ctx-lh-medialorbitofrontal;Gyri;Cortex orbitofrontal médial gauche;gauche;automatique;Gyrus droit (gyrus rectus) compris. FastSurfer n'a pas d'étiquette pour le bulbe et le tractus olfactifs : dans la fosse olfactive (surtout à gauche, plus profonde chez ce sujet), la partie la plus basse de l'étiquette peut être le bulbe olfactif, à retirer à la gomme.
+FastSurfer (DKT);2014;ctx-rh-medialorbitofrontal;Gyri;Cortex orbitofrontal médial droit;droit;automatique;Gyrus droit (gyrus rectus) compris. FastSurfer n'a pas d'étiquette pour le bulbe et le tractus olfactifs : dans la fosse olfactive (surtout à gauche, plus profonde chez ce sujet), la partie la plus basse de l'étiquette peut être le bulbe olfactif, à retirer à la gomme.
 FastSurfer (DKT);1015;ctx-lh-middletemporal;Gyri;Gyrus temporal moyen gauche;gauche;automatique;
 FastSurfer (DKT);2015;ctx-rh-middletemporal;Gyri;Gyrus temporal moyen droit;droit;automatique;
 FastSurfer (DKT);1016;ctx-lh-parahippocampal;Système limbique;Gyrus parahippocampique gauche;gauche;automatique;
@@ -383,6 +383,10 @@ Points manuels (navigateur);;;Substance blanche;Centre semi-ovale gauche;gauche;
 Points manuels (navigateur);;;Substance blanche;Centre semi-ovale droit;droit;manuel;
 Points manuels (navigateur);;;Système limbique;Pilier postérieur du fornix gauche;gauche;manuel;
 Points manuels (navigateur);;;Système limbique;Pilier postérieur du fornix droit;droit;manuel;
+Points manuels (navigateur);;;Système limbique;Bulbe olfactif gauche;gauche;manuel;
+Points manuels (navigateur);;;Système limbique;Bulbe olfactif droit;droit;manuel;
+Points manuels (navigateur);;;Système limbique;Tractus olfactif gauche;gauche;manuel;
+Points manuels (navigateur);;;Système limbique;Tractus olfactif droit;droit;manuel;
 Points manuels (navigateur);;;Tronc cérébral;Pyramide bulbaire gauche;gauche;manuel;
 Points manuels (navigateur);;;Tronc cérébral;Pyramide bulbaire droite;droit;manuel;
 Points manuels (navigateur);;;Tronc cérébral;Sillon pré-olivaire gauche;gauche;manuel;

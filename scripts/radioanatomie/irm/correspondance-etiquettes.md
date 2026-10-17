@@ -1,6 +1,6 @@
 # Correspondance des étiquettes : à relire
 
-466 lignes. Générée par `etiquettes.py` (modifier ce script, pas ce fichier).
+470 lignes. Générée par `etiquettes.py` (modifier ce script, pas ce fichier).
 
 ## Régions (19)
 
@@ -83,12 +83,12 @@
 | Gyrus temporal inférieur droit | droit | FastSurfer (DKT) | 2009 | ctx-rh-inferiortemporal | automatique |  |
 | Gyri occipitaux latéraux gauches | gauche | FastSurfer (DKT) | 1011 | ctx-lh-lateraloccipital | automatique |  |
 | Gyri occipitaux latéraux droits | droit | FastSurfer (DKT) | 2011 | ctx-rh-lateraloccipital | automatique |  |
-| Cortex orbitofrontal latéral gauche | gauche | FastSurfer (DKT) | 1012 | ctx-lh-lateralorbitofrontal | automatique | Gyri orbitaires latéraux. |
-| Cortex orbitofrontal latéral droit | droit | FastSurfer (DKT) | 2012 | ctx-rh-lateralorbitofrontal | automatique | Gyri orbitaires latéraux. |
+| Cortex orbitofrontal latéral gauche | gauche | FastSurfer (DKT) | 1012 | ctx-lh-lateralorbitofrontal | automatique | Gyri orbitaires latéraux. Les coupes axiales basses (vers 24 mm sous le plan CA-CP) passent au ras du toit de l'orbite : îlots de cortex entourés d'os, à contrôler en coronal. |
+| Cortex orbitofrontal latéral droit | droit | FastSurfer (DKT) | 2012 | ctx-rh-lateralorbitofrontal | automatique | Gyri orbitaires latéraux. Les coupes axiales basses (vers 24 mm sous le plan CA-CP) passent au ras du toit de l'orbite : îlots de cortex entourés d'os, à contrôler en coronal. |
 | Gyrus lingual gauche | gauche | FastSurfer (DKT) | 1013 | ctx-lh-lingual | automatique |  |
 | Gyrus lingual droit | droit | FastSurfer (DKT) | 2013 | ctx-rh-lingual | automatique |  |
-| Cortex orbitofrontal médial gauche | gauche | FastSurfer (DKT) | 1014 | ctx-lh-medialorbitofrontal | automatique | Gyrus droit (gyrus rectus) compris. |
-| Cortex orbitofrontal médial droit | droit | FastSurfer (DKT) | 2014 | ctx-rh-medialorbitofrontal | automatique | Gyrus droit (gyrus rectus) compris. |
+| Cortex orbitofrontal médial gauche | gauche | FastSurfer (DKT) | 1014 | ctx-lh-medialorbitofrontal | automatique | Gyrus droit (gyrus rectus) compris. FastSurfer n'a pas d'étiquette pour le bulbe et le tractus olfactifs : dans la fosse olfactive (surtout à gauche, plus profonde chez ce sujet), la partie la plus basse de l'étiquette peut être le bulbe olfactif, à retirer à la gomme. |
+| Cortex orbitofrontal médial droit | droit | FastSurfer (DKT) | 2014 | ctx-rh-medialorbitofrontal | automatique | Gyrus droit (gyrus rectus) compris. FastSurfer n'a pas d'étiquette pour le bulbe et le tractus olfactifs : dans la fosse olfactive (surtout à gauche, plus profonde chez ce sujet), la partie la plus basse de l'étiquette peut être le bulbe olfactif, à retirer à la gomme. |
 | Gyrus temporal moyen gauche | gauche | FastSurfer (DKT) | 1015 | ctx-lh-middletemporal | automatique |  |
 | Gyrus temporal moyen droit | droit | FastSurfer (DKT) | 2015 | ctx-rh-middletemporal | automatique |  |
 | Lobule paracentral gauche | gauche | FastSurfer (DKT) | 1017 | ctx-lh-paracentral | automatique |  |
@@ -128,7 +128,7 @@
 | Opercule temporal gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
 | Opercule temporal droit | droit | Points manuels (navigateur) |  |  | manuel |  |
 
-## Système limbique (23)
+## Système limbique (27)
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
@@ -155,6 +155,10 @@
 | Fornix droit, colonne | droit | HypVINN | 971 | R-Fornix | automatique | Partie proche de l'hypothalamus (colonne) ; le corps et les piliers viennent de FastSurfer-CC. |
 | Pilier postérieur du fornix gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
 | Pilier postérieur du fornix droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Bulbe olfactif gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Bulbe olfactif droit | droit | Points manuels (navigateur) |  |  | manuel |  |
+| Tractus olfactif gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
+| Tractus olfactif droit | droit | Points manuels (navigateur) |  |  | manuel |  |
 
 ## Substance blanche (86)
 

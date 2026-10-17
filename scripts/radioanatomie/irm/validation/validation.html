@@ -715,6 +715,7 @@ function dessiner() {
   }
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   dessinerPoints(T);
+  dessinerCurseur(T);
   dessinerRepere(T);
   if (survol && (E.outil === 'pinceau' || E.outil === 'gomme') && E.sel >= 0) {
     ctx.beginPath(); ctx.arc(survol.x * dpr, survol.y * dpr, E.rayon / G.vox * T.k, 0, 2 * Math.PI);
@@ -743,6 +744,19 @@ function dessinerPoints(T) {
         ctx.lineWidth = 2 * dpr; ctx.strokeStyle = '#000'; ctx.stroke();
       }
     });
+  }
+}
+function dessinerCurseur(T) {
+  // croix bleue : le dernier endroit touché, retrouvé dans les autres plans
+  if (!E.repere) return;
+  const [c, r, s] = enPlan(E.plan, E.curseur[0], E.curseur[1], E.curseur[2]);
+  if (s !== E.coupes[E.plan]) return;
+  const x = T.ox + (c + 0.5) * T.k, y = T.oy + (r + 0.5) * T.k, a = 18 * dpr, b = 4 * dpr;
+  ctx.lineCap = 'butt';
+  for (const [coul, l] of [['#000', 4], ['#35d0e6', 2]]) {
+    ctx.strokeStyle = coul; ctx.lineWidth = l * dpr; ctx.beginPath();
+    ctx.moveTo(x - a, y); ctx.lineTo(x - b, y); ctx.moveTo(x + b, y); ctx.lineTo(x + a, y);
+    ctx.moveTo(x, y - a); ctx.lineTo(x, y - b); ctx.moveTo(x, y + b); ctx.lineTo(x, y + a); ctx.stroke();
   }
 }
 function dessinerRepere(T) {
@@ -911,12 +925,13 @@ ecran.addEventListener('wheel', (e) => {
 
 function toucher(p) {
   const pos = versImage(p.x, p.y); if (!pos) return;
-  E.curseur = pos.ijk.slice();
+  E.curseur = pos.ijk.slice(); E.repere = E.outil === 'naviguer';
   if (E.outil === 'point') { if (E.sel >= 0) poserPoint(pos.ijk); return; }
   if (E.outil === 'naviguer') {
     const si = structureSous(pos);
     if (si >= 0 && si !== E.sel) choisir(si, { sauter: false });
   }
+  programmer('aucun');
 }
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -1095,15 +1110,23 @@ function majFiche() {
       const li = el('li'); const [x, y, zz] = mm(pt.i, pt.j, pt.k);
       li.append(el('span', 'num', String(n + 1)), el('span', '', `${pt.plan || ''} · x ${signe(x)} · y ${signe(y)} · z ${signe(zz)} mm`));
       const aller = el('button', 'lien', 'Voir'); aller.type = 'button';
-      aller.addEventListener('click', () => { E.curseur = [pt.i, pt.j, pt.k]; if (pt.plan && sequenceCourante().plans.includes(pt.plan)) E.plan = pt.plan; for (const p of ['axial', 'coronal', 'sagittal']) E.coupes[p] = E.curseur[AXE[p]]; centrerSur(...E.curseur); majPlan(); programmer('tout'); });
+      aller.addEventListener('click', () => { E.curseur = [pt.i, pt.j, pt.k]; E.repere = true; if (pt.plan && sequenceCourante().plans.includes(pt.plan)) E.plan = pt.plan; for (const p of ['axial', 'coronal', 'sagittal']) E.coupes[p] = E.curseur[AXE[p]]; centrerSur(...E.curseur); majPlan(); programmer('tout'); });
       const sup = el('button', 'lien', 'Retirer'); sup.type = 'button'; sup.disabled = !ecr;
-      sup.addEventListener('click', () => { const pts = d.points.filter((_, m) => m !== n); decider(s.cle, { points: pts }); });
+      sup.addEventListener('click', () => retirerPoints(s, d, d.points.filter((_, m) => m !== n)));
       li.append(aller, sup);
       const alerte = alerteLateralite(s, x);
       if (alerte) li.appendChild(el('span', 'lat', alerte));
       ul.appendChild(li);
     });
     bp.appendChild(ul);
+    if (d.points.length > 1) {
+      const tous = el('button', 'lien', `Retirer les ${d.points.length} points`); tous.type = 'button'; tous.disabled = !ecr;
+      tous.addEventListener('click', () => {
+        if (tous.dataset.arme) retirerPoints(s, d, []);
+        else { tous.dataset.arme = '1'; tous.textContent = 'Confirmer : retirer tous les points'; setTimeout(() => { delete tous.dataset.arme; tous.textContent = `Retirer les ${d.points.length} points`; }, 3500); }
+      });
+      bp.appendChild(tous);
+    }
   } else bp.appendChild(el('p', 'note', s.manuel ? 'Aucun point pour le moment.' : "Facultatif : l'étiquette sera placée automatiquement au centre de la structure."));
   z.appendChild(bp);
 
@@ -1129,7 +1152,7 @@ function majFiche() {
 function aide() {
   const a = el('div', 'aide');
   const lignes = [['V C S', 'valider, corriger, supprimer'], ['N', 'structure suivante en attente'], ['↑ ↓', 'coupe suivante ou précédente (ou molette)'],
-    ['1 2 3', 'axial, coronal, sagittal'], ['Z', 'annuler le dernier trait'], ['Ctrl + molette', 'zoom (deux doigts sur écran tactile)']];
+    ['1 2 3', 'axial, coronal, sagittal ; la croix bleue garde le dernier endroit touché d\'un plan à l\'autre'], ['Z', 'annuler le dernier trait'], ['Ctrl + molette', 'zoom (deux doigts sur écran tactile)']];
   for (const [k, t] of lignes) { const p = el('div'); p.append(el('kbd', '', k), document.createTextNode(' ' + t)); a.appendChild(p); }
   return a;
 }
@@ -1164,9 +1187,15 @@ function poserPoint(ijk) {
   const pts = (d.points || []).concat([{ i: ijk[0], j: ijk[1], k: ijk[2], plan: E.plan }]);
   const patch = { points: pts };
   if (s.manuel && !d.statut) patch.statut = 'valide';
-  decider(s.cle, patch);
+  E.outil = 'naviguer'; E.repere = false;          // un point par appui sur « Poser un point »
+  decider(s.cle, patch); majOutil();
   const alerte = alerteLateralite(s, mm(...ijk)[0]);
-  toast(alerte || `Point ${pts.length} posé : ${s.nom}`, alerte ? 5000 : 1600);
+  toast(alerte || `Point ${pts.length} posé : ${s.nom}. Pour un autre point, touchez de nouveau « Poser un point ».`, alerte ? 5000 : 3200);
+}
+function retirerPoints(s, d, pts) {
+  const patch = { points: pts };
+  if (s.manuel && !pts.length && d.statut === 'valide') patch.statut = null;   // validée par son premier point
+  decider(s.cle, patch);
 }
 
 // Pinceau : voxels ajoutés ou retirés dans la coupe courante, enregistrés par structure
@@ -1402,7 +1431,7 @@ document.addEventListener('keydown', (e) => {
   else if (k === 'n' || k === 'N') voisine(1, true);
   else if (k === 'z' || k === 'Z') annulerTrait();
   else if (k === '1') choisirPlan('axial'); else if (k === '2') choisirPlan('coronal'); else if (k === '3') choisirPlan('sagittal');
-  else if (k === 'Escape') { E.outil = 'naviguer'; majOutil(); }
+  else if (k === 'Escape') { E.outil = 'naviguer'; E.repere = false; majOutil(); programmer('aucun'); }
 });
 new ResizeObserver(() => programmer('aucun')).observe($('toile'));
 demarrer();

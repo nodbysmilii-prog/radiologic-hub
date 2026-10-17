@@ -75,9 +75,14 @@ DKT = [
     (9, 'inferiortemporal', 'Gyri', 'Gyrus temporal inférieur {c}', 'm', ''),
     (10, 'isthmuscingulate', 'Système limbique', 'Isthme du gyrus cingulaire {c}', 'm', ''),
     (11, 'lateraloccipital', 'Gyri', 'Gyri occipitaux latéraux {c}', 'mp', ''),
-    (12, 'lateralorbitofrontal', 'Gyri', 'Cortex orbitofrontal latéral {c}', 'm', 'Gyri orbitaires latéraux.'),
+    (12, 'lateralorbitofrontal', 'Gyri', 'Cortex orbitofrontal latéral {c}', 'm',
+     "Gyri orbitaires latéraux. Les coupes axiales basses (vers 24 mm sous le plan CA-CP) passent au ras du toit de "
+     "l'orbite : îlots de cortex entourés d'os, à contrôler en coronal."),
     (13, 'lingual', 'Gyri', 'Gyrus lingual {c}', 'm', ''),
-    (14, 'medialorbitofrontal', 'Gyri', 'Cortex orbitofrontal médial {c}', 'm', 'Gyrus droit (gyrus rectus) compris.'),
+    (14, 'medialorbitofrontal', 'Gyri', 'Cortex orbitofrontal médial {c}', 'm',
+     "Gyrus droit (gyrus rectus) compris. FastSurfer n'a pas d'étiquette pour le bulbe et le tractus olfactifs : "
+     "dans la fosse olfactive (surtout à gauche, plus profonde chez ce sujet), la partie la plus basse de "
+     "l'étiquette peut être le bulbe olfactif, à retirer à la gomme."),
     (15, 'middletemporal', 'Gyri', 'Gyrus temporal moyen {c}', 'm', ''),
     (16, 'parahippocampal', 'Système limbique', 'Gyrus parahippocampique {c}', 'm', ''),
     (17, 'paracentral', 'Gyri', 'Lobule paracentral {c}', 'm', ''),
@@ -330,6 +335,8 @@ MANUELLES_PAIRES = [
     ('Substance blanche', 'Centre semi-ovale {c}', 'm'),
     # Système limbique
     ('Système limbique', 'Pilier postérieur du fornix {c}', 'm'),
+    ('Système limbique', 'Bulbe olfactif {c}', 'm'),                 # rhinencéphale ; signalé par l'auteur (17/10)
+    ('Système limbique', 'Tractus olfactif {c}', 'm'),
     # Anatomie de surface du tronc cérébral (bulbe)
     ('Tronc cérébral', 'Pyramide bulbaire {c}', 'f'),
     ('Tronc cérébral', 'Sillon pré-olivaire {c}', 'm'),
