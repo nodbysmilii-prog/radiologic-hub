@@ -20,7 +20,7 @@ ICI = os.path.dirname(os.path.abspath(__file__))
 CATEGORIES = ['Régions', 'Sillons', 'Gyri', 'Système limbique', 'Substance blanche', 'Ventricules et citernes',
               'Noyaux gris centraux et structures apparentées', 'Voies optiques', 'Cervelet', 'Tronc cérébral',
               'Artères', 'Sinus veineux', 'Glandes', 'Territoires vasculaires', 'Méninges']
-# « Méninges » : catégorie absente de la liste de l'auteur, proposée d'après sa vidéo de référence du 17/10/2026
+# « Méninges » : catégorie ajoutée d'après la vidéo de référence de l'auteur du 17/10/2026 (validée par l'auteur)
 
 ADJ = {('gauche', 'm'): 'gauche', ('gauche', 'f'): 'gauche', ('droit', 'm'): 'droit', ('droit', 'f'): 'droite',
        ('gauche', 'mp'): 'gauches', ('droit', 'mp'): 'droits', ('gauche', 'fp'): 'gauches', ('droit', 'fp'): 'droites'}
@@ -292,7 +292,7 @@ MANUELLES_PAIRES = [
     ('Tronc cérébral', 'Tubercule gracile {c}', 'm'),
     ('Tronc cérébral', 'Tubercule cunéiforme {c}', 'm'),
     ('Ventricules et citernes', 'Ouverture latérale {c} du quatrième ventricule (foramen de Luschka)', 'f'),
-    # Méninges (catégorie proposée)
+    # Méninges
     ('Méninges', 'Cavum trigéminal {c} (cavum de Meckel)', 'm'),
     # Gyri et régions : repères de surface
     ('Gyri', 'Opercule frontal {c}', 'm'),
@@ -348,7 +348,7 @@ MANUELLES_MEDIANES = [
     ('Ventricules et citernes', 'Toile choroïdienne du troisième ventricule'),
     ('Ventricules et citernes', 'Plexus choroïde du quatrième ventricule'),
     ('Sillons', 'Fissure transverse du cerveau'),
-    # Méninges (catégorie proposée) : membranes et espaces au contact de la table interne
+    # Méninges : membranes et espaces au contact de la table interne
     ('Méninges', 'Dure-mère crânienne'),
     ('Méninges', 'Arachnoïde'),
     ('Méninges', 'Pie-mère crânienne'),
@@ -415,12 +415,10 @@ def lignes():
                    'automatique', 'Vaisseaux du TOF, sans nom : les noms viennent des points manuels.'])
     for cat, mod, genre in MANUELLES_PAIRES:
         for c in ('gauche', 'droit'):
-            sortie.append(['Points manuels (3D Slicer)', '', '', cat, cote(mod, genre, c), c, 'manuel',
-                           'Catégorie proposée : à valider.' if cat == 'Méninges' else ''])
+            sortie.append(['Points manuels (3D Slicer)', '', '', cat, cote(mod, genre, c), c, 'manuel', ''])
     for cat, fr in MANUELLES_MEDIANES:
         rq = ('Déjà segmenté par HypVINN : point manuel facultatif (contrôle).'
-              if fr in ('Hypophyse', 'Glande pinéale (épiphyse)') else
-              'Catégorie proposée : à valider.' if cat == 'Méninges' else '')
+              if fr in ('Hypophyse', 'Glande pinéale (épiphyse)') else '')
         sortie.append(['Points manuels (3D Slicer)', '', '', cat, fr, 'médian', 'manuel', rq])
     return sortie
 

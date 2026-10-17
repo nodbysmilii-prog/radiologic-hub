@@ -478,16 +478,16 @@
 |---|---|---|---|---|---|---|
 | Faux du cerveau | médian | Règle (limites FastSurfer) |  |  | dérivé | Surface à égale distance des deux hémisphères dans la fissure longitudinale, au-dessus du corps calleux : position déduite, la dure-mère n'est pas vue en tant que telle. |
 | Tente du cervelet | médian | Règle (limites FastSurfer) |  |  | dérivé | Surface à égale distance des hémisphères cérébraux et du cervelet, en dehors du tronc cérébral : position déduite, à valider. |
-| Cavum trigéminal gauche (cavum de Meckel) | gauche | Points manuels (3D Slicer) |  |  | manuel | Catégorie proposée : à valider. |
-| Cavum trigéminal droit (cavum de Meckel) | droit | Points manuels (3D Slicer) |  |  | manuel | Catégorie proposée : à valider. |
-| Dure-mère crânienne | médian | Points manuels (3D Slicer) |  |  | manuel | Catégorie proposée : à valider. |
-| Arachnoïde | médian | Points manuels (3D Slicer) |  |  | manuel | Catégorie proposée : à valider. |
-| Pie-mère crânienne | médian | Points manuels (3D Slicer) |  |  | manuel | Catégorie proposée : à valider. |
-| Espace épidural (virtuel) | médian | Points manuels (3D Slicer) |  |  | manuel | Catégorie proposée : à valider. |
-| Espace subdural (virtuel) | médian | Points manuels (3D Slicer) |  |  | manuel | Catégorie proposée : à valider. |
-| Espace subarachnoïdien | médian | Points manuels (3D Slicer) |  |  | manuel | Catégorie proposée : à valider. |
-| Granulations arachnoïdiennes | médian | Points manuels (3D Slicer) |  |  | manuel | Catégorie proposée : à valider. |
-| Incisure de la tente du cervelet | médian | Points manuels (3D Slicer) |  |  | manuel | Catégorie proposée : à valider. |
+| Cavum trigéminal gauche (cavum de Meckel) | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
+| Cavum trigéminal droit (cavum de Meckel) | droit | Points manuels (3D Slicer) |  |  | manuel |  |
+| Dure-mère crânienne | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Arachnoïde | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Pie-mère crânienne | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Espace épidural (virtuel) | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Espace subdural (virtuel) | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Espace subarachnoïdien | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Granulations arachnoïdiennes | médian | Points manuels (3D Slicer) |  |  | manuel |  |
+| Incisure de la tente du cervelet | médian | Points manuels (3D Slicer) |  |  | manuel |  |
 
 ## Non publiées (4)
 

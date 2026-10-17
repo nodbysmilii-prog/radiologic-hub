@@ -345,8 +345,8 @@ Points manuels (3D Slicer);;;Tronc cérébral;Tubercule cunéiforme gauche;gauch
 Points manuels (3D Slicer);;;Tronc cérébral;Tubercule cunéiforme droit;droit;manuel;
 Points manuels (3D Slicer);;;Ventricules et citernes;Ouverture latérale gauche du quatrième ventricule (foramen de Luschka);gauche;manuel;
 Points manuels (3D Slicer);;;Ventricules et citernes;Ouverture latérale droite du quatrième ventricule (foramen de Luschka);droit;manuel;
-Points manuels (3D Slicer);;;Méninges;Cavum trigéminal gauche (cavum de Meckel);gauche;manuel;Catégorie proposée : à valider.
-Points manuels (3D Slicer);;;Méninges;Cavum trigéminal droit (cavum de Meckel);droit;manuel;Catégorie proposée : à valider.
+Points manuels (3D Slicer);;;Méninges;Cavum trigéminal gauche (cavum de Meckel);gauche;manuel;
+Points manuels (3D Slicer);;;Méninges;Cavum trigéminal droit (cavum de Meckel);droit;manuel;
 Points manuels (3D Slicer);;;Gyri;Opercule frontal gauche;gauche;manuel;
 Points manuels (3D Slicer);;;Gyri;Opercule frontal droit;droit;manuel;
 Points manuels (3D Slicer);;;Gyri;Opercule pariétal gauche;gauche;manuel;
@@ -405,13 +405,13 @@ Points manuels (3D Slicer);;;Ventricules et citernes;Ouverture médiane du quatr
 Points manuels (3D Slicer);;;Ventricules et citernes;Toile choroïdienne du troisième ventricule;médian;manuel;
 Points manuels (3D Slicer);;;Ventricules et citernes;Plexus choroïde du quatrième ventricule;médian;manuel;
 Points manuels (3D Slicer);;;Sillons;Fissure transverse du cerveau;médian;manuel;
-Points manuels (3D Slicer);;;Méninges;Dure-mère crânienne;médian;manuel;Catégorie proposée : à valider.
-Points manuels (3D Slicer);;;Méninges;Arachnoïde;médian;manuel;Catégorie proposée : à valider.
-Points manuels (3D Slicer);;;Méninges;Pie-mère crânienne;médian;manuel;Catégorie proposée : à valider.
-Points manuels (3D Slicer);;;Méninges;Espace épidural (virtuel);médian;manuel;Catégorie proposée : à valider.
-Points manuels (3D Slicer);;;Méninges;Espace subdural (virtuel);médian;manuel;Catégorie proposée : à valider.
-Points manuels (3D Slicer);;;Méninges;Espace subarachnoïdien;médian;manuel;Catégorie proposée : à valider.
-Points manuels (3D Slicer);;;Méninges;Granulations arachnoïdiennes;médian;manuel;Catégorie proposée : à valider.
-Points manuels (3D Slicer);;;Méninges;Incisure de la tente du cervelet;médian;manuel;Catégorie proposée : à valider.
+Points manuels (3D Slicer);;;Méninges;Dure-mère crânienne;médian;manuel;
+Points manuels (3D Slicer);;;Méninges;Arachnoïde;médian;manuel;
+Points manuels (3D Slicer);;;Méninges;Pie-mère crânienne;médian;manuel;
+Points manuels (3D Slicer);;;Méninges;Espace épidural (virtuel);médian;manuel;
+Points manuels (3D Slicer);;;Méninges;Espace subdural (virtuel);médian;manuel;
+Points manuels (3D Slicer);;;Méninges;Espace subarachnoïdien;médian;manuel;
+Points manuels (3D Slicer);;;Méninges;Granulations arachnoïdiennes;médian;manuel;
+Points manuels (3D Slicer);;;Méninges;Incisure de la tente du cervelet;médian;manuel;
 Points manuels (3D Slicer);;;Glandes;Hypophyse;médian;manuel;Déjà segmenté par HypVINN : point manuel facultatif (contrôle).
 Points manuels (3D Slicer);;;Glandes;Glande pinéale (épiphyse);médian;manuel;Déjà segmenté par HypVINN : point manuel facultatif (contrôle).
