@@ -34,8 +34,8 @@ ASEG_PAIRES = [
     (4, 43, 'Left-Lateral-Ventricle', 'Ventricules et citernes', 'Ventricule latéral {c}', 'm', ''),
     (5, 44, 'Left-Inf-Lat-Vent', 'Ventricules et citernes', 'Corne temporale du ventricule latéral {c}', 'm', ''),
     (31, 63, 'Left-choroid-plexus', 'Ventricules et citernes', 'Plexus choroïde du ventricule latéral {c}', 'm', ''),
-    (7, 46, 'Left-Cerebellum-White-Matter', 'Cervelet', "Substance blanche de l'hémisphère cérébelleux {c}", 'm',
-     'Remplacée par le corps médullaire de CerebNet là où CerebNet a une étiquette.'),
+    (7, 46, 'Left-Cerebellum-White-Matter', 'Cervelet', "Corps médullaire de l'hémisphère cérébelleux {c}", 'm',
+     'Substance blanche du cervelet (noyaux du cervelet non distingués).'),
     (8, 47, 'Left-Cerebellum-Cortex', 'Cervelet', "Cortex de l'hémisphère cérébelleux {c}", 'm',
      'Subdivisé en lobules par CerebNet.'),
     (10, 49, 'Left-Thalamus', 'Noyaux gris centraux et structures apparentées', 'Thalamus {c}', 'm', ''),
@@ -169,53 +169,110 @@ LIMITES_MEDIANES = [
 # ---------------------------------------------------------------------------
 # CerebNet (lobules du cervelet ; nomenclature de Larsell et noms classiques)
 # ---------------------------------------------------------------------------
-CEREBNET_PAIRES = [
-    (1, 2, 'I_IV', 'Lobules I à IV (lobe antérieur), hémisphère cérébelleux {c}', 'Comprend la partie vermienne.'),
-    (3, 4, 'V', 'Lobule V (lobe antérieur), hémisphère cérébelleux {c}', 'Comprend la partie vermienne.'),
-    (5, 7, 'VI', 'Lobule VI (lobule simple), hémisphère cérébelleux {c}', ''),
-    (8, 9, 'CrusI', 'Crus I (lobule semi-lunaire supérieur), hémisphère cérébelleux {c}', ''),
-    (10, 11, 'CrusII', 'Crus II (lobule semi-lunaire inférieur), hémisphère cérébelleux {c}', ''),
-    (12, 13, 'VIIb', 'Lobule VIIB (lobule gracile), hémisphère cérébelleux {c}', ''),
-    (15, 16, 'VIIIa', 'Lobule VIIIA (lobule biventral, partie antérieure), hémisphère cérébelleux {c}', ''),
-    (17, 18, 'VIIIb', 'Lobule VIIIB (lobule biventral, partie postérieure), hémisphère cérébelleux {c}', ''),
-    (20, 22, 'IX', 'Lobule IX (tonsille), hémisphère cérébelleux {c}', ''),
-    (23, 25, 'X', 'Lobule X (flocculus) {c}', ''),
-    (26, 27, 'Corpus_Medullare', "Corps médullaire de l'hémisphère cérébelleux {c}",
-     'Substance blanche du cervelet (noyaux du cervelet non distingués).'),
+CEREBNET_PAIRES = [   # identifiants de sortie de CerebNet (table de couleurs de FreeSurfer, 601 à 632)
+    (601, 602, 'I_IV', 'Lobules I à IV (lobe antérieur), hémisphère cérébelleux {c}', 'Comprend la partie vermienne.'),
+    (603, 604, 'V', 'Lobule V (lobe antérieur), hémisphère cérébelleux {c}', 'Comprend la partie vermienne.'),
+    (605, 607, 'VI', 'Lobule VI (lobule simple), hémisphère cérébelleux {c}', ''),
+    (608, 610, 'CrusI', 'Crus I (lobule semi-lunaire supérieur), hémisphère cérébelleux {c}', ''),
+    (611, 613, 'CrusII', 'Crus II (lobule semi-lunaire inférieur), hémisphère cérébelleux {c}', ''),
+    (614, 616, 'VIIb', 'Lobule VIIB (lobule gracile), hémisphère cérébelleux {c}', ''),
+    (617, 619, 'VIIIa', 'Lobule VIIIA (lobule biventral, partie antérieure), hémisphère cérébelleux {c}', ''),
+    (620, 622, 'VIIIb', 'Lobule VIIIB (lobule biventral, partie postérieure), hémisphère cérébelleux {c}', ''),
+    (623, 625, 'IX', 'Lobule IX (tonsille), hémisphère cérébelleux {c}', ''),
+    (626, 628, 'X', 'Lobule X (flocculus) {c}', ''),
 ]
 CEREBNET_VERMIS = [
-    (6, 'Vermis_VI', 'Vermis, lobule VI (déclive)'),
-    (14, 'Vermis_VII', 'Vermis, lobule VII (folium et tuber)'),
-    (19, 'Vermis_VIII', 'Vermis, lobule VIII (pyramide)'),
-    (21, 'Vermis_IX', 'Vermis, lobule IX (uvule)'),
-    (24, 'Vermis_X', 'Vermis, lobule X (nodule)'),
+    (606, 'Cbm_Vermis_VI', 'Vermis, lobule VI (déclive)'),
+    (630, 'Cbm_Vermis_VII', 'Vermis, lobule VII (folium et tuber)'),
+    (631, 'Cbm_Vermis_VIII', 'Vermis, lobule VIII (pyramide)'),
+    (624, 'Cbm_Vermis_IX', 'Vermis, lobule IX (uvule)'),
+    (627, 'Cbm_Vermis_X', 'Vermis, lobule X (nodule)'),
+]
+# Corps calleux et fornix (FastSurfer-CC) : identifiants FreeSurfer 250 à 255 ; le corps calleux est découpé en
+# cinq parties égales le long de son grand axe (convention de FreeSurfer), pas selon les repères anatomiques
+CORPS_CALLEUX = [
+    (255, 'CC_Anterior', 'Substance blanche', 'Corps calleux, cinquième antérieur (genou)',
+     'Découpage en cinquièmes égaux (convention FreeSurfer) : le genou en occupe la plus grande part.'),
+    (254, 'CC_Mid_Anterior', 'Substance blanche', 'Corps calleux, deuxième cinquième (tronc, partie antérieure)', ''),
+    (253, 'CC_Central', 'Substance blanche', 'Corps calleux, cinquième central (tronc)', ''),
+    (252, 'CC_Mid_Posterior', 'Substance blanche', 'Corps calleux, quatrième cinquième (isthme)', ''),
+    (251, 'CC_Posterior', 'Substance blanche', 'Corps calleux, cinquième postérieur (splénium)', ''),
+    (250, 'Fornix', 'Système limbique', 'Fornix (corps et piliers)', 'Segmenté par FastSurfer-CC avec le corps calleux.'),
 ]
 
 # ---------------------------------------------------------------------------
 # HypVINN (hypothalamus et structures voisines) : (id gauche, id droit, nom outil, catégorie, modèle, genre, remarque)
 # ---------------------------------------------------------------------------
-HYPVINN_PAIRES = [
-    (2, 1, 'N.opticus', 'Voies optiques', 'Nerf optique {c} (segment intracrânien)', 'm', ''),
-    (5, 4, 'Optic-tract', 'Voies optiques', 'Tractus optique {c}', 'm', ''),
-    (8, 7, 'Chiasma-Opticum', 'Voies optiques', 'Chiasma optique, moitié {c}', 'f', ''),
-    (6, 3, 'C.mammilare', 'Système limbique', 'Corps mamillaire {c}', 'm', ''),
-    (12, 11, 'Fornix', 'Système limbique', 'Fornix {c}', 'm',
-     "Partie proche de l'hypothalamus (colonne et corps) ; les piliers postérieurs ne sont pas segmentés."),
-    (128, 228, 'Ant-Hypothalamus', 'Noyaux gris centraux et structures apparentées', 'Hypothalamus antérieur {c}', 'm', ''),
-    (126, 226, 'Med-Hypothalamus', 'Noyaux gris centraux et structures apparentées', 'Hypothalamus médial {c}', 'm', ''),
-    (127, 227, 'Lat-Hypothalamus', 'Noyaux gris centraux et structures apparentées', 'Hypothalamus latéral {c}', 'm', ''),
-    (129, 229, 'Post-Hypothalamus', 'Noyaux gris centraux et structures apparentées', 'Hypothalamus postérieur {c}', 'm', ''),
+HYPVINN_PAIRES = [   # identifiants de sortie de HypVINN (table de couleurs de FreeSurfer, 961 à 984)
+    (962, 961, 'N.opticus', 'Voies optiques', 'Nerf optique {c} (segment intracrânien)', 'm', ''),
+    (965, 964, 'Optic-tract', 'Voies optiques', 'Tractus optique {c}', 'm', ''),
+    (968, 967, 'Chiasma-Opticum', 'Voies optiques', 'Chiasma optique, moitié {c}', 'f', ''),
+    (966, 963, 'C.mammilare', 'Système limbique', 'Corps mamillaire {c}', 'm', ''),
+    (972, 971, 'Fornix', 'Système limbique', 'Fornix {c}, colonne', 'm',
+     "Partie proche de l'hypothalamus (colonne) ; le corps et les piliers viennent de FastSurfer-CC."),
+    (979, 983, 'Ant-Hypothalamus', 'Noyaux gris centraux et structures apparentées', 'Hypothalamus antérieur {c}', 'm', ''),
+    (977, 981, 'Med-Hypothalamus', 'Noyaux gris centraux et structures apparentées', 'Hypothalamus médial {c}', 'm', ''),
+    (978, 982, 'Lat-Hypothalamus', 'Noyaux gris centraux et structures apparentées', 'Hypothalamus latéral {c}', 'm', ''),
+    (980, 984, 'Post-Hypothalamus', 'Noyaux gris centraux et structures apparentées', 'Hypothalamus postérieur {c}', 'm', ''),
 ]
 HYPVINN_MEDIANS = [
-    (9, 'Ant-Commisure', 'Substance blanche', 'Commissure antérieure', ''),
-    (122, 'Tuberal-Region', 'Noyaux gris centraux et structures apparentées', "Région tubérale de l'hypothalamus", ''),
-    (14, 'Epiphysis', 'Glandes', 'Glande pinéale (épiphyse)', ''),
-    (16, 'Hypophysis', 'Glandes', 'Hypophyse', ''),
-    (17, 'Infundibulum', 'Glandes', 'Tige pituitaire (infundibulum)', ''),
+    (969, 'Ant-Commisure', 'Substance blanche', 'Commissure antérieure', ''),
+    (976, 'Tuberal-Region', 'Noyaux gris centraux et structures apparentées', "Région tubérale de l'hypothalamus", ''),
+    (973, 'Epiphysis', 'Glandes', 'Glande pinéale (épiphyse)', ''),
+    (974, 'Hypophysis', 'Glandes', 'Hypophyse', ''),
+    (975, 'Infundibulum', 'Glandes', 'Tige pituitaire (infundibulum)', ''),
 ]
-HYPVINN_DOUBLONS = [(10, '3rd-Ventricle', "Doublon du troisième ventricule de FastSurfer (aseg), qui est retenu."),
-                    (13, 'R-Globus-Pallidus', 'Doublon du globus pallidus de FastSurfer (aseg), qui est retenu.'),
-                    (20, 'L-Globus-pallidus', 'Doublon du globus pallidus de FastSurfer (aseg), qui est retenu.')]
+HYPVINN_DOUBLONS = [(970, 'Third-Ventricle', "Doublon du troisième ventricule de FastSurfer (aseg), qui est retenu.")]
+
+# ---------------------------------------------------------------------------
+# TractSeg (72 faisceaux segmentés sur la diffusion du sujet) : (nom TractSeg sans côté, catégorie, modèle, genre,
+# remarque) ; les faisceaux pairs sont suffixés _left / _right
+# ---------------------------------------------------------------------------
+TRACTSEG_PAIRES = [
+    ('AF', 'Substance blanche', 'Faisceau arqué {c}', 'm', ''),
+    ('ATR', 'Substance blanche', 'Radiation thalamique antérieure {c}', 'f', ''),
+    ('CG', 'Substance blanche', 'Cingulum {c}', 'm', ''),
+    ('CST', 'Substance blanche', 'Faisceau corticospinal {c}', 'm', ''),
+    ('FPT', 'Substance blanche', 'Faisceau fronto-pontique {c}', 'm', ''),
+    ('POPT', 'Substance blanche', 'Faisceau pariéto-occipito-pontique {c}', 'm', ''),
+    ('IFO', 'Substance blanche', 'Faisceau fronto-occipital inférieur {c}', 'm', ''),
+    ('ILF', 'Substance blanche', 'Faisceau longitudinal inférieur {c}', 'm', ''),
+    ('MLF', 'Substance blanche', 'Faisceau longitudinal moyen {c}', 'm', ''),
+    ('SLF_I', 'Substance blanche', 'Faisceau longitudinal supérieur {c}, partie I', 'm', ''),
+    ('SLF_II', 'Substance blanche', 'Faisceau longitudinal supérieur {c}, partie II', 'm', ''),
+    ('SLF_III', 'Substance blanche', 'Faisceau longitudinal supérieur {c}, partie III', 'm', ''),
+    ('STR', 'Substance blanche', 'Radiation thalamique supérieure {c}', 'f', ''),
+    ('UF', 'Substance blanche', 'Faisceau unciné {c}', 'm', ''),
+    ('OR', 'Voies optiques', 'Radiations optiques {c}', 'fp', ''),
+    ('ICP', 'Tronc cérébral', 'Pédoncule cérébelleux inférieur {c}', 'm', ''),
+    ('SCP', 'Tronc cérébral', 'Pédoncule cérébelleux supérieur {c}', 'm', ''),
+    ('T_PREF', 'Substance blanche', 'Fibres thalamo-préfrontales {c}', 'fp', ''),
+    ('T_PREM', 'Substance blanche', 'Fibres thalamo-prémotrices {c}', 'fp', ''),
+    ('T_PREC', 'Substance blanche', 'Fibres thalamo-précentrales {c}', 'fp', ''),
+    ('T_POSTC', 'Substance blanche', 'Fibres thalamo-postcentrales {c}', 'fp', ''),
+    ('T_PAR', 'Substance blanche', 'Fibres thalamo-pariétales {c}', 'fp', ''),
+    ('T_OCC', 'Substance blanche', 'Fibres thalamo-occipitales {c}', 'fp', ''),
+    ('ST_FO', 'Substance blanche', 'Fibres striato-fronto-orbitaires {c}', 'fp', ''),
+    ('ST_PREF', 'Substance blanche', 'Fibres striato-préfrontales {c}', 'fp', ''),
+    ('ST_PREM', 'Substance blanche', 'Fibres striato-prémotrices {c}', 'fp', ''),
+    ('ST_PREC', 'Substance blanche', 'Fibres striato-précentrales {c}', 'fp', ''),
+    ('ST_POSTC', 'Substance blanche', 'Fibres striato-postcentrales {c}', 'fp', ''),
+    ('ST_PAR', 'Substance blanche', 'Fibres striato-pariétales {c}', 'fp', ''),
+    ('ST_OCC', 'Substance blanche', 'Fibres striato-occipitales {c}', 'fp', ''),
+    ('FX', '—', '—', 'm', "Fornix trop fin pour cette diffusion (b = 800, 2 mm) : celui de FastSurfer est retenu."),
+]
+TRACTSEG_MEDIANS = [
+    ('MCP', 'Tronc cérébral', 'Pédoncules cérébelleux moyens', ''),
+    ('CC', 'Substance blanche', 'Fibres calleuses (ensemble)', 'Radiations du corps calleux dans les hémisphères.'),
+    ('CC_1', 'Substance blanche', 'Fibres calleuses du rostrum (CC 1)', ''),
+    ('CC_2', 'Substance blanche', 'Fibres calleuses du genou (CC 2)', ''),
+    ('CC_3', 'Substance blanche', 'Fibres calleuses du tronc, partie rostrale (CC 3, prémotrices)', ''),
+    ('CC_4', 'Substance blanche', 'Fibres calleuses du tronc, partie moyenne (CC 4, motrices)', ''),
+    ('CC_5', 'Substance blanche', 'Fibres calleuses du tronc, partie postérieure (CC 5, somesthésiques)', ''),
+    ('CC_6', 'Substance blanche', "Fibres calleuses de l'isthme (CC 6)", ''),
+    ('CC_7', 'Substance blanche', 'Fibres calleuses du splénium (CC 7)', ''),
+    ('CA', '—', '—', 'Doublon de la commissure antérieure de HypVINN, qui est retenue.'),
+]
 
 # ---------------------------------------------------------------------------
 # Structures attendues des points manuels de l'auteur (étape 4) : liste de départ, à compléter ou corriger
@@ -253,8 +310,6 @@ MANUELLES_PAIRES = [
     ('Tronc cérébral', 'Nerfs facial et vestibulocochléaire {c} (VII, VIII)', 'mp'),
     # Tronc cérébral et cervelet
     ('Tronc cérébral', 'Pédoncule cérébral {c}', 'm'),
-    ('Tronc cérébral', 'Pédoncule cérébelleux moyen {c}', 'm'),
-    ('Tronc cérébral', 'Pédoncule cérébelleux supérieur {c}', 'm'),
     ('Tronc cérébral', 'Colliculus supérieur {c}', 'm'),
     ('Tronc cérébral', 'Colliculus inférieur {c}', 'm'),
     ('Tronc cérébral', 'Olive bulbaire {c}', 'f'),
@@ -265,7 +320,6 @@ MANUELLES_PAIRES = [
     ('Cervelet', 'Noyau dentelé {c}', 'm'),
     # Voies optiques
     ('Voies optiques', 'Corps géniculé latéral {c}', 'm'),
-    ('Voies optiques', 'Radiations optiques {c}', 'fp'),
     # Substance blanche
     ('Substance blanche', 'Capsule interne {c}, bras antérieur', 'f'),
     ('Substance blanche', 'Capsule interne {c}, genou', 'f'),
@@ -274,13 +328,6 @@ MANUELLES_PAIRES = [
     ('Substance blanche', 'Capsule extrême {c}', 'f'),
     ('Substance blanche', 'Couronne rayonnante {c}', 'f'),
     ('Substance blanche', 'Centre semi-ovale {c}', 'm'),
-    ('Substance blanche', 'Faisceau longitudinal supérieur {c}', 'm'),
-    ('Substance blanche', 'Faisceau arqué {c}', 'm'),
-    ('Substance blanche', 'Faisceau unciné {c}', 'm'),
-    ('Substance blanche', 'Faisceau longitudinal inférieur {c}', 'm'),
-    ('Substance blanche', 'Faisceau fronto-occipital inférieur {c}', 'm'),
-    ('Substance blanche', 'Cingulum {c}', 'm'),
-    ('Substance blanche', 'Faisceau corticospinal {c}', 'm'),
     # Système limbique
     ('Système limbique', 'Pilier postérieur du fornix {c}', 'm'),
     # Anatomie de surface du tronc cérébral (bulbe)
@@ -324,11 +371,7 @@ MANUELLES_MEDIANES = [
     ('Tronc cérébral', 'Bulbe (moelle allongée)'),
     ('Tronc cérébral', 'Plancher du quatrième ventricule'),
     ('Substance blanche', 'Corps calleux, rostrum'),
-    ('Substance blanche', 'Corps calleux, genou'),
-    ('Substance blanche', 'Corps calleux, tronc'),
-    ('Substance blanche', 'Corps calleux, splénium'),
     ('Substance blanche', 'Commissure postérieure'),
-    ('Système limbique', 'Corps du fornix'),
     # Anatomie de surface et intérieur du tronc cérébral
     ('Tronc cérébral', 'Partie basilaire du pont'),
     ('Tronc cérébral', 'Tegmentum du pont'),
@@ -386,9 +429,11 @@ def lignes():
                            (f"Interface {'/'.join(a)} | {'/'.join(b)}. " + rq).strip()])
     for g, d, nom, mod, rq in CEREBNET_PAIRES:
         for ident, c, pre in ((g, 'gauche', 'Left'), (d, 'droit', 'Right')):
-            sortie.append(['CerebNet', ident, f'{pre}_{nom}', 'Cervelet', cote(mod, 'm', c), c, 'automatique', rq])
+            sortie.append(['CerebNet', ident, f'Cbm_{pre}_{nom}', 'Cervelet', cote(mod, 'm', c), c, 'automatique', rq])
     for ident, nom, fr in CEREBNET_VERMIS:
         sortie.append(['CerebNet', ident, nom, 'Cervelet', fr, 'médian', 'automatique', ''])
+    for ident, nom, cat, fr, rq in CORPS_CALLEUX:
+        sortie.append(['FastSurfer-CC', ident, nom, cat, fr, 'médian', 'automatique', rq])
     for g, d, nom, cat, mod, genre, rq in HYPVINN_PAIRES:
         for ident, c, pre in ((g, 'gauche', 'L-'), (d, 'droit', 'R-')):
             sortie.append(['HypVINN', ident, pre + nom, cat, cote(mod, genre, c), c, 'automatique', rq])
@@ -403,6 +448,14 @@ def lignes():
                            cote(mod, genre, c), c, 'dérivé', ('Regroupement : ' + ', '.join(noms) + '. ' + rq).strip()])
     for cat, fr, rq in LIMITES_MEDIANES:
         sortie.append(['Règle (limites FastSurfer)', '', '', cat, fr, 'médian', 'dérivé', rq])
+    for nom, cat, mod, genre, rq in TRACTSEG_PAIRES:
+        for c, suffixe in (('gauche', 'left'), ('droit', 'right')):
+            publie = cat != '—'
+            sortie.append(['TractSeg', f'{nom}_{suffixe}', f'{nom}_{suffixe}', cat, cote(mod, genre, c) if publie else '—',
+                           c if publie else '—', 'automatique' if publie else 'non publié', rq])
+    for nom, cat, fr, rq in TRACTSEG_MEDIANS:
+        publie = cat != '—'
+        sortie.append(['TractSeg', nom, nom, cat, fr, 'médian' if publie else '—', 'automatique' if publie else 'non publié', rq])
     import preparer_territoires as t
     for ident, code, groupe, nom, court, couleur, precision in t.TERRITOIRES:
         for i, c in ((ident, 'gauche'), (ident + 1, 'droit')):

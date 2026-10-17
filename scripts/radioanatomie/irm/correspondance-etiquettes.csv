@@ -7,8 +7,8 @@ FastSurfer (aseg);5;Left-Inf-Lat-Vent;Ventricules et citernes;Corne temporale du
 FastSurfer (aseg);44;Right-Inf-Lat-Vent;Ventricules et citernes;Corne temporale du ventricule latéral droit;droit;automatique;
 FastSurfer (aseg);31;Left-choroid-plexus;Ventricules et citernes;Plexus choroïde du ventricule latéral gauche;gauche;automatique;
 FastSurfer (aseg);63;Right-choroid-plexus;Ventricules et citernes;Plexus choroïde du ventricule latéral droit;droit;automatique;
-FastSurfer (aseg);7;Left-Cerebellum-White-Matter;Cervelet;Substance blanche de l'hémisphère cérébelleux gauche;gauche;automatique;Remplacée par le corps médullaire de CerebNet là où CerebNet a une étiquette.
-FastSurfer (aseg);46;Right-Cerebellum-White-Matter;Cervelet;Substance blanche de l'hémisphère cérébelleux droit;droit;automatique;Remplacée par le corps médullaire de CerebNet là où CerebNet a une étiquette.
+FastSurfer (aseg);7;Left-Cerebellum-White-Matter;Cervelet;Corps médullaire de l'hémisphère cérébelleux gauche;gauche;automatique;Substance blanche du cervelet (noyaux du cervelet non distingués).
+FastSurfer (aseg);46;Right-Cerebellum-White-Matter;Cervelet;Corps médullaire de l'hémisphère cérébelleux droit;droit;automatique;Substance blanche du cervelet (noyaux du cervelet non distingués).
 FastSurfer (aseg);8;Left-Cerebellum-Cortex;Cervelet;Cortex de l'hémisphère cérébelleux gauche;gauche;automatique;Subdivisé en lobules par CerebNet.
 FastSurfer (aseg);47;Right-Cerebellum-Cortex;Cervelet;Cortex de l'hémisphère cérébelleux droit;droit;automatique;Subdivisé en lobules par CerebNet.
 FastSurfer (aseg);10;Left-Thalamus;Noyaux gris centraux et structures apparentées;Thalamus gauche;gauche;automatique;
@@ -136,59 +136,61 @@ Règle (limites DKT);;;Sillons;Sillon du cingulum gauche;gauche;dérivé;Interfa
 Règle (limites DKT);;;Sillons;Sillon du cingulum droit;droit;dérivé;Interface superiorfrontal/paracentral | caudalanteriorcingulate/rostralanteriorcingulate/posteriorcingulate. Sillon cingulaire.
 Règle (limites DKT);;;Sillons;Sillon calcarin gauche;gauche;dérivé;Interface pericalcarine | pericalcarine. Règle propre : LCS bordé des deux côtés par le cortex péricalcarin.
 Règle (limites DKT);;;Sillons;Sillon calcarin droit;droit;dérivé;Interface pericalcarine | pericalcarine. Règle propre : LCS bordé des deux côtés par le cortex péricalcarin.
-CerebNet;1;Left_I_IV;Cervelet;Lobules I à IV (lobe antérieur), hémisphère cérébelleux gauche;gauche;automatique;Comprend la partie vermienne.
-CerebNet;2;Right_I_IV;Cervelet;Lobules I à IV (lobe antérieur), hémisphère cérébelleux droit;droit;automatique;Comprend la partie vermienne.
-CerebNet;3;Left_V;Cervelet;Lobule V (lobe antérieur), hémisphère cérébelleux gauche;gauche;automatique;Comprend la partie vermienne.
-CerebNet;4;Right_V;Cervelet;Lobule V (lobe antérieur), hémisphère cérébelleux droit;droit;automatique;Comprend la partie vermienne.
-CerebNet;5;Left_VI;Cervelet;Lobule VI (lobule simple), hémisphère cérébelleux gauche;gauche;automatique;
-CerebNet;7;Right_VI;Cervelet;Lobule VI (lobule simple), hémisphère cérébelleux droit;droit;automatique;
-CerebNet;8;Left_CrusI;Cervelet;Crus I (lobule semi-lunaire supérieur), hémisphère cérébelleux gauche;gauche;automatique;
-CerebNet;9;Right_CrusI;Cervelet;Crus I (lobule semi-lunaire supérieur), hémisphère cérébelleux droit;droit;automatique;
-CerebNet;10;Left_CrusII;Cervelet;Crus II (lobule semi-lunaire inférieur), hémisphère cérébelleux gauche;gauche;automatique;
-CerebNet;11;Right_CrusII;Cervelet;Crus II (lobule semi-lunaire inférieur), hémisphère cérébelleux droit;droit;automatique;
-CerebNet;12;Left_VIIb;Cervelet;Lobule VIIB (lobule gracile), hémisphère cérébelleux gauche;gauche;automatique;
-CerebNet;13;Right_VIIb;Cervelet;Lobule VIIB (lobule gracile), hémisphère cérébelleux droit;droit;automatique;
-CerebNet;15;Left_VIIIa;Cervelet;Lobule VIIIA (lobule biventral, partie antérieure), hémisphère cérébelleux gauche;gauche;automatique;
-CerebNet;16;Right_VIIIa;Cervelet;Lobule VIIIA (lobule biventral, partie antérieure), hémisphère cérébelleux droit;droit;automatique;
-CerebNet;17;Left_VIIIb;Cervelet;Lobule VIIIB (lobule biventral, partie postérieure), hémisphère cérébelleux gauche;gauche;automatique;
-CerebNet;18;Right_VIIIb;Cervelet;Lobule VIIIB (lobule biventral, partie postérieure), hémisphère cérébelleux droit;droit;automatique;
-CerebNet;20;Left_IX;Cervelet;Lobule IX (tonsille), hémisphère cérébelleux gauche;gauche;automatique;
-CerebNet;22;Right_IX;Cervelet;Lobule IX (tonsille), hémisphère cérébelleux droit;droit;automatique;
-CerebNet;23;Left_X;Cervelet;Lobule X (flocculus) gauche;gauche;automatique;
-CerebNet;25;Right_X;Cervelet;Lobule X (flocculus) droit;droit;automatique;
-CerebNet;26;Left_Corpus_Medullare;Cervelet;Corps médullaire de l'hémisphère cérébelleux gauche;gauche;automatique;Substance blanche du cervelet (noyaux du cervelet non distingués).
-CerebNet;27;Right_Corpus_Medullare;Cervelet;Corps médullaire de l'hémisphère cérébelleux droit;droit;automatique;Substance blanche du cervelet (noyaux du cervelet non distingués).
-CerebNet;6;Vermis_VI;Cervelet;Vermis, lobule VI (déclive);médian;automatique;
-CerebNet;14;Vermis_VII;Cervelet;Vermis, lobule VII (folium et tuber);médian;automatique;
-CerebNet;19;Vermis_VIII;Cervelet;Vermis, lobule VIII (pyramide);médian;automatique;
-CerebNet;21;Vermis_IX;Cervelet;Vermis, lobule IX (uvule);médian;automatique;
-CerebNet;24;Vermis_X;Cervelet;Vermis, lobule X (nodule);médian;automatique;
-HypVINN;2;L-N.opticus;Voies optiques;Nerf optique gauche (segment intracrânien);gauche;automatique;
-HypVINN;1;R-N.opticus;Voies optiques;Nerf optique droit (segment intracrânien);droit;automatique;
-HypVINN;5;L-Optic-tract;Voies optiques;Tractus optique gauche;gauche;automatique;
-HypVINN;4;R-Optic-tract;Voies optiques;Tractus optique droit;droit;automatique;
-HypVINN;8;L-Chiasma-Opticum;Voies optiques;Chiasma optique, moitié gauche;gauche;automatique;
-HypVINN;7;R-Chiasma-Opticum;Voies optiques;Chiasma optique, moitié droite;droit;automatique;
-HypVINN;6;L-C.mammilare;Système limbique;Corps mamillaire gauche;gauche;automatique;
-HypVINN;3;R-C.mammilare;Système limbique;Corps mamillaire droit;droit;automatique;
-HypVINN;12;L-Fornix;Système limbique;Fornix gauche;gauche;automatique;"Partie proche de l'hypothalamus (colonne et corps) ; les piliers postérieurs ne sont pas segmentés."
-HypVINN;11;R-Fornix;Système limbique;Fornix droit;droit;automatique;"Partie proche de l'hypothalamus (colonne et corps) ; les piliers postérieurs ne sont pas segmentés."
-HypVINN;128;L-Ant-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus antérieur gauche;gauche;automatique;
-HypVINN;228;R-Ant-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus antérieur droit;droit;automatique;
-HypVINN;126;L-Med-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus médial gauche;gauche;automatique;
-HypVINN;226;R-Med-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus médial droit;droit;automatique;
-HypVINN;127;L-Lat-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus latéral gauche;gauche;automatique;
-HypVINN;227;R-Lat-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus latéral droit;droit;automatique;
-HypVINN;129;L-Post-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus postérieur gauche;gauche;automatique;
-HypVINN;229;R-Post-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus postérieur droit;droit;automatique;
-HypVINN;9;Ant-Commisure;Substance blanche;Commissure antérieure;médian;automatique;
-HypVINN;122;Tuberal-Region;Noyaux gris centraux et structures apparentées;Région tubérale de l'hypothalamus;médian;automatique;
-HypVINN;14;Epiphysis;Glandes;Glande pinéale (épiphyse);médian;automatique;
-HypVINN;16;Hypophysis;Glandes;Hypophyse;médian;automatique;
-HypVINN;17;Infundibulum;Glandes;Tige pituitaire (infundibulum);médian;automatique;
-HypVINN;10;3rd-Ventricle;—;—;—;non publié;Doublon du troisième ventricule de FastSurfer (aseg), qui est retenu.
-HypVINN;13;R-Globus-Pallidus;—;—;—;non publié;Doublon du globus pallidus de FastSurfer (aseg), qui est retenu.
-HypVINN;20;L-Globus-pallidus;—;—;—;non publié;Doublon du globus pallidus de FastSurfer (aseg), qui est retenu.
+CerebNet;601;Cbm_Left_I_IV;Cervelet;Lobules I à IV (lobe antérieur), hémisphère cérébelleux gauche;gauche;automatique;Comprend la partie vermienne.
+CerebNet;602;Cbm_Right_I_IV;Cervelet;Lobules I à IV (lobe antérieur), hémisphère cérébelleux droit;droit;automatique;Comprend la partie vermienne.
+CerebNet;603;Cbm_Left_V;Cervelet;Lobule V (lobe antérieur), hémisphère cérébelleux gauche;gauche;automatique;Comprend la partie vermienne.
+CerebNet;604;Cbm_Right_V;Cervelet;Lobule V (lobe antérieur), hémisphère cérébelleux droit;droit;automatique;Comprend la partie vermienne.
+CerebNet;605;Cbm_Left_VI;Cervelet;Lobule VI (lobule simple), hémisphère cérébelleux gauche;gauche;automatique;
+CerebNet;607;Cbm_Right_VI;Cervelet;Lobule VI (lobule simple), hémisphère cérébelleux droit;droit;automatique;
+CerebNet;608;Cbm_Left_CrusI;Cervelet;Crus I (lobule semi-lunaire supérieur), hémisphère cérébelleux gauche;gauche;automatique;
+CerebNet;610;Cbm_Right_CrusI;Cervelet;Crus I (lobule semi-lunaire supérieur), hémisphère cérébelleux droit;droit;automatique;
+CerebNet;611;Cbm_Left_CrusII;Cervelet;Crus II (lobule semi-lunaire inférieur), hémisphère cérébelleux gauche;gauche;automatique;
+CerebNet;613;Cbm_Right_CrusII;Cervelet;Crus II (lobule semi-lunaire inférieur), hémisphère cérébelleux droit;droit;automatique;
+CerebNet;614;Cbm_Left_VIIb;Cervelet;Lobule VIIB (lobule gracile), hémisphère cérébelleux gauche;gauche;automatique;
+CerebNet;616;Cbm_Right_VIIb;Cervelet;Lobule VIIB (lobule gracile), hémisphère cérébelleux droit;droit;automatique;
+CerebNet;617;Cbm_Left_VIIIa;Cervelet;Lobule VIIIA (lobule biventral, partie antérieure), hémisphère cérébelleux gauche;gauche;automatique;
+CerebNet;619;Cbm_Right_VIIIa;Cervelet;Lobule VIIIA (lobule biventral, partie antérieure), hémisphère cérébelleux droit;droit;automatique;
+CerebNet;620;Cbm_Left_VIIIb;Cervelet;Lobule VIIIB (lobule biventral, partie postérieure), hémisphère cérébelleux gauche;gauche;automatique;
+CerebNet;622;Cbm_Right_VIIIb;Cervelet;Lobule VIIIB (lobule biventral, partie postérieure), hémisphère cérébelleux droit;droit;automatique;
+CerebNet;623;Cbm_Left_IX;Cervelet;Lobule IX (tonsille), hémisphère cérébelleux gauche;gauche;automatique;
+CerebNet;625;Cbm_Right_IX;Cervelet;Lobule IX (tonsille), hémisphère cérébelleux droit;droit;automatique;
+CerebNet;626;Cbm_Left_X;Cervelet;Lobule X (flocculus) gauche;gauche;automatique;
+CerebNet;628;Cbm_Right_X;Cervelet;Lobule X (flocculus) droit;droit;automatique;
+CerebNet;606;Cbm_Vermis_VI;Cervelet;Vermis, lobule VI (déclive);médian;automatique;
+CerebNet;630;Cbm_Vermis_VII;Cervelet;Vermis, lobule VII (folium et tuber);médian;automatique;
+CerebNet;631;Cbm_Vermis_VIII;Cervelet;Vermis, lobule VIII (pyramide);médian;automatique;
+CerebNet;624;Cbm_Vermis_IX;Cervelet;Vermis, lobule IX (uvule);médian;automatique;
+CerebNet;627;Cbm_Vermis_X;Cervelet;Vermis, lobule X (nodule);médian;automatique;
+FastSurfer-CC;255;CC_Anterior;Substance blanche;Corps calleux, cinquième antérieur (genou);médian;automatique;Découpage en cinquièmes égaux (convention FreeSurfer) : le genou en occupe la plus grande part.
+FastSurfer-CC;254;CC_Mid_Anterior;Substance blanche;Corps calleux, deuxième cinquième (tronc, partie antérieure);médian;automatique;
+FastSurfer-CC;253;CC_Central;Substance blanche;Corps calleux, cinquième central (tronc);médian;automatique;
+FastSurfer-CC;252;CC_Mid_Posterior;Substance blanche;Corps calleux, quatrième cinquième (isthme);médian;automatique;
+FastSurfer-CC;251;CC_Posterior;Substance blanche;Corps calleux, cinquième postérieur (splénium);médian;automatique;
+FastSurfer-CC;250;Fornix;Système limbique;Fornix (corps et piliers);médian;automatique;Segmenté par FastSurfer-CC avec le corps calleux.
+HypVINN;962;L-N.opticus;Voies optiques;Nerf optique gauche (segment intracrânien);gauche;automatique;
+HypVINN;961;R-N.opticus;Voies optiques;Nerf optique droit (segment intracrânien);droit;automatique;
+HypVINN;965;L-Optic-tract;Voies optiques;Tractus optique gauche;gauche;automatique;
+HypVINN;964;R-Optic-tract;Voies optiques;Tractus optique droit;droit;automatique;
+HypVINN;968;L-Chiasma-Opticum;Voies optiques;Chiasma optique, moitié gauche;gauche;automatique;
+HypVINN;967;R-Chiasma-Opticum;Voies optiques;Chiasma optique, moitié droite;droit;automatique;
+HypVINN;966;L-C.mammilare;Système limbique;Corps mamillaire gauche;gauche;automatique;
+HypVINN;963;R-C.mammilare;Système limbique;Corps mamillaire droit;droit;automatique;
+HypVINN;972;L-Fornix;Système limbique;Fornix gauche, colonne;gauche;automatique;"Partie proche de l'hypothalamus (colonne) ; le corps et les piliers viennent de FastSurfer-CC."
+HypVINN;971;R-Fornix;Système limbique;Fornix droit, colonne;droit;automatique;"Partie proche de l'hypothalamus (colonne) ; le corps et les piliers viennent de FastSurfer-CC."
+HypVINN;979;L-Ant-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus antérieur gauche;gauche;automatique;
+HypVINN;983;R-Ant-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus antérieur droit;droit;automatique;
+HypVINN;977;L-Med-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus médial gauche;gauche;automatique;
+HypVINN;981;R-Med-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus médial droit;droit;automatique;
+HypVINN;978;L-Lat-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus latéral gauche;gauche;automatique;
+HypVINN;982;R-Lat-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus latéral droit;droit;automatique;
+HypVINN;980;L-Post-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus postérieur gauche;gauche;automatique;
+HypVINN;984;R-Post-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus postérieur droit;droit;automatique;
+HypVINN;969;Ant-Commisure;Substance blanche;Commissure antérieure;médian;automatique;
+HypVINN;976;Tuberal-Region;Noyaux gris centraux et structures apparentées;Région tubérale de l'hypothalamus;médian;automatique;
+HypVINN;973;Epiphysis;Glandes;Glande pinéale (épiphyse);médian;automatique;
+HypVINN;974;Hypophysis;Glandes;Hypophyse;médian;automatique;
+HypVINN;975;Infundibulum;Glandes;Tige pituitaire (infundibulum);médian;automatique;
+HypVINN;970;Third-Ventricle;—;—;—;non publié;Doublon du troisième ventricule de FastSurfer (aseg), qui est retenu.
 Règle (étiquettes aseg);;;Noyaux gris centraux et structures apparentées;Corps strié gauche;gauche;dérivé;Regroupement : Left-Caudate, Left-Putamen, Left-Accumbens-area. Noyau caudé, putamen et noyau accumbens (striatum).
 Règle (étiquettes aseg);;;Noyaux gris centraux et structures apparentées;Corps strié droit;droit;dérivé;Regroupement : Right-Caudate, Right-Putamen, Right-Accumbens-area. Noyau caudé, putamen et noyau accumbens (striatum).
 Règle (étiquettes aseg);;;Noyaux gris centraux et structures apparentées;Noyau lenticulaire gauche;gauche;dérivé;Regroupement : Left-Putamen, Left-Pallidum. Putamen et globus pallidus.
@@ -196,6 +198,78 @@ Règle (étiquettes aseg);;;Noyaux gris centraux et structures apparentées;Noya
 Règle (limites FastSurfer);;;Sillons;Fissure longitudinale du cerveau;médian;dérivé;LCS entre les hémisphères cérébraux gauche et droit.
 Règle (limites FastSurfer);;;Méninges;Faux du cerveau;médian;dérivé;Surface à égale distance des deux hémisphères dans la fissure longitudinale, au-dessus du corps calleux : position déduite, la dure-mère n'est pas vue en tant que telle.
 Règle (limites FastSurfer);;;Méninges;Tente du cervelet;médian;dérivé;Surface à égale distance des hémisphères cérébraux et du cervelet, en dehors du tronc cérébral : position déduite, à valider.
+TractSeg;AF_left;AF_left;Substance blanche;Faisceau arqué gauche;gauche;automatique;
+TractSeg;AF_right;AF_right;Substance blanche;Faisceau arqué droit;droit;automatique;
+TractSeg;ATR_left;ATR_left;Substance blanche;Radiation thalamique antérieure gauche;gauche;automatique;
+TractSeg;ATR_right;ATR_right;Substance blanche;Radiation thalamique antérieure droite;droit;automatique;
+TractSeg;CG_left;CG_left;Substance blanche;Cingulum gauche;gauche;automatique;
+TractSeg;CG_right;CG_right;Substance blanche;Cingulum droit;droit;automatique;
+TractSeg;CST_left;CST_left;Substance blanche;Faisceau corticospinal gauche;gauche;automatique;
+TractSeg;CST_right;CST_right;Substance blanche;Faisceau corticospinal droit;droit;automatique;
+TractSeg;FPT_left;FPT_left;Substance blanche;Faisceau fronto-pontique gauche;gauche;automatique;
+TractSeg;FPT_right;FPT_right;Substance blanche;Faisceau fronto-pontique droit;droit;automatique;
+TractSeg;POPT_left;POPT_left;Substance blanche;Faisceau pariéto-occipito-pontique gauche;gauche;automatique;
+TractSeg;POPT_right;POPT_right;Substance blanche;Faisceau pariéto-occipito-pontique droit;droit;automatique;
+TractSeg;IFO_left;IFO_left;Substance blanche;Faisceau fronto-occipital inférieur gauche;gauche;automatique;
+TractSeg;IFO_right;IFO_right;Substance blanche;Faisceau fronto-occipital inférieur droit;droit;automatique;
+TractSeg;ILF_left;ILF_left;Substance blanche;Faisceau longitudinal inférieur gauche;gauche;automatique;
+TractSeg;ILF_right;ILF_right;Substance blanche;Faisceau longitudinal inférieur droit;droit;automatique;
+TractSeg;MLF_left;MLF_left;Substance blanche;Faisceau longitudinal moyen gauche;gauche;automatique;
+TractSeg;MLF_right;MLF_right;Substance blanche;Faisceau longitudinal moyen droit;droit;automatique;
+TractSeg;SLF_I_left;SLF_I_left;Substance blanche;Faisceau longitudinal supérieur gauche, partie I;gauche;automatique;
+TractSeg;SLF_I_right;SLF_I_right;Substance blanche;Faisceau longitudinal supérieur droit, partie I;droit;automatique;
+TractSeg;SLF_II_left;SLF_II_left;Substance blanche;Faisceau longitudinal supérieur gauche, partie II;gauche;automatique;
+TractSeg;SLF_II_right;SLF_II_right;Substance blanche;Faisceau longitudinal supérieur droit, partie II;droit;automatique;
+TractSeg;SLF_III_left;SLF_III_left;Substance blanche;Faisceau longitudinal supérieur gauche, partie III;gauche;automatique;
+TractSeg;SLF_III_right;SLF_III_right;Substance blanche;Faisceau longitudinal supérieur droit, partie III;droit;automatique;
+TractSeg;STR_left;STR_left;Substance blanche;Radiation thalamique supérieure gauche;gauche;automatique;
+TractSeg;STR_right;STR_right;Substance blanche;Radiation thalamique supérieure droite;droit;automatique;
+TractSeg;UF_left;UF_left;Substance blanche;Faisceau unciné gauche;gauche;automatique;
+TractSeg;UF_right;UF_right;Substance blanche;Faisceau unciné droit;droit;automatique;
+TractSeg;OR_left;OR_left;Voies optiques;Radiations optiques gauches;gauche;automatique;
+TractSeg;OR_right;OR_right;Voies optiques;Radiations optiques droites;droit;automatique;
+TractSeg;ICP_left;ICP_left;Tronc cérébral;Pédoncule cérébelleux inférieur gauche;gauche;automatique;
+TractSeg;ICP_right;ICP_right;Tronc cérébral;Pédoncule cérébelleux inférieur droit;droit;automatique;
+TractSeg;SCP_left;SCP_left;Tronc cérébral;Pédoncule cérébelleux supérieur gauche;gauche;automatique;
+TractSeg;SCP_right;SCP_right;Tronc cérébral;Pédoncule cérébelleux supérieur droit;droit;automatique;
+TractSeg;T_PREF_left;T_PREF_left;Substance blanche;Fibres thalamo-préfrontales gauches;gauche;automatique;
+TractSeg;T_PREF_right;T_PREF_right;Substance blanche;Fibres thalamo-préfrontales droites;droit;automatique;
+TractSeg;T_PREM_left;T_PREM_left;Substance blanche;Fibres thalamo-prémotrices gauches;gauche;automatique;
+TractSeg;T_PREM_right;T_PREM_right;Substance blanche;Fibres thalamo-prémotrices droites;droit;automatique;
+TractSeg;T_PREC_left;T_PREC_left;Substance blanche;Fibres thalamo-précentrales gauches;gauche;automatique;
+TractSeg;T_PREC_right;T_PREC_right;Substance blanche;Fibres thalamo-précentrales droites;droit;automatique;
+TractSeg;T_POSTC_left;T_POSTC_left;Substance blanche;Fibres thalamo-postcentrales gauches;gauche;automatique;
+TractSeg;T_POSTC_right;T_POSTC_right;Substance blanche;Fibres thalamo-postcentrales droites;droit;automatique;
+TractSeg;T_PAR_left;T_PAR_left;Substance blanche;Fibres thalamo-pariétales gauches;gauche;automatique;
+TractSeg;T_PAR_right;T_PAR_right;Substance blanche;Fibres thalamo-pariétales droites;droit;automatique;
+TractSeg;T_OCC_left;T_OCC_left;Substance blanche;Fibres thalamo-occipitales gauches;gauche;automatique;
+TractSeg;T_OCC_right;T_OCC_right;Substance blanche;Fibres thalamo-occipitales droites;droit;automatique;
+TractSeg;ST_FO_left;ST_FO_left;Substance blanche;Fibres striato-fronto-orbitaires gauches;gauche;automatique;
+TractSeg;ST_FO_right;ST_FO_right;Substance blanche;Fibres striato-fronto-orbitaires droites;droit;automatique;
+TractSeg;ST_PREF_left;ST_PREF_left;Substance blanche;Fibres striato-préfrontales gauches;gauche;automatique;
+TractSeg;ST_PREF_right;ST_PREF_right;Substance blanche;Fibres striato-préfrontales droites;droit;automatique;
+TractSeg;ST_PREM_left;ST_PREM_left;Substance blanche;Fibres striato-prémotrices gauches;gauche;automatique;
+TractSeg;ST_PREM_right;ST_PREM_right;Substance blanche;Fibres striato-prémotrices droites;droit;automatique;
+TractSeg;ST_PREC_left;ST_PREC_left;Substance blanche;Fibres striato-précentrales gauches;gauche;automatique;
+TractSeg;ST_PREC_right;ST_PREC_right;Substance blanche;Fibres striato-précentrales droites;droit;automatique;
+TractSeg;ST_POSTC_left;ST_POSTC_left;Substance blanche;Fibres striato-postcentrales gauches;gauche;automatique;
+TractSeg;ST_POSTC_right;ST_POSTC_right;Substance blanche;Fibres striato-postcentrales droites;droit;automatique;
+TractSeg;ST_PAR_left;ST_PAR_left;Substance blanche;Fibres striato-pariétales gauches;gauche;automatique;
+TractSeg;ST_PAR_right;ST_PAR_right;Substance blanche;Fibres striato-pariétales droites;droit;automatique;
+TractSeg;ST_OCC_left;ST_OCC_left;Substance blanche;Fibres striato-occipitales gauches;gauche;automatique;
+TractSeg;ST_OCC_right;ST_OCC_right;Substance blanche;Fibres striato-occipitales droites;droit;automatique;
+TractSeg;FX_left;FX_left;—;—;—;non publié;Fornix trop fin pour cette diffusion (b = 800, 2 mm) : celui de FastSurfer est retenu.
+TractSeg;FX_right;FX_right;—;—;—;non publié;Fornix trop fin pour cette diffusion (b = 800, 2 mm) : celui de FastSurfer est retenu.
+TractSeg;MCP;MCP;Tronc cérébral;Pédoncules cérébelleux moyens;médian;automatique;
+TractSeg;CC;CC;Substance blanche;Fibres calleuses (ensemble);médian;automatique;Radiations du corps calleux dans les hémisphères.
+TractSeg;CC_1;CC_1;Substance blanche;Fibres calleuses du rostrum (CC 1);médian;automatique;
+TractSeg;CC_2;CC_2;Substance blanche;Fibres calleuses du genou (CC 2);médian;automatique;
+TractSeg;CC_3;CC_3;Substance blanche;Fibres calleuses du tronc, partie rostrale (CC 3, prémotrices);médian;automatique;
+TractSeg;CC_4;CC_4;Substance blanche;Fibres calleuses du tronc, partie moyenne (CC 4, motrices);médian;automatique;
+TractSeg;CC_5;CC_5;Substance blanche;Fibres calleuses du tronc, partie postérieure (CC 5, somesthésiques);médian;automatique;
+TractSeg;CC_6;CC_6;Substance blanche;Fibres calleuses de l'isthme (CC 6);médian;automatique;
+TractSeg;CC_7;CC_7;Substance blanche;Fibres calleuses du splénium (CC 7);médian;automatique;
+TractSeg;CA;CA;—;—;—;non publié;Doublon de la commissure antérieure de HypVINN, qui est retenue.
 Atlas des territoires (Liu 2023, redécoupé);1;ACA;Territoires vasculaires;Territoire superficiel de l'ACA (gauche);gauche;transporté;Branches corticales : face médiale des lobes frontal et pariétal, bord supérieur de la convexité, corps calleux.
 Atlas des territoires (Liu 2023, redécoupé);2;ACA;Territoires vasculaires;Territoire superficiel de l'ACA (droit);droit;transporté;Branches corticales : face médiale des lobes frontal et pariétal, bord supérieur de la convexité, corps calleux.
 Atlas des territoires (Liu 2023, redécoupé);3;LSM;Territoires vasculaires;Lenticulo-striées médiales et artère de Heubner (ACA) (gauche);gauche;transporté;Artère récurrente de Heubner et lenticulo-striées médiales : tête du noyau caudé et partie antérieure de la capsule interne.
@@ -275,10 +349,6 @@ Points manuels (3D Slicer);;;Tronc cérébral;Nerfs facial et vestibulocochléai
 Points manuels (3D Slicer);;;Tronc cérébral;Nerfs facial et vestibulocochléaire droits (VII, VIII);droit;manuel;
 Points manuels (3D Slicer);;;Tronc cérébral;Pédoncule cérébral gauche;gauche;manuel;
 Points manuels (3D Slicer);;;Tronc cérébral;Pédoncule cérébral droit;droit;manuel;
-Points manuels (3D Slicer);;;Tronc cérébral;Pédoncule cérébelleux moyen gauche;gauche;manuel;
-Points manuels (3D Slicer);;;Tronc cérébral;Pédoncule cérébelleux moyen droit;droit;manuel;
-Points manuels (3D Slicer);;;Tronc cérébral;Pédoncule cérébelleux supérieur gauche;gauche;manuel;
-Points manuels (3D Slicer);;;Tronc cérébral;Pédoncule cérébelleux supérieur droit;droit;manuel;
 Points manuels (3D Slicer);;;Tronc cérébral;Colliculus supérieur gauche;gauche;manuel;
 Points manuels (3D Slicer);;;Tronc cérébral;Colliculus supérieur droit;droit;manuel;
 Points manuels (3D Slicer);;;Tronc cérébral;Colliculus inférieur gauche;gauche;manuel;
@@ -297,8 +367,6 @@ Points manuels (3D Slicer);;;Cervelet;Noyau dentelé gauche;gauche;manuel;
 Points manuels (3D Slicer);;;Cervelet;Noyau dentelé droit;droit;manuel;
 Points manuels (3D Slicer);;;Voies optiques;Corps géniculé latéral gauche;gauche;manuel;
 Points manuels (3D Slicer);;;Voies optiques;Corps géniculé latéral droit;droit;manuel;
-Points manuels (3D Slicer);;;Voies optiques;Radiations optiques gauches;gauche;manuel;
-Points manuels (3D Slicer);;;Voies optiques;Radiations optiques droites;droit;manuel;
 Points manuels (3D Slicer);;;Substance blanche;Capsule interne gauche, bras antérieur;gauche;manuel;
 Points manuels (3D Slicer);;;Substance blanche;Capsule interne droite, bras antérieur;droit;manuel;
 Points manuels (3D Slicer);;;Substance blanche;Capsule interne gauche, genou;gauche;manuel;
@@ -313,20 +381,6 @@ Points manuels (3D Slicer);;;Substance blanche;Couronne rayonnante gauche;gauche
 Points manuels (3D Slicer);;;Substance blanche;Couronne rayonnante droite;droit;manuel;
 Points manuels (3D Slicer);;;Substance blanche;Centre semi-ovale gauche;gauche;manuel;
 Points manuels (3D Slicer);;;Substance blanche;Centre semi-ovale droit;droit;manuel;
-Points manuels (3D Slicer);;;Substance blanche;Faisceau longitudinal supérieur gauche;gauche;manuel;
-Points manuels (3D Slicer);;;Substance blanche;Faisceau longitudinal supérieur droit;droit;manuel;
-Points manuels (3D Slicer);;;Substance blanche;Faisceau arqué gauche;gauche;manuel;
-Points manuels (3D Slicer);;;Substance blanche;Faisceau arqué droit;droit;manuel;
-Points manuels (3D Slicer);;;Substance blanche;Faisceau unciné gauche;gauche;manuel;
-Points manuels (3D Slicer);;;Substance blanche;Faisceau unciné droit;droit;manuel;
-Points manuels (3D Slicer);;;Substance blanche;Faisceau longitudinal inférieur gauche;gauche;manuel;
-Points manuels (3D Slicer);;;Substance blanche;Faisceau longitudinal inférieur droit;droit;manuel;
-Points manuels (3D Slicer);;;Substance blanche;Faisceau fronto-occipital inférieur gauche;gauche;manuel;
-Points manuels (3D Slicer);;;Substance blanche;Faisceau fronto-occipital inférieur droit;droit;manuel;
-Points manuels (3D Slicer);;;Substance blanche;Cingulum gauche;gauche;manuel;
-Points manuels (3D Slicer);;;Substance blanche;Cingulum droit;droit;manuel;
-Points manuels (3D Slicer);;;Substance blanche;Faisceau corticospinal gauche;gauche;manuel;
-Points manuels (3D Slicer);;;Substance blanche;Faisceau corticospinal droit;droit;manuel;
 Points manuels (3D Slicer);;;Système limbique;Pilier postérieur du fornix gauche;gauche;manuel;
 Points manuels (3D Slicer);;;Système limbique;Pilier postérieur du fornix droit;droit;manuel;
 Points manuels (3D Slicer);;;Tronc cérébral;Pyramide bulbaire gauche;gauche;manuel;
@@ -382,11 +436,7 @@ Points manuels (3D Slicer);;;Tronc cérébral;Pont;médian;manuel;
 Points manuels (3D Slicer);;;Tronc cérébral;Bulbe (moelle allongée);médian;manuel;
 Points manuels (3D Slicer);;;Tronc cérébral;Plancher du quatrième ventricule;médian;manuel;
 Points manuels (3D Slicer);;;Substance blanche;Corps calleux, rostrum;médian;manuel;
-Points manuels (3D Slicer);;;Substance blanche;Corps calleux, genou;médian;manuel;
-Points manuels (3D Slicer);;;Substance blanche;Corps calleux, tronc;médian;manuel;
-Points manuels (3D Slicer);;;Substance blanche;Corps calleux, splénium;médian;manuel;
 Points manuels (3D Slicer);;;Substance blanche;Commissure postérieure;médian;manuel;
-Points manuels (3D Slicer);;;Système limbique;Corps du fornix;médian;manuel;
 Points manuels (3D Slicer);;;Tronc cérébral;Partie basilaire du pont;médian;manuel;
 Points manuels (3D Slicer);;;Tronc cérébral;Tegmentum du pont;médian;manuel;
 Points manuels (3D Slicer);;;Tronc cérébral;Tegmentum du mésencéphale;médian;manuel;

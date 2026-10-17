@@ -1,6 +1,6 @@
 # Correspondance des étiquettes : à relire
 
-416 lignes. Générée par `etiquettes.py` (modifier ce script, pas ce fichier).
+466 lignes. Générée par `etiquettes.py` (modifier ce script, pas ce fichier).
 
 ## Régions (19)
 
@@ -148,21 +148,88 @@
 | Gyrus cingulaire postérieur droit | droit | FastSurfer (DKT) | 2023 | ctx-rh-posteriorcingulate | automatique |  |
 | Gyrus cingulaire antérieur gauche, partie rostrale | gauche | FastSurfer (DKT) | 1026 | ctx-lh-rostralanteriorcingulate | automatique |  |
 | Gyrus cingulaire antérieur droit, partie rostrale | droit | FastSurfer (DKT) | 2026 | ctx-rh-rostralanteriorcingulate | automatique |  |
-| Corps mamillaire gauche | gauche | HypVINN | 6 | L-C.mammilare | automatique |  |
-| Corps mamillaire droit | droit | HypVINN | 3 | R-C.mammilare | automatique |  |
-| Fornix gauche | gauche | HypVINN | 12 | L-Fornix | automatique | Partie proche de l'hypothalamus (colonne et corps) ; les piliers postérieurs ne sont pas segmentés. |
-| Fornix droit | droit | HypVINN | 11 | R-Fornix | automatique | Partie proche de l'hypothalamus (colonne et corps) ; les piliers postérieurs ne sont pas segmentés. |
+| Fornix (corps et piliers) | médian | FastSurfer-CC | 250 | Fornix | automatique | Segmenté par FastSurfer-CC avec le corps calleux. |
+| Corps mamillaire gauche | gauche | HypVINN | 966 | L-C.mammilare | automatique |  |
+| Corps mamillaire droit | droit | HypVINN | 963 | R-C.mammilare | automatique |  |
+| Fornix gauche, colonne | gauche | HypVINN | 972 | L-Fornix | automatique | Partie proche de l'hypothalamus (colonne) ; le corps et les piliers viennent de FastSurfer-CC. |
+| Fornix droit, colonne | droit | HypVINN | 971 | R-Fornix | automatique | Partie proche de l'hypothalamus (colonne) ; le corps et les piliers viennent de FastSurfer-CC. |
 | Pilier postérieur du fornix gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
 | Pilier postérieur du fornix droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Corps du fornix | médian | Points manuels (3D Slicer) |  |  | manuel |  |
 
-## Substance blanche (36)
+## Substance blanche (86)
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
 | Substance blanche cérébrale gauche | gauche | FastSurfer (aseg) | 2 | Left-Cerebral-White-Matter | automatique | Ensemble de la substance blanche de l'hémisphère (les faisceaux ne sont pas distingués par l'outil). |
 | Substance blanche cérébrale droite | droit | FastSurfer (aseg) | 41 | Right-Cerebral-White-Matter | automatique | Ensemble de la substance blanche de l'hémisphère (les faisceaux ne sont pas distingués par l'outil). |
-| Commissure antérieure | médian | HypVINN | 9 | Ant-Commisure | automatique |  |
+| Corps calleux, cinquième antérieur (genou) | médian | FastSurfer-CC | 255 | CC_Anterior | automatique | Découpage en cinquièmes égaux (convention FreeSurfer) : le genou en occupe la plus grande part. |
+| Corps calleux, deuxième cinquième (tronc, partie antérieure) | médian | FastSurfer-CC | 254 | CC_Mid_Anterior | automatique |  |
+| Corps calleux, cinquième central (tronc) | médian | FastSurfer-CC | 253 | CC_Central | automatique |  |
+| Corps calleux, quatrième cinquième (isthme) | médian | FastSurfer-CC | 252 | CC_Mid_Posterior | automatique |  |
+| Corps calleux, cinquième postérieur (splénium) | médian | FastSurfer-CC | 251 | CC_Posterior | automatique |  |
+| Commissure antérieure | médian | HypVINN | 969 | Ant-Commisure | automatique |  |
+| Faisceau arqué gauche | gauche | TractSeg | AF_left | AF_left | automatique |  |
+| Faisceau arqué droit | droit | TractSeg | AF_right | AF_right | automatique |  |
+| Radiation thalamique antérieure gauche | gauche | TractSeg | ATR_left | ATR_left | automatique |  |
+| Radiation thalamique antérieure droite | droit | TractSeg | ATR_right | ATR_right | automatique |  |
+| Cingulum gauche | gauche | TractSeg | CG_left | CG_left | automatique |  |
+| Cingulum droit | droit | TractSeg | CG_right | CG_right | automatique |  |
+| Faisceau corticospinal gauche | gauche | TractSeg | CST_left | CST_left | automatique |  |
+| Faisceau corticospinal droit | droit | TractSeg | CST_right | CST_right | automatique |  |
+| Faisceau fronto-pontique gauche | gauche | TractSeg | FPT_left | FPT_left | automatique |  |
+| Faisceau fronto-pontique droit | droit | TractSeg | FPT_right | FPT_right | automatique |  |
+| Faisceau pariéto-occipito-pontique gauche | gauche | TractSeg | POPT_left | POPT_left | automatique |  |
+| Faisceau pariéto-occipito-pontique droit | droit | TractSeg | POPT_right | POPT_right | automatique |  |
+| Faisceau fronto-occipital inférieur gauche | gauche | TractSeg | IFO_left | IFO_left | automatique |  |
+| Faisceau fronto-occipital inférieur droit | droit | TractSeg | IFO_right | IFO_right | automatique |  |
+| Faisceau longitudinal inférieur gauche | gauche | TractSeg | ILF_left | ILF_left | automatique |  |
+| Faisceau longitudinal inférieur droit | droit | TractSeg | ILF_right | ILF_right | automatique |  |
+| Faisceau longitudinal moyen gauche | gauche | TractSeg | MLF_left | MLF_left | automatique |  |
+| Faisceau longitudinal moyen droit | droit | TractSeg | MLF_right | MLF_right | automatique |  |
+| Faisceau longitudinal supérieur gauche, partie I | gauche | TractSeg | SLF_I_left | SLF_I_left | automatique |  |
+| Faisceau longitudinal supérieur droit, partie I | droit | TractSeg | SLF_I_right | SLF_I_right | automatique |  |
+| Faisceau longitudinal supérieur gauche, partie II | gauche | TractSeg | SLF_II_left | SLF_II_left | automatique |  |
+| Faisceau longitudinal supérieur droit, partie II | droit | TractSeg | SLF_II_right | SLF_II_right | automatique |  |
+| Faisceau longitudinal supérieur gauche, partie III | gauche | TractSeg | SLF_III_left | SLF_III_left | automatique |  |
+| Faisceau longitudinal supérieur droit, partie III | droit | TractSeg | SLF_III_right | SLF_III_right | automatique |  |
+| Radiation thalamique supérieure gauche | gauche | TractSeg | STR_left | STR_left | automatique |  |
+| Radiation thalamique supérieure droite | droit | TractSeg | STR_right | STR_right | automatique |  |
+| Faisceau unciné gauche | gauche | TractSeg | UF_left | UF_left | automatique |  |
+| Faisceau unciné droit | droit | TractSeg | UF_right | UF_right | automatique |  |
+| Fibres thalamo-préfrontales gauches | gauche | TractSeg | T_PREF_left | T_PREF_left | automatique |  |
+| Fibres thalamo-préfrontales droites | droit | TractSeg | T_PREF_right | T_PREF_right | automatique |  |
+| Fibres thalamo-prémotrices gauches | gauche | TractSeg | T_PREM_left | T_PREM_left | automatique |  |
+| Fibres thalamo-prémotrices droites | droit | TractSeg | T_PREM_right | T_PREM_right | automatique |  |
+| Fibres thalamo-précentrales gauches | gauche | TractSeg | T_PREC_left | T_PREC_left | automatique |  |
+| Fibres thalamo-précentrales droites | droit | TractSeg | T_PREC_right | T_PREC_right | automatique |  |
+| Fibres thalamo-postcentrales gauches | gauche | TractSeg | T_POSTC_left | T_POSTC_left | automatique |  |
+| Fibres thalamo-postcentrales droites | droit | TractSeg | T_POSTC_right | T_POSTC_right | automatique |  |
+| Fibres thalamo-pariétales gauches | gauche | TractSeg | T_PAR_left | T_PAR_left | automatique |  |
+| Fibres thalamo-pariétales droites | droit | TractSeg | T_PAR_right | T_PAR_right | automatique |  |
+| Fibres thalamo-occipitales gauches | gauche | TractSeg | T_OCC_left | T_OCC_left | automatique |  |
+| Fibres thalamo-occipitales droites | droit | TractSeg | T_OCC_right | T_OCC_right | automatique |  |
+| Fibres striato-fronto-orbitaires gauches | gauche | TractSeg | ST_FO_left | ST_FO_left | automatique |  |
+| Fibres striato-fronto-orbitaires droites | droit | TractSeg | ST_FO_right | ST_FO_right | automatique |  |
+| Fibres striato-préfrontales gauches | gauche | TractSeg | ST_PREF_left | ST_PREF_left | automatique |  |
+| Fibres striato-préfrontales droites | droit | TractSeg | ST_PREF_right | ST_PREF_right | automatique |  |
+| Fibres striato-prémotrices gauches | gauche | TractSeg | ST_PREM_left | ST_PREM_left | automatique |  |
+| Fibres striato-prémotrices droites | droit | TractSeg | ST_PREM_right | ST_PREM_right | automatique |  |
+| Fibres striato-précentrales gauches | gauche | TractSeg | ST_PREC_left | ST_PREC_left | automatique |  |
+| Fibres striato-précentrales droites | droit | TractSeg | ST_PREC_right | ST_PREC_right | automatique |  |
+| Fibres striato-postcentrales gauches | gauche | TractSeg | ST_POSTC_left | ST_POSTC_left | automatique |  |
+| Fibres striato-postcentrales droites | droit | TractSeg | ST_POSTC_right | ST_POSTC_right | automatique |  |
+| Fibres striato-pariétales gauches | gauche | TractSeg | ST_PAR_left | ST_PAR_left | automatique |  |
+| Fibres striato-pariétales droites | droit | TractSeg | ST_PAR_right | ST_PAR_right | automatique |  |
+| Fibres striato-occipitales gauches | gauche | TractSeg | ST_OCC_left | ST_OCC_left | automatique |  |
+| Fibres striato-occipitales droites | droit | TractSeg | ST_OCC_right | ST_OCC_right | automatique |  |
+| Fibres calleuses (ensemble) | médian | TractSeg | CC | CC | automatique | Radiations du corps calleux dans les hémisphères. |
+| Fibres calleuses du rostrum (CC 1) | médian | TractSeg | CC_1 | CC_1 | automatique |  |
+| Fibres calleuses du genou (CC 2) | médian | TractSeg | CC_2 | CC_2 | automatique |  |
+| Fibres calleuses du tronc, partie rostrale (CC 3, prémotrices) | médian | TractSeg | CC_3 | CC_3 | automatique |  |
+| Fibres calleuses du tronc, partie moyenne (CC 4, motrices) | médian | TractSeg | CC_4 | CC_4 | automatique |  |
+| Fibres calleuses du tronc, partie postérieure (CC 5, somesthésiques) | médian | TractSeg | CC_5 | CC_5 | automatique |  |
+| Fibres calleuses de l'isthme (CC 6) | médian | TractSeg | CC_6 | CC_6 | automatique |  |
+| Fibres calleuses du splénium (CC 7) | médian | TractSeg | CC_7 | CC_7 | automatique |  |
 | Capsule interne gauche, bras antérieur | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
 | Capsule interne droite, bras antérieur | droit | Points manuels (3D Slicer) |  |  | manuel |  |
 | Capsule interne gauche, genou | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
@@ -177,24 +244,7 @@
 | Couronne rayonnante droite | droit | Points manuels (3D Slicer) |  |  | manuel |  |
 | Centre semi-ovale gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
 | Centre semi-ovale droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Faisceau longitudinal supérieur gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Faisceau longitudinal supérieur droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Faisceau arqué gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Faisceau arqué droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Faisceau unciné gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Faisceau unciné droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Faisceau longitudinal inférieur gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Faisceau longitudinal inférieur droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Faisceau fronto-occipital inférieur gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Faisceau fronto-occipital inférieur droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Cingulum gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Cingulum droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Faisceau corticospinal gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Faisceau corticospinal droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
 | Corps calleux, rostrum | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Corps calleux, genou | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Corps calleux, tronc | médian | Points manuels (3D Slicer) |  |  | manuel |  |
-| Corps calleux, splénium | médian | Points manuels (3D Slicer) |  |  | manuel |  |
 | Commissure postérieure | médian | Points manuels (3D Slicer) |  |  | manuel |  |
 
 ## Ventricules et citernes (32)
@@ -250,15 +300,15 @@
 | Noyau accumbens droit | droit | FastSurfer (aseg) | 58 | Right-Accumbens-area | automatique |  |
 | Diencéphale ventral gauche | gauche | FastSurfer (aseg) | 28 | Left-VentralDC | automatique | Étiquette globale de l'outil : hypothalamus, noyau sous-thalamique, substance noire, noyau rouge, partie haute du pédoncule cérébral ; affinée par HypVINN pour l'hypothalamus. À relire : nom à garder ou à masquer. |
 | Diencéphale ventral droit | droit | FastSurfer (aseg) | 60 | Right-VentralDC | automatique | Étiquette globale de l'outil : hypothalamus, noyau sous-thalamique, substance noire, noyau rouge, partie haute du pédoncule cérébral ; affinée par HypVINN pour l'hypothalamus. À relire : nom à garder ou à masquer. |
-| Hypothalamus antérieur gauche | gauche | HypVINN | 128 | L-Ant-Hypothalamus | automatique |  |
-| Hypothalamus antérieur droit | droit | HypVINN | 228 | R-Ant-Hypothalamus | automatique |  |
-| Hypothalamus médial gauche | gauche | HypVINN | 126 | L-Med-Hypothalamus | automatique |  |
-| Hypothalamus médial droit | droit | HypVINN | 226 | R-Med-Hypothalamus | automatique |  |
-| Hypothalamus latéral gauche | gauche | HypVINN | 127 | L-Lat-Hypothalamus | automatique |  |
-| Hypothalamus latéral droit | droit | HypVINN | 227 | R-Lat-Hypothalamus | automatique |  |
-| Hypothalamus postérieur gauche | gauche | HypVINN | 129 | L-Post-Hypothalamus | automatique |  |
-| Hypothalamus postérieur droit | droit | HypVINN | 229 | R-Post-Hypothalamus | automatique |  |
-| Région tubérale de l'hypothalamus | médian | HypVINN | 122 | Tuberal-Region | automatique |  |
+| Hypothalamus antérieur gauche | gauche | HypVINN | 979 | L-Ant-Hypothalamus | automatique |  |
+| Hypothalamus antérieur droit | droit | HypVINN | 983 | R-Ant-Hypothalamus | automatique |  |
+| Hypothalamus médial gauche | gauche | HypVINN | 977 | L-Med-Hypothalamus | automatique |  |
+| Hypothalamus médial droit | droit | HypVINN | 981 | R-Med-Hypothalamus | automatique |  |
+| Hypothalamus latéral gauche | gauche | HypVINN | 978 | L-Lat-Hypothalamus | automatique |  |
+| Hypothalamus latéral droit | droit | HypVINN | 982 | R-Lat-Hypothalamus | automatique |  |
+| Hypothalamus postérieur gauche | gauche | HypVINN | 980 | L-Post-Hypothalamus | automatique |  |
+| Hypothalamus postérieur droit | droit | HypVINN | 984 | R-Post-Hypothalamus | automatique |  |
+| Région tubérale de l'hypothalamus | médian | HypVINN | 976 | Tuberal-Region | automatique |  |
 | Corps strié gauche | gauche | Règle (étiquettes aseg) |  |  | dérivé | Regroupement : Left-Caudate, Left-Putamen, Left-Accumbens-area. Noyau caudé, putamen et noyau accumbens (striatum). |
 | Corps strié droit | droit | Règle (étiquettes aseg) |  |  | dérivé | Regroupement : Right-Caudate, Right-Putamen, Right-Accumbens-area. Noyau caudé, putamen et noyau accumbens (striatum). |
 | Noyau lenticulaire gauche | gauche | Règle (étiquettes aseg) |  |  | dérivé | Regroupement : Left-Putamen, Left-Pallidum. Putamen et globus pallidus. |
@@ -276,59 +326,62 @@
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
-| Nerf optique gauche (segment intracrânien) | gauche | HypVINN | 2 | L-N.opticus | automatique |  |
-| Nerf optique droit (segment intracrânien) | droit | HypVINN | 1 | R-N.opticus | automatique |  |
-| Tractus optique gauche | gauche | HypVINN | 5 | L-Optic-tract | automatique |  |
-| Tractus optique droit | droit | HypVINN | 4 | R-Optic-tract | automatique |  |
-| Chiasma optique, moitié gauche | gauche | HypVINN | 8 | L-Chiasma-Opticum | automatique |  |
-| Chiasma optique, moitié droite | droit | HypVINN | 7 | R-Chiasma-Opticum | automatique |  |
+| Nerf optique gauche (segment intracrânien) | gauche | HypVINN | 962 | L-N.opticus | automatique |  |
+| Nerf optique droit (segment intracrânien) | droit | HypVINN | 961 | R-N.opticus | automatique |  |
+| Tractus optique gauche | gauche | HypVINN | 965 | L-Optic-tract | automatique |  |
+| Tractus optique droit | droit | HypVINN | 964 | R-Optic-tract | automatique |  |
+| Chiasma optique, moitié gauche | gauche | HypVINN | 968 | L-Chiasma-Opticum | automatique |  |
+| Chiasma optique, moitié droite | droit | HypVINN | 967 | R-Chiasma-Opticum | automatique |  |
+| Radiations optiques gauches | gauche | TractSeg | OR_left | OR_left | automatique |  |
+| Radiations optiques droites | droit | TractSeg | OR_right | OR_right | automatique |  |
 | Corps géniculé latéral gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
 | Corps géniculé latéral droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Radiations optiques gauches | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Radiations optiques droites | droit | Points manuels (3D Slicer) |  |  | manuel |  |
 
-## Cervelet (33)
+## Cervelet (31)
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
-| Substance blanche de l'hémisphère cérébelleux gauche | gauche | FastSurfer (aseg) | 7 | Left-Cerebellum-White-Matter | automatique | Remplacée par le corps médullaire de CerebNet là où CerebNet a une étiquette. |
-| Substance blanche de l'hémisphère cérébelleux droit | droit | FastSurfer (aseg) | 46 | Right-Cerebellum-White-Matter | automatique | Remplacée par le corps médullaire de CerebNet là où CerebNet a une étiquette. |
+| Corps médullaire de l'hémisphère cérébelleux gauche | gauche | FastSurfer (aseg) | 7 | Left-Cerebellum-White-Matter | automatique | Substance blanche du cervelet (noyaux du cervelet non distingués). |
+| Corps médullaire de l'hémisphère cérébelleux droit | droit | FastSurfer (aseg) | 46 | Right-Cerebellum-White-Matter | automatique | Substance blanche du cervelet (noyaux du cervelet non distingués). |
 | Cortex de l'hémisphère cérébelleux gauche | gauche | FastSurfer (aseg) | 8 | Left-Cerebellum-Cortex | automatique | Subdivisé en lobules par CerebNet. |
 | Cortex de l'hémisphère cérébelleux droit | droit | FastSurfer (aseg) | 47 | Right-Cerebellum-Cortex | automatique | Subdivisé en lobules par CerebNet. |
-| Lobules I à IV (lobe antérieur), hémisphère cérébelleux gauche | gauche | CerebNet | 1 | Left_I_IV | automatique | Comprend la partie vermienne. |
-| Lobules I à IV (lobe antérieur), hémisphère cérébelleux droit | droit | CerebNet | 2 | Right_I_IV | automatique | Comprend la partie vermienne. |
-| Lobule V (lobe antérieur), hémisphère cérébelleux gauche | gauche | CerebNet | 3 | Left_V | automatique | Comprend la partie vermienne. |
-| Lobule V (lobe antérieur), hémisphère cérébelleux droit | droit | CerebNet | 4 | Right_V | automatique | Comprend la partie vermienne. |
-| Lobule VI (lobule simple), hémisphère cérébelleux gauche | gauche | CerebNet | 5 | Left_VI | automatique |  |
-| Lobule VI (lobule simple), hémisphère cérébelleux droit | droit | CerebNet | 7 | Right_VI | automatique |  |
-| Crus I (lobule semi-lunaire supérieur), hémisphère cérébelleux gauche | gauche | CerebNet | 8 | Left_CrusI | automatique |  |
-| Crus I (lobule semi-lunaire supérieur), hémisphère cérébelleux droit | droit | CerebNet | 9 | Right_CrusI | automatique |  |
-| Crus II (lobule semi-lunaire inférieur), hémisphère cérébelleux gauche | gauche | CerebNet | 10 | Left_CrusII | automatique |  |
-| Crus II (lobule semi-lunaire inférieur), hémisphère cérébelleux droit | droit | CerebNet | 11 | Right_CrusII | automatique |  |
-| Lobule VIIB (lobule gracile), hémisphère cérébelleux gauche | gauche | CerebNet | 12 | Left_VIIb | automatique |  |
-| Lobule VIIB (lobule gracile), hémisphère cérébelleux droit | droit | CerebNet | 13 | Right_VIIb | automatique |  |
-| Lobule VIIIA (lobule biventral, partie antérieure), hémisphère cérébelleux gauche | gauche | CerebNet | 15 | Left_VIIIa | automatique |  |
-| Lobule VIIIA (lobule biventral, partie antérieure), hémisphère cérébelleux droit | droit | CerebNet | 16 | Right_VIIIa | automatique |  |
-| Lobule VIIIB (lobule biventral, partie postérieure), hémisphère cérébelleux gauche | gauche | CerebNet | 17 | Left_VIIIb | automatique |  |
-| Lobule VIIIB (lobule biventral, partie postérieure), hémisphère cérébelleux droit | droit | CerebNet | 18 | Right_VIIIb | automatique |  |
-| Lobule IX (tonsille), hémisphère cérébelleux gauche | gauche | CerebNet | 20 | Left_IX | automatique |  |
-| Lobule IX (tonsille), hémisphère cérébelleux droit | droit | CerebNet | 22 | Right_IX | automatique |  |
-| Lobule X (flocculus) gauche | gauche | CerebNet | 23 | Left_X | automatique |  |
-| Lobule X (flocculus) droit | droit | CerebNet | 25 | Right_X | automatique |  |
-| Corps médullaire de l'hémisphère cérébelleux gauche | gauche | CerebNet | 26 | Left_Corpus_Medullare | automatique | Substance blanche du cervelet (noyaux du cervelet non distingués). |
-| Corps médullaire de l'hémisphère cérébelleux droit | droit | CerebNet | 27 | Right_Corpus_Medullare | automatique | Substance blanche du cervelet (noyaux du cervelet non distingués). |
-| Vermis, lobule VI (déclive) | médian | CerebNet | 6 | Vermis_VI | automatique |  |
-| Vermis, lobule VII (folium et tuber) | médian | CerebNet | 14 | Vermis_VII | automatique |  |
-| Vermis, lobule VIII (pyramide) | médian | CerebNet | 19 | Vermis_VIII | automatique |  |
-| Vermis, lobule IX (uvule) | médian | CerebNet | 21 | Vermis_IX | automatique |  |
-| Vermis, lobule X (nodule) | médian | CerebNet | 24 | Vermis_X | automatique |  |
+| Lobules I à IV (lobe antérieur), hémisphère cérébelleux gauche | gauche | CerebNet | 601 | Cbm_Left_I_IV | automatique | Comprend la partie vermienne. |
+| Lobules I à IV (lobe antérieur), hémisphère cérébelleux droit | droit | CerebNet | 602 | Cbm_Right_I_IV | automatique | Comprend la partie vermienne. |
+| Lobule V (lobe antérieur), hémisphère cérébelleux gauche | gauche | CerebNet | 603 | Cbm_Left_V | automatique | Comprend la partie vermienne. |
+| Lobule V (lobe antérieur), hémisphère cérébelleux droit | droit | CerebNet | 604 | Cbm_Right_V | automatique | Comprend la partie vermienne. |
+| Lobule VI (lobule simple), hémisphère cérébelleux gauche | gauche | CerebNet | 605 | Cbm_Left_VI | automatique |  |
+| Lobule VI (lobule simple), hémisphère cérébelleux droit | droit | CerebNet | 607 | Cbm_Right_VI | automatique |  |
+| Crus I (lobule semi-lunaire supérieur), hémisphère cérébelleux gauche | gauche | CerebNet | 608 | Cbm_Left_CrusI | automatique |  |
+| Crus I (lobule semi-lunaire supérieur), hémisphère cérébelleux droit | droit | CerebNet | 610 | Cbm_Right_CrusI | automatique |  |
+| Crus II (lobule semi-lunaire inférieur), hémisphère cérébelleux gauche | gauche | CerebNet | 611 | Cbm_Left_CrusII | automatique |  |
+| Crus II (lobule semi-lunaire inférieur), hémisphère cérébelleux droit | droit | CerebNet | 613 | Cbm_Right_CrusII | automatique |  |
+| Lobule VIIB (lobule gracile), hémisphère cérébelleux gauche | gauche | CerebNet | 614 | Cbm_Left_VIIb | automatique |  |
+| Lobule VIIB (lobule gracile), hémisphère cérébelleux droit | droit | CerebNet | 616 | Cbm_Right_VIIb | automatique |  |
+| Lobule VIIIA (lobule biventral, partie antérieure), hémisphère cérébelleux gauche | gauche | CerebNet | 617 | Cbm_Left_VIIIa | automatique |  |
+| Lobule VIIIA (lobule biventral, partie antérieure), hémisphère cérébelleux droit | droit | CerebNet | 619 | Cbm_Right_VIIIa | automatique |  |
+| Lobule VIIIB (lobule biventral, partie postérieure), hémisphère cérébelleux gauche | gauche | CerebNet | 620 | Cbm_Left_VIIIb | automatique |  |
+| Lobule VIIIB (lobule biventral, partie postérieure), hémisphère cérébelleux droit | droit | CerebNet | 622 | Cbm_Right_VIIIb | automatique |  |
+| Lobule IX (tonsille), hémisphère cérébelleux gauche | gauche | CerebNet | 623 | Cbm_Left_IX | automatique |  |
+| Lobule IX (tonsille), hémisphère cérébelleux droit | droit | CerebNet | 625 | Cbm_Right_IX | automatique |  |
+| Lobule X (flocculus) gauche | gauche | CerebNet | 626 | Cbm_Left_X | automatique |  |
+| Lobule X (flocculus) droit | droit | CerebNet | 628 | Cbm_Right_X | automatique |  |
+| Vermis, lobule VI (déclive) | médian | CerebNet | 606 | Cbm_Vermis_VI | automatique |  |
+| Vermis, lobule VII (folium et tuber) | médian | CerebNet | 630 | Cbm_Vermis_VII | automatique |  |
+| Vermis, lobule VIII (pyramide) | médian | CerebNet | 631 | Cbm_Vermis_VIII | automatique |  |
+| Vermis, lobule IX (uvule) | médian | CerebNet | 624 | Cbm_Vermis_IX | automatique |  |
+| Vermis, lobule X (nodule) | médian | CerebNet | 627 | Cbm_Vermis_X | automatique |  |
 | Noyau dentelé gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
 | Noyau dentelé droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
 
-## Tronc cérébral (47)
+## Tronc cérébral (48)
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
+| Pédoncule cérébelleux inférieur gauche | gauche | TractSeg | ICP_left | ICP_left | automatique |  |
+| Pédoncule cérébelleux inférieur droit | droit | TractSeg | ICP_right | ICP_right | automatique |  |
+| Pédoncule cérébelleux supérieur gauche | gauche | TractSeg | SCP_left | SCP_left | automatique |  |
+| Pédoncule cérébelleux supérieur droit | droit | TractSeg | SCP_right | SCP_right | automatique |  |
+| Pédoncules cérébelleux moyens | médian | TractSeg | MCP | MCP | automatique |  |
 | Nerf oculomoteur gauche (III) | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
 | Nerf oculomoteur droit (III) | droit | Points manuels (3D Slicer) |  |  | manuel |  |
 | Nerf trijumeau gauche (V) | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
@@ -339,10 +392,6 @@
 | Nerfs facial et vestibulocochléaire droits (VII, VIII) | droit | Points manuels (3D Slicer) |  |  | manuel |  |
 | Pédoncule cérébral gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
 | Pédoncule cérébral droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Pédoncule cérébelleux moyen gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Pédoncule cérébelleux moyen droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
-| Pédoncule cérébelleux supérieur gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
-| Pédoncule cérébelleux supérieur droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
 | Colliculus supérieur gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
 | Colliculus supérieur droit | droit | Points manuels (3D Slicer) |  |  | manuel |  |
 | Colliculus inférieur gauche | gauche | Points manuels (3D Slicer) |  |  | manuel |  |
@@ -437,9 +486,9 @@
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
-| Glande pinéale (épiphyse) | médian | HypVINN | 14 | Epiphysis | automatique |  |
-| Hypophyse | médian | HypVINN | 16 | Hypophysis | automatique |  |
-| Tige pituitaire (infundibulum) | médian | HypVINN | 17 | Infundibulum | automatique |  |
+| Glande pinéale (épiphyse) | médian | HypVINN | 973 | Epiphysis | automatique |  |
+| Hypophyse | médian | HypVINN | 974 | Hypophysis | automatique |  |
+| Tige pituitaire (infundibulum) | médian | HypVINN | 975 | Infundibulum | automatique |  |
 | Hypophyse | médian | Points manuels (3D Slicer) |  |  | manuel | Déjà segmenté par HypVINN : point manuel facultatif (contrôle). |
 | Glande pinéale (épiphyse) | médian | Points manuels (3D Slicer) |  |  | manuel | Déjà segmenté par HypVINN : point manuel facultatif (contrôle). |
 
@@ -489,11 +538,12 @@
 | Granulations arachnoïdiennes | médian | Points manuels (3D Slicer) |  |  | manuel |  |
 | Incisure de la tente du cervelet | médian | Points manuels (3D Slicer) |  |  | manuel |  |
 
-## Non publiées (4)
+## Non publiées (5)
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
 | — | — | FastSurfer (aseg) | 77 | WM-hypointensities | non publié | Hypo-intensités de la substance blanche : pas une structure anatomique, non publiée. |
-| — | — | HypVINN | 10 | 3rd-Ventricle | non publié | Doublon du troisième ventricule de FastSurfer (aseg), qui est retenu. |
-| — | — | HypVINN | 13 | R-Globus-Pallidus | non publié | Doublon du globus pallidus de FastSurfer (aseg), qui est retenu. |
-| — | — | HypVINN | 20 | L-Globus-pallidus | non publié | Doublon du globus pallidus de FastSurfer (aseg), qui est retenu. |
+| — | — | HypVINN | 970 | Third-Ventricle | non publié | Doublon du troisième ventricule de FastSurfer (aseg), qui est retenu. |
+| — | — | TractSeg | FX_left | FX_left | non publié | Fornix trop fin pour cette diffusion (b = 800, 2 mm) : celui de FastSurfer est retenu. |
+| — | — | TractSeg | FX_right | FX_right | non publié | Fornix trop fin pour cette diffusion (b = 800, 2 mm) : celui de FastSurfer est retenu. |
+| — | — | TractSeg | CA | CA | non publié | Doublon de la commissure antérieure de HypVINN, qui est retenue. |

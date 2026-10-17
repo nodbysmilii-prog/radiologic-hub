@@ -18,10 +18,15 @@ Partie A (outils déjà disponibles : ANTs, numpy, scipy) :
      Frangi (structures tubulaires claires, échelles 0,35 à 1,2 mm) avec seuil à hystérésis ; composantes d'au moins
      4 mm³ ; masque NON NOMMÉ (veines claires comprises, comme le sinus sagittal supérieur) : les noms viendront
      des points manuels de l'auteur (étape 4).
-Partie B (FastSurfer : segmentation seule, sans surfaces ; code Apache 2.0) : noyaux gris, ventricules, cervelet,
-tronc cérébral, hippocampe, amygdale, 31 régions corticales DKT par hémisphère (CerebNet : lobules du cervelet ;
-HypVINN : hypothalamus, corps mamillaires, fornix, commissure antérieure, chiasma, nerfs et tractus optiques,
-hypophyse, tige pituitaire, épiphyse) ; lancée seulement si les modèles sont téléchargeables (zenodo.org).
+Partie B : FastSurfer v2.6.0 (segmentation seule, sans surfaces ; code et modèles Apache 2.0), lancé par
+  run_fastsurfer.sh --seg_only --vox_size min --t2 (T2 recalé, --reg_mode none) --device cpu --no_biasfield
+  (voir la commande dans le README) : noyaux gris, ventricules, cervelet, tronc cérébral, hippocampe, amygdale,
+  31 régions corticales DKT par hémisphère ; FastSurfer-CC (Apache 2.0) : corps calleux en cinq parties et fornix ;
+  CerebNet (modèles CC BY 4.0) : lobules du cervelet ; HypVINN (modèles CC BY 4.0) : hypothalamus, corps
+  mamillaires, colonnes du fornix, commissure antérieure, chiasma, nerfs et tractus optiques, hypophyse, tige
+  pituitaire, épiphyse ; puis structures dérivées : lobes, sillons, fissure longitudinale, faux du cerveau, tente.
+Partie C : TractSeg (code Apache 2.0, modèles CC BY 4.0) sur la diffusion du sujet (pics de MRtrix3, MPL 2.0) :
+  72 faisceaux de substance blanche.
 
 Sortie : assets-sources/radioanatomie/irm-cerebrale/etape3/ (étiquettes NIfTI sur la grille de référence, images).
 Usage : python3 -I -B scripts/radioanatomie/irm/etape3_segmentation.py   (depuis la racine du dépôt)
@@ -327,5 +332,389 @@ def partie_a():
     print(json.dumps(resume, ensure_ascii=False, indent=1))
 
 
+
+# ---------------------------------------------------------------------------
+# Partie B : FastSurfer (étiquettes des outils ramenées sur la grille) et structures dérivées
+# ---------------------------------------------------------------------------
+SUJET_FS = os.path.join(SORTIE, 'fastsurfer', 'sub01', 'mri')
+# identifiants de sortie (table de couleurs de FreeSurfer) : CerebNet 601–632, HypVINN 961–984, FastSurfer-CC 250–255
+CEREBNET = (601, 632)
+HYPVINN = (961, 984)
+HYPVINN_DOUBLONS = (970,)                            # troisième ventricule : on garde celui de FastSurfer (aseg)
+VENTRICULES = (4, 5, 14, 15, 43, 44, 31, 63)         # ventricules et plexus choroïdes (aseg)
+CERVELET_ASEG = (7, 8, 46, 47)
+
+
+def sur_grille_etiquettes(chemin, affine, forme):
+    """Étiquettes d'un fichier (même espace physique) ramenées sur la grille, au plus proche voisin, coupe par coupe."""
+    img = nib.load(chemin)
+    lab = np.asanyarray(img.dataobj)
+    lab = (lab[..., 0] if lab.ndim == 4 else lab).astype(np.int32)
+    m = (np.linalg.inv(img.affine) @ affine).astype(np.float32)
+    ii, jj = np.meshgrid(np.arange(forme[0], dtype=np.float32), np.arange(forme[1], dtype=np.float32), indexing='ij')
+    sortie = np.zeros(forme, np.int32)
+    for k in range(forme[2]):
+        coord = [m[r, 0] * ii + m[r, 1] * jj + m[r, 2] * k + m[r, 3] for r in range(3)]
+        sortie[:, :, k] = ndi.map_coordinates(lab, coord, order=0, mode='constant', cval=0)
+    return sortie
+
+
+def etiquettes_fines(affine, forme):
+    """FastSurfer (aseg + DKT, avec le corps calleux de FastSurfer-CC), puis fornix (FastSurfer-CC), lobules du
+    cervelet (CerebNet, dans le cervelet de FastSurfer) et HypVINN par-dessus ; identifiants FreeSurfer gardés."""
+    fines = sur_grille_etiquettes(os.path.join(SUJET_FS, 'aparc.DKTatlas+aseg.deep.withCC.mgz'), affine, forme)
+    cc = sur_grille_etiquettes(os.path.join(SUJET_FS, 'callosum.CC.orig.mgz'), affine, forme)
+    fines[cc == 250] = 250
+    cb = sur_grille_etiquettes(os.path.join(SUJET_FS, 'cerebellum.CerebNet.nii.gz'), affine, forme)
+    zone = (cb >= CEREBNET[0]) & (cb <= CEREBNET[1]) & np.isin(fines, CERVELET_ASEG)
+    fines[zone] = cb[zone]
+    hy = sur_grille_etiquettes(os.path.join(SUJET_FS, 'hypothalamus.HypVINN.nii.gz'), affine, forme)
+    zone = (hy >= HYPVINN[0]) & (hy <= HYPVINN[1]) & ~np.isin(hy, HYPVINN_DOUBLONS)
+    fines[zone] = hy[zone]
+    return fines
+
+
+def ids_dkt(noms, cote):
+    from etiquettes import DKT_NUM
+    return [(1000 if cote == 'gauche' else 2000) + DKT_NUM[n] for n in noms]
+
+
+def lobes(fines):
+    """Régions corticales DKT regroupées en lobes ; substance blanche à moins de 5 mm du cortex rattachée à la
+    région corticale la plus proche du même hémisphère (comme « wmparc » de FreeSurfer). Identifiants : lobe n
+    (1 à 6, ordre de LOBES) à gauche, 10 + n à droite ; 20 = tronc cérébral."""
+    from etiquettes import LOBES
+    sortie = np.zeros(fines.shape, np.uint8)
+    for cote, base, sb in (('gauche', 0, 2), ('droit', 10, 41)):
+        table = {}
+        for n, (_, _, regions, _) in enumerate(LOBES, start=1):
+            for i in ids_dkt(regions, cote):
+                table[i] = base + n
+        cortex = np.isin(fines, list(table))
+        d, idx = ndi.distance_transform_edt(~cortex, sampling=PAS, return_indices=True)
+        proche = fines[tuple(idx)]
+        del idx
+        lobe_de = np.zeros(4096, np.uint8)
+        for i, l in table.items():
+            lobe_de[i] = l
+        cible = cortex | ((fines == sb) & (d <= 5.0))
+        sortie[cible] = lobe_de[proche[cible]]
+    sortie[fines == 16] = 20
+    return sortie
+
+
+def sillons_et_meninges(fines, cerveau):
+    """Sillons : LCS compris entre deux groupes de régions DKT (à moins de 3 mm de chacun), plus le fond du sillon
+    (cortex d'un groupe au contact de l'autre) ; identifiant n (ordre de SILLONS) à gauche, 50 + n à droite.
+    Fissure longitudinale (100) : LCS à moins de 4 mm des deux hémisphères et à moins de 3 mm du cortex.
+    Méninges déduites : faux du cerveau (1) = surface médiane de la fissure, hors des 3 mm autour du corps calleux ;
+    tente du cervelet (2) = surface à égale distance du cerveau et du cervelet, à plus de 5 mm du tronc cérébral."""
+    from etiquettes import SILLONS, DKT_NUM
+    tissu = (fines > 0) & ~np.isin(fines, VENTRICULES + (24,))
+    ventricules = ndi.binary_dilation(np.isin(fines, VENTRICULES), boule(1.5))
+    espace = ndi.binary_fill_holes(ndi.binary_closing(tissu, boule(4.0))) & ~tissu & ~ventricules
+    cortex_tout = (fines >= 1000) & (fines < 3000)                      # régions DKT
+    sillons = np.zeros(fines.shape, np.uint8)
+    meilleur = np.full(fines.shape, np.inf, np.float32)
+    edt = lambda m: ndi.distance_transform_edt(~m, sampling=PAS).astype(np.float32)
+    for cote, base in (('gauche', 0), ('droit', 50)):
+        for n, (_, a, b, _) in enumerate(SILLONS, start=1):
+            ma = np.isin(fines, ids_dkt(a, cote))
+            if a == b:                                   # sillon calcarin : LCS bordé par le cortex péricalcarin
+                da = edt(ma)
+                autres = np.isin(fines, [x for x in ids_dkt(list(DKT_NUM), cote) if x not in ids_dkt(a, cote)])
+                cand = espace & (da <= 2.0) & (da < edt(autres))
+                score = 2 * da
+            else:
+                mb = np.isin(fines, ids_dkt(b, cote))
+                da, db = edt(ma), edt(mb)
+                score = da + db
+                cand = espace & (da <= 3.0) & (db <= 3.0)
+                fond = (ma & (db <= PAS * 1.01)) | (mb & (da <= PAS * 1.01))
+                cand |= fond
+            cand &= score < meilleur
+            sillons[cand] = base + n
+            meilleur[cand] = score[cand]
+    gauche = (fines >= 1000) & (fines < 2000) | np.isin(fines, (2, 4, 5, 10, 11, 12, 13, 17, 18, 26, 28))
+    droite = (fines >= 2000) & (fines < 3000) | np.isin(fines, (41, 43, 44, 49, 50, 51, 52, 53, 54, 58, 60))
+    dg, dd = edt(gauche), edt(droite)
+    fissure = espace & (dg <= 4.0) & (dd <= 4.0) & (edt(cortex_tout) <= 3.0)
+    sillons[fissure & (sillons == 0)] = 100
+    meninges = np.zeros(fines.shape, np.uint8)
+    cc = (fines >= 251) & (fines <= 255)
+    loin_cc = edt(cc) > 3.0 if cc.any() else np.ones(fines.shape, bool)
+    meninges[fissure & (np.abs(dg - dd) <= 0.7) & loin_cc] = 1
+    cervelet = (fines >= CEREBNET[0]) & (fines <= CEREBNET[1]) | np.isin(fines, CERVELET_ASEG)
+    cerebrum = cortex_tout | np.isin(fines, (2, 41))
+    dcb, dce = edt(cervelet), edt(cerebrum)
+    tente = (~tissu & ~ventricules & ndi.binary_dilation(cerveau, boule(3.0)) & (dcb <= 4.0) & (dce <= 4.0)
+             & (np.abs(dcb - dce) <= 0.7) & (edt(fines == 16) > 5.0))
+    meninges[tente] = 2
+    return sillons, meninges
+
+
+def couleurs_aleatoires(n, graine=3):
+    rng = np.random.default_rng(graine)
+    c = np.ones((n, 4))
+    c[:, :3] = rng.uniform(0.25, 1.0, (n, 3))
+    c[0] = 0
+    return ListedColormap(c)
+
+
+def planche_etiquettes(fond, etiq, affine, vues, titre, fichier, alpha=0.5, contour=None):
+    """Étiquettes (couleurs arbitraires, contrôle seulement) sur le T1 ; vues = [(plan, position mm), …]."""
+    n = len(vues)
+    cols = min(n, 3)
+    rangs = (n + cols - 1) // cols
+    fig, axes = plt.subplots(rangs, cols, figsize=(4.6 * cols, 4.8 * rangs), squeeze=False)
+    valeurs = np.unique(etiq)
+    rang = np.zeros(int(valeurs.max()) + 1, np.int32)
+    rang[valeurs] = np.arange(len(valeurs))
+    cmap = couleurs_aleatoires(len(valeurs))
+    for ax in axes.flat:
+        ax.axis('off')
+    for ax, (plan, pos, *zoom) in zip(axes.flat, vues):
+        axe = {'sagittal': 0, 'coronal': 1, 'axial': 2}[plan]
+        k = int(round((pos - affine[axe, 3]) / PAS))
+        f = etape2.coupe(fond, plan, k)
+        e = rang[etape2.coupe(etiq, plan, k)]
+        ax.imshow(f, cmap='gray', vmin=0, vmax=np.percentile(fond, 99.5), interpolation='bilinear')
+        ax.imshow(np.ma.masked_equal(e, 0), cmap=cmap, vmin=0, vmax=len(valeurs) - 1, alpha=alpha,
+                  interpolation='nearest')
+        if contour is not None:
+            ax.contour(etape2.coupe(contour, plan, k), levels=[0.5], colors='white', linewidths=0.5)
+        if zoom:
+            (y0, y1), (x0, x1) = zoom[0]
+            ax.set_xlim(x0, x1)
+            ax.set_ylim(y1, y0)
+        lettre = {'axial': 'z', 'coronal': 'y', 'sagittal': 'x'}[plan]
+        ax.set_title(f'{titre} : {plan} {lettre} = {pos:+.0f} mm', fontsize=9)
+    fig.tight_layout()
+    chemin = os.path.join(SORTIE, fichier)
+    fig.savefig(chemin, dpi=72)
+    plt.close(fig)
+    return chemin
+
+
+def zoom_autour(etiq_masque, affine, plan, pos, marge_mm=25):
+    """Cadre (lignes, colonnes) autour d'un masque, dans l'image affichée par etape2.coupe."""
+    axe = {'sagittal': 0, 'coronal': 1, 'axial': 2}[plan]
+    k = int(round((pos - affine[axe, 3]) / PAS))
+    m = etape2.coupe(etiq_masque.astype(np.uint8), plan, k)
+    if not m.any():
+        return None
+    r, c = np.nonzero(m)
+    g = int(marge_mm / PAS)
+    return ((max(r.min() - g, 0), r.max() + g), (max(c.min() - g, 0), c.max() + g))
+
+
+def partie_b():
+    os.makedirs(CACHE, exist_ok=True)
+    t1, a = lire_grille('t1')
+    forme = t1.shape
+    cerveau = np.asanyarray(nib.load(os.path.join(SORTIE, 'cerveau.nii.gz')).dataobj) > 0
+    print('étiquettes FastSurfer…')
+    fines = etiquettes_fines(a, forme)
+    enregistrer('etiquettes-fines', fines, a, np.uint16)
+    print('lobes…')
+    lob = lobes(fines)
+    enregistrer('lobes', lob, a)
+    print('sillons et méninges…')
+    sil, men = sillons_et_meninges(fines, cerveau)
+    enregistrer('sillons', sil, a)
+    enregistrer('meninges', men, a)
+    print('contrôles…')
+    est_hyp = (fines >= HYPVINN[0]) & (fines <= HYPVINN[1])
+    deep = np.where(np.isin(fines, (10, 11, 12, 13, 17, 18, 26, 28, 49, 50, 51, 52, 53, 54, 58, 60, 16, 250)
+                            + VENTRICULES) | est_hyp | ((fines >= 251) & (fines <= 255)), fines, 0)
+    dkt = np.where((fines >= 1000) & (fines < 3000), fines, 0)
+    cb = np.where((fines >= CEREBNET[0]) & (fines <= CEREBNET[1]) | np.isin(fines, CERVELET_ASEG), fines, 0)
+    hyp = np.where(est_hyp, fines, 0)
+    hz = zoom_autour(hyp > 0, a, 'coronal', -4) or ((0, forme[2]), (0, forme[0]))
+    hs = zoom_autour(hyp > 0, a, 'sagittal', -2) or ((0, forme[2]), (0, forme[1]))
+    ha = zoom_autour(hyp > 0, a, 'axial', -10) or ((0, forme[1]), (0, forme[0]))
+    images = [
+        planche_etiquettes(t1, deep, a, [('axial', 4), ('axial', -12), ('coronal', -2), ('coronal', -20),
+                                         ('sagittal', -24), ('sagittal', -4)],
+                           'Noyaux, ventricules, hippocampe', 'fastsurfer-noyaux-ventricules.png'),
+        planche_etiquettes(t1, dkt, a, [('axial', 40), ('axial', 10), ('axial', -14), ('coronal', -20),
+                                        ('sagittal', -44), ('sagittal', -6)], 'Régions DKT', 'fastsurfer-gyri.png'),
+        planche_etiquettes(t1, lob, a, [('axial', 40), ('axial', 4), ('coronal', -20), ('sagittal', -40),
+                                        ('sagittal', -6), ('axial', -30)], 'Lobes', 'lobes.png', alpha=0.4),
+        planche_etiquettes(t1, sil, a, [('axial', 55), ('axial', 35), ('axial', 10), ('coronal', -20),
+                                        ('sagittal', -42), ('sagittal', -8)], 'Sillons', 'sillons.png', alpha=0.85),
+        planche_etiquettes(t1, cb, a, [('coronal', -60), ('coronal', -72), ('sagittal', -2), ('sagittal', -24),
+                                       ('axial', -30), ('axial', -42)], 'Cervelet (CerebNet)', 'cervelet.png'),
+        planche_etiquettes(t1, hyp, a, [('coronal', -4, hz), ('sagittal', -2, hs), ('axial', -10, ha)],
+                           'HypVINN', 'hypothalamus-voies-optiques.png', alpha=0.6),
+        planche_etiquettes(t1, men, a, [('coronal', -20), ('coronal', -60), ('sagittal', -1), ('sagittal', -20),
+                                        ('axial', 30), ('axial', -20)], 'Faux et tente', 'meninges.png', alpha=0.9),
+    ]
+    noms = {}
+    for ligne in open(os.path.join(RACINE, 'assets-sources', 'outils', 'FastSurfer', 'FastSurferCNN', 'config',
+                                   'FreeSurferColorLUT.txt'), encoding='utf-8'):
+        c = ligne.split()
+        if len(c) >= 2 and c[0].isdigit():
+            noms[int(c[0])] = c[1]
+    vol = lambda m: round(float(m.sum() * PAS ** 3 / 1000), 2)
+    resume = {'volumes_ml': {noms.get(int(i), str(int(i))): vol(fines == i) for i in np.unique(fines)
+                             if i and not (CEREBNET[0] <= i <= CEREBNET[1] or HYPVINN[0] <= i <= HYPVINN[1])},
+              'cerebnet_ml': {noms.get(int(i), str(int(i))): vol(fines == i) for i in np.unique(cb) if i},
+              'hypvinn_mm3': {noms.get(int(i), str(int(i))): round(float((fines == i).sum() * PAS ** 3), 1)
+                              for i in np.unique(hyp) if i},
+              'lobes_ml': {int(i): vol(lob == i) for i in np.unique(lob) if i},
+              'sillons_ml': {int(i): vol(sil == i) for i in np.unique(sil) if i},
+              'meninges_ml': {int(i): vol(men == i) for i in np.unique(men) if i},
+              'images': [os.path.relpath(i, RACINE) for i in images]}
+    with open(os.path.join(SORTIE, 'partie-b.json'), 'w', encoding='utf-8') as f:
+        json.dump(resume, f, ensure_ascii=False, indent=1)
+    print(json.dumps({k: v for k, v in resume.items() if k != 'volumes_ml'}, ensure_ascii=False)[:3000])
+
+
+
+# ---------------------------------------------------------------------------
+# Partie C : faisceaux de substance blanche du sujet (TractSeg, à partir de sa diffusion)
+# ---------------------------------------------------------------------------
+TRACTSEG = os.path.join(SORTIE, 'tractseg')
+PAS_TS = 1.25                                        # résolution attendue par TractSeg (espace MNI, rigide)
+
+
+def partie_c(venv=os.path.join(RACINE, 'assets-sources', 'outils', 'venv-fastsurfer')):
+    """Diffusion (corrigée à l'étape 2) rééchantillonnée sur une grille de 1,25 mm alignée sur la grille de
+    référence (espace MNI, recalage rigide), vecteurs de gradient tournés d'autant (repère du monde, RAS) ;
+    MRtrix3 : réponse de la substance blanche (Tournier), déconvolution sphérique (CSD), trois pics par voxel ;
+    TractSeg : 72 faisceaux (masques binaires)."""
+    import subprocess
+    os.makedirs(TRACTSEG, exist_ok=True)
+    t1, a = lire_grille('t1')
+    forme = np.ceil(np.array(t1.shape) * PAS / PAS_TS).astype(int)
+    a_ts = np.diag([PAS_TS] * 3 + [1.0])
+    a_ts[:3, 3] = a[:3, 3]
+    grille_ts = etape2.vers_ants(np.zeros(forme, np.float32), a_ts)
+    c2 = os.path.join(ETAPE2, 'cache')
+    chaine = [os.path.join(c2, 't1-vers-mni.mat'), os.path.join(c2, 't1-vers-t2.mat'), os.path.join(c2, 't2-vers-b0.mat')]
+    dwi_f = os.path.join(TRACTSEG, 'dwi.nii.gz')
+    grad_f = os.path.join(TRACTSEG, 'gradients.b')
+    masque_f = os.path.join(TRACTSEG, 'masque.nii.gz')
+    if not os.path.exists(dwi_f):
+        dwi, bval, g_lps, da = etape2.preparer_diffusion()
+        vols = [ants.apply_transforms(grille_ts, etape2.vers_ants(dwi[..., i], da), chaine,
+                                      interpolator='linear').numpy() for i in range(dwi.shape[3])]
+        nib.save(nib.Nifti1Image(np.clip(np.stack(vols, axis=3), 0, None).astype(np.float32), a_ts), dwi_f)
+        rot = np.diag([-1, -1, 1]) @ np.linalg.inv(etape2.matrice(chaine))   # diffusion (LPS) → monde (RAS)
+        g = (rot @ g_lps).T
+        g[bval == 0] = 0
+        with open(grad_f, 'w') as f:                  # format MRtrix : x y z b, repère du monde
+            for (x, y, z), b in zip(g, bval):
+                f.write(f'{x:.6f} {y:.6f} {z:.6f} {b:.0f}\n')
+        m = sur_grille_etiquettes(os.path.join(SORTIE, 'cerveau.nii.gz'), a_ts, tuple(forme)) > 0
+        nib.save(nib.Nifti1Image(m.astype(np.uint8), a_ts), masque_f)
+    # les scripts Python de MRtrix3 3.0.4 importent « imp » (retiré de Python 3.12) : petit module de remplacement
+    env = {**os.environ, 'PYTHONPATH': os.path.join(ICI, 'compat')}
+    mr = lambda *args: subprocess.run(list(args) + ['-force', '-quiet', '-nthreads', '4'], check=True, env=env,
+                                      cwd=TRACTSEG)
+    rep, fod, pics = (os.path.join(TRACTSEG, n) for n in ('reponse-sb.txt', 'fod-sb.mif', 'pics.nii.gz'))
+    if not os.path.exists(pics):
+        mr('dwi2response', 'tournier', dwi_f, rep, '-grad', grad_f, '-mask', masque_f, '-scratch', CACHE)
+        mr('dwi2fod', 'csd', dwi_f, '-grad', grad_f, rep, fod, '-mask', masque_f)
+        mr('sh2peaks', fod, pics, '-num', '3', '-mask', masque_f)
+    sortie = os.path.join(TRACTSEG, 'resultat')
+    if not os.path.isdir(os.path.join(sortie, 'bundle_segmentations')):
+        subprocess.run([os.path.join(venv, 'bin', 'TractSeg'), '-i', pics, '-o', sortie,
+                        '--output_type', 'tract_segmentation'], check=True)
+    faisceaux = sorted(f[:-7] for f in os.listdir(os.path.join(sortie, 'bundle_segmentations')) if f.endswith('.nii.gz'))
+    print(len(faisceaux), 'faisceaux')
+    planche_faisceaux(t1, a, faisceaux)
+    return faisceaux
+
+
+def planche_faisceaux(t1, a, faisceaux):
+    """Quelques grands faisceaux (un par couleur) sur le T1 : contrôle de position."""
+    choix = ['CST_left', 'CST_right', 'AF_left', 'AF_right', 'IFO_left', 'IFO_right', 'ILF_left', 'ILF_right', 'UF_left',
+             'UF_right', 'CG_left', 'CG_right', 'OR_left', 'OR_right', 'SLF_II_left', 'SLF_II_right', 'MCP', 'SCP_left',
+             'SCP_right', 'CC_2', 'CC_7']
+    choix = [f for f in choix if f in faisceaux]
+    d = os.path.join(TRACTSEG, 'resultat', 'bundle_segmentations')
+    etiq = np.zeros(t1.shape, np.int32)
+    for n, f in enumerate(reversed(choix), start=1):       # le premier de la liste est peint en dernier
+        m = sur_grille_etiquettes(os.path.join(d, f + '.nii.gz'), a, t1.shape) > 0
+        etiq[m] = len(choix) + 1 - n
+    vues = [('axial', 30), ('axial', 4), ('axial', -16), ('coronal', -20), ('coronal', 8), ('sagittal', -36),
+            ('sagittal', -8), ('coronal', -60), ('axial', -36)]
+    return planche_etiquettes(t1, etiq, a, vues, 'Faisceaux (TractSeg)', 'faisceaux.png', alpha=0.55)
+
+
+
+# ---------------------------------------------------------------------------
+# Rapport de l'étape 3 : structures obtenues par catégorie (d'après la table de correspondance)
+# ---------------------------------------------------------------------------
+OUTILS = [
+    ('FastSurfer v2.6.0 (segmentation seule)', 'Apache 2.0 (code et modèles)'),
+    ('FastSurfer-CC (corps calleux, fornix)', 'Apache 2.0 (code et modèles)'),
+    ('CerebNet (lobules du cervelet)', 'code Apache 2.0, modèles CC BY 4.0'),
+    ('HypVINN (hypothalamus, voies optiques, glandes)', 'code Apache 2.0, modèles CC BY 4.0'),
+    ('TractSeg 2.10 (72 faisceaux)', 'code Apache 2.0, modèles CC BY 4.0'),
+    ('MRtrix3 3.0.4 (réponse, CSD, pics)', 'MPL 2.0'),
+    ('PyTorch 2.14.1', 'BSD'),
+    ('ANTs / ANTsPy 0.6.3 (recalages, Atropos)', 'Apache 2.0'),
+    ('Atlas des territoires artériels (Liu et al. 2023, redécoupé)', 'CC BY-SA 4.0'),
+    ('Colin 27 (relais du recalage)', 'libre avec mention du copyright McGill'),
+]
+
+
+def partie_rapport():
+    import csv
+    from collections import defaultdict
+    lire = lambda n: set(np.unique(np.asanyarray(nib.load(os.path.join(SORTIE, n)).dataobj)).tolist())
+    fines, terr = lire('etiquettes-fines.nii.gz'), lire('territoires.nii.gz')
+    ts = {f[:-7] for f in os.listdir(os.path.join(TRACTSEG, 'resultat', 'bundle_segmentations'))}
+    with open(os.path.join(ICI, 'correspondance-etiquettes.csv'), encoding='utf-8-sig') as f:
+        lignes = list(csv.reader(f, delimiter=';'))[1:]
+    compte, absents = defaultdict(lambda: defaultdict(int)), []
+    for src, ident, _, cat, fr, _, statut, _ in lignes:
+        if statut == 'non publié':
+            continue
+        present = True
+        if src.startswith('FastSurfer') or src in ('CerebNet', 'HypVINN'):
+            present = int(ident) in fines
+        elif src == 'TractSeg':
+            present = ident in ts
+        elif src.startswith('Atlas des territoires (Liu'):
+            present = int(ident) in terr
+        if not present:
+            absents.append(fr)
+        compte[cat][statut] += int(present)
+    from etiquettes import CATEGORIES
+    l = ['# Étape 3 : segmentations automatiques (studyforrest, sujet 01)', '', '## Outils', '',
+         '| Outil | Licence |', '|---|---|'] + [f'| {o} | {lic} |' for o, lic in OUTILS] + [
+         '', '## Structures par catégorie', '',
+         '| Catégorie | Automatiques | Dérivées (règle) | Reportées (atlas) | À placer (points manuels) |',
+         '|---|---|---|---|---|']
+    for cat in CATEGORIES:
+        c = compte[cat]
+        l.append(f"| {cat} | {c['automatique']} | {c['dérivé']} | {c['transporté']} | {c['manuel']} |")
+    tot = lambda k: sum(compte[c][k] for c in compte)
+    l.append(f"| **Total** | **{tot('automatique')}** | **{tot('dérivé')}** | **{tot('transporté')}** | **{tot('manuel')}** |")
+    l += ['', f"Structures attendues mais absentes des segmentations : {', '.join(absents) or 'aucune'}.", '',
+          '## Points à vérifier', '',
+          "- Nerf optique gauche presque absent de HypVINN (6 mm³, contre 130 mm³ à droite) : point manuel conseillé.",
+          '- Sillons, lobes, fissure longitudinale, faux du cerveau et tente du cervelet : déduits par règle (voir la table).',
+          '- Faisceaux (TractSeg) : masques à 1,25 mm, issus de la diffusion du sujet (32 directions, b = 800) ; le fornix '
+          'de TractSeg, trop fin, est remplacé par celui de FastSurfer.',
+          "- Artères : masque du TOF sans nom ; sinus veineux, citernes, nerfs crâniens, méninges (sauf faux et tente), "
+          "anatomie de surface du tronc cérébral : points manuels de l'auteur (étape 4).", '']
+    with open(os.path.join(SORTIE, 'rapport.md'), 'w', encoding='utf-8') as f:
+        f.write('\n'.join(l))
+    print('\n'.join(l))
+
+
 if __name__ == '__main__':
-    partie_a()
+    parties = sys.argv[1:] or ['a', 'b', 'c', 'r']
+    if 'a' in parties:
+        partie_a()
+    if 'b' in parties:
+        partie_b()
+    if 'c' in parties:
+        partie_c()
+    if 'r' in parties or len(parties) > 1:
+        partie_rapport()
