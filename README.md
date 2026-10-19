@@ -4,7 +4,7 @@
 
 🌐 **Site en ligne :** https://nodbysmilii-prog.github.io/radiologic-hub/
 
-> Dernière mise à jour du README : 17 octobre 2026
+> Dernière mise à jour du README : 19 octobre 2026
 
 ---
 
@@ -636,6 +636,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 19/10/2026 | IRM cérébrale, sillon calcarin (question de l'auteur) : zone large sur l'axiale z = +8,5 mm vérifiée (LCS du sillon vu à plat : T1 sombre, T2 clair ; fente fine 1 à 2 mm au-dessus et au-dessous) ; remarque ajoutée à la table. |
 | 17/10/2026 | IRM cérébrale, sillon latéral (question de l'auteur) : **rameaux antérieurs ascendant et horizontal** ajoutés de chaque côté (limites DKT de la partie triangulaire du gyrus frontal inférieur ; ajoutés en fin de liste, numéros des autres sillons inchangés) ; remarque du sillon latéral : rameau postérieur et terminaison, coupés en biais en axial ; partie B de l'étape 3 relancée (474 lignes, 469 structures). |
 | 17/10/2026 | IRM cérébrale, interface de validation : un point ou un commentaire posé sur une structure automatique encore en attente la passe « À corriger » (rien n'échappe au filtre des corrections). |
 | 17/10/2026 | IRM cérébrale : **première correction de l'auteur** appliquée (`corrections-auteur.json`, `corrections_auteur.py`) : pas de parenchyme entre les orbites à z = −24,4 mm ni au-dessus des toits des orbites à z = −19,5 mm (3 861 voxels retirés des étiquettes FastSurfer, et des couches dérivées) ; interface : l'outil « Poser un point » reste actif sur une structure automatique (points de signalement), un seul point par appui sur une structure manuelle ; remarques de la table mises à jour. |

@@ -156,7 +156,9 @@ SILLONS = [
     ('Sillon du cingulum {c}', ['superiorfrontal', 'paracentral'],
      ['caudalanteriorcingulate', 'rostralanteriorcingulate', 'posteriorcingulate'], 'Sillon cingulaire.'),
     ('Sillon calcarin {c}', ['pericalcarine'], ['pericalcarine'],
-     'Règle propre : LCS bordé des deux côtés par le cortex péricalcarin.'),
+     "Règle propre : LCS bordé des deux côtés par le cortex péricalcarin. Horizontal dans sa partie moyenne : la "
+     "coupe axiale qui passe à son niveau le montre à plat (large nappe de LCS, T1 sombre et T2 clair), puis il "
+     "redevient une fente fine 1 à 2 mm au-dessus et au-dessous."),
     # ajoutés le 17/10/2026 (précision demandée par l'auteur) ; à la fin de la liste pour garder les numéros
     ('Sillon latéral {c}, rameau antérieur ascendant', ['parstriangularis'], ['parsopercularis'],
      'Limite entre les parties triangulaire et operculaire du gyrus frontal inférieur (protocole DKT).'),
