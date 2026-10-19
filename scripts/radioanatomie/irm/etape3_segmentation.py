@@ -380,11 +380,16 @@ def ids_dkt(noms, cote):
 
 
 def lobes(fines):
-    """Régions corticales DKT regroupées en lobes ; substance blanche à moins de 5 mm du cortex rattachée à la
-    région corticale la plus proche du même hémisphère (comme « wmparc » de FreeSurfer). Identifiants : lobe n
-    (1 à 6, ordre de LOBES) à gauche, 10 + n à droite ; 20 = tronc cérébral."""
+    """Régions corticales DKT regroupées en lobes ; substance blanche rattachée à la région corticale la plus proche
+    du même hémisphère (comme « wmparc » de FreeSurfer, mais sans limite de 5 mm : le centre semi-ovale appartient
+    aussi aux lobes, demande de l'auteur du 19/10/2026), sauf la substance blanche à moins de 3 mm des noyaux gris
+    centraux, du thalamus et du diencéphale ventral (capsules interne, externe et extrême, laissées hors des lobes)
+    quand elle est à plus de 5 mm du cortex. Identifiants : lobe n (1 à 6, ordre de LOBES) à gauche, 10 + n à
+    droite ; 20 = tronc cérébral."""
     from etiquettes import LOBES
     sortie = np.zeros(fines.shape, np.uint8)
+    noyaux = np.isin(fines, (10, 11, 12, 13, 26, 28, 49, 50, 51, 52, 58, 60))
+    capsules = ndi.distance_transform_edt(~noyaux, sampling=PAS) <= 3.0
     for cote, base, sb in (('gauche', 0, 2), ('droit', 10, 41)):
         table = {}
         for n, (_, _, regions, _) in enumerate(LOBES, start=1):
@@ -397,7 +402,7 @@ def lobes(fines):
         lobe_de = np.zeros(4096, np.uint8)
         for i, l in table.items():
             lobe_de[i] = l
-        cible = cortex | ((fines == sb) & (d <= 5.0))
+        cible = cortex | ((fines == sb) & ((d <= 5.0) | ~capsules))
         sortie[cible] = lobe_de[proche[cible]]
     sortie[fines == 16] = 20
     return sortie

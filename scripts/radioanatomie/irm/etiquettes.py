@@ -115,8 +115,9 @@ DKT = [
 DKT_NUM = {nom: n for n, nom, *_ in DKT}
 
 # ---------------------------------------------------------------------------
-# Lobes : regroupement des régions DKT ; la substance blanche sous-jacente (5 mm) suit la région corticale la plus
-# proche, comme le fichier « wmparc » de FreeSurfer
+# Lobes : regroupement des régions DKT ; toute la substance blanche suit la région corticale la plus proche (comme
+# « wmparc » de FreeSurfer, sans la limite de 5 mm : centre semi-ovale compris), sauf la région des capsules
+# (à moins de 3 mm des noyaux gris centraux, du thalamus et du diencéphale ventral)
 # ---------------------------------------------------------------------------
 LOBES = [
     ('Lobe frontal {c}', 'm', ['superiorfrontal', 'caudalmiddlefrontal', 'rostralmiddlefrontal', 'parsopercularis',
@@ -451,7 +452,8 @@ def lignes():
     for n, (mod, genre, regions, rq) in enumerate(LOBES, start=1):        # valeurs : n à gauche, 10 + n à droite
         for c, v in (('gauche', n), ('droit', 10 + n)):
             sortie.append(['Règle (régions DKT)', '', '', 'Régions', cote(mod, genre, c), c, 'dérivé',
-                           ('Regroupement : ' + ', '.join(regions) + '. ' + rq).strip(), ('lobes', [v])])
+                           ('Regroupement : ' + ', '.join(regions) + '. Substance blanche rattachée au cortex le plus '
+                            'proche, centre semi-ovale compris, capsules exclues. ' + rq).strip(), ('lobes', [v])])
     for n, (mod, a, b, rq) in enumerate(SILLONS, start=1):                # valeurs : n à gauche, 50 + n à droite
         for c, v in (('gauche', n), ('droit', 50 + n)):
             sortie.append(['Règle (limites DKT)', '', '', 'Sillons', cote(mod, 'm', c), c, 'dérivé',
