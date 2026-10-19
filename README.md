@@ -636,6 +636,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 19/10/2026 | IRM cérébrale, interface de validation : **pinceau et gomme seulement pendant un clic gauche maintenu** (un relâchement hors de l'image ou de la page laissait le trait en cours, qui reprenait au simple survol ; le clic droit lançait aussi un trait) ; retouche accidentelle du lobe frontal gauche (32 voxels au mésencéphale) effacée. |
 | 19/10/2026 | IRM cérébrale, tronc cérébral : second bord antérieur des pédoncules tracé par l'auteur (z = −9,0 mm) ; plusieurs tracés gérés (coupes intermédiaires : tracé le plus proche ; rien au-dessus du plus haut) ; pédoncules cérébraux dans le tronc jusqu'à z = −9,0 mm. |
 | 19/10/2026 | IRM cérébrale, **tronc cérébral recontouré d'après l'auteur** : contour du pont (z = −23 mm) et bord antérieur des pédoncules cérébraux (z = −10,4 mm) ajoutés à `corrections-auteur.json` ; `corrections_auteur.tronc_cerebral` : prolongements autour du V4 retirés (1 509 voxels rendus au cervelet), pédoncules cérébraux et racines incluses (5 920 voxels) ; couche des lobes suivie ; remarques du tronc et du diencéphale ventral mises à jour. Limite latérale avec les pédoncules cérébelleux moyens au milieu du pont : en attente de contours de l'auteur. |
 | 19/10/2026 | IRM cérébrale, sillon calcarin (question de l'auteur) : zone large sur l'axiale z = +8,5 mm vérifiée (LCS du sillon vu à plat : T1 sombre, T2 clair ; fente fine 1 à 2 mm au-dessus et au-dessous) ; remarque ajoutée à la table. |

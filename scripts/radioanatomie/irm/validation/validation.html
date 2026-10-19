@@ -873,7 +873,9 @@ let geste = null, trait = null;
 function posLocale(e) { const r = ecran.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
 ecran.addEventListener('pointerdown', (e) => {
   if (!E.pret) return;
-  ecran.setPointerCapture(e.pointerId);
+  if (e.pointerType !== 'touch' && e.button !== 0) return;          // clic gauche (ou stylet posé) seulement
+  if (e.pointerType !== 'touch') for (const id of [...pointeurs.keys()]) if (id !== e.pointerId) pointeurs.delete(id);
+  try { ecran.setPointerCapture(e.pointerId); } catch (err) { /* capture refusée : la vérification des boutons suffit */ }
   const p = posLocale(e); pointeurs.set(e.pointerId, p);
   if (pointeurs.size === 2) {
     if (trait) finirTrait();
@@ -885,6 +887,8 @@ ecran.addEventListener('pointerdown', (e) => {
   if ((E.outil === 'pinceau' || E.outil === 'gomme') && E.sel >= 0 && peutEcrire()) { debuterTrait(); peindre(p); }
 });
 ecran.addEventListener('pointermove', (e) => {
+  // bouton relâché sans que la page le sache (hors de l'image ou de la page) : on arrête tout, rien ne se peint
+  if (e.pointerType !== 'touch' && !(e.buttons & 1) && pointeurs.has(e.pointerId)) arreterGeste();
   const p = posLocale(e);
   survol = { x: p.x, y: p.y, pos: E.pret ? versImage(p.x, p.y) : null, souris: e.pointerType === 'mouse' };
   if (pointeurs.has(e.pointerId)) {
@@ -913,6 +917,13 @@ function finPointeur(e) {
 }
 ecran.addEventListener('pointerup', finPointeur);
 ecran.addEventListener('pointercancel', finPointeur);
+ecran.addEventListener('lostpointercapture', finPointeur);
+ecran.addEventListener('contextmenu', (e) => e.preventDefault());
+window.addEventListener('blur', arreterGeste);
+function arreterGeste() {
+  pointeurs.clear(); geste = null;
+  if (trait) finirTrait();
+}
 ecran.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') { survol = null; $('bulle').hidden = true; majLecture(); programmer('aucun'); } });
 let cumulMolette = 0;
 ecran.addEventListener('wheel', (e) => {
