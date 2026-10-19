@@ -777,6 +777,10 @@ function dessinerRepere(T) {
   ctx.font = `700 ${13 * dpr}px Montserrat, sans-serif`; ctx.fillStyle = '#c9ccd2'; ctx.textBaseline = 'middle';
   ctx.textAlign = 'left'; ctx.fillText(g, m, he / 2); ctx.textAlign = 'right'; ctx.fillText(d, w - m, he / 2);
   ctx.textAlign = 'center'; ctx.fillText(h, w / 2, m + 6 * dpr); ctx.fillText(b, w / 2, he - m - 6 * dpr);
+  // convention de latéralité écrite en toutes lettres
+  ctx.textAlign = 'left'; ctx.textBaseline = 'top'; ctx.font = `600 ${11 * dpr}px Montserrat, sans-serif`;
+  ctx.fillText(E.plan === 'sagittal' ? 'Sagittal : avant à gauche' : 'Vue radiologique : droite du patient à gauche', m, m);
+  ctx.textBaseline = 'middle';
   // barre d'échelle de 10 mm
   const l = 10 / G.vox * T.k, x2 = w - m, x1 = x2 - l, y = he - m - 22 * dpr;
   ctx.strokeStyle = '#c9ccd2'; ctx.lineWidth = 2 * dpr; ctx.beginPath();
