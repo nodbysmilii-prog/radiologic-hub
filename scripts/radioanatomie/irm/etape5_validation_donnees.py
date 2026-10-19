@@ -270,6 +270,8 @@ def main():
     print('couches…')
     fines = np.asarray(fines).astype(np.int32)
     zone, bilan = corrections_auteur.zone_sans_parenchyme(fines, a)
+    entres, sortis, bilan_tronc = corrections_auteur.tronc_cerebral(fines, a)      # contours de l'auteur
+    print('  tronc cérébral :', bilan_tronc)
     zone_c = zone[sl]
     fines_c = fines[sl].copy()
     autres = {}
@@ -278,6 +280,9 @@ def main():
         v = np.asarray(v[sl])
         assert v.max() < 256
         autres['arteres' if nom == 'arteres-tof' else nom] = v.astype(np.uint8)
+    lobes = autres['lobes']                                     # 20 = tronc cérébral (couche des lobes)
+    lobes[entres[sl]] = 20
+    lobes[sortis[sl] & (lobes == 20)] = 0
     retires = corrections_auteur.appliquer(fines_c, {c: autres[c] for c in DERIVEES}, zone_c)
     print('  corrections de l\'auteur :', bilan, '; voxels retirés de fines :', retires)
     table = [int(x) for x in np.unique(fines_c)]
@@ -297,7 +302,8 @@ def main():
         'grille': {'forme': forme, 'voxel_mm': PAS, 'origine_mm': [round(float(x), 4) for x in lo_mm],
                    'repere': 'RAS (x vers la droite du patient), aligné CA-CP, coordonnées MNI'},
         'sequences': seqs, 'couches': couches, 'categories': etiquettes.CATEGORIES, 'structures': liste,
-        'corrections_auteur': {'zones_sans_parenchyme': bilan, 'voxels_retires_fines': retires},
+        'corrections_auteur': {'zones_sans_parenchyme': bilan, 'voxels_retires_fines': retires,
+                               'tronc_cerebral': bilan_tronc},
     }
     with open(os.path.join(SORTIE, 'manifest.json'), 'w', encoding='utf-8') as f:
         json.dump(manifeste, f, ensure_ascii=False, separators=(',', ':'))

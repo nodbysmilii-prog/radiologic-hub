@@ -45,7 +45,9 @@ ASEG_PAIRES = [
     (26, 58, 'Left-Accumbens-area', 'Noyaux gris centraux et structures apparentées', 'Noyau accumbens {c}', 'm', ''),
     (28, 60, 'Left-VentralDC', 'Noyaux gris centraux et structures apparentées', 'Diencéphale ventral {c}', 'm',
      "Étiquette globale de l'outil : hypothalamus, noyau sous-thalamique, substance noire, noyau rouge, partie "
-     "haute du pédoncule cérébral ; affinée par HypVINN pour l'hypothalamus. À relire : nom à garder ou à masquer."),
+     "haute du pédoncule cérébral ; affinée par HypVINN pour l'hypothalamus. À relire : nom à garder ou à masquer. "
+     "Sa partie mésencéphalique (pédoncules cérébraux, sous z = −10,4 mm) est rendue au tronc cérébral "
+     "(contour de l'auteur)."),
     (17, 53, 'Left-Hippocampus', 'Système limbique', 'Hippocampe {c}', 'm', ''),
     (18, 54, 'Left-Amygdala', 'Système limbique', 'Corps amygdaloïde (amygdale) {c}', 'm', ''),
 ]
@@ -53,7 +55,11 @@ ASEG_MEDIANS = [
     (14, '3rd-Ventricle', 'Ventricules et citernes', 'Troisième ventricule (V3)', ''),
     (15, '4th-Ventricle', 'Ventricules et citernes', 'Quatrième ventricule (V4)', ''),
     (16, 'Brain-Stem', 'Régions', 'Tronc cérébral', 'Mésencéphale, pont et bulbe ensemble (non subdivisés par '
-                                                    "l'outil)."),
+                                                    "l'outil). Corrigé d'après les contours de l'auteur "
+                                                    '(corrections-auteur.json) : prolongements postérieurs autour '
+                                                    'du V4 (pédoncules cérébelleux) retirés ; pédoncules cérébraux, '
+                                                    'rangés par FastSurfer dans le diencéphale ventral, inclus '
+                                                    'jusqu\'à z = −10,4 mm.'),
     (24, 'CSF', 'Ventricules et citernes', 'Liquide cérébrospinal des citernes de la base',
      "Étiquette globale de l'outil (LCS autour du tronc cérébral et à la base) : à relire, les citernes nommées "
      'viendront des points manuels.'),

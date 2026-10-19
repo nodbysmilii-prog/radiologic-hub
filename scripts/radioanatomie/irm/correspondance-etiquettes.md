@@ -6,7 +6,7 @@
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
-| Tronc cérébral | médian | FastSurfer (aseg) | 16 | Brain-Stem | automatique | Mésencéphale, pont et bulbe ensemble (non subdivisés par l'outil). |
+| Tronc cérébral | médian | FastSurfer (aseg) | 16 | Brain-Stem | automatique | Mésencéphale, pont et bulbe ensemble (non subdivisés par l'outil). Corrigé d'après les contours de l'auteur (corrections-auteur.json) : prolongements postérieurs autour du V4 (pédoncules cérébelleux) retirés ; pédoncules cérébraux, rangés par FastSurfer dans le diencéphale ventral, inclus jusqu'à z = −10,4 mm. |
 | Lobe frontal gauche | gauche | Règle (régions DKT) |  |  | dérivé | Regroupement : superiorfrontal, caudalmiddlefrontal, rostralmiddlefrontal, parsopercularis, parstriangularis, parsorbitalis, lateralorbitofrontal, medialorbitofrontal, precentral, paracentral. Le lobule paracentral, à cheval sur les lobes frontal et pariétal, est rattaché au lobe frontal : à valider. |
 | Lobe frontal droit | droit | Règle (régions DKT) |  |  | dérivé | Regroupement : superiorfrontal, caudalmiddlefrontal, rostralmiddlefrontal, parsopercularis, parstriangularis, parsorbitalis, lateralorbitofrontal, medialorbitofrontal, precentral, paracentral. Le lobule paracentral, à cheval sur les lobes frontal et pariétal, est rattaché au lobe frontal : à valider. |
 | Lobe pariétal gauche | gauche | Règle (régions DKT) |  |  | dérivé | Regroupement : postcentral, superiorparietal, inferiorparietal, supramarginal, precuneus. |
@@ -306,8 +306,8 @@
 | Globus pallidus droit | droit | FastSurfer (aseg) | 52 | Right-Pallidum | automatique |  |
 | Noyau accumbens gauche | gauche | FastSurfer (aseg) | 26 | Left-Accumbens-area | automatique |  |
 | Noyau accumbens droit | droit | FastSurfer (aseg) | 58 | Right-Accumbens-area | automatique |  |
-| Diencéphale ventral gauche | gauche | FastSurfer (aseg) | 28 | Left-VentralDC | automatique | Étiquette globale de l'outil : hypothalamus, noyau sous-thalamique, substance noire, noyau rouge, partie haute du pédoncule cérébral ; affinée par HypVINN pour l'hypothalamus. À relire : nom à garder ou à masquer. |
-| Diencéphale ventral droit | droit | FastSurfer (aseg) | 60 | Right-VentralDC | automatique | Étiquette globale de l'outil : hypothalamus, noyau sous-thalamique, substance noire, noyau rouge, partie haute du pédoncule cérébral ; affinée par HypVINN pour l'hypothalamus. À relire : nom à garder ou à masquer. |
+| Diencéphale ventral gauche | gauche | FastSurfer (aseg) | 28 | Left-VentralDC | automatique | Étiquette globale de l'outil : hypothalamus, noyau sous-thalamique, substance noire, noyau rouge, partie haute du pédoncule cérébral ; affinée par HypVINN pour l'hypothalamus. À relire : nom à garder ou à masquer. Sa partie mésencéphalique (pédoncules cérébraux, sous z = −10,4 mm) est rendue au tronc cérébral (contour de l'auteur). |
+| Diencéphale ventral droit | droit | FastSurfer (aseg) | 60 | Right-VentralDC | automatique | Étiquette globale de l'outil : hypothalamus, noyau sous-thalamique, substance noire, noyau rouge, partie haute du pédoncule cérébral ; affinée par HypVINN pour l'hypothalamus. À relire : nom à garder ou à masquer. Sa partie mésencéphalique (pédoncules cérébraux, sous z = −10,4 mm) est rendue au tronc cérébral (contour de l'auteur). |
 | Hypothalamus antérieur gauche | gauche | HypVINN | 979 | L-Ant-Hypothalamus | automatique |  |
 | Hypothalamus antérieur droit | droit | HypVINN | 983 | R-Ant-Hypothalamus | automatique |  |
 | Hypothalamus médial gauche | gauche | HypVINN | 977 | L-Med-Hypothalamus | automatique |  |

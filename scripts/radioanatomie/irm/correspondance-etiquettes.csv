@@ -21,15 +21,15 @@ FastSurfer (aseg);13;Left-Pallidum;Noyaux gris centraux et structures apparenté
 FastSurfer (aseg);52;Right-Pallidum;Noyaux gris centraux et structures apparentées;Globus pallidus droit;droit;automatique;
 FastSurfer (aseg);26;Left-Accumbens-area;Noyaux gris centraux et structures apparentées;Noyau accumbens gauche;gauche;automatique;
 FastSurfer (aseg);58;Right-Accumbens-area;Noyaux gris centraux et structures apparentées;Noyau accumbens droit;droit;automatique;
-FastSurfer (aseg);28;Left-VentralDC;Noyaux gris centraux et structures apparentées;Diencéphale ventral gauche;gauche;automatique;"Étiquette globale de l'outil : hypothalamus, noyau sous-thalamique, substance noire, noyau rouge, partie haute du pédoncule cérébral ; affinée par HypVINN pour l'hypothalamus. À relire : nom à garder ou à masquer."
-FastSurfer (aseg);60;Right-VentralDC;Noyaux gris centraux et structures apparentées;Diencéphale ventral droit;droit;automatique;"Étiquette globale de l'outil : hypothalamus, noyau sous-thalamique, substance noire, noyau rouge, partie haute du pédoncule cérébral ; affinée par HypVINN pour l'hypothalamus. À relire : nom à garder ou à masquer."
+FastSurfer (aseg);28;Left-VentralDC;Noyaux gris centraux et structures apparentées;Diencéphale ventral gauche;gauche;automatique;"Étiquette globale de l'outil : hypothalamus, noyau sous-thalamique, substance noire, noyau rouge, partie haute du pédoncule cérébral ; affinée par HypVINN pour l'hypothalamus. À relire : nom à garder ou à masquer. Sa partie mésencéphalique (pédoncules cérébraux, sous z = −10,4 mm) est rendue au tronc cérébral (contour de l'auteur)."
+FastSurfer (aseg);60;Right-VentralDC;Noyaux gris centraux et structures apparentées;Diencéphale ventral droit;droit;automatique;"Étiquette globale de l'outil : hypothalamus, noyau sous-thalamique, substance noire, noyau rouge, partie haute du pédoncule cérébral ; affinée par HypVINN pour l'hypothalamus. À relire : nom à garder ou à masquer. Sa partie mésencéphalique (pédoncules cérébraux, sous z = −10,4 mm) est rendue au tronc cérébral (contour de l'auteur)."
 FastSurfer (aseg);17;Left-Hippocampus;Système limbique;Hippocampe gauche;gauche;automatique;
 FastSurfer (aseg);53;Right-Hippocampus;Système limbique;Hippocampe droit;droit;automatique;
 FastSurfer (aseg);18;Left-Amygdala;Système limbique;Corps amygdaloïde (amygdale) gauche;gauche;automatique;
 FastSurfer (aseg);54;Right-Amygdala;Système limbique;Corps amygdaloïde (amygdale) droit;droit;automatique;
 FastSurfer (aseg);14;3rd-Ventricle;Ventricules et citernes;Troisième ventricule (V3);médian;automatique;
 FastSurfer (aseg);15;4th-Ventricle;Ventricules et citernes;Quatrième ventricule (V4);médian;automatique;
-FastSurfer (aseg);16;Brain-Stem;Régions;Tronc cérébral;médian;automatique;Mésencéphale, pont et bulbe ensemble (non subdivisés par l'outil).
+FastSurfer (aseg);16;Brain-Stem;Régions;Tronc cérébral;médian;automatique;"Mésencéphale, pont et bulbe ensemble (non subdivisés par l'outil). Corrigé d'après les contours de l'auteur (corrections-auteur.json) : prolongements postérieurs autour du V4 (pédoncules cérébelleux) retirés ; pédoncules cérébraux, rangés par FastSurfer dans le diencéphale ventral, inclus jusqu'à z = −10,4 mm."
 FastSurfer (aseg);24;CSF;Ventricules et citernes;Liquide cérébrospinal des citernes de la base;médian;automatique;Étiquette globale de l'outil (LCS autour du tronc cérébral et à la base) : à relire, les citernes nommées viendront des points manuels.
 FastSurfer (aseg);77;WM-hypointensities;—;—;—;non publié;Hypo-intensités de la substance blanche : pas une structure anatomique, non publiée.
 FastSurfer (DKT);1002;ctx-lh-caudalanteriorcingulate;Système limbique;Gyrus cingulaire antérieur gauche, partie caudale;gauche;automatique;
