@@ -190,6 +190,40 @@ LIMITES_MEDIANES = [
 ]
 
 # ---------------------------------------------------------------------------
+# Grandes régions dérivées (regions.py), sur le modèle du découpage des vidéos de référence de l'auteur du
+# 19/10/2026 (dépôt privé) : (catégorie, modèle, genre, couche, valeurs à gauche, valeurs à droite, remarque) pour les
+# paires, (catégorie, nom, couche, valeurs, remarque) pour les régions médianes. Couche « lobes » : 1–6 / 11–16 lobes,
+# 7 / 17 diencéphale, 8 / 18 hémisphère cérébelleux, 9 / 19 reste du télencéphale, 21–23 tronc, 24 vermis.
+# ---------------------------------------------------------------------------
+REGIONS_PAIRES = [
+    ('Régions', 'Hémisphère cérébral {c} (télencéphale)', 'm', 'lobes', [1, 2, 3, 4, 5, 6, 9],
+     [11, 12, 13, 14, 15, 16, 19], 'Lobes, noyaux gris centraux, capsules, hippocampe et amygdale ; ventricules exclus.'),
+    ('Régions', 'Diencéphale {c}', 'm', 'lobes', [7], [17],
+     'Thalamus et diencéphale ventral (FastSurfer), hypothalamus et corps mamillaires (HypVINN).'),
+    ('Cervelet', 'Hémisphère cérébelleux {c}', 'm', 'lobes', [8], [18],
+     'Lobules hémisphériques (CerebNet, lobules I à V avec leur partie vermienne) et corps médullaire.'),
+    ('Noyaux gris centraux et structures apparentées', 'Hypothalamus {c}', 'm', 'fines', [979, 977, 978, 980],
+     [983, 981, 982, 984], 'Réunion des quatre parties de HypVINN (antérieure, médiale, latérale, postérieure).'),
+]
+REGIONS_MEDIANES = [
+    ('Tronc cérébral', 'Mésencéphale', 'lobes', [21],
+     "Tronc cérébral (contours de l'auteur) au-dessus du plan du sillon pontique supérieur, perpendiculaire à l'axe "
+     'du tronc (regions.py).'),
+    ('Tronc cérébral', 'Pont', 'lobes', [22], 'Entre les plans des sillons pontique supérieur et bulbo-pontique.'),
+    ('Tronc cérébral', 'Moelle allongée (bulbe)', 'lobes', [23],
+     'Au-dessous du plan du sillon bulbo-pontique, jusqu\'au bas de la grille.'),
+    ('Régions', 'Rhombencéphale', 'lobes', [22, 23, 8, 18, 24], 'Pont, moelle allongée et cervelet.'),
+    ('Cervelet', 'Cervelet', 'lobes', [8, 18, 24], 'Hémisphères cérébelleux et vermis.'),
+    ('Cervelet', 'Vermis (lobules VI à X)', 'lobes', [24],
+     'CerebNet ne sépare pas le vermis des hémisphères pour les lobules I à V (lobe antérieur).'),
+    ('Cervelet', 'Lobe antérieur du cervelet', 'fines', [601, 602, 603, 604], 'Lobules I à V (CerebNet).'),
+    ('Cervelet', 'Lobe postérieur du cervelet', 'fines',
+     [605, 606, 607, 608, 610, 611, 613, 614, 616, 617, 619, 620, 622, 623, 624, 625, 630, 631],
+     'Lobules VI à IX (CerebNet), crus I et II compris.'),
+    ('Cervelet', 'Lobe flocculo-nodulaire', 'fines', [626, 627, 628], 'Flocculus droit et gauche et nodule (lobule X).'),
+]
+
+# ---------------------------------------------------------------------------
 # CerebNet (lobules du cervelet ; nomenclature de Larsell et noms classiques)
 # ---------------------------------------------------------------------------
 CEREBNET_PAIRES = [   # identifiants de sortie de CerebNet (table de couleurs de FreeSurfer, 601 à 632)
@@ -391,9 +425,6 @@ MANUELLES_MEDIANES = [
     ('Ventricules et citernes', 'Grande citerne (cisterna magna)'),
     ('Ventricules et citernes', 'Aqueduc du mésencéphale'),
     ('Ventricules et citernes', 'Septum pellucidum'),
-    ('Tronc cérébral', 'Mésencéphale'),
-    ('Tronc cérébral', 'Pont'),
-    ('Tronc cérébral', 'Bulbe (moelle allongée)'),
     ('Tronc cérébral', 'Plancher du quatrième ventricule'),
     ('Substance blanche', 'Corps calleux, rostrum'),
     ('Substance blanche', 'Commissure postérieure'),
@@ -480,6 +511,11 @@ def lignes():
             sortie.append(['Règle (étiquettes aseg)', '', '', 'Noyaux gris centraux et structures apparentées',
                            cote(mod, genre, c), c, 'dérivé', ('Regroupement : ' + ', '.join(noms) + '. ' + rq).strip(),
                            ('fines', [aseg[m] for m in noms])])
+    for cat, mod, genre, couche, vg, vd, rq in REGIONS_PAIRES:
+        for c, v in (('gauche', vg), ('droit', vd)):
+            sortie.append(['Règle (grandes régions)', '', '', cat, cote(mod, genre, c), c, 'dérivé', rq, (couche, v)])
+    for cat, nom, couche, v, rq in REGIONS_MEDIANES:
+        sortie.append(['Règle (grandes régions)', '', '', cat, nom, 'médian', 'dérivé', rq, (couche, v)])
     couches_limites = {'Fissure longitudinale du cerveau': ('sillons', [100]), 'Faux du cerveau': ('meninges', [1]),
                        'Tente du cervelet': ('meninges', [2])}
     for cat, fr, rq in LIMITES_MEDIANES:

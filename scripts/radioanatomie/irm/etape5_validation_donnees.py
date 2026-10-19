@@ -33,6 +33,7 @@ sys.path.insert(0, ICI)
 sys.path.insert(0, os.path.dirname(ICI))
 import corrections_auteur
 import etiquettes
+import regions
 import preparer_territoires as territoires
 
 RACINE = os.path.dirname(os.path.dirname(os.path.dirname(ICI)))
@@ -219,7 +220,7 @@ def structures(volumes, table_fines, faisceaux, masques_f, lo_mm):
                 pas_rel, decal = vox_f, faisceaux['origine_mm']
             else:
                 vol = volumes[nom_c]
-                idx = [table_fines.index(v) for v in vals] if nom_c == 'fines' else list(vals)
+                idx = [table_fines.index(v) for v in vals if v in table_fines] if nom_c == 'fines' else list(vals)
                 s['valeurs'] = idx
                 boites = [objets[nom_c][i - 1] for i in idx if i - 1 < len(objets[nom_c]) and objets[nom_c][i - 1]]
                 if boites:
@@ -274,15 +275,15 @@ def main():
     print('  tronc cérébral :', bilan_tronc)
     zone_c = zone[sl]
     fines_c = fines[sl].copy()
+    lobes_complets = np.asarray(lire(os.path.join(ETAPE3, 'lobes.nii.gz'))[0]).astype(np.uint8)
+    bilan_regions = regions.completer(fines, lobes_complets, a)       # grandes régions, tronc corrigé
+    print('  grandes régions :', bilan_regions)
     autres = {}
     for nom in COUCHES:
-        v, _ = lire(os.path.join(ETAPE3, nom + '.nii.gz'))
+        v = lobes_complets if nom == 'lobes' else lire(os.path.join(ETAPE3, nom + '.nii.gz'))[0]
         v = np.asarray(v[sl])
         assert v.max() < 256
         autres['arteres' if nom == 'arteres-tof' else nom] = v.astype(np.uint8)
-    lobes = autres['lobes']                                     # 20 = tronc cérébral (couche des lobes)
-    lobes[entres[sl]] = 20
-    lobes[sortis[sl] & (lobes == 20)] = 0
     retires = corrections_auteur.appliquer(fines_c, {c: autres[c] for c in DERIVEES}, zone_c)
     print('  corrections de l\'auteur :', bilan, '; voxels retirés de fines :', retires)
     table = [int(x) for x in np.unique(fines_c)]
@@ -304,6 +305,7 @@ def main():
         'sequences': seqs, 'couches': couches, 'categories': etiquettes.CATEGORIES, 'structures': liste,
         'corrections_auteur': {'zones_sans_parenchyme': bilan, 'voxels_retires_fines': retires,
                                'tronc_cerebral': bilan_tronc},
+        'grandes_regions': bilan_regions,
     }
     with open(os.path.join(SORTIE, 'manifest.json'), 'w', encoding='utf-8') as f:
         json.dump(manifeste, f, ensure_ascii=False, separators=(',', ':'))

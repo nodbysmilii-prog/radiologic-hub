@@ -1,8 +1,8 @@
 # Correspondance des étiquettes : à relire
 
-474 lignes. Générée par `etiquettes.py` (modifier ce script, pas ce fichier).
+488 lignes. Générée par `etiquettes.py` (modifier ce script, pas ce fichier).
 
-## Régions (19)
+## Régions (24)
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
@@ -19,6 +19,11 @@
 | Lobe de l'insula droit | droit | Règle (régions DKT) |  |  | dérivé | Regroupement : insula. Substance blanche rattachée au cortex le plus proche, centre semi-ovale compris, capsules exclues. |
 | Lobe limbique gauche | gauche | Règle (régions DKT) |  |  | dérivé | Regroupement : rostralanteriorcingulate, caudalanteriorcingulate, posteriorcingulate, isthmuscingulate, parahippocampal, entorhinal. Substance blanche rattachée au cortex le plus proche, centre semi-ovale compris, capsules exclues. Définition classique française (gyrus cingulaire, isthme, gyrus parahippocampique) ; FreeSurfer range le gyrus parahippocampique et le cortex entorhinal dans le lobe temporal : à valider. |
 | Lobe limbique droit | droit | Règle (régions DKT) |  |  | dérivé | Regroupement : rostralanteriorcingulate, caudalanteriorcingulate, posteriorcingulate, isthmuscingulate, parahippocampal, entorhinal. Substance blanche rattachée au cortex le plus proche, centre semi-ovale compris, capsules exclues. Définition classique française (gyrus cingulaire, isthme, gyrus parahippocampique) ; FreeSurfer range le gyrus parahippocampique et le cortex entorhinal dans le lobe temporal : à valider. |
+| Hémisphère cérébral gauche (télencéphale) | gauche | Règle (grandes régions) |  |  | dérivé | Lobes, noyaux gris centraux, capsules, hippocampe et amygdale ; ventricules exclus. |
+| Hémisphère cérébral droit (télencéphale) | droit | Règle (grandes régions) |  |  | dérivé | Lobes, noyaux gris centraux, capsules, hippocampe et amygdale ; ventricules exclus. |
+| Diencéphale gauche | gauche | Règle (grandes régions) |  |  | dérivé | Thalamus et diencéphale ventral (FastSurfer), hypothalamus et corps mamillaires (HypVINN). |
+| Diencéphale droit | droit | Règle (grandes régions) |  |  | dérivé | Thalamus et diencéphale ventral (FastSurfer), hypothalamus et corps mamillaires (HypVINN). |
+| Rhombencéphale | médian | Règle (grandes régions) |  |  | dérivé | Pont, moelle allongée et cervelet. |
 | Pôle frontal gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
 | Pôle frontal droit | droit | Points manuels (navigateur) |  |  | manuel |  |
 | Pôle temporal gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
@@ -292,7 +297,7 @@
 | Toile choroïdienne du troisième ventricule | médian | Points manuels (navigateur) |  |  | manuel |  |
 | Plexus choroïde du quatrième ventricule | médian | Points manuels (navigateur) |  |  | manuel |  |
 
-## Noyaux gris centraux et structures apparentées (33)
+## Noyaux gris centraux et structures apparentées (35)
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
@@ -321,6 +326,8 @@
 | Corps strié droit | droit | Règle (étiquettes aseg) |  |  | dérivé | Regroupement : Right-Caudate, Right-Putamen, Right-Accumbens-area. Noyau caudé, putamen et noyau accumbens (striatum). |
 | Noyau lenticulaire gauche | gauche | Règle (étiquettes aseg) |  |  | dérivé | Regroupement : Left-Putamen, Left-Pallidum. Putamen et globus pallidus. |
 | Noyau lenticulaire droit | droit | Règle (étiquettes aseg) |  |  | dérivé | Regroupement : Right-Putamen, Right-Pallidum. Putamen et globus pallidus. |
+| Hypothalamus gauche | gauche | Règle (grandes régions) |  |  | dérivé | Réunion des quatre parties de HypVINN (antérieure, médiale, latérale, postérieure). |
+| Hypothalamus droit | droit | Règle (grandes régions) |  |  | dérivé | Réunion des quatre parties de HypVINN (antérieure, médiale, latérale, postérieure). |
 | Noyau rouge gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
 | Noyau rouge droit | droit | Points manuels (navigateur) |  |  | manuel |  |
 | Substance noire gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
@@ -345,7 +352,7 @@
 | Corps géniculé latéral gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
 | Corps géniculé latéral droit | droit | Points manuels (navigateur) |  |  | manuel |  |
 
-## Cervelet (31)
+## Cervelet (38)
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
@@ -378,6 +385,13 @@
 | Vermis, lobule VIII (pyramide) | médian | CerebNet | 631 | Cbm_Vermis_VIII | automatique |  |
 | Vermis, lobule IX (uvule) | médian | CerebNet | 624 | Cbm_Vermis_IX | automatique |  |
 | Vermis, lobule X (nodule) | médian | CerebNet | 627 | Cbm_Vermis_X | automatique |  |
+| Hémisphère cérébelleux gauche | gauche | Règle (grandes régions) |  |  | dérivé | Lobules hémisphériques (CerebNet, lobules I à V avec leur partie vermienne) et corps médullaire. |
+| Hémisphère cérébelleux droit | droit | Règle (grandes régions) |  |  | dérivé | Lobules hémisphériques (CerebNet, lobules I à V avec leur partie vermienne) et corps médullaire. |
+| Cervelet | médian | Règle (grandes régions) |  |  | dérivé | Hémisphères cérébelleux et vermis. |
+| Vermis (lobules VI à X) | médian | Règle (grandes régions) |  |  | dérivé | CerebNet ne sépare pas le vermis des hémisphères pour les lobules I à V (lobe antérieur). |
+| Lobe antérieur du cervelet | médian | Règle (grandes régions) |  |  | dérivé | Lobules I à V (CerebNet). |
+| Lobe postérieur du cervelet | médian | Règle (grandes régions) |  |  | dérivé | Lobules VI à IX (CerebNet), crus I et II compris. |
+| Lobe flocculo-nodulaire | médian | Règle (grandes régions) |  |  | dérivé | Flocculus droit et gauche et nodule (lobule X). |
 | Noyau dentelé gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
 | Noyau dentelé droit | droit | Points manuels (navigateur) |  |  | manuel |  |
 
@@ -385,6 +399,9 @@
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
+| Mésencéphale | médian | Règle (grandes régions) |  |  | dérivé | Tronc cérébral (contours de l'auteur) au-dessus du plan du sillon pontique supérieur, perpendiculaire à l'axe du tronc (regions.py). |
+| Pont | médian | Règle (grandes régions) |  |  | dérivé | Entre les plans des sillons pontique supérieur et bulbo-pontique. |
+| Moelle allongée (bulbe) | médian | Règle (grandes régions) |  |  | dérivé | Au-dessous du plan du sillon bulbo-pontique, jusqu'au bas de la grille. |
 | Pédoncule cérébelleux inférieur gauche | gauche | TractSeg | ICP_left | ICP_left | automatique |  |
 | Pédoncule cérébelleux inférieur droit | droit | TractSeg | ICP_right | ICP_right | automatique |  |
 | Pédoncule cérébelleux supérieur gauche | gauche | TractSeg | SCP_left | SCP_left | automatique |  |
@@ -420,9 +437,6 @@
 | Tubercule gracile droit | droit | Points manuels (navigateur) |  |  | manuel |  |
 | Tubercule cunéiforme gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
 | Tubercule cunéiforme droit | droit | Points manuels (navigateur) |  |  | manuel |  |
-| Mésencéphale | médian | Points manuels (navigateur) |  |  | manuel |  |
-| Pont | médian | Points manuels (navigateur) |  |  | manuel |  |
-| Bulbe (moelle allongée) | médian | Points manuels (navigateur) |  |  | manuel |  |
 | Plancher du quatrième ventricule | médian | Points manuels (navigateur) |  |  | manuel |  |
 | Partie basilaire du pont | médian | Points manuels (navigateur) |  |  | manuel |  |
 | Tegmentum du pont | médian | Points manuels (navigateur) |  |  | manuel |  |
