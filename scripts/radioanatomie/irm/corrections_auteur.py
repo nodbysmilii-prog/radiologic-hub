@@ -23,8 +23,10 @@ des prolongements dans les pédoncules cérébelleux et range les pédoncules c�
      plus antérieur du V4, une rangée de voxels en arrière), ce qui retire les prolongements postéro-latéraux
      (pédoncules cérébelleux) comme sur le contour de l'auteur ; la limite latérale avec les pédoncules cérébelleux
      moyens reste celle de FastSurfer tant que l'auteur ne l'a pas tracée sur d'autres coupes ;
-  3. bord antérieur des pédoncules cérébraux tracé par l'auteur (mésencéphale) : sur sa coupe et au-dessous, le
-     diencéphale ventral situé en arrière de ce bord (empreinte fermée en arrière) passe dans le tronc cérébral ;
+  3. bords antérieurs des pédoncules cérébraux tracés par l'auteur (mésencéphale) : le diencéphale ventral situé en
+     arrière du bord (empreinte fermée en arrière) passe dans le tronc cérébral, sur la coupe du tracé, sur les
+     coupes intermédiaires (empreinte du tracé le plus proche) et au-dessous du tracé le plus bas ; rien n'est
+     changé au-dessus du tracé le plus haut ;
   4. ce qui sort du tronc revient à la substance blanche du cervelet du même côté (pédoncules cérébelleux).
 """
 import json, os
@@ -111,6 +113,7 @@ def tronc_cerebral(fines, affine):
             garde = comp == np.argmax(np.bincount(comp.ravel())[1:]) + 1
         nouveau[:, :, k] = garde
     bilan['coupes_plancher_v4'] = len(coupes)
+    empreintes = {}
     for c in contours:
         k = int(round(vers_ij(0, 0, c['z_mm'])[2]))
         ij = [vers_ij(x, y, c['z_mm'])[:2] for x, y in c['points_mm']]
@@ -120,11 +123,15 @@ def tronc_cerebral(fines, affine):
             ij = np.asarray(ij)
             arriere = min(np.argwhere(tronc0[:, :, k] | np.isin(fines[:, :, k], (28, 60)))[:, 1].min() - 2, ij[:, 1].min())
             poly = np.r_[ij, [[ij[-1, 0], arriere], [ij[0, 0], arriere]]]
-            empreinte = _polygone(poly, fines.shape[:2])
-            bas = [kk for kk in range(k + 1) if np.isin(fines[:, :, kk], (28, 60)).any()]
-            for kk in bas:
-                nouveau[:, :, kk] |= empreinte & np.isin(fines[:, :, kk], (28, 60))
-            bilan['coupes_pedoncules'] = len(bas)
+            empreintes[k] = _polygone(poly, fines.shape[:2])
+    if empreintes:
+        haut = max(empreintes)
+        dv = np.isin(fines, (28, 60))
+        coupes_dv = [kk for kk in range(haut + 1) if dv[:, :, kk].any()]
+        for kk in coupes_dv:
+            proche = min(empreintes, key=lambda k: (abs(k - kk), k))    # tracé le plus proche
+            nouveau[:, :, kk] |= empreintes[proche] & dv[:, :, kk]
+        bilan['coupes_pedoncules'] = len(coupes_dv)
     entres, sortis = nouveau & ~tronc0, tronc0 & ~nouveau
     gauche = (affine[0, 0] * np.arange(fines.shape[0]) + affine[0, 3]) < 0
     fines[nouveau] = 16
