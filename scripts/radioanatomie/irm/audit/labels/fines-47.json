@@ -74,7 +74,7 @@
      "nom": "Cerebellum Gray Matter (R)"
     }
    ],
-   "mesure": 0.471,
+   "mesure": 0.47,
    "verdict": "discordant",
    "plans": {
     "axial": {
@@ -82,7 +82,7 @@
      "verdict": "partiel"
     },
     "coronal": {
-     "mesure": 0.326,
+     "mesure": 0.32,
      "verdict": "discordant"
     },
     "sagittal": {

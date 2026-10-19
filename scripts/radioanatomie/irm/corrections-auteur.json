@@ -141,6 +141,11 @@
    ]
   }
  ],
+ "lissage_tronc_cerebral": {
+  "date": "2026-10-19",
+  "rayon_mm": 1.4,
+  "remarque": "« ici il y a des traits qui ne contournent pas le tronc cérébral, essaie d'arrondir les contours » (coupe axiale du haut du mésencéphale, z ≈ −4 mm : traits de pinceau sagittaux)."
+ },
  "niveaux_tronc_cerebral": {
   "date": "2026-10-19",
   "pont_premiere_coupe_z_mm": -19.5,

@@ -74,7 +74,7 @@
      "nom": "Thalamus (R)"
     }
    ],
-   "mesure": 0.886,
+   "mesure": 0.885,
    "verdict": "concordant",
    "plans": {
     "axial": {
@@ -82,7 +82,7 @@
      "verdict": "concordant"
     },
     "coronal": {
-     "mesure": 0.923,
+     "mesure": 0.918,
      "verdict": "concordant"
     },
     "sagittal": {
@@ -101,7 +101,7 @@
      "nom": "Right Thalamus"
     }
    ],
-   "mesure": 0.859,
+   "mesure": 0.858,
    "verdict": "concordant",
    "plans": {
     "axial": {
@@ -109,7 +109,7 @@
      "verdict": "concordant"
     },
     "coronal": {
-     "mesure": 0.854,
+     "mesure": 0.851,
      "verdict": "concordant"
     },
     "sagittal": {

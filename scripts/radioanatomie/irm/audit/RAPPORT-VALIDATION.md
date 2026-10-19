@@ -86,7 +86,11 @@ sujet et MNI, atlas et mesures par plan, latéralité, confiance, remarques). La
 5. **Tronc cérébral** : structure « Tronc cérébral » retirée (demande de l'auteur) ; mésencéphale, pont et bulbe en
    coupes axiales entières (première coupe du pont donnée par l'auteur, z = −19,5 mm ; sillon bulbo-pontique,
    z = −42,6 mm) ; retouches au pinceau de l'auteur intégrées aux données.
-6. **Convention de latéralité** écrite sur chaque coupe (« Vue radiologique : droite du patient à gauche » ;
+6. **Contour du tronc cérébral arrondi** (demande de l'auteur : « des traits qui ne contournent pas le tronc
+   cérébral ») : traits de pinceau sagittaux du haut du mésencéphale (z −8 à 0 mm) et fines lignes de gomme retirés,
+   bords lissés coupe par coupe (ouverture puis fermeture par un disque de 1,4 mm ; la fermeture n'ajoute que du
+   tissu voisin, jamais de LCS ni de cervelet) : 2 792 voxels retirés, 285 ajoutés.
+7. **Convention de latéralité** écrite sur chaque coupe (« Vue radiologique : droite du patient à gauche » ;
    « Sagittal : avant à gauche »).
 
 ## 5. Discordances signalées (non corrigées : structure non certaine)

@@ -271,8 +271,11 @@ def main():
     print('couches…')
     fines = np.asarray(fines).astype(np.int32)
     zone, bilan = corrections_auteur.zone_sans_parenchyme(fines, a)
+    avant_tronc = fines.copy()
     entres, sortis, bilan_tronc = corrections_auteur.tronc_cerebral(fines, a)      # contours de l'auteur
-    bilan_tronc['retouches'] = corrections_auteur.retouches_tronc(fines, a)        # pinceau de l'auteur
+    bilan_tronc['retouches'], gommes = corrections_auteur.retouches_tronc(fines, a)  # pinceau de l'auteur
+    bilan_tronc['lissage'] = corrections_auteur.lisser_tronc(fines, avant_tronc, gommes, a)  # contour arrondi
+    del avant_tronc, gommes
     print('  tronc cérébral :', bilan_tronc)
     zone_c = zone[sl]
     fines_c = fines[sl].copy()

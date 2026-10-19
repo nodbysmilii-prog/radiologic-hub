@@ -82,11 +82,11 @@
    "verdict": "partiel",
    "plans": {
     "axial": {
-     "mesure": 0.746,
+     "mesure": 0.74,
      "verdict": "concordant"
     },
     "coronal": {
-     "mesure": 0.657,
+     "mesure": 0.663,
      "verdict": "concordant"
     },
     "sagittal": {

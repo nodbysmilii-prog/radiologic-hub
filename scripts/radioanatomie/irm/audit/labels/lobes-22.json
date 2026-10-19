@@ -40,15 +40,15 @@
   "coronal": {
    "sujet_mm": [
     -0.5,
-    -23.5,
+    -22.8,
     -30.0
    ],
    "mni_icbm2009c_mm": [
     -1.100000023841858,
-    -24.299999237060547,
+    -23.5,
     -34.20000076293945
    ],
-   "coupe": "y = -23.5 mm"
+   "coupe": "y = -22.8 mm"
   },
   "sagittal": {
    "sujet_mm": [
@@ -78,7 +78,7 @@
      "nom": "Brainstem (R)"
     }
    ],
-   "mesure": 0.976,
+   "mesure": 0.978,
    "verdict": "concordant",
    "plans": {
     "axial": {
@@ -86,11 +86,11 @@
      "verdict": "concordant"
     },
     "coronal": {
-     "mesure": 0.975,
+     "mesure": 0.985,
      "verdict": "concordant"
     },
     "sagittal": {
-     "mesure": 0.987,
+     "mesure": 0.988,
      "verdict": "concordant"
     }
    },

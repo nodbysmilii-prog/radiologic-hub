@@ -78,19 +78,19 @@
      "nom": "Brainstem (R)"
     }
    ],
-   "mesure": 0.963,
+   "mesure": 0.986,
    "verdict": "concordant",
    "plans": {
     "axial": {
-     "mesure": 0.903,
+     "mesure": 0.91,
      "verdict": "concordant"
     },
     "coronal": {
-     "mesure": 0.987,
+     "mesure": 0.986,
      "verdict": "concordant"
     },
     "sagittal": {
-     "mesure": 0.852,
+     "mesure": 0.992,
      "verdict": "concordant"
     }
    },
@@ -105,7 +105,7 @@
      "nom": "Brainstem"
     }
    ],
-   "mesure": 0.847,
+   "mesure": 0.87,
    "verdict": "concordant",
    "plans": {
     "axial": {
@@ -113,12 +113,12 @@
      "verdict": "concordant"
     },
     "coronal": {
-     "mesure": 0.865,
+     "mesure": 0.874,
      "verdict": "concordant"
     },
     "sagittal": {
-     "mesure": 0.69,
-     "verdict": "partiel"
+     "mesure": 0.844,
+     "verdict": "concordant"
     }
    }
   }

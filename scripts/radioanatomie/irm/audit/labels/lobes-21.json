@@ -52,16 +52,16 @@
   },
   "sagittal": {
    "sujet_mm": [
-    5.8,
+    -5.4,
     -24.2,
     -11.8
    ],
    "mni_icbm2009c_mm": [
-    5.900000095367432,
-    -23.5,
-    -15.0
+    -6.699999809265137,
+    -23.299999237060547,
+    -15.100000381469727
    ],
-   "coupe": "x = +5.8 mm"
+   "coupe": "x = -5.4 mm"
   }
  },
  "atlas": [
@@ -78,7 +78,7 @@
      "nom": "Brainstem (R)"
     }
    ],
-   "mesure": 0.422,
+   "mesure": 0.423,
    "verdict": "discordant",
    "plans": {
     "axial": {
@@ -86,11 +86,11 @@
      "verdict": "discordant"
     },
     "coronal": {
-     "mesure": 0.146,
+     "mesure": 0.15,
      "verdict": "discordant"
     },
     "sagittal": {
-     "mesure": 0.452,
+     "mesure": 0.544,
      "verdict": "discordant"
     }
    },
@@ -105,7 +105,7 @@
      "nom": "Brainstem"
     }
    ],
-   "mesure": 0.479,
+   "mesure": 0.483,
    "verdict": "discordant",
    "plans": {
     "axial": {
@@ -113,11 +113,11 @@
      "verdict": "discordant"
     },
     "coronal": {
-     "mesure": 0.202,
+     "mesure": 0.208,
      "verdict": "discordant"
     },
     "sagittal": {
-     "mesure": 0.486,
+     "mesure": 0.599,
      "verdict": "discordant"
     }
    }

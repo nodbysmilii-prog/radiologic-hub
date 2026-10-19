@@ -30,7 +30,12 @@ des prolongements dans les pédoncules cérébelleux et range les pédoncules c�
   4. ce qui sort du tronc revient à la substance blanche du cervelet du même côté (pédoncules cérébelleux) ;
   5. retouches au pinceau de l'auteur sur « Tronc cérébral » (retouches-auteur.json, grille recadrée de l'interface),
      appliquées après les règles 1 à 4, sur les données qu'il avait sous les yeux : voxels peints → tronc cérébral,
-     voxels gommés → sans étiquette.
+     voxels gommés → sans étiquette ;
+  6. contour arrondi (« lissage_tronc_cerebral ») : sur chaque coupe axiale, ouverture puis fermeture par un disque de
+     1,4 mm (les traits de moins de 2,8 mm de large disparaissent, les encoches de même taille se comblent), plus
+     grande partie de la coupe gardée ; la fermeture n'ajoute que du tissu voisin (diencéphale ventral, substance
+     blanche cérébrale) et les fines lignes de gomme à l'intérieur du tronc, jamais de LCS ni de cervelet ; un voxel
+     retiré reprend l'étiquette qu'il avait avant les règles du tronc, ou aucune s'il était déjà dans le tronc.
 """
 import json, os
 
@@ -150,7 +155,8 @@ def _indices(texte):
 
 
 def retouches_tronc(fines, affine):
-    """5. Retouches au pinceau de l'auteur sur le tronc cérébral (fines modifié sur place). Renvoie un bilan."""
+    """5. Retouches au pinceau de l'auteur sur le tronc cérébral (fines modifié sur place). Renvoie un bilan et le
+    masque des voxels gommés."""
     with open(RETOUCHES, encoding='utf-8') as f:
         r = json.load(f)
     g, t = r['grille'], r['tronc_cerebral']
@@ -165,4 +171,28 @@ def retouches_tronc(fines, affine):
     fines[peints] = 16
     gommes = tuple(a[fines[gommes] == 16] for a in gommes)
     fines[gommes] = 0
-    return {'peints': len(peints[0]), 'peints_deja_tronc': deja, 'gommes': len(gommes[0])}
+    masque = np.zeros(fines.shape, bool)
+    masque[gommes] = True
+    return {'peints': len(peints[0]), 'peints_deja_tronc': deja, 'gommes': len(gommes[0])}, masque
+
+
+def lisser_tronc(fines, avant, gommes, affine):
+    """6. Contour du tronc cérébral arrondi coupe par coupe (fines modifié sur place ; avant = étiquettes d'avant les
+    règles du tronc ; gommes = voxels gommés par l'auteur, que la fermeture peut reprendre quand ce sont de fines
+    lignes à l'intérieur du tronc). Renvoie un bilan."""
+    r = int(round(charger()['lissage_tronc_cerebral']['rayon_mm'] / abs(affine[0, 0])))
+    yy, xx = np.ogrid[-r:r + 1, -r:r + 1]
+    disque = xx * xx + yy * yy <= r * r
+    tronc = fines == 16
+    lisse = np.zeros_like(tronc)
+    for k in np.flatnonzero(tronc.any(axis=(0, 1))):
+        c = ndi.binary_closing(ndi.binary_opening(tronc[:, :, k], structure=disque), structure=disque)
+        comp, n = ndi.label(c)
+        if n > 1:
+            c = comp == np.argmax(np.bincount(comp.ravel())[1:]) + 1
+        lisse[:, :, k] = c
+    ajoutes = lisse & ~tronc & (np.isin(fines, (28, 60, 2, 41)) | gommes)
+    retires = tronc & ~lisse
+    fines[ajoutes] = 16
+    fines[retires] = np.where(avant[retires] == 16, 0, avant[retires])
+    return {'rayon_voxels': r, 'retires': int(retires.sum()), 'ajoutes': int(ajoutes.sum())}
