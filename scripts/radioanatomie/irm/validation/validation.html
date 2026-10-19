@@ -417,8 +417,20 @@ async function assurerSequence(id) {
 async function demarrer() {
   try {
     const r = await fetch(DOSSIER + 'manifest.json');
-    Object.assign(M, await r.json());
-  } catch (e) { $('chargeTxt').textContent = 'Manifeste introuvable : ' + e.message; return; }
+    if (!r.ok) throw new Error('réponse ' + r.status);
+    const texte = await r.text();
+    if (!texte.trimStart().startsWith('{')) throw new Error('réponse inattendue');
+    Object.assign(M, JSON.parse(texte));
+  } catch (e) {
+    // aperçu intégré (panneau d'une application) : les fichiers de données ne sont pas servis à côté de la page
+    const t = $('chargeTxt');
+    t.textContent = `Données introuvables dans cette fenêtre (${e.message}). Ouvrez la page dans le navigateur : `;
+    const a = document.createElement('a');
+    a.href = 'https://claude.ai/artifact/Lkkug9c1ULmcAPtvaY7VrP'; a.target = '_blank'; a.rel = 'noopener';
+    a.textContent = 'claude.ai/artifact/Lkkug9c1ULmcAPtvaY7VrP'; a.style.color = 'var(--accent)';
+    t.appendChild(a);
+    return;
+  }
   const g = M.grille;
   G = { nx: g.forme[0], ny: g.forme[1], nz: g.forme[2], vox: g.voxel_mm, o: g.origine_mm };
   G.n = G.nx * G.ny * G.nz;
