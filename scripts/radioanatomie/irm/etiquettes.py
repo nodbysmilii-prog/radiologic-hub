@@ -43,28 +43,29 @@ ASEG_PAIRES = [
     (12, 51, 'Left-Putamen', 'Noyaux gris centraux et structures apparentées', 'Putamen {c}', 'm', ''),
     (13, 52, 'Left-Pallidum', 'Noyaux gris centraux et structures apparentées', 'Globus pallidus {c}', 'm', ''),
     (26, 58, 'Left-Accumbens-area', 'Noyaux gris centraux et structures apparentées', 'Noyau accumbens {c}', 'm', ''),
-    (28, 60, 'Left-VentralDC', 'Noyaux gris centraux et structures apparentées', 'Diencéphale ventral {c}', 'm',
-     "Étiquette globale de l'outil : hypothalamus, noyau sous-thalamique, substance noire, noyau rouge, partie "
-     "haute du pédoncule cérébral ; affinée par HypVINN pour l'hypothalamus. À relire : nom à garder ou à masquer. "
-     "Sa partie mésencéphalique (pédoncules cérébraux, sous z = −10,4 mm) est rendue au tronc cérébral "
-     "(contour de l'auteur)."),
     (17, 53, 'Left-Hippocampus', 'Système limbique', 'Hippocampe {c}', 'm', ''),
     (18, 54, 'Left-Amygdala', 'Système limbique', 'Corps amygdaloïde (amygdale) {c}', 'm', ''),
 ]
 ASEG_MEDIANS = [
     (14, '3rd-Ventricle', 'Ventricules et citernes', 'Troisième ventricule (V3)', ''),
     (15, '4th-Ventricle', 'Ventricules et citernes', 'Quatrième ventricule (V4)', ''),
-    (16, 'Brain-Stem', 'Régions', 'Tronc cérébral', 'Mésencéphale, pont et bulbe ensemble (non subdivisés par '
-                                                    "l'outil). Corrigé d'après les contours de l'auteur "
-                                                    '(corrections-auteur.json) : prolongements postérieurs autour '
-                                                    'du V4 (pédoncules cérébelleux) retirés ; pédoncules cérébraux, '
-                                                    'rangés par FastSurfer dans le diencéphale ventral, inclus '
-                                                    'jusqu\'à z = −10,4 mm.'),
     (24, 'CSF', 'Ventricules et citernes', 'Liquide cérébrospinal des citernes de la base',
      "Étiquette globale de l'outil (LCS autour du tronc cérébral et à la base) : à relire, les citernes nommées "
      'viendront des points manuels.'),
 ]
-ASEG_EXCLUS = [(77, 'WM-hypointensities', "Hypo-intensités de la substance blanche : pas une structure anatomique, "
+ASEG_EXCLUS = [(16, 'Brain-Stem', "Tronc cérébral : non publié à la demande de l'auteur (« enlève tronc cérébral », "
+                                  '19/10/2026), remplacé par le mésencéphale, le pont et la moelle allongée (régions '
+                                  "dérivées). Sert de base à ces trois régions après les corrections de l'auteur "
+                                  '(corrections-auteur.json, retouches-auteur.json) : prolongements autour du V4 '
+                                  "retirés, pédoncules cérébraux (diencéphale ventral de l'outil) inclus, retouches au "
+                                  'pinceau.'),
+               (28, 'Left-VentralDC', "Diencéphale ventral gauche : non publié à la demande de l'auteur (« ne jamais "
+                                      'afficher « diencéphale » comme un contour », 19/10/2026) ; étiquette globale '
+                                      "de l'outil (hypothalamus, noyau sous-thalamique, substance noire, noyau rouge) "
+                                      'gardée dans les données : hypothalamus et corps mamillaires viennent de HypVINN ; '
+                                      'sa partie mésencéphalique (pédoncules cérébraux) est rendue au tronc cérébral.'),
+               (60, 'Right-VentralDC', 'Diencéphale ventral droit : non publié (voir la ligne 28).'),
+               (77, 'WM-hypointensities', "Hypo-intensités de la substance blanche : pas une structure anatomique, "
                                           'non publiée.')]
 
 # ---------------------------------------------------------------------------
@@ -193,13 +194,11 @@ LIMITES_MEDIANES = [
 # Grandes régions dérivées (regions.py), sur le modèle du découpage des vidéos de référence de l'auteur du
 # 19/10/2026 (dépôt privé) : (catégorie, modèle, genre, couche, valeurs à gauche, valeurs à droite, remarque) pour les
 # paires, (catégorie, nom, couche, valeurs, remarque) pour les régions médianes. Couche « lobes » : 1–6 / 11–16 lobes,
-# 7 / 17 diencéphale, 8 / 18 hémisphère cérébelleux, 9 / 19 reste du télencéphale, 21–23 tronc, 24 vermis.
+# 7 / 17 diencéphale (non affiché : demande de l'auteur), 8 / 18 hémisphère cérébelleux, 9 / 19 reste du télencéphale, 21–23 tronc, 24 vermis.
 # ---------------------------------------------------------------------------
 REGIONS_PAIRES = [
     ('Régions', 'Hémisphère cérébral {c} (télencéphale)', 'm', 'lobes', [1, 2, 3, 4, 5, 6, 9],
      [11, 12, 13, 14, 15, 16, 19], 'Lobes, noyaux gris centraux, capsules, hippocampe et amygdale ; ventricules exclus.'),
-    ('Régions', 'Diencéphale {c}', 'm', 'lobes', [7], [17],
-     'Thalamus et diencéphale ventral (FastSurfer), hypothalamus et corps mamillaires (HypVINN).'),
     ('Cervelet', 'Hémisphère cérébelleux {c}', 'm', 'lobes', [8], [18],
      'Lobules hémisphériques (CerebNet, lobules I à V avec leur partie vermienne) et corps médullaire.'),
     ('Noyaux gris centraux et structures apparentées', 'Hypothalamus {c}', 'm', 'fines', [979, 977, 978, 980],
@@ -207,11 +206,14 @@ REGIONS_PAIRES = [
 ]
 REGIONS_MEDIANES = [
     ('Tronc cérébral', 'Mésencéphale', 'lobes', [21],
-     "Tronc cérébral (contours de l'auteur) au-dessus du plan du sillon pontique supérieur, perpendiculaire à l'axe "
-     'du tronc (regions.py).'),
-    ('Tronc cérébral', 'Pont', 'lobes', [22], 'Entre les plans des sillons pontique supérieur et bulbo-pontique.'),
+     "Tronc cérébral corrigé par l'auteur (contours et pinceau), coupes axiales au-dessus de la première coupe du "
+     "pont donnée par l'auteur (z = −19,5 mm) (regions.py)."),
+    ('Tronc cérébral', 'Pont', 'lobes', [22],
+     "Coupes axiales de z = −19,5 mm (première coupe, donnée par l'auteur) à z = −41,9 mm (juste au-dessus du sillon "
+     'bulbo-pontique).'),
     ('Tronc cérébral', 'Moelle allongée (bulbe)', 'lobes', [23],
-     'Au-dessous du plan du sillon bulbo-pontique, jusqu\'au bas de la grille.'),
+     'Coupes axiales du sillon bulbo-pontique (z = −42,6 mm, chute du profil antérieur médian) au bas de la grille, '
+     "partie postérieure et inférieure peinte par l'auteur comprise."),
     ('Régions', 'Rhombencéphale', 'lobes', [22, 23, 8, 18, 24], 'Pont, moelle allongée et cervelet.'),
     ('Cervelet', 'Cervelet', 'lobes', [8, 18, 24], 'Hémisphères cérébelleux et vermis.'),
     ('Cervelet', 'Vermis (lobules VI à X)', 'lobes', [24],

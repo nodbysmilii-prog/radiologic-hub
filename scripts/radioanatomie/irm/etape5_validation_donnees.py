@@ -12,8 +12,8 @@ de l'étape 3. L'auteur y valide, corrige ou supprime chaque structure et y pose
   - chaque volume est écrit en mosaïques PNG en niveaux de gris (coupes axiales rangées en grille ; les pages
     publiées ne servent pas de fichiers binaires bruts, et le PNG compresse mieux que gzip ici), avec une somme de
     contrôle Adler-32 vérifiée par la page ;
-  - corrections de l'auteur (corrections_auteur.py, corrections-auteur.json) appliquées aux étiquettes avant
-    l'export (zones sans parenchyme) ;
+  - corrections de l'auteur (corrections_auteur.py, corrections-auteur.json, retouches-auteur.json) appliquées aux
+    étiquettes avant l'export (zones sans parenchyme, tronc cérébral, niveaux du pont) ;
   - manifest.json : grilles, séquences, couches et liste des structures (table de etiquettes.py, sans les lignes
     « non publié ») avec leur volume, un point intérieur et leur étendue dans chaque plan.
 Clé d'une structure (enregistrements de la page) : « couche-valeurs » (fines-17, sillons-51, faisceaux-AF_left…),
@@ -272,11 +272,13 @@ def main():
     fines = np.asarray(fines).astype(np.int32)
     zone, bilan = corrections_auteur.zone_sans_parenchyme(fines, a)
     entres, sortis, bilan_tronc = corrections_auteur.tronc_cerebral(fines, a)      # contours de l'auteur
+    bilan_tronc['retouches'] = corrections_auteur.retouches_tronc(fines, a)        # pinceau de l'auteur
     print('  tronc cérébral :', bilan_tronc)
     zone_c = zone[sl]
     fines_c = fines[sl].copy()
     lobes_complets = np.asarray(lire(os.path.join(ETAPE3, 'lobes.nii.gz'))[0]).astype(np.uint8)
-    bilan_regions = regions.completer(fines, lobes_complets, a)       # grandes régions, tronc corrigé
+    niveaux = corrections_auteur.charger()['niveaux_tronc_cerebral']
+    bilan_regions = regions.completer(fines, lobes_complets, a, niveaux['pont_premiere_coupe_z_mm'])
     print('  grandes régions :', bilan_regions)
     autres = {}
     for nom in COUCHES:

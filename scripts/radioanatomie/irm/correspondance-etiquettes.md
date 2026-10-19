@@ -1,12 +1,11 @@
 # Correspondance des étiquettes : à relire
 
-488 lignes. Générée par `etiquettes.py` (modifier ce script, pas ce fichier).
+486 lignes. Générée par `etiquettes.py` (modifier ce script, pas ce fichier).
 
-## Régions (24)
+## Régions (21)
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
-| Tronc cérébral | médian | FastSurfer (aseg) | 16 | Brain-Stem | automatique | Mésencéphale, pont et bulbe ensemble (non subdivisés par l'outil). Corrigé d'après les contours de l'auteur (corrections-auteur.json) : prolongements postérieurs autour du V4 (pédoncules cérébelleux) retirés ; pédoncules cérébraux, rangés par FastSurfer dans le diencéphale ventral, inclus jusqu'à z = −10,4 mm. |
 | Lobe frontal gauche | gauche | Règle (régions DKT) |  |  | dérivé | Regroupement : superiorfrontal, caudalmiddlefrontal, rostralmiddlefrontal, parsopercularis, parstriangularis, parsorbitalis, lateralorbitofrontal, medialorbitofrontal, precentral, paracentral. Substance blanche rattachée au cortex le plus proche, centre semi-ovale compris, capsules exclues. Le lobule paracentral, à cheval sur les lobes frontal et pariétal, est rattaché au lobe frontal : à valider. |
 | Lobe frontal droit | droit | Règle (régions DKT) |  |  | dérivé | Regroupement : superiorfrontal, caudalmiddlefrontal, rostralmiddlefrontal, parsopercularis, parstriangularis, parsorbitalis, lateralorbitofrontal, medialorbitofrontal, precentral, paracentral. Substance blanche rattachée au cortex le plus proche, centre semi-ovale compris, capsules exclues. Le lobule paracentral, à cheval sur les lobes frontal et pariétal, est rattaché au lobe frontal : à valider. |
 | Lobe pariétal gauche | gauche | Règle (régions DKT) |  |  | dérivé | Regroupement : postcentral, superiorparietal, inferiorparietal, supramarginal, precuneus. Substance blanche rattachée au cortex le plus proche, centre semi-ovale compris, capsules exclues. |
@@ -21,8 +20,6 @@
 | Lobe limbique droit | droit | Règle (régions DKT) |  |  | dérivé | Regroupement : rostralanteriorcingulate, caudalanteriorcingulate, posteriorcingulate, isthmuscingulate, parahippocampal, entorhinal. Substance blanche rattachée au cortex le plus proche, centre semi-ovale compris, capsules exclues. Définition classique française (gyrus cingulaire, isthme, gyrus parahippocampique) ; FreeSurfer range le gyrus parahippocampique et le cortex entorhinal dans le lobe temporal : à valider. |
 | Hémisphère cérébral gauche (télencéphale) | gauche | Règle (grandes régions) |  |  | dérivé | Lobes, noyaux gris centraux, capsules, hippocampe et amygdale ; ventricules exclus. |
 | Hémisphère cérébral droit (télencéphale) | droit | Règle (grandes régions) |  |  | dérivé | Lobes, noyaux gris centraux, capsules, hippocampe et amygdale ; ventricules exclus. |
-| Diencéphale gauche | gauche | Règle (grandes régions) |  |  | dérivé | Thalamus et diencéphale ventral (FastSurfer), hypothalamus et corps mamillaires (HypVINN). |
-| Diencéphale droit | droit | Règle (grandes régions) |  |  | dérivé | Thalamus et diencéphale ventral (FastSurfer), hypothalamus et corps mamillaires (HypVINN). |
 | Rhombencéphale | médian | Règle (grandes régions) |  |  | dérivé | Pont, moelle allongée et cervelet. |
 | Pôle frontal gauche | gauche | Points manuels (navigateur) |  |  | manuel |  |
 | Pôle frontal droit | droit | Points manuels (navigateur) |  |  | manuel |  |
@@ -297,7 +294,7 @@
 | Toile choroïdienne du troisième ventricule | médian | Points manuels (navigateur) |  |  | manuel |  |
 | Plexus choroïde du quatrième ventricule | médian | Points manuels (navigateur) |  |  | manuel |  |
 
-## Noyaux gris centraux et structures apparentées (35)
+## Noyaux gris centraux et structures apparentées (33)
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
@@ -311,8 +308,6 @@
 | Globus pallidus droit | droit | FastSurfer (aseg) | 52 | Right-Pallidum | automatique |  |
 | Noyau accumbens gauche | gauche | FastSurfer (aseg) | 26 | Left-Accumbens-area | automatique |  |
 | Noyau accumbens droit | droit | FastSurfer (aseg) | 58 | Right-Accumbens-area | automatique |  |
-| Diencéphale ventral gauche | gauche | FastSurfer (aseg) | 28 | Left-VentralDC | automatique | Étiquette globale de l'outil : hypothalamus, noyau sous-thalamique, substance noire, noyau rouge, partie haute du pédoncule cérébral ; affinée par HypVINN pour l'hypothalamus. À relire : nom à garder ou à masquer. Sa partie mésencéphalique (pédoncules cérébraux, sous z = −10,4 mm) est rendue au tronc cérébral (contour de l'auteur). |
-| Diencéphale ventral droit | droit | FastSurfer (aseg) | 60 | Right-VentralDC | automatique | Étiquette globale de l'outil : hypothalamus, noyau sous-thalamique, substance noire, noyau rouge, partie haute du pédoncule cérébral ; affinée par HypVINN pour l'hypothalamus. À relire : nom à garder ou à masquer. Sa partie mésencéphalique (pédoncules cérébraux, sous z = −10,4 mm) est rendue au tronc cérébral (contour de l'auteur). |
 | Hypothalamus antérieur gauche | gauche | HypVINN | 979 | L-Ant-Hypothalamus | automatique |  |
 | Hypothalamus antérieur droit | droit | HypVINN | 983 | R-Ant-Hypothalamus | automatique |  |
 | Hypothalamus médial gauche | gauche | HypVINN | 977 | L-Med-Hypothalamus | automatique |  |
@@ -399,9 +394,9 @@
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
-| Mésencéphale | médian | Règle (grandes régions) |  |  | dérivé | Tronc cérébral (contours de l'auteur) au-dessus du plan du sillon pontique supérieur, perpendiculaire à l'axe du tronc (regions.py). |
-| Pont | médian | Règle (grandes régions) |  |  | dérivé | Entre les plans des sillons pontique supérieur et bulbo-pontique. |
-| Moelle allongée (bulbe) | médian | Règle (grandes régions) |  |  | dérivé | Au-dessous du plan du sillon bulbo-pontique, jusqu'au bas de la grille. |
+| Mésencéphale | médian | Règle (grandes régions) |  |  | dérivé | Tronc cérébral corrigé par l'auteur (contours et pinceau), coupes axiales au-dessus de la première coupe du pont donnée par l'auteur (z = −19,5 mm) (regions.py). |
+| Pont | médian | Règle (grandes régions) |  |  | dérivé | Coupes axiales de z = −19,5 mm (première coupe, donnée par l'auteur) à z = −41,9 mm (juste au-dessus du sillon bulbo-pontique). |
+| Moelle allongée (bulbe) | médian | Règle (grandes régions) |  |  | dérivé | Coupes axiales du sillon bulbo-pontique (z = −42,6 mm, chute du profil antérieur médian) au bas de la grille, partie postérieure et inférieure peinte par l'auteur comprise. |
 | Pédoncule cérébelleux inférieur gauche | gauche | TractSeg | ICP_left | ICP_left | automatique |  |
 | Pédoncule cérébelleux inférieur droit | droit | TractSeg | ICP_right | ICP_right | automatique |  |
 | Pédoncule cérébelleux supérieur gauche | gauche | TractSeg | SCP_left | SCP_left | automatique |  |
@@ -560,10 +555,13 @@
 | Granulations arachnoïdiennes | médian | Points manuels (navigateur) |  |  | manuel |  |
 | Incisure de la tente du cervelet | médian | Points manuels (navigateur) |  |  | manuel |  |
 
-## Non publiées (5)
+## Non publiées (8)
 
 | Nom français | Côté | Source | Id | Nom de l'outil | Statut | Remarque |
 |---|---|---|---|---|---|---|
+| — | — | FastSurfer (aseg) | 16 | Brain-Stem | non publié | Tronc cérébral : non publié à la demande de l'auteur (« enlève tronc cérébral », 19/10/2026), remplacé par le mésencéphale, le pont et la moelle allongée (régions dérivées). Sert de base à ces trois régions après les corrections de l'auteur (corrections-auteur.json, retouches-auteur.json) : prolongements autour du V4 retirés, pédoncules cérébraux (diencéphale ventral de l'outil) inclus, retouches au pinceau. |
+| — | — | FastSurfer (aseg) | 28 | Left-VentralDC | non publié | Diencéphale ventral gauche : non publié à la demande de l'auteur (« ne jamais afficher « diencéphale » comme un contour », 19/10/2026) ; étiquette globale de l'outil (hypothalamus, noyau sous-thalamique, substance noire, noyau rouge) gardée dans les données : hypothalamus et corps mamillaires viennent de HypVINN ; sa partie mésencéphalique (pédoncules cérébraux) est rendue au tronc cérébral. |
+| — | — | FastSurfer (aseg) | 60 | Right-VentralDC | non publié | Diencéphale ventral droit : non publié (voir la ligne 28). |
 | — | — | FastSurfer (aseg) | 77 | WM-hypointensities | non publié | Hypo-intensités de la substance blanche : pas une structure anatomique, non publiée. |
 | — | — | HypVINN | 970 | Third-Ventricle | non publié | Doublon du troisième ventricule de FastSurfer (aseg), qui est retenu. |
 | — | — | TractSeg | FX_left | FX_left | non publié | Fornix trop fin pour cette diffusion (b = 800, 2 mm) : celui de FastSurfer est retenu. |

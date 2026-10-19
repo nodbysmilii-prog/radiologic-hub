@@ -21,16 +21,16 @@ FastSurfer (aseg);13;Left-Pallidum;Noyaux gris centraux et structures apparenté
 FastSurfer (aseg);52;Right-Pallidum;Noyaux gris centraux et structures apparentées;Globus pallidus droit;droit;automatique;
 FastSurfer (aseg);26;Left-Accumbens-area;Noyaux gris centraux et structures apparentées;Noyau accumbens gauche;gauche;automatique;
 FastSurfer (aseg);58;Right-Accumbens-area;Noyaux gris centraux et structures apparentées;Noyau accumbens droit;droit;automatique;
-FastSurfer (aseg);28;Left-VentralDC;Noyaux gris centraux et structures apparentées;Diencéphale ventral gauche;gauche;automatique;"Étiquette globale de l'outil : hypothalamus, noyau sous-thalamique, substance noire, noyau rouge, partie haute du pédoncule cérébral ; affinée par HypVINN pour l'hypothalamus. À relire : nom à garder ou à masquer. Sa partie mésencéphalique (pédoncules cérébraux, sous z = −10,4 mm) est rendue au tronc cérébral (contour de l'auteur)."
-FastSurfer (aseg);60;Right-VentralDC;Noyaux gris centraux et structures apparentées;Diencéphale ventral droit;droit;automatique;"Étiquette globale de l'outil : hypothalamus, noyau sous-thalamique, substance noire, noyau rouge, partie haute du pédoncule cérébral ; affinée par HypVINN pour l'hypothalamus. À relire : nom à garder ou à masquer. Sa partie mésencéphalique (pédoncules cérébraux, sous z = −10,4 mm) est rendue au tronc cérébral (contour de l'auteur)."
 FastSurfer (aseg);17;Left-Hippocampus;Système limbique;Hippocampe gauche;gauche;automatique;
 FastSurfer (aseg);53;Right-Hippocampus;Système limbique;Hippocampe droit;droit;automatique;
 FastSurfer (aseg);18;Left-Amygdala;Système limbique;Corps amygdaloïde (amygdale) gauche;gauche;automatique;
 FastSurfer (aseg);54;Right-Amygdala;Système limbique;Corps amygdaloïde (amygdale) droit;droit;automatique;
 FastSurfer (aseg);14;3rd-Ventricle;Ventricules et citernes;Troisième ventricule (V3);médian;automatique;
 FastSurfer (aseg);15;4th-Ventricle;Ventricules et citernes;Quatrième ventricule (V4);médian;automatique;
-FastSurfer (aseg);16;Brain-Stem;Régions;Tronc cérébral;médian;automatique;"Mésencéphale, pont et bulbe ensemble (non subdivisés par l'outil). Corrigé d'après les contours de l'auteur (corrections-auteur.json) : prolongements postérieurs autour du V4 (pédoncules cérébelleux) retirés ; pédoncules cérébraux, rangés par FastSurfer dans le diencéphale ventral, inclus jusqu'à z = −10,4 mm."
 FastSurfer (aseg);24;CSF;Ventricules et citernes;Liquide cérébrospinal des citernes de la base;médian;automatique;Étiquette globale de l'outil (LCS autour du tronc cérébral et à la base) : à relire, les citernes nommées viendront des points manuels.
+FastSurfer (aseg);16;Brain-Stem;—;—;—;non publié;Tronc cérébral : non publié à la demande de l'auteur (« enlève tronc cérébral », 19/10/2026), remplacé par le mésencéphale, le pont et la moelle allongée (régions dérivées). Sert de base à ces trois régions après les corrections de l'auteur (corrections-auteur.json, retouches-auteur.json) : prolongements autour du V4 retirés, pédoncules cérébraux (diencéphale ventral de l'outil) inclus, retouches au pinceau.
+FastSurfer (aseg);28;Left-VentralDC;—;—;—;non publié;"Diencéphale ventral gauche : non publié à la demande de l'auteur (« ne jamais afficher « diencéphale » comme un contour », 19/10/2026) ; étiquette globale de l'outil (hypothalamus, noyau sous-thalamique, substance noire, noyau rouge) gardée dans les données : hypothalamus et corps mamillaires viennent de HypVINN ; sa partie mésencéphalique (pédoncules cérébraux) est rendue au tronc cérébral."
+FastSurfer (aseg);60;Right-VentralDC;—;—;—;non publié;Diencéphale ventral droit : non publié (voir la ligne 28).
 FastSurfer (aseg);77;WM-hypointensities;—;—;—;non publié;Hypo-intensités de la substance blanche : pas une structure anatomique, non publiée.
 FastSurfer (DKT);1002;ctx-lh-caudalanteriorcingulate;Système limbique;Gyrus cingulaire antérieur gauche, partie caudale;gauche;automatique;
 FastSurfer (DKT);2002;ctx-rh-caudalanteriorcingulate;Système limbique;Gyrus cingulaire antérieur droit, partie caudale;droit;automatique;
@@ -201,15 +201,13 @@ Règle (étiquettes aseg);;;Noyaux gris centraux et structures apparentées;Noya
 Règle (étiquettes aseg);;;Noyaux gris centraux et structures apparentées;Noyau lenticulaire droit;droit;dérivé;Regroupement : Right-Putamen, Right-Pallidum. Putamen et globus pallidus.
 Règle (grandes régions);;;Régions;Hémisphère cérébral gauche (télencéphale);gauche;dérivé;"Lobes, noyaux gris centraux, capsules, hippocampe et amygdale ; ventricules exclus."
 Règle (grandes régions);;;Régions;Hémisphère cérébral droit (télencéphale);droit;dérivé;"Lobes, noyaux gris centraux, capsules, hippocampe et amygdale ; ventricules exclus."
-Règle (grandes régions);;;Régions;Diencéphale gauche;gauche;dérivé;Thalamus et diencéphale ventral (FastSurfer), hypothalamus et corps mamillaires (HypVINN).
-Règle (grandes régions);;;Régions;Diencéphale droit;droit;dérivé;Thalamus et diencéphale ventral (FastSurfer), hypothalamus et corps mamillaires (HypVINN).
 Règle (grandes régions);;;Cervelet;Hémisphère cérébelleux gauche;gauche;dérivé;Lobules hémisphériques (CerebNet, lobules I à V avec leur partie vermienne) et corps médullaire.
 Règle (grandes régions);;;Cervelet;Hémisphère cérébelleux droit;droit;dérivé;Lobules hémisphériques (CerebNet, lobules I à V avec leur partie vermienne) et corps médullaire.
 Règle (grandes régions);;;Noyaux gris centraux et structures apparentées;Hypothalamus gauche;gauche;dérivé;Réunion des quatre parties de HypVINN (antérieure, médiale, latérale, postérieure).
 Règle (grandes régions);;;Noyaux gris centraux et structures apparentées;Hypothalamus droit;droit;dérivé;Réunion des quatre parties de HypVINN (antérieure, médiale, latérale, postérieure).
-Règle (grandes régions);;;Tronc cérébral;Mésencéphale;médian;dérivé;Tronc cérébral (contours de l'auteur) au-dessus du plan du sillon pontique supérieur, perpendiculaire à l'axe du tronc (regions.py).
-Règle (grandes régions);;;Tronc cérébral;Pont;médian;dérivé;Entre les plans des sillons pontique supérieur et bulbo-pontique.
-Règle (grandes régions);;;Tronc cérébral;Moelle allongée (bulbe);médian;dérivé;Au-dessous du plan du sillon bulbo-pontique, jusqu'au bas de la grille.
+Règle (grandes régions);;;Tronc cérébral;Mésencéphale;médian;dérivé;Tronc cérébral corrigé par l'auteur (contours et pinceau), coupes axiales au-dessus de la première coupe du pont donnée par l'auteur (z = −19,5 mm) (regions.py).
+Règle (grandes régions);;;Tronc cérébral;Pont;médian;dérivé;Coupes axiales de z = −19,5 mm (première coupe, donnée par l'auteur) à z = −41,9 mm (juste au-dessus du sillon bulbo-pontique).
+Règle (grandes régions);;;Tronc cérébral;Moelle allongée (bulbe);médian;dérivé;Coupes axiales du sillon bulbo-pontique (z = −42,6 mm, chute du profil antérieur médian) au bas de la grille, partie postérieure et inférieure peinte par l'auteur comprise.
 Règle (grandes régions);;;Régions;Rhombencéphale;médian;dérivé;Pont, moelle allongée et cervelet.
 Règle (grandes régions);;;Cervelet;Cervelet;médian;dérivé;Hémisphères cérébelleux et vermis.
 Règle (grandes régions);;;Cervelet;Vermis (lobules VI à X);médian;dérivé;CerebNet ne sépare pas le vermis des hémisphères pour les lobules I à V (lobe antérieur).

@@ -140,5 +140,10 @@
     [-17.3, -22.1]
    ]
   }
- ]
+ ],
+ "niveaux_tronc_cerebral": {
+  "date": "2026-10-19",
+  "pont_premiere_coupe_z_mm": -19.5,
+  "remarque": "« le pont commence à cette coupe » (coupe axiale reconnue par la forme du tronc, z = −19,5 mm : coupes entières, au-dessus mésencéphale) ; « sur la deuxième photo c'est uniquement la moelle allongée » (z = −55,2 mm, partie postérieure peinte par l'auteur, retouches-auteur.json) ; « enlève tronc cérébral » (structure remplacée par ses trois parties)."
+ }
 }
