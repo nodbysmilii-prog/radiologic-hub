@@ -1,0 +1,73 @@
+{
+ "cle": "fines-976",
+ "nom_fr": "Région tubérale de l'hypothalamus",
+ "nom_en": "Tuberal-Region",
+ "cote": "médian",
+ "categorie": "Noyaux gris centraux et structures apparentées",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "HypVINN",
+  "nom_outil": "Tuberal-Region",
+  "identifiant": 976
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -0.5,
+   -3.9,
+   -13.9
+  ],
+  "mni_icbm2009c_mm": [
+   -1.2999999523162842,
+   -4.199999809265137,
+   -17.600000381469727
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -0.5,
+    -3.9,
+    -13.9
+   ],
+   "mni_icbm2009c_mm": [
+    -1.2999999523162842,
+    -4.199999809265137,
+    -17.600000381469727
+   ],
+   "coupe": "z = -13.9 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -0.5,
+    -3.9,
+    -13.9
+   ],
+   "mni_icbm2009c_mm": [
+    -1.2999999523162842,
+    -4.199999809265137,
+    -17.600000381469727
+   ],
+   "coupe": "y = -3.9 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    0.2,
+    -3.9,
+    -13.9
+   ],
+   "mni_icbm2009c_mm": [
+    -0.30000001192092896,
+    -4.300000190734863,
+    -17.600000381469727
+   ],
+   "coupe": "x = +0.2 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : HypVINN."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

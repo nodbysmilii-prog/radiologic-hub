@@ -1,0 +1,129 @@
+{
+ "cle": "fines-2010",
+ "nom_fr": "Isthme du gyrus cingulaire droit",
+ "nom_en": "ctx-rh-isthmuscingulate",
+ "cote": "droit",
+ "categorie": "Système limbique",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-isthmuscingulate",
+  "identifiant": 2010
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   5.8,
+   -48.0,
+   5.0
+  ],
+  "mni_icbm2009c_mm": [
+   6.599999904632568,
+   -47.400001525878906,
+   5.400000095367432
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    5.8,
+    -48.0,
+    31.6
+   ],
+   "mni_icbm2009c_mm": [
+    6.5,
+    -49.900001525878906,
+    34.0
+   ],
+   "coupe": "z = +31.6 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    5.8,
+    -47.3,
+    5.0
+   ],
+   "mni_icbm2009c_mm": [
+    6.699999809265137,
+    -46.599998474121094,
+    5.400000095367432
+   ],
+   "coupe": "y = -47.3 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    2.3,
+    -48.0,
+    5.0
+   ],
+   "mni_icbm2009c_mm": [
+    2.5999999046325684,
+    -47.0,
+    5.800000190734863
+   ],
+   "coupe": "x = +2.3 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 33,
+     "nom": "Isthmus Cingulate (R)"
+    }
+   ],
+   "mesure": 0.695,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.816,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.765,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.871,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.79"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 60,
+     "nom": "Right Cingulate Gyrus, posterior division"
+    },
+    {
+     "id": 62,
+     "nom": "Right Precuneous Cortex"
+    }
+   ],
+   "mesure": 0.947,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.979,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

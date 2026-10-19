@@ -1,0 +1,105 @@
+{
+ "cle": "fines-606",
+ "nom_fr": "Vermis, lobule VI (déclive)",
+ "nom_en": "Cbm_Vermis_VI",
+ "cote": "médian",
+ "categorie": "Cervelet",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "CerebNet",
+  "nom_outil": "Cbm_Vermis_VI",
+  "identifiant": 606
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   0.2,
+   -71.8,
+   -15.3
+  ],
+  "mni_icbm2009c_mm": [
+   0.5,
+   -73.0,
+   -18.700000762939453
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    0.2,
+    -71.8,
+    -18.8
+   ],
+   "mni_icbm2009c_mm": [
+    0.30000001192092896,
+    -72.9000015258789,
+    -22.799999237060547
+   ],
+   "coupe": "z = -18.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    0.2,
+    -71.8,
+    -15.3
+   ],
+   "mni_icbm2009c_mm": [
+    0.5,
+    -73.0,
+    -18.700000762939453
+   ],
+   "coupe": "y = -71.8 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    0.2,
+    -71.8,
+    -15.3
+   ],
+   "mni_icbm2009c_mm": [
+    0.5,
+    -73.0,
+    -18.700000762939453
+   ],
+   "coupe": "x = +0.2 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 53,
+     "nom": "Vermal lobules VI-VII (L)"
+    },
+    {
+     "id": 2,
+     "nom": "Vermal lobules VI-VII (R)"
+    }
+   ],
+   "mesure": 0.831,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.716,
+     "verdict": "partiel"
+    },
+    "coronal": {
+     "mesure": 0.952,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.939,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.38"
+  }
+ ],
+ "remarques": [
+  "Étiquette CerebrA peu fiable selon ses auteurs (kappa 0.38) : la discordance ne suffit pas à conclure."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "élevée"
+}

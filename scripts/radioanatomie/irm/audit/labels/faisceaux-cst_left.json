@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-CST_left",
+ "nom_fr": "Faisceau corticospinal gauche",
+ "nom_en": "CST_left",
+ "cote": "gauche",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "CST_left",
+  "identifiant": "CST_left"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -22.9,
+   -13.0,
+   28.8
+  ],
+  "mni_icbm2009c_mm": [
+   -26.600000381469727,
+   -12.899999618530273,
+   30.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -22.9,
+    -13.0,
+    32.3
+   ],
+   "mni_icbm2009c_mm": [
+    -26.700000762939453,
+    -13.100000381469727,
+    34.70000076293945
+   ],
+   "coupe": "z = +32.3 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -22.9,
+    -17.9,
+    28.8
+   ],
+   "mni_icbm2009c_mm": [
+    -26.200000762939453,
+    -18.100000381469727,
+    30.399999618530273
+   ],
+   "coupe": "y = -17.9 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -19.4,
+    -13.0,
+    28.8
+   ],
+   "mni_icbm2009c_mm": [
+    -22.600000381469727,
+    -13.0,
+    29.799999237060547
+   ],
+   "coupe": "x = -19.4 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

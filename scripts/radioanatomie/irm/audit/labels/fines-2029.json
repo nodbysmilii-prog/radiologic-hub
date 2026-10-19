@@ -1,0 +1,133 @@
+{
+ "cle": "fines-2029",
+ "nom_fr": "Lobule pariétal supérieur droit",
+ "nom_en": "ctx-rh-superiorparietal",
+ "cote": "droit",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-superiorparietal",
+  "identifiant": 2029
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   8.6,
+   -71.1,
+   52.6
+  ],
+  "mni_icbm2009c_mm": [
+   8.600000381469727,
+   -76.30000305175781,
+   60.0
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    8.6,
+    -71.1,
+    56.8
+   ],
+   "mni_icbm2009c_mm": [
+    8.300000190734863,
+    -75.4000015258789,
+    64.5999984741211
+   ],
+   "coupe": "z = +56.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    8.6,
+    -51.5,
+    52.6
+   ],
+   "mni_icbm2009c_mm": [
+    8.100000381469727,
+    -55.70000076293945,
+    54.900001525878906
+   ],
+   "coupe": "y = -51.5 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    24.7,
+    -71.1,
+    52.6
+   ],
+   "mni_icbm2009c_mm": [
+    27.600000381469727,
+    -74.5,
+    60.29999923706055
+   ],
+   "coupe": "x = +24.7 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 9,
+     "nom": "Superior Parietal (R)"
+    }
+   ],
+   "mesure": 0.614,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.687,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.728,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.719,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.72"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 36,
+     "nom": "Right Lateral Occipital Cortex, superior division"
+    },
+    {
+     "id": 44,
+     "nom": "Right Precuneous Cortex"
+    },
+    {
+     "id": 62,
+     "nom": "Right Superior Parietal Lobule"
+    }
+   ],
+   "mesure": 0.908,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.948,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.935,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-SCP_left",
+ "nom_fr": "Pédoncule cérébelleux supérieur gauche",
+ "nom_en": "SCP_left",
+ "cote": "gauche",
+ "categorie": "Tronc cérébral",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "SCP_left",
+  "identifiant": "SCP_left"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -6.8,
+   -21.4,
+   -3.4
+  ],
+  "mni_icbm2009c_mm": [
+   -8.699999809265137,
+   -20.0,
+   -6.599999904632568
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -6.8,
+    -21.4,
+    -36.3
+   ],
+   "mni_icbm2009c_mm": [
+    -7.900000095367432,
+    -22.299999237060547,
+    -41.099998474121094
+   ],
+   "coupe": "z = -36.3 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -6.8,
+    -24.2,
+    -3.4
+   ],
+   "mni_icbm2009c_mm": [
+    -8.5,
+    -22.700000762939453,
+    -6.400000095367432
+   ],
+   "coupe": "y = -24.2 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -8.2,
+    -21.4,
+    -3.4
+   ],
+   "mni_icbm2009c_mm": [
+    -10.300000190734863,
+    -20.100000381469727,
+    -6.5
+   ],
+   "coupe": "x = -8.2 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

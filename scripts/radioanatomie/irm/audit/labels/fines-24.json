@@ -1,0 +1,73 @@
+{
+ "cle": "fines-24",
+ "nom_fr": "Liquide cérébrospinal des citernes de la base",
+ "nom_en": "CSF",
+ "cote": "médian",
+ "categorie": "Ventricules et citernes",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (aseg)",
+  "nom_outil": "CSF",
+  "identifiant": 24
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   0.2,
+   -22.1,
+   16.9
+  ],
+  "mni_icbm2009c_mm": [
+   0.0,
+   -21.299999237060547,
+   14.800000190734863
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    0.2,
+    -22.1,
+    15.5
+   ],
+   "mni_icbm2009c_mm": [
+    -0.30000001192092896,
+    -21.100000381469727,
+    13.399999618530273
+   ],
+   "coupe": "z = +15.5 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    0.2,
+    -27.7,
+    16.9
+   ],
+   "mni_icbm2009c_mm": [
+    0.4000000059604645,
+    -26.600000381469727,
+    15.300000190734863
+   ],
+   "coupe": "y = -27.7 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    0.2,
+    -22.1,
+    16.9
+   ],
+   "mni_icbm2009c_mm": [
+    0.0,
+    -21.299999237060547,
+    14.800000190734863
+   ],
+   "coupe": "x = +0.2 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : FastSurfer (aseg)."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

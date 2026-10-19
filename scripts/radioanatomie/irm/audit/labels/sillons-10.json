@@ -1,0 +1,73 @@
+{
+ "cle": "sillons-10",
+ "nom_fr": "Sillon temporal inférieur gauche",
+ "nom_en": "Inferior temporal sulcus",
+ "cote": "gauche",
+ "categorie": "Sillons",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (limites DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -50.2,
+   1.0,
+   -25.8
+  ],
+  "mni_icbm2009c_mm": [
+   -60.099998474121094,
+   2.700000047683716,
+   -31.100000381469727
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -50.2,
+    1.0,
+    -13.2
+   ],
+   "mni_icbm2009c_mm": [
+    -59.900001525878906,
+    1.399999976158142,
+    -20.100000381469727
+   ],
+   "coupe": "z = -13.2 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -50.2,
+    3.1,
+    -25.8
+   ],
+   "mni_icbm2009c_mm": [
+    -59.70000076293945,
+    4.900000095367432,
+    -30.799999237060547
+   ],
+   "coupe": "y = +3.1 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -51.6,
+    1.0,
+    -25.8
+   ],
+   "mni_icbm2009c_mm": [
+    -61.29999923706055,
+    2.4000000953674316,
+    -31.200000762939453
+   ],
+   "coupe": "x = -51.6 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Règle (limites DKT)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

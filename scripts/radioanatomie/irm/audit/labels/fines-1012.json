@@ -1,0 +1,129 @@
+{
+ "cle": "fines-1012",
+ "nom_fr": "Cortex orbitofrontal latéral gauche",
+ "nom_en": "ctx-lh-lateralorbitofrontal",
+ "cote": "gauche",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-lateralorbitofrontal",
+  "identifiant": 1012
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -16.6,
+   8.0,
+   -16.7
+  ],
+  "mni_icbm2009c_mm": [
+   -18.799999237060547,
+   7.599999904632568,
+   -21.299999237060547
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -16.6,
+    8.0,
+    -14.6
+   ],
+   "mni_icbm2009c_mm": [
+    -18.899999618530273,
+    7.5,
+    -18.600000381469727
+   ],
+   "coupe": "z = -14.6 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -16.6,
+    33.9,
+    -16.7
+   ],
+   "mni_icbm2009c_mm": [
+    -18.700000762939453,
+    33.70000076293945,
+    -21.5
+   ],
+   "coupe": "y = +33.9 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -19.4,
+    8.0,
+    -16.7
+   ],
+   "mni_icbm2009c_mm": [
+    -21.799999237060547,
+    8.0,
+    -21.700000762939453
+   ],
+   "coupe": "x = -19.4 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 58,
+     "nom": "Lateral Orbitofrontal (L)"
+    }
+   ],
+   "mesure": 0.601,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.675,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.737,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.642,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.80"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 1,
+     "nom": "Left Frontal Orbital Cortex"
+    },
+    {
+     "id": 65,
+     "nom": "Left Frontal Pole"
+    }
+   ],
+   "mesure": 0.999,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

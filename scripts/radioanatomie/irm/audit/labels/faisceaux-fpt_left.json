@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-FPT_left",
+ "nom_fr": "Faisceau fronto-pontique gauche",
+ "nom_en": "FPT_left",
+ "cote": "gauche",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "FPT_left",
+  "identifiant": "FPT_left"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -6.8,
+   -21.4,
+   -9.0
+  ],
+  "mni_icbm2009c_mm": [
+   -8.399999618530273,
+   -20.399999618530273,
+   -12.199999809265137
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -6.8,
+    -21.4,
+    19.0
+   ],
+   "mni_icbm2009c_mm": [
+    -7.0,
+    -20.600000381469727,
+    16.700000762939453
+   ],
+   "coupe": "z = +19.0 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -6.8,
+    -17.9,
+    -9.0
+   ],
+   "mni_icbm2009c_mm": [
+    -8.600000381469727,
+    -17.200000762939453,
+    -12.300000190734863
+   ],
+   "coupe": "y = -17.9 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -15.9,
+    -21.4,
+    -9.0
+   ],
+   "mni_icbm2009c_mm": [
+    -18.600000381469727,
+    -20.700000762939453,
+    -11.699999809265137
+   ],
+   "coupe": "x = -15.9 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

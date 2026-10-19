@@ -1,0 +1,99 @@
+{
+ "cle": "fines-47",
+ "nom_fr": "Cortex de l'hémisphère cérébelleux droit",
+ "nom_en": "Right-Cerebellum-Cortex",
+ "cote": "droit",
+ "categorie": "Cervelet",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (aseg)",
+  "nom_outil": "Right-Cerebellum-Cortex",
+  "identifiant": 47
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   33.1,
+   -43.8,
+   -49.6
+  ],
+  "mni_icbm2009c_mm": [
+   36.099998474121094,
+   -44.0,
+   -57.900001525878906
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    33.1,
+    -43.8,
+    -42.6
+   ],
+   "mni_icbm2009c_mm": [
+    36.20000076293945,
+    -43.0,
+    -48.79999923706055
+   ],
+   "coupe": "z = -42.6 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    33.1,
+    -43.8,
+    -49.6
+   ],
+   "mni_icbm2009c_mm": [
+    36.099998474121094,
+    -44.0,
+    -57.900001525878906
+   ],
+   "coupe": "y = -43.8 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    48.5,
+    -43.8,
+    -49.6
+   ],
+   "mni_icbm2009c_mm": [
+    51.900001525878906,
+    -44.900001525878906,
+    -55.5
+   ],
+   "coupe": "x = +48.5 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 46,
+     "nom": "Cerebellum Gray Matter (R)"
+    }
+   ],
+   "mesure": 0.471,
+   "verdict": "discordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.782,
+     "verdict": "partiel"
+    },
+    "coronal": {
+     "mesure": 0.326,
+     "verdict": "discordant"
+    },
+    "sagittal": {
+     "mesure": 0.522,
+     "verdict": "discordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.83"
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "faible"
+}

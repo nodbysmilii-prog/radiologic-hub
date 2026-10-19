@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-IFO_right",
+ "nom_fr": "Faisceau fronto-occipital inférieur droit",
+ "nom_en": "IFO_right",
+ "cote": "droit",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "IFO_right",
+  "identifiant": "IFO_right"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   12.8,
+   -81.6,
+   -2.7
+  ],
+  "mni_icbm2009c_mm": [
+   12.899999618530273,
+   -81.30000305175781,
+   -7.699999809265137
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    12.8,
+    -81.6,
+    -2.7
+   ],
+   "mni_icbm2009c_mm": [
+    12.899999618530273,
+    -81.30000305175781,
+    -7.699999809265137
+   ],
+   "coupe": "z = -2.7 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    12.8,
+    -81.6,
+    -2.7
+   ],
+   "mni_icbm2009c_mm": [
+    12.899999618530273,
+    -81.30000305175781,
+    -7.699999809265137
+   ],
+   "coupe": "y = -81.6 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    20.5,
+    -81.6,
+    -2.7
+   ],
+   "mni_icbm2009c_mm": [
+    20.799999237060547,
+    -81.19999694824219,
+    -6.5
+   ],
+   "coupe": "x = +20.5 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

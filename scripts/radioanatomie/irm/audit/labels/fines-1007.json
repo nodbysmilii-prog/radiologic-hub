@@ -1,0 +1,137 @@
+{
+ "cle": "fines-1007",
+ "nom_fr": "Gyrus fusiforme gauche",
+ "nom_en": "ctx-lh-fusiform",
+ "cote": "gauche",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-fusiform",
+  "identifiant": 1007
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -27.8,
+   -24.9,
+   -25.8
+  ],
+  "mni_icbm2009c_mm": [
+   -31.5,
+   -26.600000381469727,
+   -30.700000762939453
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -27.8,
+    -24.9,
+    -11.8
+   ],
+   "mni_icbm2009c_mm": [
+    -32.0,
+    -25.5,
+    -17.0
+   ],
+   "coupe": "z = -11.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -27.8,
+    -69.7,
+    -25.8
+   ],
+   "mni_icbm2009c_mm": [
+    -31.0,
+    -72.5999984741211,
+    -31.600000381469727
+   ],
+   "coupe": "y = -69.7 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -31.3,
+    -24.9,
+    -25.8
+   ],
+   "mni_icbm2009c_mm": [
+    -35.5,
+    -27.100000381469727,
+    -31.0
+   ],
+   "coupe": "x = -31.3 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 75,
+     "nom": "Fusiform (L)"
+    }
+   ],
+   "mesure": 0.639,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.728,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.338,
+     "verdict": "discordant"
+    },
+    "sagittal": {
+     "mesure": 0.655,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.77"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 73,
+     "nom": "Left Occipital Fusiform Gyrus"
+    },
+    {
+     "id": 75,
+     "nom": "Left Temporal Fusiform Cortex, anterior division"
+    },
+    {
+     "id": 77,
+     "nom": "Left Temporal Fusiform Cortex, posterior division"
+    },
+    {
+     "id": 79,
+     "nom": "Left Temporal Occipital Fusiform Cortex"
+    }
+   ],
+   "mesure": 0.752,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.803,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.549,
+     "verdict": "partiel"
+    },
+    "sagittal": {
+     "mesure": 0.901,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "moyenne"
+}

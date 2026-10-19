@@ -1,0 +1,133 @@
+{
+ "cle": "fines-1021",
+ "nom_fr": "Cortex péricalcarin gauche",
+ "nom_en": "ctx-lh-pericalcarine",
+ "cote": "gauche",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-pericalcarine",
+  "identifiant": 1021
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -13.8,
+   -78.8,
+   12.0
+  ],
+  "mni_icbm2009c_mm": [
+   -16.5,
+   -77.0999984741211,
+   11.399999618530273
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -13.8,
+    -78.8,
+    7.8
+   ],
+   "mni_icbm2009c_mm": [
+    -17.700000762939453,
+    -78.5999984741211,
+    6.199999809265137
+   ],
+   "coupe": "z = +7.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -13.8,
+    -74.6,
+    12.0
+   ],
+   "mni_icbm2009c_mm": [
+    -16.700000762939453,
+    -71.80000305175781,
+    12.300000190734863
+   ],
+   "coupe": "y = -74.6 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -8.9,
+    -78.8,
+    12.0
+   ],
+   "mni_icbm2009c_mm": [
+    -10.300000190734863,
+    -76.80000305175781,
+    13.100000381469727
+   ],
+   "coupe": "x = -8.9 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 57,
+     "nom": "Pericalcarine (L)"
+    }
+   ],
+   "mesure": 0.566,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.597,
+     "verdict": "partiel"
+    },
+    "coronal": {
+     "mesure": 0.593,
+     "verdict": "partiel"
+    },
+    "sagittal": {
+     "mesure": 0.733,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.60"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 47,
+     "nom": "Left Intracalcarine Cortex"
+    },
+    {
+     "id": 93,
+     "nom": "Left Occipital Pole"
+    },
+    {
+     "id": 95,
+     "nom": "Left Supracalcarine Cortex"
+    }
+   ],
+   "mesure": 0.97,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.978,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "moyenne"
+}

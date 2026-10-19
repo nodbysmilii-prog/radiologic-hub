@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-ST_PAR_right",
+ "nom_fr": "Fibres striato-pariétales droites",
+ "nom_en": "ST_PAR_right",
+ "cote": "droit",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "ST_PAR_right",
+  "identifiant": "ST_PAR_right"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   26.8,
+   -24.9,
+   30.2
+  ],
+  "mni_icbm2009c_mm": [
+   28.899999618530273,
+   -25.600000381469727,
+   31.399999618530273
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    26.8,
+    -24.9,
+    28.8
+   ],
+   "mni_icbm2009c_mm": [
+    28.899999618530273,
+    -25.5,
+    29.799999237060547
+   ],
+   "coupe": "z = +28.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    26.8,
+    -30.5,
+    30.2
+   ],
+   "mni_icbm2009c_mm": [
+    28.799999237060547,
+    -32.29999923706055,
+    30.799999237060547
+   ],
+   "coupe": "y = -30.5 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    28.2,
+    -24.9,
+    30.2
+   ],
+   "mni_icbm2009c_mm": [
+    30.200000762939453,
+    -25.600000381469727,
+    31.5
+   ],
+   "coupe": "x = +28.2 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

@@ -1,0 +1,88 @@
+{
+ "cle": "territoires-34",
+ "nom_fr": "Territoire de l'artère cérébelleuse antéro-inférieure (AICA) (droit)",
+ "nom_en": "AICA",
+ "cote": "droit",
+ "categorie": "Territoires vasculaires",
+ "statut_module": "transporté",
+ "source": {
+  "origine": "Atlas des territoires (Liu 2023, redécoupé)",
+  "nom_outil": "AICA",
+  "identifiant": 34
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   41.5,
+   -47.3,
+   -42.6
+  ],
+  "mni_icbm2009c_mm": [
+   44.900001525878906,
+   -47.599998474121094,
+   -47.900001525878906
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    41.5,
+    -47.3,
+    -41.9
+   ],
+   "mni_icbm2009c_mm": [
+    44.900001525878906,
+    -47.400001525878906,
+    -47.099998474121094
+   ],
+   "coupe": "z = -41.9 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    41.5,
+    -46.6,
+    -42.6
+   ],
+   "mni_icbm2009c_mm": [
+    44.79999923706055,
+    -46.79999923706055,
+    -47.900001525878906
+   ],
+   "coupe": "y = -46.6 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    46.4,
+    -47.3,
+    -42.6
+   ],
+   "mni_icbm2009c_mm": [
+    49.5,
+    -48.29999923706055,
+    -47.5
+   ],
+   "coupe": "x = +46.4 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "Liu et al. 2023 (territoires artériels, CC BY-SA 4.0)",
+   "type": "transporté",
+   "labels": {
+    "ids": [
+     34
+    ],
+    "noms": [
+     "Territoire de l'artère cérébelleuse antéro-inférieure (AICA) (droit)"
+    ]
+   },
+   "verdict": "redécoupé par règles géométriques (voir le rapport)"
+  }
+ ],
+ "remarques": [
+  "Territoire de l'atlas de Liu 2023 transporté sur le sujet, puis redécoupé par des règles géométriques (vidéo de référence de l'auteur) : à contrôler avec Tatu 1998.",
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Atlas des territoires (Liu 2023, redécoupé)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

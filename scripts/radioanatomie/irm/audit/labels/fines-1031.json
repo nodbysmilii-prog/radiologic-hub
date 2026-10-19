@@ -1,0 +1,137 @@
+{
+ "cle": "fines-1031",
+ "nom_fr": "Gyrus supramarginal gauche",
+ "nom_en": "ctx-lh-supramarginal",
+ "cote": "gauche",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-supramarginal",
+  "identifiant": 1031
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -62.1,
+   -39.6,
+   23.2
+  ],
+  "mni_icbm2009c_mm": [
+   -69.0999984741211,
+   -39.900001525878906,
+   25.799999237060547
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -62.1,
+    -39.6,
+    19.7
+   ],
+   "mni_icbm2009c_mm": [
+    -69.30000305175781,
+    -39.900001525878906,
+    21.899999618530273
+   ],
+   "coupe": "z = +19.7 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -62.1,
+    -32.6,
+    23.2
+   ],
+   "mni_icbm2009c_mm": [
+    -69.5999984741211,
+    -32.599998474121094,
+    25.5
+   ],
+   "coupe": "y = -32.6 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -57.9,
+    -39.6,
+    23.2
+   ],
+   "mni_icbm2009c_mm": [
+    -64.5999984741211,
+    -39.79999923706055,
+    26.0
+   ],
+   "coupe": "x = -57.9 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 102,
+     "nom": "Supramarginal (L)"
+    }
+   ],
+   "mesure": 0.563,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.455,
+     "verdict": "partiel"
+    },
+    "coronal": {
+     "mesure": 0.757,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.544,
+     "verdict": "partiel"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.81"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 37,
+     "nom": "Left Angular Gyrus"
+    },
+    {
+     "id": 39,
+     "nom": "Left Parietal Operculum Cortex"
+    },
+    {
+     "id": 41,
+     "nom": "Left Supramarginal Gyrus, anterior division"
+    },
+    {
+     "id": 85,
+     "nom": "Left Supramarginal Gyrus, posterior division"
+    }
+   ],
+   "mesure": 0.832,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.807,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.94,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.859,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "moyenne"
+}

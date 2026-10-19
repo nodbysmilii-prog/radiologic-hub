@@ -1,0 +1,141 @@
+{
+ "cle": "fines-2030",
+ "nom_fr": "Gyrus temporal supérieur droit",
+ "nom_en": "ctx-rh-superiortemporal",
+ "cote": "droit",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-superiortemporal",
+  "identifiant": 2030
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   21.2,
+   8.0,
+   -27.9
+  ],
+  "mni_icbm2009c_mm": [
+   23.399999618530273,
+   8.5,
+   -34.0
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    21.2,
+    8.0,
+    7.8
+   ],
+   "mni_icbm2009c_mm": [
+    22.799999237060547,
+    9.199999809265137,
+    4.900000095367432
+   ],
+   "coupe": "z = +7.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    21.2,
+    8.0,
+    -27.9
+   ],
+   "mni_icbm2009c_mm": [
+    23.399999618530273,
+    8.5,
+    -34.0
+   ],
+   "coupe": "y = +8.0 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    48.5,
+    8.0,
+    -27.9
+   ],
+   "mni_icbm2009c_mm": [
+    55.599998474121094,
+    11.199999809265137,
+    -31.700000762939453
+   ],
+   "coupe": "x = +48.5 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 45,
+     "nom": "Superior Temporal (R)"
+    }
+   ],
+   "mesure": 0.754,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.787,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.746,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.775,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.87"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 16,
+     "nom": "Right Planum Polare"
+    },
+    {
+     "id": 18,
+     "nom": "Right Planum Temporale"
+    },
+    {
+     "id": 20,
+     "nom": "Right Superior Temporal Gyrus, anterior division"
+    },
+    {
+     "id": 88,
+     "nom": "Right Superior Temporal Gyrus, posterior division"
+    },
+    {
+     "id": 92,
+     "nom": "Right Temporal Pole"
+    }
+   ],
+   "mesure": 0.875,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.669,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.84,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

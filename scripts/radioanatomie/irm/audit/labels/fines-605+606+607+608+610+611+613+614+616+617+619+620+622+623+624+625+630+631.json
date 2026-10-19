@@ -1,0 +1,129 @@
+{
+ "cle": "fines-605+606+607+608+610+611+613+614+616+617+619+620+622+623+624+625+630+631",
+ "nom_fr": "Lobe postérieur du cervelet",
+ "nom_en": "Posterior lobe of the cerebellum",
+ "cote": "médian",
+ "categorie": "Cervelet",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (grandes régions)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -1.9,
+   -59.2,
+   -36.3
+  ],
+  "mni_icbm2009c_mm": [
+   -2.4000000953674316,
+   -62.0,
+   -42.599998474121094
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -1.9,
+    -59.2,
+    -41.2
+   ],
+   "mni_icbm2009c_mm": [
+    -1.2000000476837158,
+    -63.79999923706055,
+    -48.0
+   ],
+   "coupe": "z = -41.2 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -1.9,
+    -65.5,
+    -36.3
+   ],
+   "mni_icbm2009c_mm": [
+    -2.200000047683716,
+    -68.19999694824219,
+    -42.70000076293945
+   ],
+   "coupe": "y = -65.5 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -31.3,
+    -59.2,
+    -36.3
+   ],
+   "mni_icbm2009c_mm": [
+    -32.70000076293945,
+    -60.70000076293945,
+    -43.79999923706055
+   ],
+   "coupe": "x = -31.3 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 97,
+     "nom": "Cerebellum Gray Matter (L)"
+    },
+    {
+     "id": 46,
+     "nom": "Cerebellum Gray Matter (R)"
+    },
+    {
+     "id": 101,
+     "nom": "Vermal lobules I-V (L)"
+    },
+    {
+     "id": 50,
+     "nom": "Vermal lobules I-V (R)"
+    },
+    {
+     "id": 53,
+     "nom": "Vermal lobules VI-VII (L)"
+    },
+    {
+     "id": 2,
+     "nom": "Vermal lobules VI-VII (R)"
+    },
+    {
+     "id": 71,
+     "nom": "Vermal lobules VIII-X (L)"
+    },
+    {
+     "id": 20,
+     "nom": "Vermal lobules VIII-X (R)"
+    }
+   ],
+   "mesure": 0.911,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.949,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.949,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.942,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.38"
+  }
+ ],
+ "remarques": [
+  "Étiquette CerebrA peu fiable selon ses auteurs (kappa 0.38) : la discordance ne suffit pas à conclure."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "élevée"
+}

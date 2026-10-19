@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-UF_right",
+ "nom_fr": "Faisceau unciné droit",
+ "nom_en": "UF_right",
+ "cote": "droit",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "UF_right",
+  "identifiant": "UF_right"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   20.5,
+   23.4,
+   -9.7
+  ],
+  "mni_icbm2009c_mm": [
+   21.299999237060547,
+   22.700000762939453,
+   -11.600000381469727
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    20.5,
+    23.4,
+    -11.1
+   ],
+   "mni_icbm2009c_mm": [
+    21.299999237060547,
+    22.5,
+    -13.0
+   ],
+   "coupe": "z = -11.1 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    20.5,
+    3.8,
+    -9.7
+   ],
+   "mni_icbm2009c_mm": [
+    22.200000762939453,
+    3.799999952316284,
+    -13.399999618530273
+   ],
+   "coupe": "y = +3.8 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    23.3,
+    23.4,
+    -9.7
+   ],
+   "mni_icbm2009c_mm": [
+    24.200000762939453,
+    22.799999237060547,
+    -12.0
+   ],
+   "coupe": "x = +23.3 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

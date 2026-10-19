@@ -1,0 +1,99 @@
+{
+ "cle": "fines-614",
+ "nom_fr": "Lobule VIIB (lobule gracile), hémisphère cérébelleux gauche",
+ "nom_en": "Cbm_Left_VIIb",
+ "cote": "gauche",
+ "categorie": "Cervelet",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "CerebNet",
+  "nom_outil": "Cbm_Left_VIIb",
+  "identifiant": 614
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -40.4,
+   -62.0,
+   -46.1
+  ],
+  "mni_icbm2009c_mm": [
+   -43.79999923706055,
+   -64.9000015258789,
+   -53.400001525878906
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -40.4,
+    -62.0,
+    -43.3
+   ],
+   "mni_icbm2009c_mm": [
+    -43.79999923706055,
+    -65.0,
+    -50.900001525878906
+   ],
+   "coupe": "z = -43.3 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -40.4,
+    -69.7,
+    -46.1
+   ],
+   "mni_icbm2009c_mm": [
+    -43.5,
+    -72.9000015258789,
+    -53.79999923706055
+   ],
+   "coupe": "y = -69.7 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -43.2,
+    -62.0,
+    -46.1
+   ],
+   "mni_icbm2009c_mm": [
+    -46.400001525878906,
+    -64.5,
+    -52.79999923706055
+   ],
+   "coupe": "x = -43.2 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 97,
+     "nom": "Cerebellum Gray Matter (L)"
+    }
+   ],
+   "mesure": 0.948,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.97,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.989,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.941,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.83"
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

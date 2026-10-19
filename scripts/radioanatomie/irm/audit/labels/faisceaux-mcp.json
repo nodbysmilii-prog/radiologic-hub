@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-MCP",
+ "nom_fr": "Pédoncules cérébelleux moyens",
+ "nom_en": "MCP",
+ "cote": "médian",
+ "categorie": "Tronc cérébral",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "MCP",
+  "identifiant": "MCP"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -5.4,
+   -27.7,
+   -28.6
+  ],
+  "mni_icbm2009c_mm": [
+   -6.400000095367432,
+   -28.399999618530273,
+   -32.900001525878906
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -5.4,
+    -27.7,
+    -32.8
+   ],
+   "mni_icbm2009c_mm": [
+    -6.300000190734863,
+    -28.700000762939453,
+    -37.5
+   ],
+   "coupe": "z = -32.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -5.4,
+    -57.8,
+    -28.6
+   ],
+   "mni_icbm2009c_mm": [
+    -6.5,
+    -59.400001525878906,
+    -33.400001525878906
+   ],
+   "coupe": "y = -57.8 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -9.6,
+    -27.7,
+    -28.6
+   ],
+   "mni_icbm2009c_mm": [
+    -11.100000381469727,
+    -28.600000381469727,
+    -32.900001525878906
+   ],
+   "coupe": "x = -9.6 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

@@ -1,0 +1,38 @@
+{
+ "cle": "manuel-artere-cerebrale-anterieure-gauche-segment-a1",
+ "nom_fr": "Artère cérébrale antérieure gauche, segment A1",
+ "nom_en": "Anterior cerebral artery, A1 segment",
+ "cote": "gauche",
+ "categorie": "Artères",
+ "statut_module": "manuel",
+ "source": {
+  "origine": "Points manuels (navigateur)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   0.9,
+   12.2,
+   -16.0
+  ],
+  "mni_icbm2009c_mm": [
+   0.699999988079071,
+   11.5,
+   -19.700000762939453
+  ],
+  "points_auteur": 1,
+  "plans_des_points": [
+   "axial"
+  ]
+ },
+ "plans": {},
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Points manuels (navigateur).",
+  "Côté en désaccord avec la coordonnée MNI."
+ ],
+ "controle_lateralite": "ÉCART : côté gauche, x MNI = +0.7 mm",
+ "confiance": "faible"
+}

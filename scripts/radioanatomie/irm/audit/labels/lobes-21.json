@@ -1,0 +1,129 @@
+{
+ "cle": "lobes-21",
+ "nom_fr": "Mésencéphale",
+ "nom_en": "Midbrain (mesencephalon)",
+ "cote": "médian",
+ "categorie": "Tronc cérébral",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (grandes régions)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -6.1,
+   -24.2,
+   -11.8
+  ],
+  "mni_icbm2009c_mm": [
+   -7.5,
+   -23.399999618530273,
+   -15.100000381469727
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -6.1,
+    -24.2,
+    -6.2
+   ],
+   "mni_icbm2009c_mm": [
+    -7.599999904632568,
+    -22.799999237060547,
+    -9.300000190734863
+   ],
+   "coupe": "z = -6.2 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -6.1,
+    -20.7,
+    -11.8
+   ],
+   "mni_icbm2009c_mm": [
+    -7.599999904632568,
+    -20.0,
+    -15.199999809265137
+   ],
+   "coupe": "y = -20.7 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    5.8,
+    -24.2,
+    -11.8
+   ],
+   "mni_icbm2009c_mm": [
+    5.900000095367432,
+    -23.5,
+    -15.0
+   ],
+   "coupe": "x = +5.8 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 62,
+     "nom": "Brainstem (L)"
+    },
+    {
+     "id": 11,
+     "nom": "Brainstem (R)"
+    }
+   ],
+   "mesure": 0.422,
+   "verdict": "discordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.24,
+     "verdict": "discordant"
+    },
+    "coronal": {
+     "mesure": 0.146,
+     "verdict": "discordant"
+    },
+    "sagittal": {
+     "mesure": 0.452,
+     "verdict": "discordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.65"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 8,
+     "nom": "Brainstem"
+    }
+   ],
+   "mesure": 0.479,
+   "verdict": "discordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.244,
+     "verdict": "discordant"
+    },
+    "coronal": {
+     "mesure": 0.202,
+     "verdict": "discordant"
+    },
+    "sagittal": {
+     "mesure": 0.486,
+     "verdict": "discordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "faible"
+}

@@ -1,0 +1,98 @@
+{
+ "cle": "fines-2",
+ "nom_fr": "Substance blanche cérébrale gauche",
+ "nom_en": "Left-Cerebral-White-Matter",
+ "cote": "gauche",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (aseg)",
+  "nom_outil": "Left-Cerebral-White-Matter",
+  "identifiant": 2
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -25.7,
+   -7.4,
+   27.4
+  ],
+  "mni_icbm2009c_mm": [
+   -29.5,
+   -7.300000190734863,
+   28.600000381469727
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -25.7,
+    -7.4,
+    26.0
+   ],
+   "mni_icbm2009c_mm": [
+    -29.600000381469727,
+    -7.099999904632568,
+    26.899999618530273
+   ],
+   "coupe": "z = +26.0 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -25.7,
+    -38.9,
+    27.4
+   ],
+   "mni_icbm2009c_mm": [
+    -28.799999237060547,
+    -40.900001525878906,
+    30.299999237060547
+   ],
+   "coupe": "y = -38.9 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -17.3,
+    -7.4,
+    27.4
+   ],
+   "mni_icbm2009c_mm": [
+    -20.5,
+    -7.5,
+    28.100000381469727
+   ],
+   "coupe": "x = -17.3 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 1,
+     "nom": "Left Cerebral White Matter"
+    }
+   ],
+   "mesure": 0.724,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.821,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.738,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.849,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

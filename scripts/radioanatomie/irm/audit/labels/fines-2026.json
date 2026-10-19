@@ -1,0 +1,133 @@
+{
+ "cle": "fines-2026",
+ "nom_fr": "Gyrus cingulaire antérieur droit, partie rostrale",
+ "nom_en": "ctx-rh-rostralanteriorcingulate",
+ "cote": "droit",
+ "categorie": "Système limbique",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-rostralanteriorcingulate",
+  "identifiant": 2026
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   3.0,
+   40.2,
+   14.8
+  ],
+  "mni_icbm2009c_mm": [
+   3.0,
+   39.400001525878906,
+   13.899999618530273
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    3.0,
+    40.2,
+    -5.5
+   ],
+   "mni_icbm2009c_mm": [
+    2.799999952316284,
+    38.5,
+    -7.0
+   ],
+   "coupe": "z = -5.5 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    3.0,
+    41.6,
+    14.8
+   ],
+   "mni_icbm2009c_mm": [
+    2.9000000953674316,
+    40.70000076293945,
+    13.899999618530273
+   ],
+   "coupe": "y = +41.6 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    3.0,
+    40.2,
+    14.8
+   ],
+   "mni_icbm2009c_mm": [
+    3.0,
+    39.400001525878906,
+    13.899999618530273
+   ],
+   "coupe": "x = +3.0 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 8,
+     "nom": "Rostral Anterior Cingulate (R)"
+    }
+   ],
+   "mesure": 0.659,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.763,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.73,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.793,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.72"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 54,
+     "nom": "Right Cingulate Gyrus, anterior division"
+    },
+    {
+     "id": 56,
+     "nom": "Right Paracingulate Gyrus"
+    },
+    {
+     "id": 58,
+     "nom": "Right Subcallosal Cortex"
+    }
+   ],
+   "mesure": 0.995,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

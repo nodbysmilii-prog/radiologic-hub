@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-ST_POSTC_left",
+ "nom_fr": "Fibres striato-postcentrales gauches",
+ "nom_en": "ST_POSTC_left",
+ "cote": "gauche",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "ST_POSTC_left",
+  "identifiant": "ST_POSTC_left"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -25.7,
+   -24.2,
+   27.4
+  ],
+  "mni_icbm2009c_mm": [
+   -28.100000381469727,
+   -24.600000381469727,
+   29.200000762939453
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -25.7,
+    -24.2,
+    21.1
+   ],
+   "mni_icbm2009c_mm": [
+    -28.600000381469727,
+    -24.100000381469727,
+    21.700000762939453
+   ],
+   "coupe": "z = +21.1 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -25.7,
+    -27.7,
+    27.4
+   ],
+   "mni_icbm2009c_mm": [
+    -27.799999237060547,
+    -28.200000762939453,
+    29.200000762939453
+   ],
+   "coupe": "y = -27.7 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -25.7,
+    -24.2,
+    27.4
+   ],
+   "mni_icbm2009c_mm": [
+    -28.100000381469727,
+    -24.600000381469727,
+    29.200000762939453
+   ],
+   "coupe": "x = -25.7 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

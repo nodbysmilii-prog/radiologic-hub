@@ -1,0 +1,129 @@
+{
+ "cle": "fines-2023",
+ "nom_fr": "Gyrus cingulaire postérieur droit",
+ "nom_en": "ctx-rh-posteriorcingulate",
+ "cote": "droit",
+ "categorie": "Système limbique",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-posteriorcingulate",
+  "identifiant": 2023
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   3.7,
+   1.0,
+   37.2
+  ],
+  "mni_icbm2009c_mm": [
+   3.5999999046325684,
+   -0.4000000059604645,
+   38.29999923706055
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    3.7,
+    1.0,
+    38.6
+   ],
+   "mni_icbm2009c_mm": [
+    3.799999952316284,
+    -0.4000000059604645,
+    39.599998474121094
+   ],
+   "coupe": "z = +38.6 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    3.7,
+    -4.6,
+    37.2
+   ],
+   "mni_icbm2009c_mm": [
+    4.0,
+    -5.099999904632568,
+    39.79999923706055
+   ],
+   "coupe": "y = -4.6 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    2.3,
+    1.0,
+    37.2
+   ],
+   "mni_icbm2009c_mm": [
+    1.7999999523162842,
+    -0.5,
+    38.0
+   ],
+   "coupe": "x = +2.3 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 47,
+     "nom": "Posterior Cingulate (R)"
+    }
+   ],
+   "mesure": 0.706,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.783,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.709,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.844,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.80"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 58,
+     "nom": "Right Cingulate Gyrus, anterior division"
+    },
+    {
+     "id": 60,
+     "nom": "Right Cingulate Gyrus, posterior division"
+    }
+   ],
+   "mesure": 0.937,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.951,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.878,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.992,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

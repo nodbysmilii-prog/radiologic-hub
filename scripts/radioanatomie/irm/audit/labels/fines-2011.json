@@ -1,0 +1,137 @@
+{
+ "cle": "fines-2011",
+ "nom_fr": "Gyri occipitaux latéraux droits",
+ "nom_en": "ctx-rh-lateraloccipital",
+ "cote": "droit",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-lateraloccipital",
+  "identifiant": 2011
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   16.3,
+   -87.9,
+   -9.7
+  ],
+  "mni_icbm2009c_mm": [
+   16.100000381469727,
+   -89.4000015258789,
+   -15.300000190734863
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    16.3,
+    -87.9,
+    -3.4
+   ],
+   "mni_icbm2009c_mm": [
+    17.399999618530273,
+    -88.4000015258789,
+    -8.300000190734863
+   ],
+   "coupe": "z = -3.4 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    16.3,
+    -89.3,
+    -9.7
+   ],
+   "mni_icbm2009c_mm": [
+    15.899999618530273,
+    -90.80000305175781,
+    -15.699999809265137
+   ],
+   "coupe": "y = -89.3 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    18.4,
+    -87.9,
+    -9.7
+   ],
+   "mni_icbm2009c_mm": [
+    18.200000762939453,
+    -89.30000305175781,
+    -15.699999809265137
+   ],
+   "coupe": "x = +18.4 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 34,
+     "nom": "Lateral Occipital (R)"
+    }
+   ],
+   "mesure": 0.584,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.61,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.685,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.675,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.76"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 44,
+     "nom": "Right Lateral Occipital Cortex, inferior division"
+    },
+    {
+     "id": 46,
+     "nom": "Right Lateral Occipital Cortex, superior division"
+    },
+    {
+     "id": 80,
+     "nom": "Right Occipital Fusiform Gyrus"
+    },
+    {
+     "id": 96,
+     "nom": "Right Occipital Pole"
+    }
+   ],
+   "mesure": 0.989,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.967,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.944,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "moyenne"
+}

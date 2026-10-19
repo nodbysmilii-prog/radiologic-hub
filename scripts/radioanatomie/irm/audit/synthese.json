@@ -1,0 +1,1496 @@
+{
+ "structures": 478,
+ "confiance": {
+  "élevée": 99,
+  "faible": 21,
+  "hors atlas": 154,
+  "moyenne": 35,
+  "à placer": 169
+ },
+ "par_categorie": {
+  "Substance blanche": {
+   "élevée": 2,
+   "hors atlas": 68,
+   "à placer": 16
+  },
+  "Ventricules et citernes": {
+   "élevée": 3,
+   "faible": 2,
+   "hors atlas": 3,
+   "moyenne": 1,
+   "à placer": 23
+  },
+  "Cervelet": {
+   "élevée": 27,
+   "faible": 3,
+   "moyenne": 6,
+   "à placer": 2
+  },
+  "Noyaux gris centraux et structures apparentées": {
+   "élevée": 10,
+   "moyenne": 2,
+   "faible": 8,
+   "hors atlas": 5,
+   "à placer": 8
+  },
+  "Système limbique": {
+   "élevée": 12,
+   "moyenne": 4,
+   "hors atlas": 3,
+   "faible": 2,
+   "à placer": 6
+  },
+  "Gyri": {
+   "élevée": 33,
+   "moyenne": 17,
+   "à placer": 6
+  },
+  "Régions": {
+   "élevée": 10,
+   "moyenne": 5,
+   "à placer": 6
+  },
+  "Sillons": {
+   "hors atlas": 35,
+   "à placer": 5
+  },
+  "Voies optiques": {
+   "hors atlas": 4,
+   "faible": 4,
+   "à placer": 2
+  },
+  "Glandes": {
+   "hors atlas": 4,
+   "à placer": 1
+  },
+  "Tronc cérébral": {
+   "faible": 1,
+   "élevée": 2,
+   "hors atlas": 5,
+   "à placer": 40
+  },
+  "Méninges": {
+   "hors atlas": 2,
+   "à placer": 10
+  },
+  "Territoires vasculaires": {
+   "hors atlas": 24
+  },
+  "Artères": {
+   "hors atlas": 1,
+   "à placer": 27,
+   "faible": 1
+  },
+  "Sinus veineux": {
+   "à placer": 17
+  }
+ },
+ "lateralite_ecarts": [
+  "manuel-artere-cerebrale-anterieure-gauche-segment-a1"
+ ],
+ "non_certaines": [
+  {
+   "cle": "fines-5",
+   "nom": "Corne temporale du ventricule latéral gauche",
+   "confiance": "faible",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.155,
+     "discordant",
+     {
+      "axial": "discordant",
+      "coronal": "discordant",
+      "sagittal": "partiel"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-44",
+   "nom": "Corne temporale du ventricule latéral droit",
+   "confiance": "faible",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.147,
+     "discordant",
+     {
+      "axial": "discordant",
+      "coronal": "discordant",
+      "sagittal": "partiel"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-8",
+   "nom": "Cortex de l'hémisphère cérébelleux gauche",
+   "confiance": "faible",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.421,
+     "discordant",
+     {
+      "axial": "partiel",
+      "coronal": "discordant",
+      "sagittal": "discordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-47",
+   "nom": "Cortex de l'hémisphère cérébelleux droit",
+   "confiance": "faible",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.471,
+     "discordant",
+     {
+      "axial": "partiel",
+      "coronal": "discordant",
+      "sagittal": "discordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-26",
+   "nom": "Noyau accumbens gauche",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.564,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "partiel",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "égal",
+     0.595,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-58",
+   "nom": "Noyau accumbens droit",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.468,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "partiel",
+      "sagittal": "partiel"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "égal",
+     0.528,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "partiel"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-14",
+   "nom": "Troisième ventricule (V3)",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.547,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-1002",
+   "nom": "Gyrus cingulaire antérieur gauche, partie caudale",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.442,
+     "partiel",
+     {
+      "axial": "partiel",
+      "coronal": "partiel",
+      "sagittal": "partiel"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "cortex HO",
+     0.968,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-2003",
+   "nom": "Gyrus frontal moyen droit, partie caudale",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.576,
+     "partiel",
+     {
+      "axial": "partiel",
+      "coronal": "partiel",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "cortex HO",
+     0.89,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-1005",
+   "nom": "Cunéus gauche",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.597,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "cortex HO",
+     0.715,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-1006",
+   "nom": "Cortex entorhinal gauche",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.584,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "partiel",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "cortex HO",
+     0.983,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-2006",
+   "nom": "Cortex entorhinal droit",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.526,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "partiel",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "cortex HO",
+     0.996,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-1007",
+   "nom": "Gyrus fusiforme gauche",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.639,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "discordant",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "cortex HO",
+     0.752,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "partiel",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-1008",
+   "nom": "Lobule pariétal inférieur gauche (gyrus angulaire)",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.58,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "cortex HO",
+     0.97,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-1009",
+   "nom": "Gyrus temporal inférieur gauche",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.562,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "partiel",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "cortex HO",
+     0.692,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "discordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-1011",
+   "nom": "Gyri occipitaux latéraux gauches",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.539,
+     "partiel",
+     {
+      "axial": "partiel",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "cortex HO",
+     0.999,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-2011",
+   "nom": "Gyri occipitaux latéraux droits",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.584,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "cortex HO",
+     0.989,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-1014",
+   "nom": "Cortex orbitofrontal médial gauche",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.552,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "partiel",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "cortex HO",
+     0.97,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-1017",
+   "nom": "Lobule paracentral gauche",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.588,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "cortex HO",
+     0.943,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-2020",
+   "nom": "Gyrus frontal inférieur droit, partie triangulaire",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.626,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "cortex HO",
+     0.472,
+     "partiel",
+     {
+      "axial": "partiel",
+      "coronal": "partiel",
+      "sagittal": "partiel"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-1021",
+   "nom": "Cortex péricalcarin gauche",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.566,
+     "partiel",
+     {
+      "axial": "partiel",
+      "coronal": "partiel",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "cortex HO",
+     0.97,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-1022",
+   "nom": "Gyrus postcentral gauche",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.589,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "cortex HO",
+     0.945,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-1026",
+   "nom": "Gyrus cingulaire antérieur gauche, partie rostrale",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.444,
+     "partiel",
+     {
+      "axial": "partiel",
+      "coronal": "partiel",
+      "sagittal": "partiel"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "cortex HO",
+     0.985,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-1027",
+   "nom": "Gyrus frontal moyen gauche, partie rostrale",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.579,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "partiel",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "cortex HO",
+     0.981,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-2027",
+   "nom": "Gyrus frontal moyen droit, partie rostrale",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.581,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "cortex HO",
+     0.994,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-1029",
+   "nom": "Lobule pariétal supérieur gauche",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.592,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "cortex HO",
+     0.855,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-1031",
+   "nom": "Gyrus supramarginal gauche",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.563,
+     "partiel",
+     {
+      "axial": "partiel",
+      "coronal": "concordant",
+      "sagittal": "partiel"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "cortex HO",
+     0.832,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-2031",
+   "nom": "Gyrus supramarginal droit",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.586,
+     "partiel",
+     {
+      "axial": "partiel",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "cortex HO",
+     0.878,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "lobes-2",
+   "nom": "Lobe pariétal gauche",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "groupe",
+     0.665,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "lobe HO",
+     0.699,
+     "partiel",
+     {
+      "axial": "partiel",
+      "coronal": "concordant",
+      "sagittal": "discordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "lobes-12",
+   "nom": "Lobe pariétal droit",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "groupe",
+     0.686,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "lobe HO",
+     0.673,
+     "partiel",
+     {
+      "axial": "discordant",
+      "coronal": "concordant",
+      "sagittal": "discordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "lobes-3",
+   "nom": "Lobe temporal gauche",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "groupe",
+     0.717,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "lobe HO",
+     0.668,
+     "partiel",
+     {
+      "axial": "discordant",
+      "coronal": "partiel",
+      "sagittal": "partiel"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "lobes-13",
+   "nom": "Lobe temporal droit",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "groupe",
+     0.725,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "lobe HO",
+     0.663,
+     "partiel",
+     {
+      "axial": "discordant",
+      "coronal": "discordant",
+      "sagittal": "partiel"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "lobes-6",
+   "nom": "Cortex cingulaire gauche",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "groupe",
+     0.586,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "partiel",
+      "sagittal": "concordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "lobe HO",
+     0.831,
+     "concordant",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-623",
+   "nom": "Lobule IX (tonsille), hémisphère cérébelleux gauche",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.776,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "partiel"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-625",
+   "nom": "Lobule IX (tonsille), hémisphère cérébelleux droit",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.753,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "partiel",
+      "sagittal": "partiel"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-626",
+   "nom": "Lobule X (flocculus) gauche",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.699,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "partiel",
+      "sagittal": "partiel"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-628",
+   "nom": "Lobule X (flocculus) droit",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.786,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "partiel"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-630",
+   "nom": "Vermis, lobule VII (folium et tuber)",
+   "confiance": "faible",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.524,
+     "discordant",
+     {
+      "axial": "discordant",
+      "coronal": "discordant",
+      "sagittal": "partiel"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-631",
+   "nom": "Vermis, lobule VIII (pyramide)",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.769,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-965",
+   "nom": "Tractus optique gauche",
+   "confiance": "faible",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.508,
+     "discordant",
+     {
+      "axial": "discordant",
+      "coronal": "concordant",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-964",
+   "nom": "Tractus optique droit",
+   "confiance": "faible",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.464,
+     "discordant",
+     {
+      "axial": "discordant",
+      "coronal": "concordant",
+      "sagittal": "partiel"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-968",
+   "nom": "Chiasma optique, moitié gauche",
+   "confiance": "faible",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.008,
+     "discordant",
+     {
+      "axial": "discordant",
+      "coronal": "discordant",
+      "sagittal": "discordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-967",
+   "nom": "Chiasma optique, moitié droite",
+   "confiance": "faible",
+   "mesures": [
+    [
+     "CerebrA",
+     "égal",
+     0.002,
+     "discordant",
+     {
+      "axial": "discordant",
+      "coronal": "discordant",
+      "sagittal": "discordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-966",
+   "nom": "Corps mamillaire gauche",
+   "confiance": "faible",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.332,
+     "discordant",
+     {
+      "axial": "discordant",
+      "coronal": "discordant",
+      "sagittal": "discordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-963",
+   "nom": "Corps mamillaire droit",
+   "confiance": "faible",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.341,
+     "discordant",
+     {
+      "axial": "discordant",
+      "coronal": "discordant",
+      "sagittal": "discordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-979",
+   "nom": "Hypothalamus antérieur gauche",
+   "confiance": "faible",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.107,
+     "discordant",
+     {
+      "axial": "discordant",
+      "coronal": "discordant",
+      "sagittal": "discordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-983",
+   "nom": "Hypothalamus antérieur droit",
+   "confiance": "faible",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.06,
+     "discordant",
+     {
+      "axial": "discordant",
+      "coronal": "discordant",
+      "sagittal": "discordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-977",
+   "nom": "Hypothalamus médial gauche",
+   "confiance": "faible",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.22,
+     "discordant",
+     {
+      "axial": "discordant",
+      "coronal": "discordant",
+      "sagittal": "discordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-981",
+   "nom": "Hypothalamus médial droit",
+   "confiance": "faible",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.328,
+     "discordant",
+     {
+      "axial": "discordant",
+      "coronal": "discordant",
+      "sagittal": "discordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-978",
+   "nom": "Hypothalamus latéral gauche",
+   "confiance": "faible",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.521,
+     "discordant",
+     {
+      "axial": "concordant",
+      "coronal": "discordant",
+      "sagittal": "discordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-982",
+   "nom": "Hypothalamus latéral droit",
+   "confiance": "faible",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.534,
+     "discordant",
+     {
+      "axial": "concordant",
+      "coronal": "discordant",
+      "sagittal": "discordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-979+977+978+980",
+   "nom": "Hypothalamus gauche",
+   "confiance": "faible",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.463,
+     "discordant",
+     {
+      "axial": "partiel",
+      "coronal": "discordant",
+      "sagittal": "discordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-983+981+982+984",
+   "nom": "Hypothalamus droit",
+   "confiance": "faible",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.492,
+     "discordant",
+     {
+      "axial": "partiel",
+      "coronal": "discordant",
+      "sagittal": "discordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "lobes-21",
+   "nom": "Mésencéphale",
+   "confiance": "faible",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.422,
+     "discordant",
+     {
+      "axial": "discordant",
+      "coronal": "discordant",
+      "sagittal": "discordant"
+     }
+    ],
+    [
+     "Harvard-Oxford",
+     "partie",
+     0.479,
+     "discordant",
+     {
+      "axial": "discordant",
+      "coronal": "discordant",
+      "sagittal": "discordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "fines-626+627+628",
+   "nom": "Lobe flocculo-nodulaire",
+   "confiance": "moyenne",
+   "mesures": [
+    [
+     "CerebrA",
+     "partie",
+     0.758,
+     "partiel",
+     {
+      "axial": "concordant",
+      "coronal": "partiel",
+      "sagittal": "concordant"
+     }
+    ]
+   ]
+  },
+  {
+   "cle": "manuel-artere-cerebrale-anterieure-gauche-segment-a1",
+   "nom": "Artère cérébrale antérieure gauche, segment A1",
+   "confiance": "faible",
+   "mesures": []
+  }
+ ],
+ "sans_nom_anglais": [],
+ "lobes_dans_harvard_oxford": {
+  "Lobe frontal gauche": {
+   "frontal": 0.918,
+   "pariétal": 0.018,
+   "temporal": 0.0,
+   "insula": 0.001,
+   "cingulaire": 0.036
+  },
+  "Lobe frontal droit": {
+   "frontal": 0.886,
+   "pariétal": 0.019,
+   "temporal": 0.001,
+   "insula": 0.001,
+   "cingulaire": 0.059
+  },
+  "Lobe pariétal gauche": {
+   "frontal": 0.01,
+   "pariétal": 0.683,
+   "temporal": 0.001,
+   "occipital": 0.258,
+   "insula": 0.0,
+   "cingulaire": 0.014
+  },
+  "Lobe pariétal droit": {
+   "frontal": 0.014,
+   "pariétal": 0.669,
+   "temporal": 0.002,
+   "occipital": 0.261,
+   "insula": 0.001,
+   "cingulaire": 0.014,
+   "temporo-occipital": 0.005
+  },
+  "Lobe temporal gauche": {
+   "frontal": 0.001,
+   "pariétal": 0.048,
+   "temporal": 0.678,
+   "occipital": 0.107,
+   "insula": 0.0,
+   "temporo-occipital": 0.163
+  },
+  "Lobe temporal droit": {
+   "frontal": 0.0,
+   "pariétal": 0.027,
+   "temporal": 0.682,
+   "occipital": 0.088,
+   "insula": 0.0,
+   "temporo-occipital": 0.2
+  },
+  "Lobe occipital gauche": {
+   "pariétal": 0.019,
+   "temporal": 0.0,
+   "occipital": 0.979,
+   "cingulaire": 0.0,
+   "temporo-occipital": 0.001
+  },
+  "Lobe occipital droit": {
+   "pariétal": 0.017,
+   "occipital": 0.979,
+   "cingulaire": 0.001,
+   "temporo-occipital": 0.004
+  },
+  "Lobe de l'insula gauche": {
+   "frontal": 0.042,
+   "pariétal": 0.0,
+   "temporal": 0.015,
+   "insula": 0.931
+  },
+  "Lobe de l'insula droit": {
+   "frontal": 0.082,
+   "pariétal": 0.001,
+   "temporal": 0.025,
+   "insula": 0.863
+  },
+  "Cortex cingulaire gauche": {
+   "frontal": 0.074,
+   "pariétal": 0.026,
+   "temporal": 0.001,
+   "occipital": 0.009,
+   "cingulaire": 0.835
+  },
+  "Cortex cingulaire droit": {
+   "frontal": 0.01,
+   "pariétal": 0.02,
+   "occipital": 0.01,
+   "cingulaire": 0.899
+  }
+ }
+}

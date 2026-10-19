@@ -1,0 +1,105 @@
+{
+ "cle": "fines-15",
+ "nom_fr": "Quatrième ventricule (V4)",
+ "nom_en": "4th-Ventricle",
+ "cote": "médian",
+ "categorie": "Ventricules et citernes",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (aseg)",
+  "nom_outil": "4th-Ventricle",
+  "identifiant": 15
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -1.2,
+   -41.7,
+   -25.8
+  ],
+  "mni_icbm2009c_mm": [
+   -1.7999999523162842,
+   -44.20000076293945,
+   -30.200000762939453
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -1.2,
+    -41.7,
+    -28.6
+   ],
+   "mni_icbm2009c_mm": [
+    -1.600000023841858,
+    -44.400001525878906,
+    -33.20000076293945
+   ],
+   "coupe": "z = -28.6 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -1.2,
+    -42.4,
+    -25.8
+   ],
+   "mni_icbm2009c_mm": [
+    -1.7999999523162842,
+    -45.20000076293945,
+    -30.200000762939453
+   ],
+   "coupe": "y = -42.4 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    0.2,
+    -41.7,
+    -25.8
+   ],
+   "mni_icbm2009c_mm": [
+    -0.10000000149011612,
+    -44.20000076293945,
+    -30.200000762939453
+   ],
+   "coupe": "x = +0.2 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 88,
+     "nom": "Fourth Ventricle (L)"
+    },
+    {
+     "id": 37,
+     "nom": "Fourth Ventricle (R)"
+    }
+   ],
+   "mesure": 0.749,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.857,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.811,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.768,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.39"
+  }
+ ],
+ "remarques": [
+  "Étiquette CerebrA peu fiable selon ses auteurs (kappa 0.39) : la discordance ne suffit pas à conclure."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "élevée"
+}

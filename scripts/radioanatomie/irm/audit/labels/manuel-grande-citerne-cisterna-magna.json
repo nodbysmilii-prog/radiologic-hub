@@ -1,0 +1,22 @@
+{
+ "cle": "manuel-grande-citerne-cisterna-magna",
+ "nom_fr": "Grande citerne (cisterna magna)",
+ "nom_en": "Cisterna magna",
+ "cote": "médian",
+ "categorie": "Ventricules et citernes",
+ "statut_module": "manuel",
+ "source": {
+  "origine": "Points manuels (navigateur)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {},
+ "plans": {},
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Points manuels (navigateur)."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "à placer"
+}

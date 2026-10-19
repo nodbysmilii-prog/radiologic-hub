@@ -1,0 +1,73 @@
+{
+ "cle": "fines-252",
+ "nom_fr": "Corps calleux, quatrième cinquième (tronc postérieur et isthme)",
+ "nom_en": "CC_Mid_Posterior",
+ "cote": "médian",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer-CC",
+  "nom_outil": "CC_Mid_Posterior",
+  "identifiant": 252
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   0.2,
+   -22.1,
+   23.9
+  ],
+  "mni_icbm2009c_mm": [
+   0.8999999761581421,
+   -22.700000762939453,
+   23.0
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    0.2,
+    -22.1,
+    24.6
+   ],
+   "mni_icbm2009c_mm": [
+    0.800000011920929,
+    -22.700000762939453,
+    23.799999237060547
+   ],
+   "coupe": "z = +24.6 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    0.2,
+    -24.2,
+    23.9
+   ],
+   "mni_icbm2009c_mm": [
+    0.800000011920929,
+    -24.600000381469727,
+    22.899999618530273
+   ],
+   "coupe": "y = -24.2 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    2.3,
+    -22.1,
+    23.9
+   ],
+   "mni_icbm2009c_mm": [
+    3.200000047683716,
+    -22.600000381469727,
+    23.100000381469727
+   ],
+   "coupe": "x = +2.3 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : FastSurfer-CC."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

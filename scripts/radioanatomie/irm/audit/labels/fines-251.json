@@ -1,0 +1,73 @@
+{
+ "cle": "fines-251",
+ "nom_fr": "Corps calleux, cinquième postérieur (splénium)",
+ "nom_en": "CC_Posterior",
+ "cote": "médian",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer-CC",
+  "nom_outil": "CC_Posterior",
+  "identifiant": 251
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   0.2,
+   -41.0,
+   17.6
+  ],
+  "mni_icbm2009c_mm": [
+   0.10000000149011612,
+   -38.29999923706055,
+   17.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    0.2,
+    -41.0,
+    20.4
+   ],
+   "mni_icbm2009c_mm": [
+    0.20000000298023224,
+    -38.599998474121094,
+    20.399999618530273
+   ],
+   "coupe": "z = +20.4 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    0.2,
+    -38.2,
+    17.6
+   ],
+   "mni_icbm2009c_mm": [
+    0.4000000059604645,
+    -35.900001525878906,
+    17.100000381469727
+   ],
+   "coupe": "y = -38.2 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    2.3,
+    -41.0,
+    17.6
+   ],
+   "mni_icbm2009c_mm": [
+    3.0,
+    -38.5,
+    17.5
+   ],
+   "coupe": "x = +2.3 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : FastSurfer-CC."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

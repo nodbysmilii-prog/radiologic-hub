@@ -1,0 +1,141 @@
+{
+ "cle": "fines-1028",
+ "nom_fr": "Gyrus frontal supérieur gauche",
+ "nom_en": "ctx-lh-superiorfrontal",
+ "cote": "gauche",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-superiorfrontal",
+  "identifiant": 1028
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -21.5,
+   34.6,
+   49.1
+  ],
+  "mni_icbm2009c_mm": [
+   -26.0,
+   33.900001525878906,
+   55.599998474121094
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -21.5,
+    34.6,
+    49.8
+   ],
+   "mni_icbm2009c_mm": [
+    -25.799999237060547,
+    33.900001525878906,
+    56.20000076293945
+   ],
+   "coupe": "z = +49.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -21.5,
+    53.5,
+    49.1
+   ],
+   "mni_icbm2009c_mm": [
+    -24.299999237060547,
+    54.099998474121094,
+    53.900001525878906
+   ],
+   "coupe": "y = +53.5 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -2.6,
+    34.6,
+    49.1
+   ],
+   "mni_icbm2009c_mm": [
+    -3.700000047683716,
+    34.900001525878906,
+    56.0
+   ],
+   "coupe": "x = -2.6 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 89,
+     "nom": "Superior Frontal (L)"
+    }
+   ],
+   "mesure": 0.611,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.708,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.665,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.691,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.82"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 1,
+     "nom": "Left Frontal Medial Cortex"
+    },
+    {
+     "id": 5,
+     "nom": "Left Frontal Pole"
+    },
+    {
+     "id": 49,
+     "nom": "Left Juxtapositional Lobule Cortex (formerly Supplementary Motor Cortex)"
+    },
+    {
+     "id": 51,
+     "nom": "Left Paracingulate Gyrus"
+    },
+    {
+     "id": 55,
+     "nom": "Left Superior Frontal Gyrus"
+    }
+   ],
+   "mesure": 0.983,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.979,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.998,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.995,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

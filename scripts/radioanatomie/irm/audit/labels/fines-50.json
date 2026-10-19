@@ -1,0 +1,125 @@
+{
+ "cle": "fines-50",
+ "nom_fr": "Noyau caudé droit",
+ "nom_en": "Right-Caudate",
+ "cote": "droit",
+ "categorie": "Noyaux gris centraux et structures apparentées",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (aseg)",
+  "nom_outil": "Right-Caudate",
+  "identifiant": 50
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   11.4,
+   15.7,
+   8.5
+  ],
+  "mni_icbm2009c_mm": [
+   11.100000381469727,
+   16.0,
+   6.800000190734863
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    11.4,
+    15.7,
+    20.4
+   ],
+   "mni_icbm2009c_mm": [
+    12.0,
+    15.199999809265137,
+    19.799999237060547
+   ],
+   "coupe": "z = +20.4 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    11.4,
+    14.3,
+    8.5
+   ],
+   "mni_icbm2009c_mm": [
+    11.300000190734863,
+    14.600000381469727,
+    6.699999809265137
+   ],
+   "coupe": "y = +14.3 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    14.2,
+    15.7,
+    8.5
+   ],
+   "mni_icbm2009c_mm": [
+    14.300000190734863,
+    16.299999237060547,
+    6.900000095367432
+   ],
+   "coupe": "x = +14.2 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 49,
+     "nom": "Caudate (R)"
+    }
+   ],
+   "mesure": 0.864,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.86,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.898,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.901,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.84"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 16,
+     "nom": "Right Caudate"
+    }
+   ],
+   "mesure": 0.856,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.787,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.907,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.884,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

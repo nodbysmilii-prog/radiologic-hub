@@ -1,0 +1,137 @@
+{
+ "cle": "fines-1014",
+ "nom_fr": "Cortex orbitofrontal médial gauche",
+ "nom_en": "ctx-lh-medialorbitofrontal",
+ "cote": "gauche",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-medialorbitofrontal",
+  "identifiant": 1014
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -5.4,
+   9.4,
+   -14.6
+  ],
+  "mni_icbm2009c_mm": [
+   -6.0,
+   9.399999618530273,
+   -18.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -5.4,
+    9.4,
+    -12.5
+   ],
+   "mni_icbm2009c_mm": [
+    -5.900000095367432,
+    8.600000381469727,
+    -16.200000762939453
+   ],
+   "coupe": "z = -12.5 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -5.4,
+    57.7,
+    -14.6
+   ],
+   "mni_icbm2009c_mm": [
+    -5.199999809265137,
+    58.5,
+    -18.299999237060547
+   ],
+   "coupe": "y = +57.7 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -2.6,
+    9.4,
+    -14.6
+   ],
+   "mni_icbm2009c_mm": [
+    -2.9000000953674316,
+    9.399999618530273,
+    -17.5
+   ],
+   "coupe": "x = -2.6 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 66,
+     "nom": "Medial Orbitofrontal (L)"
+    }
+   ],
+   "mesure": 0.552,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.636,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.59,
+     "verdict": "partiel"
+    },
+    "sagittal": {
+     "mesure": 0.7,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.72"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 1,
+     "nom": "Left Frontal Medial Cortex"
+    },
+    {
+     "id": 49,
+     "nom": "Left Frontal Orbital Cortex"
+    },
+    {
+     "id": 53,
+     "nom": "Left Frontal Pole"
+    },
+    {
+     "id": 65,
+     "nom": "Left Subcallosal Cortex"
+    }
+   ],
+   "mesure": 0.97,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.962,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.99,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.994,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "moyenne"
+}

@@ -1,0 +1,137 @@
+{
+ "cle": "fines-2009",
+ "nom_fr": "Gyrus temporal inférieur droit",
+ "nom_en": "ctx-rh-inferiortemporal",
+ "cote": "droit",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-inferiortemporal",
+  "identifiant": 2009
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   26.1,
+   5.2,
+   -42.6
+  ],
+  "mni_icbm2009c_mm": [
+   28.0,
+   5.900000095367432,
+   -50.900001525878906
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    26.1,
+    5.2,
+    -38.4
+   ],
+   "mni_icbm2009c_mm": [
+    27.600000381469727,
+    5.400000095367432,
+    -47.29999923706055
+   ],
+   "coupe": "z = -38.4 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    26.1,
+    -14.4,
+    -42.6
+   ],
+   "mni_icbm2009c_mm": [
+    29.5,
+    -13.399999618530273,
+    -48.70000076293945
+   ],
+   "coupe": "y = -14.4 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    48.5,
+    5.2,
+    -42.6
+   ],
+   "mni_icbm2009c_mm": [
+    54.0,
+    7.099999904632568,
+    -49.20000076293945
+   ],
+   "coupe": "x = +48.5 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 3,
+     "nom": "Inferior temporal (R)"
+    }
+   ],
+   "mesure": 0.615,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.731,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.572,
+     "verdict": "partiel"
+    },
+    "sagittal": {
+     "mesure": 0.608,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.72"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 16,
+     "nom": "Right Inferior Temporal Gyrus, anterior division"
+    },
+    {
+     "id": 28,
+     "nom": "Right Inferior Temporal Gyrus, posterior division"
+    },
+    {
+     "id": 30,
+     "nom": "Right Inferior Temporal Gyrus, temporooccipital part"
+    },
+    {
+     "id": 32,
+     "nom": "Right Temporal Pole"
+    }
+   ],
+   "mesure": 0.743,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.657,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.597,
+     "verdict": "partiel"
+    },
+    "sagittal": {
+     "mesure": 0.875,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

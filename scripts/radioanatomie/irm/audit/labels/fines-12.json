@@ -1,0 +1,125 @@
+{
+ "cle": "fines-12",
+ "nom_fr": "Putamen gauche",
+ "nom_en": "Left-Putamen",
+ "cote": "gauche",
+ "categorie": "Noyaux gris centraux et structures apparentées",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (aseg)",
+  "nom_outil": "Left-Putamen",
+  "identifiant": 12
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -20.1,
+   10.8,
+   -0.6
+  ],
+  "mni_icbm2009c_mm": [
+   -22.0,
+   10.899999618530273,
+   -4.699999809265137
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -20.1,
+    10.8,
+    -0.6
+   ],
+   "mni_icbm2009c_mm": [
+    -22.0,
+    10.899999618530273,
+    -4.699999809265137
+   ],
+   "coupe": "z = -0.6 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -20.1,
+    6.6,
+    -0.6
+   ],
+   "mni_icbm2009c_mm": [
+    -22.399999618530273,
+    7.300000190734863,
+    -4.699999809265137
+   ],
+   "coupe": "y = +6.6 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -25.0,
+    10.8,
+    -0.6
+   ],
+   "mni_icbm2009c_mm": [
+    -27.5,
+    11.100000381469727,
+    -4.5
+   ],
+   "coupe": "x = -25.0 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 72,
+     "nom": "Putamen (L)"
+    }
+   ],
+   "mesure": 0.853,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.824,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.912,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.924,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.87"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 6,
+     "nom": "Left Putamen"
+    }
+   ],
+   "mesure": 0.855,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.824,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.908,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.934,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

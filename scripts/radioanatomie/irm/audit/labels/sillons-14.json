@@ -1,0 +1,73 @@
+{
+ "cle": "sillons-14",
+ "nom_fr": "Sillon du cingulum gauche",
+ "nom_en": "Cingulate sulcus",
+ "cote": "gauche",
+ "categorie": "Sillons",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (limites DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -3.3,
+   57.0,
+   -1.3
+  ],
+  "mni_icbm2009c_mm": [
+   -2.4000000953674316,
+   58.29999923706055,
+   -3.799999952316284
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -3.3,
+    57.0,
+    44.9
+   ],
+   "mni_icbm2009c_mm": [
+    -3.700000047683716,
+    58.5,
+    48.599998474121094
+   ],
+   "coupe": "z = +44.9 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -3.3,
+    47.2,
+    -1.3
+   ],
+   "mni_icbm2009c_mm": [
+    -4.300000190734863,
+    46.900001525878906,
+    -0.699999988079071
+   ],
+   "coupe": "y = +47.2 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -0.5,
+    57.0,
+    -1.3
+   ],
+   "mni_icbm2009c_mm": [
+    -0.20000000298023224,
+    58.400001525878906,
+    -2.700000047683716
+   ],
+   "coupe": "x = -0.5 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Règle (limites DKT)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

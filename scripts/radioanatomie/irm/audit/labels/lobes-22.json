@@ -1,0 +1,129 @@
+{
+ "cle": "lobes-22",
+ "nom_fr": "Pont",
+ "nom_en": "Pons",
+ "cote": "médian",
+ "categorie": "Tronc cérébral",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (grandes régions)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -0.5,
+   -25.6,
+   -30.0
+  ],
+  "mni_icbm2009c_mm": [
+   -1.2000000476837158,
+   -26.399999618530273,
+   -34.20000076293945
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -0.5,
+    -25.6,
+    -23.0
+   ],
+   "mni_icbm2009c_mm": [
+    -1.100000023841858,
+    -26.0,
+    -26.700000762939453
+   ],
+   "coupe": "z = -23.0 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -0.5,
+    -23.5,
+    -30.0
+   ],
+   "mni_icbm2009c_mm": [
+    -1.100000023841858,
+    -24.299999237060547,
+    -34.20000076293945
+   ],
+   "coupe": "y = -23.5 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -5.4,
+    -25.6,
+    -30.0
+   ],
+   "mni_icbm2009c_mm": [
+    -6.400000095367432,
+    -26.399999618530273,
+    -34.29999923706055
+   ],
+   "coupe": "x = -5.4 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 62,
+     "nom": "Brainstem (L)"
+    },
+    {
+     "id": 11,
+     "nom": "Brainstem (R)"
+    }
+   ],
+   "mesure": 0.976,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.986,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.975,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.987,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.65"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 8,
+     "nom": "Brainstem"
+    }
+   ],
+   "mesure": 0.998,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "élevée"
+}

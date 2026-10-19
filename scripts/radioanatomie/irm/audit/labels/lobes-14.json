@@ -1,0 +1,165 @@
+{
+ "cle": "lobes-14",
+ "nom_fr": "Lobe occipital droit",
+ "nom_en": "Occipital lobe",
+ "cote": "droit",
+ "categorie": "Régions",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (régions DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   19.1,
+   -83.0,
+   2.9
+  ],
+  "mni_icbm2009c_mm": [
+   20.399999618530273,
+   -83.0999984741211,
+   0.8999999761581421
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    19.1,
+    -83.0,
+    2.2
+   ],
+   "mni_icbm2009c_mm": [
+    20.299999237060547,
+    -83.0,
+    -0.10000000149011612
+   ],
+   "coupe": "z = +2.2 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    19.1,
+    -84.4,
+    2.9
+   ],
+   "mni_icbm2009c_mm": [
+    20.600000381469727,
+    -84.80000305175781,
+    1.2999999523162842
+   ],
+   "coupe": "y = -84.4 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    12.8,
+    -83.0,
+    2.9
+   ],
+   "mni_icbm2009c_mm": [
+    12.5,
+    -81.69999694824219,
+    -1.7000000476837158
+   ],
+   "coupe": "x = +12.8 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "groupe",
+   "labels": [
+    {
+     "id": 43,
+     "nom": "Cuneus (R)"
+    },
+    {
+     "id": 34,
+     "nom": "Lateral Occipital (R)"
+    },
+    {
+     "id": 12,
+     "nom": "Lingual (R)"
+    },
+    {
+     "id": 6,
+     "nom": "Pericalcarine (R)"
+    }
+   ],
+   "mesure": 0.647,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.701,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.641,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.67,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.60"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "lobe HO",
+   "labels": [
+    {
+     "id": 44,
+     "nom": "Right Cuneal Cortex"
+    },
+    {
+     "id": 46,
+     "nom": "Right Intracalcarine Cortex"
+    },
+    {
+     "id": 48,
+     "nom": "Right Lateral Occipital Cortex, inferior division"
+    },
+    {
+     "id": 64,
+     "nom": "Right Lateral Occipital Cortex, superior division"
+    },
+    {
+     "id": 72,
+     "nom": "Right Lingual Gyrus"
+    },
+    {
+     "id": 80,
+     "nom": "Right Occipital Fusiform Gyrus"
+    },
+    {
+     "id": 94,
+     "nom": "Right Occipital Pole"
+    },
+    {
+     "id": 96,
+     "nom": "Right Supracalcarine Cortex"
+    }
+   ],
+   "mesure": 0.978,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.979,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.997,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.958,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

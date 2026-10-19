@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-ST_PREC_left",
+ "nom_fr": "Fibres striato-précentrales gauches",
+ "nom_en": "ST_PREC_left",
+ "cote": "gauche",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "ST_PREC_left",
+  "identifiant": "ST_PREC_left"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -24.3,
+   -8.8,
+   27.4
+  ],
+  "mni_icbm2009c_mm": [
+   -28.0,
+   -8.699999809265137,
+   28.700000762939453
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -24.3,
+    -8.8,
+    22.5
+   ],
+   "mni_icbm2009c_mm": [
+    -28.100000381469727,
+    -8.199999809265137,
+    22.600000381469727
+   ],
+   "coupe": "z = +22.5 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -24.3,
+    -15.1,
+    27.4
+   ],
+   "mni_icbm2009c_mm": [
+    -28.0,
+    -15.100000381469727,
+    29.0
+   ],
+   "coupe": "y = -15.1 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -22.9,
+    -8.8,
+    27.4
+   ],
+   "mni_icbm2009c_mm": [
+    -26.5,
+    -8.699999809265137,
+    28.600000381469727
+   ],
+   "coupe": "x = -22.9 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

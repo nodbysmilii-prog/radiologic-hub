@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-CC_1",
+ "nom_fr": "Fibres calleuses du rostrum (CC 1)",
+ "nom_en": "CC_1",
+ "cote": "médian",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "CC_1",
+  "identifiant": "CC_1"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   9.3,
+   32.5,
+   -1.3
+  ],
+  "mni_icbm2009c_mm": [
+   9.800000190734863,
+   32.20000076293945,
+   -2.799999952316284
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    9.3,
+    32.5,
+    -9.7
+   ],
+   "mni_icbm2009c_mm": [
+    10.0,
+    30.899999618530273,
+    -12.399999618530273
+   ],
+   "coupe": "z = -9.7 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    9.3,
+    36.0,
+    -1.3
+   ],
+   "mni_icbm2009c_mm": [
+    9.600000381469727,
+    35.79999923706055,
+    -2.5
+   ],
+   "coupe": "y = +36.0 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -11.7,
+    32.5,
+    -1.3
+   ],
+   "mni_icbm2009c_mm": [
+    -14.5,
+    32.400001525878906,
+    -3.0999999046325684
+   ],
+   "coupe": "x = -11.7 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

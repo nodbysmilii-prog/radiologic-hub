@@ -1,0 +1,99 @@
+{
+ "cle": "fines-611",
+ "nom_fr": "Crus II (lobule semi-lunaire inférieur), hémisphère cérébelleux gauche",
+ "nom_en": "Cbm_Left_CrusII",
+ "cote": "gauche",
+ "categorie": "Cervelet",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "CerebNet",
+  "nom_outil": "Cbm_Left_CrusII",
+  "identifiant": 611
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -38.3,
+   -73.2,
+   -37.7
+  ],
+  "mni_icbm2009c_mm": [
+   -40.900001525878906,
+   -76.5,
+   -45.099998474121094
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -38.3,
+    -73.2,
+    -36.3
+   ],
+   "mni_icbm2009c_mm": [
+    -40.900001525878906,
+    -76.5,
+    -43.599998474121094
+   ],
+   "coupe": "z = -36.3 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -38.3,
+    -78.8,
+    -37.7
+   ],
+   "mni_icbm2009c_mm": [
+    -40.400001525878906,
+    -82.0,
+    -44.099998474121094
+   ],
+   "coupe": "y = -78.8 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -13.1,
+    -73.2,
+    -37.7
+   ],
+   "mni_icbm2009c_mm": [
+    -14.699999809265137,
+    -78.0,
+    -45.20000076293945
+   ],
+   "coupe": "x = -13.1 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 97,
+     "nom": "Cerebellum Gray Matter (L)"
+    }
+   ],
+   "mesure": 0.911,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.94,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.938,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.888,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.83"
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

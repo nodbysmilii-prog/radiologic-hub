@@ -1,0 +1,133 @@
+{
+ "cle": "fines-2005",
+ "nom_fr": "Cunéus droit",
+ "nom_en": "ctx-rh-cuneus",
+ "cote": "droit",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-cuneus",
+  "identifiant": 2005
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   4.4,
+   -88.6,
+   28.8
+  ],
+  "mni_icbm2009c_mm": [
+   3.5999999046325684,
+   -89.5,
+   32.099998474121094
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    4.4,
+    -88.6,
+    19.0
+   ],
+   "mni_icbm2009c_mm": [
+    3.0999999046325684,
+    -89.9000015258789,
+    19.5
+   ],
+   "coupe": "z = +19.0 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    4.4,
+    -82.3,
+    28.8
+   ],
+   "mni_icbm2009c_mm": [
+    5.599999904632568,
+    -81.80000305175781,
+    34.599998474121094
+   ],
+   "coupe": "y = -82.3 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    0.9,
+    -88.6,
+    28.8
+   ],
+   "mni_icbm2009c_mm": [
+    0.6000000238418579,
+    -89.4000015258789,
+    31.600000381469727
+   ],
+   "coupe": "x = +0.9 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 43,
+     "nom": "Cuneus (R)"
+    }
+   ],
+   "mesure": 0.624,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.695,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.743,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.831,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.67"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 64,
+     "nom": "Right Cuneal Cortex"
+    },
+    {
+     "id": 94,
+     "nom": "Right Occipital Pole"
+    },
+    {
+     "id": 96,
+     "nom": "Right Supracalcarine Cortex"
+    }
+   ],
+   "mesure": 0.757,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.89,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.746,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.905,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

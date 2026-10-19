@@ -1,0 +1,73 @@
+{
+ "cle": "sillons-55",
+ "nom_fr": "Sillon frontal inférieur droit",
+ "nom_en": "Inferior frontal sulcus",
+ "cote": "droit",
+ "categorie": "Sillons",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (limites DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   47.1,
+   12.9,
+   29.5
+  ],
+  "mni_icbm2009c_mm": [
+   54.5,
+   15.800000190734863,
+   34.20000076293945
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    47.1,
+    12.9,
+    29.5
+   ],
+   "mni_icbm2009c_mm": [
+    54.5,
+    15.800000190734863,
+    34.20000076293945
+   ],
+   "coupe": "z = +29.5 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    47.1,
+    31.8,
+    29.5
+   ],
+   "mni_icbm2009c_mm": [
+    52.20000076293945,
+    33.400001525878906,
+    31.5
+   ],
+   "coupe": "y = +31.8 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    42.2,
+    12.9,
+    29.5
+   ],
+   "mni_icbm2009c_mm": [
+    49.0,
+    16.100000381469727,
+    33.70000076293945
+   ],
+   "coupe": "x = +42.2 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Règle (limites DKT)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

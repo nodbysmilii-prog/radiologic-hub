@@ -1,0 +1,137 @@
+{
+ "cle": "fines-2014",
+ "nom_fr": "Cortex orbitofrontal médial droit",
+ "nom_en": "ctx-rh-medialorbitofrontal",
+ "cote": "droit",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-medialorbitofrontal",
+  "identifiant": 2014
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   8.6,
+   11.5,
+   -16.0
+  ],
+  "mni_icbm2009c_mm": [
+   9.100000381469727,
+   11.0,
+   -19.399999618530273
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    8.6,
+    11.5,
+    -14.6
+   ],
+   "mni_icbm2009c_mm": [
+    9.199999809265137,
+    10.600000381469727,
+    -18.0
+   ],
+   "coupe": "z = -14.6 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    8.6,
+    57.7,
+    -16.0
+   ],
+   "mni_icbm2009c_mm": [
+    8.600000381469727,
+    59.20000076293945,
+    -21.399999618530273
+   ],
+   "coupe": "y = +57.7 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    3.0,
+    11.5,
+    -16.0
+   ],
+   "mni_icbm2009c_mm": [
+    2.799999952316284,
+    11.0,
+    -19.100000381469727
+   ],
+   "coupe": "x = +3.0 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 15,
+     "nom": "Medial Orbitofrontal (R)"
+    }
+   ],
+   "mesure": 0.615,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.748,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.759,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.741,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.72"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 2,
+     "nom": "Right Frontal Medial Cortex"
+    },
+    {
+     "id": 50,
+     "nom": "Right Frontal Orbital Cortex"
+    },
+    {
+     "id": 54,
+     "nom": "Right Frontal Pole"
+    },
+    {
+     "id": 66,
+     "nom": "Right Subcallosal Cortex"
+    }
+   ],
+   "mesure": 0.991,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.992,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.992,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

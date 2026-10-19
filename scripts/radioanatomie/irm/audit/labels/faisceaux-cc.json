@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-CC",
+ "nom_fr": "Fibres calleuses (ensemble)",
+ "nom_en": "CC",
+ "cote": "médian",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "CC",
+  "identifiant": "CC"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -22.9,
+   -31.2,
+   31.6
+  ],
+  "mni_icbm2009c_mm": [
+   -24.600000381469727,
+   -32.900001525878906,
+   33.70000076293945
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -22.9,
+    -31.2,
+    27.4
+   ],
+   "mni_icbm2009c_mm": [
+    -25.0,
+    -32.400001525878906,
+    28.899999618530273
+   ],
+   "coupe": "z = +27.4 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -22.9,
+    -30.5,
+    31.6
+   ],
+   "mni_icbm2009c_mm": [
+    -24.600000381469727,
+    -32.099998474121094,
+    33.70000076293945
+   ],
+   "coupe": "y = -30.5 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -11.7,
+    -31.2,
+    31.6
+   ],
+   "mni_icbm2009c_mm": [
+    -13.399999618530273,
+    -33.400001525878906,
+    33.099998474121094
+   ],
+   "coupe": "x = -11.7 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

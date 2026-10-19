@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-T_PREC_right",
+ "nom_fr": "Fibres thalamo-précentrales droites",
+ "nom_en": "T_PREC_right",
+ "cote": "droit",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "T_PREC_right",
+  "identifiant": "T_PREC_right"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   25.4,
+   -11.6,
+   31.6
+  ],
+  "mni_icbm2009c_mm": [
+   27.899999618530273,
+   -11.5,
+   32.70000076293945
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    25.4,
+    -11.6,
+    28.8
+   ],
+   "mni_icbm2009c_mm": [
+    27.899999618530273,
+    -11.100000381469727,
+    29.299999237060547
+   ],
+   "coupe": "z = +28.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    25.4,
+    -17.9,
+    31.6
+   ],
+   "mni_icbm2009c_mm": [
+    27.700000762939453,
+    -18.299999237060547,
+    33.20000076293945
+   ],
+   "coupe": "y = -17.9 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    19.1,
+    -11.6,
+    31.6
+   ],
+   "mni_icbm2009c_mm": [
+    21.200000762939453,
+    -11.800000190734863,
+    32.5
+   ],
+   "coupe": "x = +19.1 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

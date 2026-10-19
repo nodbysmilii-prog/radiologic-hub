@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-CC_5",
+ "nom_fr": "Fibres calleuses du tronc, partie postérieure (CC 5, somesthésiques)",
+ "nom_en": "CC_5",
+ "cote": "médian",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "CC_5",
+  "identifiant": "CC_5"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -22.2,
+   -27.7,
+   33.7
+  ],
+  "mni_icbm2009c_mm": [
+   -23.799999237060547,
+   -29.100000381469727,
+   36.099998474121094
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -22.2,
+    -27.7,
+    27.4
+   ],
+   "mni_icbm2009c_mm": [
+    -24.399999618530273,
+    -28.5,
+    29.0
+   ],
+   "coupe": "z = +27.4 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -22.2,
+    -29.1,
+    33.7
+   ],
+   "mni_icbm2009c_mm": [
+    -23.700000762939453,
+    -30.700000762939453,
+    36.0
+   ],
+   "coupe": "y = -29.1 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    14.2,
+    -27.7,
+    33.7
+   ],
+   "mni_icbm2009c_mm": [
+    16.799999237060547,
+    -28.899999618530273,
+    36.5
+   ],
+   "coupe": "x = +14.2 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

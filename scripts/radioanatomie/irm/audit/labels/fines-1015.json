@@ -1,0 +1,137 @@
+{
+ "cle": "fines-1015",
+ "nom_fr": "Gyrus temporal moyen gauche",
+ "nom_en": "ctx-lh-middletemporal",
+ "cote": "gauche",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-middletemporal",
+  "identifiant": 1015
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -50.9,
+   7.3,
+   -20.9
+  ],
+  "mni_icbm2009c_mm": [
+   -58.599998474121094,
+   8.199999809265137,
+   -25.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -50.9,
+    7.3,
+    -0.6
+   ],
+   "mni_icbm2009c_mm": [
+    -59.900001525878906,
+    6.800000190734863,
+    -3.799999952316284
+   ],
+   "coupe": "z = -0.6 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -50.9,
+    -54.3,
+    -20.9
+   ],
+   "mni_icbm2009c_mm": [
+    -56.70000076293945,
+    -55.099998474121094,
+    -25.700000762939453
+   ],
+   "coupe": "y = -54.3 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -55.1,
+    7.3,
+    -20.9
+   ],
+   "mni_icbm2009c_mm": [
+    -63.099998474121094,
+    8.0,
+    -25.700000762939453
+   ],
+   "coupe": "x = -55.1 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 79,
+     "nom": "Middle Temporal (L)"
+    }
+   ],
+   "mesure": 0.606,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.691,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.676,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.721,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.72"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 15,
+     "nom": "Left Middle Temporal Gyrus, anterior division"
+    },
+    {
+     "id": 21,
+     "nom": "Left Middle Temporal Gyrus, posterior division"
+    },
+    {
+     "id": 23,
+     "nom": "Left Middle Temporal Gyrus, temporooccipital part"
+    },
+    {
+     "id": 25,
+     "nom": "Left Temporal Pole"
+    }
+   ],
+   "mesure": 0.81,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.776,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.806,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.809,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

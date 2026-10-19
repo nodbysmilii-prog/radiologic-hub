@@ -1,0 +1,107 @@
+{
+ "cle": "fines-602",
+ "nom_fr": "Lobules I à IV (lobe antérieur), hémisphère cérébelleux droit",
+ "nom_en": "Cbm_Right_I_IV",
+ "cote": "droit",
+ "categorie": "Cervelet",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "CerebNet",
+  "nom_outil": "Cbm_Right_I_IV",
+  "identifiant": 602
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   5.1,
+   -48.7,
+   -8.3
+  ],
+  "mni_icbm2009c_mm": [
+   4.699999809265137,
+   -49.70000076293945,
+   -9.399999618530273
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    5.1,
+    -48.7,
+    -16.7
+   ],
+   "mni_icbm2009c_mm": [
+    5.400000095367432,
+    -49.599998474121094,
+    -20.200000762939453
+   ],
+   "coupe": "z = -16.7 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    5.1,
+    -45.2,
+    -8.3
+   ],
+   "mni_icbm2009c_mm": [
+    4.5,
+    -45.79999923706055,
+    -9.0
+   ],
+   "coupe": "y = -45.2 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    1.6,
+    -48.7,
+    -8.3
+   ],
+   "mni_icbm2009c_mm": [
+    0.5,
+    -50.400001525878906,
+    -10.0
+   ],
+   "coupe": "x = +1.6 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 46,
+     "nom": "Cerebellum Gray Matter (R)"
+    },
+    {
+     "id": 101,
+     "nom": "Vermal lobules I-V (L)"
+    },
+    {
+     "id": 50,
+     "nom": "Vermal lobules I-V (R)"
+    }
+   ],
+   "mesure": 0.9,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.946,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.897,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.96,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.83"
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

@@ -1,0 +1,88 @@
+{
+ "cle": "territoires-27",
+ "nom_fr": "Territoire de l'artère cérébelleuse supérieure (gauche)",
+ "nom_en": "ACS",
+ "cote": "gauche",
+ "categorie": "Territoires vasculaires",
+ "statut_module": "transporté",
+ "source": {
+  "origine": "Atlas des territoires (Liu 2023, redécoupé)",
+  "nom_outil": "ACS",
+  "identifiant": 27
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -20.1,
+   -50.8,
+   -25.8
+  ],
+  "mni_icbm2009c_mm": [
+   -22.799999237060547,
+   -50.900001525878906,
+   -30.0
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -20.1,
+    -50.8,
+    -19.5
+   ],
+   "mni_icbm2009c_mm": [
+    -23.600000381469727,
+    -50.400001525878906,
+    -22.299999237060547
+   ],
+   "coupe": "z = -19.5 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -20.1,
+    -50.1,
+    -25.8
+   ],
+   "mni_icbm2009c_mm": [
+    -22.700000762939453,
+    -50.20000076293945,
+    -30.0
+   ],
+   "coupe": "y = -50.1 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -15.9,
+    -50.8,
+    -25.8
+   ],
+   "mni_icbm2009c_mm": [
+    -18.600000381469727,
+    -51.400001525878906,
+    -30.200000762939453
+   ],
+   "coupe": "x = -15.9 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "Liu et al. 2023 (territoires artériels, CC BY-SA 4.0)",
+   "type": "transporté",
+   "labels": {
+    "ids": [
+     27
+    ],
+    "noms": [
+     "Territoire de l'artère cérébelleuse supérieure (gauche)"
+    ]
+   },
+   "verdict": "redécoupé par règles géométriques (voir le rapport)"
+  }
+ ],
+ "remarques": [
+  "Territoire de l'atlas de Liu 2023 transporté sur le sujet, puis redécoupé par des règles géométriques (vidéo de référence de l'auteur) : à contrôler avec Tatu 1998.",
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Atlas des territoires (Liu 2023, redécoupé)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

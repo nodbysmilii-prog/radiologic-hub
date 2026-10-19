@@ -1,0 +1,101 @@
+{
+ "cle": "fines-965",
+ "nom_fr": "Tractus optique gauche",
+ "nom_en": "L-Optic-tract",
+ "cote": "gauche",
+ "categorie": "Voies optiques",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "HypVINN",
+  "nom_outil": "L-Optic-tract",
+  "identifiant": 965
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -9.6,
+   -4.6,
+   -11.1
+  ],
+  "mni_icbm2009c_mm": [
+   -11.5,
+   -4.099999904632568,
+   -14.800000190734863
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -9.6,
+    -4.6,
+    -8.3
+   ],
+   "mni_icbm2009c_mm": [
+    -11.800000190734863,
+    -4.199999809265137,
+    -11.699999809265137
+   ],
+   "coupe": "z = -8.3 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -9.6,
+    -1.1,
+    -11.1
+   ],
+   "mni_icbm2009c_mm": [
+    -11.5,
+    -0.6000000238418579,
+    -15.199999809265137
+   ],
+   "coupe": "y = -1.1 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -6.8,
+    -4.6,
+    -11.1
+   ],
+   "mni_icbm2009c_mm": [
+    -8.600000381469727,
+    -4.300000190734863,
+    -15.100000381469727
+   ],
+   "coupe": "x = -6.8 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 68,
+     "nom": "Optic Chiasm (L)"
+    }
+   ],
+   "mesure": 0.508,
+   "verdict": "discordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.121,
+     "verdict": "discordant"
+    },
+    "coronal": {
+     "mesure": 0.941,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.846,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.00"
+  }
+ ],
+ "remarques": [
+  "Étiquette CerebrA peu fiable selon ses auteurs (kappa 0.00) : la discordance ne suffit pas à conclure."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "faible"
+}

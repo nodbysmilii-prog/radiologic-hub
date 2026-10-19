@@ -1,0 +1,88 @@
+{
+ "cle": "territoires-24",
+ "nom_fr": "Territoire de l'artère choroïdienne antérieure (droit)",
+ "nom_en": "ChA",
+ "cote": "droit",
+ "categorie": "Territoires vasculaires",
+ "statut_module": "transporté",
+ "source": {
+  "origine": "Atlas des territoires (Liu 2023, redécoupé)",
+  "nom_outil": "ChA",
+  "identifiant": 24
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   21.9,
+   -23.5,
+   -17.4
+  ],
+  "mni_icbm2009c_mm": [
+   25.299999237060547,
+   -23.600000381469727,
+   -22.100000381469727
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    21.9,
+    -23.5,
+    -0.6
+   ],
+   "mni_icbm2009c_mm": [
+    25.100000381469727,
+    -22.100000381469727,
+    -2.9000000953674316
+   ],
+   "coupe": "z = -0.6 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    21.9,
+    -26.3,
+    -17.4
+   ],
+   "mni_icbm2009c_mm": [
+    25.100000381469727,
+    -26.5,
+    -22.100000381469727
+   ],
+   "coupe": "y = -26.3 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    23.3,
+    -23.5,
+    -17.4
+   ],
+   "mni_icbm2009c_mm": [
+    27.0,
+    -23.600000381469727,
+    -22.200000762939453
+   ],
+   "coupe": "x = +23.3 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "Liu et al. 2023 (territoires artériels, CC BY-SA 4.0)",
+   "type": "transporté",
+   "labels": {
+    "ids": [
+     24
+    ],
+    "noms": [
+     "Territoire de l'artère choroïdienne antérieure (droit)"
+    ]
+   },
+   "verdict": "redécoupé par règles géométriques (voir le rapport)"
+  }
+ ],
+ "remarques": [
+  "Territoire de l'atlas de Liu 2023 transporté sur le sujet, puis redécoupé par des règles géométriques (vidéo de référence de l'auteur) : à contrôler avec Tatu 1998.",
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Atlas des territoires (Liu 2023, redécoupé)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

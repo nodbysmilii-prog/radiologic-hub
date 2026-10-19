@@ -1,0 +1,125 @@
+{
+ "cle": "fines-2003",
+ "nom_fr": "Gyrus frontal moyen droit, partie caudale",
+ "nom_en": "ctx-rh-caudalmiddlefrontal",
+ "cote": "droit",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-caudalmiddlefrontal",
+  "identifiant": 2003
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   45.7,
+   13.6,
+   45.6
+  ],
+  "mni_icbm2009c_mm": [
+   48.5,
+   15.300000190734863,
+   51.900001525878906
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    45.7,
+    13.6,
+    49.8
+   ],
+   "mni_icbm2009c_mm": [
+    48.29999923706055,
+    15.199999809265137,
+    55.900001525878906
+   ],
+   "coupe": "z = +49.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    45.7,
+    14.3,
+    45.6
+   ],
+   "mni_icbm2009c_mm": [
+    48.599998474121094,
+    15.899999618530273,
+    51.900001525878906
+   ],
+   "coupe": "y = +14.3 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    31.7,
+    13.6,
+    45.6
+   ],
+   "mni_icbm2009c_mm": [
+    31.899999618530273,
+    12.0,
+    54.79999923706055
+   ],
+   "coupe": "x = +31.7 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 42,
+     "nom": "Caudal Middle Frontal (R)"
+    }
+   ],
+   "mesure": 0.576,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.568,
+     "verdict": "partiel"
+    },
+    "coronal": {
+     "mesure": 0.581,
+     "verdict": "partiel"
+    },
+    "sagittal": {
+     "mesure": 0.655,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.73"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 8,
+     "nom": "Right Middle Frontal Gyrus"
+    }
+   ],
+   "mesure": 0.89,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.803,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.822,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.957,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "moyenne"
+}

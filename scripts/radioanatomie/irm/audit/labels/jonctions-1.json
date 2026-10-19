@@ -1,0 +1,73 @@
+{
+ "cle": "jonctions-1",
+ "nom_fr": "Zone jonctionnelle corticale",
+ "nom_en": "Cortical watershed (border) zone",
+ "cote": "gauche et droit",
+ "categorie": "Territoires vasculaires",
+ "statut_module": "transporté",
+ "source": {
+  "origine": "Atlas des territoires (calque jonctionnel)",
+  "nom_outil": "",
+  "identifiant": 1
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   39.4,
+   -19.3,
+   -12.5
+  ],
+  "mni_icbm2009c_mm": [
+   45.5,
+   -19.100000381469727,
+   -14.600000381469727
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    39.4,
+    -19.3,
+    -4.1
+   ],
+   "mni_icbm2009c_mm": [
+    45.400001525878906,
+    -18.700000762939453,
+    -6.599999904632568
+   ],
+   "coupe": "z = -4.1 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    39.4,
+    -15.1,
+    -12.5
+   ],
+   "mni_icbm2009c_mm": [
+    45.599998474121094,
+    -15.0,
+    -15.800000190734863
+   ],
+   "coupe": "y = -15.1 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -20.8,
+    -19.3,
+    -12.5
+   ],
+   "mni_icbm2009c_mm": [
+    -24.799999237060547,
+    -19.0,
+    -16.0
+   ],
+   "coupe": "x = -20.8 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Atlas des territoires (calque jonctionnel)."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

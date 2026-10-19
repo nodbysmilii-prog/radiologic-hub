@@ -1,0 +1,129 @@
+{
+ "cle": "fines-2016",
+ "nom_fr": "Gyrus parahippocampique droit",
+ "nom_en": "ctx-rh-parahippocampal",
+ "cote": "droit",
+ "categorie": "Système limbique",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-parahippocampal",
+  "identifiant": 2016
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   18.4,
+   -38.2,
+   -9.7
+  ],
+  "mni_icbm2009c_mm": [
+   19.700000762939453,
+   -38.400001525878906,
+   -12.0
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    18.4,
+    -38.2,
+    -11.8
+   ],
+   "mni_icbm2009c_mm": [
+    19.299999237060547,
+    -38.599998474121094,
+    -14.300000190734863
+   ],
+   "coupe": "z = -11.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    18.4,
+    -36.8,
+    -9.7
+   ],
+   "mni_icbm2009c_mm": [
+    19.700000762939453,
+    -36.900001525878906,
+    -12.100000381469727
+   ],
+   "coupe": "y = -36.8 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    17.7,
+    -38.2,
+    -9.7
+   ],
+   "mni_icbm2009c_mm": [
+    18.899999618530273,
+    -38.400001525878906,
+    -11.899999618530273
+   ],
+   "coupe": "x = +17.7 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 18,
+     "nom": "Parahippocampal (R)"
+    }
+   ],
+   "mesure": 0.713,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.798,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.798,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.761,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.86"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 68,
+     "nom": "Right Parahippocampal Gyrus, anterior division"
+    },
+    {
+     "id": 70,
+     "nom": "Right Parahippocampal Gyrus, posterior division"
+    }
+   ],
+   "mesure": 0.794,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.811,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.978,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.891,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

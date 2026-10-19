@@ -1,0 +1,99 @@
+{
+ "cle": "fines-8",
+ "nom_fr": "Cortex de l'hémisphère cérébelleux gauche",
+ "nom_en": "Left-Cerebellum-Cortex",
+ "cote": "gauche",
+ "categorie": "Cervelet",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (aseg)",
+  "nom_outil": "Left-Cerebellum-Cortex",
+  "identifiant": 8
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -30.6,
+   -38.2,
+   -48.9
+  ],
+  "mni_icbm2009c_mm": [
+   -33.400001525878906,
+   -40.70000076293945,
+   -56.400001525878906
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -30.6,
+    -38.2,
+    -43.3
+   ],
+   "mni_icbm2009c_mm": [
+    -32.900001525878906,
+    -40.099998474121094,
+    -50.099998474121094
+   ],
+   "coupe": "z = -43.3 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -30.6,
+    -43.1,
+    -48.9
+   ],
+   "mni_icbm2009c_mm": [
+    -33.20000076293945,
+    -45.20000076293945,
+    -57.099998474121094
+   ],
+   "coupe": "y = -43.1 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -27.8,
+    -38.2,
+    -48.9
+   ],
+   "mni_icbm2009c_mm": [
+    -30.399999618530273,
+    -41.099998474121094,
+    -56.400001525878906
+   ],
+   "coupe": "x = -27.8 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 97,
+     "nom": "Cerebellum Gray Matter (L)"
+    }
+   ],
+   "mesure": 0.421,
+   "verdict": "discordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.65,
+     "verdict": "partiel"
+    },
+    "coronal": {
+     "mesure": 0.252,
+     "verdict": "discordant"
+    },
+    "sagittal": {
+     "mesure": 0.491,
+     "verdict": "discordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.83"
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "faible"
+}

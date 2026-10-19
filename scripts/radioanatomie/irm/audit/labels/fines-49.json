@@ -1,0 +1,125 @@
+{
+ "cle": "fines-49",
+ "nom_fr": "Thalamus droit",
+ "nom_en": "Right-Thalamus",
+ "cote": "droit",
+ "categorie": "Noyaux gris centraux et structures apparentées",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (aseg)",
+  "nom_outil": "Right-Thalamus",
+  "identifiant": 49
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   9.3,
+   -17.9,
+   8.5
+  ],
+  "mni_icbm2009c_mm": [
+   10.699999809265137,
+   -16.5,
+   6.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    9.3,
+    -17.9,
+    6.4
+   ],
+   "mni_icbm2009c_mm": [
+    10.800000190734863,
+    -16.299999237060547,
+    4.099999904632568
+   ],
+   "coupe": "z = +6.4 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    9.3,
+    -20.7,
+    8.5
+   ],
+   "mni_icbm2009c_mm": [
+    10.600000381469727,
+    -19.299999237060547,
+    6.800000190734863
+   ],
+   "coupe": "y = -20.7 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    10.0,
+    -17.9,
+    8.5
+   ],
+   "mni_icbm2009c_mm": [
+    11.600000381469727,
+    -16.5,
+    6.5
+   ],
+   "coupe": "x = +10.0 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 40,
+     "nom": "Thalamus (R)"
+    }
+   ],
+   "mesure": 0.886,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.929,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.923,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.911,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.97"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 15,
+     "nom": "Right Thalamus"
+    }
+   ],
+   "mesure": 0.859,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.881,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.854,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.894,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

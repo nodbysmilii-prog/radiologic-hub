@@ -1,0 +1,145 @@
+{
+ "cle": "lobes-6",
+ "nom_fr": "Cortex cingulaire gauche",
+ "nom_en": "Cingulate cortex",
+ "cote": "gauche",
+ "categorie": "Régions",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (régions DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -8.9,
+   -51.5,
+   8.5
+  ],
+  "mni_icbm2009c_mm": [
+   -10.5,
+   -50.29999923706055,
+   6.199999809265137
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -8.9,
+    -51.5,
+    29.5
+   ],
+   "mni_icbm2009c_mm": [
+    -8.699999809265137,
+    -53.599998474121094,
+    32.599998474121094
+   ],
+   "coupe": "z = +29.5 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -8.9,
+    44.4,
+    8.5
+   ],
+   "mni_icbm2009c_mm": [
+    -11.199999809265137,
+    45.5,
+    9.0
+   ],
+   "coupe": "y = +44.4 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -1.9,
+    -51.5,
+    8.5
+   ],
+   "mni_icbm2009c_mm": [
+    -2.700000047683716,
+    -49.599998474121094,
+    9.5
+   ],
+   "coupe": "x = -1.9 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "groupe",
+   "labels": [
+    {
+     "id": 81,
+     "nom": "Caudal Anterior Cingulate (L)"
+    },
+    {
+     "id": 84,
+     "nom": "Isthmus Cingulate (L)"
+    },
+    {
+     "id": 98,
+     "nom": "Posterior Cingulate (L)"
+    },
+    {
+     "id": 59,
+     "nom": "Rostral Anterior Cingulate (L)"
+    }
+   ],
+   "mesure": 0.586,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.612,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.456,
+     "verdict": "partiel"
+    },
+    "sagittal": {
+     "mesure": 0.721,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.72"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "lobe HO",
+   "labels": [
+    {
+     "id": 55,
+     "nom": "Left Cingulate Gyrus, anterior division"
+    },
+    {
+     "id": 57,
+     "nom": "Left Cingulate Gyrus, posterior division"
+    },
+    {
+     "id": 59,
+     "nom": "Left Paracingulate Gyrus"
+    }
+   ],
+   "mesure": 0.831,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.996,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.991,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.87,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "moyenne"
+}

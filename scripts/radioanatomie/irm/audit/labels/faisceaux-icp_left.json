@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-ICP_left",
+ "nom_fr": "Pédoncule cérébelleux inférieur gauche",
+ "nom_en": "ICP_left",
+ "cote": "gauche",
+ "categorie": "Tronc cérébral",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "ICP_left",
+  "identifiant": "ICP_left"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -17.3,
+   -57.8,
+   -31.4
+  ],
+  "mni_icbm2009c_mm": [
+   -20.200000762939453,
+   -59.29999923706055,
+   -37.400001525878906
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -17.3,
+    -57.8,
+    -30.0
+   ],
+   "mni_icbm2009c_mm": [
+    -20.200000762939453,
+    -59.099998474121094,
+    -35.900001525878906
+   ],
+   "coupe": "z = -30.0 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -17.3,
+    -59.2,
+    -31.4
+   ],
+   "mni_icbm2009c_mm": [
+    -20.299999237060547,
+    -60.79999923706055,
+    -37.70000076293945
+   ],
+   "coupe": "y = -59.2 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -5.4,
+    -57.8,
+    -31.4
+   ],
+   "mni_icbm2009c_mm": [
+    -6.0,
+    -59.599998474121094,
+    -36.70000076293945
+   ],
+   "coupe": "x = -5.4 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

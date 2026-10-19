@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-POPT_right",
+ "nom_fr": "Faisceau pariéto-occipito-pontique droit",
+ "nom_en": "POPT_right",
+ "cote": "droit",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "POPT_right",
+  "identifiant": "POPT_right"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   24.0,
+   -24.9,
+   30.2
+  ],
+  "mni_icbm2009c_mm": [
+   26.299999237060547,
+   -25.600000381469727,
+   31.299999237060547
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    24.0,
+    -24.9,
+    28.8
+   ],
+   "mni_icbm2009c_mm": [
+    26.200000762939453,
+    -25.5,
+    29.600000381469727
+   ],
+   "coupe": "z = +28.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    24.0,
+    -30.5,
+    30.2
+   ],
+   "mni_icbm2009c_mm": [
+    26.299999237060547,
+    -32.099998474121094,
+    30.899999618530273
+   ],
+   "coupe": "y = -30.5 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    19.1,
+    -24.9,
+    30.2
+   ],
+   "mni_icbm2009c_mm": [
+    21.399999618530273,
+    -25.600000381469727,
+    31.0
+   ],
+   "coupe": "x = +19.1 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

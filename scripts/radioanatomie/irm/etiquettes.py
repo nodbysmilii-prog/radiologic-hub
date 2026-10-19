@@ -124,17 +124,23 @@ LOBES = [
     ('Lobe frontal {c}', 'm', ['superiorfrontal', 'caudalmiddlefrontal', 'rostralmiddlefrontal', 'parsopercularis',
                                'parstriangularis', 'parsorbitalis', 'lateralorbitofrontal', 'medialorbitofrontal',
                                'precentral', 'paracentral'],
-     'Le lobule paracentral, à cheval sur les lobes frontal et pariétal, est rattaché au lobe frontal : à valider.'),
+     'Lobule paracentral au lobe frontal, comme dans le protocole DKT (Klein et Tourville 2012).'),
     ('Lobe pariétal {c}', 'm', ['postcentral', 'superiorparietal', 'inferiorparietal', 'supramarginal', 'precuneus'], ''),
     ('Lobe temporal {c}', 'm', ['superiortemporal', 'middletemporal', 'inferiortemporal', 'transversetemporal',
-                                'fusiform'], ''),
+                                'fusiform', 'entorhinal', 'parahippocampal'],
+     'Gyrus parahippocampique et cortex entorhinal au lobe temporal (face médiale), comme dans le protocole DKT '
+     '(Klein et Tourville 2012) et dans CerebrA et Harvard-Oxford (audit du 19/10/2026). Jonction '
+     'temporo-occipitale (partie postérieure du gyrus fusiforme) : discordance entre CerebrA et Harvard-Oxford, '
+     'voir le rapport d\'audit.'),
     ('Lobe occipital {c}', 'm', ['lateraloccipital', 'lingual', 'cuneus', 'pericalcarine'], ''),
     ("Lobe de l'insula {c}", 'm', ['insula'], ''),
-    ('Lobe limbique {c}', 'm', ['rostralanteriorcingulate', 'caudalanteriorcingulate', 'posteriorcingulate',
-                                'isthmuscingulate', 'parahippocampal', 'entorhinal'],
-     'Définition classique française (gyrus cingulaire, isthme, gyrus parahippocampique) ; FreeSurfer range le '
-     'gyrus parahippocampique et le cortex entorhinal dans le lobe temporal : à valider.'),
+    ('Cortex cingulaire {c}', 'm', ['rostralanteriorcingulate', 'caudalanteriorcingulate', 'posteriorcingulate',
+                                    'isthmuscingulate'],
+     'Groupe « cortex cingulaire » du protocole DKT (Klein et Tourville 2012), à la place du « lobe limbique » '
+     '(audit du 19/10/2026 : 22 % de son cortex était temporal pour CerebrA). Cortex seul, sans substance blanche.'),
 ]
+# groupes de cortex seul : la substance blanche voisine revient au lobe le plus proche
+LOBES_SANS_SUBSTANCE_BLANCHE = {'Cortex cingulaire {c}'}
 
 # ---------------------------------------------------------------------------
 # Sillons dérivés : interface entre deux groupes de régions DKT (le protocole DKT trace ses limites au fond des
@@ -484,9 +490,10 @@ def lignes():
                            'automatique', rq, ('fines', [base + n])])
     for n, (mod, genre, regions, rq) in enumerate(LOBES, start=1):        # valeurs : n à gauche, 10 + n à droite
         for c, v in (('gauche', n), ('droit', 10 + n)):
+            sb = ('Cortex seul.' if mod in LOBES_SANS_SUBSTANCE_BLANCHE else
+                  'Substance blanche rattachée au cortex le plus proche, centre semi-ovale compris, capsules exclues.')
             sortie.append(['Règle (régions DKT)', '', '', 'Régions', cote(mod, genre, c), c, 'dérivé',
-                           ('Regroupement : ' + ', '.join(regions) + '. Substance blanche rattachée au cortex le plus '
-                            'proche, centre semi-ovale compris, capsules exclues. ' + rq).strip(), ('lobes', [v])])
+                           ('Regroupement : ' + ', '.join(regions) + '. ' + sb + ' ' + rq).strip(), ('lobes', [v])])
     for n, (mod, a, b, rq) in enumerate(SILLONS, start=1):                # valeurs : n à gauche, 50 + n à droite
         for c, v in (('gauche', n), ('droit', 50 + n)):
             sortie.append(['Règle (limites DKT)', '', '', 'Sillons', cote(mod, 'm', c), c, 'dérivé',

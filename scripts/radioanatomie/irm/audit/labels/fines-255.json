@@ -1,0 +1,73 @@
+{
+ "cle": "fines-255",
+ "nom_fr": "Corps calleux, cinquième antérieur (genou)",
+ "nom_en": "CC_Anterior",
+ "cote": "médian",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer-CC",
+  "nom_outil": "CC_Anterior",
+  "identifiant": 255
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   0.9,
+   25.5,
+   1.5
+  ],
+  "mni_icbm2009c_mm": [
+   -0.30000001192092896,
+   24.299999237060547,
+   -0.20000000298023224
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    0.9,
+    25.5,
+    2.2
+   ],
+   "mni_icbm2009c_mm": [
+    -0.4000000059604645,
+    24.399999618530273,
+    0.4000000059604645
+   ],
+   "coupe": "z = +2.2 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    0.9,
+    29.0,
+    1.5
+   ],
+   "mni_icbm2009c_mm": [
+    -0.4000000059604645,
+    27.899999618530273,
+    0.0
+   ],
+   "coupe": "y = +29.0 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -1.2,
+    25.5,
+    1.5
+   ],
+   "mni_icbm2009c_mm": [
+    -2.799999952316284,
+    24.5,
+    -0.30000001192092896
+   ],
+   "coupe": "x = -1.2 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : FastSurfer-CC."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

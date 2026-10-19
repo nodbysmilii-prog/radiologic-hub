@@ -1,0 +1,73 @@
+{
+ "cle": "fines-254",
+ "nom_fr": "Corps calleux, deuxième cinquième (tronc, partie antérieure)",
+ "nom_en": "CC_Mid_Anterior",
+ "cote": "médian",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer-CC",
+  "nom_outil": "CC_Mid_Anterior",
+  "identifiant": 254
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   0.9,
+   1.0,
+   25.3
+  ],
+  "mni_icbm2009c_mm": [
+   0.699999988079071,
+   -0.0,
+   24.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    0.9,
+    1.0,
+    23.2
+   ],
+   "mni_icbm2009c_mm": [
+    0.699999988079071,
+    0.30000001192092896,
+    22.100000381469727
+   ],
+   "coupe": "z = +23.2 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    0.9,
+    22.0,
+    25.3
+   ],
+   "mni_icbm2009c_mm": [
+    0.0,
+    21.5,
+    25.299999237060547
+   ],
+   "coupe": "y = +22.0 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    0.2,
+    1.0,
+    25.3
+   ],
+   "mni_icbm2009c_mm": [
+    -0.10000000149011612,
+    -0.0,
+    24.399999618530273
+   ],
+   "coupe": "x = +0.2 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : FastSurfer-CC."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

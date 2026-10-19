@@ -1,0 +1,129 @@
+{
+ "cle": "fines-1023",
+ "nom_fr": "Gyrus cingulaire postérieur gauche",
+ "nom_en": "ctx-lh-posteriorcingulate",
+ "cote": "gauche",
+ "categorie": "Système limbique",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-posteriorcingulate",
+  "identifiant": 1023
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -8.2,
+   -18.6,
+   37.9
+  ],
+  "mni_icbm2009c_mm": [
+   -10.5,
+   -17.700000762939453,
+   39.79999923706055
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -8.2,
+    -18.6,
+    40.0
+   ],
+   "mni_icbm2009c_mm": [
+    -10.899999618530273,
+    -16.899999618530273,
+    41.5
+   ],
+   "coupe": "z = +40.0 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -8.2,
+    -20.0,
+    37.9
+   ],
+   "mni_icbm2009c_mm": [
+    -10.0,
+    -19.100000381469727,
+    39.79999923706055
+   ],
+   "coupe": "y = -20.0 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -1.9,
+    -18.6,
+    37.9
+   ],
+   "mni_icbm2009c_mm": [
+    -2.200000047683716,
+    -19.100000381469727,
+    41.599998474121094
+   ],
+   "coupe": "x = -1.9 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 98,
+     "nom": "Posterior Cingulate (L)"
+    }
+   ],
+   "mesure": 0.656,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.768,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.773,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.813,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.80"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 57,
+     "nom": "Left Cingulate Gyrus, anterior division"
+    },
+    {
+     "id": 59,
+     "nom": "Left Cingulate Gyrus, posterior division"
+    }
+   ],
+   "mesure": 0.734,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.916,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.653,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.846,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

@@ -384,25 +384,30 @@ def lobes(fines):
     du même hémisphère (comme « wmparc » de FreeSurfer, mais sans limite de 5 mm : le centre semi-ovale appartient
     aussi aux lobes, demande de l'auteur du 19/10/2026), sauf la substance blanche à moins de 3 mm des noyaux gris
     centraux, du thalamus et du diencéphale ventral (capsules interne, externe et extrême, laissées hors des lobes)
-    quand elle est à plus de 5 mm du cortex. Identifiants : lobe n (1 à 6, ordre de LOBES) à gauche, 10 + n à
-    droite ; 20 = tronc cérébral."""
-    from etiquettes import LOBES
+    quand elle est à plus de 5 mm du cortex ; le cortex cingulaire (groupe DKT, pas un lobe) reste du cortex seul,
+    sa substance blanche voisine va au lobe le plus proche. Identifiants : lobe n (1 à 6, ordre de LOBES) à gauche,
+    10 + n à droite ; 20 = tronc cérébral."""
+    from etiquettes import LOBES, LOBES_SANS_SUBSTANCE_BLANCHE
     sortie = np.zeros(fines.shape, np.uint8)
     noyaux = np.isin(fines, (10, 11, 12, 13, 26, 28, 49, 50, 51, 52, 58, 60))
     capsules = ndi.distance_transform_edt(~noyaux, sampling=PAS) <= 3.0
     for cote, base, sb in (('gauche', 0, 2), ('droit', 10, 41)):
-        table = {}
-        for n, (_, _, regions, _) in enumerate(LOBES, start=1):
+        table, attire = {}, []
+        for n, (mod, _, regions, _) in enumerate(LOBES, start=1):
             for i in ids_dkt(regions, cote):
                 table[i] = base + n
-        cortex = np.isin(fines, list(table))
-        d, idx = ndi.distance_transform_edt(~cortex, sampling=PAS, return_indices=True)
-        proche = fines[tuple(idx)]
-        del idx
+                if mod not in LOBES_SANS_SUBSTANCE_BLANCHE:
+                    attire.append(i)
         lobe_de = np.zeros(4096, np.uint8)
         for i, l in table.items():
             lobe_de[i] = l
-        cible = cortex | ((fines == sb) & ((d <= 5.0) | ~capsules))
+        cortex = np.isin(fines, list(table))
+        sortie[cortex] = lobe_de[fines[cortex]]
+        # substance blanche : cortex le plus proche parmi les lobes (le cortex cingulaire n'en prend pas)
+        d, idx = ndi.distance_transform_edt(~np.isin(fines, attire), sampling=PAS, return_indices=True)
+        proche = fines[tuple(idx)]
+        del idx
+        cible = (fines == sb) & ((d <= 5.0) | ~capsules)
         sortie[cible] = lobe_de[proche[cible]]
     sortie[fines == 16] = 20
     return sortie

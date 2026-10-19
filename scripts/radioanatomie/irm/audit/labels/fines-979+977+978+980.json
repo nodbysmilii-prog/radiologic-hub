@@ -1,0 +1,99 @@
+{
+ "cle": "fines-979+977+978+980",
+ "nom_fr": "Hypothalamus gauche",
+ "nom_en": "Hypothalamus",
+ "cote": "gauche",
+ "categorie": "Noyaux gris centraux et structures apparentées",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (grandes régions)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -1.9,
+   1.0,
+   -9.7
+  ],
+  "mni_icbm2009c_mm": [
+   -2.9000000953674316,
+   1.7999999523162842,
+   -13.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -1.9,
+    1.0,
+    -6.9
+   ],
+   "mni_icbm2009c_mm": [
+    -3.0999999046325684,
+    1.899999976158142,
+    -10.699999809265137
+   ],
+   "coupe": "z = -6.9 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -1.9,
+    -0.4,
+    -9.7
+   ],
+   "mni_icbm2009c_mm": [
+    -3.0,
+    0.30000001192092896,
+    -13.800000190734863
+   ],
+   "coupe": "y = -0.4 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -0.5,
+    1.0,
+    -9.7
+   ],
+   "mni_icbm2009c_mm": [
+    -1.2999999523162842,
+    1.7999999523162842,
+    -13.399999618530273
+   ],
+   "coupe": "x = -0.5 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 77,
+     "nom": "Ventral Diencephalon (L)"
+    }
+   ],
+   "mesure": 0.463,
+   "verdict": "discordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.636,
+     "verdict": "partiel"
+    },
+    "coronal": {
+     "mesure": 0.483,
+     "verdict": "discordant"
+    },
+    "sagittal": {
+     "mesure": 0.227,
+     "verdict": "discordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.93"
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "faible"
+}

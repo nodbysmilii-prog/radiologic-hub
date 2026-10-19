@@ -1,0 +1,73 @@
+{
+ "cle": "sillons-1",
+ "nom_fr": "Sillon central gauche",
+ "nom_en": "Central sulcus",
+ "cote": "gauche",
+ "categorie": "Sillons",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (limites DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -54.4,
+   -2.5,
+   21.8
+  ],
+  "mni_icbm2009c_mm": [
+   -61.70000076293945,
+   -3.200000047683716,
+   20.799999237060547
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -54.4,
+    -2.5,
+    30.2
+   ],
+   "mni_icbm2009c_mm": [
+    -62.0,
+    -2.799999952316284,
+    31.600000381469727
+   ],
+   "coupe": "z = +30.2 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -54.4,
+    -20.7,
+    21.8
+   ],
+   "mni_icbm2009c_mm": [
+    -58.900001525878906,
+    -21.100000381469727,
+    26.0
+   ],
+   "coupe": "y = -20.7 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -43.2,
+    -2.5,
+    21.8
+   ],
+   "mni_icbm2009c_mm": [
+    -49.70000076293945,
+    -2.5999999046325684,
+    19.600000381469727
+   ],
+   "coupe": "x = -43.2 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Règle (limites DKT)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

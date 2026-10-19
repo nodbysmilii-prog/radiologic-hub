@@ -1,0 +1,73 @@
+{
+ "cle": "sillons-16",
+ "nom_fr": "Sillon latéral gauche, rameau antérieur ascendant",
+ "nom_en": "Lateral sulcus, anterior ascending ramus",
+ "cote": "gauche",
+ "categorie": "Sillons",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (limites DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -52.3,
+   18.5,
+   9.9
+  ],
+  "mni_icbm2009c_mm": [
+   -60.70000076293945,
+   18.600000381469727,
+   8.899999618530273
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -52.3,
+    18.5,
+    17.6
+   ],
+   "mni_icbm2009c_mm": [
+    -60.20000076293945,
+    16.600000381469727,
+    19.0
+   ],
+   "coupe": "z = +17.6 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -52.3,
+    22.0,
+    9.9
+   ],
+   "mni_icbm2009c_mm": [
+    -58.900001525878906,
+    23.200000762939453,
+    9.199999809265137
+   ],
+   "coupe": "y = +22.0 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -50.2,
+    18.5,
+    9.9
+   ],
+   "mni_icbm2009c_mm": [
+    -58.900001525878906,
+    18.799999237060547,
+    8.800000190734863
+   ],
+   "coupe": "x = -50.2 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Règle (limites DKT)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

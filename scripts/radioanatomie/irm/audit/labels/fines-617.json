@@ -1,0 +1,99 @@
+{
+ "cle": "fines-617",
+ "nom_fr": "Lobule VIIIA (lobule biventral, partie antérieure), hémisphère cérébelleux gauche",
+ "nom_en": "Cbm_Left_VIIIa",
+ "cote": "gauche",
+ "categorie": "Cervelet",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "CerebNet",
+  "nom_outil": "Cbm_Left_VIIIa",
+  "identifiant": 617
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -13.1,
+   -64.1,
+   -46.1
+  ],
+  "mni_icbm2009c_mm": [
+   -15.399999618530273,
+   -68.9000015258789,
+   -54.099998474121094
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -13.1,
+    -64.1,
+    -47.5
+   ],
+   "mni_icbm2009c_mm": [
+    -15.399999618530273,
+    -68.80000305175781,
+    -55.5
+   ],
+   "coupe": "z = -47.5 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -13.1,
+    -62.7,
+    -46.1
+   ],
+   "mni_icbm2009c_mm": [
+    -15.5,
+    -67.5999984741211,
+    -54.099998474121094
+   ],
+   "coupe": "y = -62.7 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -31.3,
+    -64.1,
+    -46.1
+   ],
+   "mni_icbm2009c_mm": [
+    -34.70000076293945,
+    -67.80000305175781,
+    -55.400001525878906
+   ],
+   "coupe": "x = -31.3 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 97,
+     "nom": "Cerebellum Gray Matter (L)"
+    }
+   ],
+   "mesure": 0.97,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.989,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.959,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.974,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.83"
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

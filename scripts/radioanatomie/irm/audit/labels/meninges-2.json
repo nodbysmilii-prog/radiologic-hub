@@ -1,0 +1,73 @@
+{
+ "cle": "meninges-2",
+ "nom_fr": "Tente du cervelet",
+ "nom_en": "Tentorium cerebelli",
+ "cote": "médian",
+ "categorie": "Méninges",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (limites FastSurfer)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -38.3,
+   -81.6,
+   -15.3
+  ],
+  "mni_icbm2009c_mm": [
+   -40.29999923706055,
+   -83.4000015258789,
+   -21.799999237060547
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -38.3,
+    -81.6,
+    -15.3
+   ],
+   "mni_icbm2009c_mm": [
+    -40.29999923706055,
+    -83.4000015258789,
+    -21.799999237060547
+   ],
+   "coupe": "z = -15.3 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -38.3,
+    -57.1,
+    -15.3
+   ],
+   "mni_icbm2009c_mm": [
+    -42.70000076293945,
+    -59.900001525878906,
+    -17.600000381469727
+   ],
+   "coupe": "y = -57.1 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    6.5,
+    -81.6,
+    -15.3
+   ],
+   "mni_icbm2009c_mm": [
+    5.5,
+    -83.80000305175781,
+    -19.0
+   ],
+   "coupe": "x = +6.5 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Règle (limites FastSurfer)."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-T_PAR_right",
+ "nom_fr": "Fibres thalamo-pariétales droites",
+ "nom_en": "T_PAR_right",
+ "cote": "droit",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "T_PAR_right",
+  "identifiant": "T_PAR_right"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   17.0,
+   -24.2,
+   11.3
+  ],
+  "mni_icbm2009c_mm": [
+   19.200000762939453,
+   -23.399999618530273,
+   10.300000190734863
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    17.0,
+    -24.2,
+    30.2
+   ],
+   "mni_icbm2009c_mm": [
+    19.200000762939453,
+    -24.899999618530273,
+    31.100000381469727
+   ],
+   "coupe": "z = +30.2 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    17.0,
+    -30.5,
+    11.3
+   ],
+   "mni_icbm2009c_mm": [
+    19.100000381469727,
+    -29.799999237060547,
+    10.899999618530273
+   ],
+   "coupe": "y = -30.5 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    19.1,
+    -24.2,
+    11.3
+   ],
+   "mni_icbm2009c_mm": [
+    21.600000381469727,
+    -23.5,
+    10.199999809265137
+   ],
+   "coupe": "x = +19.1 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

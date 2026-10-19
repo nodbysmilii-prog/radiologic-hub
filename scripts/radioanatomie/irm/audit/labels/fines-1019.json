@@ -1,0 +1,133 @@
+{
+ "cle": "fines-1019",
+ "nom_fr": "Gyrus frontal inférieur gauche, partie orbitaire",
+ "nom_en": "ctx-lh-parsorbitalis",
+ "cote": "gauche",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-parsorbitalis",
+  "identifiant": 1019
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -47.4,
+   32.5,
+   -12.5
+  ],
+  "mni_icbm2009c_mm": [
+   -52.900001525878906,
+   35.099998474121094,
+   -14.100000381469727
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -47.4,
+    32.5,
+    -16.7
+   ],
+   "mni_icbm2009c_mm": [
+    -52.5,
+    34.599998474121094,
+    -18.5
+   ],
+   "coupe": "z = -16.7 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -47.4,
+    27.6,
+    -12.5
+   ],
+   "mni_icbm2009c_mm": [
+    -52.79999923706055,
+    28.700000762939453,
+    -14.300000190734863
+   ],
+   "coupe": "y = +27.6 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -39.0,
+    32.5,
+    -12.5
+   ],
+   "mni_icbm2009c_mm": [
+    -42.5,
+    36.099998474121094,
+    -14.600000381469727
+   ],
+   "coupe": "x = -39.0 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 95,
+     "nom": "Pars Orbitalis (L)"
+    }
+   ],
+   "mesure": 0.651,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.634,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.725,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.737,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.80"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 1,
+     "nom": "Left Frontal Orbital Cortex"
+    },
+    {
+     "id": 9,
+     "nom": "Left Frontal Pole"
+    },
+    {
+     "id": 65,
+     "nom": "Left Inferior Frontal Gyrus, pars triangularis"
+    }
+   ],
+   "mesure": 0.998,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.997,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

@@ -1,0 +1,101 @@
+{
+ "cle": "fines-5",
+ "nom_fr": "Corne temporale du ventricule latéral gauche",
+ "nom_en": "Left-Inf-Lat-Vent",
+ "cote": "gauche",
+ "categorie": "Ventricules et citernes",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (aseg)",
+  "nom_outil": "Left-Inf-Lat-Vent",
+  "identifiant": 5
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -29.9,
+   -8.8,
+   -16.7
+  ],
+  "mni_icbm2009c_mm": [
+   -34.79999923706055,
+   -7.699999809265137,
+   -22.399999618530273
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -29.9,
+    -8.8,
+    -9.0
+   ],
+   "mni_icbm2009c_mm": [
+    -34.5,
+    -8.100000381469727,
+    -13.100000381469727
+   ],
+   "coupe": "z = -9.0 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -29.9,
+    -10.9,
+    -16.7
+   ],
+   "mni_icbm2009c_mm": [
+    -35.0,
+    -10.100000381469727,
+    -22.0
+   ],
+   "coupe": "y = -10.9 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -33.4,
+    -8.8,
+    -16.7
+   ],
+   "mni_icbm2009c_mm": [
+    -38.599998474121094,
+    -7.099999904632568,
+    -21.700000762939453
+   ],
+   "coupe": "x = -33.4 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 56,
+     "nom": "Inferior Lateral Ventricle (L)"
+    }
+   ],
+   "mesure": 0.155,
+   "verdict": "discordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.213,
+     "verdict": "discordant"
+    },
+    "coronal": {
+     "mesure": 0.27,
+     "verdict": "discordant"
+    },
+    "sagittal": {
+     "mesure": 0.515,
+     "verdict": "partiel"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.12"
+  }
+ ],
+ "remarques": [
+  "Étiquette CerebrA peu fiable selon ses auteurs (kappa 0.12) : la discordance ne suffit pas à conclure."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "faible"
+}

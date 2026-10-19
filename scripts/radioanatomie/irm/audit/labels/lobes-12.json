@@ -1,0 +1,165 @@
+{
+ "cle": "lobes-12",
+ "nom_fr": "Lobe pariétal droit",
+ "nom_en": "Parietal lobe",
+ "cote": "droit",
+ "categorie": "Régions",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (régions DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   17.7,
+   -55.0,
+   35.1
+  ],
+  "mni_icbm2009c_mm": [
+   19.799999237060547,
+   -56.70000076293945,
+   38.599998474121094
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    17.7,
+    -55.0,
+    26.7
+   ],
+   "mni_icbm2009c_mm": [
+    21.700000762939453,
+    -56.0,
+    26.700000762939453
+   ],
+   "coupe": "z = +26.7 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    17.7,
+    -54.3,
+    35.1
+   ],
+   "mni_icbm2009c_mm": [
+    19.799999237060547,
+    -56.099998474121094,
+    38.5
+   ],
+   "coupe": "y = -54.3 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    24.0,
+    -55.0,
+    35.1
+   ],
+   "mni_icbm2009c_mm": [
+    25.700000762939453,
+    -56.79999923706055,
+    39.0
+   ],
+   "coupe": "x = +24.0 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "groupe",
+   "labels": [
+    {
+     "id": 10,
+     "nom": "Inferior Parietal (R)"
+    },
+    {
+     "id": 13,
+     "nom": "Postcentral (R)"
+    },
+    {
+     "id": 31,
+     "nom": "Precuneus (R)"
+    },
+    {
+     "id": 9,
+     "nom": "Superior Parietal (R)"
+    },
+    {
+     "id": 51,
+     "nom": "Supramarginal (R)"
+    }
+   ],
+   "mesure": 0.686,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.695,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.709,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.688,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.72"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "lobe HO",
+   "labels": [
+    {
+     "id": 34,
+     "nom": "Right Angular Gyrus"
+    },
+    {
+     "id": 36,
+     "nom": "Right Parietal Operculum Cortex"
+    },
+    {
+     "id": 38,
+     "nom": "Right Postcentral Gyrus"
+    },
+    {
+     "id": 40,
+     "nom": "Right Precuneous Cortex"
+    },
+    {
+     "id": 42,
+     "nom": "Right Superior Parietal Lobule"
+    },
+    {
+     "id": 62,
+     "nom": "Right Supramarginal Gyrus, anterior division"
+    },
+    {
+     "id": 86,
+     "nom": "Right Supramarginal Gyrus, posterior division"
+    }
+   ],
+   "mesure": 0.673,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.597,
+     "verdict": "discordant"
+    },
+    "coronal": {
+     "mesure": 0.974,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.456,
+     "verdict": "discordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "moyenne"
+}

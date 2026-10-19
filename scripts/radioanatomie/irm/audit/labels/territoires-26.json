@@ -1,0 +1,88 @@
+{
+ "cle": "territoires-26",
+ "nom_fr": "Territoire des branches de l'artère basilaire (droit)",
+ "nom_en": "BAS",
+ "cote": "droit",
+ "categorie": "Territoires vasculaires",
+ "statut_module": "transporté",
+ "source": {
+  "origine": "Atlas des territoires (Liu 2023, redécoupé)",
+  "nom_outil": "BAS",
+  "identifiant": 26
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   9.3,
+   -27.7,
+   -31.4
+  ],
+  "mni_icbm2009c_mm": [
+   9.800000190734863,
+   -28.399999618530273,
+   -35.900001525878906
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    9.3,
+    -27.7,
+    -32.1
+   ],
+   "mni_icbm2009c_mm": [
+    9.800000190734863,
+    -28.5,
+    -36.70000076293945
+   ],
+   "coupe": "z = -32.1 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    9.3,
+    -28.4,
+    -31.4
+   ],
+   "mni_icbm2009c_mm": [
+    9.800000190734863,
+    -29.200000762939453,
+    -35.900001525878906
+   ],
+   "coupe": "y = -28.4 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    4.4,
+    -27.7,
+    -31.4
+   ],
+   "mni_icbm2009c_mm": [
+    4.199999809265137,
+    -28.5,
+    -35.900001525878906
+   ],
+   "coupe": "x = +4.4 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "Liu et al. 2023 (territoires artériels, CC BY-SA 4.0)",
+   "type": "transporté",
+   "labels": {
+    "ids": [
+     26
+    ],
+    "noms": [
+     "Territoire des branches de l'artère basilaire (droit)"
+    ]
+   },
+   "verdict": "redécoupé par règles géométriques (voir le rapport)"
+  }
+ ],
+ "remarques": [
+  "Territoire de l'atlas de Liu 2023 transporté sur le sujet, puis redécoupé par des règles géométriques (vidéo de référence de l'auteur) : à contrôler avec Tatu 1998.",
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Atlas des territoires (Liu 2023, redécoupé)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

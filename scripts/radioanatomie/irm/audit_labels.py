@@ -10,7 +10,7 @@ Pour chaque structure publiée :
     cortex de Harvard-Oxford) qui tombe dans les régions Harvard-Oxford correspondantes ;
   - mesure globale et mesure dans les trois plans (coupes axiale, coronale et sagittale de référence de la
     structure, celles que l'interface affiche) ; verdicts : concordant ≥ seuil haut, partiel ≥ seuil bas, sinon
-    discordant (SEUILS) ;
+    discordant (SEUILS ; pour un lobe entier, 80 % de son cortex doit tomber dans le lobe de Harvard-Oxford) ;
   - coordonnées MNI-ICBM2009c (symétrique) du centre et des trois coupes, par la transformation du recalage ;
     contrôle de latéralité (gauche : x < 0 ; droit : x > 0) ;
   - niveau de confiance : « élevée » (tous les atlas disponibles concordants, aucun plan discordant), « moyenne »
@@ -22,7 +22,7 @@ structure), audit/tableau-labels.csv et .md, audit/synthese.json ; captures de c
 Harvard-Oxford, usage interne) dans assets-sources/…/audit/captures/.
 Usage : python3 -I -B scripts/radioanatomie/irm/audit_labels.py [audit] [captures] [--points <dossier statuts>]
 """
-import csv, glob, json, os, re, sys, zlib
+import csv, glob, json, os, re, sys, unicodedata, zlib
 
 import nibabel as nib
 import numpy as np
@@ -41,7 +41,8 @@ CAPTURES = os.path.join(A.SORTIE, 'captures')
 PAS = 0.7
 CONVENTION = ("vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en "
               "sagittal ; lettres D et G sur l'image")
-SEUILS = {'égal': (0.6, 0.4), 'groupe': (0.6, 0.4), 'partie': (0.8, 0.6), 'cortex HO': (0.6, 0.4)}
+SEUILS = {'égal': (0.6, 0.4), 'groupe': (0.6, 0.4), 'partie': (0.8, 0.6), 'cortex HO': (0.6, 0.4),
+          'lobe HO': (0.8, 0.6)}                     # un lobe entier : 80 % de son cortex dans le lobe Harvard-Oxford
 GAUCHE_ASEG = {4, 5, 7, 8, 10, 11, 12, 13, 17, 18, 26, 28, 31}
 
 # --- correspondances avec CerebrA (nom de l'étiquette ; côté pris de la structure, « deux » = les deux côtés) ---
@@ -116,6 +117,26 @@ HO_LOBES = {
     'temporo-occipital': ['Middle Temporal Gyrus, temporooccipital', 'Inferior Temporal Gyrus, temporooccipital',
                           'Temporal Occipital Fusiform'],
 }
+# 48 régions corticales de Harvard-Oxford dans l'ordre de FSL ; la table de TemplateFlow (HOCPAL, gauche et droite
+# alternés) n'en donne que 52 lignes sur 96 : la liste est vérifiée contre ces lignes (tables()), et les centres des
+# autres étiquettes ont été contrôlés dans l'espace MNI (rapport d'audit).
+HO_CORTICAL = ['Frontal Pole', 'Insular Cortex', 'Superior Frontal Gyrus', 'Middle Frontal Gyrus',
+               'Inferior Frontal Gyrus, pars triangularis', 'Inferior Frontal Gyrus, pars opercularis', 'Precentral Gyrus',
+               'Temporal Pole', 'Superior Temporal Gyrus, anterior division', 'Superior Temporal Gyrus, posterior division',
+               'Middle Temporal Gyrus, anterior division', 'Middle Temporal Gyrus, posterior division',
+               'Middle Temporal Gyrus, temporooccipital part', 'Inferior Temporal Gyrus, anterior division',
+               'Inferior Temporal Gyrus, posterior division', 'Inferior Temporal Gyrus, temporooccipital part',
+               'Postcentral Gyrus', 'Superior Parietal Lobule', 'Supramarginal Gyrus, anterior division',
+               'Supramarginal Gyrus, posterior division', 'Angular Gyrus', 'Lateral Occipital Cortex, superior division',
+               'Lateral Occipital Cortex, inferior division', 'Intracalcarine Cortex', 'Frontal Medial Cortex',
+               'Juxtapositional Lobule Cortex (formerly Supplementary Motor Cortex)', 'Subcallosal Cortex',
+               'Paracingulate Gyrus', 'Cingulate Gyrus, anterior division', 'Cingulate Gyrus, posterior division',
+               'Precuneous Cortex', 'Cuneal Cortex', 'Frontal Orbital Cortex', 'Parahippocampal Gyrus, anterior division',
+               'Parahippocampal Gyrus, posterior division', 'Lingual Gyrus', 'Temporal Fusiform Cortex, anterior division',
+               'Temporal Fusiform Cortex, posterior division', 'Temporal Occipital Fusiform Cortex',
+               'Occipital Fusiform Gyrus', 'Frontal Operculum Cortex', 'Central Opercular Cortex',
+               'Parietal Operculum Cortex', 'Planum Polare', "Heschl's Gyrus (includes H1 and H2)", 'Planum Temporale',
+               'Supracalcarine Cortex', 'Occipital Pole']
 LOBE_HO = {"Lobe frontal {c}": 'frontal', "Lobe pariétal {c}": 'pariétal', "Lobe temporal {c}": 'temporal',
            "Lobe occipital {c}": 'occipital', "Lobe de l'insula {c}": 'insula', "Cortex cingulaire {c}": 'cingulaire',
            "Lobe limbique {c}": 'cingulaire'}
@@ -159,7 +180,7 @@ def tables():
     with open(os.path.join(A.REFERENCES, A.SYM + '_atlas-CerebA_dseg.tsv'), encoding='utf-8') as f:
         for r in csv.DictReader(f, delimiter='\t'):
             cer.append({'id': int(r['label']), 'nom': r['name'].strip(), 'cote': r['hemi'],
-                        'freesurfer': int(r['mindboggle mapping'])})
+                        'freesurfer': int(r['mindboggle mapping']), 'kappa': float(r['dice/kappa'])})
     def ho(fichier, decalage):
         sortie = {}
         with open(os.path.join(A.REFERENCES, fichier), encoding='utf-8') as f:
@@ -171,7 +192,14 @@ def tables():
                 sortie[int(r['index']) + decalage] = {'nom': re.sub(r'^(Left|Right) ', '', nom), 'cote': cote,
                                                       'nom_complet': nom}
         return sortie
-    return cer, ho('tpl-MNI152NLin6Asym_atlas-HOCPAL_dseg.tsv', 1), ho('tpl-MNI152NLin6Asym_atlas-HOSPA_dseg.tsv', 0)
+    hoc = {}
+    for i in range(2 * len(HO_CORTICAL)):
+        cote, nom = ('L', 'Left ') if i % 2 == 0 else ('R', 'Right ')
+        hoc[i + 1] = {'nom': HO_CORTICAL[i // 2], 'cote': cote, 'nom_complet': nom + HO_CORTICAL[i // 2]}
+    for v, r in ho('tpl-MNI152NLin6Asym_atlas-HOCPAL_dseg.tsv', 1).items():
+        if hoc[v]['nom_complet'] != r['nom_complet']:
+            sys.exit(f"table Harvard-Oxford : {v} {r['nom_complet']} ≠ {hoc[v]['nom_complet']}")
+    return cer, hoc, ho('tpl-MNI152NLin6Asym_atlas-HOSPA_dseg.tsv', 0)
 
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -179,6 +207,8 @@ def tables():
 # ---------------------------------------------------------------------------------------------------------------
 def cote_lettre(s):
     c = s.get('cote', '')
+    if ' et ' in c:                      # structure des deux côtés (« gauche et droit »)
+        return ''
     return 'L' if c.startswith('gauche') else 'R' if c.startswith('droit') else ''
 
 
@@ -195,15 +225,16 @@ def references(s, table, cer, hoc, hos):
         ids = [r['id'] for r in cer if r['nom'] in noms and r['cote'] in cotes]
         if ids:
             refs.append({'atlas': 'CerebrA', 'type': type_, 'ids': ids, 'restreindre': restreindre,
-                         'noms': sorted({f"{r['nom']} ({r['cote']})" for r in cer if r['id'] in ids})})
+                         'noms': sorted({f"{r['nom']} ({r['cote']})" for r in cer if r['id'] in ids}),
+                         'kappa': min(r['kappa'] for r in cer if r['id'] in ids)})
     def ho_sous(type_, debut):
         ids = [i for i, r in hos.items() if r['nom'].startswith(debut) and (not cote or r['cote'] in (cote, ''))]
         if ids:
             refs.append({'atlas': 'Harvard-Oxford', 'type': type_, 'ids': ids, 'restreindre': None,
                          'noms': [hos[i]['nom_complet'] for i in ids], 'couche': 'ho-souscortical'})
-    def ho_cortex(debuts):
+    def ho_cortex(debuts, type_='cortex HO'):
         ids = [i for i, r in hoc.items() if any(r['nom'].startswith(d) for d in debuts) and r['cote'] == cote]
-        refs.append({'atlas': 'Harvard-Oxford', 'type': 'cortex HO', 'ids': ids, 'restreindre': None,
+        refs.append({'atlas': 'Harvard-Oxford', 'type': type_, 'ids': ids, 'restreindre': None,
                      'noms': sorted({hoc[i]['nom_complet'] for i in ids}), 'couche': 'ho-cortical'})
     ids = ids_fines(s, table)
     couche, vals = s.get('couche'), s.get('valeurs', [])
@@ -216,6 +247,8 @@ def references(s, table, cer, hoc, hos):
             region = s['outil'].split('-', 2)[2]
             if region in DKT_HO:
                 ho_cortex(DKT_HO[region])
+        elif i in (8, 47):          # cortex cérébelleux laissé par CerebNet (qui en a découpé les lobules) : une partie
+            cerebra('partie', [ASEG_CEREBRA[i]], ['L' if i in GAUCHE_ASEG else 'R'])
         elif i in ASEG_CEREBRA:
             cerebra('égal', [ASEG_CEREBRA[i]], None if i in (14, 15) else ['L' if i in GAUCHE_ASEG else 'R'])
         if i in ASEG_HO:
@@ -229,7 +262,11 @@ def references(s, table, cer, hoc, hos):
             cerebra('partie', ['Ventral Diencephalon'])
         if i in VERMIS_CEREBRA:
             cerebra('partie', [VERMIS_CEREBRA[i]], ['L', 'R'])
-        if 601 <= i <= 628 and i not in VERMIS_CEREBRA:
+        if 601 <= i <= 604:         # lobules I à V de CerebNet : partie vermienne comprise
+            cerebra('partie', ['Cerebellum Gray Matter'])
+            refs[-1]['ids'] += [r['id'] for r in cer if r['nom'] == 'Vermal lobules I-V']
+            refs[-1]['noms'] += ['Vermal lobules I-V (L)', 'Vermal lobules I-V (R)']
+        elif 605 <= i <= 628 and i not in VERMIS_CEREBRA:
             cerebra('partie', ['Cerebellum Gray Matter'])
     elif couche == 'fines' and set(ids) <= set(HYPOTHALAMUS):
         cerebra('partie', ['Ventral Diencephalon'])
@@ -244,7 +281,7 @@ def references(s, table, cer, hoc, hos):
             noms = [r['nom'] for r in cer if r['freesurfer'] in {2000 + n for n, nom, *_ in etiquettes.DKT if nom in regs}]
             cerebra('groupe', noms, restreindre='cortex')
             if mod in LOBE_HO:
-                ho_cortex(HO_LOBES[LOBE_HO[mod]])
+                ho_cortex(HO_LOBES[LOBE_HO[mod]], 'lobe HO')
         elif v in ({1, 2, 3, 4, 5, 6, 9}, {11, 12, 13, 14, 15, 16, 19}):
             noms = [r['nom'] for r in cer if r['freesurfer'] >= 1000 or r['nom'] in
                     ('Caudate', 'Putamen', 'Pallidum', 'Hippocampus', 'Amygdala', 'Accumbens Area', 'Basal Forebrain')]
@@ -275,7 +312,7 @@ def mesure(ref, nous, atlas, cortex, gris_nous):
         n = nous & cortex
     elif ref['restreindre'] == 'gris':
         n = nous & gris_nous
-    if ref['type'] == 'cortex HO':
+    if ref['type'] in ('cortex HO', 'lobe HO'):
         dans = n & (atlas['ho-cortical'] > 0)
         tot = int(dans.sum())
         return (float((dans & r).sum()) / tot) if tot else None
@@ -291,6 +328,17 @@ def verdict(type_, x):
         return 'non mesurable'
     hi, lo = SEUILS[type_]
     return 'concordant' if x >= hi else 'partiel' if x >= lo else 'discordant'
+
+
+AXE = {'axial': 2, 'coronal': 1, 'sagittal': 0}
+
+
+def point_plan(s, plan):
+    """Point de référence d'un plan : centre de la structure, sur la meilleure coupe du plan (celle que l'interface
+    ouvre ; manifeste : plans[plan] = [première, dernière, meilleure coupe] le long de l'axe du plan)."""
+    p = list(s['centre'])
+    p[AXE[plan]] = s['plans'][plan][2]
+    return p
 
 
 def tranche(v, plan, p):
@@ -325,7 +373,7 @@ def audit(dossier_points=None):
         if 'centre' in s:
             a_convertir.append(mm(a, lo, s['centre']))
             for plan in ('axial', 'coronal', 'sagittal'):
-                a_convertir.append(mm(a, lo, s['plans'][plan]))
+                a_convertir.append(mm(a, lo, point_plan(s, plan)))
         elif s['cle'] in points_auteur:
             p = points_auteur[s['cle']]
             a_convertir.append(mm(a, lo, np.mean([[q['i'], q['j'], q['k']] for q in p], axis=0)))
@@ -348,7 +396,7 @@ def audit(dossier_points=None):
         if 'centre' in s:
             e['coordonnees'] = {'sujet_mm': mm(a, lo, s['centre']).tolist(), 'mni_icbm2009c_mm': next(mni)}
             for plan in ('axial', 'coronal', 'sagittal'):
-                p = s['plans'][plan]
+                p = point_plan(s, plan)
                 x = mm(a, lo, p)
                 e['plans'][plan] = {'sujet_mm': x.tolist(), 'mni_icbm2009c_mm': next(mni),
                                     'coupe': {'axial': f'z = {x[2]:+.1f} mm', 'coronal': f'y = {x[1]:+.1f} mm',
@@ -368,9 +416,15 @@ def audit(dossier_points=None):
                  'labels': [{'id': i, 'nom': n} for i, n in zip(ref['ids'], ref['noms'])] if len(ref['ids']) == len(ref['noms'])
                  else {'ids': ref['ids'], 'noms': ref['noms']},
                  'mesure': None if x is None else round(x, 3), 'verdict': v, 'plans': {}}
+            if 'kappa' in ref:
+                r['fiabilite_publiee'] = ('Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : '
+                                          f"{ref['kappa']:.2f}")
+                if ref['kappa'] < 0.5:
+                    e['remarques'].append(f"Étiquette CerebrA peu fiable selon ses auteurs (kappa {ref['kappa']:.2f}) : "
+                                          "la discordance ne suffit pas à conclure.")
             verdicts.append(v)
             for plan, pl in e['plans'].items():
-                p = s['plans'][plan]
+                p = point_plan(s, plan)
                 sous = {c: tranche(vv, plan, p) for c, vv in atlas.items()}
                 xp = mesure(ref, tranche(nous, plan, p), sous, tranche(cortex, plan, p), tranche(gris_nous, plan, p))
                 vp = verdict(ref['type'], xp)
@@ -385,8 +439,7 @@ def audit(dossier_points=None):
             ok = (x_mni < 0) if c == 'L' else (x_mni > 0)
             e['controle_lateralite'] = 'conforme' if ok else f'ÉCART : côté {s["cote"]}, x MNI = {x_mni:+.1f} mm'
         else:
-            e['controle_lateralite'] = 'sans objet (structure médiane)' if s.get('cote') in ('médian', '—', '') or not c \
-                else 'non mesurable'
+            e['controle_lateralite'] = ('sans objet (structure médiane ou des deux côtés)' if not c else 'non mesurable')
         if not refs:
             if s['statut'] == 'manuel' and not e['coordonnees']:
                 e['confiance'] = 'à placer'
@@ -497,21 +550,69 @@ def bords(v):
     return (v != ndi.grey_erosion(v, size=3)) & (v > 0)
 
 
+def police(taille=13):
+    try:
+        return ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', taille)
+    except OSError:
+        return None
+
+
+def panneau(plan, centre, boite, t1, remplis, couleurs, blancs, jaunes, a, lo, hauteur=360):
+    """Coupe du plan passant par `centre`, recadrée sur `boite` (mm de marge compris), en vue radiologique."""
+    f = lambda v: tranche(v, plan, centre)
+    axes = [d for d in range(3) if d != AXE[plan]]
+    sl = tuple(slice(boite[0][d], boite[1][d]) for d in axes)
+    g = f(t1)[sl].astype(np.float32)
+    rgb = np.repeat(g[..., None], 3, axis=2)
+    n2 = f(remplis)[sl]
+    rgb[n2 > 0] = rgb[n2 > 0] * 0.5 + couleurs[n2[n2 > 0]] * 0.5
+    rgb[bords(f(blancs)[sl])] = (255, 255, 255)
+    rgb[bords(f(jaunes)[sl])] = (255, 220, 0)
+    img = np.transpose(rgb, (1, 0, 2))[::-1, ::-1]        # haut en haut ; droite du patient (ou avant) à gauche
+    k = hauteur / img.shape[0]
+    im = Image.fromarray(img.astype(np.uint8)).resize((max(1, round(img.shape[1] * k)), hauteur), Image.NEAREST)
+    d = ImageDraw.Draw(im)
+    x = mm(a, lo, centre)
+    titre = {'axial': f'axial z = {x[2]:+.1f} mm', 'coronal': f'coronal y = {x[1]:+.1f} mm',
+             'sagittal': f'sagittal x = {x[0]:+.1f} mm'}[plan]
+    d.text((6, 4), titre, fill=(255, 255, 0), font=police())
+    gauche, droite = ('A', 'P') if plan == 'sagittal' else ('D', 'G')
+    d.text((6, im.height // 2), gauche, fill=(255, 255, 255), font=police())
+    d.text((im.width - 16, im.height // 2), droite, fill=(255, 255, 255), font=police())
+    return im
+
+
+def planche(fichier, titre, t1, remplis, couleurs, blancs, jaunes, centre, a, lo, marge_mm=15, cote_min_mm=50):
+    zone = np.argwhere(remplis > 0)
+    lo_b, hi_b = zone.min(axis=0), zone.max(axis=0) + 1
+    m = int(marge_mm / PAS)
+    milieu = (lo_b + hi_b) // 2
+    demi = np.maximum((hi_b - lo_b) // 2 + m, int(cote_min_mm / PAS / 2))
+    boite = (np.maximum(milieu - demi, 0), np.minimum(milieu + demi, np.array(t1.shape)))
+    panneaux = [panneau(p, centre, boite, t1, remplis, couleurs, blancs, jaunes, a, lo) for p in
+                ('axial', 'coronal', 'sagittal')]
+    W = Image.new('RGB', (sum(p.width for p in panneaux) + 8 * 2, 360 + 30), (16, 16, 16))
+    x0 = 0
+    for p in panneaux:
+        W.paste(p, (x0, 30))
+        x0 += p.width + 8
+    ImageDraw.Draw(W).text((6, 6), titre, fill=(255, 255, 255), font=police())
+    W.save(os.path.join(CAPTURES, fichier))
+
+
 def captures():
     m, vols, t1, atlas, a, lo = donnees()
     table = m['couches']['fines']['table']
     cer, hoc, hos = tables()
     os.makedirs(CAPTURES, exist_ok=True)
-    try:
-        police = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', 13)
-    except OSError:
-        police = None
+    for f in glob.glob(os.path.join(CAPTURES, '*.png')):
+        os.remove(f)
     rng = np.random.default_rng(7)
     par_cat = {}
     for s in m['structures']:
         if s.get('couche') and s['couche'] != 'faisceaux' and 'centre' in s:
             par_cat.setdefault(s['cat'], []).append(s)
-    sortie = {}
+    legende = 'contours blancs : CerebrA ; jaunes : Harvard-Oxford (contrôle interne) ; vue radiologique'
     for cat, liste in par_cat.items():
         nous = np.zeros(t1.shape, np.int16)
         ref_c = np.zeros(t1.shape, np.int16)
@@ -520,52 +621,68 @@ def captures():
             masque = np.isin(vols[s['couche']], s['valeurs'])
             nous[masque & (nous == 0)] = n
             for ref in references(s, table, cer, hoc, hos):
-                if ref['type'] == 'cortex HO':
+                if ref['type'] in ('cortex HO', 'lobe HO'):
                     continue
                 r = np.isin(atlas[ref.get('couche', 'cerebra')], ref['ids'])
                 cible = ref_c if ref['atlas'] == 'CerebrA' else ref_h
                 cible[r & (cible == 0)] = n
         couleurs = (rng.uniform(60, 255, (len(liste) + 1, 3))).astype(np.uint8)
         centre = np.argwhere(nous > 0).mean(axis=0).round().astype(int)
-        panneaux = []
-        for plan in ('axial', 'coronal', 'sagittal'):
-            f = lambda v: tranche(v, plan, centre)
-            g = f(t1).astype(np.float32)
-            rgb = np.repeat(g[..., None], 3, axis=2)
-            n2 = f(nous)
-            rgb[n2 > 0] = rgb[n2 > 0] * 0.5 + couleurs[n2[n2 > 0]] * 0.5
-            rgb[bords(f(ref_c))] = (255, 255, 255)
-            rgb[bords(f(ref_h))] = (255, 220, 0)
-            if plan == 'sagittal':
-                img = np.transpose(rgb, (1, 0, 2))[::-1, ::-1]        # haut en haut, avant à gauche
-            else:
-                img = np.transpose(rgb, (1, 0, 2))[::-1, ::-1]        # convention radiologique
-            im = Image.fromarray(img.astype(np.uint8)).resize((img.shape[1] * 2, img.shape[0] * 2), Image.NEAREST)
-            d = ImageDraw.Draw(im)
-            x = mm(a, lo, centre)
-            titre = {'axial': f'axial z = {x[2]:+.1f} mm', 'coronal': f'coronal y = {x[1]:+.1f} mm',
-                     'sagittal': f'sagittal x = {x[0]:+.1f} mm'}[plan]
-            d.text((6, 4), titre, fill=(255, 255, 0), font=police)
-            if plan != 'sagittal':
-                d.text((6, im.height // 2), 'D', fill=(255, 255, 255), font=police)
-                d.text((im.width - 16, im.height // 2), 'G', fill=(255, 255, 255), font=police)
-            else:
-                d.text((6, im.height // 2), 'A', fill=(255, 255, 255), font=police)
-                d.text((im.width - 16, im.height // 2), 'P', fill=(255, 255, 255), font=police)
-            panneaux.append(im)
-        h = max(p.height for p in panneaux)
-        W = Image.new('RGB', (sum(p.width for p in panneaux), h + 30), (16, 16, 16))
-        x0 = 0
-        for p in panneaux:
-            W.paste(p, (x0, 30))
-            x0 += p.width
-        ImageDraw.Draw(W).text((6, 6), f'{cat} — {len(liste)} structures (couleurs) ; contours blancs : CerebrA ; '
-                               'jaunes : Harvard-Oxford (contrôle interne) ; vue radiologique', fill=(255, 255, 255),
-                               font=police)
-        nom = re.sub(r'[^a-z0-9]+', '-', cat.lower().encode('ascii', 'ignore').decode()).strip('-') or 'categorie'
-        W.save(os.path.join(CAPTURES, nom + '.png'))
-        sortie[cat] = nom + '.png'
-    print(len(sortie), 'planches dans', CAPTURES)
+        nom = re.sub(r'[^a-z0-9]+', '-', unicodedata.normalize('NFD', cat.lower()).encode('ascii', 'ignore').decode())
+        planche(nom.strip('-') + '.png', f'{cat} — {len(liste)} structures (couleurs) ; ' + legende, t1, nous, couleurs,
+                ref_c, ref_h, centre, a, lo)
+    # discordances ciblées
+    fines_ids = np.asarray(table)[vols['fines']]
+    cortex = (fines_ids >= 1000) & (fines_ids < 3000)
+    lobes_cer = groupes_cerebra(cer, atlas['cerebra'])
+    lobes_ho = groupes_ho(hoc, atlas['ho-cortical'])
+    lob = vols['lobes']
+    couleurs = np.array([[0, 0, 0], [230, 90, 80], [90, 140, 240], [240, 200, 60]], np.uint8)
+    for cote, base in (('gauche', 0), ('droit', 10)):
+        rempl = np.zeros(t1.shape, np.int16)
+        rempl[lob == base + 3] = 1                                   # lobe temporal
+        rempl[lob == base + 4] = 2                                   # lobe occipital
+        occ = (lob == base + 3) & cortex & (lobes_cer == 4) & (lobes_ho == 4)
+        if occ.any():
+            centre = np.argwhere(occ).mean(axis=0).round().astype(int)
+            planche(f'discordance-temporo-occipitale-{cote}.png',
+                    f'Jonction temporo-occipitale {cote} : lobe temporal (rouge), occipital (bleu) ; contour du lobe '
+                    'occipital de CerebrA (blanc) et de Harvard-Oxford (jaune)', t1, rempl, couleurs,
+                    (lobes_cer == 4).astype(np.int16), (lobes_ho == 4).astype(np.int16), centre, a, lo)
+        cing = (lob == base + 6) & (lobes_cer == 1)
+        if cing.sum() > 200:
+            rempl = np.where(lob == base + 6, 3, np.where(lob == base + 1, 2, 0)).astype(np.int16)
+            centre = np.argwhere(cing).mean(axis=0).round().astype(int)
+            planche(f'discordance-cingulaire-{cote}.png',
+                    f'Cortex cingulaire {cote} (jaune plein) et lobe frontal (bleu) ; contour du cingulaire de '
+                    'CerebrA (blanc) et de Harvard-Oxford (jaune)', t1, rempl, couleurs,
+                    (lobes_cer == 5).astype(np.int16), (lobes_ho == 5).astype(np.int16), centre, a, lo)
+    print(len(glob.glob(os.path.join(CAPTURES, '*.png'))), 'planches dans', CAPTURES)
+
+
+GROUPES = ['frontal', 'pariétal', 'temporal', 'occipital', 'cingulaire', 'insula']
+
+
+def groupes_cerebra(cer, v):
+    """Volume des lobes de CerebrA : régions DKT regroupées selon etiquettes.LOBES (1 frontal … 6 insula)."""
+    num = {nom: n for n, nom, *_ in etiquettes.DKT}
+    lut = np.zeros(256, np.uint8)
+    for mod, _, regs, _ in etiquettes.LOBES:
+        g = {'Lobe frontal {c}': 1, 'Lobe pariétal {c}': 2, 'Lobe temporal {c}': 3, 'Lobe occipital {c}': 4,
+             'Cortex cingulaire {c}': 5, "Lobe de l'insula {c}": 6}.get(mod)
+        for r in cer:
+            if g and r['freesurfer'] in {2000 + num[x] for x in regs}:
+                lut[r['id']] = g
+    return lut[v]
+
+
+def groupes_ho(hoc, v):
+    lut = np.zeros(256, np.uint8)
+    for i, r in hoc.items():
+        for g, nom in enumerate(GROUPES, start=1):
+            if any(r['nom'].startswith(d) for d in HO_LOBES[nom]):
+                lut[i] = g
+    return lut[v]
 
 
 if __name__ == '__main__':

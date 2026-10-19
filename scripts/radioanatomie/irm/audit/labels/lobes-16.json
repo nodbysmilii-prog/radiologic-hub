@@ -1,0 +1,145 @@
+{
+ "cle": "lobes-16",
+ "nom_fr": "Cortex cingulaire droit",
+ "nom_en": "Cingulate cortex",
+ "cote": "droit",
+ "categorie": "Régions",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (régions DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   2.3,
+   26.9,
+   30.2
+  ],
+  "mni_icbm2009c_mm": [
+   1.7000000476837158,
+   27.100000381469727,
+   29.700000762939453
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    2.3,
+    26.9,
+    30.9
+   ],
+   "mni_icbm2009c_mm": [
+    1.7000000476837158,
+    27.100000381469727,
+    30.5
+   ],
+   "coupe": "z = +30.9 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    2.3,
+    41.6,
+    30.2
+   ],
+   "mni_icbm2009c_mm": [
+    1.2999999523162842,
+    45.400001525878906,
+    31.299999237060547
+   ],
+   "coupe": "y = +41.6 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    3.0,
+    26.9,
+    30.2
+   ],
+   "mni_icbm2009c_mm": [
+    2.5,
+    26.700000762939453,
+    29.299999237060547
+   ],
+   "coupe": "x = +3.0 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "groupe",
+   "labels": [
+    {
+     "id": 30,
+     "nom": "Caudal Anterior Cingulate (R)"
+    },
+    {
+     "id": 33,
+     "nom": "Isthmus Cingulate (R)"
+    },
+    {
+     "id": 47,
+     "nom": "Posterior Cingulate (R)"
+    },
+    {
+     "id": 8,
+     "nom": "Rostral Anterior Cingulate (R)"
+    }
+   ],
+   "mesure": 0.707,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.801,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.734,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.818,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.72"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "lobe HO",
+   "labels": [
+    {
+     "id": 56,
+     "nom": "Right Cingulate Gyrus, anterior division"
+    },
+    {
+     "id": 58,
+     "nom": "Right Cingulate Gyrus, posterior division"
+    },
+    {
+     "id": 60,
+     "nom": "Right Paracingulate Gyrus"
+    }
+   ],
+   "mesure": 0.887,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.991,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.877,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

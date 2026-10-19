@@ -1,0 +1,247 @@
+{
+ "cle": "lobes-1+2+3+4+5+6+9",
+ "nom_fr": "Hémisphère cérébral gauche (télencéphale)",
+ "nom_en": "Cerebral hemisphere (telencephalon)",
+ "cote": "gauche",
+ "categorie": "Régions",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (grandes régions)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -17.3,
+   14.3,
+   0.8
+  ],
+  "mni_icbm2009c_mm": [
+   -19.5,
+   13.899999618530273,
+   -3.200000047683716
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -17.3,
+    14.3,
+    -2.7
+   ],
+   "mni_icbm2009c_mm": [
+    -19.0,
+    13.600000381469727,
+    -6.199999809265137
+   ],
+   "coupe": "z = -2.7 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -17.3,
+    -9.5,
+    0.8
+   ],
+   "mni_icbm2009c_mm": [
+    -21.200000762939453,
+    -8.399999618530273,
+    -2.0999999046325684
+   ],
+   "coupe": "y = -9.5 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -20.8,
+    14.3,
+    0.8
+   ],
+   "mni_icbm2009c_mm": [
+    -23.299999237060547,
+    14.100000381469727,
+    -3.0999999046325684
+   ],
+   "coupe": "x = -20.8 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "groupe",
+   "labels": [
+    {
+     "id": 100,
+     "nom": "Accumbens Area (L)"
+    },
+    {
+     "id": 72,
+     "nom": "Amygdala (L)"
+    },
+    {
+     "id": 78,
+     "nom": "Basal Forebrain (L)"
+    },
+    {
+     "id": 99,
+     "nom": "Caudal Anterior Cingulate (L)"
+    },
+    {
+     "id": 70,
+     "nom": "Caudal Middle Frontal (L)"
+    },
+    {
+     "id": 55,
+     "nom": "Caudate (L)"
+    },
+    {
+     "id": 76,
+     "nom": "Cuneus (L)"
+    },
+    {
+     "id": 81,
+     "nom": "Entorhinal (L)"
+    },
+    {
+     "id": 93,
+     "nom": "Fusiform (L)"
+    },
+    {
+     "id": 94,
+     "nom": "Hippocampus (L)"
+    },
+    {
+     "id": 87,
+     "nom": "Inferior Parietal (L)"
+    },
+    {
+     "id": 75,
+     "nom": "Inferior temporal (L)"
+    },
+    {
+     "id": 61,
+     "nom": "Insula (L)"
+    },
+    {
+     "id": 54,
+     "nom": "Isthmus Cingulate (L)"
+    },
+    {
+     "id": 84,
+     "nom": "Lateral Occipital (L)"
+    },
+    {
+     "id": 85,
+     "nom": "Lateral Orbitofrontal (L)"
+    },
+    {
+     "id": 58,
+     "nom": "Lingual (L)"
+    },
+    {
+     "id": 63,
+     "nom": "Medial Orbitofrontal (L)"
+    },
+    {
+     "id": 66,
+     "nom": "Middle Temporal (L)"
+    },
+    {
+     "id": 79,
+     "nom": "Pallidum (L)"
+    },
+    {
+     "id": 69,
+     "nom": "Paracentral (L)"
+    },
+    {
+     "id": 67,
+     "nom": "Parahippocampal (L)"
+    },
+    {
+     "id": 83,
+     "nom": "Pars Opercularis (L)"
+    },
+    {
+     "id": 95,
+     "nom": "Pars Orbitalis (L)"
+    },
+    {
+     "id": 73,
+     "nom": "Pars Triangularis (L)"
+    },
+    {
+     "id": 57,
+     "nom": "Pericalcarine (L)"
+    },
+    {
+     "id": 64,
+     "nom": "Postcentral (L)"
+    },
+    {
+     "id": 98,
+     "nom": "Posterior Cingulate (L)"
+    },
+    {
+     "id": 86,
+     "nom": "Precentral (L)"
+    },
+    {
+     "id": 82,
+     "nom": "Precuneus (L)"
+    },
+    {
+     "id": 59,
+     "nom": "Putamen (L)"
+    },
+    {
+     "id": 52,
+     "nom": "Rostral Anterior Cingulate (L)"
+    },
+    {
+     "id": 89,
+     "nom": "Rostral Middle Frontal (L)"
+    },
+    {
+     "id": 60,
+     "nom": "Superior Frontal (L)"
+    },
+    {
+     "id": 96,
+     "nom": "Superior Parietal (L)"
+    },
+    {
+     "id": 102,
+     "nom": "Superior Temporal (L)"
+    },
+    {
+     "id": 65,
+     "nom": "Supramarginal (L)"
+    },
+    {
+     "id": 74,
+     "nom": "Transverse Temporal (L)"
+    }
+   ],
+   "mesure": 0.724,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.73,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.762,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.725,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.60"
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

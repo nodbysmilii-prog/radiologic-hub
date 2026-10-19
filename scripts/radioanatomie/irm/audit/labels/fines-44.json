@@ -1,0 +1,101 @@
+{
+ "cle": "fines-44",
+ "nom_fr": "Corne temporale du ventricule latéral droit",
+ "nom_en": "Right-Inf-Lat-Vent",
+ "cote": "droit",
+ "categorie": "Ventricules et citernes",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (aseg)",
+  "nom_outil": "Right-Inf-Lat-Vent",
+  "identifiant": 44
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   20.5,
+   -13.7,
+   -10.4
+  ],
+  "mni_icbm2009c_mm": [
+   22.600000381469727,
+   -13.600000381469727,
+   -13.100000381469727
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    20.5,
+    -13.7,
+    -9.7
+   ],
+   "mni_icbm2009c_mm": [
+    22.5,
+    -13.5,
+    -12.199999809265137
+   ],
+   "coupe": "z = -9.7 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    20.5,
+    -7.4,
+    -10.4
+   ],
+   "mni_icbm2009c_mm": [
+    22.100000381469727,
+    -7.5,
+    -14.100000381469727
+   ],
+   "coupe": "y = -7.4 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    21.2,
+    -13.7,
+    -10.4
+   ],
+   "mni_icbm2009c_mm": [
+    23.600000381469727,
+    -13.600000381469727,
+    -13.100000381469727
+   ],
+   "coupe": "x = +21.2 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 5,
+     "nom": "Inferior Lateral Ventricle (R)"
+    }
+   ],
+   "mesure": 0.147,
+   "verdict": "discordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.312,
+     "verdict": "discordant"
+    },
+    "coronal": {
+     "mesure": 0.306,
+     "verdict": "discordant"
+    },
+    "sagittal": {
+     "mesure": 0.467,
+     "verdict": "partiel"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.12"
+  }
+ ],
+ "remarques": [
+  "Étiquette CerebrA peu fiable selon ses auteurs (kappa 0.12) : la discordance ne suffit pas à conclure."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "faible"
+}

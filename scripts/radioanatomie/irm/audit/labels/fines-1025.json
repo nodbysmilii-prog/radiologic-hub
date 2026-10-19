@@ -1,0 +1,125 @@
+{
+ "cle": "fines-1025",
+ "nom_fr": "Précunéus gauche",
+ "nom_en": "ctx-lh-precuneus",
+ "cote": "gauche",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-precuneus",
+  "identifiant": 1025
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -10.3,
+   -59.9,
+   14.8
+  ],
+  "mni_icbm2009c_mm": [
+   -11.199999809265137,
+   -56.0,
+   15.100000381469727
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -10.3,
+    -59.9,
+    37.9
+   ],
+   "mni_icbm2009c_mm": [
+    -8.300000190734863,
+    -63.900001525878906,
+    44.599998474121094
+   ],
+   "coupe": "z = +37.9 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -10.3,
+    -59.2,
+    14.8
+   ],
+   "mni_icbm2009c_mm": [
+    -11.300000190734863,
+    -55.400001525878906,
+    15.0
+   ],
+   "coupe": "y = -59.2 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -2.6,
+    -59.9,
+    14.8
+   ],
+   "mni_icbm2009c_mm": [
+    -3.0999999046325684,
+    -56.70000076293945,
+    17.200000762939453
+   ],
+   "coupe": "x = -2.6 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 82,
+     "nom": "Precuneus (L)"
+    }
+   ],
+   "mesure": 0.662,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.796,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.746,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.876,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.80"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 61,
+     "nom": "Left Precuneous Cortex"
+    }
+   ],
+   "mesure": 0.81,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.781,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.97,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.928,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}
