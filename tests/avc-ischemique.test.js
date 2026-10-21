@@ -81,3 +81,11 @@ test('figure « Stade hyperaigu » : mismatch diffusion / FLAIR, étiquettes des
   assert.match(fig, />DIFFUSION<\/text>/); assert.match(fig, />FLAIR<\/text>/);
   assert.ok(texte.includes('Mismatch entre la séquence de diffusion (DWI) et la séquence FLAIR'));
 });
+
+test('titre « Imagerie de l\'AVC ischémique » (page, onglet, carte des Fiches rapides)', () => {
+  assert.match(HTML, /<title>Imagerie de l'AVC ischémique — Fiche rapide RadiologicHub<\/title>/);
+  assert.match(HTML, /<h1>Imagerie de <span class="hl-navy">l'AVC ischémique<\/span><\/h1>/);
+  assert.doesNotMatch(HTML, /cours complet/);
+  const index = fs.readFileSync(path.join(__dirname, '..', 'fiches-rapides.html'), 'utf8');
+  assert.match(index, /<h2>Imagerie de l'AVC ischémique<\/h2>/);
+});
