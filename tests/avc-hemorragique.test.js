@@ -73,3 +73,11 @@ test('fiche listée dans Fiches rapides › Neuro', () => {
   const index = fs.readFileSync(path.join(__dirname, '..', 'fiches-rapides.html'), 'utf8');
   assert.match(index, /<a class="fiche-card" data-spe="neuro" href="fiches\/avc-hemorragique\.html"/);
 });
+
+test('schéma de l\'évolution du signal : image présente, textes en calque SVG (Montserrat)', () => {
+  assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', 'fiches', 'avc', 'evolution-signal-irm.jpg')));
+  const fig = HTML.match(/evolution-signal-irm\.jpg[\s\S]*?<\/svg>/)[0];
+  for (const t of ['T1', 'T2', 'b1000', 'ADC', 'SWI']) assert.match(fig, new RegExp(`>${t}</text>`));
+  for (const l of 'abcde') assert.match(fig, new RegExp(`>${l}</text></g>`));
+  assert.match(fig, /viewBox="0 0 1038 1198"/);
+});
