@@ -64,3 +64,13 @@ test('figure « Collatéralité en angio-TDM » : image, lettres A et B, 2 flèc
   assert.equal((fig.match(/data-mk="fleche"/g) || []).length, 2);
   assert.ok(texte.includes('démontrant un très bon score de collatéralité, illustré par l\'opacification complète du territoire de l\'artère cérébrale moyenne (ACM) distale au thrombus (flèche)'));
 });
+
+test('figure « Signes précoces en TDM » : image, lettres A à C, 3 flèches, légende de l\'auteur', () => {
+  assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', 'fiches', 'avc', 'avci-signes-precoces-tdm.jpg')));
+  const fig = HTML.match(/avci-signes-precoces-tdm\.jpg[\s\S]*?<\/figure>/)[0];
+  assert.equal((fig.match(/<g class="mk-lettre">/g) || []).length, 3);
+  assert.equal((fig.match(/data-mk="fleche"/g) || []).length, 3);
+  for (const t of ['signe de l\'artère cérébrale moyenne hyperdense (trop belle artère)',
+    'signe du ruban insulaire : l\'interface substance grise-substance blanche de la zone insulaire droite disparaît et le sillon cérébral devient peu profond',
+    'Hypodensité du noyau lenticulaire']) assert.ok(texte.includes(t), t);
+});
