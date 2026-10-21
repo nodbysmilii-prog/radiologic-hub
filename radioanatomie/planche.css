@@ -1,0 +1,76 @@
+/* =========================================================
+   RadiologicHub — Radioanatomie › Radiographie standard
+   Planche annotée : cliché + calque SVG (légendes, traits),
+   bouton « Afficher / Masquer les légendes », mode quiz.
+   ========================================================= */
+
+.pl { display: grid; grid-template-columns: minmax(0, 640px) minmax(0, 1fr); gap: 34px 46px; align-items: start; }
+.pl-col-vue { min-width: 0; }
+.pl-barre, .pl-quiz-barre { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 12px; }
+.pl-quiz-barre[hidden] { display: none; }
+.pl-score { margin-right: auto; padding: .35em .9em; border-radius: 999px; background: var(--amber); color: var(--ink); font-weight: 900; font-size: .8rem; }
+
+/* ---------- Cliché et calque ---------- */
+.pl-vue { position: relative; border: 4px solid var(--ink); border-radius: var(--radius); overflow: hidden; background: #000; box-shadow: 8px 8px 0 color-mix(in srgb, var(--purple) 40%, transparent); }
+.pl-img { display: block; width: 100%; height: auto; }
+.pl-calque { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.pl-sans-image { display: none; }
+.pl-vue.is-sans-image .pl-img { visibility: hidden; aspect-ratio: 1012 / 1466; }
+.pl-vue.is-sans-image .pl-sans-image { display: block; position: absolute; top: 45%; left: 0; right: 0; margin: 0; text-align: center; color: #9a9ba6; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+
+.pl-halo, .pl-trait { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.pl-halo { stroke: #111114; stroke-width: 8.5; }
+.pl-trait { stroke: var(--c); stroke-width: 4.5; }
+.pl-etiq rect { fill: rgba(17, 17, 20, .86); stroke: var(--c); stroke-width: 3; }
+.pl-etiq text { fill: #fff; font-family: var(--font); font-weight: 800; text-anchor: middle; letter-spacing: .01em; }
+.pl-num { cursor: pointer; outline: none; }
+.pl-num circle { fill: var(--amber); stroke: var(--ink); stroke-width: 3.5; }
+.pl-num text { fill: var(--ink); font-family: var(--font); font-weight: 900; font-size: 21px; text-anchor: middle; }
+.pl-num:focus-visible circle { stroke: #fff; stroke-width: 5; }
+.pl-vue.is-compact .pl-num-in { transform: scale(1.7); }
+.pl-s { transition: opacity .2s; }
+
+/* Les éléments cachés gardent leur taille (mesure des étiquettes) : visibility plutôt que display. */
+.pl-num, .pl-vue[data-mode="masque"] .pl-calque { visibility: hidden; }
+.pl-vue.is-compact .pl-etiq { visibility: hidden; }
+.pl-vue.is-compact .pl-num { visibility: visible; }
+.pl-vue[data-mode="quiz"] .pl-etiq { visibility: hidden; }
+.pl-vue[data-mode="quiz"] .pl-num { visibility: visible; }
+.pl-vue[data-mode="quiz"]:not(.is-compact) .pl-s.is-vu .pl-etiq { visibility: visible; }
+.pl-vue[data-mode="quiz"]:not(.is-compact) .pl-s.is-vu .pl-num { visibility: hidden; }
+.pl-vue[data-mode="quiz"] .pl-s.is-vu .pl-num circle { fill: var(--c); }
+.pl-vue[data-mode="masque"] .pl-num { visibility: hidden; }
+
+/* Repérage d'une structure (survol de la liste, pastille touchée) */
+.pl-vue.is-focus .pl-s:not(.is-on) { opacity: .18; }
+.pl-vue.is-focus .pl-s.is-on .pl-trait { stroke-width: 6; }
+
+/* ---------- Bulle sous le cliché (téléphone et quiz) ---------- */
+.pl-bulle { display: none; margin: 12px 0 0; min-height: 2.6em; padding: 10px 14px; border-radius: 16px; background: var(--ink); color: #fff; font-weight: 700; font-size: .9rem; }
+.pl-bulle b { display: inline-grid; place-items: center; min-width: 1.9em; height: 1.9em; margin-right: .5em; border-radius: 50%; background: var(--c, var(--amber)); color: var(--ink); font-weight: 900; }
+.pl-vue.is-compact ~ .pl-bulle, .pl-vue[data-mode="quiz"] ~ .pl-bulle { display: block; }
+.pl-vue[data-mode="masque"] ~ .pl-bulle { display: none; }
+.pl-credit { margin: 10px 0 0; color: var(--muted); font-size: .76rem; }
+
+/* ---------- Liste des structures ---------- */
+.pl-aide { margin: 0 0 18px; font-size: .92rem; }
+.pl-liste { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 14px; }
+.pl-liste li { display: flex; align-items: center; gap: 10px; padding: 6px 10px 6px 6px; border-radius: 999px; border: 2px solid color-mix(in srgb, var(--c) 70%, #0000); background: #fff; font-size: .9rem; line-height: 1.25; cursor: default; transition: transform .15s, box-shadow .15s; }
+.pl-liste li:hover, .pl-liste li.is-on { transform: translateX(3px); box-shadow: 3px 3px 0 color-mix(in srgb, var(--c) 60%, #0000); }
+.pl-pastille { flex: none; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--c); border: 2.5px solid var(--ink); color: var(--ink); font-weight: 900; font-size: .78rem; }
+.pl-nom { color: var(--t); font-weight: 800; }
+.pl-cache { display: none; color: var(--muted); font-weight: 900; letter-spacing: .1em; }
+.pl.is-quiz .pl-liste li:not(.is-vu) .pl-nom { display: none; }
+.pl.is-quiz .pl-liste li:not(.is-vu) .pl-cache { display: inline; }
+
+@media (max-width: 1000px) {
+  .pl { grid-template-columns: minmax(0, 1fr); }
+  .pl-col-vue { max-width: 640px; }
+}
+@media (max-width: 520px) {
+  .pl-liste { grid-template-columns: minmax(0, 1fr); }
+  .pl-vue { border-width: 3px; box-shadow: 5px 5px 0 color-mix(in srgb, var(--purple) 40%, transparent); }
+}
+@media print {
+  .pl-barre, .pl-quiz-barre, .pl-bulle { display: none !important; }
+}
