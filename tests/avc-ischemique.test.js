@@ -74,3 +74,10 @@ test('figure « Signes précoces en TDM » : image, lettres A à C, 3 flèches, 
     'signe du ruban insulaire : l\'interface substance grise-substance blanche de la zone insulaire droite disparaît et le sillon cérébral devient peu profond',
     'Hypodensité du noyau lenticulaire']) assert.ok(texte.includes(t), t);
 });
+
+test('figure « Stade hyperaigu » : mismatch diffusion / FLAIR, étiquettes des deux rangées, légende de l\'auteur', () => {
+  assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', 'fiches', 'avc', 'avci-mismatch-diffusion-flair.jpg')));
+  const fig = HTML.match(/avci-mismatch-diffusion-flair\.jpg[\s\S]*?<\/figure>/)[0];
+  assert.match(fig, />DIFFUSION<\/text>/); assert.match(fig, />FLAIR<\/text>/);
+  assert.ok(texte.includes('Mismatch entre la séquence de diffusion (DWI) et la séquence FLAIR'));
+});
