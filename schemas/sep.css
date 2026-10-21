@@ -56,3 +56,10 @@
   .mcd .sep-svg { padding: 4px; border-width: 3px; box-shadow: 4px 4px 0 rgba(17, 17, 20, .85); }
   .mcd .sep-coupes figcaption { font-size: .62rem; }
 }
+
+/* ---------- Épidémiologie : sex-ratio en symboles ---------- */
+.sx-ratio { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 6px 0 0; font-size: 2.6rem; font-weight: 900; line-height: 1; color: var(--ink); }
+.sx-ratio .sx-f, .sx-ratio .sx-h { font-family: "Segoe UI Symbol", "Apple Symbols", "DejaVu Sans", system-ui, sans-serif; font-weight: 400; }
+.sx-ratio .sx-f { color: var(--crimson); font-size: 3rem; }
+.sx-ratio .sx-h { color: var(--blue); font-size: 3rem; }
+.sx-ratio .sx-deux { color: var(--muted); }
