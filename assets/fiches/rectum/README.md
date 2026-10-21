@@ -3,6 +3,11 @@
 Images extraites du cours de l'auteur (PDF « irm_rectum_2 »).
 Pour remplacer une image, garder le même nom de fichier.
 
+Depuis le 21/10/2026, les flèches, textes et mesures d'origine sont **effacés des images** et redessinés au style du site
+dans un calque SVG (`<svg class="annot">`) placé dans la fiche, aux mêmes coordonnées (pixels de l'image).
+Les 4 images « avant / après » sont recadrées au format 2:1 (celui de la fiche). Si une image est remplacée,
+reprendre son calque. `schema-staging-t.jpg` : schéma dessiné par l'auteur.
+
 | Fichier | Section |
 |---|---|
 | `formes-tumorales.jpg` | V.1 Formes tumorales |
