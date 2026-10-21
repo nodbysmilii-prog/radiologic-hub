@@ -88,7 +88,7 @@ test('4 cas IRM (aigu → chronique) : images, lettres en calque, flèches, lég
   for (const [nom, lettres, fleches] of cas) {
     assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', 'fiches', 'avc', nom + '.jpg')), nom);
     const fig = car.match(new RegExp(`${nom}\\.jpg[\\s\\S]*?</figure>`))[0];
-    assert.equal((fig.match(/<g class="mk-num">/g) || []).length, lettres.length, nom + ' : lettres');
+    assert.equal((fig.match(/<g class="mk-lettre">/g) || []).length, lettres.length, nom + ' : lettres');
     for (const l of lettres) assert.match(fig, new RegExp(`>${l}</text></g>`));
     assert.equal((fig.match(/data-mk="fleche"/g) || []).length, fleches, nom + ' : flèches');
   }

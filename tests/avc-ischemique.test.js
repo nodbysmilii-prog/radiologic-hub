@@ -47,3 +47,12 @@ test('abréviations du cours et carte dans Fiches rapides › Neuro', () => {
   const index = fs.readFileSync(path.join(__dirname, '..', 'fiches-rapides.html'), 'utf8');
   assert.match(index, /<a class="fiche-card" data-spe="neuro" href="fiches\/avc-ischemique\.html"/);
 });
+
+test('figure « Évolution en diffusion » : image, lettres A à D en calque, légende de l\'auteur', () => {
+  assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', 'fiches', 'avc', 'avci-evolution-diffusion.jpg')));
+  const fig = HTML.match(/avci-evolution-diffusion\.jpg[\s\S]*?<\/figure>/)[0];
+  for (const l of 'ABCD') assert.match(fig, new RegExp(`<g class="mk-lettre">[^]*?>${l}</text></g>`));
+  assert.ok(texte.includes('la tomodensitométrie sans injection de produit de contraste révèle une hypodensité du lobe temporo-pariétal droit'));
+  assert.ok(texte.includes('l\'imagerie de diffusion (DWI) devient isointense'));
+  assert.match(HTML, /<div class="lb-wrap"><img src="" alt=""><\/div>/, 'agrandissement avec calque');
+});
