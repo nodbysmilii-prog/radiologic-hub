@@ -81,3 +81,17 @@ test('schéma de l\'évolution du signal : image présente, textes en calque SVG
   for (const l of 'abcde') assert.match(fig, new RegExp(`>${l}</text></g>`));
   assert.match(fig, /viewBox="0 0 1038 1198"/);
 });
+
+test('4 cas IRM (aigu → chronique) : images, lettres en calque, flèches, légendes sans sexe ni âge', () => {
+  const car = HTML.match(/<div class="carousel"[\s\S]*?<div class="car-nav">/)[0];
+  const cas = [['cas-aigu', 'ABCDEF', 1], ['cas-subaigu-precoce', 'ABCDE', 1], ['cas-subaigu-tardif', 'ABCDE', 0], ['cas-chronique', 'ABCDE', 1]];
+  for (const [nom, lettres, fleches] of cas) {
+    assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', 'fiches', 'avc', nom + '.jpg')), nom);
+    const fig = car.match(new RegExp(`${nom}\\.jpg[\\s\\S]*?</figure>`))[0];
+    assert.equal((fig.match(/<g class="mk-num">/g) || []).length, lettres.length, nom + ' : lettres');
+    for (const l of lettres) assert.match(fig, new RegExp(`>${l}</text></g>`));
+    assert.equal((fig.match(/data-mk="fleche"/g) || []).length, fleches, nom + ' : flèches');
+  }
+  assert.doesNotMatch(car, /\b(homme|femme|\d+ ans)\b/i, 'sexe ou âge du patient dans les légendes');
+  for (const d of ['2 jours', '4 jours', '14 jours', '1 an']) assert.match(car, new RegExp(d + ' après le début des symptômes'));
+});
