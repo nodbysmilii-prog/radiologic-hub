@@ -56,3 +56,11 @@ test('figure « Évolution en diffusion » : image, lettres A à D en calque, l�
   assert.ok(texte.includes('l\'imagerie de diffusion (DWI) devient isointense'));
   assert.match(HTML, /<div class="lb-wrap"><img src="" alt=""><\/div>/, 'agrandissement avec calque');
 });
+
+test('figure « Collatéralité en angio-TDM » : image, lettres A et B, 2 flèches, légende de l\'auteur', () => {
+  assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', 'fiches', 'avc', 'avci-angio-tdm-collateralite.jpg')));
+  const fig = HTML.match(/avci-angio-tdm-collateralite\.jpg[\s\S]*?<\/figure>/)[0];
+  assert.equal((fig.match(/<g class="mk-lettre">/g) || []).length, 2);
+  assert.equal((fig.match(/data-mk="fleche"/g) || []).length, 2);
+  assert.ok(texte.includes('démontrant un très bon score de collatéralité, illustré par l\'opacification complète du territoire de l\'artère cérébrale moyenne (ACM) distale au thrombus (flèche)'));
+});
