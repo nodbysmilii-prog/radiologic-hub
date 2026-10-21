@@ -23,9 +23,11 @@ test('9 parties dans l\'ordre, sommaire, scripts', () => {
 });
 
 test('chiffres et signes clés du cours', () => {
-  for (const t of ['60 %', '20 et 40 ans', '50 %', '80 %', '75-90 %', '> 97 %', '0,2 mmol/kg', '5-15 min', '2 des 4',
+  for (const t of ['3 femmes pour 1 homme', '20 et 40 ans', '50 %', '80 %', '75-90 %', '> 97 %', '0,1 mmol/kg', '5-15 min', '3D FLAIR recommandé pour l\'encéphale', '2 des 4',
     '« crête de coq »', '« cible » ou « cocarde »', '« Coup d\'ongle » (open ring)', 'ophtalmoplégie internucléaire', 'STIR sagittal'])
     assert.ok(texte.includes(t), t);
+  for (const t of ['60 %', '0,2 mmol/kg', 'peut compter pour plusieurs localisations'])
+    assert.ok(!texte.includes(t), 'corrigé à la demande de l\'auteur : ' + t);
 });
 
 test('schéma : un complet (légende), un pour le vérificateur ; ses 4 zones DIS = localisations de McDonald', () => {
