@@ -91,7 +91,7 @@ const CASES = [
   {
     tab: 'Cas 1 · Neuro',
     image: { src: 'assets/cas/striatopathie-diabetique/irm-t1-axiale.jpg', alt: "IRM cérébrale, coupe axiale T1 sans injection", legende: "IRM axiale T1 sans injection" },
-    vignette: 'Homme de 56 ans aux antécédents de <span class="hl-navy">diabète de type 2 mal équilibré</span>, consulte pour des <span class="hl-red">mouvements involontaires et brusques</span> d\'apparition soudaine du bras et de la jambe droits. L\'IRM montre un <span class="hl-navy">hypersignal T1 du putamen gauche</span>.',
+    vignette: 'Homme de 56 ans aux antécédents de <span class="hl-navy">diabète de type 2 mal équilibré</span>, consulte pour des <span class="hl-red">mouvements involontaires et brusques</span> d\'apparition soudaine du bras et de la jambe gauches. L\'IRM montre un <span class="hl-navy">hypersignal T1 du putamen droit</span>.',
     question: 'Quel est votre diagnostic ?',
     options: ['Hématome des noyaux gris', 'Striatopathie diabétique', 'Calcifications (Fahr)', 'Dépôts de manganèse'],
     answer: 1,

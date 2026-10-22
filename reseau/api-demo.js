@@ -46,7 +46,7 @@
     const cas = (auteur, h, champs) => { const c = { id: id(), auteur_id: auteur.id, question: '', reponse: '', etat: 'publie', masque_motif: null, nb_jaime: 0, nb_commentaires: 0, attestation: true, cree_le: il_y_a(h), modifie_le: null, ...champs }; e.cas.push(c); return c; };
     const c1 = cas(amel, 30, {
       titre: 'Mouvements anormaux brutaux chez un diabétique', specialite: 'neuro', modalites: ['scanner', 'irm'],
-      histoire: 'Homme de 56 ans, diabète de type 2 mal équilibré, consulte pour des mouvements involontaires et brusques, d\'apparition soudaine, du bras et de la jambe droits. L\'IRM montre un hypersignal T1 du putamen gauche.',
+      histoire: 'Homme de 56 ans, diabète de type 2 mal équilibré, consulte pour des mouvements involontaires et brusques, d\'apparition soudaine, du bras et de la jambe gauches. L\'IRM montre un hypersignal T1 du putamen droit.',
       question: 'Quel est votre diagnostic ?',
       reponse: 'Striatopathie diabétique (hyperglycémie non cétosique) : hémichorée ou hémiballisme ; putamen (± noyau caudé) controlatéral aux symptômes ; hyperdensité au scanner sans effet de masse ; hypersignal T1 caractéristique en IRM ; régression après équilibration glycémique.',
       images: [{ chemin: 'assets/posts/cas-striatopathie.png', legende: 'Présentation du cas (visuel pédagogique)' }],
