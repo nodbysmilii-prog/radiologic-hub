@@ -73,7 +73,10 @@
       { "terme": "contours bien définis", "erreurs": ["contour bien défini", "contours bien défini", "contour bien définis"] }
     ],
     "Oreille, rachis, neuro (dictées de l'auteur)": [
-      { "terme": "lytique", "erreurs": ["lithique", "lythique", "li tique"] },
+      { "terme": "lytique", "erreurs": ["lithique", "lythique", "li tique", "litique", "lytic", "l'hytique", "lie tique"] },
+      { "terme": "lyse", "erreurs": ["lise", "lize"] },
+      { "terme": "ostéolyse", "erreurs": ["ostéo lise", "ostéolise", "ostéo lyse", "ostéo lize"] },
+      { "terme": "lysée", "erreurs": ["lisée", "lisé", "lysé"], "avant": ["corticale", "est", "partiellement", "totalement"] },
       { "terme": "lytiques", "erreurs": ["lithiques", "lythiques"] },
       { "terme": "ostéolytique", "erreurs": ["ostéolithique", "ostéo lithique", "ostéolythique", "ostéo lytique"] },
       { "terme": "ostéolytiques", "erreurs": ["ostéolithiques", "ostéo lithiques", "ostéolythiques", "ostéo lytiques"] },
@@ -81,7 +84,7 @@
       { "terme": "interapophysaire", "erreurs": ["interapophisaire", "inter apophisaire", "inter apophysaire", "inter-apophisaire", "inter-apophysaire"] },
       { "terme": "interapophysaires", "erreurs": ["interapophisaires", "inter apophisaires", "inter apophysaires", "inter-apophysaires"] },
       { "terme": "tri-ventriculaire", "erreurs": ["prix ventriculaire", "tri ventriculaire", "triventriculaire", "pris ventriculaire"] },
-      { "terme": "s'étendant", "erreurs": ["c'est tendant", "c'est étendant", "sait tendant", "ces tendant"] },
+      { "terme": "s'étendant", "erreurs": ["c'est tendant", "c'est étendant", "sait tendant", "ces tendant", "ses tendant", "s'est tendant", "c'est tendent", "c'étendant", "c étendant", "s étendant", "cet tendant", "c'est tendons", "c'est tant dans", "set tendant", "s'étend dans"] },
       { "terme": "ptérygoïdien", "erreurs": ["pérégoïdien", "péry goïdien", "ptérigoïdien", "pterygoïdien", "pétérigoïdien"] },
       { "terme": "ptérygoïdienne", "erreurs": ["pérégoïdienne", "ptérigoïdienne", "pétérigoïdienne"] },
       { "terme": "ptérygoïdiens", "erreurs": ["pérégoïdiens", "ptérigoïdiens", "pétérigoïdiens"] },
