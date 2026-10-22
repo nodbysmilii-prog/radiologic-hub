@@ -82,3 +82,22 @@ test('cliché de Radiology Buzz : jamais publié sans leur accord', () => {
   if (fs.existsSync(img)) assert.match(credit, /avec (leur )?autorisation/i, 'cliché présent : le crédit doit mentionner l\'autorisation');
   else assert.match(credit, /en attente/);
 });
+
+test('planches thoraciques (face, profil) : disposition en colonnes, points dans le cliché, licence citée', () => {
+  for (const [f, n] of [['thorax-face', 22], ['thorax-profil', 10]]) {
+    const B = path.join(R, 'radioanatomie', 'radiographie-standard', f);
+    const D = JSON.parse(fs.readFileSync(B + '.json', 'utf8')), H = fs.readFileSync(B + '.html', 'utf8');
+    assert.equal(D.disposition, 'colonnes');
+    assert.equal(D.structures.length, n, f);
+    assert.deepEqual(D.structures.map(s => s.n), D.structures.map((_, i) => i + 1));
+    for (const s of D.structures) {
+      assert.ok(['g', 'd'].includes(s.cote), s.id);
+      assert.ok(s.point[0] >= 0 && s.point[0] <= D.image.largeur && s.point[1] >= 0 && s.point[1] <= D.image.hauteur, s.id);
+      assert.ok(H.includes(`data-s="${s.id}"`), s.id);
+    }
+    assert.ok(fs.existsSync(path.join(R, 'radioanatomie', 'radiographie-standard', D.image.fichier)), D.image.fichier);
+    assert.match(H, /CC BY 4\.0/);
+    assert.match(H, /10\.5281\/zenodo\.18241127/);
+  }
+  assert.ok(fs.existsSync(path.join(R, 'radioanatomie', 'radiographie-standard', 'images', 'LICENSE.txt')));
+});

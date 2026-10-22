@@ -1,0 +1,173 @@
+{
+ "titre": "Radiographie thoracique de profil",
+ "sousTitre": "Profil gauche, debout, en inspiration",
+ "disposition": "colonnes",
+ "marge": 400,
+ "taille": 32,
+ "image": {
+  "fichier": "images/thorax-profil.jpg",
+  "largeur": 1000,
+  "hauteur": 1234
+ },
+ "origine": "Cliché : V. Udodov, « X-ray images of the respiratory system in the frontal and lateral projections (normal) », Zenodo 2026, doi:10.5281/zenodo.18241127, licence CC BY 4.0 (cliché 9, recadré et réduit). Points et légendes posés par RadiologicHub.",
+ "structures": [
+  {
+   "id": "manubrium",
+   "nom": "Manubrium sternal",
+   "lignes": [
+    "Manubrium",
+    "sternal"
+   ],
+   "c": "#fcd34d",
+   "t": "#a16207",
+   "cote": "g",
+   "point": [
+    250,
+    262
+   ],
+   "n": 1
+  },
+  {
+   "id": "espace-retrosternal",
+   "nom": "Espace clair rétrosternal",
+   "lignes": [
+    "Espace clair",
+    "rétrosternal"
+   ],
+   "c": "#a5f3fc",
+   "t": "#0e7490",
+   "cote": "g",
+   "point": [
+    275,
+    420
+   ],
+   "n": 2
+  },
+  {
+   "id": "sternum",
+   "nom": "Corps du sternum",
+   "lignes": [
+    "Corps du",
+    "sternum"
+   ],
+   "c": "#fcd34d",
+   "t": "#a16207",
+   "cote": "g",
+   "point": [
+    140,
+    560
+   ],
+   "n": 3
+  },
+  {
+   "id": "coeur",
+   "nom": "Cœur",
+   "lignes": [
+    "Cœur"
+   ],
+   "c": "#f87171",
+   "t": "#b91c1c",
+   "cote": "g",
+   "point": [
+    330,
+    760
+   ],
+   "n": 4
+  },
+  {
+   "id": "coupole",
+   "nom": "Coupole diaphragmatique",
+   "lignes": [
+    "Coupole diaphrag-",
+    "matique"
+   ],
+   "c": "#fb923c",
+   "t": "#c2410c",
+   "cote": "g",
+   "point": [
+    430,
+    928
+   ],
+   "n": 5
+  },
+  {
+   "id": "trachee",
+   "nom": "Trachée",
+   "lignes": [
+    "Trachée"
+   ],
+   "c": "#7dd3fc",
+   "t": "#0369a1",
+   "cote": "d",
+   "point": [
+    545,
+    300
+   ],
+   "n": 6
+  },
+  {
+   "id": "hile",
+   "nom": "Hiles pulmonaires",
+   "lignes": [
+    "Hiles",
+    "pulmonaires"
+   ],
+   "c": "#f472b6",
+   "t": "#be185d",
+   "cote": "d",
+   "point": [
+    510,
+    560
+   ],
+   "n": 7
+  },
+  {
+   "id": "vertebre",
+   "nom": "Corps vertébral thoracique",
+   "lignes": [
+    "Corps vertébral",
+    "thoracique"
+   ],
+   "c": "#fcd34d",
+   "t": "#a16207",
+   "cote": "d",
+   "point": [
+    765,
+    640
+   ],
+   "n": 8
+  },
+  {
+   "id": "espace-retrocardiaque",
+   "nom": "Espace clair rétrocardiaque",
+   "lignes": [
+    "Espace clair",
+    "rétrocardiaque"
+   ],
+   "c": "#a5f3fc",
+   "t": "#0e7490",
+   "cote": "d",
+   "point": [
+    560,
+    820
+   ],
+   "n": 9
+  },
+  {
+   "id": "cds-posterieur",
+   "nom": "Cul-de-sac costodiaphragmatique postérieur",
+   "lignes": [
+    "Cul-de-sac",
+    "postérieur"
+   ],
+   "c": "#a5f3fc",
+   "t": "#0e7490",
+   "cote": "d",
+   "point": [
+    755,
+    1115
+   ],
+   "n": 10
+  }
+ ]
+}
