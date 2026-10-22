@@ -33,7 +33,8 @@ liens = re.findall(r'href="(?!#|https://)([^"]*)"', page)
 assert all(l.startswith(('../styles.css', '../fiche.css', 'cours.css', '../assets/emblem', '../public/models/coude/LICENSE')) for l in liens), liens
 
 # Fichiers nécessaires
-fichiers = ['styles.css', 'fiche.css', 'fiche.js', 'assets/emblem.svg', 'assets/emblem-light.svg',
+fichiers = ['styles.css', 'fiche.css', 'fiche.js', 'assets/emblem.svg', 'assets/emblem-traits.svg', 'assets/emblem-symbole.svg',
+            'assets/emblem-light.svg', 'assets/emblem-light-traits.svg', 'assets/emblem-light-symbole.svg',
             'cours/cours.css', 'cours/coude-3d.js', 'cours/coude-fiche.js', 'cours/visionneuse.js']
 fichiers += ['vendor/three-0.170.0/' + f for f in ['LICENSE', 'three.module.min.js', 'addons/libs/meshopt_decoder.module.js',
              'addons/controls/OrbitControls.js', 'addons/loaders/GLTFLoader.js', 'addons/utils/BufferGeometryUtils.js']]

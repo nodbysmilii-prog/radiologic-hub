@@ -56,7 +56,6 @@ h2 { font-size: clamp(1.35rem, 2.6vw, 1.9rem); line-height: 1.18; }
 
 /* ---------- En-tête du site ---------- */
 .site-header.is-scrolled { box-shadow: 0 1px 0 var(--trait); }
-.brand:hover .brand-mark { transform: none; }
 .main-nav a:not(.btn) { transition: color var(--t-court) var(--ease); }
 .main-nav a:not(.btn):hover { color: var(--navy); }
 .main-nav a:not(.btn)::after { height: 2px; bottom: -5px; transition: transform var(--t-moyen) var(--ease); }
