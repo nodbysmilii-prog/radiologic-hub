@@ -41,7 +41,7 @@
       { "terme": "ligaments", "erreurs": ["lit gaments", "liga ments"] },
       { "terme": "lobaire", "erreurs": ["l'auber", "l'aubère", "lobère", "l'aubert"], "apres": ["supérieur", "supérieure", "inférieur", "inférieure", "moyen", "moyenne"] },
       { "terme": "lobe", "erreurs": ["l'aube", "l'obe", "lob"], "apres": ["supérieur", "inférieur", "moyen", "droit", "gauche", "caudé", "frontal", "temporal", "pariétal", "occipital"] },
-      { "terme": "dure-mère", "erreurs": ["grammaire", "durmer", "dur mère", "dure mère", "dure mer", "dur mer", "dure-mer", "dure maire"] },
+      { "terme": "dure-mère", "erreurs": ["grammaire", "durmer", "durmers", "durmerre", "durmaire", "dur maire", "dure-maire", "dur-mer", "dur-mère", "durmère", "dure mères", "dures mères", "dur mère", "dure mère", "dure mer", "dur mer", "dure-mer", "dure maire"] },
       { "terme": "dure-mérien", "erreurs": ["dur mais rien", "duremérien", "dure mérien", "dur mérien", "dure-mairien"] },
       { "terme": "dure-mériens", "erreurs": ["dur mais riens", "duremériens", "dure mériens", "dur mériens"] },
       { "terme": "dure-mérienne", "erreurs": ["dur mais rienne", "duremérienne", "dure mérienne", "dur mérienne"] },
