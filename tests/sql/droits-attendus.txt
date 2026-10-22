@@ -15,6 +15,18 @@ cours_reglages · authenticated : DELETE, INSERT, SELECT, UPDATE
 cours_reglages · service_role : tous les droits
 cours_validations · authenticated : DELETE, INSERT, SELECT, UPDATE
 cours_validations · service_role : tous les droits
+dc_examens · authenticated : SELECT
+dc_examens · service_role : tous les droits
+dc_expertises · authenticated : SELECT
+dc_expertises · service_role : tous les droits
+dc_journal · authenticated : SELECT
+dc_journal · service_role : DELETE, INSERT, SELECT
+dc_partages · service_role : tous les droits
+dc_passerelles · service_role : tous les droits
+dc_reglages · authenticated : SELECT
+dc_reglages · service_role : tous les droits
+dc_residents · authenticated : DELETE, INSERT, SELECT, UPDATE
+dc_residents · service_role : tous les droits
 profils · authenticated : DELETE, SELECT, UPDATE
 profils · service_role : tous les droits
 rp_admins · service_role : tous les droits
@@ -67,6 +79,9 @@ rs_signalements · service_role : tous les droits
 ## Colonnes (droit limité à certaines colonnes)
 bib_articles · anon : SELECT (acces, annee, classifications, doi, et_al, id, licence, modalites, niveau, organes, pmcid, pmid, premier_auteur, publie_le, resume, revue, source_texte, specialite, statut, titre, url_texte)
 cours_validations · anon : SELECT (cours, element, statut, type, version)
+dc_partages · authenticated : SELECT (anonymise, avec_code, bloque_jusqu_au, cree_le, cree_par, derniere_consultation, duree, essais_echoues, examen_id, expire_le, id, nb_consultations, revoque_le, revoque_par)
+dc_passerelles · authenticated : SELECT (cree_le, cree_par, derniere_reception, id, nom, revoquee_le, structure_id)
+dc_reglages · authenticated : UPDATE (conservation_jours, envoi_max_mo, journal_jours)
 rs_messages · authenticated : INSERT (conversation_id, image, texte)
 rs_messages · authenticated : UPDATE (supprime)
 rs_notifications · authenticated : UPDATE (lu)
@@ -75,6 +90,15 @@ rs_signalements · authenticated : INSERT (cible_id, cible_type, details, motif)
 rs_signalements · authenticated : UPDATE (decision, traite_le, traite_par)
 
 ## Fonctions (EXECUTE)
+dc_droits(eid uuid) · authenticated
+dc_droits_de(pid uuid, eid uuid) · service_role
+dc_droits_etude(uid text) · authenticated
+dc_mon_espace() · authenticated
+dc_peut_importer(sid uuid) · authenticated
+dc_peut_importer_de(pid uuid, sid uuid) · service_role
+dc_peut_valider_resident(sid uuid) · authenticated
+dc_role() · authenticated
+dc_role_de(pid uuid) · service_role
 rp_a_recu(did uuid) · authenticated
 rp_a_recu_de(sid uuid) · authenticated
 rp_accepter_invitations() · authenticated

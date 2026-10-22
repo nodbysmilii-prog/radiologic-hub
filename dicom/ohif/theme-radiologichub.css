@@ -1,0 +1,69 @@
+/* =========================================================
+   Visionneuse de l'Espace DICOM : couleurs de RadiologicHub dans OHIF.
+   Chargé après app.bundle.css (voir index.html.modele, copié par
+   installer-ohif.js). Les images restent sur fond NOIR (lecture
+   radiologique) ; seuls le cadre et les commandes prennent la charte :
+   police Montserrat, encre et bleu marine du site, ambre pour l'outil
+   actif et le focus, rouge du site pour les actions destructives.
+   Couleurs du site (styles.css) : encre #111114, marine #2b2a74,
+   bleu roi #2a39a3, bleuet #5273bf, ambre #f2ab2f, rouge #a8172d.
+   ========================================================= */
+
+:root, .dark {
+  /* Fond des images : noir */
+  --background: 0 0% 0%;
+  --foreground: 0 0% 98%;
+  /* Panneaux et barres : marine très sombre */
+  --card: 241 40% 11%;
+  --card-foreground: 0 0% 98%;
+  --popover: 241 45% 15%;
+  --popover-foreground: 0 0% 98%;
+  --muted: 241 40% 11%;
+  --muted-foreground: 232 22% 72%;
+  /* Icônes et textes d'accent : bleuet clair */
+  --primary: 224 70% 78%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 241 40% 30%;
+  --secondary-foreground: 230 50% 88%;
+  /* Survol : marine du site */
+  --accent: 241 47% 31%;
+  --accent-foreground: 0 0% 98%;
+  /* Outil actif, sélection, focus : ambre du site */
+  --highlight: 38 88% 57%;
+  --ring: 38 88% 57%;
+  --destructive: 351 76% 37%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 241 25% 20%;
+  --input: 241 35% 30%;
+  --neutral: 232 18% 62%;
+  --neutral-light: 228 60% 86%;
+  --neutral-dark: 241 25% 20%;
+}
+
+/* Police du site (Montserrat, chargée par index.html) à la place d'Inter */
+html, body, #root, .font-sans, button, input, select, textarea, [class*="text-"] {
+  font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif !important;
+}
+.font-mono { font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important; }
+
+/* Anciennes classes d'OHIF à couleur fixe */
+.bg-primary-dark { background-color: #111127 !important; }
+.text-primary-dark { color: #111127 !important; }
+.border-primary-dark { border-color: #111127 !important; }
+.bg-primary-main, .group-hover\:bg-primary-main:hover { background-color: #2a39a3 !important; }
+.text-primary-main { color: #2a39a3 !important; }
+.border-primary-main { border-color: #2a39a3 !important; }
+.bg-primary-light { background-color: #a9bdf0 !important; }
+.text-primary-light { color: #a9bdf0 !important; }
+.border-primary-light { border-color: #a9bdf0 !important; }
+.text-primary-active { color: #f2ab2f !important; }
+.border-primary-active { border-color: #f2ab2f !important; }
+.bg-secondary-dark { background-color: #16163d !important; }
+.bg-secondary-light { background-color: #2b2a74 !important; }
+.border-secondary-light, .border-inputfield-main { border-color: #2b2a74 !important; }
+.text-secondary-light { color: #8b8fd6 !important; }
+.border-secondary-main { border-color: #2b2a74 !important; }
+.stroke-secondary-light { stroke: #2b2a74 !important; }
+
+/* Outil actif : icône foncée sur ambre (comme les étiquettes du site) */
+.bg-highlight { color: #111114; }

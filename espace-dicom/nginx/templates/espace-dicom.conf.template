@@ -1,0 +1,153 @@
+# =====================================================================
+# Espace DICOM — Nginx (seule porte d'entrée du serveur)
+# Modèle : au démarrage, les variables ${DICOM_…} et ${ORTHANC_AUTH_BASIC}
+# sont remplacées par celles du fichier .env (rien n'est écrit en dur).
+# • Orthanc n'est JAMAIS exposé : /dicomweb/ passe d'abord par dicom-api
+#   (auth_request), qui vérifie la session et le droit sur l'étude.
+# • Le droit est vérifié AVANT le cache : une image en cache n'est jamais
+#   servie sans droit.
+# =====================================================================
+
+proxy_cache_path /var/cache/nginx/dicom levels=1:2 keys_zone=dicom_images:50m
+                 max_size=${DICOM_CACHE_TAILLE} inactive=1d use_temp_path=off;
+
+limit_req_zone $binary_remote_addr zone=debit_api:10m rate=10r/s;
+limit_req_zone $binary_remote_addr zone=debit_images:10m rate=200r/s;
+limit_req_zone $binary_remote_addr zone=debit_codes:10m rate=5r/m;    # codes d'accès des liens (étape 4)
+limit_req_status 429;
+
+map $host $dicom_csp {
+  default "frame-ancestors 'self' ${DICOM_SITE_ORIGINES}; base-uri 'self'; object-src 'none'";
+}
+
+upstream orthanc   { server orthanc:8042;   keepalive 32; }
+upstream dicom_api { server dicom-api:3000; keepalive 16; }
+
+server_tokens off;
+
+# HTTP : certificats Let's Encrypt, puis redirection vers HTTPS
+server {
+  listen 80 default_server;
+  server_name _;
+  location /.well-known/acme-challenge/ { root /var/www/acme; }
+  location = /nginx-sante { allow 127.0.0.1; deny all; access_log off; return 204; }
+  location / { return 301 ${DICOM_URL_PUBLIQUE}$request_uri; }
+}
+
+# Nom de domaine inconnu : connexion refusée
+server {
+  listen 443 ssl default_server;
+  ssl_reject_handshake on;
+}
+
+server {
+  listen 443 ssl;
+  http2 on;
+  server_name ${DICOM_DOMAINE};
+
+  ssl_certificate     /etc/nginx/certs/fullchain.pem;
+  ssl_certificate_key /etc/nginx/certs/privkey.pem;
+  ssl_protocols TLSv1.2 TLSv1.3;
+  ssl_session_cache shared:SSL:10m;
+  ssl_session_timeout 1d;
+  ssl_session_tickets off;
+
+  include /etc/nginx/espace-dicom/entetes.conf;
+
+  gzip on;
+  gzip_vary on;
+  gzip_proxied any;
+  gzip_min_length 1024;
+  gzip_types application/json application/dicom+json text/css text/plain application/javascript image/svg+xml;
+
+  client_max_body_size 64m;
+
+  # Vérification d'une requête d'images par dicom-api (sous-requête interne).
+  # Elle reçoit le chemin NORMALISÉ de la requête d'origine ($uri, noté avant
+  # toute réécriture), celui-là même que Nginx relaie à Orthanc.
+  location = /_auth_dicomweb {
+    internal;
+    proxy_pass http://dicom_api/auth/dicomweb;
+    proxy_pass_request_body off;
+    proxy_set_header Content-Length "";
+    proxy_set_header X-Original-Method $request_method;
+    proxy_set_header X-Chemin $dicom_chemin;
+    proxy_set_header X-Requete $dicom_requete;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_http_version 1.1;
+    proxy_set_header Connection "";
+  }
+
+  # DICOMweb (lecture seule) : métadonnées et recherches limitées à une étude
+  location /dicomweb/ {
+    set $dicom_chemin $uri;
+    set $dicom_requete $args;
+    limit_except GET { deny all; }
+    limit_req zone=debit_images burst=2000 nodelay;
+    auth_request /_auth_dicomweb;
+
+    proxy_pass http://orthanc/dicom-web/;
+    proxy_http_version 1.1;
+    proxy_set_header Connection "";
+    proxy_set_header Host $http_host;
+    proxy_set_header Forwarded "host=$http_host;proto=https";
+    proxy_set_header Authorization "Basic ${ORTHANC_AUTH_BASIC}";
+    proxy_hide_header X-Content-Type-Options;    # remis par entetes.conf (sinon en double)
+    proxy_read_timeout 300s;
+
+    # Images, vignettes et données binaires : immuables, mises en cache sur le serveur
+    location ~ ^/dicomweb/studies/[0-9.]+/series/[0-9.]+/instances/[0-9.]+/(frames|rendered|thumbnail|bulk)(/|$) {
+      set $dicom_chemin $uri;
+      set $dicom_requete $args;
+      limit_except GET { deny all; }
+      rewrite ^/dicomweb/(.*)$ /dicom-web/$1 break;
+      proxy_pass http://orthanc;
+      proxy_http_version 1.1;
+      proxy_set_header Connection "";
+      proxy_set_header Host $http_host;
+      proxy_set_header Forwarded "host=$http_host;proto=https";
+      proxy_set_header Authorization "Basic ${ORTHANC_AUTH_BASIC}";
+
+      proxy_cache dicom_images;
+      proxy_cache_key "$uri|$args|$http_accept";
+      proxy_cache_valid 200 1d;
+      proxy_cache_lock on;
+      proxy_ignore_headers Cache-Control Expires Set-Cookie Vary;
+      proxy_hide_header Cache-Control;
+      proxy_hide_header X-Content-Type-Options;
+      include /etc/nginx/espace-dicom/entetes.conf;
+      add_header X-Cache $upstream_cache_status always;
+      add_header Cache-Control "private, max-age=86400" always;
+    }
+  }
+
+  # API du site (import, partages, télé-expertise…)
+  location /api/ {
+    limit_req zone=debit_api burst=40 nodelay;
+    proxy_pass http://dicom_api;
+    proxy_http_version 1.1;
+    proxy_set_header Connection "";
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-Proto https;
+    proxy_request_buffering off;
+  }
+
+  # Codes d'accès des liens de partage : essais limités par adresse IP (étape 4)
+  location /api/partages/acces {
+    limit_req zone=debit_codes burst=5 nodelay;
+    proxy_pass http://dicom_api;
+    proxy_http_version 1.1;
+    proxy_set_header Connection "";
+    proxy_set_header Host $http_host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-Proto https;
+  }
+
+  location = / {
+    root /usr/share/nginx/espace-dicom;
+    try_files /index.html =404;
+  }
+
+  location / { return 404; }
+}

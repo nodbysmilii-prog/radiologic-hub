@@ -1,0 +1,137 @@
+# =====================================================================
+# Espace DICOM — services du serveur (VPS ou poste de développement)
+#   nginx      : seule porte ouverte (HTTPS) ; vérifie chaque requête
+#                d'images auprès de dicom-api avant de la relayer
+#   dicom-api  : droits (Supabase), journal d'audit, API du site
+#   orthanc    : stockage DICOM, compression sans perte JPEG-LS, DICOMweb
+#                — aucun port publié, aucun accès à Internet
+#   orthanc-db : index d'Orthanc (PostgreSQL dédié, données du VPS)
+# Toute la configuration est dans .env (domaine, ports, dossiers,
+# Supabase, secrets) : voir .env.example et README.md.
+# Démarrage : node outils/initialiser.js puis docker compose up -d
+# =====================================================================
+name: espace-dicom
+
+x-journaux: &journaux
+  logging:
+    driver: json-file
+    options: { max-size: "10m", max-file: "5" }
+
+services:
+  orthanc-db:
+    image: postgres:17.11-alpine3.24
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: orthanc
+      POSTGRES_USER: orthanc
+      POSTGRES_PASSWORD: ${ORTHANC_DB_MOT_DE_PASSE:?à définir dans .env (node outils/initialiser.js)}
+    volumes:
+      - ${DONNEES_DIR:-./donnees}/orthanc-index:/var/lib/postgresql/data
+    networks: [interne]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U orthanc -d orthanc"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    <<: *journaux
+
+  orthanc:
+    image: orthancteam/orthanc:26.9.1
+    restart: unless-stopped
+    depends_on:
+      orthanc-db: { condition: service_healthy }
+    environment:
+      ORTHANC_UTILISATEUR: ${ORTHANC_UTILISATEUR:?à définir dans .env}
+      ORTHANC_MOT_DE_PASSE: ${ORTHANC_MOT_DE_PASSE:?à définir dans .env}
+      ORTHANC_DB_MOT_DE_PASSE: ${ORTHANC_DB_MOT_DE_PASSE}
+      DICOM_WEB_PLUGIN_ENABLED: "true"
+      POSTGRESQL_PLUGIN_ENABLED: "true"
+      GDCM_PLUGIN_ENABLED: "true"            # lecture des fichiers reçus en JPEG 2000
+      ORTHANC_EXPLORER_2_ENABLED: "false"    # pas d'interface d'administration d'Orthanc
+      VERBOSE_STARTUP: "false"
+    volumes:
+      - ./orthanc/orthanc.json:/etc/orthanc/espace-dicom.json:ro
+      - ${DONNEES_DIR:-./donnees}/orthanc-fichiers:/var/lib/orthanc/db
+    networks: [interne]
+    healthcheck:
+      test: ["CMD", "/probes/test-aliveness.py"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+    <<: *journaux
+
+  dicom-api:
+    build: ./api
+    image: radiologichub/dicom-api:local
+    restart: unless-stopped
+    depends_on:
+      orthanc: { condition: service_healthy }
+    environment:
+      ORTHANC_URL: http://orthanc:8042
+      ORTHANC_UTILISATEUR: ${ORTHANC_UTILISATEUR}
+      ORTHANC_MOT_DE_PASSE: ${ORTHANC_MOT_DE_PASSE}
+      SUPABASE_URL: ${SUPABASE_URL:-}
+      SUPABASE_REST_URL: ${SUPABASE_REST_URL:-}
+      SUPABASE_CLE_PUBLIQUE: ${SUPABASE_CLE_PUBLIQUE:?à définir dans .env}
+      SUPABASE_CLE_SERVICE: ${SUPABASE_CLE_SERVICE:?à définir dans .env}
+      SUPABASE_JWT_SECRET: ${SUPABASE_JWT_SECRET:-}
+      SUPABASE_JWKS_URL: ${SUPABASE_JWKS_URL:-}
+      DICOM_SITE_ORIGINES: ${DICOM_SITE_ORIGINES:-}
+      DICOM_URL_PUBLIQUE: ${DICOM_URL_PUBLIQUE:?à définir dans .env}
+      DROITS_CACHE_SECONDES: ${DROITS_CACHE_SECONDES:-60}
+    networks: [interne, sortie]
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3000/api/sante"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    <<: *journaux
+
+  nginx:
+    image: nginx:1.30.5-alpine
+    restart: unless-stopped
+    depends_on:
+      dicom-api: { condition: service_healthy }
+    ports:
+      - "${PUBLIER_SUR:-127.0.0.1}:${PORT_HTTP:-8080}:80"
+      - "${PUBLIER_SUR:-127.0.0.1}:${PORT_HTTPS:-8443}:443"
+    environment:
+      DICOM_DOMAINE: ${DICOM_DOMAINE:?à définir dans .env}
+      DICOM_URL_PUBLIQUE: ${DICOM_URL_PUBLIQUE}
+      DICOM_SITE_ORIGINES: ${DICOM_SITE_ORIGINES:-}
+      DICOM_CACHE_TAILLE: ${DICOM_CACHE_TAILLE:-20g}
+      ORTHANC_UTILISATEUR: ${ORTHANC_UTILISATEUR}
+      ORTHANC_MOT_DE_PASSE: ${ORTHANC_MOT_DE_PASSE}
+      NGINX_ENVSUBST_FILTER: "^(DICOM_|ORTHANC_AUTH_BASIC)"
+    volumes:
+      - ./nginx/templates:/etc/nginx/templates:ro
+      - ./nginx/conf:/etc/nginx/espace-dicom:ro
+      - ./nginx/entrypoint/05-espace-dicom.envsh:/docker-entrypoint.d/05-espace-dicom.envsh:ro
+      - ./nginx/statique:/usr/share/nginx/espace-dicom:ro
+      - ${CERTS_DIR:-./certs}:/etc/nginx/certs:ro
+      - ${DONNEES_DIR:-./donnees}/acme:/var/www/acme:ro
+      - cache-images:/var/cache/nginx/dicom
+    networks: [interne, public]
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1/nginx-sante"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    <<: *journaux
+
+volumes:
+  cache-images: {}
+
+networks:
+  # Réseau sans accès à Internet : Orthanc et sa base ne peuvent ni être joints ni joindre l'extérieur
+  interne:
+    internal: true
+  # Sortie de dicom-api vers Supabase et Brevo (aucun port publié)
+  sortie: {}
+  # Ports publiés de Nginx
+  public: {}

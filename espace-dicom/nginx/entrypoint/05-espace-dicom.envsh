@@ -1,0 +1,8 @@
+#!/bin/sh
+# Espace DICOM : prépare les variables du modèle Nginx (exécuté au démarrage, avant envsubst).
+# En-tête d'authentification interne vers Orthanc, calculé depuis le fichier .env
+ORTHANC_AUTH_BASIC=$(printf '%s:%s' "$ORTHANC_UTILISATEUR" "$ORTHANC_MOT_DE_PASSE" | base64 | tr -d '\n')
+export ORTHANC_AUTH_BASIC
+unset ORTHANC_MOT_DE_PASSE
+# Page d'accueil par défaut de l'image Nginx : retirée (seul le modèle de l'Espace DICOM sert)
+rm -f /etc/nginx/conf.d/default.conf
