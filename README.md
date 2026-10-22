@@ -693,6 +693,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 22/10/2026 | Dictée vocale : catégorie « Oreille, rachis, neuro » du lexique (lytique, conservée, interapophysaire, tri-ventriculaire, s'étendant, ptérygoïdien, épitympan, attico-antral, malleus, incudo-malléaire, incus, ossifiante, hypodensité pré-stapédienne, otospongiose) ; majuscule d'une erreur gardée seulement en début de phrase ; **publiée sur le site en ligne** (fichiers de la dictée seulement) |
 | 22/10/2026 | Dictée vocale : variantes supplémentaires de « dure-mère » (durmers, durmère, dur-mer, dur maire…) ; vérifié dans Chromium sur comptes-rendus.html |
 | 22/10/2026 | Dictée vocale : « micro nodule » → « micronodules » soudé et au pluriel par défaut (singulier après « un », « le », « seul »…) ; « brancher » toujours corrigé en « branché(s) » ; contexte « avantInterdit » dans le lexique ; tests |
 | 22/10/2026 | Dictée vocale : accord au pluriel « micronodules centrolobulaires branchés » (« micronodules sans trop lobulaire brancher » ; singulier conservé après « nodule ») ; tests |

@@ -85,7 +85,10 @@
     // « sans trop lobulaire brancher » → « centrolobulaire » puis « centrolobulaire branché »)
     for (const avecContexte of [false, true, true]) {   // contexte deux fois : un accord peut en entraîner un autre
       LEXIQUE_ENTREES.filter(e => e.contexte === avecContexte)
-        .forEach(({ re, terme }) => { t = t.replace(re, (m, ctx, err) => ctx + garde(casse(err, terme))); });
+        .forEach(({ re, terme }) => {
+          // majuscule gardée seulement en début de phrase (« Mali us » au milieu → « malleus »)
+          t = t.replace(re, (m, ctx, err, i, tout) => ctx + garde(/(?:^|[.!?\n][ \t]*)$/.test(tout.slice(0, i + ctx.length)) ? casse(err, terme) : terme));
+        });
       t = rendre(t);
     }
     return t;

@@ -296,3 +296,16 @@ test('« contour régulier » → « contours réguliers »', () => {
   assert.equal(T.corriger('contour microbuler'), 'contours microlobulés');
   assert.equal(T.corriger('le foie et de contour régulier'), 'le foie est de contours réguliers');
 });
+
+test('lexique : oreille, rachis, neuro (erreurs signalées par l\'auteur)', () => {
+  for (const [dit, ecrit] of [
+    ['lésion lithique', 'lésion lytique'], ['corticale conserver', 'corticale conservée'],
+    ['arthrose interapophisaire', 'arthrose interapophysaire'], ['dilatation prix ventriculaire', 'dilatation tri-ventriculaire'],
+    ["processus c'est tendant au cavum", "processus s'étendant au cavum"], ['muscle pérégoïdien latéral', 'muscle ptérygoïdien latéral'],
+    ["comblement de l'épithimpan", "comblement de l'épitympan"], ['extension atiko entrailles', 'extension attico-antral'],
+    ['extension aTICO entre elles', 'extension attico-antral'], ['tête du Mali us', 'tête du malleus'], ['tête du malleux', 'tête du malleus'],
+    ["luxation un cul d'eau malléaire", 'luxation incudo-malléaire'], ['érosion du un CUS', 'érosion du incus'],
+    ['lésion aussi fiente', 'lésion ossifiante'], ['hypotensité prestapédienne', 'hypodensité pré-stapédienne'],
+    ['autospongiose fenestrale', 'otospongiose fenestrale'], ['Autospongiose.', 'Otospongiose.'],
+  ]) assert.equal(T.corriger(dit), ecrit, dit);
+});
