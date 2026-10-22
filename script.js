@@ -101,7 +101,8 @@ const CASES = [
       'Scanner : hyperdensité sans effet de masse',
       'IRM : hypersignal T1 caractéristique',
       'Régression après équilibration glycémique'
-    ]
+    ],
+    link: { href: 'cas/striatopathie-diabetique.html', label: 'Le cas complet, image par image →' }
   },
   {
     tab: 'Cas 2 · Digestif',

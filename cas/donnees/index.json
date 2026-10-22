@@ -1,6 +1,7 @@
 {
  "commentaire": "Ordre des cartes de cas/index.html. Un cas bilingue : {\"id\": ...} (contenu dans cas/donnees/<id>.json). Une page écrite à la main : lien, badge, titre, résumé, mots, couleur.",
  "cas": [
+  {"id": "striatopathie-diabetique"},
   {"id": "tendino-bursite-patte-oie"},
   {"id": "sarcome-artere-pulmonaire"},
   {"id": "maladie-rendu-osler"},

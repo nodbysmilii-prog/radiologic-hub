@@ -94,6 +94,13 @@ h2 { font-size: clamp(1.35rem, 2.6vw, 1.9rem); line-height: 1.18; }
 .teaser-label { top: -15px; border-width: 2px; font-size: .68rem; }
 .teaser-text { font-size: .86rem; line-height: 1.65; margin-bottom: .6em; }
 .teaser-btn { font-size: 1.05rem; }
+/* IRM du cas à côté de la vignette (cadrage d'origine, sans recadrage) */
+.teaser { display: grid; grid-template-columns: 118px minmax(0, 1fr); column-gap: 18px; width: min(450px, 96%); }
+.teaser-irm { grid-row: 1 / span 2; align-self: start; display: block; text-decoration: none; }
+.teaser-irm img { width: 100%; height: auto; border-radius: 10px; border: 2px solid var(--ink); background: #000; }
+.teaser-irm span { display: block; margin-top: 6px; font-size: .62rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; text-align: center; color: var(--muted); }
+.teaser-text, .teaser-btn { grid-column: 2; }
+.teaser-btn { justify-self: start; }
 .hand-arrow { width: 104px; right: -4px; top: -10px; }
 .hand-arrow path { animation: none; stroke-dashoffset: 0; }
 
@@ -292,6 +299,7 @@ h2 { font-size: clamp(1.35rem, 2.6vw, 1.9rem); line-height: 1.18; }
 @media (max-width: 640px) {
   h1 { font-size: clamp(1.7rem, 7.6vw, 2.2rem); letter-spacing: .02em; }
   .hero-grille > * { min-width: 0; }
+  .teaser { grid-template-columns: 96px minmax(0, 1fr); column-gap: 14px; }
   .hero { padding: calc(var(--header-h) + 24px) 0 40px; }
   .acces, .acces-reseau { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   .acces .acces-carte {

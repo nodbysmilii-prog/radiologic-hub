@@ -27,8 +27,8 @@ test('pages générées à jour (scripts/cas/construire_cas.py --verifier)', () 
   execFileSync('python3', ['-I', 'scripts/cas/construire_cas.py', '--verifier'], { cwd: R, stdio: 'pipe' });
 });
 
-test('cinq cas bilingues : chaque texte existe en français et en anglais', () => {
-  assert.deepEqual(IDS.sort(), ['hernie-amyand', 'maladie-rendu-osler', 'sarcome-artere-pulmonaire', 'syndrome-kartagener', 'tendino-bursite-patte-oie']);
+test('six cas bilingues : chaque texte existe en français et en anglais', () => {
+  assert.deepEqual(IDS.sort(), ['hernie-amyand', 'maladie-rendu-osler', 'sarcome-artere-pulmonaire', 'striatopathie-diabetique', 'syndrome-kartagener', 'tendino-bursite-patte-oie']);
   for (const [id, d] of Object.entries(CAS)) {
     const t = textes(d);
     assert.ok(t.length > 20, id);
