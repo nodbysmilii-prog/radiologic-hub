@@ -313,6 +313,9 @@ def page_cas(d, v):
     o.append(f'        {t(d["tag"], "p", "marker-tag")}')
     o.append(f'        <h1>{t(d["titre"])}</h1>')
     o.append(f'        {t(d["accroche"], "p", "fiche-sub")}')
+    if d.get('auteur'):
+        o.append(f'        <p class="cas-auteur"><span class="cas-auteur-label">{t({"fr": "Cas proposé par", "en": "Case contributed by"})}</span>'
+                 f'<strong>{html.escape(d["auteur"])}</strong></p>')
     o.append('        <div class="cas-outils">' + bascule()
              + t({'fr': 'Texte original en anglais : un clic sur <b>EN</b>.', 'en': 'French translation: one click on <b>FR</b>.'}, 'p', 'cas-langue-aide')
              + '</div>')
@@ -379,6 +382,8 @@ def page_index(liste, cas, v):
         o.append(f'            {t(badge, "span", "fiche-card-badge")}')
         o.append(f'            {t(titre, "h2")}')
         o.append(f'            {t(resume, "p")}')
+        if e.get('id') and d.get('auteur'):
+            o.append(f'            <p class="cas-carte-auteur">{t({"fr": "Cas de", "en": "Case by"})} <strong>{html.escape(d["auteur"])}</strong></p>')
         o.append('            <ul class="fiche-tags">' + ''.join(f'<li>{t(m)}</li>' for m in mots) + '</ul>')
         if note:
             o.append(f'            {note}')
