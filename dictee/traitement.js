@@ -75,6 +75,31 @@
       return { contexte: !!(e.avant || e.apres || e.debutPhrase), re: new RegExp(`${avant}${interdit}${e.avant || e.debutPhrase ? '' : AV}(${motif(e.dit)})${AP}${apres}`, 'giu'), terme: e.terme };
     });
   const casse = (modele, t) => (/^\p{Lu}/u.test(modele) && /^\p{Ll}/u.test(t) ? t[0].toUpperCase() + t.slice(1) : t);
+  /* ---------- Corrections apprises (« Mes corrections », mémorisées dans le navigateur) ---------- */
+  let PERSO = [];
+  function apprendre(liste) {
+    PERSO = (liste || []).filter(c => c && String(c.dit || '').trim() && String(c.ecrit || '').trim())
+      .sort((a, b) => norm(b.dit).length - norm(a.dit).length)
+      .map(c => ({ re: new RegExp(`()${AV}(${motif(c.dit)})${AP}`, 'giu'), terme: String(c.ecrit).trim() }));
+    return PERSO.length;
+  }
+
+  // corrections apprises seules (pour corriger un compte rendu déjà écrit)
+  const corrigerAppris = texte => PERSO.reduce((t, { re, terme }) => t.replace(re, (m, ctx) => ctx + terme), String(texte ?? ''));
+
+  /* ---------- Vocabulaire médical : choix entre plusieurs hypothèses du moteur ---------- */
+  const VOCAB = new Set();
+  [...Object.values((LEXIQUE && LEXIQUE.categories) || {}).flat().map(e => e.terme), ...(DICO.remplacements || []).map(r => r[1])]
+    .forEach(t => String(t).split(/[\s']+/).forEach(m => { if (m.length > 3) VOCAB.add(norm(m)); }));
+  const VOCABULAIRE = [...new Set([...Object.values((LEXIQUE && LEXIQUE.categories) || {}).flat().map(e => e.terme)])];
+  function meilleureHypothese(hypotheses) {
+    // note = termes médicaux reconnus après correction ; le moteur classe ses hypothèses (la 1re est un peu favorisée)
+    const note = h => corriger(h).split(/[\s,.;:'’]+/).filter(m => VOCAB.has(norm(m))).length;
+    let best = hypotheses[0] || '', score = -Infinity;
+    hypotheses.forEach((h, i) => { const n = note(h) - i * 0.6; if (n > score) { score = n; best = h; } });
+    return best;
+  }
+
   function lexique(texte) {
     let t = texte;
     const prot = [];
@@ -83,6 +108,8 @@
     const rendre = s => s.replace(/\u0003(\d+)\u0004/g, (m, i) => prot[+i]);
     // deux passes : sans contexte, puis avec contexte (qui peut dépendre d'un terme corrigé :
     // « sans trop lobulaire brancher » → « centrolobulaire » puis « centrolobulaire branché »)
+    PERSO.forEach(({ re, terme }) => { t = t.replace(re, (m, ctx, err) => garde(terme)); });
+    t = rendre(t);
     for (const avecContexte of [false, true, true]) {   // contexte deux fois : un accord peut en entraîner un autre
       LEXIQUE_ENTREES.filter(e => e.contexte === avecContexte)
         .forEach(({ re, terme }) => {
@@ -394,7 +421,7 @@
   }
 
   return {
-    norm, corriger, lexique, etEst, dimensions, analyser, assembler, INSERTION, debutDernierMot,
+    norm, corriger, lexique, etEst, apprendre, corrigerAppris, meilleureHypothese, VOCABULAIRE, dimensions, analyser, assembler, INSERTION, debutDernierMot,
     sections, cibleSection, trouverSection, chercher, choisir, reponse, identite, SEUIL,
   };
 });
