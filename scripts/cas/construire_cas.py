@@ -89,6 +89,7 @@ POLICES = morceau(r'  <link rel="preconnect" href="https://fonts.googleapis.com"
 V_STYLES = morceau(r'styles\.css\?v=\d+')
 V_FICHE_CSS = morceau(r'fiche\.css\?v=\d+')
 V_FICHE_JS = morceau(r'fiche\.js\?v=\d+')
+V_NAVIGATION = morceau(r'navigation\.js\?v=\d+')
 
 
 def versions():
@@ -143,6 +144,7 @@ def fin(v, avec_3d=False, agrandissement=True):
         '  ' + bascule(flottante=True),
         '',
         PIED,
+        f'  <script src="../{V_NAVIGATION}"></script>',
         f'  <script src="../{V_FICHE_JS}"></script>',
         f'  <script src="cas.js?v={v["cas_js"]}"></script>',
     ]

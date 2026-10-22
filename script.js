@@ -317,34 +317,16 @@ flashEl.addEventListener('click', e => {
   card.setAttribute('aria-pressed', on);
 });
 
-/* ---------- Header & navigation ---------- */
-const header = document.querySelector('.site-header');
-const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 30);
-window.addEventListener('scroll', onScroll, { passive: true });
-onScroll();
-
-const toggle = document.querySelector('.nav-toggle');
-const nav = document.getElementById('main-nav');
-const setNav = open => {
-  nav.classList.toggle('is-open', open);
-  document.body.classList.toggle('nav-open', open);
-  toggle.setAttribute('aria-expanded', open);
-  toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
-};
-toggle.addEventListener('click', () => setNav(!nav.classList.contains('is-open')));
-nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setNav(false)));
-
-const navLinks = [...nav.querySelectorAll('a[href^="#"]:not(.btn)')];
-const sectionObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    navLinks.forEach(l => l.classList.toggle('is-current', l.getAttribute('href') === '#' + entry.target.id));
-  });
-}, { rootMargin: '-45% 0px -50% 0px' });
-navLinks.forEach(l => {
-  const s = document.querySelector(l.getAttribute('href'));
-  if (s) sectionObserver.observe(s);
-});
+/* ---------- Navigation ----------
+   Menu mobile et en-tête : navigation.js (commun à toutes les pages).
+   Ici : lien « Masterclass » du menu marqué tant que ses sections sont à l'écran. */
+const lienMasterclass = document.querySelector('#main-nav a[href="#masterclass"]');
+const blocMasterclass = document.getElementById('bloc-masterclass');
+if (lienMasterclass && blocMasterclass) {
+  new IntersectionObserver(entries => {
+    entries.forEach(entry => lienMasterclass.classList.toggle('is-current', entry.isIntersecting));
+  }, { rootMargin: '-45% 0px -50% 0px' }).observe(blocMasterclass);
+}
 
 /* ---------- Apparition au scroll ---------- */
 const revealObserver = new IntersectionObserver(entries => {
@@ -356,19 +338,6 @@ const revealObserver = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-/* ---------- Compteurs ---------- */
-document.querySelectorAll('[data-count]').forEach(el => {
-  const target = +el.dataset.count;
-  const suffix = el.dataset.suffix || '';
-  const start = performance.now();
-  const tick = now => {
-    const p = Math.min((now - start) / 1400, 1);
-    el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + suffix;
-    if (p < 1) requestAnimationFrame(tick);
-  };
-  requestAnimationFrame(tick);
-});
 
 /* ---------- Formulaire ---------- */
 const form = document.getElementById('signup-form');

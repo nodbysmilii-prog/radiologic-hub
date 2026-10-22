@@ -5,19 +5,7 @@
 const $ = (s, root = document) => root.querySelector(s);
 const $$ = (s, root = document) => [...root.querySelectorAll(s)];
 
-/* ---------- Menu mobile ---------- */
-const toggle = $('.nav-toggle');
-const nav = $('#main-nav');
-if (toggle && nav) {
-  const setNav = open => {
-    nav.classList.toggle('is-open', open);
-    document.body.classList.toggle('nav-open', open);
-    toggle.setAttribute('aria-expanded', open);
-    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
-  };
-  toggle.addEventListener('click', () => setNav(!nav.classList.contains('is-open')));
-  $$('a', nav).forEach(a => a.addEventListener('click', () => setNav(false)));
-}
+/* Menu mobile : navigation.js (commun à toutes les pages) */
 
 /* ---------- Index : onglets par spécialité ---------- */
 const speTabs = $$('.spe-tab');

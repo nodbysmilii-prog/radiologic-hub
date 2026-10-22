@@ -1556,20 +1556,39 @@
     if (act === 'reset' && confirm('Réinitialiser cet outil ?')) { states[cur] = T.init(); say(''); render(); }
   });
 
-  /* ---------- Raccourcis au-dessus de l'éditeur (outils suggérés selon le texte) ---------- */
-  chipsBox.insertAdjacentHTML('beforeend', Object.entries(TOOLS).map(([k, T]) =>
-    `<button type="button" class="cr-tool-chip" data-tool="${k}">${esc(T.chip)}<small>${esc(T.sub)}</small></button>`).join(''));
+  /* ---------- Volet « Schémas et calculateurs » : outils classés par domaine ; ceux que le texte
+     évoque sont repris à côté du bouton du volet, même volet fermé ---------- */
+  const GROUPES = [
+    ['Oncologie', ['recist', 'lugano']],
+    ['Thorax et cœur', ['fleischner', 'cadrads']],
+    ['Sein et thyroïde', ['birads', 'tirads']],
+    ['Pelvis et rein', ['pirads', 'figo', 'bosniak']],
+    ['Os', ['osteogamme']],
+  ];
+  const chip = (k, cls = '') => `<button type="button" class="cr-tool-chip${cls}" data-tool="${k}">${esc(TOOLS[k].chip)}<small>${esc(TOOLS[k].sub)}</small></button>`;
+  const calculs = document.getElementById('cr-tools-calculs') || chipsBox;
+  const classes = new Set(GROUPES.flatMap(([, ks]) => ks));
+  const autres = Object.keys(TOOLS).filter(k => !classes.has(k));
+  calculs.insertAdjacentHTML('beforeend', [...GROUPES, ['Autres', autres]].map(([titre, ks]) => {
+    const l = ks.filter(k => TOOLS[k]);
+    return l.length ? `<div class="cr-tools-groupe"><p class="cr-tools-titre">${titre}</p><div class="cr-tools-chips">${l.map(k => chip(k)).join('')}</div></div>` : '';
+  }).join(''));
+  const nb = document.getElementById('cr-tools-nb');
+  if (nb) nb.textContent = `(${Object.keys(TOOLS).length})`;
+  const suggBox = document.getElementById('cr-tools-sugg');
   chipsBox.addEventListener('click', e => { const b = e.target.closest('[data-tool]'); if (b) open(b.dataset.tool); });
   let sugTimer;
   const suggest = () => {
     clearTimeout(sugTimer);
     sugTimer = setTimeout(() => {
       const t = norm(editor.value);
-      chipsBox.querySelectorAll('[data-tool]').forEach(b => {
-        const on = TOOLS[b.dataset.tool].suggest.test(t);
-        b.classList.toggle('is-suggested', on);
-        b.title = on ? 'Outil suggéré d\'après le compte rendu' : '';
+      const on = Object.keys(TOOLS).filter(k => TOOLS[k].suggest.test(t));
+      calculs.querySelectorAll('[data-tool]').forEach(b => {
+        const s = on.includes(b.dataset.tool);
+        b.classList.toggle('is-suggested', s);
+        b.title = s ? 'Outil suggéré d\'après le compte rendu' : '';
       });
+      if (suggBox) suggBox.innerHTML = on.length ? `<span class="cr-tools-sugg-titre">Suggérés :</span>${on.map(k => chip(k, ' is-suggested')).join('')}` : '';
     }, 250);
   };
   editor.addEventListener('input', suggest);
