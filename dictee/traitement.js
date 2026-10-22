@@ -82,7 +82,7 @@
     const rendre = s => s.replace(/\u0003(\d+)\u0004/g, (m, i) => prot[+i]);
     // deux passes : sans contexte, puis avec contexte (qui peut dépendre d'un terme corrigé :
     // « sans trop lobulaire brancher » → « centrolobulaire » puis « centrolobulaire branché »)
-    for (const avecContexte of [false, true]) {
+    for (const avecContexte of [false, true, true]) {   // contexte deux fois : un accord peut en entraîner un autre
       LEXIQUE_ENTREES.filter(e => e.contexte === avecContexte)
         .forEach(({ re, terme }) => { t = t.replace(re, (m, ctx, err) => ctx + garde(casse(err, terme))); });
       t = rendre(t);

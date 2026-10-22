@@ -243,7 +243,9 @@ test('lexique : erreurs de transcription corrigées selon le contexte', () => {
   assert.equal(T.corriger('ipo signal T1'), 'hyposignal T1');
   assert.equal(T.corriger('hyper signal et hypo-signal'), 'hypersignal et hyposignal', 'toujours en un mot');
   assert.equal(T.corriger('bronche l\'auber supérieur gauche'), 'bronche lobaire supérieur gauche');
-  assert.equal(T.corriger('micronodules sans trop lobulaire brancher'), 'micronodules centrolobulaire branché');
+  assert.equal(T.corriger('micronodules sans trop lobulaire brancher'), 'micronodules centrolobulaires branchés');
+  assert.equal(T.corriger('micronodules centrolobulaire branché'), 'micronodules centrolobulaires branchés');
+  assert.equal(T.corriger('nodule sans trop lobulaire brancher'), 'nodule centrolobulaire branché');
   assert.equal(T.corriger('rehaussement de la grammaire'), 'rehaussement de la dure-mère');
   assert.equal(T.corriger('la durmer'), 'la dure-mère');
   assert.equal(T.corriger('la dure mère'), 'la dure-mère', 'toujours avec un trait d\'union');
