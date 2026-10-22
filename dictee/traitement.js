@@ -8,8 +8,11 @@
    • analyser(segment)        → actions : texte, ponctuation, à la ligne,
                                  nouveau paragraphe, effacer le dernier mot,
                                  aller à une section, insérer un modèle, arrêter
-   • corriger(texte)          → nombres décimaux, dimensions, unités,
-                                 dictionnaire médical (dictee/corrections.js)
+   • corriger(texte)          → lexique des erreurs de transcription
+                                 (dictee/lexique.js, avec contexte), nombres
+                                 décimaux, dimensions, unités, dictionnaire
+                                 médical (dictee/corrections.js), puis « et » →
+                                 « est » quand la grammaire l'impose (etEst)
    • assembler(actions, avant)→ texte à insérer (espaces, majuscules,
                                  ponctuation) d'après le texte qui précède
    • sections(texte), trouverSection(), cibleSection()
@@ -23,10 +26,11 @@
 
 (function (root, factory) {
   const node = typeof module === 'object' && module.exports;
-  const api = factory(node ? require('./corrections.js') : (root.RHDictee || {}).corrections);
+  const R = root.RHDictee || {};
+  const api = factory(node ? require('./corrections.js') : R.corrections, node ? require('./lexique.js') : R.lexique);
   if (node) module.exports = api;
   else (root.RHDictee = root.RHDictee || {}).traitement = api;
-})(typeof self !== 'undefined' ? self : this, function (DICO) {
+})(typeof self !== 'undefined' ? self : this, function (DICO, LEXIQUE) {
   'use strict';
 
   const AV = '(?<![\\p{L}\\p{N}])', AP = '(?![\\p{L}\\p{N}])';   // limites de mot (accents compris)
@@ -56,6 +60,72 @@
   const NOMS_PROPRES = new Set((DICO.remplacements || []).map(([, e]) => e).filter(e => /^\p{Lu}\p{Ll}/u.test(e)).map(norm));
   const TITRES_CONCLUSION = (DICO.titresConclusion || ['conclusion', 'au total']).map(norm);
 
+  /* ---------- Lexique des erreurs de transcription (dictee/lexique.js) ----------
+     Chaque erreur devient un motif ; le contexte (mot avant, mot après, début de phrase)
+     est vérifié sur le texte voisin et laissé intact. Une seule passe : un terme corrigé
+     n'est pas re-corrigé. */
+  const alternatives = l => (l || []).map(motif).sort((a, b) => b.length - a.length).join('|');
+  const LEXIQUE_ENTREES = Object.values((LEXIQUE && LEXIQUE.categories) || {}).flat()
+    .flatMap(e => (e.erreurs || []).map(dit => ({ ...e, dit })))
+    .sort((a, b) => norm(b.dit).length - norm(a.dit).length)
+    .map(e => {
+      const interdit = e.avantInterdit ? `(?<!${AV}(?:${alternatives(e.avantInterdit)})[ \\t]+)` : '';
+      const avant = e.debutPhrase ? '((?:^|[.!?;:\\n])[ \\t]*)' : e.avant ? `(${AV}(?:${alternatives(e.avant)})(?:[ \\t]+|(?<=['’])))` : '()';
+      const apres = e.apres ? `(?=[ \\t]+(?:${alternatives(e.apres)})${AP})` : '';
+      return { contexte: !!(e.avant || e.apres || e.debutPhrase), re: new RegExp(`${avant}${interdit}${e.avant || e.debutPhrase ? '' : AV}(${motif(e.dit)})${AP}${apres}`, 'giu'), terme: e.terme };
+    });
+  const casse = (modele, t) => (/^\p{Lu}/u.test(modele) && /^\p{Ll}/u.test(t) ? t[0].toUpperCase() + t.slice(1) : t);
+  function lexique(texte) {
+    let t = texte;
+    const prot = [];
+    // un terme déjà corrigé est mis de côté pour ne pas être repris par une erreur plus courte
+    const garde = s => { prot.push(s); return `\u0003${prot.length - 1}\u0004`; };
+    const rendre = s => s.replace(/\u0003(\d+)\u0004/g, (m, i) => prot[+i]);
+    // deux passes : sans contexte, puis avec contexte (qui peut dépendre d'un terme corrigé :
+    // « sans trop lobulaire brancher » → « centrolobulaire » puis « centrolobulaire branché »)
+    for (const avecContexte of [false, true, true]) {   // contexte deux fois : un accord peut en entraîner un autre
+      LEXIQUE_ENTREES.filter(e => e.contexte === avecContexte)
+        .forEach(({ re, terme }) => {
+          // majuscule gardée seulement en début de phrase (« Mali us » au milieu → « malleus »)
+          t = t.replace(re, (m, ctx, err, i, tout) => ctx + garde(/(?:^|[.!?\n][ \t]*)$/.test(tout.slice(0, i + ctx.length)) ? casse(err, terme) : terme));
+        });
+      t = rendre(t);
+    }
+    return t;
+  }
+
+  /* ---------- « et » ou « est » ? ----------
+     La reconnaissance écrit souvent « et » pour « est ». On ne remplace que si la phrase
+     l'impose : SUJET SINGULIER + « et » + ATTRIBUT.
+       • sujet : déterminant singulier (le, la, l', ce, cet, cette, son, sa, un, une) + nom,
+         éventuellement suivi d'un complément d'identité (droit, gauche, biliaire…),
+         ou pronom (il, elle, qui), ou nom d'organe seul en début de phrase ;
+         un adjectif entre le nom et « et » (« lésion hypodense et homogène ») = vraie
+         conjonction : on ne touche à rien ;
+       • attribut : adjectif ou participe (-é, -ique, -al, -gène, -dense…), adverbe suivi
+         d'un mot (« légèrement », « bien »…), ou « de taille », « sans », « en place »… ;
+         jamais un déterminant ni un nom (« le foie et la rate » reste écrit). */
+  const DET_SG = "(?:le|la|ce|cet|cette|son|sa|un|une|l['’])";
+  const COMPLEMENTS = '(?:[ \\t]+(?:droite?|gauche|biliaire|principale?|commune?|primitive?|natif|native|sup[ée]rieure?|inf[ée]rieure?|moyenne?|caud[ée]|h[ée]patique|porte|splénique|rénale?|thyro[ïi]dien(?:ne)?|pulmonaire|abdominale?|pelvienne?|cérébrale?|médiane?|externe|interne))*';
+  const ORGANES = '(?:foie|rate|pancr[ée]as|rein|v[ée]sicule|v[ée]ssie|ut[ée]rus|prostate|thyro[ïi]de|aorte|c[œo]e?ur|cerveau|enc[ée]phale|parenchyme|cortex|syst[èe]me ventriculaire|ventricule|m[ée]diastin|poumon|thorax|trach[ée]e|[œo]e?sophage|estomac|c[ôo]lon|appendice|rectum|pelvis|ovaire|testicule|rachis|disque|canal|tendon|ligament|m[ée]nisque|cartilage|kyste|nodule|l[ée]sion|masse|ad[ée]nopathie|[ée]panchement|thrombus|anomalie|signal|rehaussement|aspect|contenu|calibre|contour|examen|scanner|comblement|épaississement)';
+  const ADVERBES = '(?:l[ée]g[èe]rement|discr[èe]tement|mod[ée]r[ée]ment|nettement|tr[èe]s|peu|bien|mal|non|globalement|partiellement|totalement|compl[èe]tement|franchement|r[ée]guli[èe]rement|largement|plut[ôo]t|toujours|d[ée]j[àa]|aussi|actuellement|encore|probablement|possiblement|vraisemblablement)';
+  const ATTRIBUTS = '(?:(?!\\p{L}*ments?(?![\\p{L}]))\\p{L}+(?:[ée]e?s?|ique|iques|ale?s?|aux|if|ive|eux|euse|g[èe]ne|dense|ible|able|aire|oire|ale|ose|ant|ante|ent|ente|uit|uite|ert|erte|ieur|ieure|al)' +
+    '|normale?|libre|fine?|large|petite?|grande?|grosse?|gros|nette?|floue?|lisse|r[ée]guli[èe]re?|irr[ée]guli[èe]re?|souple|vide|pleine?|perm[ée]able|stable|absente?|pr[ée]sente?|visible|nul|nulle|intacte?|mince|[ée]paisse?|[ée]pais|ronde?|ovale|unique|multiple|sym[ée]trique|asym[ée]trique|homog[èe]ne|h[ée]t[ée]rog[èe]ne|calcifi[ée]e?|atrophique)';
+  const PAS_ATTRIBUT = "(?!(?:le|la|les|l['’]|un|une|des|du|de[ \\t]+(?:la|l['’])|ce|ces|cet|cette|son|sa|ses|leur|leurs|il|elle|ils|elles|on|qui|que|à|au|aux|en|par|pour|sur|dans|avec|puis|ou|mais|donc|non[ \\t]+plus)" + AP + ')';
+  const SUITES = `(?:d['’ ][ \\t]*(?:[ée]chostructure|aspect|allure|architecture|[ée]chog[ée]nicit[ée]|[ée]paisseur|origine)${AP}|de[ \\t]+(?:taille|volume|morphologie|contours?|signal|densit[ée]|[ée]chostructure|calibre|forme)${AP}|sans${AP}|le[ \\t]+si[èe]ge${AP}|en[ \\t]+(?:place|position|rapport|contact|regard)${AP}|${PAS_ATTRIBUT}(?:${ADVERBES}[ \\t]+\\p{L}|${ATTRIBUTS}${AP}))`;
+  const RE_ET = new RegExp(
+    `(${AV}(?:${DET_SG}[ \\t]*\\p{L}[\\p{L}-]*${COMPLEMENTS}|(?:il|elle|qui|celui-ci|celle-ci|celle-là|celui-là)|(?<=(?:^|[.!?;:\\n])[ \\t]*)${ORGANES}${COMPLEMENTS}))` +
+    `([ \\t]+)(et)(?=[ \\t]+${SUITES})`, 'giu');
+  // le mot après le déterminant ne doit pas être lui-même un adjectif/participe (« la plus », « le même »…)
+  const PAS_UN_NOM_SUJET = /^(?:plus|moins|même|mêmes|tout|toute|seul|seule|premier|première|dernier|dernière|autre|meilleur|pire|grand|grande|petit|petite)$/iu;
+  function etEst(texte) {
+    return String(texte ?? '').replace(RE_ET, (m, sujet, esp, et) => {
+      const nom = (sujet.match(/^(?:\p{L}+['’]|\p{L}+[ \t]+)?(\p{L}[\p{L}-]*)/u) || [])[1] || '';
+      if (/^(?:le|la|ce|cet|cette|son|sa|un|une|l)\b/iu.test(sujet) && PAS_UN_NOM_SUJET.test(nom)) return m;
+      return sujet + esp + (et[0] === 'E' ? 'Est' : 'est');
+    });
+  }
+
   /* ---------- Nombres, dimensions, unités, dictionnaire ---------- */
   const NUM = '(\\d+(?:[.,]\\d+)?)';
   const UNIT = '(millim[eè]tres?|mm|centim[eè]tres?|cm)';
@@ -75,12 +145,13 @@
   }
 
   function corriger(texte) {
-    let t = String(texte ?? '');
+    let t = lexique(String(texte ?? ''));
     t = t.replace(/(\d)\s*virgule\s*(\d)/giu, '$1,$2');           // 12 virgule 5 → 12,5
     t = dimensions(t);
     UNITES.forEach(({ re, ecrit }) => { t = t.replace(re, `$1 ${ecrit}`); });
     t = expressions(remplacer(t));
     REGLES.forEach(({ re, r }) => { t = t.replace(re, r); });
+    t = etEst(t);
     return t.replace(/[ \t]{2,}/g, ' ').replace(/ +([.,])/g, '$1').trim();
   }
 
@@ -162,7 +233,13 @@
       if (a.type === 'texte') {
         const v = ctx();
         let t = debutDePhrase(v) ? majuscule(a.texte) : minusculeSiBanal(a.texte);
-        if (v && !/[\s(\['’"«/]$/.test(v) && !/^[.,;:!?)\]…]/.test(t)) t = ' ' + t;
+        // « le foie et » | pause | « homogène » : le « et » déjà écrit devient « est »
+        const fin = v.match(/(?:^|[.!?;:\n])([^.!?;:\n]*?)([ \t]*)\b(et|Et)[ \t]*$/u);
+        if (fin && etEst(`${fin[1]}${fin[2]}${fin[3]} ${t}`).startsWith(`${fin[1]}${fin[2]}${fin[3] === 'Et' ? 'Est' : 'est'} `)) {
+          ote(v.length - v.lastIndexOf(fin[3]));
+          buf += fin[3] === 'Et' ? 'Est' : 'est';
+          t = ' ' + t.trimStart();
+        } else if (v && !/[\s(\['’"«/]$/.test(v) && !/^[.,;:!?)\]…]/.test(t)) t = ' ' + t;
         buf += t;
       } else if (a.type === 'ponct') {
         const c = a.texte;
@@ -317,7 +394,7 @@
   }
 
   return {
-    norm, corriger, dimensions, analyser, assembler, INSERTION, debutDernierMot,
+    norm, corriger, lexique, etEst, dimensions, analyser, assembler, INSERTION, debutDernierMot,
     sections, cibleSection, trouverSection, chercher, choisir, reponse, identite, SEUIL,
   };
 });

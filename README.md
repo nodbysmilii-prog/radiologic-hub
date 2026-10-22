@@ -4,7 +4,7 @@
 
 🌐 **Site en ligne :** https://nodbysmilii-prog.github.io/radiologic-hub/
 
-> Dernière mise à jour du README : 21 octobre 2026
+> Dernière mise à jour du README : 22 octobre 2026
 
 ---
 
@@ -635,6 +635,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 22/10/2026 | Dictée vocale : **couche de correction des erreurs de transcription** avant insertion (lexique JSON `dictee/lexique.js` par catégorie, modifiable sans code, avec contexte) — hypersignal / hyposignal, dure-mère, lobaire, micronodules centrolobulaires branchés, contours réguliers, lytique, ptérygoïdien, épitympan, attico-antral, malleus, incus, incudo-malléaire, otospongiose… ; règle « et » → « est » (y compris après une pause) ; tests |
 | 21/10/2026 | Fiche **IRM du cancer du rectum** : mesure de l'exemple axial affichée « **1,64 cm** » (valeur donnée par l'auteur, à la place de 1,57 cm), étiquette et légende ; **mise en ligne** de la nouvelle iconographie de la fiche. |
 | 21/10/2026 | Fiche **IRM du cancer du rectum** : **iconographie au style du site**. Sur 10 images, les flèches, têtes de flèche, textes et la mesure incrustés (repérés au pixel près) sont effacés puis redessinés **exactement au même endroit** en calques SVG : flèches et têtes de flèche orange cernées d'encre (tête de flèche noire de l'œdème en bleu, formes « ➤ » du stade T3 gardées), étiquettes en Montserrat (« IRM INITIALE », « APRÈS TRAITEMENT », « CRM », « EMS », « mésorectum », « fascia recti », légende), mesure « **1,57 cm** » (virgule) sur un trait au pied à coulisse ; lettres d'article sans objet (A, B, C) et curseur de souris d'une capture retirés. Images « avant / après traitement » recadrées au format 2:1 où la fiche les affiche (calques justes dans la vignette et dans l'agrandissement, qui reprend désormais le calque) ; pastille « Avant / après » retirée de ces 3 figures (doublon des étiquettes). **Nouveau schéma du staging T** (dessin de l'auteur) à la place de l'ancien schéma en anglais. Images versionnées (`?v=20261021`). |
 | 17/10/2026 | **Mise en ligne de l'espace radioanatomie** à la demande de l'auteur et entrée **« Radioanatomie »** ajoutée au menu principal et au pied de page des 27 pages (juste après « Fiches rapides », entrée active sur les pages de l'espace) ; menu resserré pour tenir sur une ligne (espacement réduit jusqu'à 1366 px, encore un peu sous 1212 px ; vérifié de 1141 à 1600 px, accueil compris) ; `styles.css?v=` changé sur toutes les pages ; nouveau test du menu (9 tests radioanatomie) ; branche en ligne : espace radioanatomie ajouté, toujours sans le cours des ischio-jambiers |
