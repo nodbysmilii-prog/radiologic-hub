@@ -7,6 +7,9 @@ Groupes (membre DROIT) :
   coude             partie distale du bras et proximale de l'avant-bras :
                     tendons des quatre loges, ligaments, bourses, nerfs
                     ulnaire, médian et radial, artères et veines
+  patte-oie         genou : sartorius, gracile et semi-tendineux jusqu'à leur
+                    insertion tibiale, bourse ansérine, ligament collatéral
+                    tibial (cas clinique « tendino-bursite de la patte d'oie »)
 
 Source : pack Z-Anatomy (CC BY-SA 4.0), lui-même dérivé de BodyParts3D
 (CC BY-SA 2.1 Japon). Téléchargement : bash scripts/telecharger_z_anatomy.sh
@@ -23,8 +26,8 @@ Usage (Blender sans interface, scripts du fichier .blend désactivés) :
      courbes dont le pack règle l'épaisseur point par point : elle est gardée
      pour les vaisseaux ; les nerfs sont calés sur un diamètre d'AFFICHAGE
      réaliste approximatif, mesuré après export à un niveau donné ;
-  3. coupes horizontales (ischio-jambiers : sous le genou ; coude : au-dessus
-     et au-dessous de l'interligne), sections refermées ;
+  3. coupes horizontales (ischio-jambiers : sous le genou ; coude et patte d'oie :
+     au-dessus et au-dessous de l'interligne), sections refermées ;
   4. simplification (décimation) : nombre de triangles visé, ou proportion gardée ;
   5. matériaux simplifiés (muscle / tendon / os / cartilage / ligament / capsule /
      bourse / nerf / artère / veine) ;
@@ -156,7 +159,27 @@ STRUCTURES_COUDE = [
     ('veine-mediane-coude',       'Median cubital vein.r',             'Veine médiane du coude',                'veine',    None, None, 'anterieure'),
 ]
 
-STRUCTURES = {'ischio-jambiers': STRUCTURES_ISCHIO, 'coude': STRUCTURES_COUDE}.get(GROUPE)
+# ---------- Patte d'oie (genou) ----------
+# Distances gardées autour du sommet du tibia (plateau) : 14 cm de cuisse (les trois muscles convergent),
+# 12 cm de jambe (l'insertion de la patte d'oie est à 5-6 cm sous l'interligne)
+PATTE_OIE_CUISSE = 0.14
+PATTE_OIE_JAMBE = 0.12
+
+STRUCTURES_PATTE_OIE = [
+    ('sartorius',                  'Sartorius muscle.r',                'Sartorius',                             'muscle',   3000, None),
+    ('gracile',                    'Gracilis muscle.r',                 'Gracile',                               'muscle',   2500, None),
+    ('semi-tendineux',             'Semitendinosus muscle.r',           'Semi-tendineux',                        'muscle',   2500, None),
+    ('bourse-anserine',            'Anserine bursa.r',                  'Bourse de la patte d\'oie',             'bourse',   None, None),
+    ('ligament-collateral-tibial', ('Superficial part of tibial collateral ligament.r', 'Deep part of tibial collateral ligament.r'),
+                                                                        'Ligament collatéral tibial',            'ligament', None, None),
+    ('semi-membraneux',            'Semimembranosus muscle.r',          'Semi-membraneux',                       'contexte', 2500, None),
+    ('femur-distal',               'Femur.r',                           'Fémur (partie distale)',                'os',       3000, None),
+    ('patella',                    'Patella.r',                         'Patella',                               'os',       None, None),
+    ('tibia-proximal',             'Tibia.r',                           'Tibia (partie proximale)',              'os',       3000, None),
+    ('fibula-proximale',           'Fibula.r',                          'Fibula (partie proximale)',             'os',       2000, None),
+]
+
+STRUCTURES = {'ischio-jambiers': STRUCTURES_ISCHIO, 'coude': STRUCTURES_COUDE, 'patte-oie': STRUCTURES_PATTE_OIE}.get(GROUPE)
 if STRUCTURES is None:
     print(f'ERREUR : groupe inconnu : {GROUPE}')
     sys.exit(1)
@@ -401,6 +424,11 @@ def coupes_du_groupe():
         tibia = bpy.data.objects['Tibia.r']
         sommet_tibia = max((tibia.matrix_world @ v.co).z for v in tibia.data.vertices)
         return [(sommet_tibia - JAMBE_GARDEE, 'dessous', f'coupé {JAMBE_GARDEE * 100:.0f} cm sous le sommet du tibia, section refermée')]
+    if GROUPE == 'patte-oie':
+        tibia = bpy.data.objects['Tibia.r']
+        sommet_tibia = max((tibia.matrix_world @ v.co).z for v in tibia.data.vertices)
+        return [(sommet_tibia + PATTE_OIE_CUISSE, 'dessus', f'coupé {PATTE_OIE_CUISSE * 100:.0f} cm au-dessus du plateau tibial, section refermée'),
+                (sommet_tibia - PATTE_OIE_JAMBE, 'dessous', f'coupé {PATTE_OIE_JAMBE * 100:.0f} cm sous le plateau tibial, section refermée')]
     humerus = bpy.data.objects['Humerus.r']
     interligne = min((humerus.matrix_world @ v.co).z for v in humerus.data.vertices)
     cm = f'{COUDE_GARDE * 100:.0f} cm'
@@ -476,6 +504,16 @@ def main():
             ischion_y=round(min(v.co.z for v in coxal.data.vertices) - centre.z, 5),
             plateau_tibial_y=round(max(v.co.z for v in tibia_obj.data.vertices) - centre.z, 5),
         )
+    elif GROUPE == 'patte-oie':
+        tibia_obj = next(o['obj'] for o in objets if o['id'] == 'tibia-proximal')
+        bourse = [v.co for v in next(o['obj'] for o in objets if o['id'] == 'bourse-anserine').data.vertices]
+        centre_bourse = sum(bourse, Vector()) / len(bourse)
+        reperes = dict(
+            plateau_tibial_y=round(max(v.co.z for v in tibia_obj.data.vertices) - centre.z, 5),
+            bourse_anserine=gltf(centre_bourse),
+            coupe_proximale_y=round(coupes[0][0] - centre.z, 5),
+            coupe_distale_y=round(coupes[1][0] - centre.z, 5),
+        )
     else:
         hum = [v.co for v in next(o['obj'] for o in objets if o['id'] == 'humerus-distal').data.vertices]
         interligne = min(p.z for p in hum)
@@ -532,6 +570,9 @@ def main():
         centre_source=[round(c, 5) for c in centre])
     if GROUPE == 'ischio-jambiers':
         manifeste['coupe_jambe'] = '%.0f cm sous le sommet du tibia' % (JAMBE_GARDEE * 100)
+    elif GROUPE == 'patte-oie':
+        manifeste['position'] = 'anatomique : genou en extension'
+        manifeste['coupes'] = '%.0f cm au-dessus et %.0f cm au-dessous du plateau tibial' % (PATTE_OIE_CUISSE * 100, PATTE_OIE_JAMBE * 100)
     else:
         manifeste['position'] = 'anatomique : coude en extension, avant-bras en supination'
         manifeste['coupes'] = '%.0f cm au-dessus et au-dessous de l\'interligne du coude' % (COUDE_GARDE * 100)

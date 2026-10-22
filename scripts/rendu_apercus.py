@@ -33,7 +33,7 @@ VUES = {
     'mediale':     dict(rotation=(math.pi / 2, 0, math.pi / 2), horizontal=1),   # regarde vers -X (du côté médial)
 }
 # Vue de chaque structure, vues d'ensemble : (nom, vue, catégories exclues)
-VUE_STRUCTURE = 'anterieure' if GROUPE == 'coude' else 'posterieure'
+VUE_STRUCTURE = {'coude': 'anterieure', 'patte-oie': 'mediale'}.get(GROUPE, 'posterieure')
 ENSEMBLES = {
     'coude': [
         ('ensemble-anterieur', 'anterieure', ()),
@@ -41,6 +41,12 @@ ENSEMBLES = {
         ('ensemble-lateral', 'laterale', ()),
         ('ensemble-medial', 'mediale', ()),
         ('ensemble-anterieur-sans-muscles', 'anterieure', ('muscle', 'contexte', 'capsule')),
+    ],
+    'patte-oie': [
+        ('ensemble-medial', 'mediale', ()),
+        ('ensemble-anterieur', 'anterieure', ()),
+        ('ensemble-posterieur', 'posterieure', ()),
+        ('ensemble-medial-sans-contexte', 'mediale', ('contexte',)),
     ],
 }.get(GROUPE, [
     ('ensemble-posterieur', 'posterieure', ()),

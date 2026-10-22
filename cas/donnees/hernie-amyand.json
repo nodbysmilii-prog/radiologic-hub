@@ -1,0 +1,43 @@
+{
+ "id": "hernie-amyand",
+ "spe": "digestif", "c": "amber",
+ "badge": {"fr": "Digestif", "en": "Abdominal"},
+ "tag": {"fr": "Cas clinique · Digestif · TDM", "en": "Clinical case · Abdominal imaging · CT"},
+ "titre": {"fr": "Un appendice <span class='hl-navy'>inflammatoire</span> dans une hernie inguinale", "en": "An <span class='hl-navy'>inflamed</span> appendix within an inguinal hernia"},
+ "titre_texte": {"fr": "Un appendice inflammatoire dans une hernie inguinale", "en": "An inflamed appendix within an inguinal hernia"},
+ "accroche": {"fr": "Voici un cas d'<span class='hl-navy'>appendice inflammatoire</span> contenu dans une <span class='hl-red'>hernie inguinale</span>. Observez la TDM, puis nommez ce type rare de hernie.", "en": "Here's a case featuring an <span class='hl-navy'>inflamed appendix</span> within an <span class='hl-red'>inguinal hernia</span>. Look at the CT, then name this rare type of hernia."},
+ "mots": [{"fr": "TDM", "en": "CT"}, {"fr": "Hernie inguinale", "en": "Inguinal hernia"}, {"fr": "Appendice", "en": "Appendix"}],
+ "sections": [
+  {"id": "cas", "num": "I", "c": "rose", "titre": {"fr": "Le cas", "en": "The case"}, "blocs": [
+   {"type": "recit", "fr": "Voici un cas <mark class='k-key'>d'appendice inflammatoire</mark> contenu dans une <mark class='k-key'>hernie inguinale</mark>.", "en": "Here's a case featuring an <mark class='k-key'>inflamed appendix</mark> within an <mark class='k-key'>inguinal hernia</mark>."}
+  ]},
+  {"id": "images", "num": "II", "c": "slate", "titre": {"fr": "La TDM", "en": "The CT"}, "blocs": [
+   {"type": "intro-images"},
+   {"type": "galerie", "c": "slate", "images": [
+    {"src": "tdm-axiale.jpg", "mod": {"fr": "Axiale", "en": "Axial"}, "titre": {"fr": "Coupe 1 · TDM axiale", "en": "Image 1 · Axial CT"}, "alt": {"fr": "TDM abdomino-pelvienne, coupe axiale", "en": "Abdominopelvic CT, axial image"}},
+    {"src": "tdm-coronale.jpg", "mod": {"fr": "Coronale", "en": "Coronal"}, "titre": {"fr": "Coupe 2 · Reconstruction coronale", "en": "Image 2 · Coronal reformat"}, "alt": {"fr": "TDM abdomino-pelvienne, reconstruction coronale", "en": "Abdominopelvic CT, coronal reformat"}}
+   ]}
+  ]},
+  {"id": "diagnostic", "num": "III", "c": "amber", "titre": {"fr": "À vous de jouer", "en": "Your turn"}, "blocs": [
+   {"type": "question", "question": {"fr": "Saurez-vous nommer ce type rare de hernie ?", "en": "Can you name this rare type of hernia?"}, "reponse": {"fr": "Hernie d'Amyand", "en": "Amyand hernia"}}
+  ]},
+  {"id": "frequence", "num": "IV", "c": "crimson", "titre": {"fr": "Une hernie rare", "en": "A rare hernia"}, "blocs": [
+   {"type": "chiffres", "items": [
+    {"c": "amber", "valeur": {"fr": "1 %", "en": "1%"}, "texte": {"fr": "Représente <b>1 % de l'ensemble des hernies inguinales</b>.", "en": "Accounts for <b>1% of all inguinal hernias</b>."}},
+    {"c": "crimson", "valeur": {"fr": "0,1 %", "en": "0.1%"}, "texte": {"fr": "<b>Appendicite dans une hernie d'Amyand</b> : survient dans 0,1 % des cas.", "en": "<b>Appendicitis in Amyand's hernia</b>: occurs in 0.1% of cases."}}
+   ]}
+  ]},
+  {"id": "tdm", "num": "V", "c": "blue", "titre": {"fr": "Apport de la TDM", "en": "Role of CT"}, "blocs": [
+   {"type": "colonnes", "blocs": [
+    {"type": "fcard", "c": "blue", "titre": {"fr": "Le diagnostic", "en": "The diagnosis"}, "items": [
+     {"fr": "La TDM <mark class='k-key'>confirme la présence de l'appendice dans le sac herniaire</mark>.", "en": "CT <mark class='k-key'>confirms the presence of the appendix in the hernia sac</mark>."}
+    ]},
+    {"type": "fcard", "c": "rose", "titre": {"fr": "Signes inflammatoires (s'ils sont présents)", "en": "Signs of inflammation (if present)"}, "items": [
+     {"fr": "<mark class='k-signo'>Épaississement de la paroi appendiculaire</mark> (&gt; 6 mm).", "en": "<mark class='k-signo'>Thickened appendix wall</mark> (&gt;6 mm)."},
+     {"fr": "<mark class='k-signo'>Infiltration de la graisse péri-appendiculaire</mark>.", "en": "<mark class='k-signo'>Fat stranding</mark> around the appendix."},
+     {"fr": "<mark class='k-grave'>Épanchement liquidien libre ou abcès</mark> dans les formes évoluées.", "en": "Presence of <mark class='k-grave'>free fluid or abscess formation</mark> in advanced cases."}
+    ]}
+   ]}
+  ]}
+ ]
+}

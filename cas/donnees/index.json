@@ -1,0 +1,16 @@
+{
+ "commentaire": "Ordre des cartes de cas/index.html. Un cas bilingue : {\"id\": ...} (contenu dans cas/donnees/<id>.json). Une page écrite à la main : lien, badge, titre, résumé, mots, couleur.",
+ "cas": [
+  {"id": "tendino-bursite-patte-oie"},
+  {"id": "sarcome-artere-pulmonaire"},
+  {"id": "maladie-rendu-osler"},
+  {"id": "syndrome-kartagener"},
+  {"id": "hernie-amyand"},
+  {"lien": "schwannome-v3.html", "c": "purple",
+   "badge": {"fr": "Tête et cou", "en": "Head and neck"},
+   "titre": {"fr": "Le menton qui s'endort", "en": "The chin that goes numb"},
+   "resume": {"fr": "Un menton engourdi, une mâchoire qui dévie, une oreille bouchée… et une IRM de la base du crâne. Puis le trajet du trijumeau grâce à un <span class='hl-red'>festin de pâtes</span>.", "en": "A numb chin, a deviating jaw, a blocked ear… and a skull base MRI. Then the course of the trigeminal nerve, remembered with a <span class='hl-red'>pasta feast</span>."},
+   "mots": [{"fr": "IRM", "en": "MRI"}, {"fr": "Base du crâne", "en": "Skull base"}, {"fr": "Trijumeau", "en": "Trigeminal nerve"}],
+   "note": {"fr": "", "en": "Page in French only."}}
+ ]
+}

@@ -1,0 +1,44 @@
+{
+ "id": "maladie-rendu-osler",
+ "spe": "vasculaire", "c": "teal",
+ "badge": {"fr": "Cardio-vasculaire", "en": "Cardiovascular"},
+ "tag": {"fr": "Cas clinique · Vasculaire · TDM", "en": "Clinical case · Vascular imaging · CT"},
+ "titre": {"fr": "Hémorragie digestive et <span class='hl-red'>épistaxis</span>", "en": "Gastrointestinal bleeding and <span class='hl-red'>epistaxis</span>"},
+ "titre_texte": {"fr": "Hémorragie digestive et épistaxis", "en": "Gastrointestinal bleeding and epistaxis"},
+ "accroche": {"fr": "Un patient de 51 ans hospitalisé pour une <span class='hl-red'>hémorragie digestive</span>, qui rapporte aussi des épistaxis. Quatre images de TDM : quel est votre diagnostic ?", "en": "A 51-year-old patient admitted for <span class='hl-red'>gastrointestinal bleeding</span>, who also reports nosebleeds. Four CT images: what is your diagnosis?"},
+ "mots": [{"fr": "TDM", "en": "CT"}, {"fr": "Malformations artério-veineuses", "en": "Arteriovenous malformations"}],
+ "sections": [
+  {"id": "cas", "num": "I", "c": "rose", "titre": {"fr": "Le cas", "en": "The case"}, "blocs": [
+   {"type": "recit", "fr": "<b>Patient de 51 ans</b> hospitalisé pour la prise en charge d'une <mark class='k-grave'>hémorragie digestive extériorisée</mark>, sous forme de <mark class='k-signo'>méléna</mark> et <mark class='k-signo'>d'hématémèse</mark>.</p><p>Le patient rapporte également des épisodes <mark class='k-key'>d'épistaxis</mark>.", "en": "<b>A 51-year-old patient</b> was admitted for the management of an <mark class='k-grave'>externalized gastrointestinal hemorrhage</mark>, presenting as <mark class='k-signo'>melena</mark> and <mark class='k-signo'>hematemesis</mark>.</p><p>The patient also reported experiencing episodes of <mark class='k-key'>epistaxis</mark>."}
+  ]},
+  {"id": "images", "num": "II", "c": "slate", "titre": {"fr": "La TDM", "en": "The CT"}, "blocs": [
+   {"type": "intro-images"},
+   {"type": "galerie", "c": "slate", "images": [
+    {"src": "tdm-axiale-estomac.jpg", "mod": {"fr": "Axiale", "en": "Axial"}, "titre": {"fr": "Coupe 1 · TDM axiale", "en": "Image 1 · Axial CT"}, "texte": {"fr": "Après injection.", "en": "Contrast-enhanced."}, "alt": {"fr": "TDM abdominale après injection, coupe axiale", "en": "Contrast-enhanced abdominal CT, axial image"}},
+    {"src": "tdm-coronale-peritoine.jpg", "mod": {"fr": "Coronale", "en": "Coronal"}, "titre": {"fr": "Coupe 2 · Reconstruction coronale", "en": "Image 2 · Coronal reformat"}, "alt": {"fr": "TDM abdominale, reconstruction coronale", "en": "Abdominal CT, coronal reformat"}},
+    {"src": "tdm-coronale-thorax.jpg", "mod": {"fr": "Coronale MIP", "en": "Coronal MIP"}, "titre": {"fr": "Coupe 3 · Reconstruction coronale MIP", "en": "Image 3 · Coronal MIP"}, "texte": {"fr": "Thorax.", "en": "Chest."}, "alt": {"fr": "TDM thoracique, reconstruction coronale en projection d'intensité maximale", "en": "Chest CT, coronal maximum intensity projection"}},
+    {"src": "tdm-coronale-abdomen.jpg", "mod": {"fr": "Coronale MIP", "en": "Coronal MIP"}, "titre": {"fr": "Coupe 4 · Reconstruction coronale MIP", "en": "Image 4 · Coronal MIP"}, "texte": {"fr": "Abdomen.", "en": "Abdomen."}, "alt": {"fr": "TDM abdominale, reconstruction coronale en projection d'intensité maximale", "en": "Abdominal CT, coronal maximum intensity projection"}}
+   ]}
+  ]},
+  {"id": "diagnostic", "num": "III", "c": "amber", "titre": {"fr": "À vous de jouer", "en": "Your turn"}, "blocs": [
+   {"type": "question", "question": {"fr": "Quel est votre diagnostic ?", "en": "What is your diagnosis?"}, "reponse": {"fr": "Télangiectasie hémorragique héréditaire", "en": "Hereditary hemorrhagic telangiectasia"}, "precision": {"fr": "Maladie de Rendu-Osler-Weber", "en": "Osler-Weber-Rendu disease"}}
+  ]},
+  {"id": "malformations", "num": "IV", "c": "teal", "titre": {"fr": "Les malformations de ce patient", "en": "This patient's malformations"}, "blocs": [
+   {"type": "galerie", "c": "teal", "images": [
+    {"src": "tdm-axiale-estomac.jpg", "mod": {"fr": "Estomac", "en": "Stomach"}, "titre": {"fr": "Malformation artério-veineuse gastrique sous-muqueuse", "en": "Submucosal gastric arteriovenous malformation"}, "alt": {"fr": "TDM : malformation artério-veineuse gastrique sous-muqueuse", "en": "CT: submucosal gastric arteriovenous malformation"}},
+    {"src": "tdm-coronale-peritoine.jpg", "mod": {"fr": "Péritoine", "en": "Peritoneum"}, "titre": {"fr": "Malformation artério-veineuse péritonéale", "en": "Peritoneal arteriovenous malformation"}, "alt": {"fr": "TDM : malformation artério-veineuse péritonéale", "en": "CT: peritoneal arteriovenous malformation"}},
+    {"src": "tdm-coronale-thorax.jpg", "mod": {"fr": "Poumon", "en": "Lung"}, "titre": {"fr": "Communication artério-veineuse pulmonaire", "en": "Pulmonary arteriovenous communication"}, "texte": {"fr": "Au niveau du <mark class='k-tech'>segment apical du lobe supérieur droit</mark> (LSD).", "en": "At the <mark class='k-tech'>apical segment of the right upper lobe</mark> (RUL)."}, "alt": {"fr": "TDM : communication artério-veineuse du segment apical du lobe supérieur droit", "en": "CT: arteriovenous communication at the apical segment of the right upper lobe"}}
+   ]}
+  ]},
+  {"id": "localisations", "num": "V", "c": "green", "titre": {"fr": "Où siègent les malformations artério-veineuses ?", "en": "Where do arteriovenous malformations occur?"}, "blocs": [
+   {"type": "colonnes", "blocs": [
+    {"type": "sites", "c": "rose", "titre": {"fr": "Localisations les plus fréquentes", "en": "Most frequent locations"}, "items": [
+     {"c": "rose", "fr": "Poumons", "en": "Lungs"}, {"c": "teal", "fr": "Foie", "en": "Liver"}, {"c": "blue", "fr": "Cerveau", "en": "Brain"}, {"c": "rose", "fr": "Tube digestif", "en": "Gastrointestinal tract"}
+    ]},
+    {"type": "sites", "c": "purple", "titre": {"fr": "Localisations rares", "en": "Rare locations"}, "items": [
+     {"c": "blue", "fr": "Péritoine", "en": "Peritoneum"}, {"c": "plum", "fr": "Moelle spinale", "en": "Spine"}
+    ]}
+   ]}
+  ]}
+ ]
+}

@@ -116,7 +116,8 @@ const CASES = [
       'Infiltration de la graisse péri-appendiculaire',
       'Liquide libre ou abcès dans les formes évoluées',
       'Astuce : appendice dans une hernie crurale = De Garengeot'
-    ]
+    ],
+    link: { href: 'cas/hernie-amyand.html', label: 'Le cas complet, image par image →' }
   },
   {
     tab: 'Cas 3 · Thorax',
@@ -131,7 +132,8 @@ const CASES = [
       'Extension tumorale extraluminale',
       'Rehaussement après injection',
       'Nodules pulmonaires métastatiques'
-    ]
+    ],
+    link: { href: 'cas/sarcome-artere-pulmonaire.html', label: 'Le cas complet, image par image →' }
   },
   {
     tab: 'Cas 4 · Tête et cou',
