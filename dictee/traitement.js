@@ -108,7 +108,7 @@
   const ATTRIBUTS = '(?:(?!\\p{L}*ments?(?![\\p{L}]))\\p{L}+(?:[ée]e?s?|ique|iques|ale?s?|aux|if|ive|eux|euse|g[èe]ne|dense|ible|able|aire|oire|ale|ose|ant|ante|ent|ente|uit|uite|ert|erte|ieur|ieure|al)' +
     '|normale?|libre|fine?|large|petite?|grande?|grosse?|gros|nette?|floue?|lisse|r[ée]guli[èe]re?|irr[ée]guli[èe]re?|souple|vide|pleine?|perm[ée]able|stable|absente?|pr[ée]sente?|visible|nul|nulle|intacte?|mince|[ée]paisse?|[ée]pais|ronde?|ovale|unique|multiple|sym[ée]trique|asym[ée]trique|homog[èe]ne|h[ée]t[ée]rog[èe]ne|calcifi[ée]e?|atrophique)';
   const PAS_ATTRIBUT = "(?!(?:le|la|les|l['’]|un|une|des|du|de[ \\t]+(?:la|l['’])|ce|ces|cet|cette|son|sa|ses|leur|leurs|il|elle|ils|elles|on|qui|que|à|au|aux|en|par|pour|sur|dans|avec|puis|ou|mais|donc|non[ \\t]+plus)" + AP + ')';
-  const SUITES = `(?:de[ \\t]+(?:taille|volume|morphologie|contours?|signal|densit[ée]|[ée]chostructure|calibre|forme)${AP}|sans${AP}|le[ \\t]+si[èe]ge${AP}|en[ \\t]+(?:place|position|rapport|contact|regard)${AP}|${PAS_ATTRIBUT}(?:${ADVERBES}[ \\t]+\\p{L}|${ATTRIBUTS}${AP}))`;
+  const SUITES = `(?:d['’ ][ \\t]*(?:[ée]chostructure|aspect|allure|architecture|[ée]chog[ée]nicit[ée]|[ée]paisseur|origine)${AP}|de[ \\t]+(?:taille|volume|morphologie|contours?|signal|densit[ée]|[ée]chostructure|calibre|forme)${AP}|sans${AP}|le[ \\t]+si[èe]ge${AP}|en[ \\t]+(?:place|position|rapport|contact|regard)${AP}|${PAS_ATTRIBUT}(?:${ADVERBES}[ \\t]+\\p{L}|${ATTRIBUTS}${AP}))`;
   const RE_ET = new RegExp(
     `(${AV}(?:${DET_SG}[ \\t]*\\p{L}[\\p{L}-]*${COMPLEMENTS}|(?:il|elle|qui|celui-ci|celle-ci|celle-là|celui-là)|(?<=(?:^|[.!?;:\\n])[ \\t]*)${ORGANES}${COMPLEMENTS}))` +
     `([ \\t]+)(et)(?=[ \\t]+${SUITES})`, 'giu');
@@ -229,7 +229,13 @@
       if (a.type === 'texte') {
         const v = ctx();
         let t = debutDePhrase(v) ? majuscule(a.texte) : minusculeSiBanal(a.texte);
-        if (v && !/[\s(\['’"«/]$/.test(v) && !/^[.,;:!?)\]…]/.test(t)) t = ' ' + t;
+        // « le foie et » | pause | « homogène » : le « et » déjà écrit devient « est »
+        const fin = v.match(/(?:^|[.!?;:\n])([^.!?;:\n]*?)([ \t]*)\b(et|Et)[ \t]*$/u);
+        if (fin && etEst(`${fin[1]}${fin[2]}${fin[3]} ${t}`).startsWith(`${fin[1]}${fin[2]}${fin[3] === 'Et' ? 'Est' : 'est'} `)) {
+          ote(v.length - v.lastIndexOf(fin[3]));
+          buf += fin[3] === 'Et' ? 'Est' : 'est';
+          t = ' ' + t.trimStart();
+        } else if (v && !/[\s(\['’"«/]$/.test(v) && !/^[.,;:!?)\]…]/.test(t)) t = ' ' + t;
         buf += t;
       } else if (a.type === 'ponct') {
         const c = a.texte;

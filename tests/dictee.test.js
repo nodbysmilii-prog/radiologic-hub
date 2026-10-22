@@ -269,3 +269,15 @@ test('« et » → « est » seulement quand la grammaire l\'impose', () => {
     'le kyste et épaississement pariétal', 'les reins et la rate', 'le foie et les voies biliaires', 'hypodense et hétérogène'])
     assert.equal(T.corriger(s), s, `conjonction conservée : ${s}`);
 });
+
+test('« et » → « est » aussi quand la phrase est dictée en deux fois (pause après « et »)', () => {
+  const T2 = (s, avant) => T.assembler(T.analyser(s).filter(a => T.INSERTION.has(a.type)), avant);
+  let r = T2('homogène', 'Le foie et');
+  assert.equal('Le foie et'.slice(0, 'Le foie et'.length - r.retirer) + r.texte, 'Le foie est homogène');
+  r = T2('de taille normale', 'Rapport. Le foie et ');
+  assert.equal('Rapport. Le foie et '.slice(0, 20 - r.retirer) + r.texte, 'Rapport. Le foie est de taille normale');
+  r = T2('la rate', 'Le foie et');
+  assert.equal('Le foie et'.slice(0, 10 - r.retirer) + r.texte, 'Le foie et la rate');
+  assert.equal(T.corriger("Le foie et d'échostructure homogène"), "Le foie est d'échostructure homogène");
+  assert.equal(T.corriger("le foie et d'aspect normal"), "le foie est d'aspect normal");
+});
