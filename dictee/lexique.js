@@ -10,6 +10,8 @@
      { "terme": "hyposignal", "erreurs": ["ipo signal", "hypo signal"] }
    Contexte facultatif (la correction n'est faite que si le contexte correspond) :
      "avant": ["le", "du"]         mot(s) juste avant l'erreur (gardés tels quels)
+     "avantInterdit": ["un"]       pas de correction si l'erreur suit un de ces mots
+                                   (une entrée suivante peut alors s'en charger)
      "apres": ["supérieur", "…"]   mot(s) juste après l'erreur (gardés tels quels)
      "debutPhrase": true           erreur en début de phrase seulement
    Les erreurs sont insensibles à la casse et aux accents ; un espace accepte
@@ -78,7 +80,9 @@
       { "terme": "infiltration", "erreurs": ["un filtration", "infiltre ation"] },
       { "terme": "centrolobulaire", "erreurs": ["sans trop lobulaire", "centre lobulaire", "sans tro lobulaire"] },
       { "terme": "centrolobulaires", "erreurs": ["sans trop lobulaires", "centre lobulaires", "sans tro lobulaires"] },
-      { "terme": "branché", "erreurs": ["brancher"], "avant": ["centrolobulaire"] },
+      { "terme": "branché", "erreurs": ["brancher", "branche est", "branchait"] },
+      { "terme": "micronodules", "erreurs": ["micro nodule", "micro nodules", "micro-nodule", "micro-nodules", "micronodule"], "avantInterdit": ["un", "le", "du", "au", "ce", "cet", "seul", "un seul", "unique", "petit"] },
+      { "terme": "micronodule", "erreurs": ["micro nodule", "micro nodules", "micro-nodule", "micro-nodules"] },
       { "terme": "centrolobulaires", "erreurs": ["centrolobulaire"], "avant": ["micronodules", "nodules", "opacités", "nodules flous", "micronodules flous", "nodules en verre dépoli", "micronodules en verre dépoli"] },
       { "terme": "branchés", "erreurs": ["brancher", "branché", "branchée", "branchées"], "avant": ["centrolobulaires"] },
       { "terme": "microlobulé", "erreurs": ["microbuler", "microbulé", "micro lobulé", "micro lobuler", "microlobuler"] },

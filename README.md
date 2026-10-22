@@ -693,6 +693,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 22/10/2026 | Dictée vocale : « micro nodule » → « micronodules » soudé et au pluriel par défaut (singulier après « un », « le », « seul »…) ; « brancher » toujours corrigé en « branché(s) » ; contexte « avantInterdit » dans le lexique ; tests |
 | 22/10/2026 | Dictée vocale : accord au pluriel « micronodules centrolobulaires branchés » (« micronodules sans trop lobulaire brancher » ; singulier conservé après « nodule ») ; tests |
 | 22/10/2026 | Dictée vocale : accord « contour régulier » → « contours réguliers » (irréguliers, nets, flous, lobulés, microlobulés, polylobés, spiculés, lisses, bosselés, mal / bien définis), catégorie « Accords fréquents » du lexique ; tests |
 | 22/10/2026 | Dictée vocale : « le foie et » restait écrit quand on marquait une pause après « et » — le « et » déjà inséré devient « est » dès que la suite dictée est un attribut ; « et d'échostructure », « et d'aspect », « et d'allure »… → « est » ; tests |

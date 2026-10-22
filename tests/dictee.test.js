@@ -246,6 +246,10 @@ test('lexique : erreurs de transcription corrigées selon le contexte', () => {
   assert.equal(T.corriger('micronodules sans trop lobulaire brancher'), 'micronodules centrolobulaires branchés');
   assert.equal(T.corriger('micronodules centrolobulaire branché'), 'micronodules centrolobulaires branchés');
   assert.equal(T.corriger('nodule sans trop lobulaire brancher'), 'nodule centrolobulaire branché');
+  assert.equal(T.corriger('micro nodule sans trop lobulaire brancher'), 'micronodules centrolobulaires branchés');
+  assert.equal(T.corriger('micro nodules centrolobulaire brancher'), 'micronodules centrolobulaires branchés');
+  assert.equal(T.corriger('un micro nodule'), 'un micronodule', 'singulier après « un »');
+  assert.equal(T.corriger('aspect brancher'), 'aspect branché', '« brancher » jamais laissé');
   assert.equal(T.corriger('rehaussement de la grammaire'), 'rehaussement de la dure-mère');
   assert.equal(T.corriger('la durmer'), 'la dure-mère');
   assert.equal(T.corriger('la dure mère'), 'la dure-mère', 'toujours avec un trait d\'union');

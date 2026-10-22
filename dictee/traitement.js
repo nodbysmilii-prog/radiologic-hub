@@ -69,9 +69,10 @@
     .flatMap(e => (e.erreurs || []).map(dit => ({ ...e, dit })))
     .sort((a, b) => norm(b.dit).length - norm(a.dit).length)
     .map(e => {
+      const interdit = e.avantInterdit ? `(?<!${AV}(?:${alternatives(e.avantInterdit)})[ \\t]+)` : '';
       const avant = e.debutPhrase ? '((?:^|[.!?;:\\n])[ \\t]*)' : e.avant ? `(${AV}(?:${alternatives(e.avant)})(?:[ \\t]+|(?<=['’])))` : '()';
       const apres = e.apres ? `(?=[ \\t]+(?:${alternatives(e.apres)})${AP})` : '';
-      return { contexte: !!(e.avant || e.apres || e.debutPhrase), re: new RegExp(`${avant}${e.avant || e.debutPhrase ? '' : AV}(${motif(e.dit)})${AP}${apres}`, 'giu'), terme: e.terme };
+      return { contexte: !!(e.avant || e.apres || e.debutPhrase), re: new RegExp(`${avant}${interdit}${e.avant || e.debutPhrase ? '' : AV}(${motif(e.dit)})${AP}${apres}`, 'giu'), terme: e.terme };
     });
   const casse = (modele, t) => (/^\p{Lu}/u.test(modele) && /^\p{Ll}/u.test(t) ? t[0].toUpperCase() + t.slice(1) : t);
   function lexique(texte) {
