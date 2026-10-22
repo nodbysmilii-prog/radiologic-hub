@@ -3,3 +3,6 @@ assets-sources/
 
 # Cache Python des scripts de préparation
 __pycache__/
+
+# Captures des vérifications dans le navigateur (npm run test:navigateur)
+tests/navigateur/captures/

@@ -80,6 +80,13 @@ test('accueil : la plateforme au premier écran, masterclass dans leur partie, a
   assert.deepEqual([...html.matchAll(/<p class="price">(\d+)<span>€<\/span><\/p>/g)].map(m => m[1]), ['190', '490', '890']);
   for (const c of ['<strong>6</strong><span>spécialités</span>', '<strong>120+</strong><span>cas cliniques</span>', '<strong>24/7</strong><span>replay</span>']) assert.ok(html.includes(c), c);
   assert.doesNotMatch(lire('script.js'), /data-count|Compteurs/, 'plus de compteur animé : chiffres lisibles sans script');
+  // bloc d'inscription : texte centré dans le cercle vert ; une colonne sur tablette et téléphone
+  const fin = lire('finition.css');
+  assert.match(fin, /\.ring-circle \{ width: min\(480px, 100%\); height: auto; aspect-ratio: 1; left: 50%; top: 50%; margin: 0; transform: translate\(-50%, -50%\); \}/);
+  assert.match(fin, /@media \(max-width: 980px\) \{[^}]*\}[\s\S]*?\.signup \{ grid-template-columns: minmax\(0, 1fr\); \}/);
+  // vérification dans le navigateur : script Playwright du projet
+  assert.equal(JSON.parse(lire('package.json')).scripts['test:navigateur'], 'node tests/navigateur/refonte.js');
+  assert.ok(fs.existsSync(path.join(R, 'tests/navigateur/refonte.js')));
   assert.match(lire('finition.css'), /\.reveal, \.reveal\.is-visible \{ opacity: 1; transform: none; transition: none; \}/, 'contenu visible sans attendre une animation');
 });
 
