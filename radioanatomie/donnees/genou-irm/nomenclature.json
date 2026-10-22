@@ -1,0 +1,254 @@
+{
+ "categories": [
+  {
+   "id": "os",
+   "nom": "Os",
+   "couleur": "#f5e6c8"
+  },
+  {
+   "id": "articulation",
+   "nom": "Articulation",
+   "couleur": "#c4b5fd"
+  },
+  {
+   "id": "cavite",
+   "nom": "Cavité articulaire",
+   "couleur": "#67e8f9"
+  },
+  {
+   "id": "graisse",
+   "nom": "Corps adipeux",
+   "couleur": "#fdba74"
+  },
+  {
+   "id": "menisques",
+   "nom": "Ménisques",
+   "couleur": "#4ade80"
+  },
+  {
+   "id": "ligaments",
+   "nom": "Ligaments",
+   "couleur": "#d9f99d"
+  },
+  {
+   "id": "muscles",
+   "nom": "Muscles",
+   "couleur": "#f9a8d4"
+  },
+  {
+   "id": "tendons",
+   "nom": "Tendons",
+   "couleur": "#e5e7eb"
+  },
+  {
+   "id": "fascias",
+   "nom": "Fascias",
+   "couleur": "#a8a29e"
+  },
+  {
+   "id": "arteres",
+   "nom": "Artères",
+   "couleur": "#f87171"
+  },
+  {
+   "id": "veines",
+   "nom": "Veines",
+   "couleur": "#60a5fa"
+  },
+  {
+   "id": "nerfs",
+   "nom": "Nerfs",
+   "couleur": "#fde047"
+  }
+ ],
+ "structures": {
+  "femur": [
+   "Fémur",
+   "os"
+  ],
+  "condyle-lat": [
+   "Condyle fémoral latéral",
+   "os"
+  ],
+  "condyle-med": [
+   "Condyle fémoral médial",
+   "os"
+  ],
+  "trochlee": [
+   "Trochlée fémorale",
+   "os"
+  ],
+  "fosse-intercondylaire": [
+   "Fosse intercondylaire",
+   "os"
+  ],
+  "patella": [
+   "Patella",
+   "os"
+  ],
+  "tibia": [
+   "Tibia",
+   "os"
+  ],
+  "plateau-lat": [
+   "Plateau tibial latéral",
+   "os"
+  ],
+  "plateau-med": [
+   "Plateau tibial médial",
+   "os"
+  ],
+  "eminence": [
+   "Éminence intercondylaire",
+   "os"
+  ],
+  "fibula-tete": [
+   "Tête de la fibula",
+   "os"
+  ],
+  "art-femoro-patellaire": [
+   "Articulation fémoro-patellaire",
+   "articulation"
+  ],
+  "art-tibio-fibulaire": [
+   "Articulation tibio-fibulaire proximale",
+   "articulation"
+  ],
+  "recessus-suprapatellaire": [
+   "Récessus suprapatellaire",
+   "cavite"
+  ],
+  "recessus-lateral": [
+   "Récessus synovial latéral",
+   "cavite"
+  ],
+  "hoffa": [
+   "Corps adipeux infrapatellaire (Hoffa)",
+   "graisse"
+  ],
+  "ml-ant": [
+   "Corne antérieure du ménisque latéral",
+   "menisques"
+  ],
+  "ml-post": [
+   "Corne postérieure du ménisque latéral",
+   "menisques"
+  ],
+  "ml-corps": [
+   "Corps du ménisque latéral",
+   "menisques"
+  ],
+  "mm-ant": [
+   "Corne antérieure du ménisque médial",
+   "menisques"
+  ],
+  "mm-post": [
+   "Corne postérieure du ménisque médial",
+   "menisques"
+  ],
+  "mm-corps": [
+   "Corps du ménisque médial",
+   "menisques"
+  ],
+  "lca": [
+   "Ligament croisé antérieur",
+   "ligaments"
+  ],
+  "lcp": [
+   "Ligament croisé postérieur",
+   "ligaments"
+  ],
+  "lcm": [
+   "Ligament collatéral médial",
+   "ligaments"
+  ],
+  "lcl": [
+   "Ligament collatéral latéral (fibulaire)",
+   "ligaments"
+  ],
+  "lig-patellaire": [
+   "Ligament patellaire",
+   "ligaments"
+  ],
+  "vaste-med": [
+   "Muscle vaste médial",
+   "muscles"
+  ],
+  "vaste-lat": [
+   "Muscle vaste latéral",
+   "muscles"
+  ],
+  "gastro-lat": [
+   "Chef latéral du muscle gastrocnémien",
+   "muscles"
+  ],
+  "gastro-med": [
+   "Chef médial du muscle gastrocnémien",
+   "muscles"
+  ],
+  "muscle-poplite": [
+   "Muscle poplité",
+   "muscles"
+  ],
+  "biceps": [
+   "Muscle biceps fémoral",
+   "muscles"
+  ],
+  "semi-membraneux": [
+   "Muscle semi-membraneux",
+   "muscles"
+  ],
+  "sartorius": [
+   "Muscle sartorius",
+   "muscles"
+  ],
+  "tendon-quadricipital": [
+   "Tendon quadricipital",
+   "tendons"
+  ],
+  "tendon-biceps": [
+   "Tendon du biceps fémoral",
+   "tendons"
+  ],
+  "tendon-poplite": [
+   "Tendon du muscle poplité",
+   "tendons"
+  ],
+  "tendon-semi-membraneux": [
+   "Tendon du semi-membraneux",
+   "tendons"
+  ],
+  "tendon-semi-tendineux": [
+   "Tendon du semi-tendineux",
+   "tendons"
+  ],
+  "tendon-gracile": [
+   "Tendon du gracile",
+   "tendons"
+  ],
+  "tractus-iliotibial": [
+   "Tractus iliotibial",
+   "fascias"
+  ],
+  "artere-poplitee": [
+   "Artère poplitée",
+   "arteres"
+  ],
+  "vaisseaux-poplites": [
+   "Vaisseaux poplités",
+   "arteres"
+  ],
+  "grande-saphene": [
+   "Grande veine saphène",
+   "veines"
+  ],
+  "nerf-tibial": [
+   "Nerf tibial",
+   "nerfs"
+  ],
+  "nerf-fibulaire": [
+   "Nerf fibulaire commun",
+   "nerfs"
+  ]
+ }
+}

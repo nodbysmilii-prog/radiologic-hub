@@ -1,0 +1,122 @@
+/* =========================================================
+   RadiologicHub — Espace radioanatomie : atlas de coupes légendées
+   (étiquettes en colonnes de part et d'autre de l'image, lignes de rappel,
+   catégories à interrupteurs, mode quiz). Utilisé par irm-genou.html.
+   ========================================================= */
+
+.ac-station {
+  --ac-fond: #0b0c10;
+  position: relative;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  border: 4px solid var(--ink); border-radius: var(--radius); overflow: hidden;
+  background: var(--ac-fond); color: #e7e8ec;
+  box-shadow: 8px 8px 0 color-mix(in srgb, var(--teal) 40%, transparent);
+}
+
+/* ---------- Barre du haut : séries et boutons ---------- */
+.ac-barre { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 10px 12px; background: #15161c; border-bottom: 1px solid #2a2b33; }
+.ac-series { display: flex; gap: 8px; flex-wrap: wrap; }
+.ac-serie {
+  display: flex; align-items: center; gap: 8px; padding: 4px 10px 4px 4px;
+  border: 1.5px solid #3a3b45; border-radius: 12px; background: #1d1e25; color: #e7e8ec;
+  font: 700 .74rem var(--font); cursor: pointer; text-align: left;
+}
+.ac-serie img { width: 38px; height: 38px; object-fit: cover; border-radius: 8px; background: #000; }
+.ac-serie small { display: block; color: #9a9ba6; font-weight: 600; font-size: .64rem; }
+.ac-serie[aria-pressed="true"] { border-color: var(--amber); background: #2a2410; }
+.ac-serie:focus-visible, .ac-btn:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+.ac-outils { display: flex; gap: 6px; margin-left: auto; flex-wrap: wrap; }
+.ac-btn {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 12px;
+  border: 1.5px solid #3a3b45; border-radius: 999px; background: #1d1e25; color: #e7e8ec;
+  font: 700 .74rem var(--font); cursor: pointer; white-space: nowrap;
+}
+.ac-btn:hover { border-color: var(--amber); }
+.ac-btn[aria-pressed="true"] { border-color: var(--amber); background: var(--amber); color: var(--ink); }
+.ac-btn svg { width: 16px; height: 16px; flex: none; }
+
+/* ---------- Scène : image au centre, étiquettes de part et d'autre ---------- */
+.ac-scene { position: relative; min-height: 360px; touch-action: pan-x; user-select: none; -webkit-user-select: none; outline: none; }
+.ac-scene:focus-visible { box-shadow: inset 0 0 0 2px var(--amber); }
+.ac-cadre { position: absolute; background: #000; }
+.ac-cadre img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; image-rendering: auto; }
+.ac-or { position: absolute; font: 800 .68rem var(--font); color: #ffd36b; text-shadow: 0 0 3px #000, 0 0 3px #000; pointer-events: none; }
+.ac-or-haut { top: 4px; left: 50%; transform: translateX(-50%); }
+.ac-or-bas { bottom: 4px; left: 50%; transform: translateX(-50%); }
+.ac-or-gauche { left: 5px; top: 50%; transform: translateY(-50%); }
+.ac-or-droite { right: 5px; top: 50%; transform: translateY(-50%); }
+.ac-traits { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.ac-trait { fill: none; stroke: var(--c); stroke-width: 1.2; opacity: .9; }
+.ac-point { fill: var(--c); stroke: #000; stroke-width: 1.5; }
+.ac-traits .is-on .ac-trait { stroke-width: 2.4; opacity: 1; }
+.ac-traits .is-on .ac-point { r: 6; stroke: #fff; }
+.ac-traits .is-off { opacity: .15; }
+
+.ac-etiq {
+  position: absolute; display: block; margin: 0; padding: 2px 0; border: 0; background: none;
+  color: var(--c); font: 600 .78rem/1.2 var(--font); cursor: pointer; text-align: right;
+  overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3;
+}
+.ac-etiq.cote-g { padding-right: 9px; border-right: 2px solid var(--c); }
+.ac-etiq.cote-d { padding-left: 9px; border-left: 2px solid var(--c); text-align: left; }
+.ac-etiq:hover, .ac-etiq.is-on { color: #fff; text-shadow: 0 0 6px color-mix(in srgb, var(--c) 80%, transparent); }
+.ac-etiq.is-off { opacity: .25; }
+.ac-etiq.is-cache { color: #9a9ba6; font-style: italic; }
+.ac-etiq:focus-visible { outline: 2px solid var(--amber); outline-offset: 1px; }
+.ac-scene.is-sans-legende .ac-etiq, .ac-scene.is-sans-legende .ac-traits { display: none; }
+
+.ac-vide { position: absolute; left: 0; right: 0; bottom: 10px; margin: 0; text-align: center; color: #9a9ba6; font-size: .78rem; pointer-events: none; }
+.ac-chargement { position: absolute; inset: 0; display: grid; place-items: center; color: #9a9ba6; font-weight: 700; }
+
+/* ---------- Barre du bas : coupe, quiz, info ---------- */
+.ac-bas { display: grid; gap: 8px; padding: 10px 12px 12px; background: #15161c; border-top: 1px solid #2a2b33; }
+.ac-coupe { display: flex; align-items: center; gap: 10px; }
+.ac-coupe input[type="range"] { flex: 1; accent-color: var(--amber); }
+.ac-compteur { min-width: 7.5em; font: 800 .76rem var(--font); color: #ffd36b; text-align: right; }
+.ac-info { margin: 0; min-height: 1.4em; font-size: .8rem; color: #c9cad2; }
+.ac-info b { color: var(--c, #fff); }
+.ac-quiz-barre { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.ac-quiz-barre[hidden] { display: none; }
+.ac-score { padding: .3em .9em; border-radius: 999px; background: var(--amber); color: var(--ink); font: 900 .74rem var(--font); }
+
+/* ---------- Panneau des catégories (comme le menu de l'atlas de référence) ---------- */
+.ac-panneau {
+  position: absolute; top: 0; right: 0; bottom: 0; z-index: 3; width: min(320px, 88%);
+  display: flex; flex-direction: column; background: #24252c; border-left: 1px solid #3a3b45;
+  box-shadow: -12px 0 30px rgba(0, 0, 0, .45); transform: translateX(105%); transition: transform .25s;
+}
+.ac-panneau.is-ouvert { transform: none; }
+.ac-panneau-tete { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid #3a3b45; font-weight: 800; }
+.ac-panneau-liste { list-style: none; margin: 0; padding: 6px 0; overflow-y: auto; }
+.ac-cat { display: flex; align-items: center; gap: 12px; padding: 9px 14px; cursor: pointer; }
+.ac-cat:hover { background: #2d2e36; }
+.ac-cat-pastille { width: 14px; height: 14px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 2px #000; flex: none; }
+.ac-cat-nom { flex: 1; font-size: .88rem; }
+.ac-cat-nb { color: #9a9ba6; font-size: .72rem; font-weight: 700; }
+.ac-interrupteur { position: relative; width: 42px; height: 24px; flex: none; border-radius: 999px; background: #6b6d78; transition: background .2s; }
+.ac-interrupteur::after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; transition: transform .2s; }
+.ac-cat input { position: absolute; opacity: 0; pointer-events: none; }
+.ac-cat input:checked + .ac-interrupteur { background: #2f6fd1; }
+.ac-cat input:checked + .ac-interrupteur::after { transform: translateX(18px); }
+.ac-cat input:focus-visible + .ac-interrupteur { outline: 2px solid var(--amber); outline-offset: 2px; }
+.ac-panneau-pied { display: flex; gap: 8px; padding: 10px 14px; border-top: 1px solid #3a3b45; }
+
+/* ---------- Texte d'accompagnement ---------- */
+.ac-aide { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 22px; margin-top: 30px; }
+.ac-legende-cats { display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 10px 0 0; padding: 0; list-style: none; font-size: .86rem; }
+.ac-legende-cats li { display: flex; align-items: center; gap: 6px; }
+.ac-legende-cats span { width: 12px; height: 12px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 1.5px var(--ink); }
+
+@media (max-width: 640px) {
+  .ac-station { border-width: 3px; box-shadow: 5px 5px 0 color-mix(in srgb, var(--teal) 40%, transparent); }
+  .ac-barre { padding: 8px; gap: 6px; }
+  .ac-serie { padding: 3px 8px 3px 3px; font-size: .68rem; }
+  .ac-serie img { width: 30px; height: 30px; }
+  .ac-serie small { display: none; }
+  .ac-outils { margin-left: 0; }
+  .ac-btn { min-height: 30px; padding: 0 10px; font-size: .7rem; }
+  .ac-etiq { font-size: .66rem; -webkit-line-clamp: 2; }
+  .ac-etiq.cote-g { padding-right: 6px; }
+  .ac-etiq.cote-d { padding-left: 6px; }
+}
