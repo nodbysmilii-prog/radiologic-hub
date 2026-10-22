@@ -309,3 +309,9 @@ test('lexique : oreille, rachis, neuro (erreurs signalées par l\'auteur)', () =
     ['autospongiose fenestrale', 'otospongiose fenestrale'], ['Autospongiose.', 'Otospongiose.'],
   ]) assert.equal(T.corriger(dit), ecrit, dit);
 });
+
+test('lyse, lytique, s\'étendant : variantes entendues', () => {
+  assert.equal(T.corriger('plage de lise et lithique'), 'plage de lyse et lytique');
+  assert.equal(T.corriger('ostéo lise'), 'ostéolyse');
+  for (const s of ["c'est tendant", "s'est tendant", "ses tendant", "c'étendant"]) assert.equal(T.corriger(`processus ${s} au cavum`), "processus s'étendant au cavum", s);
+});
