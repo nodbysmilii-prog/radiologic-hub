@@ -93,7 +93,7 @@
     }
     if (nouvelleCible) cible = nouvelleCible;
     if (actif) { majInterface(); return; }                 // déjà en cours : on change seulement de cible
-    session = mo.creer({ langue: 'fr-FR', surIntermediaire, surFinal, surEtat, surErreur });
+    session = mo.creer({ langue: 'fr-FR', surIntermediaire, surFinal, surEtat, surErreur, choisir: T.meilleureHypothese, vocabulaire: T.VOCABULAIRE });
     actif = true;
     debut = Date.now();
     tick();
@@ -413,6 +413,62 @@
   };
   panneau('#dt-aide-btn', '#dt-aide');
   panneau('#dt-reglages-btn', '#dt-reglages');
+  panneau('#dt-perso-btn', '#dt-perso');
+
+  /* ---------- Mes corrections : la dictée apprend les termes de l'utilisateur ---------- */
+  const KEY_PERSO = 'rh-dictee-perso';
+  const lirePerso = () => { try { const l = JSON.parse(localStorage.getItem(KEY_PERSO) || '[]'); return Array.isArray(l) ? l : []; } catch (e) { return []; } };
+  let perso = lirePerso();
+  const listeEl = $('#dt-perso-liste'), ditEl = $('#dt-perso-dit'), ecritEl = $('#dt-perso-ecrit');
+  const majPerso = () => {
+    try { localStorage.setItem(KEY_PERSO, JSON.stringify(perso)); } catch (e) { /* stockage indisponible */ }
+    T.apprendre(perso);
+    listeEl.innerHTML = perso.length
+      ? perso.map((c, i) => `<li><span>« ${esc(c.dit)} »</span> → <b>${esc(c.ecrit)}</b><button type="button" class="dt-icon-btn" data-oublier="${i}" title="Oublier cette correction" aria-label="Oublier « ${esc(c.dit)} »">×</button></li>`).join('')
+      : '<li class="dt-perso-vide">Aucune correction apprise pour l\'instant.</li>';
+  };
+  majPerso();
+  // la sélection dans le compte rendu pré-remplit « La dictée écrit »
+  $('#dt-perso-btn').addEventListener('click', () => {
+    const sel = editor.value.slice(editor.selectionStart, editor.selectionEnd).trim();
+    if (sel && sel.length < 80) { ditEl.value = sel; ecritEl.focus(); }
+  });
+  $('#dt-perso-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const dit = ditEl.value.trim(), ecrit = ecritEl.value.trim();
+    if (!dit || !ecrit) return;
+    perso = perso.filter(c => T.norm(c.dit) !== T.norm(dit)).concat({ dit, ecrit });
+    majPerso();
+    // corrigé aussi dans le compte rendu en cours (une étape d'historique : « ↶ Retour » l'annule)
+    const avant = editor.value, apres = T.corrigerAppris(avant);
+    if (apres !== avant) ED.remplacer(0, avant.length, apres);
+    ditEl.value = ''; ecritEl.value = '';
+    message(`Appris : « ${dit} » → « ${ecrit} ».`);
+  });
+  listeEl.addEventListener('click', e => {
+    const b = e.target.closest('[data-oublier]');
+    if (!b) return;
+    perso.splice(+b.dataset.oublier, 1);
+    majPerso();
+  });
+  $('#dt-perso-export').addEventListener('click', () => {
+    const url = URL.createObjectURL(new Blob([JSON.stringify(perso, null, 2)], { type: 'application/json' }));
+    const a = Object.assign(document.createElement('a'), { href: url, download: 'mes-corrections-dictee.json' });
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+  $('#dt-perso-import').addEventListener('change', async e => {
+    const f = e.target.files[0];
+    if (!f) return;
+    try {
+      const l = JSON.parse(await f.text());
+      if (!Array.isArray(l)) throw new Error();
+      l.forEach(c => { if (c && c.dit && c.ecrit) perso = perso.filter(x => T.norm(x.dit) !== T.norm(c.dit)).concat({ dit: String(c.dit), ecrit: String(c.ecrit) }); });
+      majPerso();
+      message(`${l.length} correction(s) importée(s).`);
+    } catch (err) { message('Fichier non reconnu (liste JSON attendue).', true); }
+    e.target.value = '';
+  });
   const moteurSel = $('#dt-moteur');
   moteurSel.innerHTML = M.liste().map(m => `<option value="${m.id}"${m.disponible() ? '' : ' disabled'}>${esc(m.nom)}${m.disponible() ? '' : ' — indisponible'}</option>`).join('');
   moteurSel.addEventListener('change', () => {

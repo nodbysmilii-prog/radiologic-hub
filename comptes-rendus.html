@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="finition.css?v=20261022310000">
   <link rel="stylesheet" href="cr.css?v=20261022235000">
   <link rel="stylesheet" href="cr-tools.css?v=20261022235000">
-  <link rel="stylesheet" href="dictee/dictee.css?v=20261012150000">
+  <link rel="stylesheet" href="dictee/dictee.css?v=20261022330000">
 </head>
 <body>
 
@@ -130,6 +130,7 @@
             <span class="dt-live" id="dt-live" aria-live="polite"></span>
             <span class="dt-bar-end">
               <button class="dt-icon-btn" type="button" id="dt-aide-btn" aria-expanded="false" aria-controls="dt-aide" title="Commandes vocales">?</button>
+              <button class="dt-icon-btn dt-perso-btn" type="button" id="dt-perso-btn" aria-expanded="false" aria-controls="dt-perso" title="Mes corrections : apprendre à la dictée vos termes">Aa</button>
               <button class="dt-icon-btn" type="button" id="dt-reglages-btn" aria-expanded="false" aria-controls="dt-reglages" title="Réglages de la dictée">⚙</button>
             </span>
             <p class="dt-warn" id="dt-warn">La dictée passe par le service du navigateur : ne dictez pas d'identité patient.</p>
@@ -148,6 +149,20 @@
               <li><b>« arrêter la dictée »</b></li>
             </ul>
             <p class="dt-panel-note">Corrections automatiques : « pi rads » → PI-RADS, « 12 virgule 5 » → 12,5, « 12 sur 8 millimètres » → 12 x 8 mm, « 12 sur 8 sur 6 » → 12 x 8 x 6 mm, « 4 sur 5 » → 4/5… , « hyper signal » → hypersignal, « la grammaire » → la dure-mère, « le foie et homogène » → le foie est homogène (dictionnaire : <code>dictee/corrections.js</code> ; erreurs de transcription : <code>dictee/lexique.js</code>, à enrichir). « Point » reste un mot dans « point de départ », « point d'appel »… Le texte dicté reste modifiable au clavier à tout moment.</p>
+          </div>
+          <div class="dt-panel" id="dt-perso" hidden>
+            <p class="dt-panel-title">Mes corrections — apprendre à la dictée</p>
+            <p class="dt-panel-note">Quand la dictée se trompe sur un terme, <b>sélectionnez le mot faux</b> dans le compte rendu, ouvrez ce volet, écrivez le bon terme et validez : la correction est appliquée tout de suite et <b>à chaque dictée suivante</b> (mémorisée dans ce navigateur). Envoyez-nous la liste (« Exporter ») pour l'ajouter au site pour tous.</p>
+            <form class="dt-perso-form" id="dt-perso-form">
+              <label>La dictée écrit <input type="text" id="dt-perso-dit" required autocomplete="off" placeholder="ex. sans trop lobulaire"></label>
+              <label>Il faut écrire <input type="text" id="dt-perso-ecrit" required autocomplete="off" placeholder="ex. centrolobulaire"></label>
+              <button class="btn btn-ink btn-sm" type="submit">Apprendre</button>
+            </form>
+            <ul class="dt-perso-liste" id="dt-perso-liste"></ul>
+            <div class="dt-perso-actions">
+              <button class="btn btn-outline btn-sm" type="button" id="dt-perso-export">Exporter</button>
+              <label class="btn btn-outline btn-sm dt-perso-import">Importer<input type="file" id="dt-perso-import" accept="application/json,.json" hidden></label>
+            </div>
           </div>
           <div class="dt-panel" id="dt-reglages" hidden>
             <p class="dt-panel-title">Réglages de la dictée</p>
@@ -392,9 +407,9 @@
   <script src="cr-tools.js?v=20261022235000"></script>
   <script src="cr.js?v=20261012200000"></script>
   <script src="dictee/corrections.js?v=20261022290000"></script>
-  <script src="dictee/lexique.js?v=20261022300000"></script>
-  <script src="dictee/traitement.js?v=20261022290000"></script>
-  <script src="dictee/moteurs.js?v=20261012150000"></script>
-  <script src="dictee/dictee.js?v=20261012150000"></script>
+  <script src="dictee/lexique.js?v=20261022330000"></script>
+  <script src="dictee/traitement.js?v=20261022330000"></script>
+  <script src="dictee/moteurs.js?v=20261022330000"></script>
+  <script src="dictee/dictee.js?v=20261022330000"></script>
 </body>
 </html>

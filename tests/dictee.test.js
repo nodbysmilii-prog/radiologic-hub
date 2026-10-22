@@ -315,3 +315,14 @@ test('lyse, lytique, s\'étendant : variantes entendues', () => {
   assert.equal(T.corriger('ostéo lise'), 'ostéolyse');
   for (const s of ["c'est tendant", "s'est tendant", "ses tendant", "c'étendant"]) assert.equal(T.corriger(`processus ${s} au cavum`), "processus s'étendant au cavum", s);
 });
+
+test('corrections apprises (« Mes corrections ») et choix entre hypothèses du moteur', () => {
+  assert.equal(T.apprendre([{ dit: 'sans trop lobulaire', ecrit: 'centrolobulaire' }, { dit: 'nodule fort', ecrit: 'nodule de Fahr' }]), 2);
+  assert.equal(T.corriger('aspect nodule fort'), 'aspect nodule de Fahr', 'appliquée à chaque dictée');
+  assert.equal(T.corrigerAppris('Nodule fort. Autre nodule fort'), 'nodule de Fahr. Autre nodule de Fahr', 'appliquée au compte rendu déjà écrit');
+  T.apprendre([]);
+  assert.equal(T.corriger('nodule fort'), 'nodule fort', 'oubliée');
+  assert.equal(T.meilleureHypothese(['lésion en hyper signal T2', 'les sions en hyper cygne al T2']), 'lésion en hyper signal T2');
+  assert.equal(T.meilleureHypothese(['la date de la grand-mère', 'prise de contraste de la dure-mère']), 'prise de contraste de la dure-mère');
+  assert.ok(T.VOCABULAIRE.includes('hypersignal') && T.VOCABULAIRE.length > 50);
+});

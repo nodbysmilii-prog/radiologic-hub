@@ -53,12 +53,20 @@
         r.lang = o.langue || 'fr-FR';
         r.continuous = true;
         r.interimResults = true;
-        r.maxAlternatives = 1;
+        r.maxAlternatives = o.choisir ? 5 : 1;
+        // vocabulaire médical proposé au moteur quand le navigateur le permet (Chrome récent)
+        if (o.vocabulaire && 'phrases' in r && root.SpeechRecognitionPhrase) {
+          try { r.phrases = o.vocabulaire.slice(0, 500).map(m => new root.SpeechRecognitionPhrase(m, 5)); } catch (err) { /* non pris en charge */ }
+        }
         r.onstart = () => o.surEtat && o.surEtat('ecoute');
         r.onresult = e => {
           let inter = '';
           for (let i = e.resultIndex; i < e.results.length; i++) {
-            const res = e.results[i], t = res[0] ? res[0].transcript : '';
+            const res = e.results[i];
+            // plusieurs hypothèses : on garde celle qui contient le plus de termes médicaux connus
+            const t = res.isFinal && o.choisir && res.length > 1
+              ? o.choisir([...Array(res.length)].map((x, k) => res[k].transcript))
+              : (res[0] ? res[0].transcript : '');
             if (res.isFinal) { if (t.trim()) o.surFinal(t.trim()); } else inter += t;
           }
           if (o.surIntermediaire) o.surIntermediaire(inter.trim());
