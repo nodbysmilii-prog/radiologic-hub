@@ -6,3 +6,9 @@ __pycache__/
 
 # Captures des vérifications dans le navigateur (npm run test:navigateur)
 tests/navigateur/captures/
+
+# Dictée Whisper local : modèles, exécutables et audio restent hors du dépôt
+*.bin
+*.gguf
+outils/whisper-local/*.wav
+whisper.cpp/

@@ -10,6 +10,9 @@
     "test:bib-reel": "node tests/bibliotheque-reel.js",
     "test:navigateur": "node tests/navigateur/refonte.js",
     "test:dicom": "node espace-dicom/tests/integration.js",
-    "visionneuse": "node espace-dicom/visionneuse/installer-ohif.js"
+    "visionneuse": "node espace-dicom/visionneuse/installer-ohif.js",
+    "whisper:installer": "bash outils/whisper-local/installer.sh",
+    "whisper:demarrer": "bash outils/whisper-local/demarrer.sh",
+    "whisper:arreter": "bash outils/whisper-local/arreter.sh"
   }
 }

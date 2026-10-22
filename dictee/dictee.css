@@ -91,3 +91,20 @@
 .dt-perso-vide { color: #666; font-style: italic; }
 .dt-perso-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 .dt-perso-import { cursor: pointer; }
+
+/* Whisper local : état, réglages, texte brut */
+.dt-w-badge { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; border: 2px solid var(--ink); font-size: .72rem; font-weight: 800; background: #fff; }
+.dt-w-badge::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: #8b8a96; }
+.dt-w-badge.is-ok::before { background: #2f8a55; }
+.dt-w-badge.is-attention::before { background: #f2ab2f; }
+.dt-w-badge.is-ko::before { background: #a8172d; }
+.dt-w-badge.is-occupe::before { background: #3c67b8; animation: dt-pulse 1s infinite; }
+@keyframes dt-pulse { 50% { opacity: .3; } }
+.dt-whisper { margin: 10px 0 14px; padding: 10px 14px 12px; border: 2px dashed var(--ink); border-radius: 14px; }
+.dt-whisper legend { padding: 0 6px; font-size: .72rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+.dt-whisper input, .dt-whisper select { font: inherit; padding: 5px 9px; border: 2px solid var(--ink); border-radius: 10px; min-width: 0; max-width: 100%; }
+.dt-w-etat { margin: 8px 0 0; font-weight: 700; }
+.dt-brut { margin: 6px 0 0; font-size: .8rem; }
+.dt-brut summary { cursor: pointer; font-weight: 800; }
+.dt-brut p { margin: 4px 0 0; padding: 6px 10px; border-radius: 10px; background: #f4f4f6; white-space: pre-wrap; }
+@media (prefers-reduced-motion: reduce) { .dt-w-badge.is-occupe::before { animation: none; } }

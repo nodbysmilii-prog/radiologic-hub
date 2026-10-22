@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="finition.css?v=20261022310000">
   <link rel="stylesheet" href="cr.css?v=20261022235000">
   <link rel="stylesheet" href="cr-tools.css?v=20261022235000">
-  <link rel="stylesheet" href="dictee/dictee.css?v=20261022330000">
+  <link rel="stylesheet" href="dictee/dictee.css?v=20261023000000">
 </head>
 <body>
 
@@ -128,6 +128,7 @@
             <button class="btn btn-sm dt-mic" type="button" id="dt-mic" aria-pressed="false"><svg class="dt-svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M9 21h6" fill="none"/></svg><span class="dt-lab">Dicter</span><kbd class="dt-kbd" id="dt-kbd">F9</kbd></button>
             <span class="dt-rec" id="dt-rec" hidden><i aria-hidden="true"></i>Dictée en cours <b id="dt-temps">0:00</b></span>
             <span class="dt-live" id="dt-live" aria-live="polite"></span>
+            <span class="dt-w-badge" id="dt-w-badge" hidden></span>
             <span class="dt-bar-end">
               <button class="dt-icon-btn" type="button" id="dt-aide-btn" aria-expanded="false" aria-controls="dt-aide" title="Commandes vocales">?</button>
               <button class="dt-icon-btn dt-perso-btn" type="button" id="dt-perso-btn" aria-expanded="false" aria-controls="dt-perso" title="Mes corrections : apprendre à la dictée vos termes">Aa</button>
@@ -136,6 +137,7 @@
             <p class="dt-warn" id="dt-warn">La dictée passe par le service du navigateur : ne dictez pas d'identité patient.</p>
             <p class="dt-unsupported" id="dt-unsupported" hidden></p>
             <p class="dt-msg" id="dt-msg" role="status" aria-live="polite"></p>
+            <details class="dt-brut" id="dt-brut" hidden><summary>Texte brut de la dernière transcription</summary><p id="dt-brut-texte"></p></details>
           </div>
           <div class="dt-panel" id="dt-aide" hidden>
             <p class="dt-panel-title">Commandes vocales</p>
@@ -148,7 +150,7 @@
               <li><b>« insérer modèle scanner thoracique »</b> : examen complet (vide → chargé ; sinon « remplacer », « insérer » ou « annuler ») ; <b>« insérer la phrase foie normal »</b> : inséré au curseur</li>
               <li><b>« arrêter la dictée »</b></li>
             </ul>
-            <p class="dt-panel-note">Corrections automatiques : « pi rads » → PI-RADS, « 12 virgule 5 » → 12,5, « 12 sur 8 millimètres » → 12 x 8 mm, « 12 sur 8 sur 6 » → 12 x 8 x 6 mm, « 4 sur 5 » → 4/5… , « hyper signal » → hypersignal, « la grammaire » → la dure-mère, « le foie et homogène » → le foie est homogène (dictionnaire : <code>dictee/corrections.js</code> ; erreurs de transcription : <code>dictee/lexique.js</code>, à enrichir). « Point » reste un mot dans « point de départ », « point d'appel »… Le texte dicté reste modifiable au clavier à tout moment.</p>
+            <p class="dt-panel-note">Corrections automatiques : « pi rads » → PI-RADS, « 12 virgule 5 » → 12,5, « 12 sur 8 millimètres » → 12 x 8 mm, « 12 sur 8 sur 6 » → 12 x 8 x 6 mm, « 4 sur 5 » → 4/5… , « hyper signal » → hypersignal, « la grammaire » → la dure-mère, « le foie et homogène » → le foie est homogène (dictionnaire : <code>dictee/corrections.js</code> ; erreurs de transcription : <code>dictee/lexique.js</code>, à enrichir). « Point » reste un mot dans « point de départ », « point d'appel »… Le texte dicté reste modifiable au clavier à tout moment. <b>Whisper local</b> (essai) : moteur installé sur votre ordinateur, voir <code>outils/whisper-local/README.md</code>.</p>
           </div>
           <div class="dt-panel" id="dt-perso" hidden>
             <p class="dt-panel-title">Mes corrections — apprendre à la dictée</p>
@@ -170,6 +172,27 @@
               <label for="dt-moteur">Moteur de transcription</label>
               <select id="dt-moteur"></select>
             </div>
+            <fieldset class="dt-whisper" id="dt-whisper" hidden>
+              <legend>Whisper local (sur ce poste)</legend>
+              <p class="dt-panel-note">Fonction d'essai : il faut avoir installé et démarré le service sur cet ordinateur (<code>outils/whisper-local</code>, voir son README). L'audio ne quitte pas le poste.</p>
+              <div class="dt-set">
+                <label for="dt-w-adresse">Adresse du service</label>
+                <input type="text" id="dt-w-adresse" autocomplete="off" spellcheck="false">
+              </div>
+              <div class="dt-set">
+                <label for="dt-w-jeton">Code d'appairage</label>
+                <input type="password" id="dt-w-jeton" autocomplete="off" spellcheck="false" placeholder="affiché par le service au démarrage">
+              </div>
+              <div class="dt-set">
+                <label for="dt-w-mode">Transcription</label>
+                <select id="dt-w-mode">
+                  <option value="arret">Après l'arrêt de l'enregistrement (le plus fiable)</option>
+                  <option value="segments">Par segments, à chaque pause</option>
+                </select>
+              </div>
+              <button class="btn btn-outline btn-sm" type="button" id="dt-w-tester">Tester la connexion</button>
+              <p class="dt-w-etat" id="dt-w-etat-detail" role="status"></p>
+            </fieldset>
             <div class="dt-set">
               <span>Touche démarrer / arrêter</span>
               <button class="btn btn-outline btn-sm dt-key" type="button" data-touche="toucheBasculer"></button>
@@ -409,9 +432,10 @@
   <script src="cr-tools.js?v=20261022340000"></script>
   <script src="cr.js?v=20261012200000"></script>
   <script src="dictee/corrections.js?v=20261022290000"></script>
-  <script src="dictee/lexique.js?v=20261022330000"></script>
-  <script src="dictee/traitement.js?v=20261022330000"></script>
-  <script src="dictee/moteurs.js?v=20261022330000"></script>
-  <script src="dictee/dictee.js?v=20261022330000"></script>
+  <script src="dictee/lexique.js?v=20261023000000"></script>
+  <script src="dictee/traitement.js?v=20261023000000"></script>
+  <script src="dictee/audio.js?v=20261023000000"></script>
+  <script src="dictee/moteurs.js?v=20261023000000"></script>
+  <script src="dictee/dictee.js?v=20261023000000"></script>
 </body>
 </html>

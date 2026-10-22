@@ -18,11 +18,12 @@
    • V1 : « webspeech » — Web Speech API du navigateur (Chrome, Edge,
      Safari). L'audio est transcrit par le service du navigateur (Google,
      Apple…) : avertissement affiché, pas d'identité patient.
-   • V2 (à venir) : « whisper-local » — Whisper exécuté dans le navigateur
-     (WebGPU, ex. transformers.js), modèle téléchargé une fois puis gardé en
-     cache ; micro capté par getUserMedia, découpage sur les silences ;
-     l'audio ne quitte pas le poste. Pas de résultats intermédiaires natifs :
-     le texte de chaque tronçon sera envoyé à surFinal().
+   • V2 : « whisper-local » — whisper.cpp installé sur le poste et un petit
+     service local (outils/whisper-local), joint sur 127.0.0.1 avec un jeton
+     d'appairage ; l'audio ne quitte pas le poste. Pas de résultats
+     intermédiaires : le texte de chaque enregistrement ou segment est envoyé
+     à surFinal(texte, { brut, … }). Le moteur ne bascule jamais seul vers un
+     autre service.
    ========================================================= */
 
 (function (root) {
@@ -104,14 +105,132 @@
     },
   };
 
-  /* ---------- V2 : Whisper local (WebGPU) — emplacement réservé ---------- */
+  /* ---------- V2 : Whisper local (whisper.cpp sur ce poste, service outils/whisper-local) ----------
+     micro (getUserMedia) → 16 kHz mono dans le navigateur (dictee/audio.js) → WAV → service local
+     http://127.0.0.1:8737 (jeton d'appairage) → texte français → surFinal. Aucun service externe :
+     si le service local ne répond pas, erreur claire, jamais de bascule vers un autre moteur.
+     Modes : « arret » (transcription après l'arrêt) ou « segments » (envoi à chaque pause). */
+  const A = () => RH.audio;
+  const MESSAGES_HTTP = {
+    401: 'Whisper local : appairage requis — collez le code affiché par le service dans Dictée › Réglages.',
+    403: 'Whisper local : cette adresse du site n\'est pas autorisée par le service (option --origine).',
+    413: 'Whisper local : enregistrement trop long (2 minutes au plus) — utilisez le mode « par segments ».',
+    415: 'Whisper local : format audio refusé.',
+    503: 'Whisper local : moteur non installé — lancez outils/whisper-local/installer.sh.',
+    504: 'Whisper local : transcription trop longue.',
+  };
+  const INJOIGNABLE = 'Whisper local injoignable : démarrez le service (double-clic sur « Dictée Whisper » dans outils/whisper-local, ou bash outils/whisper-local/demarrer.sh), puis réessayez. Aucun autre moteur n\'est utilisé à sa place.';
+
+  async function appeler(cfg, chemin, options = {}) {
+    let r;
+    try {
+      r = await fetch(cfg.adresse.replace(/\/+$/, '') + chemin, {
+        ...options, cache: 'no-store', credentials: 'omit',
+        targetAddressSpace: 'loopback',                   // Chrome : accès local demandé explicitement
+        headers: { ...(options.headers || {}), Authorization: `Bearer ${cfg.jeton || ''}` },
+      });
+    } catch (err) {
+      const e = new Error(INJOIGNABLE); e.code = 'injoignable'; throw e;
+    }
+    const corps = await r.json().catch(() => ({}));
+    if (!r.ok) { const e = new Error(MESSAGES_HTTP[r.status] || `Whisper local : erreur ${r.status}.`); e.code = r.status; throw e; }
+    return corps;
+  }
+
   const whisperLocal = {
     id: 'whisper-local',
-    nom: 'Whisper local (WebGPU) — bientôt',
+    nom: 'Whisper local (sur ce poste, service à démarrer)',
     local: true,
-    disponible: () => false,
-    raison: () => 'Transcription locale en préparation (Whisper dans le navigateur, WebGPU) : l\'audio ne quittera pas le poste.',
-    creer() { throw new Error('Moteur Whisper local non disponible dans cette version.'); },
+    disponible: () => !!(root.navigator && root.navigator.mediaDevices && root.navigator.mediaDevices.getUserMedia && (root.AudioContext || root.webkitAudioContext) && RH.audio),
+    raison: () => 'Ce navigateur ne permet pas la capture du micro nécessaire à Whisper local.',
+    etat: cfg => appeler(cfg, '/etat'),
+    creer(o) {
+      const cfg = o.whisper || {};
+      const Au = A();
+      let flux = null, ctx = null, noeud = null, source = null, reech = null, decoupeur = null;
+      let enregistrement = [], file = Promise.resolve(), enAttente = 0, precedent = '', ouvert = false;
+
+      const info = () => o.surInfo && o.surInfo(enAttente ? `Transcription en cours (${enAttente})…` : (ouvert ? 'Écoute…' : ''), enAttente > 0);
+      const envoyer = ech => {
+        if (!Au.aDeLaParole(ech)) return;                    // silence : rien n'est envoyé
+        const contexte = (cfg.contexte && cfg.contexte()) || '';
+        enAttente++; info();
+        file = file.then(async () => {
+          try {
+            const r = await appeler(cfg, '/transcrire', {
+              method: 'POST', body: Au.wav(ech),
+              headers: { 'Content-Type': 'audio/wav', 'X-RH-Contexte': encodeURIComponent(contexte) },
+            });
+            let t = (r.texte || '').trim();
+            if (t && Au.echoDuContexte(t, contexte)) t = '';
+            if (t) t = Au.raccorder(precedent, t);
+            if (t) { precedent = t; o.surFinal(t, { brut: r.texte, moteur: 'whisper-local', modele: r.modele, duree: r.duree, calcul: r.calcul, sansRemplacer: true }); }
+            if (o.surMesure) o.surMesure(r);
+          } catch (err) {
+            if (o.surErreur) o.surErreur({ code: err.code, fatale: err.code === 'injoignable' || err.code === 401, message: err.message });
+          } finally { enAttente--; info(); }
+        });
+      };
+
+      const fermerMicro = () => {
+        ouvert = false;
+        try { if (noeud) noeud.disconnect(); if (source) source.disconnect(); } catch (err) { /* déjà fermé */ }
+        if (flux) flux.getTracks().forEach(t => t.stop());
+        if (ctx) ctx.close().catch(() => {});
+        flux = ctx = noeud = source = null;
+      };
+
+      return {
+        async demarrer() {
+          // Le service répond-il ? (avant d'ouvrir le micro)
+          try {
+            const e = await appeler(cfg, '/etat');
+            if (!e.appaire) throw Object.assign(new Error(MESSAGES_HTTP[401]), { code: 401 });
+            if (!e.pret) throw Object.assign(new Error(MESSAGES_HTTP[503]), { code: 503 });
+          } catch (err) {
+            o.surErreur && o.surErreur({ code: err.code, fatale: true, message: err.message });
+            return;
+          }
+          try {
+            flux = await root.navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true, autoGainControl: true } });
+          } catch (err) {
+            o.surErreur && o.surErreur({ code: 'micro', fatale: true, message: 'Accès au micro refusé ou impossible : autorisez le micro pour ce site, puis réessayez.' });
+            return;
+          }
+          const AC = root.AudioContext || root.webkitAudioContext;
+          ctx = new AC();
+          source = ctx.createMediaStreamSource(flux);
+          reech = new Au.Reechantillonneur(ctx.sampleRate);
+          enregistrement = []; precedent = '';
+          decoupeur = cfg.mode === 'segments' ? new Au.Decoupeur({ surSegment: envoyer }) : null;
+          const recevoir = bloc => {
+            const x = reech.pousser(bloc);
+            if (decoupeur) decoupeur.pousser(x); else enregistrement.push(x);
+          };
+          // ScriptProcessor : pris en charge partout (Safari compris) ; l'audio n'est pas rejoué
+          noeud = ctx.createScriptProcessor(4096, 1, 1);
+          noeud.onaudioprocess = e => recevoir(new Float32Array(e.inputBuffer.getChannelData(0)));
+          source.connect(noeud);
+          noeud.connect(ctx.destination);
+          ouvert = true; info();
+          o.surEtat && o.surEtat('ecoute');
+        },
+        arreter() {
+          if (!ouvert) return;
+          fermerMicro();
+          if (decoupeur) decoupeur.vider();
+          else if (enregistrement.length) {
+            const n = enregistrement.reduce((s, x) => s + x.length, 0), tout = new Float32Array(n);
+            let k = 0; enregistrement.forEach(x => { tout.set(x, k); k += x.length; });
+            enregistrement = [];
+            if (n > 120 * Au.FREQ) o.surErreur && o.surErreur({ fatale: false, message: MESSAGES_HTTP[413] });
+            else envoyer(tout);
+          }
+          info();
+          o.surEtat && o.surEtat('arret');
+        },
+      };
+    },
   };
 
   const MOTEURS = { webspeech, 'whisper-local': whisperLocal };
