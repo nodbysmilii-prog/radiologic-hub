@@ -105,7 +105,7 @@
   /* ---------- Mise en page ---------- */
   function mesures() {
     const s = S(), W = scene.clientWidth;
-    const frac = W >= 900 ? .5 : W >= 600 ? .52 : .54;
+    const frac = W >= 900 ? .5 : W >= 600 ? .52 : .5;
     const iw = Math.round(Math.min(W * frac, 600));
     const ih = Math.round(iw * s.hauteur / s.largeur);
     const col = (W - iw) / 2;
@@ -159,7 +159,7 @@
     }
 
     // étiquettes : texte, largeur, hauteur mesurée
-    const largeurCol = Math.max(60, m.col - 14);
+    const largeurCol = Math.max(60, m.col - (m.W < 600 ? 10 : 14));
     items.forEach((t, i) => {
       const b = etiquette(i), ct = cat(t.id), vu = !etat.quiz || etat.vus.has(cleVu(t.id));
       b.hidden = false; b.dataset.id = t.id;
@@ -169,7 +169,7 @@
       b.title = vu ? `${nomStructure(t.id)} (${ct.nom})` : `Structure à trouver (${ct.nom})`;
       b.setAttribute('aria-label', vu ? `${nomStructure(t.id)}, ${ct.nom}` : `Structure à trouver, catégorie ${ct.nom} ; toucher pour révéler`);
       b.style.width = largeurCol + 'px';
-      b.style.left = t.g ? '6px' : (m.W - m.col + 8) + 'px';
+      b.style.left = t.g ? (m.W < 600 ? '3px' : '6px') : (m.W - m.col + (m.W < 600 ? 7 : 8)) + 'px';
       t.el = b;
     });
     for (let i = items.length; i < pool.length; i++) pool[i].hidden = true;
@@ -177,7 +177,7 @@
 
     const ecart = 6, marge = 8;
     const hauteurCol = cote => items.filter(t => t.g === cote).reduce((a, t) => a + t.h + ecart, 0);
-    const H = Math.max(m.ih + 56, hauteurCol(true) + 2 * marge, hauteurCol(false) + 2 * marge, 300);
+    const H = Math.max(m.ih + 56, hauteurCol(true) + 2 * marge, hauteurCol(false) + 2 * marge, m.W < 600 ? 300 : 360);
     scene.style.height = H + 'px';
     const top = Math.round((H - m.ih) / 2);
     Object.assign(cadre.style, { left: m.col + 'px', top: top + 'px', width: m.iw + 'px', height: m.ih + 'px' });
@@ -196,10 +196,11 @@
 
     // lignes de rappel et points
     traits.setAttribute('viewBox', `0 0 ${m.W} ${H}`);
+    traits.setAttribute('preserveAspectRatio', 'xMinYMin meet');
     traits.innerHTML = '';
     items.forEach(t => {
       const ax = m.col + t.x * m.iw / s.largeur, ay = top + t.y * m.ih / s.hauteur;
-      const x0 = t.g ? 6 + largeurCol : m.W - m.col + 8, x1 = t.g ? x0 + 10 : x0 - 10;
+      const x0 = t.g ? (m.W < 600 ? 3 : 6) + largeurCol : m.W - m.col + (m.W < 600 ? 7 : 8), x1 = t.g ? x0 + 6 : x0 - 6;
       const g = document.createElementNS(SVG, 'g');
       g.dataset.id = t.id; g.style.setProperty('--c', cat(t.id).couleur);
       g.innerHTML = `<path class="ac-trait" d="M${x0.toFixed(1)} ${t.ly.toFixed(1)} H${x1.toFixed(1)} L${ax.toFixed(1)} ${ay.toFixed(1)}"/><circle class="ac-point" cx="${ax.toFixed(1)}" cy="${ay.toFixed(1)}" r="3.6"/>`;
