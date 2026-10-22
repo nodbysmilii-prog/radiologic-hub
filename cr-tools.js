@@ -12,6 +12,7 @@
      schemas/uterus.js ; arbre décisionnel IRM : regles/myome.js)
    • CAD-RADS 2.0 : coroscanner (arbre coronaire selon la dominance :
      schemas/coronaires.js ; règles et score calcique : regles/cadrads.js)
+   • Qanadli : index d'obstruction de l'embolie pulmonaire (regles/qanadli.js)
    • RECIST 1.1 : réponse des tumeurs solides
    • Lugano 2014 (Cheson) : réponse des lymphomes (TEP ou TDM)
    • OsteoGamme : gamme diagnostique d'une lésion osseuse lytique (même
@@ -1374,7 +1375,36 @@
     },
   };
 
-  const TOOLS = { ...(PR ? { pirads: PIRADS } : {}), ...(BR ? { birads: BIRADS } : {}), tirads: TIRADS, ...(FL ? { fleischner: FLEISCHNER } : {}), ...(MY && UT ? { figo: MYOMES } : {}), ...(CA && CO ? { cadrads: CADRADS } : {}), recist: RECIST, lugano: LUGANO, ...(OSTEOGAMME ? { osteogamme: OSTEOGAMME } : {}), ...(BOSNIAK ? { bosniak: BOSNIAK } : {}) };
+  /* =======================================================
+     Embolie pulmonaire — index d'obstruction de Qanadli (regles/qanadli.js)
+     ======================================================= */
+  const QA = window.RHRegles && window.RHRegles.qanadli;
+  const QANADLI = QA && {
+    title: 'Embolie pulmonaire — index de Qanadli', chip: 'Qanadli', sub: 'embolie pulmonaire',
+    keys: ['qanadli', 'embolie'], suggest: /qanadli|embolie pulmonaire|embole/,
+    hint: 'Embole proximal (tronc, artère pulmonaire, lobaire) : il compte pour toutes les artères segmentaires d\'aval. Puis chaque artère segmentaire : partielle = 1, totale = 2, sous-segmentaire = 1. Total sur 40.',
+    init: () => ({ proximaux: {}, segments: {} }),
+    form(st) {
+      const OBS = [['', '—'], ['1', 'Partielle'], ['2', 'Totale']];
+      const SEG = [['', '—'], ['s', 'Sous-segmentaire (1)'], ['1', 'Partielle (1)'], ['2', 'Totale (2)']];
+      const pts = QA.evaluer(st).points;
+      let h = `<fieldset class="tl-box"><legend>Embole proximal</legend><div class="tf-row">${
+        Object.entries(QA.PROXIMAUX).map(([k, p]) => sel(`proximaux.${k}`, p.nom.replace(/^./, m => m.toUpperCase()), OBS, st.proximaux[k] || '')).join('')}</div></fieldset>`;
+      h += QA.LOBES.map(l => `<fieldset class="tl-box"><legend>${l.cote === 'D' ? 'Poumon droit' : 'Poumon gauche'} — ${esc(l.nom)}</legend><div class="tf-row">${
+        l.segments.map(([id, nom]) => sel(`segments.${id}`, `${nom} · ${pts[id]} pt`, SEG, st.segments[id] || '')).join('')}</div></fieldset>`).join('');
+      return h;
+    },
+    result(st) {
+      const r = QA.evaluer(st);
+      return badge(`Qanadli : ${r.score}/40 — ${fr(r.index)} %`, !r.score ? C.green : r.severe ? C.red : C.amber);
+    },
+    text(st) {
+      const r = QA.evaluer(st);
+      return `${QA.texte(r)}\nConclusion proposée : ${QA.conclusion(r)}`;
+    },
+  };
+
+  const TOOLS = { ...(PR ? { pirads: PIRADS } : {}), ...(BR ? { birads: BIRADS } : {}), tirads: TIRADS, ...(FL ? { fleischner: FLEISCHNER } : {}), ...(MY && UT ? { figo: MYOMES } : {}), ...(CA && CO ? { cadrads: CADRADS } : {}), recist: RECIST, lugano: LUGANO, ...(OSTEOGAMME ? { osteogamme: OSTEOGAMME } : {}), ...(BOSNIAK ? { bosniak: BOSNIAK } : {}), ...(QANADLI ? { qanadli: QANADLI } : {}) };
   const states = {};
   let cur = null;
   const titleEl = $('#tool-title', dlg), hintEl = $('#tool-hint', dlg), schemaEl = $('#tool-schema', dlg), formEl = $('#tool-form', dlg);
@@ -1560,7 +1590,7 @@
      évoque sont repris à côté du bouton du volet, même volet fermé ---------- */
   const GROUPES = [
     ['Oncologie', ['recist', 'lugano']],
-    ['Thorax et cœur', ['fleischner', 'cadrads']],
+    ['Thorax et cœur', ['qanadli', 'fleischner', 'cadrads']],
     ['Sein et thyroïde', ['birads', 'tirads']],
     ['Pelvis et rein', ['pirads', 'figo', 'bosniak']],
     ['Os', ['osteogamme']],

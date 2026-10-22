@@ -516,6 +516,40 @@ AU TOTAL :
 [conclusion]`,
   },
   {
+    id: 'angio-tdm-embolie', spe: 'thorax', mod: 'TDM',
+    title: 'Angioscanner thoracique — embolie pulmonaire',
+    text: `ANGIOSCANNER THORACIQUE — RECHERCHE D'EMBOLIE PULMONAIRE
+
+RENSEIGNEMENTS CLINIQUES :
+[renseignements cliniques]
+
+TECHNIQUE :
+Acquisition hélicoïdale centrée sur l'étage thoracique avec injection de produit de contraste en bolus tracking : injection IV d'environ [50] cc à 350 mg d'iode, à 4 cc/s ; déclenchement automatique au pic de rehaussement vasculaire dans la VCS.
+
+RÉSULTATS :
+Étude vasculaire :
+• [Absence de défect endoluminal des artères pulmonaires / Défect endoluminal partiel / Défect endoluminal total] [du tronc de l'artère pulmonaire / de l'artère pulmonaire / de l'artère lobaire / de l'artère segmentaire / de l'artère sous-segmentaire] [droite / gauche] : [segment apical / postérieur / antérieur du lobe supérieur / latéral / médial du lobe moyen / lingulaire supérieur / lingulaire inférieur / apical du lobe inférieur (Nelson) / médio-basal / antéro-basal / latéro-basal / postéro-basal]. Siège de l'embole déterminé selon la classification de Boyden.
+• Index d'obstruction de Qanadli (calcul automatique) : [x]/40, soit [x] %.
+• [Absence de dilatation des cavités droites / Dilatation des cavités droites avec un rapport VD/VG > 1 (VD/VG = « x »)].
+• [Absence de reflux cave sus-hépatique / Reflux cave sus-hépatique].
+• [Absence de dilatation veineuse d'amont / Dilatation veineuse d'amont : VCS, VCI, veine azygos et veines sus-hépatiques].
+• [Absence de dysmorphie septale / Dysmorphie septale : rectitude septale / septum sigmoïde / septum convexe vers le ventricule gauche].
+
+Étude parenchymateuse et pleuro-pariétale :
+• [Absence d'infarctus pulmonaire / Infarctus pulmonaire « segment » : foyer de condensation sous-pleural, triangulaire ou quadrangulaire, avec clartés centrales et vaisseau dilaté à son sommet].
+• [Absence d'atélectasie / Atélectasie « siège »].
+• [Absence d'épanchement pleural / Épanchement pleural droit / Épanchement pleural gauche / Épanchement pleural bilatéral] [de faible / de moyenne / de grande] abondance.
+• L'arbre trachéo-bronchique est libre.
+
+Étude médiastinale :
+• [Absence d'adénomégalie médiastinale / Adénomégalie médiastinale : chaînes « préciser »].
+• [Absence d'épanchement péricardique / Épanchement péricardique en lame / Épanchement péricardique de faible abondance / Épanchement péricardique de moyenne abondance / Épanchement péricardique de grande abondance].
+• [Perméabilité conservée des cavités cardiaques / Thrombus de l'oreillette droite / Thrombus du ventricule droit / Thrombus de l'oreillette gauche / Thrombus du ventricule gauche].
+
+CONCLUSION :
+[Absence d'embolie pulmonaire / Embolie pulmonaire droite / Embolie pulmonaire gauche / Embolie pulmonaire bilatérale] [proximale / lobaire / segmentaire / sous-segmentaire], index d'obstruction de Qanadli à [x] %.`,
+  },
+  {
     id: 'tdm-tap', spe: 'tap', mod: 'TDM',
     title: 'TDM thoraco-abdomino-pelvienne sans et avec injection — normale',
     text: `SCANNER THORACO-ABDOMINO-PELVIEN
