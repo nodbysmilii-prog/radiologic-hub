@@ -156,12 +156,8 @@ p { margin: 0 0 1em; }
 .header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 
 .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
-.brand-mark { position: relative; display: block; flex: none; width: 48px; }
-.brand-mark img { display: block; width: 100%; height: auto; }
-/* Survol du logo : seul le symbole (emblem-symbole.svg, posé sur les traits fixes d'emblem-traits.svg) fait un
-   tiers de tour autour de son centre (274, 215 dans la viewBox 88 52 292 260) ; symétrique d'ordre 3, il retombe identique. */
-.brand-symbole { position: absolute; top: 0; left: 0; transform-origin: 63.699% 62.692%; transition: transform .5s cubic-bezier(.2, .7, .2, 1); }
-.brand:hover .brand-symbole, .brand:focus-visible .brand-symbole { transform: rotate(120deg); }
+.brand-mark { width: 48px; height: auto; transition: transform .6s; }
+.brand:hover .brand-mark { transform: rotate(120deg); }
 .brand-name {
   font-family: var(--font-logo);
   font-size: .78rem;

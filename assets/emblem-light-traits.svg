@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="88 52 292 260" fill="none">
-  <!-- Logo clair (pied de page), calque 2/2 : les traits fixes qui partent des bras du symbole.
-       Même cadre que emblem-light.svg ; calque 1/2 (symbole qui tourne) : emblem-light-symbole.svg. -->
-  <g stroke="#ecebf3" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M220.3 175.9V135M213.3 188.1L175 210L137 188L97 211"/>
-    <path d="M327.7 175.9V132L365 110V62M334.7 188.1L370 208"/>
-    <path d="M267 281L232 302M281 281L316 302"/>
-  </g>
-</svg>
