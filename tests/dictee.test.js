@@ -229,3 +229,83 @@ test('vocabulaire : pas de fausse correction', () => {
   assert.equal(T.corriger('eu tirads 4'), 'EU-TIRADS 4');
   assert.equal(T.corriger('danse'), 'danse');
 });
+
+test('lexique : JSON valide (modifiable sans toucher au code)', () => {
+  const src = require('fs').readFileSync(require('path').join(__dirname, '../dictee/lexique.js'), 'utf8');
+  const json = src.slice(src.indexOf('{', src.indexOf('this,')), src.lastIndexOf('}') + 1);
+  const L = JSON.parse(json);
+  for (const [cat, liste] of Object.entries(L.categories))
+    for (const e of liste) assert.ok(e.terme && Array.isArray(e.erreurs) && e.erreurs.length, `${cat} : ${JSON.stringify(e)}`);
+});
+
+test('lexique : erreurs de transcription corrigées selon le contexte', () => {
+  assert.equal(T.corriger('hyper cent nal T2'), 'hypersignal T2');
+  assert.equal(T.corriger('ipo signal T1'), 'hyposignal T1');
+  assert.equal(T.corriger('hyper signal et hypo-signal'), 'hypersignal et hyposignal', 'toujours en un mot');
+  assert.equal(T.corriger('bronche l\'auber supérieur gauche'), 'bronche lobaire supérieur gauche');
+  assert.equal(T.corriger('micronodules sans trop lobulaire brancher'), 'micronodules centrolobulaires branchés');
+  assert.equal(T.corriger('micronodules centrolobulaire branché'), 'micronodules centrolobulaires branchés');
+  assert.equal(T.corriger('nodule sans trop lobulaire brancher'), 'nodule centrolobulaire branché');
+  assert.equal(T.corriger('micro nodule sans trop lobulaire brancher'), 'micronodules centrolobulaires branchés');
+  assert.equal(T.corriger('micro nodules centrolobulaire brancher'), 'micronodules centrolobulaires branchés');
+  assert.equal(T.corriger('un micro nodule'), 'un micronodule', 'singulier après « un »');
+  assert.equal(T.corriger('aspect brancher'), 'aspect branché', '« brancher » jamais laissé');
+  assert.equal(T.corriger('rehaussement de la grammaire'), 'rehaussement de la dure-mère');
+  assert.equal(T.corriger('la durmer'), 'la dure-mère');
+  assert.equal(T.corriger('la dure mère'), 'la dure-mère', 'toujours avec un trait d\'union');
+  assert.equal(T.corriger('épaississement dur mais rien'), 'épaississement dure-mérien');
+  assert.equal(T.corriger('contours microbuler'), 'contours microlobulés');
+  assert.equal(T.corriger('nodule microbuler'), 'nodule microlobulé');
+  assert.equal(T.corriger('de taille de taille normale'), 'le foie est de taille normale');
+  assert.equal(T.corriger('de taille normale'), 'de taille normale', '« de taille » légitime conservé');
+  assert.equal(T.corriger('l\'aube supérieur droit'), 'lobe supérieur droit');
+  assert.equal(T.corriger('lever de l\'aube'), 'lever de l\'aube', 'contexte absent : rien');
+});
+
+test('« et » → « est » seulement quand la grammaire l\'impose', () => {
+  for (const [dit, ecrit] of [
+    ['le foie et homogène', 'le foie est homogène'],
+    ['Le foie et de taille normale', 'Le foie est de taille normale'],
+    ['la vésicule biliaire et alithiasique', 'la vésicule biliaire est alithiasique'],
+    ['le rein droit et dilaté', 'le rein droit est dilaté'],
+    ['le foie et légèrement augmenté de volume', 'le foie est légèrement augmenté de volume'],
+    ['Elle et hypodense', 'Elle est hypodense'],
+    ['la sonde et en place', 'la sonde est en place'],
+  ]) assert.equal(T.corriger(dit), ecrit, dit);
+  for (const s of ['le foie et la rate sont normaux', 'lésion hypodense et homogène', 'un kyste et une masse',
+    'le kyste et épaississement pariétal', 'les reins et la rate', 'le foie et les voies biliaires', 'hypodense et hétérogène'])
+    assert.equal(T.corriger(s), s, `conjonction conservée : ${s}`);
+});
+
+test('« et » → « est » aussi quand la phrase est dictée en deux fois (pause après « et »)', () => {
+  const T2 = (s, avant) => T.assembler(T.analyser(s).filter(a => T.INSERTION.has(a.type)), avant);
+  let r = T2('homogène', 'Le foie et');
+  assert.equal('Le foie et'.slice(0, 'Le foie et'.length - r.retirer) + r.texte, 'Le foie est homogène');
+  r = T2('de taille normale', 'Rapport. Le foie et ');
+  assert.equal('Rapport. Le foie et '.slice(0, 20 - r.retirer) + r.texte, 'Rapport. Le foie est de taille normale');
+  r = T2('la rate', 'Le foie et');
+  assert.equal('Le foie et'.slice(0, 10 - r.retirer) + r.texte, 'Le foie et la rate');
+  assert.equal(T.corriger("Le foie et d'échostructure homogène"), "Le foie est d'échostructure homogène");
+  assert.equal(T.corriger("le foie et d'aspect normal"), "le foie est d'aspect normal");
+});
+
+test('« contour régulier » → « contours réguliers »', () => {
+  assert.equal(T.corriger('de contour régulier'), 'de contours réguliers');
+  assert.equal(T.corriger('Contours régulier et nets'), 'Contours réguliers et nets');
+  assert.equal(T.corriger('contour irrégulier'), 'contours irréguliers');
+  assert.equal(T.corriger('contour microbuler'), 'contours microlobulés');
+  assert.equal(T.corriger('le foie et de contour régulier'), 'le foie est de contours réguliers');
+});
+
+test('lexique : oreille, rachis, neuro (erreurs signalées par l\'auteur)', () => {
+  for (const [dit, ecrit] of [
+    ['lésion lithique', 'lésion lytique'], ['corticale conserver', 'corticale conservée'],
+    ['arthrose interapophisaire', 'arthrose interapophysaire'], ['dilatation prix ventriculaire', 'dilatation tri-ventriculaire'],
+    ["processus c'est tendant au cavum", "processus s'étendant au cavum"], ['muscle pérégoïdien latéral', 'muscle ptérygoïdien latéral'],
+    ["comblement de l'épithimpan", "comblement de l'épitympan"], ['extension atiko entrailles', 'extension attico-antral'],
+    ['extension aTICO entre elles', 'extension attico-antral'], ['tête du Mali us', 'tête du malleus'], ['tête du malleux', 'tête du malleus'],
+    ["luxation un cul d'eau malléaire", 'luxation incudo-malléaire'], ['érosion du un CUS', 'érosion du incus'],
+    ['lésion aussi fiente', 'lésion ossifiante'], ['hypotensité prestapédienne', 'hypodensité pré-stapédienne'],
+    ['autospongiose fenestrale', 'otospongiose fenestrale'], ['Autospongiose.', 'Otospongiose.'],
+  ]) assert.equal(T.corriger(dit), ecrit, dit);
+});
