@@ -37,7 +37,43 @@ def etiquette(s):
             f'<text font-size="{t}">{tsp}</text></g>')
 
 
+def colonnes(D):
+    """Disposition « colonnes » : cliché au centre, noms dans deux colonnes noires de part et d'autre,
+    reliés par un trait de rappel (crochet, coude, trait) à un point posé sur la structure."""
+    im = D['image']; M = D['marge']; W, H = im['largeur'], im['hauteur']; t = D.get('taille', 26)
+    VW = W + 2 * M
+    out = [f'<svg class="pl-calque pl-colonnes" viewBox="0 0 {VW} {H}" role="group" aria-label="Légendes du cliché">']
+    for cote in ('g', 'd'):
+        ss = sorted([s for s in D['structures'] if s['cote'] == cote], key=lambda s: s['point'][1])
+        n = len(ss); pas = (H - 80) / max(n, 1)
+        for i, s in enumerate(ss):
+            ly = 40 + pas * (i + .5); lignes = s.get('lignes') or [s['nom']]
+            L = t * INTERLIGNE; y0 = -(len(lignes) - 1) * L / 2 + t * .36
+            px, py = s['point'][0] + M, s['point'][1]
+            xb = M - 26 if cote == 'g' else M + W + 26          # crochet
+            xc = xb + (22 if cote == 'g' else -22)              # coude
+            xt = xb - 12 if cote == 'g' else xb + 12            # texte
+            hb = len(lignes) * L / 2 + 6
+            d = f'M{xb} {ly:.1f} L{xc} {ly:.1f} L{px:.1f} {py:.1f}'
+            contours = ''.join(f'<path class="pl-contour" d="{lisse([(x + M, y) for x, y in c], s.get("ferme", False))}"/>' for c in s.get('contours', []))
+            tsp = ''.join(f'<tspan x="0" y="{y0 + k * L:.1f}">{html.escape(l)}</tspan>' for k, l in enumerate(lignes))
+            out.append(f'  <g class="pl-s" data-s="{s["id"]}" data-n="{s["n"]}" style="--c: {s["c"]}">')
+            out.append(f'    <g class="pl-traits">{contours}<path class="pl-halo" d="{d}"/><path class="pl-trait" d="{d}"/>'
+                       f'<path class="pl-crochet" d="M{xb} {ly - hb:.1f} L{xb} {ly + hb:.1f}"/>'
+                       f'<circle class="pl-point" cx="{px:.1f}" cy="{py:.1f}" r="7"/></g>')
+            out.append(f'    <g class="pl-etiq pl-etiq-{cote}" transform="translate({xt} {ly:.1f})"><rect x="0" y="0" width="0" height="0"/>'
+                       f'<text font-size="{t}">{tsp}</text></g>')
+            xn = M / 2 if cote == 'g' else M + W + M / 2
+            out.append(f'    <g class="pl-num" tabindex="0" role="button" aria-label="Structure {s["n"]}" transform="translate({xn:.0f} {ly:.1f})">'
+                       f'<g class="pl-num-in"><circle r="19"/><text y="7.5">{s["n"]}</text></g></g>')
+            out.append('  </g>')
+    out.append('</svg>')
+    return '\n'.join(out)
+
+
 def svg(D):
+    if D.get('disposition') == 'colonnes':
+        return colonnes(D)
     im = D['image']; out = [f'<svg class="pl-calque" viewBox="0 0 {im["largeur"]} {im["hauteur"]}" role="group" aria-label="Légendes du cliché">']
     for s in D['structures']:
         out.append(f'  <g class="pl-s" data-s="{s["id"]}" data-n="{s["n"]}" style="--c: {s["c"]}">')

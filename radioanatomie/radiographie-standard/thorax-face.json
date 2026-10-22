@@ -1,0 +1,360 @@
+{
+ "titre": "Radiographie thoracique de face",
+ "sousTitre": "Incidence postéro-antérieure, debout, en inspiration",
+ "disposition": "colonnes",
+ "marge": 400,
+ "taille": 32,
+ "image": {
+  "fichier": "images/thorax-face.jpg",
+  "largeur": 1000,
+  "hauteur": 1058
+ },
+ "origine": "Cliché : V. Udodov, « X-ray images of the respiratory system in the frontal and lateral projections (normal) », Zenodo 2026, doi:10.5281/zenodo.18241127, licence CC BY 4.0 (cliché 9, recadré et réduit). Points et légendes posés par RadiologicHub.",
+ "structures": [
+  {
+   "id": "trachee",
+   "nom": "Trachée",
+   "lignes": [
+    "Trachée"
+   ],
+   "c": "#7dd3fc",
+   "t": "#0369a1",
+   "cote": "g",
+   "point": [
+    500,
+    250
+   ],
+   "n": 1
+  },
+  {
+   "id": "apex-droit",
+   "nom": "Apex pulmonaire droit",
+   "lignes": [
+    "Apex pulmonaire",
+    "droit"
+   ],
+   "c": "#f472b6",
+   "t": "#be185d",
+   "cote": "g",
+   "point": [
+    330,
+    150
+   ],
+   "n": 2
+  },
+  {
+   "id": "clavicule-droite",
+   "nom": "Clavicule droite",
+   "lignes": [
+    "Clavicule",
+    "droite"
+   ],
+   "c": "#fcd34d",
+   "t": "#a16207",
+   "cote": "g",
+   "point": [
+    230,
+    108
+   ],
+   "n": 3
+  },
+  {
+   "id": "vcs",
+   "nom": "Veine cave supérieure",
+   "lignes": [
+    "Veine cave",
+    "supérieure"
+   ],
+   "c": "#c4b5fd",
+   "t": "#6d28d9",
+   "cote": "g",
+   "point": [
+    412,
+    330
+   ],
+   "n": 4
+  },
+  {
+   "id": "bronche-droite",
+   "nom": "Bronche principale droite",
+   "lignes": [
+    "Bronche principale",
+    "droite"
+   ],
+   "c": "#7dd3fc",
+   "t": "#0369a1",
+   "cote": "g",
+   "point": [
+    468,
+    432
+   ],
+   "n": 5
+  },
+  {
+   "id": "hile-droit",
+   "nom": "Hile droit",
+   "lignes": [
+    "Hile droit"
+   ],
+   "c": "#f472b6",
+   "t": "#be185d",
+   "cote": "g",
+   "point": [
+    385,
+    480
+   ],
+   "n": 6
+  },
+  {
+   "id": "poumon-droit",
+   "nom": "Poumon droit",
+   "lignes": [
+    "Poumon droit"
+   ],
+   "c": "#f472b6",
+   "t": "#be185d",
+   "cote": "g",
+   "point": [
+    240,
+    520
+   ],
+   "n": 7
+  },
+  {
+   "id": "atrium-droit",
+   "nom": "Atrium droit (arc inférieur droit)",
+   "lignes": [
+    "Atrium droit"
+   ],
+   "c": "#f87171",
+   "t": "#b91c1c",
+   "cote": "g",
+   "point": [
+    402,
+    650
+   ],
+   "n": 8
+  },
+  {
+   "id": "angle-cp-droit",
+   "nom": "Angle cardiophrénique droit",
+   "lignes": [
+    "Angle cardio-",
+    "phrénique droit"
+   ],
+   "c": "#a5f3fc",
+   "t": "#0e7490",
+   "cote": "g",
+   "point": [
+    395,
+    772
+   ],
+   "n": 9
+  },
+  {
+   "id": "coupole-droite",
+   "nom": "Coupole diaphragmatique droite",
+   "lignes": [
+    "Coupole diaphrag-",
+    "matique droite"
+   ],
+   "c": "#fb923c",
+   "t": "#c2410c",
+   "cote": "g",
+   "point": [
+    250,
+    783
+   ],
+   "n": 10
+  },
+  {
+   "id": "cds-droit",
+   "nom": "Cul-de-sac costodiaphragmatique droit",
+   "lignes": [
+    "Cul-de-sac costo-",
+    "diaphragm. droit"
+   ],
+   "c": "#a5f3fc",
+   "t": "#0e7490",
+   "cote": "g",
+   "point": [
+    92,
+    872
+   ],
+   "n": 11
+  },
+  {
+   "id": "apex-gauche",
+   "nom": "Apex pulmonaire gauche",
+   "lignes": [
+    "Apex pulmonaire",
+    "gauche"
+   ],
+   "c": "#f472b6",
+   "t": "#be185d",
+   "cote": "d",
+   "point": [
+    640,
+    145
+   ],
+   "n": 12
+  },
+  {
+   "id": "clavicule-gauche",
+   "nom": "Clavicule gauche",
+   "lignes": [
+    "Clavicule",
+    "gauche"
+   ],
+   "c": "#fcd34d",
+   "t": "#a16207",
+   "cote": "d",
+   "point": [
+    770,
+    108
+   ],
+   "n": 13
+  },
+  {
+   "id": "bouton-aortique",
+   "nom": "Bouton aortique",
+   "lignes": [
+    "Bouton",
+    "aortique"
+   ],
+   "c": "#f87171",
+   "t": "#b91c1c",
+   "cote": "d",
+   "point": [
+    572,
+    345
+   ],
+   "n": 14
+  },
+  {
+   "id": "carene",
+   "nom": "Carène",
+   "lignes": [
+    "Carène"
+   ],
+   "c": "#7dd3fc",
+   "t": "#0369a1",
+   "cote": "d",
+   "point": [
+    482,
+    410
+   ],
+   "n": 15
+  },
+  {
+   "id": "bronche-gauche",
+   "nom": "Bronche principale gauche",
+   "lignes": [
+    "Bronche principale",
+    "gauche"
+   ],
+   "c": "#7dd3fc",
+   "t": "#0369a1",
+   "cote": "d",
+   "point": [
+    535,
+    450
+   ],
+   "n": 16
+  },
+  {
+   "id": "hile-gauche",
+   "nom": "Hile gauche",
+   "lignes": [
+    "Hile gauche"
+   ],
+   "c": "#f472b6",
+   "t": "#be185d",
+   "cote": "d",
+   "point": [
+    625,
+    472
+   ],
+   "n": 17
+  },
+  {
+   "id": "poumon-gauche",
+   "nom": "Poumon gauche",
+   "lignes": [
+    "Poumon gauche"
+   ],
+   "c": "#f472b6",
+   "t": "#be185d",
+   "cote": "d",
+   "point": [
+    805,
+    525
+   ],
+   "n": 18
+  },
+  {
+   "id": "ventricule-gauche",
+   "nom": "Ventricule gauche (arc inférieur gauche)",
+   "lignes": [
+    "Ventricule",
+    "gauche"
+   ],
+   "c": "#f87171",
+   "t": "#b91c1c",
+   "cote": "d",
+   "point": [
+    715,
+    700
+   ],
+   "n": 19
+  },
+  {
+   "id": "coupole-gauche",
+   "nom": "Coupole diaphragmatique gauche",
+   "lignes": [
+    "Coupole diaphrag-",
+    "matique gauche"
+   ],
+   "c": "#fb923c",
+   "t": "#c2410c",
+   "cote": "d",
+   "point": [
+    800,
+    812
+   ],
+   "n": 20
+  },
+  {
+   "id": "poche-air",
+   "nom": "Poche à air gastrique",
+   "lignes": [
+    "Poche à air",
+    "gastrique"
+   ],
+   "c": "#86efac",
+   "t": "#15803d",
+   "cote": "d",
+   "point": [
+    655,
+    950
+   ],
+   "n": 21
+  },
+  {
+   "id": "cds-gauche",
+   "nom": "Cul-de-sac costodiaphragmatique gauche",
+   "lignes": [
+    "Cul-de-sac costo-",
+    "diaphragm. gauche"
+   ],
+   "c": "#a5f3fc",
+   "t": "#0e7490",
+   "cote": "d",
+   "point": [
+    930,
+    893
+   ],
+   "n": 22
+  }
+ ]
+}
