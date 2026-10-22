@@ -42,13 +42,18 @@ def attr(s):
     return html.escape(re.sub(r'<[^>]+>', '', s), quote=True)
 
 
+def insecables(fr):
+    """Typographie française : espace insécable avant ? ! : ; (le signe ne passe jamais seul à la ligne)."""
+    return re.sub(r' ([?!:;])', '\u00a0\\1', fr)
+
+
 def t(d, tag='span', cls='', extra=''):
     """Texte bilingue : un élément par langue (le français d'abord). Texte identique : un seul élément."""
     if d is None:
         return ''
     if isinstance(d, str):
         d = {'fr': d, 'en': d}
-    fr, en = d['fr'], d['en']
+    fr, en = insecables(d['fr']), d['en']
     if fr == en:
         return f'<{tag} class="{cls}"{extra}>{fr}</{tag}>' if (cls or tag != 'span' or extra) else fr
     c = f'{cls} ' if cls else ''
@@ -58,7 +63,7 @@ def t(d, tag='span', cls='', extra=''):
 def paragraphes(d, cls=''):
     """Plusieurs paragraphes (séparés par </p><p> dans le JSON) : tous les français, puis tous les anglais."""
     c = f'{cls} ' if cls else ''
-    fr = ''.join(f'<p class="{c}t-fr">{p}</p>' for p in d['fr'].split('</p><p>'))
+    fr = ''.join(f'<p class="{c}t-fr">{p}</p>' for p in insecables(d['fr']).split('</p><p>'))
     en = ''.join(f'<p class="{c}t-en" lang="en">{p}</p>' for p in d['en'].split('</p><p>'))
     return fr + en
 
