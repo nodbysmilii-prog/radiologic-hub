@@ -1,0 +1,66 @@
+{
+  "Name": "RadiologicHub - Espace DICOM",
+
+  "StorageDirectory": "/var/lib/orthanc/db",
+  "StorageCompression": false,
+  "MaximumStorageSize": 0,
+  "MaximumPatientCount": 0,
+  "OverwriteInstances": false,
+  "StableAge": 30,
+  "SaveJobs": false,
+  "ConcurrentJobs": 2,
+  "DeidentifyLogs": true,
+  "StorageAccessOnFind": "Never",
+  "LimitFindResults": 200,
+  "LimitFindInstances": 200,
+
+  "RemoteAccessAllowed": true,
+  "AuthenticationEnabled": true,
+  "RegisteredUsers": {
+    "${ORTHANC_UTILISATEUR}": "${ORTHANC_MOT_DE_PASSE}"
+  },
+  "HttpPort": 8042,
+  "HttpServerEnabled": true,
+  "HttpCompressionEnabled": false,
+  "HttpDescribeErrors": false,
+  "HttpThreadsCount": 50,
+  "HttpTimeout": 120,
+  "KeepAlive": true,
+  "TcpNoDelay": true,
+  "WebDavEnabled": false,
+  "ExecuteLuaEnabled": false,
+  "RestApiWriteToFileSystemEnabled": false,
+  "OrthancExplorerEnabled": false,
+
+  "DicomServerEnabled": false,
+
+  "IngestTranscoding": "1.2.840.10008.1.2.4.80",
+  "IngestTranscodingOfUncompressed": true,
+  "IngestTranscodingOfCompressed": false,
+
+  "PostgreSQL": {
+    "EnableIndex": true,
+    "EnableStorage": false,
+    "Host": "orthanc-db",
+    "Port": 5432,
+    "Database": "orthanc",
+    "Username": "orthanc",
+    "Password": "${ORTHANC_DB_MOT_DE_PASSE}",
+    "EnableSsl": false,
+    "Lock": false,
+    "IndexConnectionsCount": 5
+  },
+
+  "DicomWeb": {
+    "Enable": true,
+    "Root": "/dicom-web/",
+    "PublicRoot": "/dicomweb/",
+    "EnableWado": false,
+    "Ssl": true,
+    "StudiesMetadata": "Full",
+    "SeriesMetadata": "Full",
+    "EnableMetadataCache": true,
+    "MetadataWorkerThreadsCount": 4,
+    "Servers": {}
+  }
+}

@@ -1,0 +1,4 @@
+OHIF Viewer @ohif/app 3.13.12 (licence MIT, voir LICENSE)
+sha512-dFVGcssmFaxK+FvEUwsV+bt69SNn8mARj1NJbeU++hOrdXgw4qpEGV//nD3LGvtj5vcNbMK+Tr34H5EGdqcmGQ==
+Correctifs : chemin-public : 8 fichiers ; police : 5 adresse(s) ; blob-meme-origine : 1
+Préparé par espace-dicom/visionneuse/installer-ohif.js : ne pas modifier à la main.

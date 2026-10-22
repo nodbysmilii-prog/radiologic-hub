@@ -4,10 +4,12 @@
   "description": "Site RadiologicHub (statique) — tests des règles de calcul, des modules Remplacements, Communauté et Bibliothèque et de leur schéma Supabase.",
   "scripts": {
     "test": "node --test tests/*.test.js",
-    "test:sql": "node tests/sql/rls.js && node tests/sql/rls-reseau.js && node tests/sql/rls-bibliotheque.js && node tests/sql/rls-cours.js && node tests/sql/droits.js",
+    "test:sql": "node tests/sql/rls.js && node tests/sql/rls-reseau.js && node tests/sql/rls-bibliotheque.js && node tests/sql/rls-cours.js && node tests/sql/rls-dicom.js && node tests/sql/droits.js",
     "test:integration": "node tests/sql/integration.js",
     "backend:preparer": "node scripts/preparer-backend.js",
     "test:bib-reel": "node tests/bibliotheque-reel.js",
-    "test:navigateur": "node tests/navigateur/refonte.js"
+    "test:navigateur": "node tests/navigateur/refonte.js",
+    "test:dicom": "node espace-dicom/tests/integration.js",
+    "visionneuse": "node espace-dicom/visionneuse/installer-ohif.js"
   }
 }

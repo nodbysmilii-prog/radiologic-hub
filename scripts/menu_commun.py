@@ -42,7 +42,7 @@ COURANTE = [
 
 PIED = [
     ('Au quotidien', [('comptes-rendus.html', 'Comptes rendus'), ('suivi-oncologique.html', 'Suivi oncologique'),
-                      ('fiches-rapides.html', 'Fiches rapides')]),
+                      ('fiches-rapides.html', 'Fiches rapides'), ('espace-dicom.html', 'Espace DICOM')]),
     ('Apprendre', [('radioanatomie/index.html', 'Radioanatomie'), ('cas/index.html', 'Cas cliniques'),
                    ('index.html#cas-du-jour', 'Cas du jour'), ('bibliotheque.html', 'Bibliothèque')]),
     ('Réseau', [('communaute.html', 'Communauté'), ('remplacements.html', 'Remplacements')]),
