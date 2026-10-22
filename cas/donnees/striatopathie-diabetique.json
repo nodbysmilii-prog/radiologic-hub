@@ -19,8 +19,8 @@
   "en": "Involuntary, jerky movements in a diabetic patient"
  },
  "accroche": {
-  "fr": "Homme de 56 ans, <span class='hl-navy'>diabète de type 2 mal équilibré</span>, mouvements involontaires et brusques du bras et de la jambe droits. Une IRM, une TDM : quel est votre diagnostic ?",
-  "en": "A 56-year-old man with <span class='hl-navy'>poorly controlled type 2 diabetes</span> and involuntary, jerky movements of his right arm and leg. One MRI, one CT: what is your diagnosis?"
+  "fr": "Homme de 56 ans, <span class='hl-navy'>diabète de type 2 mal équilibré</span>, mouvements involontaires et brusques du bras et de la jambe gauches. Une IRM, une TDM : quel est votre diagnostic ?",
+  "en": "A 56-year-old man with <span class='hl-navy'>poorly controlled type 2 diabetes</span> and involuntary, jerky movements of his left arm and leg. One MRI, one CT: what is your diagnosis?"
  },
  "mots": [
   {
@@ -48,8 +48,8 @@
    "blocs": [
     {
      "type": "recit",
-     "fr": "Homme de 56 ans aux antécédents de <mark class='k-key'>diabète de type 2 mal équilibré</mark>, qui consulte pour des <mark class='k-signo'>mouvements involontaires et brusques</mark>, d'apparition soudaine, du bras et de la jambe droits.",
-     "en": "A 56-year-old male with a history of <mark class='k-key'>poorly controlled type 2 diabetes mellitus</mark> presents with sudden-onset, <mark class='k-signo'>involuntary and jerky movements</mark> of his right arm and leg."
+     "fr": "Homme de 56 ans aux antécédents de <mark class='k-key'>diabète de type 2 mal équilibré</mark>, qui consulte pour des <mark class='k-signo'>mouvements involontaires et brusques</mark>, d'apparition soudaine, du bras et de la jambe gauches.",
+     "en": "A 56-year-old male with a history of <mark class='k-key'>poorly controlled type 2 diabetes mellitus</mark> presents with sudden-onset, <mark class='k-signo'>involuntary and jerky movements</mark> of his left arm and leg."
     }
    ]
   },
