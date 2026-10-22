@@ -229,3 +229,43 @@ test('vocabulaire : pas de fausse correction', () => {
   assert.equal(T.corriger('eu tirads 4'), 'EU-TIRADS 4');
   assert.equal(T.corriger('danse'), 'danse');
 });
+
+test('lexique : JSON valide (modifiable sans toucher au code)', () => {
+  const src = require('fs').readFileSync(require('path').join(__dirname, '../dictee/lexique.js'), 'utf8');
+  const json = src.slice(src.indexOf('{', src.indexOf('this,')), src.lastIndexOf('}') + 1);
+  const L = JSON.parse(json);
+  for (const [cat, liste] of Object.entries(L.categories))
+    for (const e of liste) assert.ok(e.terme && Array.isArray(e.erreurs) && e.erreurs.length, `${cat} : ${JSON.stringify(e)}`);
+});
+
+test('lexique : erreurs de transcription corrigées selon le contexte', () => {
+  assert.equal(T.corriger('hyper cent nal T2'), 'hypersignal T2');
+  assert.equal(T.corriger('ipo signal T1'), 'hyposignal T1');
+  assert.equal(T.corriger('hyper signal et hypo-signal'), 'hypersignal et hyposignal', 'toujours en un mot');
+  assert.equal(T.corriger('bronche l\'auber supérieur gauche'), 'bronche lobaire supérieur gauche');
+  assert.equal(T.corriger('micronodules sans trop lobulaire brancher'), 'micronodules centrolobulaire branché');
+  assert.equal(T.corriger('rehaussement de la grammaire'), 'rehaussement de la dure-mère');
+  assert.equal(T.corriger('la durmer'), 'la dure-mère');
+  assert.equal(T.corriger('la dure mère'), 'la dure-mère', 'toujours avec un trait d\'union');
+  assert.equal(T.corriger('épaississement dur mais rien'), 'épaississement dure-mérien');
+  assert.equal(T.corriger('contours microbuler'), 'contours microlobulé');
+  assert.equal(T.corriger('de taille de taille normale'), 'le foie est de taille normale');
+  assert.equal(T.corriger('de taille normale'), 'de taille normale', '« de taille » légitime conservé');
+  assert.equal(T.corriger('l\'aube supérieur droit'), 'lobe supérieur droit');
+  assert.equal(T.corriger('lever de l\'aube'), 'lever de l\'aube', 'contexte absent : rien');
+});
+
+test('« et » → « est » seulement quand la grammaire l\'impose', () => {
+  for (const [dit, ecrit] of [
+    ['le foie et homogène', 'le foie est homogène'],
+    ['Le foie et de taille normale', 'Le foie est de taille normale'],
+    ['la vésicule biliaire et alithiasique', 'la vésicule biliaire est alithiasique'],
+    ['le rein droit et dilaté', 'le rein droit est dilaté'],
+    ['le foie et légèrement augmenté de volume', 'le foie est légèrement augmenté de volume'],
+    ['Elle et hypodense', 'Elle est hypodense'],
+    ['la sonde et en place', 'la sonde est en place'],
+  ]) assert.equal(T.corriger(dit), ecrit, dit);
+  for (const s of ['le foie et la rate sont normaux', 'lésion hypodense et homogène', 'un kyste et une masse',
+    'le kyste et épaississement pariétal', 'les reins et la rate', 'le foie et les voies biliaires', 'hypodense et hétérogène'])
+    assert.equal(T.corriger(s), s, `conjonction conservée : ${s}`);
+});

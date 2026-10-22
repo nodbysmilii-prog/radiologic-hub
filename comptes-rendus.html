@@ -147,7 +147,7 @@
               <li><b>« insérer modèle scanner thoracique »</b> : examen complet (vide → chargé ; sinon « remplacer », « insérer » ou « annuler ») ; <b>« insérer la phrase foie normal »</b> : inséré au curseur</li>
               <li><b>« arrêter la dictée »</b></li>
             </ul>
-            <p class="dt-panel-note">Corrections automatiques : « pi rads » → PI-RADS, « 12 virgule 5 » → 12,5, « 12 sur 8 millimètres » → 12 x 8 mm, « 12 sur 8 sur 6 » → 12 x 8 x 6 mm, « 4 sur 5 » → 4/5… (dictionnaire : <code>dictee/corrections.js</code>). « Point » reste un mot dans « point de départ », « point d'appel »… Le texte dicté reste modifiable au clavier à tout moment.</p>
+            <p class="dt-panel-note">Corrections automatiques : « pi rads » → PI-RADS, « 12 virgule 5 » → 12,5, « 12 sur 8 millimètres » → 12 x 8 mm, « 12 sur 8 sur 6 » → 12 x 8 x 6 mm, « 4 sur 5 » → 4/5… , « hyper signal » → hypersignal, « la grammaire » → la dure-mère, « le foie et homogène » → le foie est homogène (dictionnaire : <code>dictee/corrections.js</code> ; erreurs de transcription : <code>dictee/lexique.js</code>, à enrichir). « Point » reste un mot dans « point de départ », « point d'appel »… Le texte dicté reste modifiable au clavier à tout moment.</p>
           </div>
           <div class="dt-panel" id="dt-reglages" hidden>
             <p class="dt-panel-title">Réglages de la dictée</p>
@@ -391,8 +391,9 @@
   <script src="regles/bosniak-cr.js?v=20261013050000"></script>
   <script src="cr-tools.js?v=20261022235000"></script>
   <script src="cr.js?v=20261012200000"></script>
-  <script src="dictee/corrections.js?v=20261012150000"></script>
-  <script src="dictee/traitement.js?v=20261012150000"></script>
+  <script src="dictee/corrections.js?v=20261022240000"></script>
+  <script src="dictee/lexique.js?v=20261022240000"></script>
+  <script src="dictee/traitement.js?v=20261022240000"></script>
   <script src="dictee/moteurs.js?v=20261012150000"></script>
   <script src="dictee/dictee.js?v=20261012150000"></script>
 </body>
