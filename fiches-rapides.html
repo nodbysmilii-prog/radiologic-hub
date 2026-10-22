@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261017003500">
+  <link rel="stylesheet" href="styles.css?v=20261022235000">
   <link rel="stylesheet" href="fiche.css?v=20261012150000">
 </head>
 <body>
@@ -21,15 +21,13 @@
         <span class="brand-name">Radiologic<br>Hub</span>
       </a>
       <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
-        <a href="index.html#masterclass">Masterclass</a>
+        <a href="comptes-rendus.html">Comptes rendus</a>
         <a href="fiches-rapides.html" class="is-current">Fiches rapides</a>
         <a href="radioanatomie/index.html">Radioanatomie</a>
         <a href="bibliotheque.html">Bibliothèque</a>
-        <a href="comptes-rendus.html">Comptes rendus</a>
-        <a href="remplacements.html">Remplacements</a>
         <a href="communaute.html">Communauté</a>
-        <a href="index.html#tarifs">Tarifs</a>
-        <a href="index.html#inscription" class="btn btn-ink btn-sm">S'inscrire</a>
+        <a href="remplacements.html">Remplacements</a>
+        <a href="index.html#masterclass" class="nav-masterclass">Masterclass</a>
       </nav>
       <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
         <span></span><span></span><span></span>
@@ -132,6 +130,34 @@
             <ul class="fiche-tags"><li>Échographie</li><li>3D</li><li>Nerf ulnaire</li></ul>
             <span class="fiche-open">Ouvrir le cours →</span>
           </a>
+          <a class="fiche-card" data-spe="neuro" href="fiches/avc-ischemique.html" style="--c: var(--blue)">
+            <span class="fiche-card-badge">Cerveau</span>
+            <h2>Imagerie de l'AVC ischémique</h2>
+            <p>Étiologies, moyens d'exploration, démarche devant un AVC aigu, <span class="hl-red">sémiologie par stade</span> (suraigu, aigu, subaigu, chronique), formes topographiques et évolutives.</p>
+            <ul class="fiche-tags"><li>IRM</li><li>TDM</li><li>Perfusion</li></ul>
+            <span class="fiche-open">Ouvrir la fiche →</span>
+          </a>
+          <a class="fiche-card" data-spe="neuro" href="fiches/avc-hemorragique.html" style="--c: var(--crimson)">
+            <span class="fiche-card-badge">Cerveau</span>
+            <h2>AVC hémorragique : l'imagerie</h2>
+            <p>Diagnostic positif, <span class="hl-red">datation TDM-IRM de l'hématome</span>, protocoles et les 8 étiologies. Avec un quiz : remplir le tableau de datation, corrigé case par case.</p>
+            <ul class="fiche-tags"><li>TDM</li><li>IRM</li><li>Datation</li></ul>
+            <span class="fiche-open">Ouvrir la fiche →</span>
+          </a>
+          <a class="fiche-card" data-spe="neuro" href="fiches/sclerose-en-plaques.html" style="--c: var(--teal)">
+            <span class="fiche-card-badge">Substance blanche</span>
+            <h2>Sclérose en plaques : l'imagerie</h2>
+            <p>Où chercher les plaques (schéma en couleur), plaques aiguës et anciennes, <span class="hl-red">critères de McDonald 2017</span> avec vérificateur, protocole, diffusion et pronostic.</p>
+            <ul class="fiche-tags"><li>IRM</li><li>McDonald</li><li>Démyélinisation</li></ul>
+            <span class="fiche-open">Ouvrir la fiche →</span>
+          </a>
+          <a class="fiche-card" data-spe="thorax" href="fiches/amylose-thoracique.html" style="--c: var(--blue)">
+            <span class="fiche-card-badge">Poumon &amp; médiastin</span>
+            <h2>Amylose thoracique : une affection bénigne mais déroutante</h2>
+            <p>Les aspects en imagerie comprennent des atteintes trachéobronchiques, parenchymateuses, médiastinales, ganglionnaires et pleurales, <span class="hl-red">simulant fréquemment des lésions malignes</span>.</p>
+            <ul class="fiche-tags"><li>TDM</li><li>Voies aériennes</li><li>Plèvre</li></ul>
+            <span class="fiche-open">Ouvrir la fiche →</span>
+          </a>
           <a class="fiche-card" data-spe="neuro" href="radioanatomie/territoires-arteriels.html" style="--c: var(--purple)">
             <span class="fiche-card-badge">Radioanatomie · IRM</span>
             <h2>Territoires artériels du cerveau</h2>
@@ -152,26 +178,45 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <a href="index.html" class="brand">
-        <img src="assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
-        <span class="brand-name">Radiologic<br>Hub</span>
-      </a>
+      <div class="footer-brand">
+        <a href="index.html" class="brand">
+          <img src="assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+          <span class="brand-name">Radiologic<br>Hub</span>
+        </a>
+        <p class="footer-tagline">Outils, ressources et formation pour les radiologues et les résidents.</p>
+      </div>
       <nav aria-label="Liens de pied de page">
-        <a href="index.html#masterclass">Masterclass</a>
-        <a href="fiches-rapides.html">Fiches rapides</a>
-        <a href="radioanatomie/index.html">Radioanatomie</a>
-        <a href="bibliotheque.html">Bibliothèque</a>
-        <a href="comptes-rendus.html">Comptes rendus</a>
-        <a href="communaute.html">Communauté</a>
-        <a href="remplacements.html">Remplacements</a>
-        <a href="index.html#cas-du-jour">Cas du jour</a>
-        <a href="mentions-legales.html">Mentions légales</a>
-        <a href="index.html#inscription">Contact</a>
+        <div class="footer-col">
+          <p class="footer-titre">Au quotidien</p>
+          <a href="comptes-rendus.html">Comptes rendus</a>
+          <a href="suivi-oncologique.html">Suivi oncologique</a>
+          <a href="fiches-rapides.html">Fiches rapides</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Apprendre</p>
+          <a href="radioanatomie/index.html">Radioanatomie</a>
+          <a href="cas/index.html">Cas cliniques</a>
+          <a href="index.html#cas-du-jour">Cas du jour</a>
+          <a href="bibliotheque.html">Bibliothèque</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Réseau</p>
+          <a href="communaute.html">Communauté</a>
+          <a href="remplacements.html">Remplacements</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Masterclass</p>
+          <a href="index.html#masterclass">Programme</a>
+          <a href="index.html#tarifs">Tarifs</a>
+          <a href="index.html#inscription">S'inscrire à une masterclass</a>
+        </div>
       </nav>
-      <p class="copyright">© <span id="year"></span> RadiologicHub · Formation en radiologie d'urgence</p>
+      <p class="copyright"><span>© <span id="year"></span> RadiologicHub · Outils, ressources et formation en radiologie</span><span class="copyright-liens"><a href="mentions-legales.html">Mentions légales</a><a href="index.html#inscription">Contact</a></span></p>
     </div>
   </footer>
 
-  <script src="fiche.js?v=20261012150000"></script>
+  <script src="navigation.js?v=20261022235000"></script>
+
+  <script src="fiche.js?v=20261022235000"></script>
 </body>
 </html>

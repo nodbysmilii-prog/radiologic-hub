@@ -1,0 +1,105 @@
+{
+ "cle": "fines-624",
+ "nom_fr": "Vermis, lobule IX (uvule)",
+ "nom_en": "Cbm_Vermis_IX",
+ "cote": "médian",
+ "categorie": "Cervelet",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "CerebNet",
+  "nom_outil": "Cbm_Vermis_IX",
+  "identifiant": 624
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -0.5,
+   -54.3,
+   -32.8
+  ],
+  "mni_icbm2009c_mm": [
+   -0.5,
+   -56.70000076293945,
+   -38.099998474121094
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -0.5,
+    -54.3,
+    -34.9
+   ],
+   "mni_icbm2009c_mm": [
+    -0.6000000238418579,
+    -56.900001525878906,
+    -40.5
+   ],
+   "coupe": "z = -34.9 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -0.5,
+    -57.1,
+    -32.8
+   ],
+   "mni_icbm2009c_mm": [
+    -0.800000011920929,
+    -59.29999923706055,
+    -38.400001525878906
+   ],
+   "coupe": "y = -57.1 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -1.2,
+    -54.3,
+    -32.8
+   ],
+   "mni_icbm2009c_mm": [
+    -1.2000000476837158,
+    -56.599998474121094,
+    -38.0
+   ],
+   "coupe": "x = -1.2 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 71,
+     "nom": "Vermal lobules VIII-X (L)"
+    },
+    {
+     "id": 20,
+     "nom": "Vermal lobules VIII-X (R)"
+    }
+   ],
+   "mesure": 0.847,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.943,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.883,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.893,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.44"
+  }
+ ],
+ "remarques": [
+  "Étiquette CerebrA peu fiable selon ses auteurs (kappa 0.44) : la discordance ne suffit pas à conclure."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "élevée"
+}

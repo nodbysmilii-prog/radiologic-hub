@@ -1,0 +1,73 @@
+{
+ "cle": "sillons-61",
+ "nom_fr": "Sillon occipito-temporal droit",
+ "nom_en": "Occipitotemporal sulcus",
+ "cote": "droit",
+ "categorie": "Sillons",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (limites DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   40.1,
+   -38.2,
+   -27.9
+  ],
+  "mni_icbm2009c_mm": [
+   43.900001525878906,
+   -39.099998474121094,
+   -31.299999237060547
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    40.1,
+    -38.2,
+    -16.7
+   ],
+   "mni_icbm2009c_mm": [
+    46.79999923706055,
+    -37.20000076293945,
+    -21.899999618530273
+   ],
+   "coupe": "z = -16.7 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    40.1,
+    -43.8,
+    -27.9
+   ],
+   "mni_icbm2009c_mm": [
+    44.400001525878906,
+    -43.5,
+    -31.5
+   ],
+   "coupe": "y = -43.8 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    38.7,
+    -38.2,
+    -27.9
+   ],
+   "mni_icbm2009c_mm": [
+    42.20000076293945,
+    -39.0,
+    -31.399999618530273
+   ],
+   "coupe": "x = +38.7 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Règle (limites DKT)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

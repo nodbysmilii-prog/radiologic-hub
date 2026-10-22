@@ -1,0 +1,133 @@
+{
+ "cle": "fines-2017",
+ "nom_fr": "Lobule paracentral droit",
+ "nom_en": "ctx-rh-paracentral",
+ "cote": "droit",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-paracentral",
+  "identifiant": 2017
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   1.6,
+   -15.1,
+   48.4
+  ],
+  "mni_icbm2009c_mm": [
+   2.9000000953674316,
+   -16.200000762939453,
+   54.70000076293945
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    1.6,
+    -15.1,
+    49.8
+   ],
+   "mni_icbm2009c_mm": [
+    2.799999952316284,
+    -17.200000762939453,
+    56.5
+   ],
+   "coupe": "z = +49.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    1.6,
+    -17.2,
+    48.4
+   ],
+   "mni_icbm2009c_mm": [
+    2.0999999046325684,
+    -18.899999618530273,
+    54.900001525878906
+   ],
+   "coupe": "y = -17.2 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    1.6,
+    -15.1,
+    48.4
+   ],
+   "mni_icbm2009c_mm": [
+    2.9000000953674316,
+    -16.200000762939453,
+    54.70000076293945
+   ],
+   "coupe": "x = +1.6 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 16,
+     "nom": "Paracentral (R)"
+    }
+   ],
+   "mesure": 0.683,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.678,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.807,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.786,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.77"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 14,
+     "nom": "Right Juxtapositional Lobule Cortex (formerly Supplementary Motor Cortex)"
+    },
+    {
+     "id": 34,
+     "nom": "Right Postcentral Gyrus"
+    },
+    {
+     "id": 52,
+     "nom": "Right Precentral Gyrus"
+    }
+   ],
+   "mesure": 0.908,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.908,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.951,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.94,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

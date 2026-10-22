@@ -1,0 +1,37 @@
+{
+ "cle": "manuel-glande-pineale-epiphyse",
+ "nom_fr": "Glande pinéale (épiphyse)",
+ "nom_en": "Pineal gland",
+ "cote": "médian",
+ "categorie": "Glandes",
+ "statut_module": "manuel",
+ "source": {
+  "origine": "Points manuels (navigateur)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -30.6,
+   39.5,
+   -23.0
+  ],
+  "mni_icbm2009c_mm": [
+   -33.599998474121094,
+   40.599998474121094,
+   -25.700000762939453
+  ],
+  "points_auteur": 1,
+  "plans_des_points": [
+   "axial"
+  ]
+ },
+ "plans": {},
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Points manuels (navigateur)."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

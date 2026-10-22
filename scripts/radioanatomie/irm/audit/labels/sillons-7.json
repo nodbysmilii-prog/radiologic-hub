@@ -1,0 +1,73 @@
+{
+ "cle": "sillons-7",
+ "nom_fr": "Sillon latéral gauche (fissure sylvienne)",
+ "nom_en": "Lateral sulcus (Sylvian fissure)",
+ "cote": "gauche",
+ "categorie": "Sillons",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (limites DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -60.7,
+   -35.4,
+   21.8
+  ],
+  "mni_icbm2009c_mm": [
+   -68.4000015258789,
+   -35.70000076293945,
+   23.700000762939453
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -60.7,
+    -35.4,
+    12.0
+   ],
+   "mni_icbm2009c_mm": [
+    -68.0999984741211,
+    -36.0,
+    11.600000381469727
+   ],
+   "coupe": "z = +12.0 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -60.7,
+    -35.4,
+    21.8
+   ],
+   "mni_icbm2009c_mm": [
+    -68.4000015258789,
+    -35.70000076293945,
+    23.700000762939453
+   ],
+   "coupe": "y = -35.4 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -48.8,
+    -35.4,
+    21.8
+   ],
+   "mni_icbm2009c_mm": [
+    -54.599998474121094,
+    -34.599998474121094,
+    25.100000381469727
+   ],
+   "coupe": "x = -48.8 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Règle (limites DKT)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

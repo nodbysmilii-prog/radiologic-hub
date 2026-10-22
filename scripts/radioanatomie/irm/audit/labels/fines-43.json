@@ -1,0 +1,125 @@
+{
+ "cle": "fines-43",
+ "nom_fr": "Ventricule latéral droit",
+ "nom_en": "Right-Lateral-Ventricle",
+ "cote": "droit",
+ "categorie": "Ventricules et citernes",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (aseg)",
+  "nom_outil": "Right-Lateral-Ventricle",
+  "identifiant": 43
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   17.7,
+   -34.7,
+   20.4
+  ],
+  "mni_icbm2009c_mm": [
+   20.0,
+   -34.70000076293945,
+   20.200000762939453
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    17.7,
+    -34.7,
+    20.4
+   ],
+   "mni_icbm2009c_mm": [
+    20.0,
+    -34.70000076293945,
+    20.200000762939453
+   ],
+   "coupe": "z = +20.4 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    17.7,
+    -43.1,
+    20.4
+   ],
+   "mni_icbm2009c_mm": [
+    20.200000762939453,
+    -43.099998474121094,
+    19.600000381469727
+   ],
+   "coupe": "y = -43.1 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    5.1,
+    -34.7,
+    20.4
+   ],
+   "mni_icbm2009c_mm": [
+    7.099999904632568,
+    -33.29999923706055,
+    20.100000381469727
+   ],
+   "coupe": "x = +5.1 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 41,
+     "nom": "Lateral Ventricle (R)"
+    }
+   ],
+   "mesure": 0.879,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.922,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.933,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.933,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.89"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 14,
+     "nom": "Right Lateral Ventricle"
+    }
+   ],
+   "mesure": 0.836,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.881,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.853,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.92,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

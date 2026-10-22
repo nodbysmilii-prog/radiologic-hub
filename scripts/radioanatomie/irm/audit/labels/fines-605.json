@@ -1,0 +1,99 @@
+{
+ "cle": "fines-605",
+ "nom_fr": "Lobule VI (lobule simple), hémisphère cérébelleux gauche",
+ "nom_en": "Cbm_Left_VI",
+ "cote": "gauche",
+ "categorie": "Cervelet",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "CerebNet",
+  "nom_outil": "Cbm_Left_VI",
+  "identifiant": 605
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -15.9,
+   -62.0,
+   -16.0
+  ],
+  "mni_icbm2009c_mm": [
+   -21.200000762939453,
+   -63.5,
+   -19.100000381469727
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -15.9,
+    -62.0,
+    -19.5
+   ],
+   "mni_icbm2009c_mm": [
+    -20.600000381469727,
+    -64.0,
+    -22.799999237060547
+   ],
+   "coupe": "z = -19.5 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -15.9,
+    -65.5,
+    -16.0
+   ],
+   "mni_icbm2009c_mm": [
+    -20.899999618530273,
+    -68.30000305175781,
+    -19.700000762939453
+   ],
+   "coupe": "y = -65.5 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -29.9,
+    -62.0,
+    -16.0
+   ],
+   "mni_icbm2009c_mm": [
+    -35.099998474121094,
+    -64.5,
+    -19.600000381469727
+   ],
+   "coupe": "x = -29.9 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 97,
+     "nom": "Cerebellum Gray Matter (L)"
+    }
+   ],
+   "mesure": 0.905,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.977,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.871,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.96,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.83"
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

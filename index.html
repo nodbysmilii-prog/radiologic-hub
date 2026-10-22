@@ -3,16 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RadiologicHub — Masterclass de radiologie d'urgence</title>
-  <meta name="description" content="RadiologicHub : masterclass de radiologie d'urgence par spécialité — neuro, digestif, thorax, traumatologie, vasculaire, pédiatrie. Cas cliniques, quiz et fiches flash.">
-  <meta property="og:title" content="RadiologicHub — Masterclass de radiologie d'urgence">
-  <meta property="og:description" content="La radiologie d'urgence, cas par cas.">
+  <title>RadiologicHub — Outils, ressources et masterclass de radiologie</title>
+  <meta name="description" content="RadiologicHub : vos outils de radiologie au même endroit. Comptes rendus types, fiches rapides, radioanatomie, bibliothèque d'articles, cas cliniques et masterclass de radiologie d'urgence, pour les radiologues et les résidents.">
+  <meta property="og:title" content="RadiologicHub — Outils, ressources et masterclass de radiologie">
+  <meta property="og:description" content="Vos outils de radiologie, au même endroit.">
   <meta property="og:image" content="assets/logo-radiologichub.png">
   <link rel="icon" type="image/svg+xml" href="assets/emblem.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261017003500">
+  <link rel="stylesheet" href="styles.css?v=20261022235000">
+  <link rel="stylesheet" href="finition.css?v=20261022240500">
 </head>
 <body>
 
@@ -24,16 +25,13 @@
         <span class="brand-name">Radiologic<br>Hub</span>
       </a>
       <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
-        <a href="#masterclass">Masterclass</a>
-        <a href="communaute.html">Communauté</a>
+        <a href="comptes-rendus.html">Comptes rendus</a>
         <a href="fiches-rapides.html">Fiches rapides</a>
         <a href="radioanatomie/index.html">Radioanatomie</a>
         <a href="bibliotheque.html">Bibliothèque</a>
-        <a href="comptes-rendus.html">Comptes rendus</a>
+        <a href="communaute.html">Communauté</a>
         <a href="remplacements.html">Remplacements</a>
-        <a href="#format">Format</a>
-        <a href="#tarifs">Tarifs</a>
-        <a href="#inscription" class="btn btn-ink btn-sm">S'inscrire</a>
+        <a href="#masterclass" class="nav-masterclass">Masterclass</a>
       </nav>
       <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
         <span></span><span></span><span></span>
@@ -42,50 +40,169 @@
   </header>
 
   <main>
-    <!-- ============ HERO ============ -->
+    <!-- ============ PREMIER ÉCRAN : LA PLATEFORME ============ -->
     <section class="hero sec-down">
-      <div class="container hero-inner">
-        <div class="hero-text reveal">
-          <p class="marker-tag">Masterclass · Urgences</p>
-          <h1>La radiologie d'urgence, <span class="hl-navy">cas par cas</span>.</h1>
+      <div class="container hero-grille">
+        <div class="hero-text">
+          <p class="marker-tag">Radiologues · Résidents</p>
+          <h1>Vos outils de radiologie, <span class="hl-navy">au même endroit.</span></h1>
           <p class="lead">
-            Des masterclass par spécialité — <strong class="hl-navy">neuro</strong>, <strong class="hl-navy">digestif</strong>,
-            <strong class="hl-navy">thorax</strong>, traumato, vasculaire, pédiatrie — pour lire <strong class="hl-red">vite</strong>
-            et <strong class="hl-red">juste</strong> pendant vos gardes.
+            Comptes rendus, fiches pratiques, radioanatomie et ressources pour <strong class="hl-navy">interpréter</strong>,
+            <strong class="hl-navy">rédiger</strong> et <strong class="hl-red">approfondir</strong> vos connaissances.
           </p>
           <div class="hero-cta">
-            <a href="#masterclass" class="btn btn-ink">Voir les masterclass</a>
-            <a href="#cas-du-jour" class="btn btn-outline">Tester un cas →</a>
+            <a href="#outils" class="btn btn-ink">Accéder aux outils</a>
+            <a href="cas/index.html" class="btn btn-outline">Explorer un cas clinique</a>
           </div>
-          <ul class="hero-stats">
-            <li style="--c: var(--amber)"><strong data-count="6">0</strong><span>spécialités</span></li>
-            <li style="--c: var(--blue)"><strong data-count="120" data-suffix="+">0</strong><span>cas cliniques</span></li>
-            <li style="--c: var(--purple)"><strong data-count="24" data-suffix="/7">0</strong><span>replay</span></li>
-          </ul>
         </div>
 
-        <div class="hero-visual reveal">
+        <aside class="hero-visual" aria-label="Cas express">
           <div class="blob blob-violet hero-blob" aria-hidden="true"></div>
           <article class="teaser">
             <p class="teaser-label">Cas express</p>
+            <a class="teaser-irm" href="cas/striatopathie-diabetique.html#images">
+              <img src="assets/cas/striatopathie-diabetique/irm-t1-axiale-vignette.jpg" alt="IRM cérébrale du cas, coupe axiale pondérée en T1" width="300" height="400">
+              <span>IRM · T1 axiale</span>
+            </a>
             <p class="teaser-text">
               Homme de 56 ans, <span class="hl-navy">diabète de type 2 mal équilibré</span>, consulte pour des
               <span class="hl-red">mouvements involontaires et brusques</span> du bras et de la jambe droits.
             </p>
-            <a href="#cas-du-jour" class="teaser-btn">Votre diagnostic ?</a>
+            <a href="cas/striatopathie-diabetique.html" class="teaser-btn">Votre diagnostic ?</a>
           </article>
           <svg class="hand-arrow" viewBox="0 0 160 120" aria-hidden="true">
             <path d="M150 10 C 110 20, 60 30, 40 80 M40 80 L 30 55 M40 80 L 62 68" />
           </svg>
+        </aside>
+
+        <div class="acces-bloc" id="outils">
+          <span class="regle" aria-hidden="true"></span>
+          <h2 class="acces-titre"><span class="marker-tag">Accès rapides</span></h2>
+          <div class="acces">
+          <a class="acces-carte" href="comptes-rendus.html" style="--c: var(--blue)">
+            <span class="acces-icone" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 11h7M9 14.5h7M9 18h4"/></svg></span>
+            <h3>Comptes rendus</h3>
+            <p>Modèles par examen, phrases automatiques, dictée vocale et calculateurs (PI-RADS, BI-RADS, Fleischner…).</p>
+            <span class="acces-lien">Ouvrir l'éditeur →</span>
+          </a>
+          <a class="acces-carte" href="fiches-rapides.html" style="--c: var(--amber)">
+            <span class="acces-icone" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="6" width="12" height="15" rx="2"/><path d="M8 3h10a2 2 0 0 1 2 2v13"/><path d="M7.5 11h5M7.5 14.5h5"/></svg></span>
+            <h3>Fiches rapides</h3>
+            <p>L'essentiel de l'imagerie d'urgence, spécialité par spécialité : techniques, signes clés et pièges.</p>
+            <span class="acces-lien">Voir les fiches →</span>
+          </a>
+          <a class="acces-carte" href="radioanatomie/index.html" style="--c: var(--teal)">
+            <span class="acces-icone" aria-hidden="true"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="7" rx="8" ry="3"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3M4 17c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span>
+            <h3>Radioanatomie</h3>
+            <p>Des examens à parcourir coupe par coupe, comme sur une console, structures colorées et nommées.</p>
+            <span class="acces-lien">Explorer →</span>
+          </a>
+          <a class="acces-carte" href="bibliotheque.html" style="--c: var(--purple)">
+            <span class="acces-icone" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5.5C6.5 4 9.5 4 12 6c2.5-2 5.5-2 8-.5V19c-2.5-1.5-5.5-1.5-8 .5-2.5-2-5.5-2-8-.5z"/><path d="M12 6v13.5"/></svg></span>
+            <h3>Bibliothèque</h3>
+            <p>Des articles en accès libre classés par thème, avec un résumé en français.</p>
+            <span class="acces-lien">Lire →</span>
+          </a>
+          </div>
+          <div class="acces acces-reseau">
+            <p class="acces-groupe">Réseau des radiologues</p>
+          <a class="acces-carte" href="communaute.html" style="--c: var(--green)">
+            <span class="acces-icone" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9.5" r="2.4"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><path d="M15 14.4c2.6-.4 4.7 1.1 5.4 4.1"/></svg></span>
+            <h3>Communauté</h3>
+            <p>Publiez vos cas anonymisés et échangez avec vos confrères.</p>
+            <span class="acces-lien">Découvrir →</span>
+              <span class="acces-statut">Démonstration : membres fictifs</span>
+          </a>
+          <a class="acces-carte" href="remplacements.html" style="--c: var(--steel)">
+            <span class="acces-icone" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M9 15h6M13 13l2 2-2 2"/></svg></span>
+            <h3>Remplacements</h3>
+            <p>Les cliniques et cabinets de Tunisie publient leurs besoins ; réponse en un clic.</p>
+            <span class="acces-lien">Découvrir →</span>
+              <span class="acces-statut">Démonstration : données fictives</span>
+          </a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ============ MASTERCLASS ============ -->
-    <section class="section sec-up" id="masterclass">
+    <!-- ============ CAS DU JOUR ============ -->
+    <section class="section sec-up" id="cas-du-jour">
       <div class="container">
         <div class="section-head reveal">
-          <h2 class="marker-title">Nos masterclass</h2>
+          <h2 class="marker-title">Cas du jour</h2>
+          <p>Un aperçu de nos masterclass : lisez la vignette, choisissez, apprenez.</p>
+        </div>
+
+        <div class="quiz reveal">
+          <div class="blob blob-peach quiz-blob" aria-hidden="true"></div>
+          <div class="quiz-tabs" role="tablist" aria-label="Choisir un cas"></div>
+          <div class="quiz-card" id="quiz-card"><!-- généré par script.js --></div>
+          <p class="quiz-score" id="quiz-score"></p>
+        </div>
+        <p class="more-fiches reveal"><a href="cas/schwannome-v3.html" class="btn btn-ink">Cas complet : le menton qui s'endort →</a> <a href="cas/index.html" class="btn btn-outline">Tous les cas cliniques →</a></p>
+      </div>
+    </section>
+
+    <!-- ============ FICHE FLASH ============ -->
+    <section class="section sec-down" id="fiche-flash">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="marker-tag">Fiche flash · Neuro</p>
+          <h2>Hypersignal T1 des noyaux gris centraux</h2>
+          <p>Retournez les cartes pour réviser les 4 grandes causes.</p>
+        </div>
+        <div class="flash" id="flash"><!-- généré par script.js --></div>
+        <p class="more-fiches reveal"><a href="fiches-rapides.html" class="btn btn-ink">Toutes les fiches rapides →</a></p>
+      </div>
+    </section>
+
+    <!-- ============ NOS FICHES ============ -->
+    <section class="section sec-up" id="fiches">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 class="marker-title">Nos fiches</h2>
+          <p>Le style RadiologicHub : des visuels clairs, des mots-clés, l'essentiel à retenir.</p>
+        </div>
+      </div>
+      <div class="gallery reveal" tabindex="0" aria-label="Galerie de fiches">
+        <figure><img src="assets/posts/hypersignal-t1.png" alt="Fiche : hypersignal T1 des noyaux gris centraux" loading="lazy"></figure>
+        <figure><img src="assets/posts/cas-striatopathie.png" alt="Cas clinique : homme de 56 ans diabétique avec mouvements involontaires" loading="lazy"></figure>
+        <figure><img src="assets/posts/striatopathie.png" alt="Fiche : striatopathie diabétique" loading="lazy"></figure>
+        <figure><img src="assets/posts/hernie-appendice.png" alt="Cas : appendice inflammatoire dans une hernie inguinale" loading="lazy"></figure>
+      </div>
+    </section>
+
+    <!-- ============ PARTIE MASTERCLASS (formation) ============ -->
+    <div id="bloc-masterclass">
+    <!-- ============ MASTERCLASS ============ -->
+    <section class="section sec-down section-masterclass" id="masterclass">
+      <div class="container">
+        <div class="mc-intro">
+          <div class="mc-intro-texte">
+            <p class="marker-tag">Masterclass · Urgences</p>
+            <h2>La radiologie d'urgence, <span class="hl-navy">cas par cas</span>.</h2>
+            <p class="lead">
+              Des masterclass par spécialité — <strong class="hl-navy">neuro</strong>, <strong class="hl-navy">digestif</strong>,
+              <strong class="hl-navy">thorax</strong>, traumato, vasculaire, pédiatrie — pour lire <strong class="hl-red">vite</strong>
+              et <strong class="hl-red">juste</strong> pendant vos gardes.
+            </p>
+            <div class="hero-cta">
+              <a href="#inscription" class="btn btn-ink">S'inscrire à une masterclass</a>
+              <a href="#programme" class="btn btn-outline">Voir une journée type</a>
+            </div>
+          </div>
+          <ul class="hero-stats">
+            <li style="--c: var(--amber)"><strong>6</strong><span>spécialités</span></li>
+            <li style="--c: var(--blue)"><strong>120+</strong><span>cas cliniques</span></li>
+            <li style="--c: var(--purple)"><strong>24/7</strong><span>replay</span></li>
+          </ul>
+        </div>
+        <nav class="mc-sommaire" aria-label="Sommaire des masterclass">
+          <a href="#format">Le format</a><a href="#programme">Une journée type</a><a href="#tarifs">Tarifs</a><a href="#faq">FAQ</a><a href="#inscription">Inscription</a>
+        </nav>
+
+        <div class="section-head reveal">
+          <h3 class="marker-title">Nos masterclass</h3>
           <p>Une spécialité, une journée, les urgences qu'il ne faut <span class="hl-red">jamais</span> manquer.</p>
         </div>
 
@@ -99,39 +216,8 @@
       </div>
     </section>
 
-    <!-- ============ CAS DU JOUR ============ -->
-    <section class="section sec-down" id="cas-du-jour">
-      <div class="container">
-        <div class="section-head reveal">
-          <h2 class="marker-title">Cas du jour</h2>
-          <p>Un aperçu de nos masterclass : lisez la vignette, choisissez, apprenez.</p>
-        </div>
-
-        <div class="quiz reveal">
-          <div class="blob blob-peach quiz-blob" aria-hidden="true"></div>
-          <div class="quiz-tabs" role="tablist" aria-label="Choisir un cas"></div>
-          <div class="quiz-card" id="quiz-card"><!-- généré par script.js --></div>
-          <p class="quiz-score" id="quiz-score"></p>
-        </div>
-        <p class="more-fiches reveal"><a href="cas/schwannome-v3.html" class="btn btn-ink">Cas complet : le menton qui s'endort →</a></p>
-      </div>
-    </section>
-
-    <!-- ============ FICHE FLASH ============ -->
-    <section class="section sec-up" id="fiche-flash">
-      <div class="container">
-        <div class="section-head reveal">
-          <p class="marker-tag">Fiche flash · Neuro</p>
-          <h2>Hypersignal T1 des noyaux gris centraux</h2>
-          <p>Retournez les cartes pour réviser les 4 grandes causes.</p>
-        </div>
-        <div class="flash" id="flash"><!-- généré par script.js --></div>
-        <p class="more-fiches reveal"><a href="fiches-rapides.html" class="btn btn-ink">Toutes les fiches rapides →</a></p>
-      </div>
-    </section>
-
     <!-- ============ FORMAT ============ -->
-    <section class="section sec-down" id="format">
+    <section class="section sec-up" id="format">
       <div class="container">
         <div class="section-head reveal">
           <h2 class="marker-title">Le format</h2>
@@ -167,7 +253,7 @@
     </section>
 
     <!-- ============ PROGRAMME ============ -->
-    <section class="section sec-up" id="programme">
+    <section class="section sec-down" id="programme">
       <div class="container">
         <div class="section-head reveal">
           <h2 class="marker-title">Une journée type</h2>
@@ -181,22 +267,6 @@
           <li class="reveal" style="--c: var(--red)"><time>15:15</time><div><h3>Atelier lecture en conditions de garde</h3><p>Cas chronométrés sur console, correction collective.</p></div></li>
           <li class="reveal" style="--c: var(--green)"><time>17:00</time><div><h3>Comptes rendus &amp; quiz de sortie</h3><p>Rédaction structurée et évaluation finale.</p></div></li>
         </ol>
-      </div>
-    </section>
-
-    <!-- ============ NOS FICHES ============ -->
-    <section class="section sec-down" id="fiches">
-      <div class="container">
-        <div class="section-head reveal">
-          <h2 class="marker-title">Nos fiches</h2>
-          <p>Le style RadiologicHub : des visuels clairs, des mots-clés, l'essentiel à retenir.</p>
-        </div>
-      </div>
-      <div class="gallery reveal" tabindex="0" aria-label="Galerie de fiches">
-        <figure><img src="assets/posts/hypersignal-t1.png" alt="Fiche : hypersignal T1 des noyaux gris centraux" loading="lazy"></figure>
-        <figure><img src="assets/posts/cas-striatopathie.png" alt="Cas clinique : homme de 56 ans diabétique avec mouvements involontaires" loading="lazy"></figure>
-        <figure><img src="assets/posts/striatopathie.png" alt="Fiche : striatopathie diabétique" loading="lazy"></figure>
-        <figure><img src="assets/posts/hernie-appendice.png" alt="Cas : appendice inflammatoire dans une hernie inguinale" loading="lazy"></figure>
       </div>
     </section>
 
@@ -322,29 +392,47 @@
         </form>
       </div>
     </section>
+    </div>
+
   </main>
 
   <!-- ============ FOOTER ============ -->
   <footer class="site-footer">
     <div class="container footer-inner">
-      <a href="#top" class="brand">
-        <img src="assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
-        <span class="brand-name">Radiologic<br>Hub</span>
-      </a>
+      <div class="footer-brand">
+        <a href="#top" class="brand">
+          <img src="assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+          <span class="brand-name">Radiologic<br>Hub</span>
+        </a>
+        <p class="footer-tagline">Outils, ressources et formation pour les radiologues et les résidents.</p>
+      </div>
       <nav aria-label="Liens de pied de page">
-        <a href="#masterclass">Masterclass</a>
-        <a href="fiches-rapides.html">Fiches rapides</a>
-        <a href="radioanatomie/index.html">Radioanatomie</a>
-        <a href="bibliotheque.html">Bibliothèque</a>
-        <a href="comptes-rendus.html">Comptes rendus</a>
-        <a href="communaute.html">Communauté</a>
-        <a href="remplacements.html">Remplacements</a>
-        <a href="#cas-du-jour">Cas du jour</a>
-        <a href="#tarifs">Tarifs</a>
-        <a href="mentions-legales.html">Mentions légales</a>
-        <a href="#inscription">Contact</a>
+        <div class="footer-col">
+          <p class="footer-titre">Au quotidien</p>
+          <a href="comptes-rendus.html">Comptes rendus</a>
+          <a href="suivi-oncologique.html">Suivi oncologique</a>
+          <a href="fiches-rapides.html">Fiches rapides</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Apprendre</p>
+          <a href="radioanatomie/index.html">Radioanatomie</a>
+          <a href="cas/index.html">Cas cliniques</a>
+          <a href="#cas-du-jour">Cas du jour</a>
+          <a href="bibliotheque.html">Bibliothèque</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Réseau</p>
+          <a href="communaute.html">Communauté</a>
+          <a href="remplacements.html">Remplacements</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Masterclass</p>
+          <a href="#masterclass">Programme</a>
+          <a href="#tarifs">Tarifs</a>
+          <a href="#inscription">S'inscrire à une masterclass</a>
+        </div>
       </nav>
-      <p class="copyright">© <span id="year"></span> RadiologicHub · Formation en radiologie d'urgence</p>
+      <p class="copyright"><span>© <span id="year"></span> RadiologicHub · Outils, ressources et formation en radiologie</span><span class="copyright-liens"><a href="mentions-legales.html">Mentions légales</a><a href="#inscription">Contact</a></span></p>
     </div>
   </footer>
 
@@ -354,6 +442,8 @@
     <div id="modal-body"></div>
   </dialog>
 
-  <script src="script.js?v=20261012150000"></script>
+  <script src="navigation.js?v=20261022235000"></script>
+
+  <script src="script.js?v=20261022240500"></script>
 </body>
 </html>

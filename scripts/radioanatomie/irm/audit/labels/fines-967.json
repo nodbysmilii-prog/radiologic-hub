@@ -1,0 +1,101 @@
+{
+ "cle": "fines-967",
+ "nom_fr": "Chiasma optique, moitié droite",
+ "nom_en": "R-Chiasma-Opticum",
+ "cote": "droit",
+ "categorie": "Voies optiques",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "HypVINN",
+  "nom_outil": "R-Chiasma-Opticum",
+  "identifiant": 967
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   1.6,
+   5.9,
+   -18.1
+  ],
+  "mni_icbm2009c_mm": [
+   1.7000000476837158,
+   7.400000095367432,
+   -17.600000381469727
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    1.6,
+    5.9,
+    -17.4
+   ],
+   "mni_icbm2009c_mm": [
+    1.7000000476837158,
+    7.199999809265137,
+    -17.200000762939453
+   ],
+   "coupe": "z = -17.4 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    1.6,
+    5.9,
+    -18.1
+   ],
+   "mni_icbm2009c_mm": [
+    1.7000000476837158,
+    7.400000095367432,
+    -17.600000381469727
+   ],
+   "coupe": "y = +5.9 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    3.0,
+    5.9,
+    -18.1
+   ],
+   "mni_icbm2009c_mm": [
+    3.4000000953674316,
+    7.300000190734863,
+    -17.799999237060547
+   ],
+   "coupe": "x = +3.0 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 17,
+     "nom": "Optic Chiasm (R)"
+    }
+   ],
+   "mesure": 0.002,
+   "verdict": "discordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.0,
+     "verdict": "discordant"
+    },
+    "coronal": {
+     "mesure": 0.0,
+     "verdict": "discordant"
+    },
+    "sagittal": {
+     "mesure": 0.0,
+     "verdict": "discordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.00"
+  }
+ ],
+ "remarques": [
+  "Étiquette CerebrA peu fiable selon ses auteurs (kappa 0.00) : la discordance ne suffit pas à conclure."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "faible"
+}

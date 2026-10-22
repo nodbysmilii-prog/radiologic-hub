@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-AF_right",
+ "nom_fr": "Faisceau arqué droit",
+ "nom_en": "AF_right",
+ "cote": "droit",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "AF_right",
+  "identifiant": "AF_right"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   26.8,
+   31.1,
+   12.7
+  ],
+  "mni_icbm2009c_mm": [
+   28.600000381469727,
+   33.70000076293945,
+   12.399999618530273
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    26.8,
+    31.1,
+    11.3
+   ],
+   "mni_icbm2009c_mm": [
+    28.299999237060547,
+    33.70000076293945,
+    10.899999618530273
+   ],
+   "coupe": "z = +11.3 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    26.8,
+    -6.7,
+    12.7
+   ],
+   "mni_icbm2009c_mm": [
+    28.700000762939453,
+    -4.300000190734863,
+    10.199999809265137
+   ],
+   "coupe": "y = -6.7 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    35.2,
+    31.1,
+    12.7
+   ],
+   "mni_icbm2009c_mm": [
+    38.400001525878906,
+    33.29999923706055,
+    11.300000190734863
+   ],
+   "coupe": "x = +35.2 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

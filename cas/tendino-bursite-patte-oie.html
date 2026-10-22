@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="fr" data-langue="fr" data-titre-en="Medial knee pain — RadiologicHub clinical case">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Une douleur médiale du genou — Cas clinique RadiologicHub</title>
+  <meta name="description" content="Cas clinique RadiologicHub (ostéo-articulaire) : Un patient de 50 ans, un point douloureux exquis et trois coupes d&#x27;IRM : quel est votre diagnostic ? Puis la patte d&#x27;oie en 3D, tendon par tendon. Texte en français, original en anglais en un clic.">
+  <link rel="icon" type="image/svg+xml" href="../assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=20261022235000">
+  <link rel="stylesheet" href="../fiche.css?v=20261012150000">
+  <link rel="stylesheet" href="../cours/cours.css?v=294c14e768">
+  <link rel="stylesheet" href="cas.css?v=11b4584dc0">
+  <script type="importmap">{ "imports": { "three": "../vendor/three-0.170.0/three.module.min.js", "three/addons/": "../vendor/three-0.170.0/addons/" } }</script>
+</head>
+<body class="fiche-page cas-page">
+
+  <div class="read-progress" aria-hidden="true"><span></span></div>
+
+  <header class="site-header is-scrolled" id="top">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="RadiologicHub — accueil">
+        <img src="../assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+        <a href="../comptes-rendus.html">Comptes rendus</a>
+        <a href="../fiches-rapides.html">Fiches rapides</a>
+        <a href="../radioanatomie/index.html">Radioanatomie</a>
+        <a href="../bibliotheque.html">Bibliothèque</a>
+        <a href="../communaute.html">Communauté</a>
+        <a href="../remplacements.html">Remplacements</a>
+        <a href="../index.html#masterclass" class="nav-masterclass">Masterclass</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="fiche-hero sec-down">
+      <div class="container">
+        <nav class="crumbs" aria-label="Fil d’Ariane" data-en-aria-label="Breadcrumb"><a href="../index.html"><span class="t-fr">Accueil</span><span class="t-en" lang="en">Home</span></a> › <a href="index.html"><span class="t-fr">Cas cliniques</span><span class="t-en" lang="en">Clinical cases</span></a> › <span><span class="t-fr">Une douleur médiale du genou</span><span class="t-en" lang="en">Medial knee pain</span></span></nav>
+        <p class="marker-tag t-fr">Cas clinique · Ostéo-articulaire · IRM</p><p class="marker-tag t-en" lang="en">Clinical case · Musculoskeletal imaging · MRI</p>
+        <h1><span class="t-fr">Une douleur <span class='hl-navy'>médiale</span> du genou</span><span class="t-en" lang="en"><span class='hl-navy'>Medial</span> knee pain</span></h1>
+        <p class="fiche-sub t-fr">Un patient de 50 ans, un <span class='hl-red'>point douloureux exquis</span> et trois coupes d'IRM : quel est votre diagnostic ? Puis la patte d'oie en 3D, tendon par tendon.</p><p class="fiche-sub t-en" lang="en">A 50-year-old patient, a <span class='hl-red'>localized tender point</span> and three MRI images: what is your diagnosis? Then the pes anserinus in 3D, tendon by tendon.</p>
+        <div class="cas-outils"><div class="cas-langue" role="group" aria-label="Langue du cas" data-en-aria-label="Case language"><button type="button" data-langue="fr" lang="fr" aria-pressed="true" title="Lire en français">FR</button><button type="button" data-langue="en" lang="en" aria-pressed="false" title="Read in English">EN</button></div><p class="cas-langue-aide t-fr">Texte original en anglais : un clic sur <b>EN</b>.</p><p class="cas-langue-aide t-en" lang="en">French translation: one click on <b>FR</b>.</p></div>
+        <div class="legend" role="group" aria-label="Code couleur — cliquez pour isoler une catégorie" data-en-aria-label="Colour code — click to isolate a category">
+          <span class="legend-label"><span class="t-fr">Code couleur :</span><span class="t-en" lang="en">Colour code:</span></span>
+          <button class="chip k-tech" data-k="tech" aria-pressed="false"><span class="t-fr">Technique / anatomie</span><span class="t-en" lang="en">Technique / anatomy</span></button>
+          <button class="chip k-signo" data-k="signo" aria-pressed="false"><span class="t-fr">Signe clinique ou radiologique</span><span class="t-en" lang="en">Clinical or imaging sign</span></button>
+          <button class="chip k-sign" data-k="sign" aria-pressed="false"><span class="t-fr">Signe discriminant / typique</span><span class="t-en" lang="en">Key / typical finding</span></button>
+          <button class="chip k-key" data-k="key" aria-pressed="false"><span class="t-fr">À retenir</span><span class="t-en" lang="en">Key point</span></button>
+        </div>
+        <p class="legend-hint t-fr">Astuce : cliquez sur une couleur pour n'afficher qu'elle.</p><p class="legend-hint t-en" lang="en">Tip: click a colour to show only that category.</p>
+        <div class="fiche-actions">
+          <button class="btn btn-outline btn-sm" id="print-btn"><span class="t-fr">Imprimer / PDF</span><span class="t-en" lang="en">Print / PDF</span></button>
+          <a href="#cas" class="btn btn-outline btn-sm"><span class="t-fr">Commencer</span><span class="t-en" lang="en">Start</span></a>
+          <a href="#diagnostic" class="btn btn-ink btn-sm"><span class="t-fr">À vous de jouer →</span><span class="t-en" lang="en">Your turn →</span></a>
+        </div>
+      </div>
+    </section>
+
+    <div class="container fiche-layout">
+      <aside class="toc" aria-label="Sommaire" data-en-aria-label="Contents">
+        <p class="toc-title"><span class="t-fr">Sommaire</span><span class="t-en" lang="en">Contents</span></p>
+        <ol>
+          <li><a href="#cas" style="--c: var(--rose)"><b>I</b><span class="t-fr">Le cas</span><span class="t-en" lang="en">The case</span></a></li>
+          <li><a href="#images" style="--c: var(--slate)"><b>II</b><span class="t-fr">L'IRM</span><span class="t-en" lang="en">The MRI</span></a></li>
+          <li><a href="#diagnostic" style="--c: var(--amber)"><b>III</b><span class="t-fr">À vous de jouer</span><span class="t-en" lang="en">Your turn</span></a></li>
+          <li><a href="#signes-irm" style="--c: var(--crimson)"><b>IV</b><span class="t-fr">Signes IRM</span><span class="t-en" lang="en">MRI findings</span></a></li>
+          <li><a href="#patte-oie-3d" style="--c: var(--plum)"><b>V</b><span class="t-fr">La patte d'oie en 3D</span><span class="t-en" lang="en">The pes anserinus in 3D</span></a></li>
+          <li><a href="#anatomie" style="--c: var(--teal)"><b>VI</b><span class="t-fr">Anatomie radiologique</span><span class="t-en" lang="en">Radiologic anatomy</span></a></li>
+        </ol>
+      </aside>
+
+      <div class="fiche-body" id="fiche-body">
+
+        <!-- I -->
+        <section class="fsec" id="cas" style="--c: var(--rose)">
+          <h2 class="fsec-title"><span class="fnum">I</span><span class="t-fr">Le cas</span><span class="t-en" lang="en">The case</span></h2>
+          <article class="cas-recit"><p class="t-fr"><b>Patient de 50 ans</b> adressé pour une <mark class='k-signo'>gonalgie médiale</mark> avec un <mark class='k-key'>point douloureux exquis</mark> à la palpation.</p><p class="t-en" lang="en"><b>A 50-year-old patient</b> referred for <mark class='k-signo'>medial knee pain</mark> with a <mark class='k-key'>localized tender point</mark> on palpation.</p></article>
+        </section>
+
+        <!-- II -->
+        <section class="fsec" id="images" style="--c: var(--slate)">
+          <h2 class="fsec-title"><span class="fnum">II</span><span class="t-fr">L'IRM</span><span class="t-en" lang="en">The MRI</span></h2>
+          <p class="fintro t-fr">Une IRM a été réalisée. <b>Observez avant de lire la suite.</b> Cliquez sur une image pour l'agrandir.</p><p class="fintro t-en" lang="en">An MRI was performed. <b>Look before reading on.</b> Click an image to enlarge it.</p>
+          <div class="ex-gallery"><div class="ex-grid">
+<figure class="ex-fig" style="--c: var(--slate)"><button class="ex-img" type="button" aria-label="Agrandir : Coupe 1 · IRM axiale" data-en-aria-label="Enlarge: Image 1 · Axial MRI"><img src="../assets/cas/tendino-bursite-patte-oie/irm-axiale-1.jpg" alt="IRM du genou, coupe axiale" data-en-alt="Knee MRI, axial image" loading="lazy"><span class="ex-mod t-fr">Axiale</span><span class="ex-mod t-en" lang="en">Axial</span></button><figcaption><strong><span class="t-fr">Coupe 1 · IRM axiale</span><span class="t-en" lang="en">Image 1 · Axial MRI</span></strong></figcaption></figure>
+<figure class="ex-fig" style="--c: var(--slate)"><button class="ex-img" type="button" aria-label="Agrandir : Coupe 2 · IRM axiale" data-en-aria-label="Enlarge: Image 2 · Axial MRI"><img src="../assets/cas/tendino-bursite-patte-oie/irm-axiale-2.jpg" alt="IRM du genou, coupe axiale" data-en-alt="Knee MRI, axial image" loading="lazy"><span class="ex-mod t-fr">Axiale</span><span class="ex-mod t-en" lang="en">Axial</span></button><figcaption><strong><span class="t-fr">Coupe 2 · IRM axiale</span><span class="t-en" lang="en">Image 2 · Axial MRI</span></strong></figcaption></figure>
+<figure class="ex-fig" style="--c: var(--slate)"><button class="ex-img" type="button" aria-label="Agrandir : Coupe 3 · IRM axiale" data-en-aria-label="Enlarge: Image 3 · Axial MRI"><img src="../assets/cas/tendino-bursite-patte-oie/irm-axiale-3.jpg" alt="IRM du genou, coupe axiale" data-en-alt="Knee MRI, axial image" loading="lazy"><span class="ex-mod t-fr">Axiale</span><span class="ex-mod t-en" lang="en">Axial</span></button><figcaption><strong><span class="t-fr">Coupe 3 · IRM axiale</span><span class="t-en" lang="en">Image 3 · Axial MRI</span></strong></figcaption></figure>
+</div></div>
+        </section>
+
+        <!-- III -->
+        <section class="fsec" id="diagnostic" style="--c: var(--amber)">
+          <h2 class="fsec-title"><span class="fnum">III</span><span class="t-fr">À vous de jouer</span><span class="t-en" lang="en">Your turn</span></h2>
+          <div class="case-vignette cas-question"><p class="teaser-label">Question</p><p class="t-fr">Quel est votre diagnostic ?</p><p class="t-en" lang="en">What is your diagnosis?</p></div>
+<button class="btn btn-ink annex-toggle" type="button" aria-expanded="false" aria-controls="reponse-tendino-bursite-patte-oie"><span class="annex-open"><span class="t-fr">Afficher la réponse ↓</span><span class="t-en" lang="en">Show the answer ↓</span></span><span class="annex-close"><span class="t-fr">Masquer la réponse ↑</span><span class="t-en" lang="en">Hide the answer ↑</span></span></button>
+<div class="annex-body" id="reponse-tendino-bursite-patte-oie" hidden><div class="cas-reponse"><p class="cas-reponse-label"><span class="t-fr">Réponse</span><span class="t-en" lang="en">Answer</span></p><p class="cas-reponse-dx t-fr">Tendino-bursite de la patte d'oie</p><p class="cas-reponse-dx t-en" lang="en">Pes anserine tendino-bursitis</p></div></div>
+        </section>
+
+        <!-- IV -->
+        <section class="fsec" id="signes-irm" style="--c: var(--crimson)">
+          <h2 class="fsec-title"><span class="fnum">IV</span><span class="t-fr">Signes IRM</span><span class="t-en" lang="en">MRI findings</span></h2>
+          <div class="fcard" style="--c: var(--crimson)"><ul class="fl"><li class="t-fr"><mark class='k-sign'>Collection liquidienne bien limitée</mark> (<mark class='k-signo'>hypersignal T2</mark>, <mark class='k-signo'>hyposignal T1</mark>), située à la <mark class='k-tech'>face profonde des tendons de la patte d'oie</mark>, au contact du tibia.</li><li class="t-en" lang="en"><mark class='k-sign'>Well-defined fluid collection</mark> (<mark class='k-signo'>hyperintense on T2-weighted</mark> and <mark class='k-signo'>hypointense on T1-weighted sequences</mark>) located at the <mark class='k-tech'>deep surface of the pes anserinus tendons</mark>, adjacent to the tibia.</li><li class="t-fr"><mark class='k-sign'>Épaississement</mark> et <mark class='k-sign'>hypersignal intratendineux</mark> des tendons de la patte d'oie.</li><li class="t-en" lang="en"><mark class='k-sign'>Thickening</mark> and <mark class='k-sign'>increased intratendinous signal</mark> of the pes anserinus tendons.</li></ul></div>
+        </section>
+
+        <!-- V -->
+        <section class="fsec" id="patte-oie-3d" style="--c: var(--plum)">
+          <h2 class="fsec-title"><span class="fnum">V</span><span class="t-fr">La patte d'oie en 3D</span><span class="t-en" lang="en">The pes anserinus in 3D</span></h2>
+          <p class="fintro t-fr">La <b>patte d'oie</b> réunit trois tendons : <mark class='k-tech'>sartorius</mark>, <mark class='k-tech'>gracile</mark> et <mark class='k-tech'>semi-tendineux</mark> <span class='cas-anciens'>(anciennement couturier, droit interne et demi-tendineux)</span>.</p><p class="fintro t-en" lang="en">The <b>pes anserinus</b> is formed by three tendons: <mark class='k-tech'>sartorius</mark>, <mark class='k-tech'>gracilis</mark> and <mark class='k-tech'>semitendinosus</mark>.</p>
+          <div class="v3d" id="v3d" data-modeles="../public/models/patte-oie/"><div class="v3d-scene" id="v3d-scene"></div><div class="v3d-panneau" id="v3d-panneau" hidden></div></div>
+<p class="v3d-aide t-fr">Genou droit en extension : 14 cm de cuisse et 12 cm de jambe autour de l'interligne. Faites glisser pour tourner, pincez ou utilisez la molette pour zoomer, touchez une structure pour la mettre en surbrillance. « Tendons seuls » retire les corps charnus pour suivre chaque tendon jusqu'à son insertion sur le tibia.</p><p class="v3d-aide t-en" lang="en">Right knee in extension: 14 cm of thigh and 12 cm of leg around the joint line. Drag to rotate, pinch or use the mouse wheel to zoom, tap a structure to highlight it. "Tendons only" removes the muscle bellies so that each tendon can be followed to its insertion on the tibia.</p>
+<p class="v3d-attribution"><span class="t-fr"><b>Modèle 3D</b> : <a href='https://github.com/Z-Anatomy/Models-of-human-anatomy' rel='noopener' target='_blank'>Z-Anatomy</a> (G. Kervyn, M. Zielinski), licence <a href='https://creativecommons.org/licenses/by-sa/4.0/deed.fr' rel='noopener license' target='_blank'>CC BY-SA 4.0</a>, d'après <a href='https://dbarchive.biosciencedbc.jp/en/bodyparts3d/download.html' rel='noopener' target='_blank'>BodyParts3D</a> © The Database Center for Life Science (CC BY-SA 2.1 Japon). Extrait, coupé, simplifié et mis en couleurs par RadiologicHub : <a href='../public/models/patte-oie/LICENSE'>licence et liste des modifications</a>. Représentation pédagogique approximative.</span><span class="t-en" lang="en"><b>3D model</b>: <a href='https://github.com/Z-Anatomy/Models-of-human-anatomy' rel='noopener' target='_blank'>Z-Anatomy</a> (G. Kervyn, M. Zielinski), <a href='https://creativecommons.org/licenses/by-sa/4.0/' rel='noopener license' target='_blank'>CC BY-SA 4.0</a> licence, based on <a href='https://dbarchive.biosciencedbc.jp/en/bodyparts3d/download.html' rel='noopener' target='_blank'>BodyParts3D</a> © The Database Center for Life Science (CC BY-SA 2.1 Japan). Extracted, cut, simplified and coloured by RadiologicHub: <a href='../public/models/patte-oie/LICENSE'>licence and list of changes</a>. Approximate teaching model.</span></p>
+        </section>
+
+        <!-- VI -->
+        <section class="fsec" id="anatomie" style="--c: var(--teal)">
+          <h2 class="fsec-title"><span class="fnum">VI</span><span class="t-fr">Anatomie radiologique</span><span class="t-en" lang="en">Radiologic anatomy</span></h2>
+          <figure class="cas-planche" style="--c: var(--teal)"><svg class="annot" viewBox="0 60 1250 890" role="img" aria-label="IRM axiale du genou : tendons de la patte d&#x27;oie et bourse de la patte d&#x27;oie" data-en-aria-label="Axial knee MRI: pes anserinus tendons and pes anserinus bursa"><rect x="0" y="60" width="1250" height="890" fill="#000"/><image href="../assets/cas/tendino-bursite-patte-oie/irm-anatomie.jpg" x="0" y="0" width="826" height="990"/><g class="mk" data-mk="sartorius"><line class="cas-rappel-o" x1="670.9" y1="531.4" x2="860" y2="531.4"/><line class="cas-rappel" style="stroke: var(--teal)" x1="670.9" y1="531.4" x2="860" y2="531.4"/><circle class="cas-point" style="fill: var(--teal)" cx="670.9" cy="531.4" r="8"/><text class="cas-etiquette" x="876" y="542.4">Sartorius</text></g><g class="mk" data-mk="gracile"><line class="cas-rappel-o" x1="670.9" y1="622.0" x2="860" y2="622.0"/><line class="cas-rappel" style="stroke: var(--green)" x1="670.9" y1="622.0" x2="860" y2="622.0"/><circle class="cas-point" style="fill: var(--green)" cx="670.9" cy="622.0" r="8"/><text class="cas-etiquette t-fr" x="876" y="633.0">Gracile</text><text class="cas-etiquette t-en" lang="en" x="876" y="633.0">Gracilis</text></g><g class="mk" data-mk="semi-tendineux"><line class="cas-rappel-o" x1="671.6" y1="743.2" x2="860" y2="743.2"/><line class="cas-rappel" style="stroke: var(--blue)" x1="671.6" y1="743.2" x2="860" y2="743.2"/><circle class="cas-point" style="fill: var(--blue)" cx="671.6" cy="743.2" r="8"/><text class="cas-etiquette t-fr" x="876" y="754.2">Semi-tendineux</text><text class="cas-etiquette t-en" lang="en" x="876" y="754.2">Semitendinosus</text></g><g class="mk" data-mk="bourse"><polygon class="cas-chevron" style="fill: var(--amber)" points="587.2,638.9 610.9,695.8 637.8,707.0 649.1,679.5 625.3,623.2 614.1,649.5"/></g></svg><figcaption><strong><span class="t-fr">IRM axiale du genou, côté médial à droite de l'image</span><span class="t-en" lang="en">Axial knee MRI, medial side on the right of the image</span></strong></figcaption></figure>
+          <ul class="case-legend" aria-label="Légende des annotations" data-en-aria-label="Annotation key"><li data-mk="sartorius"><span class="lg cas-lg-trait" style="--lc: var(--teal)" aria-hidden="true"></span><span><b>Sartorius</b></span></li><li data-mk="gracile"><span class="lg cas-lg-trait" style="--lc: var(--green)" aria-hidden="true"></span><span><span class="t-fr"><b>Gracile</b></span><span class="t-en" lang="en"><b>Gracilis</b></span></span></li><li data-mk="semi-tendineux"><span class="lg cas-lg-trait" style="--lc: var(--blue)" aria-hidden="true"></span><span><span class="t-fr"><b>Semi-tendineux</b></span><span class="t-en" lang="en"><b>Semitendinosus</b></span></span></li><li data-mk="bourse"><span class="lg cas-lg-chevron" style="--lc: var(--amber)" aria-hidden="true"></span><span><span class="t-fr"><b>Chevron jaune</b> · <mark class='k-key'>bourse de la patte d'oie</mark> (bourse ansérine)</span><span class="t-en" lang="en"><b>Yellow chevron</b> · <mark class='k-key'>pes anserinus bursa</mark></span></span></li></ul><p class="legend-hint t-fr">Survolez une ligne de la légende pour la repérer sur l'image.</p><p class="legend-hint t-en" lang="en">Hover over a line of the key to locate it on the image.</p>
+        </section>
+
+        <div class="fiche-end">
+          <img src="../assets/emblem.svg" alt="" width="60" height="54">
+          <p class="t-fr">Cas clinique — RadiologicHub</p><p class="t-en" lang="en">Clinical case — RadiologicHub</p>
+          <a href="index.html" class="btn btn-outline btn-sm"><span class="t-fr">← Tous les cas cliniques</span><span class="t-en" lang="en">← All clinical cases</span></a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Image agrandie" data-en-aria-label="Enlarged image">
+    <button class="modal-close" aria-label="Fermer" data-en-aria-label="Close">&times;</button>
+    <div class="lb-wrap"><img src="" alt=""></div>
+    <p class="lightbox-cap"></p>
+  </dialog>
+
+  <div class="cas-langue cas-langue-flottante" role="group" aria-label="Langue du cas" data-en-aria-label="Case language"><button type="button" data-langue="fr" lang="fr" aria-pressed="true" title="Lire en français">FR</button><button type="button" data-langue="en" lang="en" aria-pressed="false" title="Read in English">EN</button></div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="../index.html" class="brand">
+          <img src="../assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+          <span class="brand-name">Radiologic<br>Hub</span>
+        </a>
+        <p class="footer-tagline">Outils, ressources et formation pour les radiologues et les résidents.</p>
+      </div>
+      <nav aria-label="Liens de pied de page">
+        <div class="footer-col">
+          <p class="footer-titre">Au quotidien</p>
+          <a href="../comptes-rendus.html">Comptes rendus</a>
+          <a href="../suivi-oncologique.html">Suivi oncologique</a>
+          <a href="../fiches-rapides.html">Fiches rapides</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Apprendre</p>
+          <a href="../radioanatomie/index.html">Radioanatomie</a>
+          <a href="../cas/index.html">Cas cliniques</a>
+          <a href="../index.html#cas-du-jour">Cas du jour</a>
+          <a href="../bibliotheque.html">Bibliothèque</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Réseau</p>
+          <a href="../communaute.html">Communauté</a>
+          <a href="../remplacements.html">Remplacements</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Masterclass</p>
+          <a href="../index.html#masterclass">Programme</a>
+          <a href="../index.html#tarifs">Tarifs</a>
+          <a href="../index.html#inscription">S'inscrire à une masterclass</a>
+        </div>
+      </nav>
+      <p class="copyright"><span>© <span id="year"></span> RadiologicHub · Outils, ressources et formation en radiologie</span><span class="copyright-liens"><a href="../mentions-legales.html">Mentions légales</a><a href="../index.html#inscription">Contact</a></span></p>
+    </div>
+  </footer>
+  <script src="../navigation.js?v=20261022235000"></script>
+  <script src="../fiche.js?v=20261022235000"></script>
+  <script src="cas.js?v=37ad8436e0"></script>
+  <script src="patte-oie-3d.js?v=aaf2a6c5e9"></script>
+</body>
+</html>

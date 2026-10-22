@@ -1,0 +1,73 @@
+{
+ "cle": "sillons-12",
+ "nom_fr": "Sillon collatéral gauche",
+ "nom_en": "Collateral sulcus",
+ "cote": "gauche",
+ "categorie": "Sillons",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (limites DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -22.2,
+   -25.6,
+   -25.8
+  ],
+  "mni_icbm2009c_mm": [
+   -25.5,
+   -26.399999618530273,
+   -30.799999237060547
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -22.2,
+    -25.6,
+    -5.5
+   ],
+   "mni_icbm2009c_mm": [
+    -26.5,
+    -25.0,
+    -8.300000190734863
+   ],
+   "coupe": "z = -5.5 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -22.2,
+    -76.0,
+    -25.8
+   ],
+   "mni_icbm2009c_mm": [
+    -24.899999618530273,
+    -81.0999984741211,
+    -31.799999237060547
+   ],
+   "coupe": "y = -76.0 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -18.0,
+    -25.6,
+    -25.8
+   ],
+   "mni_icbm2009c_mm": [
+    -21.0,
+    -25.700000762939453,
+    -30.600000381469727
+   ],
+   "coupe": "x = -18.0 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Règle (limites DKT)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

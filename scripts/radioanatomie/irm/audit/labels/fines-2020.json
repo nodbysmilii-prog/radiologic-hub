@@ -1,0 +1,129 @@
+{
+ "cle": "fines-2020",
+ "nom_fr": "Gyrus frontal inférieur droit, partie triangulaire",
+ "nom_en": "ctx-rh-parstriangularis",
+ "cote": "droit",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-parstriangularis",
+  "identifiant": 2020
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   49.9,
+   30.4,
+   19.0
+  ],
+  "mni_icbm2009c_mm": [
+   55.5,
+   32.400001525878906,
+   19.899999618530273
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    49.9,
+    30.4,
+    2.9
+   ],
+   "mni_icbm2009c_mm": [
+    56.0,
+    35.599998474121094,
+    2.4000000953674316
+   ],
+   "coupe": "z = +2.9 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    49.9,
+    29.7,
+    19.0
+   ],
+   "mni_icbm2009c_mm": [
+    55.599998474121094,
+    31.799999237060547,
+    20.100000381469727
+   ],
+   "coupe": "y = +29.7 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    49.2,
+    30.4,
+    19.0
+   ],
+   "mni_icbm2009c_mm": [
+    55.0,
+    32.29999923706055,
+    19.899999618530273
+   ],
+   "coupe": "x = +49.2 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 22,
+     "nom": "Pars Triangularis (R)"
+    }
+   ],
+   "mesure": 0.626,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.771,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.758,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.715,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.76"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 10,
+     "nom": "Right Frontal Operculum Cortex"
+    },
+    {
+     "id": 82,
+     "nom": "Right Inferior Frontal Gyrus, pars triangularis"
+    }
+   ],
+   "mesure": 0.472,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.443,
+     "verdict": "partiel"
+    },
+    "coronal": {
+     "mesure": 0.445,
+     "verdict": "partiel"
+    },
+    "sagittal": {
+     "mesure": 0.594,
+     "verdict": "partiel"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "moyenne"
+}

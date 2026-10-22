@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-T_POSTC_right",
+ "nom_fr": "Fibres thalamo-postcentrales droites",
+ "nom_en": "T_POSTC_right",
+ "cote": "droit",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "T_POSTC_right",
+  "identifiant": "T_POSTC_right"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   17.0,
+   -21.4,
+   12.7
+  ],
+  "mni_icbm2009c_mm": [
+   19.299999237060547,
+   -20.5,
+   11.600000381469727
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    17.0,
+    -21.4,
+    27.4
+   ],
+   "mni_icbm2009c_mm": [
+    18.799999237060547,
+    -21.700000762939453,
+    27.700000762939453
+   ],
+   "coupe": "z = +27.4 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    17.0,
+    -29.1,
+    12.7
+   ],
+   "mni_icbm2009c_mm": [
+    19.100000381469727,
+    -28.5,
+    12.399999618530273
+   ],
+   "coupe": "y = -29.1 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    19.1,
+    -21.4,
+    12.7
+   ],
+   "mni_icbm2009c_mm": [
+    21.700000762939453,
+    -20.5,
+    11.399999618530273
+   ],
+   "coupe": "x = +19.1 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

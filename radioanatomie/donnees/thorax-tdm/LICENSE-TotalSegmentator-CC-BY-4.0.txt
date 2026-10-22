@@ -1,0 +1,22 @@
+Images TDM du thorax (dossiers ax-med/, ax-pulm/, cor/, sag/) et calques des lobes
+(dossiers axial-lobes/, coronal-lobes/, sagittal-lobes/)
+
+Source : « Dataset with segmentations of 117 important anatomical structures in 1228 CT images »
+(TotalSegmentator CT dataset), version 2.0.1
+Wasserthal J. et al., Research and Analysis, University Hospital Basel (Hôpital universitaire de Bâle)
+Zenodo, doi:10.5281/zenodo.10047292 — https://zenodo.org/records/10047292
+Article : Wasserthal J. et al. TotalSegmentator: robust segmentation of 104 anatomic structures in CT
+images. Radiology: Artificial Intelligence 2023;5(5):e230024. doi:10.1148/ryai.230024
+Cas utilisé : s0310 (fichier ct.nii.gz et masques de segmentation du dossier segmentations/).
+
+Licence : Creative Commons Attribution 4.0 International (CC BY 4.0)
+https://creativecommons.org/licenses/by/4.0/legalcode
+
+Modifications par RadiologicHub : coupes axiales, coronales et sagittales extraites du volume,
+orientées selon la convention radiologique, fenêtrées (médiastin : largeur 400, centre 40 ;
+parenchyme : largeur 1500, centre −600), recadrées sur le patient, agrandies × 2, export JPEG ;
+calques colorés des cinq lobes pulmonaires et des scissures tirés des masques de segmentation ;
+repères anatomiques et légendes en français ajoutés (atlas.json), en partie calculés à partir des
+masques, en partie placés à la main (reperes-manuels/ax.json) ; contrôles automatiques
+(validation.json). Les images et calques modifiés sont diffusés sous la même licence CC BY 4.0,
+avec cette mention. Les étiquettes ne sont pas une relecture radiologique du jeu de données.

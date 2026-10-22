@@ -1,0 +1,73 @@
+{
+ "cle": "sillons-17",
+ "nom_fr": "Sillon latéral gauche, rameau antérieur horizontal",
+ "nom_en": "Lateral sulcus, anterior horizontal ramus",
+ "cote": "gauche",
+ "categorie": "Sillons",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (limites DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -45.3,
+   24.8,
+   -7.6
+  ],
+  "mni_icbm2009c_mm": [
+   -51.900001525878906,
+   24.899999618530273,
+   -9.899999618530273
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -45.3,
+    24.8,
+    -6.9
+   ],
+   "mni_icbm2009c_mm": [
+    -52.0,
+    25.0,
+    -9.300000190734863
+   ],
+   "coupe": "z = -6.9 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -45.3,
+    24.8,
+    -7.6
+   ],
+   "mni_icbm2009c_mm": [
+    -51.900001525878906,
+    24.899999618530273,
+    -9.899999618530273
+   ],
+   "coupe": "y = +24.8 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -42.5,
+    24.8,
+    -7.6
+   ],
+   "mni_icbm2009c_mm": [
+    -49.5,
+    25.5,
+    -9.600000381469727
+   ],
+   "coupe": "x = -42.5 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Règle (limites DKT)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

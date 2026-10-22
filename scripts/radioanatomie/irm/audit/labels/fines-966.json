@@ -1,0 +1,99 @@
+{
+ "cle": "fines-966",
+ "nom_fr": "Corps mamillaire gauche",
+ "nom_en": "L-C.mammilare",
+ "cote": "gauche",
+ "categorie": "Système limbique",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "HypVINN",
+  "nom_outil": "L-C.mammilare",
+  "identifiant": 966
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -1.2,
+   -8.1,
+   -11.8
+  ],
+  "mni_icbm2009c_mm": [
+   -2.200000047683716,
+   -8.300000190734863,
+   -15.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -1.2,
+    -8.1,
+    -12.5
+   ],
+   "mni_icbm2009c_mm": [
+    -2.200000047683716,
+    -8.399999618530273,
+    -16.100000381469727
+   ],
+   "coupe": "z = -12.5 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -1.2,
+    -7.4,
+    -11.8
+   ],
+   "mni_icbm2009c_mm": [
+    -2.200000047683716,
+    -7.599999904632568,
+    -15.600000381469727
+   ],
+   "coupe": "y = -7.4 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -0.5,
+    -8.1,
+    -11.8
+   ],
+   "mni_icbm2009c_mm": [
+    -1.399999976158142,
+    -8.300000190734863,
+    -15.5
+   ],
+   "coupe": "x = -0.5 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 77,
+     "nom": "Ventral Diencephalon (L)"
+    }
+   ],
+   "mesure": 0.332,
+   "verdict": "discordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.0,
+     "verdict": "discordant"
+    },
+    "coronal": {
+     "mesure": 0.345,
+     "verdict": "discordant"
+    },
+    "sagittal": {
+     "mesure": 0.366,
+     "verdict": "discordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.93"
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "faible"
+}

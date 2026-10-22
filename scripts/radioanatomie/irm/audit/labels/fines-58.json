@@ -1,0 +1,125 @@
+{
+ "cle": "fines-58",
+ "nom_fr": "Noyau accumbens droit",
+ "nom_en": "Right-Accumbens-area",
+ "cote": "droit",
+ "categorie": "Noyaux gris centraux et structures apparentées",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (aseg)",
+  "nom_outil": "Right-Accumbens-area",
+  "identifiant": 58
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   7.9,
+   10.1,
+   -7.6
+  ],
+  "mni_icbm2009c_mm": [
+   8.0,
+   8.699999809265137,
+   -11.100000381469727
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    7.9,
+    10.1,
+    -6.9
+   ],
+   "mni_icbm2009c_mm": [
+    7.900000095367432,
+    8.699999809265137,
+    -10.300000190734863
+   ],
+   "coupe": "z = -6.9 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    7.9,
+    10.1,
+    -7.6
+   ],
+   "mni_icbm2009c_mm": [
+    8.0,
+    8.699999809265137,
+    -11.100000381469727
+   ],
+   "coupe": "y = +10.1 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    5.8,
+    10.1,
+    -7.6
+   ],
+   "mni_icbm2009c_mm": [
+    5.5,
+    8.800000190734863,
+    -11.100000381469727
+   ],
+   "coupe": "x = +5.8 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 4,
+     "nom": "Accumbens Area (R)"
+    }
+   ],
+   "mesure": 0.468,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.624,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.476,
+     "verdict": "partiel"
+    },
+    "sagittal": {
+     "mesure": 0.564,
+     "verdict": "partiel"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.76"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 21,
+     "nom": "Right Accumbens"
+    }
+   ],
+   "mesure": 0.528,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.673,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.612,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.59,
+     "verdict": "partiel"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "moyenne"
+}

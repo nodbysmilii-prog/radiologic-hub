@@ -1,0 +1,200 @@
+{
+ "groupe": "patte-oie",
+ "cote": "droit",
+ "unite": "mètre",
+ "axes": "glTF : +Y vers le haut, +Z vers l'avant du patient, -X vers le côté latéral (membre droit)",
+ "centre_source": [
+  -0.07081,
+  0.0283,
+  0.44318
+ ],
+ "position": "anatomique : genou en extension",
+ "coupes": "14 cm au-dessus et 12 cm au-dessous du plateau tibial",
+ "reperes": {
+  "plateau_tibial_y": -0.01,
+  "bourse_anserine": [
+   0.01639,
+   -0.06278,
+   0.00497
+  ],
+  "coupe_proximale_y": 0.13,
+  "coupe_distale_y": -0.13
+ },
+ "source": {
+  "nom": "Z-Anatomy",
+  "depot": "https://github.com/Z-Anatomy/Models-of-human-anatomy",
+  "commit": "2b6cf98a8ca012571ecb252e5c077b42a21b3b61",
+  "licence": "CC BY-SA 4.0",
+  "origine": "BodyParts3D, The Database Center for Life Science (CC BY-SA 2.1 Japon)"
+ },
+ "licence": "CC BY-SA 4.0",
+ "compression": "EXT_meshopt_compression (gltf-transform meshopt)",
+ "total_octets": 139160,
+ "modeles": [
+  {
+   "id": "sartorius",
+   "fichier": "sartorius.glb",
+   "nom": "Sartorius",
+   "categorie": "muscle",
+   "source": "Sartorius muscle.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 1698,
+   "octets": 17048,
+   "version": "722966dfe5db",
+   "modifications": [
+    "coupé 14 cm au-dessus du plateau tibial, section refermée"
+   ]
+  },
+  {
+   "id": "gracile",
+   "fichier": "gracile.glb",
+   "nom": "Gracile",
+   "categorie": "muscle",
+   "source": "Gracilis muscle.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 1762,
+   "octets": 17480,
+   "version": "1963af9bc176",
+   "modifications": [
+    "coupé 14 cm au-dessus du plateau tibial, section refermée"
+   ]
+  },
+  {
+   "id": "semi-tendineux",
+   "fichier": "semi-tendineux.glb",
+   "nom": "Semi-tendineux",
+   "categorie": "muscle",
+   "source": "Semitendinosus muscle.r",
+   "materiaux": [
+    "muscle",
+    "tendon"
+   ],
+   "triangles": 2042,
+   "octets": 19860,
+   "version": "38f9b262cc20",
+   "modifications": [
+    "coupé 14 cm au-dessus du plateau tibial, section refermée"
+   ]
+  },
+  {
+   "id": "bourse-anserine",
+   "fichier": "bourse-anserine.glb",
+   "nom": "Bourse de la patte d'oie",
+   "categorie": "bourse",
+   "source": "Anserine bursa.r",
+   "materiaux": [
+    "bourse"
+   ],
+   "triangles": 1216,
+   "octets": 10264,
+   "version": "6810322c1542",
+   "modifications": []
+  },
+  {
+   "id": "ligament-collateral-tibial",
+   "fichier": "ligament-collateral-tibial.glb",
+   "nom": "Ligament collatéral tibial",
+   "categorie": "ligament",
+   "source": "Superficial part of tibial collateral ligament.r + Deep part of tibial collateral ligament.r",
+   "materiaux": [
+    "ligament"
+   ],
+   "triangles": 752,
+   "octets": 9308,
+   "version": "7de861890092",
+   "modifications": [
+    "2 objets du pack réunis"
+   ]
+  },
+  {
+   "id": "semi-membraneux",
+   "fichier": "semi-membraneux.glb",
+   "nom": "Semi-membraneux",
+   "categorie": "contexte",
+   "source": "Semimembranosus muscle.r",
+   "materiaux": [
+    "contexte",
+    "tendon"
+   ],
+   "triangles": 2500,
+   "octets": 23484,
+   "version": "67d92a38c3c3",
+   "modifications": [
+    "coupé 14 cm au-dessus du plateau tibial, section refermée",
+    "simplifié de 4206 à 2500 triangles (41 %)"
+   ]
+  },
+  {
+   "id": "femur-distal",
+   "fichier": "femur-distal.glb",
+   "nom": "Fémur (partie distale)",
+   "categorie": "os",
+   "source": "Femur.r",
+   "materiaux": [
+    "os",
+    "cartilage"
+   ],
+   "triangles": 1768,
+   "octets": 16420,
+   "version": "5ccd0fe26374",
+   "modifications": [
+    "coupé 14 cm au-dessus du plateau tibial, section refermée"
+   ]
+  },
+  {
+   "id": "patella",
+   "fichier": "patella.glb",
+   "nom": "Patella",
+   "categorie": "os",
+   "source": "Patella.r",
+   "materiaux": [
+    "os",
+    "cartilage"
+   ],
+   "triangles": 276,
+   "octets": 5536,
+   "version": "88d3b93a60f7",
+   "modifications": []
+  },
+  {
+   "id": "tibia-proximal",
+   "fichier": "tibia-proximal.glb",
+   "nom": "Tibia (partie proximale)",
+   "categorie": "os",
+   "source": "Tibia.r",
+   "materiaux": [
+    "os",
+    "cartilage"
+   ],
+   "triangles": 1116,
+   "octets": 11728,
+   "version": "b4a2604ebdfb",
+   "modifications": [
+    "coupé 12 cm sous le plateau tibial, section refermée"
+   ]
+  },
+  {
+   "id": "fibula-proximale",
+   "fichier": "fibula-proximale.glb",
+   "nom": "Fibula (partie proximale)",
+   "categorie": "os",
+   "source": "Fibula.r",
+   "materiaux": [
+    "os",
+    "cartilage"
+   ],
+   "triangles": 666,
+   "octets": 8032,
+   "version": "062eb5681edb",
+   "modifications": [
+    "coupé 12 cm sous le plateau tibial, section refermée"
+   ]
+  }
+ ]
+}

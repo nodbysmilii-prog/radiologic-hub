@@ -1,0 +1,88 @@
+{
+ "cle": "territoires-18",
+ "nom_fr": "Territoire de l'ACP (droit)",
+ "nom_en": "ACP",
+ "cote": "droit",
+ "categorie": "Territoires vasculaires",
+ "statut_module": "transporté",
+ "source": {
+  "origine": "Atlas des territoires (Liu 2023, redécoupé)",
+  "nom_outil": "ACP",
+  "identifiant": 18
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   38.0,
+   -51.5,
+   -9.0
+  ],
+  "mni_icbm2009c_mm": [
+   42.400001525878906,
+   -53.0,
+   -7.800000190734863
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    38.0,
+    -51.5,
+    -7.6
+   ],
+   "mni_icbm2009c_mm": [
+    42.20000076293945,
+    -52.70000076293945,
+    -6.599999904632568
+   ],
+   "coupe": "z = -7.6 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    38.0,
+    -84.4,
+    -9.0
+   ],
+   "mni_icbm2009c_mm": [
+    41.0,
+    -86.9000015258789,
+    -16.0
+   ],
+   "coupe": "y = -84.4 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    13.5,
+    -51.5,
+    -9.0
+   ],
+   "mni_icbm2009c_mm": [
+    14.100000381469727,
+    -52.599998474121094,
+    -10.399999618530273
+   ],
+   "coupe": "x = +13.5 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "Liu et al. 2023 (territoires artériels, CC BY-SA 4.0)",
+   "type": "transporté",
+   "labels": {
+    "ids": [
+     18
+    ],
+    "noms": [
+     "Territoire de l'ACP (droit)"
+    ]
+   },
+   "verdict": "redécoupé par règles géométriques (voir le rapport)"
+  }
+ ],
+ "remarques": [
+  "Territoire de l'atlas de Liu 2023 transporté sur le sujet, puis redécoupé par des règles géométriques (vidéo de référence de l'auteur) : à contrôler avec Tatu 1998.",
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Atlas des territoires (Liu 2023, redécoupé)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

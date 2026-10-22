@@ -1,0 +1,129 @@
+{
+ "cle": "fines-2013",
+ "nom_fr": "Gyrus lingual droit",
+ "nom_en": "ctx-rh-lingual",
+ "cote": "droit",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-lingual",
+  "identifiant": 2013
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   5.1,
+   -81.6,
+   -11.8
+  ],
+  "mni_icbm2009c_mm": [
+   5.0,
+   -82.80000305175781,
+   -15.0
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    5.1,
+    -81.6,
+    -3.4
+   ],
+   "mni_icbm2009c_mm": [
+    3.9000000953674316,
+    -81.0999984741211,
+    -5.900000095367432
+   ],
+   "coupe": "z = -3.4 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    5.1,
+    -60.6,
+    -11.8
+   ],
+   "mni_icbm2009c_mm": [
+    5.800000190734863,
+    -61.70000076293945,
+    -15.600000381469727
+   ],
+   "coupe": "y = -60.6 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    10.7,
+    -81.6,
+    -11.8
+   ],
+   "mni_icbm2009c_mm": [
+    10.600000381469727,
+    -83.5999984741211,
+    -15.600000381469727
+   ],
+   "coupe": "x = +10.7 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 12,
+     "nom": "Lingual (R)"
+    }
+   ],
+   "mesure": 0.645,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.705,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.697,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.781,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.75"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 48,
+     "nom": "Right Intracalcarine Cortex"
+    },
+    {
+     "id": 72,
+     "nom": "Right Lingual Gyrus"
+    }
+   ],
+   "mesure": 0.905,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.914,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.932,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.924,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

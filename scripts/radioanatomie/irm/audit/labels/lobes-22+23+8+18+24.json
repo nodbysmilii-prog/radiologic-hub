@@ -1,0 +1,145 @@
+{
+ "cle": "lobes-22+23+8+18+24",
+ "nom_fr": "Rhombencéphale",
+ "nom_en": "Rhombencephalon (hindbrain)",
+ "cote": "médian",
+ "categorie": "Régions",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (grandes régions)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -24.3,
+   -61.3,
+   -34.2
+  ],
+  "mni_icbm2009c_mm": [
+   -27.100000381469727,
+   -62.79999923706055,
+   -41.400001525878906
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -24.3,
+    -61.3,
+    -28.6
+   ],
+   "mni_icbm2009c_mm": [
+    -27.799999237060547,
+    -62.400001525878906,
+    -34.5
+   ],
+   "coupe": "z = -28.6 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -24.3,
+    -55.7,
+    -34.2
+   ],
+   "mni_icbm2009c_mm": [
+    -26.600000381469727,
+    -56.599998474121094,
+    -40.5
+   ],
+   "coupe": "y = -55.7 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    6.5,
+    -61.3,
+    -34.2
+   ],
+   "mni_icbm2009c_mm": [
+    8.0,
+    -63.400001525878906,
+    -39.79999923706055
+   ],
+   "coupe": "x = +6.5 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 62,
+     "nom": "Brainstem (L)"
+    },
+    {
+     "id": 11,
+     "nom": "Brainstem (R)"
+    },
+    {
+     "id": 97,
+     "nom": "Cerebellum Gray Matter (L)"
+    },
+    {
+     "id": 46,
+     "nom": "Cerebellum Gray Matter (R)"
+    },
+    {
+     "id": 90,
+     "nom": "Cerebellum White Matter (L)"
+    },
+    {
+     "id": 39,
+     "nom": "Cerebellum White Matter (R)"
+    },
+    {
+     "id": 101,
+     "nom": "Vermal lobules I-V (L)"
+    },
+    {
+     "id": 50,
+     "nom": "Vermal lobules I-V (R)"
+    },
+    {
+     "id": 53,
+     "nom": "Vermal lobules VI-VII (L)"
+    },
+    {
+     "id": 2,
+     "nom": "Vermal lobules VI-VII (R)"
+    },
+    {
+     "id": 71,
+     "nom": "Vermal lobules VIII-X (L)"
+    },
+    {
+     "id": 20,
+     "nom": "Vermal lobules VIII-X (R)"
+    }
+   ],
+   "mesure": 0.915,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.945,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.951,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.932,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.38"
+  }
+ ],
+ "remarques": [
+  "Étiquette CerebrA peu fiable selon ses auteurs (kappa 0.38) : la discordance ne suffit pas à conclure."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "élevée"
+}

@@ -1,0 +1,103 @@
+{
+ "cle": "lobes-8",
+ "nom_fr": "Hémisphère cérébelleux gauche",
+ "nom_en": "Cerebellar hemisphere",
+ "cote": "gauche",
+ "categorie": "Cervelet",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (grandes régions)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -25.7,
+   -59.2,
+   -34.9
+  ],
+  "mni_icbm2009c_mm": [
+   -28.200000762939453,
+   -60.400001525878906,
+   -41.900001525878906
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -25.7,
+    -59.2,
+    -27.9
+   ],
+   "mni_icbm2009c_mm": [
+    -29.600000381469727,
+    -60.20000076293945,
+    -33.099998474121094
+   ],
+   "coupe": "z = -27.9 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -25.7,
+    -54.3,
+    -34.9
+   ],
+   "mni_icbm2009c_mm": [
+    -27.600000381469727,
+    -55.099998474121094,
+    -41.20000076293945
+   ],
+   "coupe": "y = -54.3 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -13.8,
+    -59.2,
+    -34.9
+   ],
+   "mni_icbm2009c_mm": [
+    -16.299999237060547,
+    -62.0,
+    -40.900001525878906
+   ],
+   "coupe": "x = -13.8 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 97,
+     "nom": "Cerebellum Gray Matter (L)"
+    },
+    {
+     "id": 90,
+     "nom": "Cerebellum White Matter (L)"
+    }
+   ],
+   "mesure": 0.905,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.948,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.916,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.916,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.73"
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

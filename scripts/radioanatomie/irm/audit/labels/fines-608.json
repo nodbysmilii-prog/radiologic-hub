@@ -1,0 +1,99 @@
+{
+ "cle": "fines-608",
+ "nom_fr": "Crus I (lobule semi-lunaire supérieur), hémisphère cérébelleux gauche",
+ "nom_en": "Cbm_Left_CrusI",
+ "cote": "gauche",
+ "categorie": "Cervelet",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "CerebNet",
+  "nom_outil": "Cbm_Left_CrusI",
+  "identifiant": 608
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -39.0,
+   -69.7,
+   -22.3
+  ],
+  "mni_icbm2009c_mm": [
+   -43.29999923706055,
+   -71.9000015258789,
+   -26.600000381469727
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -39.0,
+    -69.7,
+    -25.8
+   ],
+   "mni_icbm2009c_mm": [
+    -42.70000076293945,
+    -72.0999984741211,
+    -31.299999237060547
+   ],
+   "coupe": "z = -25.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -39.0,
+    -73.9,
+    -22.3
+   ],
+   "mni_icbm2009c_mm": [
+    -42.20000076293945,
+    -76.5,
+    -27.700000762939453
+   ],
+   "coupe": "y = -73.9 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -39.0,
+    -69.7,
+    -22.3
+   ],
+   "mni_icbm2009c_mm": [
+    -43.29999923706055,
+    -71.9000015258789,
+    -26.600000381469727
+   ],
+   "coupe": "x = -39.0 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 97,
+     "nom": "Cerebellum Gray Matter (L)"
+    }
+   ],
+   "mesure": 0.887,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.944,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.917,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.922,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.83"
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

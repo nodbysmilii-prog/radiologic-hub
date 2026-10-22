@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-ILF_right",
+ "nom_fr": "Faisceau longitudinal inférieur droit",
+ "nom_en": "ILF_right",
+ "cote": "droit",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "ILF_right",
+  "identifiant": "ILF_right"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   10.7,
+   -77.4,
+   -1.3
+  ],
+  "mni_icbm2009c_mm": [
+   11.100000381469727,
+   -76.5999984741211,
+   -4.900000095367432
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    10.7,
+    -77.4,
+    -1.3
+   ],
+   "mni_icbm2009c_mm": [
+    11.100000381469727,
+    -76.5999984741211,
+    -4.900000095367432
+   ],
+   "coupe": "z = -1.3 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    10.7,
+    -75.3,
+    -1.3
+   ],
+   "mni_icbm2009c_mm": [
+    11.699999809265137,
+    -74.5,
+    -4.300000190734863
+   ],
+   "coupe": "y = -75.3 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    35.2,
+    -77.4,
+    -1.3
+   ],
+   "mni_icbm2009c_mm": [
+    37.0,
+    -79.80000305175781,
+    -8.100000381469727
+   ],
+   "coupe": "x = +35.2 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

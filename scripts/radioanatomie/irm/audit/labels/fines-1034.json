@@ -1,0 +1,129 @@
+{
+ "cle": "fines-1034",
+ "nom_fr": "Gyrus temporal transverse gauche (gyrus de Heschl)",
+ "nom_en": "ctx-lh-transversetemporal",
+ "cote": "gauche",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-transversetemporal",
+  "identifiant": 1034
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -36.2,
+   -23.5,
+   14.1
+  ],
+  "mni_icbm2009c_mm": [
+   -40.599998474121094,
+   -24.0,
+   13.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -36.2,
+    -23.5,
+    10.6
+   ],
+   "mni_icbm2009c_mm": [
+    -40.900001525878906,
+    -23.799999237060547,
+    9.600000381469727
+   ],
+   "coupe": "z = +10.6 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -36.2,
+    -23.5,
+    14.1
+   ],
+   "mni_icbm2009c_mm": [
+    -40.599998474121094,
+    -24.0,
+    13.5
+   ],
+   "coupe": "y = -23.5 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -40.4,
+    -23.5,
+    14.1
+   ],
+   "mni_icbm2009c_mm": [
+    -44.79999923706055,
+    -23.799999237060547,
+    14.300000190734863
+   ],
+   "coupe": "x = -40.4 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 65,
+     "nom": "Transverse Temporal (L)"
+    }
+   ],
+   "mesure": 0.715,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.754,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.67,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.744,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.85"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 89,
+     "nom": "Left Heschl's Gyrus (includes H1 and H2)"
+    },
+    {
+     "id": 91,
+     "nom": "Left Planum Temporale"
+    }
+   ],
+   "mesure": 0.933,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.867,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.944,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.995,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

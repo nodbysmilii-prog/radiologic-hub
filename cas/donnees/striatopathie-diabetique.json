@@ -1,0 +1,359 @@
+{
+ "id": "striatopathie-diabetique",
+ "spe": "neuro",
+ "c": "purple",
+ "badge": {
+  "fr": "Neuro",
+  "en": "Neuro"
+ },
+ "tag": {
+  "fr": "Cas clinique · Neuro · IRM et TDM",
+  "en": "Clinical case · Neuroimaging · MRI and CT"
+ },
+ "titre": {
+  "fr": "Des mouvements <span class='hl-red'>involontaires et brusques</span> chez un diabétique",
+  "en": "<span class='hl-red'>Involuntary, jerky movements</span> in a diabetic patient"
+ },
+ "titre_texte": {
+  "fr": "Des mouvements involontaires et brusques chez un diabétique",
+  "en": "Involuntary, jerky movements in a diabetic patient"
+ },
+ "accroche": {
+  "fr": "Homme de 56 ans, <span class='hl-navy'>diabète de type 2 mal équilibré</span>, mouvements involontaires et brusques du bras et de la jambe droits. Une IRM, une TDM : quel est votre diagnostic ?",
+  "en": "A 56-year-old man with <span class='hl-navy'>poorly controlled type 2 diabetes</span> and involuntary, jerky movements of his right arm and leg. One MRI, one CT: what is your diagnosis?"
+ },
+ "mots": [
+  {
+   "fr": "IRM",
+   "en": "MRI"
+  },
+  {
+   "fr": "TDM",
+   "en": "CT"
+  },
+  {
+   "fr": "Noyaux gris centraux",
+   "en": "Basal ganglia"
+  }
+ ],
+ "sections": [
+  {
+   "id": "cas",
+   "num": "I",
+   "c": "rose",
+   "titre": {
+    "fr": "Le cas",
+    "en": "The case"
+   },
+   "blocs": [
+    {
+     "type": "recit",
+     "fr": "Homme de 56 ans aux antécédents de <mark class='k-key'>diabète de type 2 mal équilibré</mark>, qui consulte pour des <mark class='k-signo'>mouvements involontaires et brusques</mark>, d'apparition soudaine, du bras et de la jambe droits.",
+     "en": "A 56-year-old male with a history of <mark class='k-key'>poorly controlled type 2 diabetes mellitus</mark> presents with sudden-onset, <mark class='k-signo'>involuntary and jerky movements</mark> of his right arm and leg."
+    }
+   ]
+  },
+  {
+   "id": "images",
+   "num": "II",
+   "c": "slate",
+   "titre": {
+    "fr": "L'IRM et la TDM",
+    "en": "The MRI and the CT"
+   },
+   "blocs": [
+    {
+     "type": "intro-images"
+    },
+    {
+     "type": "galerie",
+     "c": "slate",
+     "images": [
+      {
+       "src": "irm-t1-axiale.jpg",
+       "mod": {
+        "fr": "IRM T1",
+        "en": "T1 MRI"
+       },
+       "titre": {
+        "fr": "Image 1 · IRM, coupe axiale pondérée en T1",
+        "en": "Image 1 · Axial T1-weighted MRI"
+       },
+       "alt": {
+        "fr": "IRM cérébrale, coupe axiale pondérée en T1, passant par les noyaux gris centraux",
+        "en": "Brain MRI, axial T1-weighted image through the basal ganglia"
+       }
+      },
+      {
+       "src": "tdm-axiale.jpg",
+       "mod": {
+        "fr": "TDM",
+        "en": "CT"
+       },
+       "titre": {
+        "fr": "Image 2 · TDM cérébrale sans injection, coupe axiale",
+        "en": "Image 2 · Non-contrast head CT, axial image"
+       },
+       "alt": {
+        "fr": "TDM cérébrale sans injection, coupe axiale passant par les noyaux gris centraux",
+        "en": "Non-contrast head CT, axial image through the basal ganglia"
+       }
+      },
+      {
+       "src": "tdm-coronale.jpg",
+       "mod": {
+        "fr": "TDM",
+        "en": "CT"
+       },
+       "titre": {
+        "fr": "Image 3 · TDM cérébrale, reconstruction coronale",
+        "en": "Image 3 · Head CT, coronal reformat"
+       },
+       "alt": {
+        "fr": "TDM cérébrale, reconstruction coronale passant par les noyaux gris centraux",
+        "en": "Head CT, coronal reformat through the basal ganglia"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "diagnostic",
+   "num": "III",
+   "c": "amber",
+   "titre": {
+    "fr": "À vous de jouer",
+    "en": "Your turn"
+   },
+   "blocs": [
+    {
+     "type": "question",
+     "question": {
+      "fr": "Quel est votre diagnostic ?",
+      "en": "What is your diagnosis?"
+     },
+     "reponse": {
+      "fr": "Striatopathie diabétique",
+      "en": "Diabetic striatopathy"
+     }
+    }
+   ]
+  },
+  {
+   "id": "semiologie",
+   "num": "IV",
+   "c": "crimson",
+   "titre": {
+    "fr": "Ce que montrent les images",
+    "en": "What the images show"
+   },
+   "blocs": [
+    {
+     "type": "colonnes",
+     "blocs": [
+      {
+       "type": "fcard",
+       "c": "purple",
+       "titre": {
+        "fr": "IRM",
+        "en": "MRI"
+       },
+       "items": [
+        {
+         "fr": "<mark class='k-sign'>Hypersignal du putamen et du noyau caudé</mark> en pondération T1.",
+         "en": "<mark class='k-sign'>Hyperintensity in the putamen and caudate nucleus</mark> on the T1-weighted sequence."
+        }
+       ]
+      },
+      {
+       "type": "fcard",
+       "c": "crimson",
+       "titre": {
+        "fr": "TDM",
+        "en": "CT"
+       },
+       "items": [
+        {
+         "fr": "<mark class='k-sign'>Hyperdensité anormale des noyaux gris centraux droits</mark>, touchant le <mark class='k-tech'>noyau caudé</mark> et le <mark class='k-tech'>noyau lenticulaire</mark>.",
+         "en": "<mark class='k-sign'>Abnormal hyperdensity is noted in the right basal ganglia</mark>, involving the <mark class='k-tech'>caudate nucleus</mark> and <mark class='k-tech'>lentiform nuclei</mark>."
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "striatopathie",
+   "num": "V",
+   "c": "teal",
+   "titre": {
+    "fr": "La striatopathie diabétique",
+    "en": "Diabetic striatopathy"
+   },
+   "blocs": [
+    {
+     "type": "fcard",
+     "c": "teal",
+     "items": [
+      {
+       "fr": "<mark class='k-key'>Hyperglycémie sans cétose</mark>.",
+       "en": "<mark class='k-key'>Hyperglycemia without ketosis</mark>."
+      },
+      {
+       "fr": "Atteinte <mark class='k-sign'>unilatérale</mark>.",
+       "en": "<mark class='k-sign'>Unilateral</mark> involvement."
+      },
+      {
+       "fr": "<mark class='k-tech'>Putamen ++</mark> et <mark class='k-tech'>noyau caudé</mark>.",
+       "en": "<mark class='k-tech'>Putamen ++</mark> and <mark class='k-tech'>caudate nucleus</mark>."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "hypersignal-t1",
+   "num": "VI",
+   "c": "blue",
+   "titre": {
+    "fr": "Hypersignal T1 des noyaux gris centraux",
+    "en": "T1 hyperintensity of the basal ganglia"
+   },
+   "blocs": [
+    {
+     "type": "tuiles",
+     "items": [
+      {
+       "c": "amber",
+       "badge": "1",
+       "titre": {
+        "fr": "Sang",
+        "en": "Blood"
+       }
+      },
+      {
+       "c": "blue",
+       "badge": "2",
+       "titre": {
+        "fr": "Calcifications",
+        "en": "Calcifications"
+       }
+      },
+      {
+       "c": "purple",
+       "badge": "3",
+       "titre": {
+        "fr": "Métaux",
+        "en": "Metals"
+       }
+      },
+      {
+       "c": "teal",
+       "badge": "4",
+       "titre": {
+        "fr": "Striatopathie diabétique",
+        "en": "Diabetic striatopathy"
+       }
+      }
+     ]
+    },
+    {
+     "type": "colonnes",
+     "blocs": [
+      {
+       "type": "fcard",
+       "c": "amber",
+       "titre": {
+        "fr": "Sang",
+        "en": "Blood"
+       },
+       "items": [
+        {
+         "fr": "<mark class='k-ddx'>Encéphalopathie hypoxo-ischémique</mark> : noyaux gris centraux, thalamus, cortex rolandique, substance blanche sous-corticale, hippocampes.",
+         "en": "<mark class='k-ddx'>Hypoxic-ischemic encephalopathy</mark>: basal ganglia, thalamus, Rolandic cortex, subcortical white matter, hippocampi."
+        },
+        {
+         "fr": "<mark class='k-ddx'>Intoxication au méthanol</mark> : nécrose hémorragique du putamen, névrite optique.",
+         "en": "<mark class='k-ddx'>Methanol poisoning</mark>: hemorrhagic necrosis of the putamen, optic neuritis."
+        },
+        {
+         "fr": "<mark class='k-ddx'>Infarctus hémorragique</mark>.",
+         "en": "<mark class='k-ddx'>Hemorrhagic infarction</mark>."
+        },
+        {
+         "fr": "<mark class='k-ddx'>Intoxication au monoxyde de carbone</mark>, en cas de transformation hémorragique : globus pallidus &gt; substance blanche profonde &gt; putamen, noyau caudé.",
+         "en": "<mark class='k-ddx'>Carbon monoxide poisoning</mark>, if hemorrhagic transformation: globus pallidus &gt; deep white matter &gt; putamen, caudate nucleus."
+        }
+       ]
+      },
+      {
+       "type": "fcard",
+       "c": "purple",
+       "titre": {
+        "fr": "Métaux (manganèse)",
+        "en": "Metals (manganese)"
+       },
+       "items": [
+        {
+         "fr": "<mark class='k-ddx'>Insuffisance hépatique</mark>.",
+         "en": "<mark class='k-ddx'>Liver failure</mark>."
+        },
+        {
+         "fr": "<mark class='k-ddx'>Nutrition parentérale</mark>.",
+         "en": "<mark class='k-ddx'>Parenteral nutrition</mark>."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "colonnes",
+     "blocs": [
+      {
+       "type": "fcard",
+       "c": "blue",
+       "titre": {
+        "fr": "Calcifications acquises",
+        "en": "Acquired calcifications"
+       },
+       "items": [
+        {
+         "fr": "<mark class='k-ddx'>Physiologiques</mark> : ponctuées ; globus pallidus &gt; tête du noyau caudé, putamen.",
+         "en": "<mark class='k-ddx'>Physiological</mark>: punctate; globus pallidus &gt; head of caudate, putamen."
+        },
+        {
+         "fr": "<mark class='k-ddx'>Métaboliques</mark> : hyperparathyroïdie, hypoparathyroïdie, pseudo-hypoparathyroïdie.",
+         "en": "<mark class='k-ddx'>Metabolic</mark>: hyperparathyroidism, hypoparathyroidism, pseudohypoparathyroidism."
+        },
+        {
+         "fr": "<mark class='k-ddx'>Infectieuses</mark> : asymétriques ; CMV, toxoplasmose, EBV, virus BK.",
+         "en": "<mark class='k-ddx'>Infectious</mark>: asymmetric; CMV, toxoplasmosis, EBV, BK virus."
+        }
+       ]
+      },
+      {
+       "type": "fcard",
+       "c": "cornflower",
+       "titre": {
+        "fr": "Calcifications congénitales",
+        "en": "Congenital calcifications"
+       },
+       "items": [
+        {
+         "fr": "<mark class='k-ddx'>Syndrome de Cockayne</mark> : bilatérales et symétriques ; putamen +++, cortex, noyau dentelé.",
+         "en": "<mark class='k-ddx'>Cockayne syndrome</mark>: bilateral and symmetric; putamen +++, cortex, dentate nucleus."
+        },
+        {
+         "fr": "<mark class='k-ddx'>Calcinose striato-pallido-dentelée bilatérale (maladie de Fahr)</mark> : globus pallidus, putamen, noyau caudé, thalamus, noyau dentelé, centres semi-ovales.",
+         "en": "<mark class='k-ddx'>Bilateral striopallidodentate calcinosis (Fahr disease)</mark>: globus pallidus, putamen, caudate nucleus, thalamus, dentate nucleus, semioval centers."
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

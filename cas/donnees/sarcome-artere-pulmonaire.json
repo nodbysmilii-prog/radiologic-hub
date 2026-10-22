@@ -1,0 +1,408 @@
+{
+ "id": "sarcome-artere-pulmonaire",
+ "spe": "vasculaire",
+ "c": "teal",
+ "badge": {
+  "fr": "Cardio-vasculaire",
+  "en": "Cardiovascular"
+ },
+ "tag": {
+  "fr": "Cas clinique · Thorax · TDM",
+  "en": "Clinical case · Chest imaging · CT"
+ },
+ "titre": {
+  "fr": "Une dyspnée qui s'aggrave depuis <span class='hl-red'>3 mois</span>",
+  "en": "Dyspnea worsening over <span class='hl-red'>3 months</span>"
+ },
+ "titre_texte": {
+  "fr": "Une dyspnée qui s'aggrave depuis 3 mois",
+  "en": "Dyspnea worsening over 3 months"
+ },
+ "accroche": {
+  "fr": "Une femme de 52 ans arrive aux urgences pour une <span class='hl-red'>dyspnée progressive</span>. Deux coupes de TDM thoracique : quel est votre diagnostic ?",
+  "en": "A 52-year-old woman comes to the emergency department with <span class='hl-red'>progressive dyspnea</span>. Two chest CT images: what is your diagnosis?"
+ },
+ "mots": [
+  {
+   "fr": "TDM",
+   "en": "CT"
+  },
+  {
+   "fr": "Artères pulmonaires",
+   "en": "Pulmonary arteries"
+  },
+  {
+   "fr": "Tumeur",
+   "en": "Tumor"
+  }
+ ],
+ "sections": [
+  {
+   "id": "cas",
+   "num": "I",
+   "c": "rose",
+   "titre": {
+    "fr": "Le cas",
+    "en": "The case"
+   },
+   "blocs": [
+    {
+     "type": "recit",
+     "fr": "<b>Femme de 52 ans</b> admise aux urgences pour une <mark class='k-grave'>dyspnée progressive</mark> depuis 3 mois, aggravée depuis 2 semaines.</p><p>Elle rapporte également des <mark class='k-grave'>douleurs thoraciques</mark> intermittentes, une toux sèche persistante et une sensation de <mark class='k-signo'>palpitations</mark>.",
+     "en": "<b>A 52-year-old woman</b> presents to the emergency department with <mark class='k-grave'>progressive dyspnea</mark> over the past 3 months, which has worsened over the last 2 weeks.</p><p>She also reports intermittent <mark class='k-grave'>chest pain</mark>, a persistent dry cough, and a sensation of <mark class='k-signo'>palpitations</mark>."
+    }
+   ]
+  },
+  {
+   "id": "images",
+   "num": "II",
+   "c": "slate",
+   "titre": {
+    "fr": "La TDM",
+    "en": "The CT"
+   },
+   "blocs": [
+    {
+     "type": "intro-images"
+    },
+    {
+     "type": "galerie",
+     "c": "slate",
+     "images": [
+      {
+       "src": "tdm-axiale-1.jpg",
+       "mod": {
+        "fr": "Axiale",
+        "en": "Axial"
+       },
+       "titre": {
+        "fr": "Coupe 1 · TDM axiale",
+        "en": "Image 1 · Axial CT"
+       },
+       "texte": {
+        "fr": "Après injection.",
+        "en": "Contrast-enhanced."
+       },
+       "alt": {
+        "fr": "TDM thoracique après injection, coupe axiale",
+        "en": "Contrast-enhanced chest CT, axial image"
+       }
+      },
+      {
+       "src": "tdm-axiale-2.jpg",
+       "mod": {
+        "fr": "Axiale",
+        "en": "Axial"
+       },
+       "titre": {
+        "fr": "Coupe 2 · TDM axiale",
+        "en": "Image 2 · Axial CT"
+       },
+       "texte": {
+        "fr": "Après injection, agrandissement.",
+        "en": "Contrast-enhanced, magnified."
+       },
+       "alt": {
+        "fr": "TDM thoracique après injection, coupe axiale agrandie",
+        "en": "Contrast-enhanced chest CT, magnified axial image"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "diagnostic",
+   "num": "III",
+   "c": "amber",
+   "titre": {
+    "fr": "À vous de jouer",
+    "en": "Your turn"
+   },
+   "blocs": [
+    {
+     "type": "question",
+     "question": {
+      "fr": "Quel est votre diagnostic ?",
+      "en": "What is your diagnosis?"
+     },
+     "reponse": {
+      "fr": "Sarcome de l'artère pulmonaire",
+      "en": "Pulmonary artery sarcoma"
+     }
+    }
+   ]
+  },
+  {
+   "id": "description",
+   "num": "IV",
+   "c": "crimson",
+   "titre": {
+    "fr": "La description",
+    "en": "The description"
+   },
+   "blocs": [
+    {
+     "type": "colonnes",
+     "blocs": [
+      {
+       "type": "galerie",
+       "c": "crimson",
+       "images": [
+        {
+         "src": "tdm-axiale-1.jpg",
+         "mod": {
+          "fr": "Axiale",
+          "en": "Axial"
+         },
+         "titre": {
+          "fr": "TDM axiale annotée",
+          "en": "Annotated axial CT"
+         },
+         "texte": {
+          "fr": "Tirets bleus : la masse dans l'artère pulmonaire gauche.",
+          "en": "Blue dashes: the mass within the left pulmonary artery."
+         },
+         "alt": {
+          "fr": "TDM thoracique annotée : masse de l'artère pulmonaire gauche",
+          "en": "Annotated chest CT: mass within the left pulmonary artery"
+         },
+         "annot": {
+          "taille": [
+           564,
+           429
+          ],
+          "marques": [
+           {
+            "mk": "masse",
+            "type": "tirets",
+            "c": "cornflower",
+            "lignes": [
+             [
+              [
+               406.6,
+               195.8
+              ],
+              [
+               424.4,
+               249.7
+              ]
+             ],
+             [
+              [
+               378.8,
+               219.0
+              ],
+              [
+               397.5,
+               261.8
+              ]
+             ]
+            ]
+           }
+          ]
+         }
+        }
+       ]
+      },
+      {
+       "type": "fcard",
+       "c": "crimson",
+       "titre": {
+        "fr": "Compte rendu",
+        "en": "Report"
+       },
+       "texte": {
+        "fr": "Masse <mark class='k-sign'>polylobée</mark>, de densité tissulaire, <mark class='k-tech'>centrée sur le tronc de l'artère pulmonaire</mark>, de <mark class='k-sign'>configuration ramifiée</mark> s'étendant aux deux artères pulmonaires, avec <mark class='k-grave'>envahissement pariétal</mark>, <mark class='k-grave'>distension de la lumière des vaisseaux atteints</mark> et <mark class='k-grave'>extension extraluminale</mark>.",
+        "en": "<mark class='k-sign'>Polylobulated</mark>, soft-tissue attenuation mass <mark class='k-tech'>centered in the pulmonary trunk</mark>, exhibiting a <mark class='k-sign'>branching configuration</mark> extending into both pulmonary arteries, with evidence of <mark class='k-grave'>mural invasion</mark> and <mark class='k-grave'>luminal expansion of the affected vessels</mark>, and <mark class='k-grave'>extraluminal extension</mark>."
+       }
+      }
+     ]
+    },
+    {
+     "type": "legende",
+     "items": [
+      {
+       "mk": "masse",
+       "lg": "tirets",
+       "c": "cornflower",
+       "fr": "<b>Tirets bleus</b> · <mark class='k-sign'>la masse dans l'artère pulmonaire gauche</mark>, qui en comble et en distend la lumière.",
+       "en": "<b>Blue dashes</b> · <mark class='k-sign'>the mass within the left pulmonary artery</mark>, filling and expanding its lumen."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "signes-tdm",
+   "num": "V",
+   "c": "blue",
+   "titre": {
+    "fr": "Signes TDM",
+    "en": "CT findings"
+   },
+   "blocs": [
+    {
+     "type": "tuiles",
+     "items": [
+      {
+       "c": "crimson",
+       "badge": "1",
+       "titre": {
+        "fr": "Envahissement pariétal",
+        "en": "Wall invasion"
+       }
+      },
+      {
+       "c": "rose",
+       "badge": "2",
+       "titre": {
+        "fr": "Distension des artères atteintes",
+        "en": "Expansion of the involved arteries"
+       }
+      },
+      {
+       "c": "purple",
+       "badge": "3",
+       "titre": {
+        "fr": "Extension tumorale extraluminale",
+        "en": "Extraluminal tumor extension"
+       }
+      },
+      {
+       "c": "blue",
+       "badge": "4",
+       "titre": {
+        "fr": "Rehaussement après injection",
+        "en": "Contrast enhancement"
+       }
+      },
+      {
+       "c": "teal",
+       "badge": "5",
+       "titre": {
+        "fr": "Nodules pulmonaires métastatiques",
+        "en": "Metastatic pulmonary nodules"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "extension",
+   "num": "VI",
+   "c": "teal",
+   "titre": {
+    "fr": "Localisation et extension",
+    "en": "Location and spread"
+   },
+   "blocs": [
+    {
+     "type": "colonnes",
+     "blocs": [
+      {
+       "type": "fcard",
+       "c": "blue",
+       "titre": {
+        "fr": "Localisation primitive",
+        "en": "Primary location"
+       },
+       "items": [
+        {
+         "fr": "<mark class='k-key'>Tronc de l'artère pulmonaire</mark> : le plus souvent atteint.",
+         "en": "<mark class='k-key'>Pulmonary artery trunk</mark>: most frequently involved."
+        },
+        {
+         "fr": "Peut aussi toucher les <mark class='k-tech'>branches droite ou gauche</mark>, voire la <mark class='k-tech'>valve pulmonaire</mark>.",
+         "en": "May also affect the <mark class='k-tech'>right or left branches</mark> and even the <mark class='k-tech'>pulmonary valves</mark>."
+        }
+       ]
+      },
+      {
+       "type": "fcard",
+       "c": "purple",
+       "titre": {
+        "fr": "Mode d'extension",
+        "en": "Extension pattern"
+       },
+       "items": [
+        {
+         "fr": "Suit le <mark class='k-key'>sens du flux sanguin</mark>.",
+         "en": "Follows the <mark class='k-key'>direction of blood flow</mark>."
+        },
+        {
+         "fr": "Une <mark class='k-grave'>infiltration du ventricule droit et du myocarde</mark> est également possible.",
+         "en": "<mark class='k-grave'>Infiltration of the right ventricle and myocardium</mark> is also possible."
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "chiffres",
+     "items": [
+      {
+       "c": "amber",
+       "valeur": {
+        "fr": "50 %",
+        "en": "50%"
+       },
+       "texte": {
+        "fr": "des cas : <b>extension à travers la paroi artérielle</b> vers le parenchyme pulmonaire.",
+        "en": "of cases: <b>extension through the arterial wall</b> into the pulmonary parenchyma."
+       }
+      },
+      {
+       "c": "teal",
+       "valeur": {
+        "fr": "30 %",
+        "en": "30%"
+       },
+       "texte": {
+        "fr": "des cas : <b>métastases</b>, pulmonaires +++, plus rarement hépatiques.",
+        "en": "of cases: <b>metastases</b>, pulmonary +++, less commonly hepatic."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "histologie",
+   "num": "VII",
+   "c": "purple",
+   "titre": {
+    "fr": "Types histologiques",
+    "en": "Histological types"
+   },
+   "blocs": [
+    {
+     "type": "sites",
+     "c": "purple",
+     "titre": {
+      "fr": "Les plus fréquents",
+      "en": "Most common"
+     },
+     "items": [
+      {
+       "c": "rose",
+       "fr": "Léiomyosarcome",
+       "en": "Leiomyosarcoma"
+      },
+      {
+       "c": "steel",
+       "fr": "Fibrosarcome",
+       "en": "Fibrosarcoma"
+      },
+      {
+       "c": "plum",
+       "fr": "Angiosarcome",
+       "en": "Angiosarcoma"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

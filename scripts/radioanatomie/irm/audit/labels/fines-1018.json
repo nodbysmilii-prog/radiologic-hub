@@ -1,0 +1,129 @@
+{
+ "cle": "fines-1018",
+ "nom_fr": "Gyrus frontal inférieur gauche, partie operculaire",
+ "nom_en": "ctx-lh-parsopercularis",
+ "cote": "gauche",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-parsopercularis",
+  "identifiant": 1018
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -36.2,
+   19.9,
+   9.9
+  ],
+  "mni_icbm2009c_mm": [
+   -43.900001525878906,
+   20.0,
+   8.300000190734863
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -36.2,
+    19.9,
+    21.1
+   ],
+   "mni_icbm2009c_mm": [
+    -45.099998474121094,
+    17.5,
+    25.700000762939453
+   ],
+   "coupe": "z = +21.1 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -36.2,
+    17.1,
+    9.9
+   ],
+   "mni_icbm2009c_mm": [
+    -44.599998474121094,
+    16.5,
+    8.600000381469727
+   ],
+   "coupe": "y = +17.1 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -41.8,
+    19.9,
+    9.9
+   ],
+   "mni_icbm2009c_mm": [
+    -50.0,
+    20.5,
+    8.5
+   ],
+   "coupe": "x = -41.8 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 83,
+     "nom": "Pars Opercularis (L)"
+    }
+   ],
+   "mesure": 0.702,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.806,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.807,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.747,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.77"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 11,
+     "nom": "Left Frontal Operculum Cortex"
+    },
+    {
+     "id": 81,
+     "nom": "Left Inferior Frontal Gyrus, pars opercularis"
+    }
+   ],
+   "mesure": 0.76,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.802,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.956,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.763,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

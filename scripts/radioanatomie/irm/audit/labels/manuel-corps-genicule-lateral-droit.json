@@ -1,0 +1,22 @@
+{
+ "cle": "manuel-corps-genicule-lateral-droit",
+ "nom_fr": "Corps géniculé latéral droit",
+ "nom_en": "Lateral geniculate body",
+ "cote": "droit",
+ "categorie": "Voies optiques",
+ "statut_module": "manuel",
+ "source": {
+  "origine": "Points manuels (navigateur)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {},
+ "plans": {},
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Points manuels (navigateur)."
+ ],
+ "controle_lateralite": "non mesurable",
+ "confiance": "à placer"
+}

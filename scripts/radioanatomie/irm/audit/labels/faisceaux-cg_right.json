@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-CG_right",
+ "nom_fr": "Cingulum droit",
+ "nom_en": "CG_right",
+ "cote": "droit",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "CG_right",
+  "identifiant": "CG_right"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   10.7,
+   -56.4,
+   33.7
+  ],
+  "mni_icbm2009c_mm": [
+   12.800000190734863,
+   -58.79999923706055,
+   37.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    10.7,
+    -56.4,
+    32.3
+   ],
+   "mni_icbm2009c_mm": [
+    13.100000381469727,
+    -58.20000076293945,
+    35.599998474121094
+   ],
+   "coupe": "z = +32.3 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    10.7,
+    40.9,
+    33.7
+   ],
+   "mni_icbm2009c_mm": [
+    10.899999618530273,
+    43.0,
+    34.599998474121094
+   ],
+   "coupe": "y = +40.9 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    9.3,
+    -56.4,
+    33.7
+   ],
+   "mni_icbm2009c_mm": [
+    11.399999618530273,
+    -58.79999923706055,
+    37.5
+   ],
+   "coupe": "x = +9.3 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

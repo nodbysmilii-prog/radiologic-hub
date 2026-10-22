@@ -1,0 +1,38 @@
+Modèles 3D — cas clinique « Une douleur médiale du genou » (tendino-bursite de la patte d'oie) — genou droit
+==========================================================================================================
+
+Licence : Creative Commons Attribution – Partage dans les mêmes conditions 4.0 International (CC BY-SA 4.0)
+Résumé : https://creativecommons.org/licenses/by-sa/4.0/deed.fr
+Texte juridique : https://creativecommons.org/licenses/by-sa/4.0/legalcode.fr
+
+Cette licence s'applique UNIQUEMENT aux fichiers de ce dossier (*.glb et manifest.json).
+Le reste du site RadiologicHub (textes, schémas, images, code) n'est pas concerné.
+
+Attribution
+-----------
+- « Z-Anatomy – The libre 3D atlas of anatomy » — Gauthier Kervyn (design, 3D, anatomie),
+  Marcin Zielinski (module Blender) — CC BY-SA 4.0
+  https://github.com/Z-Anatomy/Models-of-human-anatomy (version 2b6cf98a8ca012571ecb252e5c077b42a21b3b61)
+- lui-même dérivé de « BodyParts3D » — The Database Center for Life Science (DBCLS), Kousaku Okubo —
+  CC BY-SA 2.1 Japon
+  https://dbarchive.biosciencedbc.jp/en/bodyparts3d/download.html
+
+Aucun objet ne provient des parties du pack sous licence non commerciale (oreille interne, rein).
+
+Modifications apportées par RadiologicHub (octobre 2026)
+--------------------------------------------------------
+- extraction de 10 structures du genou droit, genou en extension (liste et détail par fichier :
+  manifest.json) : sartorius, gracile, semi-tendineux, bourse de la patte d'oie (bourse ansérine),
+  ligament collatéral tibial (parties superficielle et profonde réunies en un fichier),
+  semi-membraneux (repère), fémur, patella, tibia et fibula ;
+- toutes les structures coupées 14 cm au-dessus et 12 cm au-dessous du plateau tibial, sections refermées ;
+- simplification des maillages (décimation), matériaux simplifiés (muscle, tendon, os, cartilage,
+  ligament, bourse), recentrage commun à tous les fichiers ;
+- conversion en glTF binaire (.glb) et compression meshopt ;
+- dans le site, les trois muscles de la patte d'oie et la bourse sont affichés dans des couleurs
+  distinctes (sartorius, gracile, semi-tendineux, bourse) pour l'enseignement.
+Script de production : scripts/export_muscles.py (groupe « patte-oie »),
+dépôt https://github.com/nodbysmilii-prog/radiologic-hub
+
+Ces modèles sont des représentations pédagogiques approximatives, fournies sans garantie,
+non destinées à un usage diagnostique.

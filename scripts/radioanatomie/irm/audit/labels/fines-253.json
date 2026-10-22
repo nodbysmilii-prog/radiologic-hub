@@ -1,0 +1,73 @@
+{
+ "cle": "fines-253",
+ "nom_fr": "Corps calleux, cinquième central (tronc)",
+ "nom_en": "CC_Central",
+ "cote": "médian",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer-CC",
+  "nom_outil": "CC_Central",
+  "identifiant": 253
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   0.2,
+   -12.3,
+   25.3
+  ],
+  "mni_icbm2009c_mm": [
+   0.699999988079071,
+   -13.100000381469727,
+   25.200000762939453
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    0.2,
+    -12.3,
+    26.0
+   ],
+   "mni_icbm2009c_mm": [
+    0.699999988079071,
+    -13.199999809265137,
+    25.899999618530273
+   ],
+   "coupe": "z = +26.0 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    0.2,
+    -6.0,
+    25.3
+   ],
+   "mni_icbm2009c_mm": [
+    0.10000000149011612,
+    -6.699999809265137,
+    25.0
+   ],
+   "coupe": "y = -6.0 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -0.5,
+    -12.3,
+    25.3
+   ],
+   "mni_icbm2009c_mm": [
+    0.0,
+    -13.100000381469727,
+    25.100000381469727
+   ],
+   "coupe": "x = -0.5 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : FastSurfer-CC."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

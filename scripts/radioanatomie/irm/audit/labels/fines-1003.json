@@ -1,0 +1,125 @@
+{
+ "cle": "fines-1003",
+ "nom_fr": "Gyrus frontal moyen gauche, partie caudale",
+ "nom_en": "ctx-lh-caudalmiddlefrontal",
+ "cote": "gauche",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-caudalmiddlefrontal",
+  "identifiant": 1003
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -36.9,
+   26.9,
+   43.5
+  ],
+  "mni_icbm2009c_mm": [
+   -41.5,
+   29.0,
+   48.599998474121094
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -36.9,
+    26.9,
+    47.0
+   ],
+   "mni_icbm2009c_mm": [
+    -41.20000076293945,
+    28.200000762939453,
+    52.29999923706055
+   ],
+   "coupe": "z = +47.0 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -36.9,
+    15.7,
+    43.5
+   ],
+   "mni_icbm2009c_mm": [
+    -43.20000076293945,
+    18.100000381469727,
+    48.900001525878906
+   ],
+   "coupe": "y = +15.7 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -35.5,
+    26.9,
+    43.5
+   ],
+   "mni_icbm2009c_mm": [
+    -40.20000076293945,
+    29.100000381469727,
+    49.099998474121094
+   ],
+   "coupe": "x = -35.5 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 93,
+     "nom": "Caudal Middle Frontal (L)"
+    }
+   ],
+   "mesure": 0.623,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.688,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.653,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.643,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.73"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 7,
+     "nom": "Left Middle Frontal Gyrus"
+    }
+   ],
+   "mesure": 0.797,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.64,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.927,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.884,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

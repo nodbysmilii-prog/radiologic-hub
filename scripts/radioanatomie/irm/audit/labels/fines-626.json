@@ -1,0 +1,99 @@
+{
+ "cle": "fines-626",
+ "nom_fr": "Lobule X (flocculus) gauche",
+ "nom_en": "Cbm_Left_X",
+ "cote": "gauche",
+ "categorie": "Cervelet",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "CerebNet",
+  "nom_outil": "Cbm_Left_X",
+  "identifiant": 626
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -22.9,
+   -31.9,
+   -38.4
+  ],
+  "mni_icbm2009c_mm": [
+   -24.100000381469727,
+   -35.900001525878906,
+   -44.900001525878906
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -22.9,
+    -31.9,
+    -38.4
+   ],
+   "mni_icbm2009c_mm": [
+    -24.100000381469727,
+    -35.900001525878906,
+    -44.900001525878906
+   ],
+   "coupe": "z = -38.4 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -22.9,
+    -33.3,
+    -38.4
+   ],
+   "mni_icbm2009c_mm": [
+    -24.200000762939453,
+    -37.20000076293945,
+    -45.0
+   ],
+   "coupe": "y = -33.3 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -22.2,
+    -31.9,
+    -38.4
+   ],
+   "mni_icbm2009c_mm": [
+    -23.5,
+    -35.79999923706055,
+    -44.900001525878906
+   ],
+   "coupe": "x = -22.2 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 97,
+     "nom": "Cerebellum Gray Matter (L)"
+    }
+   ],
+   "mesure": 0.699,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.943,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.735,
+     "verdict": "partiel"
+    },
+    "sagittal": {
+     "mesure": 0.65,
+     "verdict": "partiel"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.83"
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "moyenne"
+}

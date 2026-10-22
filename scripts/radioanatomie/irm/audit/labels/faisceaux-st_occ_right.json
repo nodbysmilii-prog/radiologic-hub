@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-ST_OCC_right",
+ "nom_fr": "Fibres striato-occipitales droites",
+ "nom_en": "ST_OCC_right",
+ "cote": "droit",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "ST_OCC_right",
+  "identifiant": "ST_OCC_right"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   12.1,
+   -83.7,
+   -4.8
+  ],
+  "mni_icbm2009c_mm": [
+   12.699999809265137,
+   -84.30000305175781,
+   -9.399999618530273
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    12.1,
+    -83.7,
+    0.1
+   ],
+   "mni_icbm2009c_mm": [
+    11.800000190734863,
+    -82.5999984741211,
+    -4.599999904632568
+   ],
+   "coupe": "z = +0.1 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    12.1,
+    -81.6,
+    -4.8
+   ],
+   "mni_icbm2009c_mm": [
+    12.300000190734863,
+    -81.9000015258789,
+    -9.600000381469727
+   ],
+   "coupe": "y = -81.6 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    29.6,
+    -83.7,
+    -4.8
+   ],
+   "mni_icbm2009c_mm": [
+    30.299999237060547,
+    -83.4000015258789,
+    -11.0
+   ],
+   "coupe": "x = +29.6 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

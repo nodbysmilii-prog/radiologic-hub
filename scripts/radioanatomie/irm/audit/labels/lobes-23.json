@@ -1,0 +1,129 @@
+{
+ "cle": "lobes-23",
+ "nom_fr": "Moelle allongée (bulbe)",
+ "nom_en": "Medulla oblongata",
+ "cote": "médian",
+ "categorie": "Tronc cérébral",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (grandes régions)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -1.9,
+   -36.1,
+   -48.2
+  ],
+  "mni_icbm2009c_mm": [
+   -2.5,
+   -39.099998474121094,
+   -55.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -1.9,
+    -36.1,
+    -42.6
+   ],
+   "mni_icbm2009c_mm": [
+    -2.4000000953674316,
+    -38.400001525878906,
+    -49.20000076293945
+   ],
+   "coupe": "z = -42.6 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -1.9,
+    -41.7,
+    -48.2
+   ],
+   "mni_icbm2009c_mm": [
+    -2.0,
+    -45.20000076293945,
+    -55.70000076293945
+   ],
+   "coupe": "y = -41.7 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    3.0,
+    -36.1,
+    -48.2
+   ],
+   "mni_icbm2009c_mm": [
+    2.799999952316284,
+    -38.900001525878906,
+    -55.099998474121094
+   ],
+   "coupe": "x = +3.0 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 62,
+     "nom": "Brainstem (L)"
+    },
+    {
+     "id": 11,
+     "nom": "Brainstem (R)"
+    }
+   ],
+   "mesure": 0.986,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.91,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.986,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.992,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.65"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 8,
+     "nom": "Brainstem"
+    }
+   ],
+   "mesure": 0.87,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.874,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.844,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "élevée"
+}

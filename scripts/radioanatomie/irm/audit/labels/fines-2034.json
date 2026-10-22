@@ -1,0 +1,129 @@
+{
+ "cle": "fines-2034",
+ "nom_fr": "Gyrus temporal transverse droit (gyrus de Heschl)",
+ "nom_en": "ctx-rh-transversetemporal",
+ "cote": "droit",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-transversetemporal",
+  "identifiant": 2034
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   38.0,
+   -19.3,
+   9.9
+  ],
+  "mni_icbm2009c_mm": [
+   42.900001525878906,
+   -18.399999618530273,
+   8.399999618530273
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    38.0,
+    -19.3,
+    8.5
+   ],
+   "mni_icbm2009c_mm": [
+    42.599998474121094,
+    -18.299999237060547,
+    6.599999904632568
+   ],
+   "coupe": "z = +8.5 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    38.0,
+    -20.0,
+    9.9
+   ],
+   "mni_icbm2009c_mm": [
+    43.0,
+    -19.200000762939453,
+    8.5
+   ],
+   "coupe": "y = -20.0 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    37.3,
+    -19.3,
+    9.9
+   ],
+   "mni_icbm2009c_mm": [
+    42.0,
+    -18.399999618530273,
+    8.399999618530273
+   ],
+   "coupe": "x = +37.3 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 14,
+     "nom": "Transverse Temporal (R)"
+    }
+   ],
+   "mesure": 0.755,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.783,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.775,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.791,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.85"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 90,
+     "nom": "Right Heschl's Gyrus (includes H1 and H2)"
+    },
+    {
+     "id": 92,
+     "nom": "Right Planum Temporale"
+    }
+   ],
+   "mesure": 0.89,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.734,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.969,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.984,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

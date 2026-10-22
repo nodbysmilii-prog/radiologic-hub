@@ -1,0 +1,99 @@
+{
+ "cle": "fines-46",
+ "nom_fr": "Corps médullaire de l'hémisphère cérébelleux droit",
+ "nom_en": "Right-Cerebellum-White-Matter",
+ "cote": "droit",
+ "categorie": "Cervelet",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (aseg)",
+  "nom_outil": "Right-Cerebellum-White-Matter",
+  "identifiant": 46
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   18.4,
+   -48.0,
+   -32.8
+  ],
+  "mni_icbm2009c_mm": [
+   20.899999618530273,
+   -49.0,
+   -38.29999923706055
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    18.4,
+    -48.0,
+    -30.7
+   ],
+   "mni_icbm2009c_mm": [
+    20.600000381469727,
+    -48.900001525878906,
+    -36.0
+   ],
+   "coupe": "z = -30.7 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    18.4,
+    -50.8,
+    -32.8
+   ],
+   "mni_icbm2009c_mm": [
+    21.100000381469727,
+    -51.599998474121094,
+    -38.5
+   ],
+   "coupe": "y = -50.8 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    14.2,
+    -48.0,
+    -32.8
+   ],
+   "mni_icbm2009c_mm": [
+    17.200000762939453,
+    -49.400001525878906,
+    -38.599998474121094
+   ],
+   "coupe": "x = +14.2 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 39,
+     "nom": "Cerebellum White Matter (R)"
+    }
+   ],
+   "mesure": 0.723,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.787,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.821,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.741,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.73"
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

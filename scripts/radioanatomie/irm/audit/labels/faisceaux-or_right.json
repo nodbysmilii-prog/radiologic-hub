@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-OR_right",
+ "nom_fr": "Radiations optiques droites",
+ "nom_en": "OR_right",
+ "cote": "droit",
+ "categorie": "Voies optiques",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "OR_right",
+  "identifiant": "OR_right"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   15.6,
+   -92.8,
+   9.9
+  ],
+  "mni_icbm2009c_mm": [
+   17.200000762939453,
+   -96.0,
+   9.199999809265137
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    15.6,
+    -92.8,
+    1.5
+   ],
+   "mni_icbm2009c_mm": [
+    19.100000381469727,
+    -95.5,
+    -0.8999999761581421
+   ],
+   "coupe": "z = +1.5 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    15.6,
+    -90.0,
+    9.9
+   ],
+   "mni_icbm2009c_mm": [
+    16.700000762939453,
+    -92.4000015258789,
+    9.600000381469727
+   ],
+   "coupe": "y = -90.0 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    15.6,
+    -92.8,
+    9.9
+   ],
+   "mni_icbm2009c_mm": [
+    17.200000762939453,
+    -96.0,
+    9.199999809265137
+   ],
+   "coupe": "x = +15.6 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-T_PREM_left",
+ "nom_fr": "Fibres thalamo-prémotrices gauches",
+ "nom_en": "T_PREM_left",
+ "cote": "gauche",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "T_PREM_left",
+  "identifiant": "T_PREM_left"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -11.0,
+   -15.1,
+   12.7
+  ],
+  "mni_icbm2009c_mm": [
+   -14.100000381469727,
+   -13.699999809265137,
+   10.800000190734863
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -11.0,
+    -15.1,
+    14.8
+   ],
+   "mni_icbm2009c_mm": [
+    -13.800000190734863,
+    -13.800000190734863,
+    13.300000190734863
+   ],
+   "coupe": "z = +14.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -11.0,
+    1.0,
+    12.7
+   ],
+   "mni_icbm2009c_mm": [
+    -14.0,
+    1.7999999523162842,
+    11.100000381469727
+   ],
+   "coupe": "y = +1.0 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -18.0,
+    -15.1,
+    12.7
+   ],
+   "mni_icbm2009c_mm": [
+    -21.899999618530273,
+    -13.899999618530273,
+    10.5
+   ],
+   "coupe": "x = -18.0 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

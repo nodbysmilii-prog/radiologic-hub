@@ -1,0 +1,73 @@
+{
+ "cle": "fines-973",
+ "nom_fr": "Glande pinéale (épiphyse)",
+ "nom_en": "Epiphysis",
+ "cote": "médian",
+ "categorie": "Glandes",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "HypVINN",
+  "nom_outil": "Epiphysis",
+  "identifiant": 973
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   0.2,
+   -31.9,
+   2.9
+  ],
+  "mni_icbm2009c_mm": [
+   -0.800000011920929,
+   -30.700000762939453,
+   1.7000000476837158
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    0.2,
+    -31.9,
+    2.9
+   ],
+   "mni_icbm2009c_mm": [
+    -0.800000011920929,
+    -30.700000762939453,
+    1.7000000476837158
+   ],
+   "coupe": "z = +2.9 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    0.2,
+    -32.6,
+    2.9
+   ],
+   "mni_icbm2009c_mm": [
+    -0.800000011920929,
+    -31.399999618530273,
+    1.7999999523162842
+   ],
+   "coupe": "y = -32.6 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    0.9,
+    -31.9,
+    2.9
+   ],
+   "mni_icbm2009c_mm": [
+    0.0,
+    -30.700000762939453,
+    1.7000000476837158
+   ],
+   "coupe": "x = +0.9 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : HypVINN."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

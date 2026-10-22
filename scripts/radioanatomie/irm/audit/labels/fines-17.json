@@ -1,0 +1,125 @@
+{
+ "cle": "fines-17",
+ "nom_fr": "Hippocampe gauche",
+ "nom_en": "Left-Hippocampus",
+ "cote": "gauche",
+ "categorie": "Système limbique",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (aseg)",
+  "nom_outil": "Left-Hippocampus",
+  "identifiant": 17
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -22.2,
+   -16.5,
+   -13.9
+  ],
+  "mni_icbm2009c_mm": [
+   -26.600000381469727,
+   -16.399999618530273,
+   -18.0
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -22.2,
+    -16.5,
+    -11.1
+   ],
+   "mni_icbm2009c_mm": [
+    -26.700000762939453,
+    -16.399999618530273,
+    -14.600000381469727
+   ],
+   "coupe": "z = -11.1 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -22.2,
+    -10.9,
+    -13.9
+   ],
+   "mni_icbm2009c_mm": [
+    -26.399999618530273,
+    -11.0,
+    -17.700000762939453
+   ],
+   "coupe": "y = -10.9 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -20.8,
+    -16.5,
+    -13.9
+   ],
+   "mni_icbm2009c_mm": [
+    -24.799999237060547,
+    -16.299999237060547,
+    -17.600000381469727
+   ],
+   "coupe": "x = -20.8 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 99,
+     "nom": "Hippocampus (L)"
+    }
+   ],
+   "mesure": 0.789,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.711,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.759,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.795,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.69"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 9,
+     "nom": "Left Hippocampus"
+    }
+   ],
+   "mesure": 0.821,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.797,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.817,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.893,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

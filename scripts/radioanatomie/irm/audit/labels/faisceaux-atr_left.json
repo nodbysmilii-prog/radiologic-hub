@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-ATR_left",
+ "nom_fr": "Radiation thalamique antérieure gauche",
+ "nom_en": "ATR_left",
+ "cote": "gauche",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "ATR_left",
+  "identifiant": "ATR_left"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -22.9,
+   29.7,
+   19.0
+  ],
+  "mni_icbm2009c_mm": [
+   -27.100000381469727,
+   28.5,
+   20.299999237060547
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -22.9,
+    29.7,
+    12.7
+   ],
+   "mni_icbm2009c_mm": [
+    -26.399999618530273,
+    29.799999237060547,
+    13.199999809265137
+   ],
+   "coupe": "z = +12.7 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -22.9,
+    33.2,
+    19.0
+   ],
+   "mni_icbm2009c_mm": [
+    -26.799999237060547,
+    32.0,
+    20.299999237060547
+   ],
+   "coupe": "y = +33.2 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -15.9,
+    29.7,
+    19.0
+   ],
+   "mni_icbm2009c_mm": [
+    -20.399999618530273,
+    29.299999237060547,
+    20.0
+   ],
+   "coupe": "x = -15.9 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

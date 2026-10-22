@@ -1,0 +1,129 @@
+{
+ "cle": "fines-1002",
+ "nom_fr": "Gyrus cingulaire antérieur gauche, partie caudale",
+ "nom_en": "ctx-lh-caudalanteriorcingulate",
+ "cote": "gauche",
+ "categorie": "Système limbique",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-caudalanteriorcingulate",
+  "identifiant": 1002
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -1.9,
+   36.0,
+   28.8
+  ],
+  "mni_icbm2009c_mm": [
+   -2.700000047683716,
+   40.0,
+   31.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -1.9,
+    36.0,
+    29.5
+   ],
+   "mni_icbm2009c_mm": [
+    -2.5999999046325684,
+    40.0,
+    32.29999923706055
+   ],
+   "coupe": "z = +29.5 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -1.9,
+    22.7,
+    28.8
+   ],
+   "mni_icbm2009c_mm": [
+    -3.0999999046325684,
+    23.600000381469727,
+    31.299999237060547
+   ],
+   "coupe": "y = +22.7 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -1.9,
+    36.0,
+    28.8
+   ],
+   "mni_icbm2009c_mm": [
+    -2.700000047683716,
+    40.0,
+    31.5
+   ],
+   "coupe": "x = -1.9 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 81,
+     "nom": "Caudal Anterior Cingulate (L)"
+    }
+   ],
+   "mesure": 0.442,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.431,
+     "verdict": "partiel"
+    },
+    "coronal": {
+     "mesure": 0.422,
+     "verdict": "partiel"
+    },
+    "sagittal": {
+     "mesure": 0.598,
+     "verdict": "partiel"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.79"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 55,
+     "nom": "Left Cingulate Gyrus, anterior division"
+    },
+    {
+     "id": 57,
+     "nom": "Left Paracingulate Gyrus"
+    }
+   ],
+   "mesure": 0.968,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.996,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.981,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "moyenne"
+}

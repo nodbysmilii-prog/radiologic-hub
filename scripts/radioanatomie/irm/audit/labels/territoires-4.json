@@ -1,0 +1,88 @@
+{
+ "cle": "territoires-4",
+ "nom_fr": "Lenticulo-striées médiales et artère de Heubner (ACA) (droit)",
+ "nom_en": "LSM",
+ "cote": "droit",
+ "categorie": "Territoires vasculaires",
+ "statut_module": "transporté",
+ "source": {
+  "origine": "Atlas des territoires (Liu 2023, redécoupé)",
+  "nom_outil": "LSM",
+  "identifiant": 4
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   15.6,
+   8.0,
+   15.5
+  ],
+  "mni_icbm2009c_mm": [
+   16.399999618530273,
+   8.5,
+   14.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    15.6,
+    8.0,
+    14.8
+   ],
+   "mni_icbm2009c_mm": [
+    16.399999618530273,
+    8.5,
+    13.699999809265137
+   ],
+   "coupe": "z = +14.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    15.6,
+    6.6,
+    15.5
+   ],
+   "mni_icbm2009c_mm": [
+    16.5,
+    7.199999809265137,
+    14.5
+   ],
+   "coupe": "y = +6.6 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    14.2,
+    8.0,
+    15.5
+   ],
+   "mni_icbm2009c_mm": [
+    14.899999618530273,
+    8.399999618530273,
+    14.5
+   ],
+   "coupe": "x = +14.2 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "Liu et al. 2023 (territoires artériels, CC BY-SA 4.0)",
+   "type": "transporté",
+   "labels": {
+    "ids": [
+     4
+    ],
+    "noms": [
+     "Lenticulo-striées médiales et artère de Heubner (ACA) (droit)"
+    ]
+   },
+   "verdict": "redécoupé par règles géométriques (voir le rapport)"
+  }
+ ],
+ "remarques": [
+  "Territoire de l'atlas de Liu 2023 transporté sur le sujet, puis redécoupé par des règles géométriques (vidéo de référence de l'auteur) : à contrôler avec Tatu 1998.",
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Atlas des territoires (Liu 2023, redécoupé)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

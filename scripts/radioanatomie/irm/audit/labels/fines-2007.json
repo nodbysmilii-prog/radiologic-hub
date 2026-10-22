@@ -1,0 +1,137 @@
+{
+ "cle": "fines-2007",
+ "nom_fr": "Gyrus fusiforme droit",
+ "nom_en": "ctx-rh-fusiform",
+ "cote": "droit",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-fusiform",
+  "identifiant": 2007
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   22.6,
+   -41.0,
+   -15.3
+  ],
+  "mni_icbm2009c_mm": [
+   23.100000381469727,
+   -41.70000076293945,
+   -17.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    22.6,
+    -41.0,
+    -14.6
+   ],
+   "mni_icbm2009c_mm": [
+    23.100000381469727,
+    -41.70000076293945,
+    -16.799999237060547
+   ],
+   "coupe": "z = -14.6 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    22.6,
+    -41.0,
+    -15.3
+   ],
+   "mni_icbm2009c_mm": [
+    23.100000381469727,
+    -41.70000076293945,
+    -17.5
+   ],
+   "coupe": "y = -41.0 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    29.6,
+    -41.0,
+    -15.3
+   ],
+   "mni_icbm2009c_mm": [
+    31.299999237060547,
+    -41.70000076293945,
+    -17.600000381469727
+   ],
+   "coupe": "x = +29.6 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 24,
+     "nom": "Fusiform (R)"
+    }
+   ],
+   "mesure": 0.609,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.67,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.805,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.675,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.77"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 74,
+     "nom": "Right Occipital Fusiform Gyrus"
+    },
+    {
+     "id": 76,
+     "nom": "Right Temporal Fusiform Cortex, anterior division"
+    },
+    {
+     "id": 78,
+     "nom": "Right Temporal Fusiform Cortex, posterior division"
+    },
+    {
+     "id": 80,
+     "nom": "Right Temporal Occipital Fusiform Cortex"
+    }
+   ],
+   "mesure": 0.852,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.925,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.724,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.933,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

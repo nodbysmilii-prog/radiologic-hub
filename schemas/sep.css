@@ -1,0 +1,65 @@
+/* =========================================================
+   RadiologicHub — fiche SEP : schéma des localisations (schemas/sep.js)
+   et vérificateur des critères de McDonald 2017 (outils/mcdonald.js)
+   ========================================================= */
+
+/* ---------- Schéma ---------- */
+.sep-schema { margin: 26px 0 34px; }
+.sep-coupes { display: grid; grid-template-columns: 300fr 360fr; gap: 18px; align-items: end; }
+.sep-coupes figure { margin: 0; }
+.sep-svg { padding: 10px; border-radius: var(--radius); border: 4px solid var(--ink); background: #fff; box-shadow: 8px 8px 0 rgba(17, 17, 20, .85); }
+.sep-svg svg { display: block; width: 100%; height: auto; }
+.sep-coupes figcaption { margin-top: 10px; text-align: center; font-weight: 900; font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.sep-zone, .sep-badge { transition: opacity .2s, filter .2s; }
+.sep-schema.is-focus .sep-zone:not(.is-on), .sep-schema.is-focus .sep-badge:not(.is-on) { opacity: .12; }
+.sep-schema[data-mode="mcdonald"] .sep-zone:not(.is-on), .sep-schema[data-mode="mcdonald"] .sep-badge:not(.is-on) { opacity: .18; filter: grayscale(1); }
+.sep-schema[data-mode="mcdonald"] .is-hors { opacity: .1 !important; }
+
+.sep-legende { list-style: none; padding: 0; margin: 22px 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+.sep-leg { display: flex; gap: 12px; align-items: flex-start; width: 100%; padding: 10px 14px; border-radius: 16px; border: 3px solid var(--zc); background: var(--card); text-align: left; font: inherit; color: var(--ink); cursor: pointer; transition: transform .15s, background .15s; }
+.sep-leg:hover, .sep-leg[aria-pressed="true"] { transform: translateY(-2px); background: color-mix(in srgb, var(--zc) 14%, var(--card)); }
+.sep-leg b { display: block; font-size: .86rem; }
+.sep-leg small { display: block; font-size: .76rem; color: var(--muted); line-height: 1.4; }
+.sep-num { flex: 0 0 auto; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--zc); border: 2px solid var(--ink); color: #fff; font-weight: 900; font-size: .85rem; }
+
+@media (max-width: 640px) {
+  .sep-coupes { grid-template-columns: 1fr; }
+}
+
+/* ---------- Vérificateur McDonald ---------- */
+.mcd { margin-top: 10px; }
+.mcd .two-col { margin-bottom: 18px; }
+.mcd .sep-schema { margin: 0 0 18px; }
+.mcd .sep-coupes { max-width: 640px; margin: 0 auto; }
+.mcd-opts label { display: flex; gap: 10px; align-items: flex-start; padding: 8px 10px; margin: 0 -10px; border-radius: 12px; font-size: .9rem; cursor: pointer; transition: background .2s; }
+.mcd-opts label:hover { background: rgba(0, 0, 0, .04); }
+.mcd-opts label:has(input:checked) { background: color-mix(in srgb, var(--c) 12%, transparent); font-weight: 700; }
+.mcd-opts input { flex: 0 0 auto; width: 20px; height: 20px; margin-top: 2px; accent-color: var(--c); cursor: pointer; }
+.mcd-opts small { display: block; color: var(--muted); font-weight: 500; }
+.mcd-compte { margin: 10px 0 0; font-size: .82rem; font-weight: 800; color: var(--muted); }
+
+.mcd-res { display: grid; grid-template-columns: auto auto 1fr; gap: 12px 14px; align-items: center; padding: 18px 20px; border-radius: var(--radius); border: 4px solid var(--ink); background: var(--card); box-shadow: 8px 8px 0 rgba(17, 17, 20, .85); }
+.mcd-badge { display: inline-flex; align-items: center; gap: 8px; padding: .45em 1em; border-radius: 999px; border: 3px solid var(--ink); font-weight: 900; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; background: #fff; }
+.mcd-badge[data-ok="true"] { background: var(--k-sign); color: #fff; }
+.mcd-badge[data-ok="false"] { background: #fff; color: var(--muted); }
+.mcd-concl { margin: 0; font-weight: 700; }
+.mcd-res[data-criteres="true"] { border-color: var(--k-sign); box-shadow: 8px 8px 0 color-mix(in srgb, var(--k-sign) 55%, transparent); }
+.mcd-detail { grid-column: 1 / -1; margin: 0; font-size: .84rem; color: var(--muted); }
+.mcd-note { margin: 12px 0 0; font-size: .8rem; color: var(--muted); }
+@media (max-width: 640px) {
+  .mcd-res { grid-template-columns: auto auto; }
+  .mcd-concl { grid-column: 1 / -1; }
+}
+@media print { .mcd { display: none; } }
+@media (max-width: 640px) {
+  .mcd .sep-coupes { grid-template-columns: 300fr 360fr; gap: 8px; }
+  .mcd .sep-svg { padding: 4px; border-width: 3px; box-shadow: 4px 4px 0 rgba(17, 17, 20, .85); }
+  .mcd .sep-coupes figcaption { font-size: .62rem; }
+}
+
+/* ---------- Épidémiologie : sex-ratio en symboles ---------- */
+.sx-ratio { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 6px 0 0; font-size: 2.6rem; font-weight: 900; line-height: 1; color: var(--ink); }
+.sx-ratio .sx-f, .sx-ratio .sx-h { font-family: "Segoe UI Symbol", "Apple Symbols", "DejaVu Sans", system-ui, sans-serif; font-weight: 400; }
+.sx-ratio .sx-f { color: var(--crimson); font-size: 3rem; }
+.sx-ratio .sx-h { color: var(--blue); font-size: 3rem; }
+.sx-ratio .sx-deux { color: var(--muted); }

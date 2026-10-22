@@ -801,7 +801,7 @@
 
   /* ---------- Démarrage ---------- */
   async function rafraichir() { S = await api.session(); rendreNav(); }
-  app.innerHTML = '<p class="rs-chargement">Chargement…</p>';
+  if (!app.querySelector('[data-attente]')) app.innerHTML = '<p class="rs-chargement" role="status">Chargement de la communauté…</p>';
   try { await api.pret; await rafraichir(); }
   catch (e) { app.innerHTML = vide(`Service indisponible : ${esc(e.message)}`); return; }
   if (S && /access_token|type=magiclink|error_description/.test(location.hash)) location.replace(S.membre ? '#/' : '#/bienvenue');

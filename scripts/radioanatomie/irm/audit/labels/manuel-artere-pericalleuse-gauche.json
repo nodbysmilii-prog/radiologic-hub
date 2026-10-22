@@ -1,0 +1,22 @@
+{
+ "cle": "manuel-artere-pericalleuse-gauche",
+ "nom_fr": "Artère péricalleuse gauche",
+ "nom_en": "Pericallosal artery",
+ "cote": "gauche",
+ "categorie": "Artères",
+ "statut_module": "manuel",
+ "source": {
+  "origine": "Points manuels (navigateur)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {},
+ "plans": {},
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Points manuels (navigateur)."
+ ],
+ "controle_lateralite": "non mesurable",
+ "confiance": "à placer"
+}

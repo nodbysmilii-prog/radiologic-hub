@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-CC_2",
+ "nom_fr": "Fibres calleuses du genou (CC 2)",
+ "nom_en": "CC_2",
+ "cote": "médian",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "CC_2",
+  "identifiant": "CC_2"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -18.0,
+   31.1,
+   21.1
+  ],
+  "mni_icbm2009c_mm": [
+   -22.399999618530273,
+   30.200000762939453,
+   22.600000381469727
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -18.0,
+    31.1,
+    26.0
+   ],
+   "mni_icbm2009c_mm": [
+    -21.700000762939453,
+    29.799999237060547,
+    28.799999237060547
+   ],
+   "coupe": "z = +26.0 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -18.0,
+    36.0,
+    21.1
+   ],
+   "mni_icbm2009c_mm": [
+    -21.899999618530273,
+    35.79999923706055,
+    22.799999237060547
+   ],
+   "coupe": "y = +36.0 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -11.0,
+    31.1,
+    21.1
+   ],
+   "mni_icbm2009c_mm": [
+    -16.0,
+    31.899999618530273,
+    23.299999237060547
+   ],
+   "coupe": "x = -11.0 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

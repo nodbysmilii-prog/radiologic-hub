@@ -1,0 +1,133 @@
+{
+ "cle": "fines-1005",
+ "nom_fr": "Cunéus gauche",
+ "nom_en": "ctx-lh-cuneus",
+ "cote": "gauche",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-cuneus",
+  "identifiant": 1005
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -18.7,
+   -64.1,
+   15.5
+  ],
+  "mni_icbm2009c_mm": [
+   -21.0,
+   -62.29999923706055,
+   15.699999809265137
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -18.7,
+    -64.1,
+    16.9
+   ],
+   "mni_icbm2009c_mm": [
+    -21.100000381469727,
+    -62.599998474121094,
+    17.299999237060547
+   ],
+   "coupe": "z = +16.9 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -18.7,
+    -80.9,
+    15.5
+   ],
+   "mni_icbm2009c_mm": [
+    -21.0,
+    -81.4000015258789,
+    12.199999809265137
+   ],
+   "coupe": "y = -80.9 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -2.6,
+    -64.1,
+    15.5
+   ],
+   "mni_icbm2009c_mm": [
+    -2.5,
+    -61.0,
+    19.100000381469727
+   ],
+   "coupe": "x = -2.6 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 94,
+     "nom": "Cuneus (L)"
+    }
+   ],
+   "mesure": 0.597,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.629,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.765,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.814,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.67"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 63,
+     "nom": "Left Cuneal Cortex"
+    },
+    {
+     "id": 93,
+     "nom": "Left Occipital Pole"
+    },
+    {
+     "id": 95,
+     "nom": "Left Supracalcarine Cortex"
+    }
+   ],
+   "mesure": 0.715,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.803,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.665,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.878,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "moyenne"
+}

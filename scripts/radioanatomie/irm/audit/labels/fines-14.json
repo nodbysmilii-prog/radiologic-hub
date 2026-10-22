@@ -1,0 +1,103 @@
+{
+ "cle": "fines-14",
+ "nom_fr": "Troisième ventricule (V3)",
+ "nom_en": "3rd-Ventricle",
+ "cote": "médian",
+ "categorie": "Ventricules et citernes",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (aseg)",
+  "nom_outil": "3rd-Ventricle",
+  "identifiant": 14
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   0.9,
+   -27.0,
+   7.1
+  ],
+  "mni_icbm2009c_mm": [
+   -0.10000000149011612,
+   -25.399999618530273,
+   5.900000095367432
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    0.9,
+    -27.0,
+    -1.3
+   ],
+   "mni_icbm2009c_mm": [
+    0.20000000298023224,
+    -26.0,
+    -4.0
+   ],
+   "coupe": "z = -1.3 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    0.9,
+    -24.9,
+    7.1
+   ],
+   "mni_icbm2009c_mm": [
+    -0.10000000149011612,
+    -23.0,
+    5.800000190734863
+   ],
+   "coupe": "y = -24.9 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    0.9,
+    -27.0,
+    7.1
+   ],
+   "mni_icbm2009c_mm": [
+    -0.10000000149011612,
+    -25.399999618530273,
+    5.900000095367432
+   ],
+   "coupe": "x = +0.9 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 80,
+     "nom": "Third Ventricle (L)"
+    },
+    {
+     "id": 29,
+     "nom": "Third Ventricle (R)"
+    }
+   ],
+   "mesure": 0.547,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.74,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.663,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.736,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.68"
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "moyenne"
+}

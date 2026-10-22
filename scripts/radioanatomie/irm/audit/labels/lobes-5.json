@@ -1,0 +1,125 @@
+{
+ "cle": "lobes-5",
+ "nom_fr": "Lobe de l'insula gauche",
+ "nom_en": "Insular lobe",
+ "cote": "gauche",
+ "categorie": "Régions",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (régions DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -29.2,
+   12.9,
+   -7.6
+  ],
+  "mni_icbm2009c_mm": [
+   -34.70000076293945,
+   13.199999809265137,
+   -12.300000190734863
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -29.2,
+    12.9,
+    4.3
+   ],
+   "mni_icbm2009c_mm": [
+    -35.29999923706055,
+    13.100000381469727,
+    1.399999976158142
+   ],
+   "coupe": "z = +4.3 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -29.2,
+    -6.0,
+    -7.6
+   ],
+   "mni_icbm2009c_mm": [
+    -33.70000076293945,
+    -5.0,
+    -11.399999618530273
+   ],
+   "coupe": "y = -6.0 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -29.9,
+    12.9,
+    -7.6
+   ],
+   "mni_icbm2009c_mm": [
+    -35.70000076293945,
+    13.199999809265137,
+    -12.199999809265137
+   ],
+   "coupe": "x = -29.9 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "groupe",
+   "labels": [
+    {
+     "id": 74,
+     "nom": "Insula (L)"
+    }
+   ],
+   "mesure": 0.761,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.766,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.753,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.768,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.88"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "lobe HO",
+   "labels": [
+    {
+     "id": 3,
+     "nom": "Left Insular Cortex"
+    }
+   ],
+   "mesure": 0.941,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.967,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.981,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.976,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

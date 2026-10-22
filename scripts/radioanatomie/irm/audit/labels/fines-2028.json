@@ -1,0 +1,141 @@
+{
+ "cle": "fines-2028",
+ "nom_fr": "Gyrus frontal supérieur droit",
+ "nom_en": "ctx-rh-superiorfrontal",
+ "cote": "droit",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-superiorfrontal",
+  "identifiant": 2028
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   12.1,
+   20.6,
+   61.7
+  ],
+  "mni_icbm2009c_mm": [
+   13.0,
+   21.299999237060547,
+   66.69999694824219
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    12.1,
+    20.6,
+    62.4
+   ],
+   "mni_icbm2009c_mm": [
+    13.0,
+    21.100000381469727,
+    67.30000305175781
+   ],
+   "coupe": "z = +62.4 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    12.1,
+    50.7,
+    61.7
+   ],
+   "mni_icbm2009c_mm": [
+    13.300000190734863,
+    52.400001525878906,
+    66.5999984741211
+   ],
+   "coupe": "y = +50.7 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    3.7,
+    20.6,
+    61.7
+   ],
+   "mni_icbm2009c_mm": [
+    2.799999952316284,
+    20.100000381469727,
+    67.5999984741211
+   ],
+   "coupe": "x = +3.7 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 38,
+     "nom": "Superior Frontal (R)"
+    }
+   ],
+   "mesure": 0.644,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.718,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.678,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.806,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.82"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 2,
+     "nom": "Right Frontal Medial Cortex"
+    },
+    {
+     "id": 6,
+     "nom": "Right Frontal Pole"
+    },
+    {
+     "id": 50,
+     "nom": "Right Juxtapositional Lobule Cortex (formerly Supplementary Motor Cortex)"
+    },
+    {
+     "id": 52,
+     "nom": "Right Paracingulate Gyrus"
+    },
+    {
+     "id": 56,
+     "nom": "Right Superior Frontal Gyrus"
+    }
+   ],
+   "mesure": 0.974,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.979,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.986,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

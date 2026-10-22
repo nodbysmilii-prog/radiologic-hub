@@ -1,0 +1,129 @@
+{
+ "cle": "fines-2018",
+ "nom_fr": "Gyrus frontal inférieur droit, partie operculaire",
+ "nom_en": "ctx-rh-parsopercularis",
+ "cote": "droit",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-parsopercularis",
+  "identifiant": 2018
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   56.2,
+   15.0,
+   16.9
+  ],
+  "mni_icbm2009c_mm": [
+   61.29999923706055,
+   17.100000381469727,
+   17.799999237060547
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    56.2,
+    15.0,
+    12.0
+   ],
+   "mni_icbm2009c_mm": [
+    61.70000076293945,
+    18.0,
+    11.5
+   ],
+   "coupe": "z = +12.0 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    56.2,
+    10.8,
+    16.9
+   ],
+   "mni_icbm2009c_mm": [
+    62.70000076293945,
+    13.100000381469727,
+    16.700000762939453
+   ],
+   "coupe": "y = +10.8 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    44.3,
+    15.0,
+    16.9
+   ],
+   "mni_icbm2009c_mm": [
+    51.29999923706055,
+    13.199999809265137,
+    19.0
+   ],
+   "coupe": "x = +44.3 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 32,
+     "nom": "Pars Opercularis (R)"
+    }
+   ],
+   "mesure": 0.67,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.669,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.77,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.668,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.77"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 12,
+     "nom": "Right Frontal Operculum Cortex"
+    },
+    {
+     "id": 82,
+     "nom": "Right Inferior Frontal Gyrus, pars opercularis"
+    }
+   ],
+   "mesure": 0.711,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.626,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.94,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.666,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

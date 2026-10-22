@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-CC_7",
+ "nom_fr": "Fibres calleuses du splénium (CC 7)",
+ "nom_en": "CC_7",
+ "cote": "médian",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "CC_7",
+  "identifiant": "CC_7"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -14.5,
+   -91.4,
+   8.5
+  ],
+  "mni_icbm2009c_mm": [
+   -15.300000190734863,
+   -92.19999694824219,
+   9.199999809265137
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -14.5,
+    -91.4,
+    0.1
+   ],
+   "mni_icbm2009c_mm": [
+    -17.700000762939453,
+    -94.4000015258789,
+    -3.5999999046325684
+   ],
+   "coupe": "z = +0.1 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -14.5,
+    -81.6,
+    8.5
+   ],
+   "mni_icbm2009c_mm": [
+    -16.799999237060547,
+    -81.5999984741211,
+    6.800000190734863
+   ],
+   "coupe": "y = -81.6 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -20.8,
+    -91.4,
+    8.5
+   ],
+   "mni_icbm2009c_mm": [
+    -21.700000762939453,
+    -94.5999984741211,
+    9.800000190734863
+   ],
+   "coupe": "x = -20.8 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

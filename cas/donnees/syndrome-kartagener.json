@@ -1,0 +1,34 @@
+{
+ "id": "syndrome-kartagener",
+ "spe": "thorax", "c": "blue",
+ "badge": {"fr": "Thorax", "en": "Chest"},
+ "tag": {"fr": "Cas clinique · Thorax · TDM", "en": "Clinical case · Chest imaging · CT"},
+ "titre": {"fr": "Toux, fièvre et <span class='hl-red'>sinusite chronique</span>", "en": "Cough, fever and <span class='hl-red'>chronic sinusitis</span>"},
+ "titre_texte": {"fr": "Toux, fièvre et sinusite chronique", "en": "Cough, fever and chronic sinusitis"},
+ "accroche": {"fr": "Un homme de 30 ans, un antécédent de <span class='hl-red'>sinusite chronique</span> et quatre coupes de TDM : sinus, thorax, abdomen. Quel est votre diagnostic ?", "en": "A 30-year-old man, a history of <span class='hl-red'>chronic sinusitis</span> and four CT images: sinuses, chest, abdomen. What is your diagnosis?"},
+ "mots": [{"fr": "TDM", "en": "CT"}, {"fr": "Bronches", "en": "Airways"}, {"fr": "Sinus", "en": "Sinuses"}],
+ "sections": [
+  {"id": "cas", "num": "I", "c": "rose", "titre": {"fr": "Le cas", "en": "The case"}, "blocs": [
+   {"type": "recit", "fr": "<b>Homme de 30 ans</b> consultant pour une <mark class='k-signo'>toux</mark> et de la <mark class='k-signo'>fièvre</mark>. Antécédent de <mark class='k-key'>sinusite chronique</mark>.", "en": "<b>A 30-year-old man</b> presenting with <mark class='k-signo'>cough</mark> and <mark class='k-signo'>fever</mark>. Medical history of <mark class='k-key'>chronic sinusitis</mark>."}
+  ]},
+  {"id": "images", "num": "II", "c": "slate", "titre": {"fr": "La TDM", "en": "The CT"}, "blocs": [
+   {"type": "intro-images"},
+   {"type": "galerie", "c": "slate", "images": [
+    {"src": "tdm-sinus.jpg", "mod": {"fr": "Sinus", "en": "Sinuses"}, "titre": {"fr": "Coupe 1 · TDM des sinus", "en": "Image 1 · Sinus CT"}, "alt": {"fr": "TDM du massif facial, coupe axiale en fenêtre osseuse", "en": "Facial CT, axial image, bone window"}},
+    {"src": "tdm-thorax-lobe-moyen.jpg", "mod": {"fr": "Thorax", "en": "Chest"}, "titre": {"fr": "Coupe 2 · TDM thoracique", "en": "Image 2 · Chest CT"}, "texte": {"fr": "Fenêtre parenchymateuse.", "en": "Lung window."}, "alt": {"fr": "TDM thoracique, coupe axiale en fenêtre parenchymateuse", "en": "Chest CT, axial image, lung window"}},
+    {"src": "tdm-thorax-bases.jpg", "mod": {"fr": "Thorax", "en": "Chest"}, "titre": {"fr": "Coupe 3 · TDM thoracique", "en": "Image 3 · Chest CT"}, "texte": {"fr": "Fenêtre parenchymateuse.", "en": "Lung window."}, "alt": {"fr": "TDM thoracique, coupe axiale basse en fenêtre parenchymateuse", "en": "Chest CT, lower axial image, lung window"}},
+    {"src": "tdm-abdomen.jpg", "mod": {"fr": "Abdomen", "en": "Abdomen"}, "titre": {"fr": "Coupe 4 · TDM abdominale", "en": "Image 4 · Abdominal CT"}, "alt": {"fr": "TDM de l'étage abdominal supérieur, coupe axiale", "en": "Upper abdominal CT, axial image"}}
+   ]}
+  ]},
+  {"id": "diagnostic", "num": "III", "c": "amber", "titre": {"fr": "À vous de jouer", "en": "Your turn"}, "blocs": [
+   {"type": "question", "question": {"fr": "Quel est votre diagnostic ?", "en": "What is your diagnosis?"}, "reponse": {"fr": "Syndrome de Kartagener", "en": "Kartagener syndrome"}}
+  ]},
+  {"id": "signes", "num": "IV", "c": "blue", "titre": {"fr": "Les trois signes", "en": "The three findings"}, "blocs": [
+   {"type": "galerie", "c": "blue", "images": [
+    {"src": "tdm-abdomen.jpg", "mod": {"fr": "Abdomen", "en": "Abdomen"}, "titre": {"fr": "Situs inversus", "en": "Situs inversus"}, "alt": {"fr": "TDM abdominale : situs inversus", "en": "Abdominal CT: situs inversus"}},
+    {"src": "tdm-thorax-lobe-moyen.jpg", "mod": {"fr": "Thorax", "en": "Chest"}, "titre": {"fr": "Lobe moyen à gauche", "en": "Middle lobe on the left side"}, "texte": {"fr": "Dans ce cas, le <mark class='k-tech'>lobe moyen est à gauche</mark>, siège de <mark class='k-signo'>dilatations des bronches variqueuses</mark>.", "en": "In this case, the <mark class='k-tech'>middle lobe is on the left side</mark> with <mark class='k-signo'>varicose bronchiectasis</mark>."}, "alt": {"fr": "TDM thoracique : lobe moyen à gauche, dilatations des bronches variqueuses", "en": "Chest CT: left-sided middle lobe with varicose bronchiectasis"}},
+    {"src": "tdm-sinus.jpg", "mod": {"fr": "Sinus", "en": "Sinuses"}, "titre": {"fr": "Polypose naso-sinusienne", "en": "Sinonasal polyposis"}, "alt": {"fr": "TDM du massif facial : polypose naso-sinusienne", "en": "Facial CT: sinonasal polyposis"}}
+   ]}
+  ]}
+ ]
+}

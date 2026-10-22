@@ -9,10 +9,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261017003500">
+  <link rel="stylesheet" href="styles.css?v=20261022235000">
   <link rel="stylesheet" href="fiche.css?v=20261012150000">
-  <link rel="stylesheet" href="cr.css?v=20261012150000">
-  <link rel="stylesheet" href="cr-tools.css?v=20261013050000">
+  <link rel="stylesheet" href="finition.css?v=20261022240500">
+  <link rel="stylesheet" href="cr.css?v=20261022235000">
+  <link rel="stylesheet" href="cr-tools.css?v=20261022235000">
   <link rel="stylesheet" href="dictee/dictee.css?v=20261012150000">
 </head>
 <body>
@@ -24,15 +25,13 @@
         <span class="brand-name">Radiologic<br>Hub</span>
       </a>
       <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
-        <a href="index.html#masterclass">Masterclass</a>
+        <a href="comptes-rendus.html" class="is-current">Comptes rendus</a>
         <a href="fiches-rapides.html">Fiches rapides</a>
         <a href="radioanatomie/index.html">Radioanatomie</a>
         <a href="bibliotheque.html">Bibliothèque</a>
-        <a href="comptes-rendus.html" class="is-current">Comptes rendus</a>
-        <a href="remplacements.html">Remplacements</a>
         <a href="communaute.html">Communauté</a>
-        <a href="index.html#tarifs">Tarifs</a>
-        <a href="index.html#inscription" class="btn btn-ink btn-sm">S'inscrire</a>
+        <a href="remplacements.html">Remplacements</a>
+        <a href="index.html#masterclass" class="nav-masterclass">Masterclass</a>
       </nav>
       <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
         <span></span><span></span><span></span>
@@ -42,15 +41,29 @@
 
   <main>
     <section class="fiche-hero sec-down cr-hero">
-      <div class="container">
-        <p class="marker-tag">Outil du radiologue</p>
-        <h1>Comptes rendus <span class="hl-navy">types</span></h1>
-        <p class="fiche-sub">Partez d'un <span class="hl-navy">modèle</span>, tapez un <span class="hl-red">mot-clé</span> : la description de la lésion apparaît et s'insère dans votre compte rendu.</p>
+      <div class="container cr-hero-in">
+        <div class="cr-hero-texte">
+          <p class="marker-tag">Outil du radiologue</p>
+          <h1>Comptes rendus <span class="hl-navy">types</span></h1>
+          <p class="fiche-sub">Partez d'un <span class="hl-navy">modèle</span>, tapez un <span class="hl-red">mot-clé</span> : la description de la lésion apparaît et s'insère dans votre compte rendu.</p>
+        </div>
+        <button type="button" class="cr-aide-btn" data-depliant="cr-aide" aria-controls="cr-aide" aria-expanded="false">
+          <span class="cr-aide-ico" aria-hidden="true">?</span>Mode d'emploi <small>3 étapes · raccourcis</small>
+        </button>
+      </div>
+      <div class="container cr-aide" id="cr-aide" hidden>
         <ol class="cr-steps">
           <li style="--c: var(--blue)"><b>1</b><span>Choisissez l'<strong>examen</strong>, la spécialité, puis le <strong>modèle</strong>.</span></li>
           <li style="--c: var(--orange)"><b>2</b><span>Tapez un mot-clé, par exemple <mark class="k-sign">angiome</mark> : la description apparaît, <kbd>Tab</kbd> l'insère.</span></li>
           <li style="--c: var(--green)"><b>3</b><span><kbd>Tab</kbd> passe d'un champ <code>[ … ]</code> au suivant ; un champ à choix <code>[droite / gauche]</code> affiche ses options, cliquez pour choisir. Puis <strong>Copier</strong> ou <strong>Envoyer par e-mail</strong>.</span></li>
         </ol>
+        <ul class="cr-raccourcis" aria-label="Raccourcis clavier de l'éditeur">
+          <li><kbd>Tab</kbd> insérer la phrase proposée, puis champ suivant</li>
+          <li><kbd>↑</kbd><kbd>↓</kbd> choisir une proposition · <kbd>Entrée</kbd> la valider</li>
+          <li><kbd>Échap</kbd> fermer les propositions</li>
+          <li><kbd>Ctrl</kbd> + <kbd>Z</kbd> retour · <kbd>Ctrl</kbd> + <kbd>Y</kbd> rétablir</li>
+          <li><kbd>F9</kbd> dicter (touche réglable dans ⚙)</li>
+        </ul>
       </div>
     </section>
 
@@ -88,15 +101,26 @@
         <!-- ============ Éditeur ============ -->
         <div class="cr-main">
           <div class="cr-toolbar" role="toolbar" aria-label="Actions sur le compte rendu">
-            <button class="btn btn-outline btn-sm" type="button" id="cr-undo" title="Retour : annuler la dernière modification (Ctrl + Z)" disabled>↶ Retour</button>
-            <button class="btn btn-outline btn-sm" type="button" id="cr-redo" title="Rétablir la modification annulée (Ctrl + Y)" disabled>↷ Rétablir</button>
-            <button class="btn btn-ink btn-sm" type="button" id="cr-copy">Copier</button>
-            <button class="btn btn-outline btn-sm" type="button" id="cr-next" title="Sélectionner le champ [ … ] suivant (touche Tab)">Champ suivant ⇥</button>
-            <button class="btn btn-outline btn-sm" type="button" id="cr-download">Télécharger .txt</button>
-            <button class="btn btn-outline btn-sm" type="button" id="cr-print-btn">Imprimer</button>
-            <button class="btn btn-outline btn-sm" type="button" id="cr-save-tpl">Enregistrer comme modèle</button>
-            <button class="btn btn-outline btn-sm" type="button" id="cr-sel-phrase" title="Créer une phrase personnelle à partir du texte sélectionné">Sélection → phrase</button>
-            <button class="btn btn-outline btn-sm cr-danger" type="button" id="cr-clear">Effacer</button>
+            <div class="cr-tb-groupe">
+              <button class="btn btn-outline btn-sm cr-tb-discret" type="button" id="cr-undo" title="Retour : annuler la dernière modification (Ctrl + Z)" disabled>↶ Retour</button>
+              <button class="btn btn-outline btn-sm cr-tb-discret" type="button" id="cr-redo" title="Rétablir la modification annulée (Ctrl + Y)" disabled>↷ Rétablir</button>
+            </div>
+            <div class="cr-tb-groupe">
+              <button class="btn btn-ink btn-sm" type="button" id="cr-copy">Copier</button>
+              <button class="btn btn-outline btn-sm" type="button" id="cr-next" title="Sélectionner le champ [ … ] suivant (touche Tab)">Champ suivant ⇥</button>
+            </div>
+            <div class="cr-tb-groupe cr-plus-boite">
+              <button class="btn btn-outline btn-sm cr-plus-btn" type="button" data-menu aria-controls="cr-plus" aria-expanded="false">Plus d'actions <span aria-hidden="true">▾</span></button>
+              <div class="cr-plus" id="cr-plus" hidden>
+                <button type="button" id="cr-save-tpl">Enregistrer comme modèle</button>
+                <button type="button" id="cr-sel-phrase" title="Créer une phrase personnelle à partir du texte sélectionné">Sélection → phrase</button>
+                <button type="button" id="cr-download">Télécharger .txt</button>
+                <button type="button" id="cr-print-btn">Imprimer</button>
+              </div>
+            </div>
+            <div class="cr-tb-groupe cr-tb-fin">
+              <button class="btn btn-outline btn-sm cr-danger" type="button" id="cr-clear" title="Effacer tout le compte rendu (confirmation demandée ; ↶ Retour pour annuler)">Effacer</button>
+            </div>
           </div>
 
           <!-- Dictée vocale (dictee/*.js) -->
@@ -146,11 +170,25 @@
           <div class="dt-alerte" id="dt-alerte" role="alert" hidden></div>
           <div class="dt-sections" id="dt-sections" aria-label="Sections du compte rendu : cliquez pour y dicter" hidden></div>
 
-          <div class="cr-tools" id="cr-tools" aria-label="Schémas et calculateurs">
-            <span class="cr-tools-label">Schémas &amp; calculateurs</span>
-            <a class="cr-tool-chip cr-tool-link" href="suivi-oncologique.html">Suivi oncologique<small>RECIST · Lugano →</small></a>
-            <a class="cr-tool-chip cr-tool-link" href="outils/osteogamme">OsteoGamme<small>page complète →</small></a>
-            <a class="cr-tool-chip cr-tool-link" href="outils/bosniak">Bosniak<small>kystes rénaux →</small></a>
+          <div class="cr-tools" id="cr-tools" data-depliant-boite>
+            <div class="cr-tools-tete">
+              <button type="button" class="cr-tools-btn" data-depliant="cr-calculateurs" aria-controls="cr-tools-panneau" aria-expanded="false">
+                Schémas et calculateurs <small id="cr-tools-nb"></small><span class="cr-tools-fleche" aria-hidden="true"></span>
+              </button>
+              <div class="cr-tools-sugg" id="cr-tools-sugg" aria-live="polite"></div>
+            </div>
+            <div class="cr-tools-panneau" id="cr-tools-panneau" hidden>
+              <p class="cr-tools-legende">Calculer, puis insérer le texte dans le compte rendu :</p>
+              <div class="cr-tools-calculs" id="cr-tools-calculs"></div>
+              <div class="cr-tools-groupe cr-tools-pages">
+                <p class="cr-tools-titre">Outils complets <small>(page dédiée, hors de l'éditeur)</small></p>
+                <div class="cr-tools-chips">
+                  <a class="cr-tool-chip cr-tool-link" href="suivi-oncologique.html">Suivi oncologique<small>RECIST · Lugano sur plusieurs examens →</small></a>
+                  <a class="cr-tool-chip cr-tool-link" href="outils/osteogamme">OsteoGamme<small>page complète →</small></a>
+                  <a class="cr-tool-chip cr-tool-link" href="outils/bosniak">Bosniak<small>schémas et conduite à tenir →</small></a>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="cr-editor-wrap">
@@ -267,24 +305,40 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <a href="index.html" class="brand">
-        <img src="assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
-        <span class="brand-name">Radiologic<br>Hub</span>
-      </a>
+      <div class="footer-brand">
+        <a href="index.html" class="brand">
+          <img src="assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+          <span class="brand-name">Radiologic<br>Hub</span>
+        </a>
+        <p class="footer-tagline">Outils, ressources et formation pour les radiologues et les résidents.</p>
+      </div>
       <nav aria-label="Liens de pied de page">
-        <a href="index.html#masterclass">Masterclass</a>
-        <a href="fiches-rapides.html">Fiches rapides</a>
-        <a href="radioanatomie/index.html">Radioanatomie</a>
-        <a href="bibliotheque.html">Bibliothèque</a>
-        <a href="comptes-rendus.html">Comptes rendus</a>
-        <a href="suivi-oncologique.html">Suivi oncologique</a>
-        <a href="communaute.html">Communauté</a>
-        <a href="remplacements.html">Remplacements</a>
-        <a href="index.html#cas-du-jour">Cas du jour</a>
-        <a href="mentions-legales.html">Mentions légales</a>
-        <a href="index.html#inscription">Contact</a>
+        <div class="footer-col">
+          <p class="footer-titre">Au quotidien</p>
+          <a href="comptes-rendus.html">Comptes rendus</a>
+          <a href="suivi-oncologique.html">Suivi oncologique</a>
+          <a href="fiches-rapides.html">Fiches rapides</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Apprendre</p>
+          <a href="radioanatomie/index.html">Radioanatomie</a>
+          <a href="cas/index.html">Cas cliniques</a>
+          <a href="index.html#cas-du-jour">Cas du jour</a>
+          <a href="bibliotheque.html">Bibliothèque</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Réseau</p>
+          <a href="communaute.html">Communauté</a>
+          <a href="remplacements.html">Remplacements</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Masterclass</p>
+          <a href="index.html#masterclass">Programme</a>
+          <a href="index.html#tarifs">Tarifs</a>
+          <a href="index.html#inscription">S'inscrire à une masterclass</a>
+        </div>
       </nav>
-      <p class="copyright">© <span id="year"></span> RadiologicHub · Formation en radiologie d'urgence</p>
+      <p class="copyright"><span>© <span id="year"></span> RadiologicHub · Outils, ressources et formation en radiologie</span><span class="copyright-liens"><a href="mentions-legales.html">Mentions légales</a><a href="index.html#inscription">Contact</a></span></p>
     </div>
   </footer>
 
@@ -318,7 +372,9 @@
   <!-- Version imprimable du compte rendu -->
   <div class="cr-print" id="cr-print" aria-hidden="true"></div>
 
-  <script src="fiche.js?v=20261012150000"></script>
+  <script src="navigation.js?v=20261022235000"></script>
+
+  <script src="fiche.js?v=20261022235000"></script>
   <script src="cr-data.js?v=20261015000000"></script>
   <script src="schemas/prostate.js?v=20261012150000"></script>
   <script src="regles/fleischner.js?v=20261012150000"></script>
@@ -333,7 +389,7 @@
   <script src="outils/bosniak-schemas.js?v=20261013030000"></script>
   <script src="outils/bosniak-rules.js?v=20261013040000"></script>
   <script src="regles/bosniak-cr.js?v=20261013050000"></script>
-  <script src="cr-tools.js?v=20261013050000"></script>
+  <script src="cr-tools.js?v=20261022235000"></script>
   <script src="cr.js?v=20261012200000"></script>
   <script src="dictee/corrections.js?v=20261022290000"></script>
   <script src="dictee/lexique.js?v=20261022300000"></script>

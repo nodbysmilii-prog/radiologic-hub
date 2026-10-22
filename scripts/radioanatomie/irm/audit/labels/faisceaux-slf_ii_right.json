@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-SLF_II_right",
+ "nom_fr": "Faisceau longitudinal supérieur droit, partie II",
+ "nom_en": "SLF_II_right",
+ "cote": "droit",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "SLF_II_right",
+  "identifiant": "SLF_II_right"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   25.4,
+   -1.8,
+   37.2
+  ],
+  "mni_icbm2009c_mm": [
+   27.899999618530273,
+   -2.0999999046325684,
+   38.599998474121094
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    25.4,
+    -1.8,
+    30.2
+   ],
+   "mni_icbm2009c_mm": [
+    29.0,
+    -0.20000000298023224,
+    30.5
+   ],
+   "coupe": "z = +30.2 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    25.4,
+    3.8,
+    37.2
+   ],
+   "mni_icbm2009c_mm": [
+    27.399999618530273,
+    3.0999999046325684,
+    39.20000076293945
+   ],
+   "coupe": "y = +3.8 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    31.7,
+    -1.8,
+    37.2
+   ],
+   "mni_icbm2009c_mm": [
+    34.29999923706055,
+    -1.7999999523162842,
+    40.099998474121094
+   ],
+   "coupe": "x = +31.7 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

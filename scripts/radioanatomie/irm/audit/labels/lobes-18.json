@@ -1,0 +1,103 @@
+{
+ "cle": "lobes-18",
+ "nom_fr": "Hémisphère cérébelleux droit",
+ "nom_en": "Cerebellar hemisphere",
+ "cote": "droit",
+ "categorie": "Cervelet",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (grandes régions)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   26.1,
+   -62.7,
+   -33.5
+  ],
+  "mni_icbm2009c_mm": [
+   28.299999237060547,
+   -63.099998474121094,
+   -40.70000076293945
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    26.1,
+    -62.7,
+    -28.6
+   ],
+   "mni_icbm2009c_mm": [
+    28.700000762939453,
+    -64.4000015258789,
+    -34.70000076293945
+   ],
+   "coupe": "z = -28.6 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    26.1,
+    -55.0,
+    -33.5
+   ],
+   "mni_icbm2009c_mm": [
+    27.5,
+    -55.099998474121094,
+    -39.599998474121094
+   ],
+   "coupe": "y = -55.0 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    12.8,
+    -62.7,
+    -33.5
+   ],
+   "mni_icbm2009c_mm": [
+    15.100000381469727,
+    -63.599998474121094,
+    -41.20000076293945
+   ],
+   "coupe": "x = +12.8 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 46,
+     "nom": "Cerebellum Gray Matter (R)"
+    },
+    {
+     "id": 39,
+     "nom": "Cerebellum White Matter (R)"
+    }
+   ],
+   "mesure": 0.907,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.952,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.92,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.91,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.73"
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

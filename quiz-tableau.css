@@ -1,0 +1,123 @@
+/* =========================================================
+   RadiologicHub — tableaux de signal et quiz « remplir le tableau »
+   ---------------------------------------------------------
+   • .sg : pastille de signal (hyper / iso / hypo), même code dans
+     le tableau de référence et dans le quiz ;
+   • [data-quiz-tableau] : choisir une réponse dans la palette, puis
+     un clic par case ; correction immédiate et score (quiz-tableau.js).
+   ========================================================= */
+
+.sg {
+  display: inline-block;
+  padding: .18em .6em;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: .76rem;
+  letter-spacing: .02em;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+.sg-hyper { background: #d4174a; color: #fff; }
+.sg-hypo { background: #3c67b8; color: #fff; }
+.sg-iso { background: #f2ab2f; color: #111114; }
+.sg-bio { background: #e3e3e8; color: #111114; white-space: normal; }
+.sg-txt { font-size: .74rem; color: var(--muted); font-weight: 600; }
+.sg-row { display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; }
+
+/* Tableau de datation : colonnes fixes, défilement horizontal sur téléphone */
+.ftable.datation { min-width: 860px; }
+.ftable.datation td { vertical-align: top; }
+.ftable.datation .stade b { display: block; font-size: .82rem; }
+.ftable.datation .stade small { display: block; color: var(--muted); font-weight: 700; letter-spacing: .02em; }
+.ftable.datation .sg-part { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin: 2px 0; }
+.ftable.datation .sg-part::after { content: attr(data-part); font-size: .72rem; font-weight: 700; color: var(--muted); }
+.sg-legend { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin: -14px 0 30px; font-size: .84rem; }
+
+/* ---------- Quiz ---------- */
+.qz { margin-top: 10px; }
+.qz-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  align-items: center;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  border-radius: 18px;
+  border: 3px solid var(--ink);
+  background: var(--card);
+}
+.qz-palette-label { font-size: .68rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-right: 2px; }
+.qz-sep { width: 100%; height: 0; }
+.qz-brush {
+  --b: #fff;
+  --t: var(--ink);
+  padding: .5em 1em;
+  border-radius: 999px;
+  border: 3px solid var(--ink);
+  background: var(--b);
+  color: var(--t);
+  font: 800 .74rem var(--font);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+}
+.qz-brush:hover { transform: translateY(-2px); }
+.qz-brush[aria-pressed="true"] { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px var(--ink); transform: translateY(-2px); }
+.qz-brush[data-v="hyper"] { --b: #d4174a; --t: #fff; }
+.qz-brush[data-v="hypo"] { --b: #3c67b8; --t: #fff; }
+.qz-brush[data-v="iso"] { --b: #f2ab2f; }
+.qz-brush[data-kind="bio"] { text-transform: none; letter-spacing: 0; font-size: .78rem; }
+.qz-palette.is-flash { animation: qz-flash .5s ease 2; }
+@keyframes qz-flash { 50% { border-color: var(--k-grave); box-shadow: 0 0 0 4px rgba(168, 23, 45, .25); } }
+
+.qz-msg { min-height: 1.4em; margin: 0 0 10px; font-size: .86rem; font-weight: 700; color: var(--k-grave); }
+
+.qz-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: 100%;
+  min-height: 42px;
+  padding: 6px;
+  border: 2px dashed rgba(17, 17, 20, .28);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--muted);
+  font: 700 .76rem var(--font);
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.qz-cell:hover:not([data-state]) { border-color: var(--ink); background: #fbfbfd; }
+.qz-cell:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.qz-cell[data-state] { cursor: default; border-style: solid; }
+.qz-cell[data-state="ok"] { border-color: var(--k-sign); background: #e7f5ee; }
+.qz-cell[data-state="ko"] { border-color: var(--k-grave); background: #fbe9ec; }
+.qz-cell[data-state="vu"] { border-color: rgba(17, 17, 20, .25); background: #f3f3f6; }
+.qz-verdict { font-size: .7rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+.qz-cell[data-state="ok"] .qz-verdict { color: var(--k-sign); }
+.qz-cell[data-state="ko"] .qz-verdict { color: var(--k-grave); }
+.qz-mine { font-size: .7rem; color: var(--k-grave); text-decoration: line-through; }
+.qz-split { display: grid; gap: 6px; }
+.qz-part > span { display: block; margin-bottom: 3px; font-size: .64rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+
+.qz-score { display: grid; gap: 8px; margin: 18px 0 12px; }
+.qz-bar { height: 14px; border-radius: 999px; border: 3px solid var(--ink); background: #fff; overflow: hidden; display: flex; }
+.qz-bar span { display: block; height: 100%; transition: width .25s; }
+.qz-bar .ok { background: var(--k-sign); }
+.qz-bar .ko { background: var(--k-grave); }
+.qz-count { font-weight: 800; font-size: .9rem; }
+.qz-count b { font-weight: 900; }
+.qz-end { padding: 14px 18px; border-radius: 18px; background: var(--g-sun); font-weight: 700; }
+.qz-end[hidden] { display: none; }
+.qz-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .qz-brush, .qz-bar span { transition: none; }
+  .qz-palette.is-flash { animation: none; }
+}
+@media print {
+  .qz-palette, .qz-actions, .qz-msg { display: none; }
+}

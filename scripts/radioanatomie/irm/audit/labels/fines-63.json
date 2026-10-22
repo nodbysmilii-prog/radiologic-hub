@@ -1,0 +1,73 @@
+{
+ "cle": "fines-63",
+ "nom_fr": "Plexus choroïde du ventricule latéral droit",
+ "nom_en": "Right-choroid-plexus",
+ "cote": "droit",
+ "categorie": "Ventricules et citernes",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (aseg)",
+  "nom_outil": "Right-choroid-plexus",
+  "identifiant": 63
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   23.3,
+   -36.8,
+   8.5
+  ],
+  "mni_icbm2009c_mm": [
+   25.899999618530273,
+   -37.0,
+   7.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    23.3,
+    -36.8,
+    19.7
+   ],
+   "mni_icbm2009c_mm": [
+    25.299999237060547,
+    -37.400001525878906,
+    18.799999237060547
+   ],
+   "coupe": "z = +19.7 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    23.3,
+    -35.4,
+    8.5
+   ],
+   "mni_icbm2009c_mm": [
+    25.899999618530273,
+    -35.599998474121094,
+    7.5
+   ],
+   "coupe": "y = -35.4 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    23.3,
+    -36.8,
+    8.5
+   ],
+   "mni_icbm2009c_mm": [
+    25.899999618530273,
+    -37.0,
+    7.5
+   ],
+   "coupe": "x = +23.3 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : FastSurfer (aseg)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

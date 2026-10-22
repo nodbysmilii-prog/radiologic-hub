@@ -1,0 +1,125 @@
+{
+ "cle": "fines-2035",
+ "nom_fr": "Cortex insulaire droit",
+ "nom_en": "ctx-rh-insula",
+ "cote": "droit",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-insula",
+  "identifiant": 2035
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   29.6,
+   15.0,
+   -14.6
+  ],
+  "mni_icbm2009c_mm": [
+   32.79999923706055,
+   13.899999618530273,
+   -17.899999618530273
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    29.6,
+    15.0,
+    -0.6
+   ],
+   "mni_icbm2009c_mm": [
+    33.20000076293945,
+    16.700000762939453,
+    -4.0
+   ],
+   "coupe": "z = -0.6 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    29.6,
+    13.6,
+    -14.6
+   ],
+   "mni_icbm2009c_mm": [
+    32.79999923706055,
+    12.800000190734863,
+    -17.799999237060547
+   ],
+   "coupe": "y = +13.6 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    34.5,
+    15.0,
+    -14.6
+   ],
+   "mni_icbm2009c_mm": [
+    38.099998474121094,
+    15.600000381469727,
+    -17.600000381469727
+   ],
+   "coupe": "x = +34.5 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 23,
+     "nom": "Insula (R)"
+    }
+   ],
+   "mesure": 0.778,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.781,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.786,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.83,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.88"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 4,
+     "nom": "Right Insular Cortex"
+    }
+   ],
+   "mesure": 0.863,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.89,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.932,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.903,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

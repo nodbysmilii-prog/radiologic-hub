@@ -1,0 +1,317 @@
+{
+ "id": "adenome-pleomorphe",
+ "spe": "orl",
+ "auteur": "Dr Boubaker Guermazi",
+ "c": "purple",
+ "badge": {
+  "fr": "Tête et cou",
+  "en": "Head and neck"
+ },
+ "tag": {
+  "fr": "Cas clinique · Tête et cou · IRM",
+  "en": "Clinical case · Head and neck · MRI"
+ },
+ "titre": {
+  "fr": "Une tuméfaction <span class='hl-red'>préauriculaire</span> indolore",
+  "en": "A painless <span class='hl-red'>preauricular</span> swelling"
+ },
+ "titre_texte": {
+  "fr": "Une tuméfaction préauriculaire indolore",
+  "en": "A painless preauricular swelling"
+ },
+ "accroche": {
+  "fr": "Femme de 52 ans, <span class='hl-navy'>tuméfaction préauriculaire droite indolore</span> évoluant depuis un an. Une IRM de la parotide : quel est votre diagnostic ?",
+  "en": "A 52-year-old woman with a <span class='hl-navy'>painless right preauricular swelling</span> growing over the past year. A parotid MRI: what is your diagnosis?"
+ },
+ "mots": [
+  {
+   "fr": "IRM",
+   "en": "MRI"
+  },
+  {
+   "fr": "Parotide",
+   "en": "Parotid gland"
+  },
+  {
+   "fr": "Diffusion",
+   "en": "Diffusion"
+  }
+ ],
+ "sections": [
+  {
+   "id": "cas",
+   "num": "I",
+   "c": "rose",
+   "titre": {
+    "fr": "Le cas",
+    "en": "The case"
+   },
+   "blocs": [
+    {
+     "type": "recit",
+     "fr": "Une <mark class='k-key'>femme de 52 ans</mark> consulte pour une <mark class='k-signo'>tuméfaction préauriculaire droite indolore</mark>, apparue et augmentant de volume depuis un an.",
+     "en": "A <mark class='k-key'>52-year-old female</mark> has presented with a <mark class='k-signo'>painless preauricular swelling on the right side of her face</mark> that has been developing over the past year."
+    }
+   ]
+  },
+  {
+   "id": "images",
+   "num": "II",
+   "c": "slate",
+   "titre": {
+    "fr": "L'IRM",
+    "en": "The MRI"
+   },
+   "blocs": [
+    {
+     "type": "intro-images"
+    },
+    {
+     "type": "galerie",
+     "c": "slate",
+     "images": [
+      {
+       "src": "axial-t2.jpg",
+       "mod": {
+        "fr": "T2",
+        "en": "T2"
+       },
+       "titre": {
+        "fr": "Image 1 · Coupe axiale pondérée en T2",
+        "en": "Image 1 · Axial T2-weighted image"
+       },
+       "alt": {
+        "fr": "IRM des parotides, coupe axiale pondérée en T2",
+        "en": "Parotid MRI, axial T2-weighted image"
+       }
+      },
+      {
+       "src": "axial-t1.jpg",
+       "mod": {
+        "fr": "T1",
+        "en": "T1"
+       },
+       "titre": {
+        "fr": "Image 2 · Coupe axiale pondérée en T1",
+        "en": "Image 2 · Axial T1-weighted image"
+       },
+       "alt": {
+        "fr": "IRM des parotides, coupe axiale pondérée en T1",
+        "en": "Parotid MRI, axial T1-weighted image"
+       }
+      },
+      {
+       "src": "coronal-t2-fs.jpg",
+       "mod": {
+        "fr": "T2 FS",
+        "en": "T2 FS"
+       },
+       "titre": {
+        "fr": "Image 3 · Coupe coronale T2 avec saturation de la graisse",
+        "en": "Image 3 · Coronal fat-saturated T2"
+       },
+       "alt": {
+        "fr": "IRM, coupe coronale T2 avec saturation de la graisse",
+        "en": "MRI, coronal fat-saturated T2 image"
+       }
+      },
+      {
+       "src": "diffusion.jpg",
+       "mod": {
+        "fr": "Diffusion",
+        "en": "DWI"
+       },
+       "titre": {
+        "fr": "Image 4 · Diffusion",
+        "en": "Image 4 · Diffusion-weighted image"
+       },
+       "alt": {
+        "fr": "IRM, coupe axiale en diffusion",
+        "en": "MRI, axial diffusion-weighted image"
+       }
+      },
+      {
+       "src": "cartographie-adc.jpg",
+       "mod": {
+        "fr": "ADC",
+        "en": "ADC"
+       },
+       "titre": {
+        "fr": "Image 5 · Cartographie ADC",
+        "en": "Image 5 · ADC map"
+       },
+       "alt": {
+        "fr": "IRM, cartographie du coefficient de diffusion apparent",
+        "en": "MRI, apparent diffusion coefficient map"
+       }
+      },
+      {
+       "src": "coronal-t1-fs-gado.jpg",
+       "mod": {
+        "fr": "T1 FS Gd",
+        "en": "T1 FS Gd"
+       },
+       "titre": {
+        "fr": "Image 6 · Coronale T1 FS après gadolinium",
+        "en": "Image 6 · Coronal post-gadolinium fat-saturated T1"
+       },
+       "alt": {
+        "fr": "IRM, coupe coronale T1 avec saturation de la graisse après injection de gadolinium",
+        "en": "MRI, coronal fat-saturated T1 image after gadolinium"
+       }
+      },
+      {
+       "src": "axial-t1-fs-gado.jpg",
+       "mod": {
+        "fr": "T1 FS Gd",
+        "en": "T1 FS Gd"
+       },
+       "titre": {
+        "fr": "Image 7 · Axiale T1 FS après gadolinium",
+        "en": "Image 7 · Axial post-gadolinium fat-saturated T1"
+       },
+       "alt": {
+        "fr": "IRM, coupe axiale T1 avec saturation de la graisse après injection de gadolinium",
+        "en": "MRI, axial fat-saturated T1 image after gadolinium"
+       }
+      },
+      {
+       "src": "courbe-rehaussement.jpg",
+       "mod": {
+        "fr": "Dynamique",
+        "en": "Dynamic"
+       },
+       "titre": {
+        "fr": "Image 8 · Courbe de rehaussement dynamique",
+        "en": "Image 8 · Dynamic enhancement curve"
+       },
+       "alt": {
+        "fr": "Courbe intensité-temps après injection dynamique de gadolinium",
+        "en": "Time-intensity curve after dynamic gadolinium injection"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "diagnostic",
+   "num": "III",
+   "c": "amber",
+   "titre": {
+    "fr": "À vous de jouer",
+    "en": "Your turn"
+   },
+   "blocs": [
+    {
+     "type": "question",
+     "question": {
+      "fr": "Quel est votre diagnostic ?",
+      "en": "What's your diagnosis?"
+     },
+     "reponse": {
+      "fr": "Adénome pléomorphe",
+      "en": "Pleomorphic adenoma"
+     }
+    }
+   ]
+  },
+  {
+   "id": "semiologie",
+   "num": "IV",
+   "c": "crimson",
+   "titre": {
+    "fr": "Ce que montre l'IRM",
+    "en": "What the MRI shows"
+   },
+   "blocs": [
+    {
+     "type": "fcard",
+     "c": "crimson",
+     "items": [
+      {
+       "fr": "Masse intraparotidienne droite <mark class='k-sign'>ovalaire, bien limitée</mark>, prédominant dans le <mark class='k-tech'>lobe superficiel</mark>, en <mark class='k-signo'>isosignal T1</mark> et en <mark class='k-signo'>signal T2 hétérogène</mark>, avec des <mark class='k-sign'>plages en hypersignal T2 correspondant à des zones myxoïdes</mark>.",
+       "en": "Right intraparotid ovoid, <mark class='k-sign'>sharply marginated</mark> mass predominantly in the <mark class='k-tech'>superficial lobe</mark>, exhibiting <mark class='k-signo'>isosignal on T1-weighted imaging</mark> and <mark class='k-signo'>heterogeneous signal on T2-weighted imaging</mark>, showing <mark class='k-sign'>hyperintense areas consistent with myxoid areas</mark>."
+      },
+      {
+       "fr": "En coronal T2 FS : <mark class='k-sign'>capsule périphérique en hyposignal</mark>.",
+       "en": "Coronal T2 FS reveals a <mark class='k-sign'>peripheral low signal intensity capsule</mark>."
+      },
+      {
+       "fr": "Diffusion et cartographie ADC : <mark class='k-sign'>hypersignal diffusion, ADC élevé</mark> (ADC : 1,8 × 10⁻³ mm²/s).",
+       "en": "Diffusion-weighted image and corresponding ADC map demonstrate an <mark class='k-sign'>increased diffusivity with high ADC values</mark> (rADC: 1.8 × 10⁻³ mm²/s)."
+      },
+      {
+       "fr": "T1 FS après gadolinium : <mark class='k-signo'>rehaussement hétérogène</mark>.",
+       "en": "<mark class='k-signo'>Heterogeneous enhancement</mark> on T1-weighted fat-suppressed MRI following gadolinium administration."
+      },
+      {
+       "fr": "Injection dynamique : <mark class='k-sign'>rehaussement progressif</mark> <mark class='k-sign'>sans lavage</mark>, courbe de type A.",
+       "en": "<mark class='k-sign'>Progressive enhancement</mark> following dynamic gadolinium injection <mark class='k-sign'>without wash-out</mark>, following a type A enhancement curve."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "adenome",
+   "num": "V",
+   "c": "teal",
+   "titre": {
+    "fr": "L'adénome pléomorphe",
+    "en": "Pleomorphic adenoma"
+   },
+   "blocs": [
+    {
+     "type": "colonnes",
+     "blocs": [
+      {
+       "type": "fcard",
+       "c": "teal",
+       "titre": {
+        "fr": "Clés IRM",
+        "en": "MR imaging keys"
+       },
+       "items": [
+        {
+         "fr": "<mark class='k-key'>Tumeur bénigne de la parotide la plus fréquente</mark> chez l'adulte.",
+         "en": "<mark class='k-key'>The most common benign parotid gland tumor</mark> in adults."
+        },
+        {
+         "fr": "Le plus souvent dans le <mark class='k-tech'>lobe superficiel</mark>.",
+         "en": "Usually in the <mark class='k-tech'>superficial lobe</mark>."
+        },
+        {
+         "fr": "<mark class='k-sign'>Hypersignal T2 très intense</mark>.",
+         "en": "<mark class='k-sign'>Very high T2 signal</mark>."
+        },
+        {
+         "fr": "<mark class='k-sign'>ADC plus élevé que celui des autres tumeurs parotidiennes</mark> (1,3 à 2,2 × 10⁻³ mm²/s).",
+         "en": "<mark class='k-sign'>ADC values higher than other parotid tumors</mark> (1.3–2.2 × 10⁻³ mm²/s)."
+        }
+       ]
+      },
+      {
+       "type": "fcard",
+       "c": "crimson",
+       "titre": {
+        "fr": "Risque de dégénérescence",
+        "en": "Tendency to degenerate"
+       },
+       "items": [
+        {
+         "fr": "<mark class='k-grave'>Transformation maligne</mark> rapportée jusqu'à <mark class='k-grave'>15 %</mark> en l'absence de traitement : <mark class='k-grave'>carcinome ex-adénome pléomorphe</mark>.",
+         "en": "<mark class='k-grave'>Malignant transformation</mark> reported up to <mark class='k-grave'>15%</mark> if left untreated: <mark class='k-grave'>carcinoma ex pleomorphic adenoma</mark>."
+        },
+        {
+         "fr": "Signes de malignité : <mark class='k-grave'>contours infiltrants</mark>, <mark class='k-grave'>multicentricité</mark>, <mark class='k-grave'>hyposignal T2</mark>, <mark class='k-grave'>ADC &lt; 1,2</mark> (× 10⁻³ mm²/s).",
+         "en": "Signs of malignancy: <mark class='k-grave'>infiltrative margins</mark>, <mark class='k-grave'>multicentricity</mark>, <mark class='k-grave'>hypointense T2 signal</mark>, <mark class='k-grave'>ADC value &lt;1.2</mark> (× 10⁻³ mm²/s)."
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

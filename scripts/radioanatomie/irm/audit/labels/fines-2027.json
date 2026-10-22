@@ -1,0 +1,129 @@
+{
+ "cle": "fines-2027",
+ "nom_fr": "Gyrus frontal moyen droit, partie rostrale",
+ "nom_en": "ctx-rh-rostralmiddlefrontal",
+ "cote": "droit",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-rostralmiddlefrontal",
+  "identifiant": 2027
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   24.0,
+   36.7,
+   47.7
+  ],
+  "mni_icbm2009c_mm": [
+   28.399999618530273,
+   37.20000076293945,
+   50.0
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    24.0,
+    36.7,
+    29.5
+   ],
+   "mni_icbm2009c_mm": [
+    26.299999237060547,
+    40.29999923706055,
+    28.399999618530273
+   ],
+   "coupe": "z = +29.5 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    24.0,
+    36.7,
+    47.7
+   ],
+   "mni_icbm2009c_mm": [
+    28.399999618530273,
+    37.20000076293945,
+    50.0
+   ],
+   "coupe": "y = +36.7 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    38.7,
+    36.7,
+    47.7
+   ],
+   "mni_icbm2009c_mm": [
+    42.900001525878906,
+    37.599998474121094,
+    51.29999923706055
+   ],
+   "coupe": "x = +38.7 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 1,
+     "nom": "Rostral Middle Frontal (R)"
+    }
+   ],
+   "mesure": 0.581,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.675,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.605,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.63,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.74"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 2,
+     "nom": "Right Frontal Pole"
+    },
+    {
+     "id": 8,
+     "nom": "Right Middle Frontal Gyrus"
+    }
+   ],
+   "mesure": 0.994,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "moyenne"
+}

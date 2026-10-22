@@ -1,0 +1,105 @@
+{
+ "cle": "fines-630",
+ "nom_fr": "Vermis, lobule VII (folium et tuber)",
+ "nom_en": "Cbm_Vermis_VII",
+ "cote": "médian",
+ "categorie": "Cervelet",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "CerebNet",
+  "nom_outil": "Cbm_Vermis_VII",
+  "identifiant": 630
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   0.2,
+   -73.9,
+   -26.5
+  ],
+  "mni_icbm2009c_mm": [
+   -0.30000001192092896,
+   -75.19999694824219,
+   -31.799999237060547
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    0.2,
+    -73.9,
+    -25.8
+   ],
+   "mni_icbm2009c_mm": [
+    -0.30000001192092896,
+    -75.0999984741211,
+    -30.899999618530273
+   ],
+   "coupe": "z = -25.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    0.2,
+    -76.0,
+    -26.5
+   ],
+   "mni_icbm2009c_mm": [
+    -0.5,
+    -77.69999694824219,
+    -31.299999237060547
+   ],
+   "coupe": "y = -76.0 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    0.2,
+    -73.9,
+    -26.5
+   ],
+   "mni_icbm2009c_mm": [
+    -0.30000001192092896,
+    -75.19999694824219,
+    -31.799999237060547
+   ],
+   "coupe": "x = +0.2 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 53,
+     "nom": "Vermal lobules VI-VII (L)"
+    },
+    {
+     "id": 2,
+     "nom": "Vermal lobules VI-VII (R)"
+    }
+   ],
+   "mesure": 0.524,
+   "verdict": "discordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.553,
+     "verdict": "discordant"
+    },
+    "coronal": {
+     "mesure": 0.548,
+     "verdict": "discordant"
+    },
+    "sagittal": {
+     "mesure": 0.613,
+     "verdict": "partiel"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.38"
+  }
+ ],
+ "remarques": [
+  "Étiquette CerebrA peu fiable selon ses auteurs (kappa 0.38) : la discordance ne suffit pas à conclure."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "faible"
+}

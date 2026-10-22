@@ -1,0 +1,129 @@
+{
+ "cle": "fines-1024",
+ "nom_fr": "Gyrus précentral gauche",
+ "nom_en": "ctx-lh-precentral",
+ "cote": "gauche",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-precentral",
+  "identifiant": 1024
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -55.1,
+   3.1,
+   33.7
+  ],
+  "mni_icbm2009c_mm": [
+   -62.20000076293945,
+   2.9000000953674316,
+   35.29999923706055
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -55.1,
+    3.1,
+    24.6
+   ],
+   "mni_icbm2009c_mm": [
+    -62.20000076293945,
+    2.5,
+    24.600000381469727
+   ],
+   "coupe": "z = +24.6 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -55.1,
+    -9.5,
+    33.7
+   ],
+   "mni_icbm2009c_mm": [
+    -60.70000076293945,
+    -8.199999809265137,
+    40.099998474121094
+   ],
+   "coupe": "y = -9.5 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -46.7,
+    3.1,
+    33.7
+   ],
+   "mni_icbm2009c_mm": [
+    -54.099998474121094,
+    4.699999809265137,
+    35.29999923706055
+   ],
+   "coupe": "x = -46.7 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 86,
+     "nom": "Precentral (L)"
+    }
+   ],
+   "mesure": 0.719,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.663,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.706,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.769,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.84"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 13,
+     "nom": "Left Central Opercular Cortex"
+    },
+    {
+     "id": 83,
+     "nom": "Left Precentral Gyrus"
+    }
+   ],
+   "mesure": 0.923,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.836,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.978,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.955,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

@@ -1,0 +1,133 @@
+{
+ "cle": "fines-1022",
+ "nom_fr": "Gyrus postcentral gauche",
+ "nom_en": "ctx-lh-postcentral",
+ "cote": "gauche",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-postcentral",
+  "identifiant": 1022
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -62.1,
+   -18.6,
+   28.8
+  ],
+  "mni_icbm2009c_mm": [
+   -68.0,
+   -19.399999618530273,
+   33.79999923706055
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -62.1,
+    -18.6,
+    44.2
+   ],
+   "mni_icbm2009c_mm": [
+    -66.69999694824219,
+    -19.299999237060547,
+    50.400001525878906
+   ],
+   "coupe": "z = +44.2 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -62.1,
+    -13.7,
+    28.8
+   ],
+   "mni_icbm2009c_mm": [
+    -67.5999984741211,
+    -15.199999809265137,
+    33.0
+   ],
+   "coupe": "y = -13.7 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -50.2,
+    -18.6,
+    28.8
+   ],
+   "mni_icbm2009c_mm": [
+    -53.70000076293945,
+    -16.5,
+    34.70000076293945
+   ],
+   "coupe": "x = -50.2 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 64,
+     "nom": "Postcentral (L)"
+    }
+   ],
+   "mesure": 0.589,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.668,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.797,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.64,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.82"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 33,
+     "nom": "Left Central Opercular Cortex"
+    },
+    {
+     "id": 83,
+     "nom": "Left Parietal Operculum Cortex"
+    },
+    {
+     "id": 85,
+     "nom": "Left Postcentral Gyrus"
+    }
+   ],
+   "mesure": 0.945,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.933,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.97,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.943,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "moyenne"
+}

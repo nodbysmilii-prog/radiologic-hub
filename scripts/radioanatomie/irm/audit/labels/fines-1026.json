@@ -1,0 +1,133 @@
+{
+ "cle": "fines-1026",
+ "nom_fr": "Gyrus cingulaire antérieur gauche, partie rostrale",
+ "nom_en": "ctx-lh-rostralanteriorcingulate",
+ "cote": "gauche",
+ "categorie": "Système limbique",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-rostralanteriorcingulate",
+  "identifiant": 1026
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -2.6,
+   43.7,
+   -1.3
+  ],
+  "mni_icbm2009c_mm": [
+   -3.4000000953674316,
+   43.29999923706055,
+   -1.2999999523162842
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -2.6,
+    43.7,
+    -6.2
+   ],
+   "mni_icbm2009c_mm": [
+    -2.9000000953674316,
+    43.099998474121094,
+    -7.300000190734863
+   ],
+   "coupe": "z = -6.2 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -2.6,
+    44.4,
+    -1.3
+   ],
+   "mni_icbm2009c_mm": [
+    -3.4000000953674316,
+    44.0,
+    -1.100000023841858
+   ],
+   "coupe": "y = +44.4 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -1.9,
+    43.7,
+    -1.3
+   ],
+   "mni_icbm2009c_mm": [
+    -2.5999999046325684,
+    43.099998474121094,
+    -1.2999999523162842
+   ],
+   "coupe": "x = -1.9 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 59,
+     "nom": "Rostral Anterior Cingulate (L)"
+    }
+   ],
+   "mesure": 0.444,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.553,
+     "verdict": "partiel"
+    },
+    "coronal": {
+     "mesure": 0.452,
+     "verdict": "partiel"
+    },
+    "sagittal": {
+     "mesure": 0.576,
+     "verdict": "partiel"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.72"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 53,
+     "nom": "Left Cingulate Gyrus, anterior division"
+    },
+    {
+     "id": 55,
+     "nom": "Left Paracingulate Gyrus"
+    },
+    {
+     "id": 57,
+     "nom": "Left Subcallosal Cortex"
+    }
+   ],
+   "mesure": 0.985,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.985,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.991,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.994,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "moyenne"
+}

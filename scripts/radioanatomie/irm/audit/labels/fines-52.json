@@ -1,0 +1,125 @@
+{
+ "cle": "fines-52",
+ "nom_fr": "Globus pallidus droit",
+ "nom_en": "Right-Pallidum",
+ "cote": "droit",
+ "categorie": "Noyaux gris centraux et structures apparentées",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (aseg)",
+  "nom_outil": "Right-Pallidum",
+  "identifiant": 52
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   16.3,
+   -0.4,
+   0.1
+  ],
+  "mni_icbm2009c_mm": [
+   17.799999237060547,
+   0.0,
+   -3.0
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    16.3,
+    -0.4,
+    0.1
+   ],
+   "mni_icbm2009c_mm": [
+    17.799999237060547,
+    0.0,
+    -3.0
+   ],
+   "coupe": "z = +0.1 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    16.3,
+    -3.2,
+    0.1
+   ],
+   "mni_icbm2009c_mm": [
+    18.100000381469727,
+    -2.700000047683716,
+    -2.9000000953674316
+   ],
+   "coupe": "y = -3.2 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    20.5,
+    -0.4,
+    0.1
+   ],
+   "mni_icbm2009c_mm": [
+    22.399999618530273,
+    0.5,
+    -3.5999999046325684
+   ],
+   "coupe": "x = +20.5 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 27,
+     "nom": "Pallidum (R)"
+    }
+   ],
+   "mesure": 0.687,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.794,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.795,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.682,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.83"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 18,
+     "nom": "Right Pallidum"
+    }
+   ],
+   "mesure": 0.751,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.818,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.845,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.795,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

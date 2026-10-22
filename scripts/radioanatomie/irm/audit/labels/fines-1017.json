@@ -1,0 +1,133 @@
+{
+ "cle": "fines-1017",
+ "nom_fr": "Lobule paracentral gauche",
+ "nom_en": "ctx-lh-paracentral",
+ "cote": "gauche",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-paracentral",
+  "identifiant": 1017
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -2.6,
+   -14.4,
+   63.8
+  ],
+  "mni_icbm2009c_mm": [
+   -1.5,
+   -18.399999618530273,
+   70.80000305175781
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -2.6,
+    -14.4,
+    54.0
+   ],
+   "mni_icbm2009c_mm": [
+    -1.899999976158142,
+    -17.299999237060547,
+    60.79999923706055
+   ],
+   "coupe": "z = +54.0 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -2.6,
+    -24.2,
+    63.8
+   ],
+   "mni_icbm2009c_mm": [
+    -1.399999976158142,
+    -27.200000762939453,
+    69.80000305175781
+   ],
+   "coupe": "y = -24.2 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -3.3,
+    -14.4,
+    63.8
+   ],
+   "mni_icbm2009c_mm": [
+    -2.0999999046325684,
+    -18.200000762939453,
+    70.80000305175781
+   ],
+   "coupe": "x = -3.3 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 67,
+     "nom": "Paracentral (L)"
+    }
+   ],
+   "mesure": 0.588,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.654,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.749,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.868,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.77"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 13,
+     "nom": "Left Juxtapositional Lobule Cortex (formerly Supplementary Motor Cortex)"
+    },
+    {
+     "id": 33,
+     "nom": "Left Postcentral Gyrus"
+    },
+    {
+     "id": 51,
+     "nom": "Left Precentral Gyrus"
+    }
+   ],
+   "mesure": 0.943,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.862,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.983,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "moyenne"
+}

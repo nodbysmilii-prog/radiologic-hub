@@ -1,0 +1,73 @@
+{
+ "cle": "fines-971",
+ "nom_fr": "Fornix droit, colonne",
+ "nom_en": "R-Fornix",
+ "cote": "droit",
+ "categorie": "Système limbique",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "HypVINN",
+  "nom_outil": "R-Fornix",
+  "identifiant": 971
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   2.3,
+   1.7,
+   1.5
+  ],
+  "mni_icbm2009c_mm": [
+   1.899999976158142,
+   2.700000047683716,
+   -1.7999999523162842
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    2.3,
+    1.7,
+    2.2
+   ],
+   "mni_icbm2009c_mm": [
+    1.899999976158142,
+    2.5999999046325684,
+    -1.0
+   ],
+   "coupe": "z = +2.2 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    2.3,
+    1.0,
+    1.5
+   ],
+   "mni_icbm2009c_mm": [
+    1.899999976158142,
+    2.0999999046325684,
+    -1.7999999523162842
+   ],
+   "coupe": "y = +1.0 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    2.3,
+    1.7,
+    1.5
+   ],
+   "mni_icbm2009c_mm": [
+    1.899999976158142,
+    2.700000047683716,
+    -1.7999999523162842
+   ],
+   "coupe": "x = +2.3 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : HypVINN."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

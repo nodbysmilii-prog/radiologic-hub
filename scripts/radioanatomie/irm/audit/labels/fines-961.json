@@ -1,0 +1,73 @@
+{
+ "cle": "fines-961",
+ "nom_fr": "Nerf optique droit (segment intracrânien)",
+ "nom_en": "R-N.opticus",
+ "cote": "droit",
+ "categorie": "Voies optiques",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "HypVINN",
+  "nom_outil": "R-N.opticus",
+  "identifiant": 961
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   5.8,
+   11.5,
+   -21.6
+  ],
+  "mni_icbm2009c_mm": [
+   5.699999809265137,
+   11.800000190734863,
+   -24.299999237060547
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    5.8,
+    11.5,
+    -23.0
+   ],
+   "mni_icbm2009c_mm": [
+    5.800000190734863,
+    11.699999809265137,
+    -25.399999618530273
+   ],
+   "coupe": "z = -23.0 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    5.8,
+    10.8,
+    -21.6
+   ],
+   "mni_icbm2009c_mm": [
+    5.800000190734863,
+    11.300000190734863,
+    -23.799999237060547
+   ],
+   "coupe": "y = +10.8 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    7.9,
+    11.5,
+    -21.6
+   ],
+   "mni_icbm2009c_mm": [
+    8.100000381469727,
+    11.800000190734863,
+    -24.200000762939453
+   ],
+   "coupe": "x = +7.9 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : HypVINN."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

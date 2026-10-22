@@ -1,0 +1,73 @@
+{
+ "cle": "sillons-56",
+ "nom_fr": "Sillon intrapariétal droit",
+ "nom_en": "Intraparietal sulcus",
+ "cote": "droit",
+ "categorie": "Sillons",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (limites DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   34.5,
+   -57.1,
+   51.9
+  ],
+  "mni_icbm2009c_mm": [
+   37.20000076293945,
+   -61.900001525878906,
+   58.20000076293945
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    34.5,
+    -57.1,
+    40.0
+   ],
+   "mni_icbm2009c_mm": [
+    37.900001525878906,
+    -61.79999923706055,
+    43.20000076293945
+   ],
+   "coupe": "z = +40.0 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    34.5,
+    -44.5,
+    51.9
+   ],
+   "mni_icbm2009c_mm": [
+    41.0,
+    -48.599998474121094,
+    57.0
+   ],
+   "coupe": "y = -44.5 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    28.2,
+    -57.1,
+    51.9
+   ],
+   "mni_icbm2009c_mm": [
+    31.299999237060547,
+    -63.0,
+    57.70000076293945
+   ],
+   "coupe": "x = +28.2 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Règle (limites DKT)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

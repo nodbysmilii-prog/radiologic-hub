@@ -1,0 +1,1488 @@
+<title>Validation IRM cérébrale</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Page privée de validation des structures de l'IRM cérébrale (étapes 4 et 5) : valider, corriger, supprimer, placer les points manuels.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Permanent+Marker&display=swap">
+<style>
+/* Poste de travail : en-tête de progression, liste des structures à gauche, coupe sur fond noir au centre,
+   fiche de la structure à droite ; une seule colonne sur téléphone (coupe, fiche, puis liste).
+   Charte du site : Montserrat, Permanent Marker, ambre #f2ab2f, encre #111114. */
+:root {
+  --bg: #eceef1; --surface: #ffffff; --surface-2: #f0f1f1; --line: #d4d7dc; --fg: #111114; --muted: #555a64;
+  --accent: #f2ab2f; --accent-ink: #111114; --focus: #2a39a3;
+  --ok: #3b7655; --ok-bg: #dfeee5; --warn: #9a5800; --warn-bg: #fcecd2; --bad: #b92a38; --bad-bg: #f8dfe2;
+  --todo: #344fa6; --todo-bg: #e1e7f6; --wait: #646a74; --wait-bg: #e4e6e9;
+  --viewer: #050506; --viewer-fg: #eceef1; --viewer-muted: #a0a6ae;
+  --sans: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --marker: 'Permanent Marker', 'Segoe Print', 'Comic Sans MS', cursive;
+  --radius: 14px; --radius-s: 9px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1013; --surface: #18191d; --surface-2: #212328; --line: #30343b; --fg: #eceef1; --muted: #a4a9b2;
+    --focus: #9fb0ff; --ok: #7cc69a; --ok-bg: #1b3024; --warn: #f2ab2f; --warn-bg: #382a10; --bad: #f2808a;
+    --bad-bg: #3a1b20; --todo: #9ab1f2; --todo-bg: #1e2944; --wait: #a4a9b2; --wait-bg: #272a30; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1013; --surface: #18191d; --surface-2: #212328; --line: #30343b; --fg: #eceef1; --muted: #a4a9b2;
+  --focus: #9fb0ff; --ok: #7cc69a; --ok-bg: #1b3024; --warn: #f2ab2f; --warn-bg: #382a10; --bad: #f2808a;
+  --bad-bg: #3a1b20; --todo: #9ab1f2; --todo-bg: #1e2944; --wait: #a4a9b2; --wait-bg: #272a30; color-scheme: dark;
+}
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 14px; line-height: 1.45; }
+* { box-sizing: border-box; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.page { height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 10px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 10px; }
+
+/* En-tête */
+.barre { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
+.marque { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+.marque h1 { margin: 0; font-family: var(--marker); font-weight: 400; font-size: 26px; line-height: 1; letter-spacing: .5px; }
+.marque span { color: var(--muted); font-weight: 600; font-size: 13px; }
+.progres { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-variant-numeric: tabular-nums; }
+.pastille { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: 12px;
+  font-weight: 600; white-space: nowrap; }
+.pastille::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.s-valide { color: var(--ok); background: var(--ok-bg); }
+.s-corriger { color: var(--warn); background: var(--warn-bg); }
+.s-supprime { color: var(--bad); background: var(--bad-bg); }
+.s-attente { color: var(--wait); background: var(--wait-bg); }
+.s-placer { color: var(--todo); background: var(--todo-bg); }
+.jauge { width: 140px; height: 8px; border-radius: 99px; background: var(--wait-bg); overflow: hidden; display: flex; }
+.jauge i { display: block; height: 100%; }
+.droite { margin-left: auto; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.etat-enr { font-size: 12px; color: var(--muted); font-weight: 600; }
+.etat-enr.erreur { color: var(--bad); }
+.bouton { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 14px; font-weight: 600;
+  font-size: 13px; }
+.bouton:hover { border-color: var(--fg); }
+.bouton:disabled { opacity: .45; cursor: not-allowed; }
+
+/* Trois colonnes */
+.app { display: grid; grid-template-columns: 300px minmax(0, 1fr) 330px; gap: 10px; min-height: 0; }
+.panneau { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); min-height: 0;
+  display: flex; flex-direction: column; overflow: hidden; }
+.liste .haut { padding: 12px; display: grid; gap: 8px; border-bottom: 1px solid var(--line); }
+.champ { width: 100%; border: 1px solid var(--line); border-radius: var(--radius-s); background: var(--surface-2);
+  padding: 7px 10px; }
+.ligne { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.ligne .champ { flex: 1 1 120px; min-width: 0; }
+.cats { padding: 6px 8px 8px; border-bottom: 1px solid var(--line); max-height: 40%; overflow: auto; flex: none; }
+.cats summary { cursor: pointer; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--muted); padding: 4px 4px 6px; }
+.cats-actions { display: flex; gap: 6px; padding: 0 4px 6px; }
+.lien { background: none; border: 0; padding: 0; color: var(--todo); font-weight: 600; font-size: 12px; text-decoration: underline; }
+.cat { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 4px;
+  border-radius: 8px; cursor: pointer; font-size: 13px; }
+.cat:hover { background: var(--surface-2); }
+.cat input { margin: 0; accent-color: var(--accent); width: 16px; height: 16px; }
+.cat .pt { width: 11px; height: 11px; border-radius: 3px; border: 1px solid rgba(0,0,0,.25); }
+.cat .nb { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.elements { overflow: auto; padding: 4px 6px 10px; flex: 1 1 auto; min-height: 120px; }
+.groupe { position: sticky; top: 0; z-index: 1; background: var(--surface); font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .06em; color: var(--muted); padding: 8px 6px 4px; }
+.el { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; gap: 8px; align-items: center; width: 100%; text-align: left;
+  background: none; border: 0; border-radius: 8px; padding: 5px 6px; font-size: 13px; }
+.el:hover { background: var(--surface-2); }
+.el.actif { background: var(--warn-bg); box-shadow: inset 3px 0 0 var(--accent); }
+.el .d { width: 10px; height: 10px; border-radius: 50%; background: var(--wait); }
+.el.st-valide .d { background: var(--ok); } .el.st-corriger .d { background: var(--warn); }
+.el.st-supprime .d { background: var(--bad); } .el.st-placer .d { background: var(--todo); }
+.el.st-supprime .n { text-decoration: line-through; color: var(--muted); }
+.el .n { min-width: 0; overflow-wrap: anywhere; }
+.el .src { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.vide { color: var(--muted); padding: 14px 8px; font-size: 13px; }
+.ajout { border-top: 1px solid var(--line); padding: 8px 12px 12px; flex: none; }
+.ajout summary { cursor: pointer; font-weight: 600; font-size: 13px; }
+.ajout form { display: grid; gap: 6px; margin-top: 8px; }
+.note { font-size: 12px; color: var(--muted); margin: 0; }
+.note.alerte { color: var(--bad); font-weight: 600; }
+
+/* Visionneuse */
+.vue { background: var(--viewer); border-color: #000; color: var(--viewer-fg); }
+.outils { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; padding: 8px 10px; border-bottom: 1px solid #1f2125; }
+.seg { display: inline-flex; background: #17181b; border-radius: 999px; padding: 2px; gap: 2px; flex-wrap: wrap; }
+.seg button { border: 0; background: none; color: var(--viewer-muted); padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.seg button:disabled { opacity: .35; cursor: not-allowed; }
+.seg button:not(:disabled):not([aria-pressed="true"]):hover { color: #fff; }
+.reg { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--viewer-muted); font-weight: 600; }
+.reg input[type=range] { width: 90px; accent-color: var(--accent); }
+.reg input[type=checkbox] { accent-color: var(--accent); }
+.toile { position: relative; flex: 1 1 auto; min-height: 260px; touch-action: none; user-select: none; -webkit-user-select: none; }
+.toile canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.toile.t-point canvas, .toile.t-pinceau canvas, .toile.t-gomme canvas { cursor: crosshair; }
+.toile.t-naviguer canvas { cursor: grab; }
+[hidden] { display: none !important; }
+.charge { position: absolute; inset: 0; display: grid; place-content: center; gap: 10px; text-align: center; color: var(--viewer-fg);
+  background: rgba(5,5,6,.75); font-weight: 600; }
+.charge .barre-c { width: min(320px, 70vw); height: 6px; background: #26282d; border-radius: 9px; overflow: hidden; }
+.charge .barre-c i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .2s; }
+.chip-sel { position: absolute; left: 10px; top: 10px; max-width: calc(100% - 20px); background: rgba(5,5,6,.78);
+  border: 1px solid #2a2c31; color: #fff; border-radius: 10px; padding: 4px 10px; font-weight: 700; font-size: 13px; pointer-events: none; }
+.bulle { position: absolute; pointer-events: none; background: rgba(5,5,6,.9); color: #fff; border: 1px solid #34363c;
+  font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 8px; white-space: nowrap; transform: translate(12px, 12px); }
+.bas { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; padding: 8px 10px; border-top: 1px solid #1f2125;
+  font-size: 12px; color: var(--viewer-muted); font-variant-numeric: tabular-nums; }
+.bas input[type=range] { flex: 1 1 160px; min-width: 120px; accent-color: var(--accent); }
+.bas .pas { border: 1px solid #2a2c31; background: #141518; color: #fff; border-radius: 8px; width: 32px; height: 28px; font-weight: 700; }
+.lecture { flex: 1 1 100%; min-height: 1.4em; color: var(--viewer-fg); }
+
+/* Fiche */
+.fiche { overflow: auto; }
+.fiche .corps { padding: 14px; display: grid; gap: 12px; align-content: start; }
+.fiche h2 { margin: 0; font-size: 18px; line-height: 1.25; text-wrap: balance; overflow-wrap: anywhere; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px; }
+.etiq { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; background: var(--surface-2); color: var(--muted);
+  text-transform: uppercase; letter-spacing: .04em; }
+.desc { margin: 0; font-size: 13px; color: var(--muted); }
+.actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.act { border: 2px solid transparent; border-radius: 12px; padding: 10px 4px; font-weight: 800; font-size: 13px; }
+.act.v { background: var(--ok-bg); color: var(--ok); } .act.c { background: var(--warn-bg); color: var(--warn); }
+.act.s { background: var(--bad-bg); color: var(--bad); }
+.act[aria-pressed="true"] { border-color: currentColor; }
+.act:disabled { opacity: .45; cursor: not-allowed; }
+.act kbd { display: block; font: 600 10px var(--sans); opacity: .7; }
+.bloc { border: 1px solid var(--line); border-radius: 12px; padding: 10px; display: grid; gap: 8px; }
+.bloc h3 { margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.outils-c { display: flex; flex-wrap: wrap; gap: 6px; }
+.oc { border: 1px solid var(--line); background: var(--surface-2); border-radius: 999px; padding: 5px 11px; font-weight: 700; font-size: 12px; }
+.oc[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.oc:disabled { opacity: .45; cursor: not-allowed; }
+.points { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 12px; font-variant-numeric: tabular-nums; }
+.points li { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.points .num { display: inline-grid; place-content: center; width: 20px; height: 20px; border-radius: 50%; background: var(--accent);
+  color: var(--accent-ink); font-weight: 800; font-size: 11px; border: 2px solid var(--fg); }
+.points .lat { color: var(--bad); font-weight: 700; flex-basis: 100%; }
+textarea.champ { min-height: 64px; resize: vertical; }
+.nav { display: flex; gap: 6px; flex-wrap: wrap; }
+.nav .bouton { flex: 1 1 auto; }
+.aide { font-size: 12px; color: var(--muted); display: grid; gap: 4px; }
+.aide kbd { font: 700 11px var(--sans); background: var(--surface-2); border: 1px solid var(--line); border-radius: 5px; padding: 0 5px; }
+.pied { font-size: 11px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.toast { position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+  background: var(--fg); color: var(--bg); padding: 8px 14px; border-radius: 10px; font-weight: 600; font-size: 13px; z-index: 20;
+  max-width: calc(100vw - 32px); }
+.export { display: grid; gap: 6px; }
+.export textarea { min-height: 120px; font-size: 11px; font-family: ui-monospace, Menlo, Consolas, monospace; }
+
+@media (max-width: 960px) {
+  html, body { height: auto; }
+  .page { height: auto; }
+  .app { display: flex; flex-direction: column; }
+  .vue { order: 1; } .fiche { order: 2; } .liste { order: 3; }
+  .toile { min-height: 0; height: min(78vh, 118vw); flex: none; }
+  .liste .elements { max-height: 70vh; }
+  .cats { max-height: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="page">
+  <header class="barre">
+    <div class="marque"><h1>Validation</h1><span>IRM cérébrale · sujet 01 · étapes 4 et 5</span></div>
+    <div class="progres" id="progres" aria-live="polite"></div>
+    <div class="droite">
+      <span class="etat-enr" id="etatEnr">Connexion à l'enregistrement…</span>
+      <button class="bouton" id="btnExport" type="button">Exporter (JSON)</button>
+    </div>
+  </header>
+
+  <main class="app">
+    <aside class="panneau liste" aria-label="Structures">
+      <div class="haut">
+        <input class="champ" id="recherche" type="search" placeholder="Rechercher une structure…" autocomplete="off">
+        <div class="ligne">
+          <select class="champ" id="filtreStatut" aria-label="Filtrer par statut">
+            <option value="tous">Tous les statuts</option>
+            <option value="attente">En attente</option>
+            <option value="placer">À placer (manuelles)</option>
+            <option value="corriger">À corriger</option>
+            <option value="valide">Validées</option>
+            <option value="supprime">Supprimées</option>
+          </select>
+          <select class="champ" id="filtreSource" aria-label="Filtrer par origine">
+            <option value="toutes">Toutes origines</option>
+            <option value="auto">Automatiques</option>
+            <option value="manuel">Manuelles</option>
+          </select>
+        </div>
+      </div>
+      <details class="cats" open>
+        <summary>Catégories</summary>
+        <div class="cats-actions"><button class="lien" type="button" id="toutes">Tout sélectionner</button><button class="lien" type="button" id="aucune">Aucune</button></div>
+        <div id="cats"></div>
+      </details>
+      <div class="elements" id="elements"><p class="vide">Chargement de la liste…</p></div>
+      <details class="ajout">
+        <summary>Ajouter une structure absente de la liste</summary>
+        <form id="formAjout">
+          <input class="champ" id="ajoutNom" placeholder="Nom français complet, avec le côté" required>
+          <div class="ligne">
+            <select class="champ" id="ajoutCat" aria-label="Catégorie"></select>
+            <select class="champ" id="ajoutCote" aria-label="Côté">
+              <option value="gauche">gauche</option><option value="droit">droit</option><option value="médian">médian</option>
+            </select>
+          </div>
+          <p class="note" id="ajoutNote">La structure est ajoutée aux structures manuelles : posez ensuite son point.</p>
+          <button class="bouton" type="submit" id="ajoutOk">Ajouter</button>
+        </form>
+      </details>
+    </aside>
+
+    <section class="panneau vue" aria-label="Coupe">
+      <div class="outils">
+        <div class="seg" id="sequences" role="group" aria-label="Séquence"></div>
+        <div class="seg" id="plans" role="group" aria-label="Plan">
+          <button type="button" data-plan="axial" aria-pressed="true">Axial</button>
+          <button type="button" data-plan="coronal" aria-pressed="false">Coronal</button>
+          <button type="button" data-plan="sagittal" aria-pressed="false">Sagittal</button>
+        </div>
+        <label class="reg">Étiquettes <input type="range" id="opacite" min="0" max="100" value="40"></label>
+        <label class="reg"><input type="checkbox" id="contours" checked> Contours</label>
+        <label class="reg"><input type="checkbox" id="isoler"> Seule la structure choisie</label>
+        <label class="reg">Luminosité <input type="range" id="lum" min="-128" max="128" value="0"></label>
+        <label class="reg">Contraste <input type="range" id="contraste" min="-90" max="90" value="0"></label>
+        <div class="seg" role="group" aria-label="Zoom">
+          <button type="button" id="zMoins" aria-label="Dézoomer">−</button>
+          <button type="button" id="zAjuster">Ajuster</button>
+          <button type="button" id="zPlus" aria-label="Zoomer">+</button>
+        </div>
+      </div>
+      <div class="toile t-naviguer" id="toile">
+        <canvas id="ecran" aria-label="Coupe IRM"></canvas>
+        <div class="chip-sel" id="chipSel" hidden></div>
+        <div class="bulle" id="bulle" hidden></div>
+        <div class="charge" id="charge"><div id="chargeTxt">Chargement des données…</div><div class="barre-c"><i id="chargeBarre"></i></div></div>
+      </div>
+      <div class="bas">
+        <button class="pas" type="button" id="cMoins" aria-label="Coupe précédente">▼</button>
+        <input type="range" id="coupe" min="0" max="1" value="0" aria-label="Coupe">
+        <button class="pas" type="button" id="cPlus" aria-label="Coupe suivante">▲</button>
+        <span id="coupeTxt">—</span>
+        <div class="lecture" id="lecture">Survolez ou touchez l'image.</div>
+      </div>
+    </section>
+
+    <aside class="panneau fiche" aria-label="Structure choisie">
+      <div class="corps" id="fiche">
+        <h2>Aucune structure choisie</h2>
+        <p class="desc">Choisissez une structure dans la liste, ou touchez-la sur l'image. Les décisions sont enregistrées au fur et à mesure.</p>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="pied">
+    <span>Page privée de validation : seules les structures validées seront publiées.</span>
+    <span>Contenu pédagogique, ne constitue pas un outil diagnostique.</span>
+    <span>Examen : studyforrest, sujet 01 (OpenNeuro ds000113, domaine public).</span>
+  </footer>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+'use strict';
+// ---------------------------------------------------------------------------------------------------------------
+// Données : manifest.json et volumes en mosaïques PNG préparés par etape5_validation_donnees.py
+// ---------------------------------------------------------------------------------------------------------------
+const DOSSIER = 'donnees/';
+const COUL_CAT = {
+  'Régions': '#f2b49b', 'Sillons': '#eef0f2', 'Gyri': '#7fd1a0', 'Système limbique': '#f07a84',
+  'Substance blanche': '#93abf0', 'Ventricules et citernes': '#a8e3e1',
+  'Noyaux gris centraux et structures apparentées': '#f39a3d', 'Voies optiques': '#f5e663', 'Cervelet': '#c49be3',
+  'Tronc cérébral': '#e58ac6', 'Artères': '#ff6b6b', 'Sinus veineux': '#8a96ff', 'Glandes': '#6fc3e8',
+  'Territoires vasculaires': '#9fd36b', 'Méninges': '#d9c7b8'
+};
+const CATS_DEPART = ['Gyri', 'Système limbique', 'Ventricules et citernes', 'Noyaux gris centraux et structures apparentées',
+  'Voies optiques', 'Cervelet', 'Glandes'];
+const ORDRE_COUCHES = ['territoires', 'jonctions', 'lobes', 'fines', 'sillons', 'meninges', 'arteres'];   // du bas vers le haut
+const NOM_SEQ_COURT = { t1: 'T1', t2: 'T2', swi: 'SWI', minip: 'minIP', tof: 'TOF', dwi: 'DWI', adc: 'ADC', fa: 'FA couleur' };
+const LIB = { valide: 'Validée', corriger: 'À corriger', supprime: 'Supprimée', attente: 'En attente', placer: 'À placer' };
+const ORIENT = { axial: ['D', 'G', 'A', 'P'], coronal: ['D', 'G', 'S', 'I'], sagittal: ['A', 'P', 'S', 'I'] };
+const AXE = { axial: 2, coronal: 1, sagittal: 0 };
+
+const $ = (id) => document.getElementById(id);
+const M = {};                       // manifeste
+let G;                              // grille : nx, ny, nz, vox, o[3]
+const vol = {};                     // séquences chargées : id → Uint8Array
+const couches = {};                 // couches d'étiquettes : nom → Uint8Array
+let fais = null, F = null;          // faisceaux (plans de bits) et leur grille
+let S = [];                         // structures (manifeste + ajouts de l'auteur)
+const parCle = new Map();
+const prim = {};                    // couche → Int16Array(256) valeur → structure (structures à une seule valeur)
+const decisions = new Map();        // clé → { statut, commentaire, nom_corrige, points, maj, par }
+const retouches = new Map();        // clé → { ajouts: Set, retraits: Set }
+const ajoutees = new Map();         // clé → { nom, cat, cote }
+
+const E = {
+  seq: 't1', plan: 'axial', coupes: { axial: 0, coronal: 0, sagittal: 0 }, curseur: [0, 0, 0],
+  cats: new Set(CATS_DEPART), recherche: '', filtreStatut: 'tous', filtreSource: 'toutes',
+  sel: -1, outil: 'naviguer', rayon: 1.4, opacite: 0.4, contours: true, isoler: false,
+  reglages: {}, zoom: 1, px: 0, py: 0, pret: false, chargeEnCours: null,
+};
+const annulations = [];
+
+function lireLocal(cle, defaut) { try { const v = localStorage.getItem(cle); return v ? JSON.parse(v) : defaut; } catch (e) { return defaut; } }
+function ecrireLocal(cle, v) { try { localStorage.setItem(cle, JSON.stringify(v)); } catch (e) { /* stockage indisponible */ } }
+
+function toast(msg, ms = 2600) {
+  const t = $('toast'); t.textContent = msg; t.hidden = false;
+  clearTimeout(toast.h); toast.h = setTimeout(() => { t.hidden = true; }, ms);
+}
+const fr1 = new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const frEnt = new Intl.NumberFormat('fr-FR');
+const signe = (x) => (x > 0.04 ? '+' : x < -0.04 ? '−' : '') + fr1.format(Math.abs(x));
+
+// ---------------------------------------------------------------------------------------------------------------
+// Chargement
+// ---------------------------------------------------------------------------------------------------------------
+// Volume (x, y, z[, canal]) : coupe z = tuile de nx × ny pixels, C tuiles par ligne, R lignes par image ; un jeu
+// d'images par canal ; somme Adler-32 du volume (x le plus rapide, canaux à la suite) vérifiée après décodage.
+let toileDecodage = null;
+async function chargerVolume(info, libelle) {
+  const [nx, ny, nz] = info.forme, nc = info.canaux, n = nx * ny * nz, [C, R] = info.tuiles;
+  const parCanal = info.fichiers.length / nc, out = new Uint8Array(n * nc);
+  let recu = 0;
+  if (!toileDecodage) toileDecodage = document.createElement('canvas');
+  const cx = toileDecodage.getContext('2d', { willReadFrequently: true });
+  for (let f = 0; f < info.fichiers.length; f++) {
+    const blob = await lireFichier(info.fichiers[f], (o) => progression(libelle, recu + o, info.octets));
+    recu += blob.size;
+    const { img, url } = await decoderImage(blob);
+    toileDecodage.width = img.width; toileDecodage.height = img.height;
+    cx.drawImage(img, 0, 0);
+    const px = cx.getImageData(0, 0, img.width, img.height).data, w = img.width;
+    if (img.close) img.close();
+    if (url) URL.revokeObjectURL(url);
+    const c = Math.floor(f / parCanal), p = f % parCanal;
+    for (let t = 0; t < C * R; t++) {
+      const k = p * C * R + t; if (k >= nz) break;
+      const tr = Math.floor(t / C), tc = t % C;
+      for (let j = 0; j < ny; j++) {
+        let src = ((tr * ny + j) * w + tc * nx) * 4; const dst = c * n + k * nx * ny + j * nx;
+        for (let i = 0; i < nx; i++, src += 4) out[dst + i] = px[src];
+      }
+    }
+  }
+  if (adler32(out) !== info.adler32) throw new Error(`${libelle} : octets altérés au décodage des images`);
+  return out;
+}
+async function lireFichier(nom, suivi) {
+  const r = await fetch(DOSSIER + nom);
+  if (!r.ok) throw new Error(`${nom} : ${r.status}`);
+  if (!r.body || !r.body.getReader) return r.blob();
+  const lecteur = r.body.getReader(), morceaux = []; let n = 0;
+  for (;;) { const { done, value } = await lecteur.read(); if (done) break; morceaux.push(value); n += value.length; suivi(n); }
+  return new Blob(morceaux, { type: 'image/png' });
+}
+async function decoderImage(blob) {
+  if (window.createImageBitmap) {
+    try { return { img: await createImageBitmap(blob, { colorSpaceConversion: 'none', premultiplyAlpha: 'none' }), url: null }; }
+    catch (e) { /* repli sur un élément image */ }
+  }
+  const url = URL.createObjectURL(blob), im = new Image();
+  im.src = url; await im.decode();
+  return { img: im, url };
+}
+function adler32(d) {
+  let a = 1, b = 0, i = 0; const L = d.length;
+  while (i < L) { const fin = Math.min(i + 5552, L); for (; i < fin; i++) { a += d[i]; b += a; } a %= 65521; b %= 65521; }
+  return ((b << 16) | a) >>> 0;
+}
+function progression(libelle, recu, total) {
+  $('chargeTxt').textContent = `${libelle}… ${fr1.format(recu / 1e6)}${total ? ' / ' + fr1.format(total / 1e6) : ''} Mo`;
+  $('chargeBarre').style.width = total ? Math.min(100, recu / total * 100) + '%' : '30%';
+}
+function afficherCharge(oui) { $('charge').hidden = !oui; }
+
+async function assurerSequence(id) {
+  if (vol[id]) return true;
+  const info = M.sequences.find((s) => s.id === id);
+  if (E.chargeEnCours === id) return false;
+  E.chargeEnCours = id; afficherCharge(true);
+  try { vol[id] = await chargerVolume(info, info.nom); }
+  catch (e) { toast('Séquence non chargée : ' + e.message, 5000); E.chargeEnCours = null; afficherCharge(false); return false; }
+  E.chargeEnCours = null;
+  if (E.seq === id) afficherCharge(false);
+  programmer('tout');
+  return true;
+}
+
+async function demarrer() {
+  try {
+    const r = await fetch(DOSSIER + 'manifest.json');
+    if (!r.ok) throw new Error('réponse ' + r.status);
+    const texte = await r.text();
+    if (!texte.trimStart().startsWith('{')) throw new Error('réponse inattendue');
+    Object.assign(M, JSON.parse(texte));
+  } catch (e) {
+    // aperçu intégré (panneau d'une application) : les fichiers de données ne sont pas servis à côté de la page
+    const t = $('chargeTxt');
+    t.textContent = `Données introuvables dans cette fenêtre (${e.message}). Ouvrez la page dans le navigateur : `;
+    const a = document.createElement('a');
+    a.href = 'https://claude.ai/artifact/Lkkug9c1ULmcAPtvaY7VrP'; a.target = '_blank'; a.rel = 'noopener';
+    a.textContent = 'claude.ai/artifact/Lkkug9c1ULmcAPtvaY7VrP'; a.style.color = 'var(--accent)';
+    t.appendChild(a);
+    return;
+  }
+  const g = M.grille;
+  G = { nx: g.forme[0], ny: g.forme[1], nz: g.forme[2], vox: g.voxel_mm, o: g.origine_mm };
+  G.n = G.nx * G.ny * G.nz;
+  const memo = lireLocal('validation-irm-filtres', null);
+  if (memo && Array.isArray(memo.cats)) E.cats = new Set(memo.cats.filter((c) => M.categories.includes(c)));
+  if (memo && memo.seq && M.sequences.some((s) => s.id === memo.seq)) E.seq = memo.seq;
+  if (memo && memo.plan) E.plan = memo.plan;
+  for (const s of M.sequences) E.reglages[s.id] = { lum: 0, contraste: 0 };
+  construireStructures();
+  construireSequences();
+  construireCategories();
+  for (const p of ['axial', 'coronal', 'sagittal']) E.coupes[p] = Math.floor(geo(p).S / 2);
+  E.curseur = [G.nx >> 1, G.ny >> 1, G.nz >> 1];
+  majPlan(); majListe(); majProgres(); majFiche();
+  initialiserEnregistrement();
+  // couches d'étiquettes (petites), puis la séquence affichée
+  try {
+    for (const nom of ['fines', 'lobes', 'sillons', 'meninges', 'territoires', 'jonctions', 'arteres']) {
+      couches[nom] = await chargerVolume(M.couches[nom], 'Étiquettes');
+    }
+    const fi = M.couches.faisceaux;
+    F = { fx: fi.forme[0], fy: fi.forme[1], fz: fi.forme[2] };
+    F.n = F.fx * F.fy * F.fz;
+    fais = await chargerVolume(fi, 'Faisceaux');
+    const table = (n, o) => { const t = new Int32Array(n); for (let i = 0; i < n; i++) { const v = Math.round((G.o[o] + i * G.vox - fi.origine_mm[o]) / fi.voxel_mm); t[i] = v >= 0 && v < fi.forme[o] ? v : -1; } return t; };
+    F.mi = table(G.nx, 0); F.mj = table(G.ny, 1); F.mk = table(G.nz, 2);
+  } catch (e) { $('chargeTxt').textContent = 'Étiquettes non chargées : ' + e.message; return; }
+  E.pret = true;
+  await assurerSequence(E.seq);
+  afficherCharge(!vol[E.seq]);
+  programmer('tout');
+}
+
+// ---------------------------------------------------------------------------------------------------------------
+// Structures
+// ---------------------------------------------------------------------------------------------------------------
+function hexVersRgb(h) { const n = parseInt(h.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
+function rgbVersHsl([r, g, b]) {
+  r /= 255; g /= 255; b /= 255; const mx = Math.max(r, g, b), mn = Math.min(r, g, b); let h = 0, s = 0; const l = (mx + mn) / 2;
+  if (mx !== mn) { const d = mx - mn; s = l > .5 ? d / (2 - mx - mn) : d / (mx + mn);
+    h = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h /= 6; }
+  return [h, s, l];
+}
+function hslVersRgb(h, s, l) {
+  const f = (p, q, t) => { t = (t + 1) % 1; return t < 1 / 6 ? p + (q - p) * 6 * t : t < .5 ? q : t < 2 / 3 ? p + (q - p) * (2 / 3 - t) * 6 : p; };
+  if (s === 0) return [l * 255, l * 255, l * 255].map(Math.round);
+  const q = l < .5 ? l * (1 + s) : l + s - l * s, p = 2 * l - q;
+  return [f(p, q, h + 1 / 3), f(p, q, h), f(p, q, h - 1 / 3)].map((x) => Math.round(x * 255));
+}
+function couleurStructure(s, rang) {
+  if (s.couleur) return hexVersRgb(s.couleur);
+  const [h, sa, l] = rgbVersHsl(hexVersRgb(COUL_CAT[s.cat] || '#cccccc'));
+  const dh = ((rang * 0.618034) % 1 - 0.5) * 0.16, dl = ((rang * 0.381966) % 1 - 0.5) * 0.22;
+  return hslVersRgb((h + dh + 1) % 1, Math.min(1, sa + 0.05), Math.min(0.85, Math.max(0.35, l + dl)));
+}
+function construireStructures() {
+  const rangs = {};
+  S = M.structures.map((s) => ({ ...s }));
+  for (const [cle, a] of ajoutees) S.push(structureAjoutee(cle, a));
+  parCle.clear();
+  S.forEach((s, i) => {
+    s.i = i; s.manuel = !s.couche; parCle.set(s.cle, i);
+    rangs[s.cat] = (rangs[s.cat] || 0) + 1;
+    s.rgb = couleurStructure(s, rangs[s.cat]);
+    s.css = `rgb(${s.rgb.join(',')})`;
+    if (s.couche && s.couche !== 'faisceaux') { s.lut = new Uint8Array(256); for (const v of s.valeurs) s.lut[v] = 1; }
+    s.recherche = sansAccents(s.nom + ' ' + (s.outil || '') + ' ' + s.cat);
+  });
+  for (const c of ORDRE_COUCHES) prim[c] = new Int16Array(256).fill(-1);
+  for (const s of S) if (s.couche && s.couche !== 'faisceaux' && s.valeurs.length === 1) prim[s.couche][s.valeurs[0]] = s.i;
+}
+function structureAjoutee(cle, a) {
+  return { cle, nom: a.nom, cat: a.cat, cote: a.cote, source: "Ajout de l'auteur (navigateur)", statut: 'manuel',
+    outil: '', id_outil: '', remarque: "Structure ajoutée dans l'interface de validation." };
+}
+function sansAccents(t) { return t.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/æ/g, 'ae').replace(/œ/g, 'oe').toLowerCase(); }
+function statutDe(s) {
+  const d = decisions.get(s.cle);
+  if (d && d.statut) return d.statut;
+  if (s.manuel && !(d && d.points && d.points.length)) return 'placer';
+  return 'attente';
+}
+
+// ---------------------------------------------------------------------------------------------------------------
+// Géométrie des coupes (convention radiologique : droite du patient à gauche de l'écran ; sagittal : avant à gauche)
+// ---------------------------------------------------------------------------------------------------------------
+function geo(plan) {
+  if (plan === 'axial') return { W: G.nx, H: G.ny, S: G.nz };
+  if (plan === 'coronal') return { W: G.nx, H: G.nz, S: G.ny };
+  return { W: G.ny, H: G.nz, S: G.nx };
+}
+function voxel(plan, s, c, r) {
+  if (plan === 'axial') return [G.nx - 1 - c, G.ny - 1 - r, s];
+  if (plan === 'coronal') return [G.nx - 1 - c, s, G.nz - 1 - r];
+  return [s, G.ny - 1 - c, G.nz - 1 - r];
+}
+function enPlan(plan, i, j, k) {
+  if (plan === 'axial') return [G.nx - 1 - i, G.ny - 1 - j, k];
+  if (plan === 'coronal') return [G.nx - 1 - i, G.nz - 1 - k, j];
+  return [G.ny - 1 - j, G.nz - 1 - k, i];
+}
+function parcours(plan, s, nx, ny, nz) {
+  if (plan === 'axial') return { W: nx, H: ny, base: (nx - 1) + nx * (ny - 1) + nx * ny * s, dc: -1, dr: -nx };
+  if (plan === 'coronal') return { W: nx, H: nz, base: (nx - 1) + nx * s + nx * ny * (nz - 1), dc: -1, dr: -nx * ny };
+  return { W: ny, H: nz, base: s + nx * (ny - 1) + nx * ny * (nz - 1), dc: -nx, dr: -nx * ny };
+}
+const indice = (i, j, k) => i + G.nx * (j + G.ny * k);
+const mm = (i, j, k) => [G.o[0] + i * G.vox, G.o[1] + j * G.vox, G.o[2] + k * G.vox];
+function fIndice(i, j, k) {
+  const a = F.mi[i], b = F.mj[j], c = F.mk[k];
+  return a < 0 || b < 0 || c < 0 ? -1 : a + F.fx * (b + F.fy * c);
+}
+function dansBase(s, idx, i, j, k) {
+  if (!s.couche) return false;
+  if (s.couche === 'faisceaux') {
+    if (!fais) return false;
+    const f = fIndice(i, j, k); if (f < 0) return false;
+    for (const b of s.valeurs) if ((fais[(b >> 3) * F.n + f] >> (b & 7)) & 1) return true;
+    return false;
+  }
+  const d = couches[s.couche]; return d ? s.lut[d[idx]] === 1 : false;
+}
+function appartient(s, idx, i, j, k) {
+  const R = retouches.get(s.cle);
+  if (R) { if (R.ajouts.has(idx)) return true; if (R.retraits.has(idx)) return false; }
+  return dansBase(s, idx, i, j, k);
+}
+
+// ---------------------------------------------------------------------------------------------------------------
+// Rendu
+// ---------------------------------------------------------------------------------------------------------------
+const ecran = $('ecran'), ctx = ecran.getContext('2d');
+const toileBase = document.createElement('canvas'), ctxBase = toileBase.getContext('2d');
+const toileCalque = document.createElement('canvas'), ctxCalque = toileCalque.getContext('2d');
+let carte = null, masqueSel = null, chemins = [], cheminSel = null, dpr = 1;
+const sale = { base: true, calques: true };
+let rafPrevu = false, survol = null;
+
+function programmer(quoi) {
+  if (quoi === 'tout' || quoi === 'base') sale.base = true;
+  if (quoi === 'tout' || quoi === 'calques') sale.calques = true;
+  if (!rafPrevu) { rafPrevu = true; requestAnimationFrame(() => { rafPrevu = false; dessiner(); }); }
+}
+function sequenceCourante() { return M.sequences.find((s) => s.id === E.seq); }
+function lutCourante() {
+  const r = E.reglages[E.seq], lut = new Uint8ClampedArray(256);
+  const pente = Math.tan((45 + r.contraste * 0.5) * Math.PI / 180);
+  for (let v = 0; v < 256; v++) lut[v] = (v - 127.5) * pente + 127.5 + r.lum;
+  return lut;
+}
+function rendreBase() {
+  const seq = sequenceCourante(), v = vol[seq.id];
+  if (!v) return false;
+  const f = seq.facteur, [nx, ny, nz] = seq.forme, s = Math.min(Math.floor(E.coupes[E.plan] / f), (E.plan === 'axial' ? nz : E.plan === 'coronal' ? ny : nx) - 1);
+  const p = parcours(E.plan, s, nx, ny, nz), lut = lutCourante(), n = nx * ny * nz;
+  if (toileBase.width !== p.W || toileBase.height !== p.H) { toileBase.width = p.W; toileBase.height = p.H; }
+  const img = ctxBase.createImageData(p.W, p.H), d = img.data;
+  let q = 0;
+  for (let r = 0; r < p.H; r++) {
+    let idx = p.base + r * p.dr;
+    for (let c = 0; c < p.W; c++, idx += p.dc, q += 4) {
+      if (seq.canaux === 3) { d[q] = lut[v[idx]]; d[q + 1] = lut[v[n + idx]]; d[q + 2] = lut[v[2 * n + idx]]; }
+      else { const g = lut[v[idx]]; d[q] = g; d[q + 1] = g; d[q + 2] = g; }
+      d[q + 3] = 255;
+    }
+  }
+  ctxBase.putImageData(img, 0, 0);
+  return true;
+}
+function visibles() {
+  const vis = new Uint8Array(S.length);
+  for (const s of S) vis[s.i] = E.isoler ? (s.i === E.sel ? 1 : 0) : (E.cats.has(s.cat) ? 1 : 0);
+  return vis;
+}
+function rendreCalques() {
+  const coupe = E.coupes[E.plan], p = parcours(E.plan, coupe, G.nx, G.ny, G.nz), W = p.W, H = p.H, N = W * H;
+  carte = new Int16Array(N).fill(-1);
+  const vis = visibles();
+  for (const nom of ORDRE_COUCHES) {
+    const data = couches[nom]; if (!data) continue;
+    const pr = prim[nom];
+    let q = 0;
+    for (let r = 0; r < H; r++) {
+      let idx = p.base + r * p.dr;
+      for (let c = 0; c < W; c++, idx += p.dc, q++) {
+        const v = data[idx];
+        if (v) { const si = pr[v]; if (si >= 0 && vis[si]) carte[q] = si; }
+      }
+    }
+  }
+  // mésencéphale, pont et moelle allongée (couche des régions) au-dessus des étiquettes fines du tronc cérébral
+  if (couches.lobes) {
+    const data = couches.lobes, pr = prim.lobes;
+    let q = 0;
+    for (let r = 0; r < H; r++) {
+      let idx = p.base + r * p.dr;
+      for (let c = 0; c < W; c++, idx += p.dc, q++) {
+        const v = data[idx];
+        if (v >= 21 && v <= 23) { const si = pr[v]; if (si >= 0 && vis[si]) carte[q] = si; }
+      }
+    }
+  }
+  // retouches de l'auteur (voxels ajoutés ou retirés dans cette coupe)
+  const nxy = G.nx * G.ny;
+  for (const [cle, R] of retouches) {
+    const si = parCle.get(cle); if (si === undefined || !vis[si]) continue;
+    for (const [ens, ajout] of [[R.ajouts, true], [R.retraits, false]]) {
+      for (const idx of ens) {
+        const k = Math.floor(idx / nxy), j = Math.floor((idx - k * nxy) / G.nx), i = idx - k * nxy - j * G.nx;
+        const [c, r, s] = enPlan(E.plan, i, j, k);
+        if (s !== coupe) continue;
+        const q = r * W + c;
+        if (ajout) carte[q] = si; else if (carte[q] === si) carte[q] = -1;
+      }
+    }
+  }
+  // structure choisie : masque complet (regroupements, faisceaux, retouches compris)
+  masqueSel = null;
+  const sel = E.sel >= 0 ? S[E.sel] : null;
+  if (sel && (sel.couche || retouches.has(sel.cle))) {
+    masqueSel = new Uint8Array(N);
+    let q = 0;
+    for (let r = 0; r < H; r++) {
+      let idx = p.base + r * p.dr;
+      for (let c = 0; c < W; c++, idx += p.dc, q++) {
+        let ijk = null;
+        if (sel.couche === 'faisceaux') ijk = voxel(E.plan, coupe, c, r);
+        if (appartient(sel, idx, ijk ? ijk[0] : 0, ijk ? ijk[1] : 0, ijk ? ijk[2] : 0)) masqueSel[q] = 1;
+      }
+    }
+  }
+  // remplissage
+  if (toileCalque.width !== W || toileCalque.height !== H) { toileCalque.width = W; toileCalque.height = H; }
+  const img = ctxCalque.createImageData(W, H), d = img.data;
+  const a = Math.round(E.opacite * 255), aSel = Math.round(Math.min(1, E.opacite + 0.25) * 255);
+  for (let q = 0, o = 0; q < N; q++, o += 4) {
+    let si = carte[q], al = a;
+    if (masqueSel && masqueSel[q]) { si = E.sel; al = aSel; }
+    if (si < 0) continue;
+    const rgb = S[si].rgb; d[o] = rgb[0]; d[o + 1] = rgb[1]; d[o + 2] = rgb[2]; d[o + 3] = al;
+  }
+  ctxCalque.putImageData(img, 0, 0);
+  // contours : arêtes entre deux pixels d'étiquettes différentes, regroupées par couleur
+  chemins = []; cheminSel = null;
+  if (E.contours) {
+    const parCouleur = new Map();
+    const ajouter = (si, x1, y1, x2, y2) => {
+      let ch = parCouleur.get(si); if (!ch) { ch = new Path2D(); parCouleur.set(si, ch); }
+      ch.moveTo(x1, y1); ch.lineTo(x2, y2);
+    };
+    for (let r = 0; r < H; r++) for (let c = 0; c < W; c++) {
+      const q = r * W + c, aa = carte[q];
+      if (c < W - 1) { const b = carte[q + 1]; if (aa !== b) ajouter(aa >= 0 ? aa : b, c + 1, r, c + 1, r + 1); }
+      if (r < H - 1) { const b = carte[q + W]; if (aa !== b) ajouter(aa >= 0 ? aa : b, c, r + 1, c + 1, r + 1); }
+    }
+    for (const [si, ch] of parCouleur) chemins.push([S[si].css, ch]);
+  }
+  if (masqueSel) {
+    cheminSel = new Path2D();
+    for (let r = 0; r < H; r++) for (let c = 0; c < W; c++) {
+      const q = r * W + c, aa = masqueSel[q];
+      const dr = c < W - 1 ? masqueSel[q + 1] : 0, bas = r < H - 1 ? masqueSel[q + W] : 0;
+      const ga = c > 0 ? masqueSel[q - 1] : 0, ha = r > 0 ? masqueSel[q - W] : 0;
+      if (!aa) continue;
+      if (!dr) { cheminSel.moveTo(c + 1, r); cheminSel.lineTo(c + 1, r + 1); }
+      if (!bas) { cheminSel.moveTo(c, r + 1); cheminSel.lineTo(c + 1, r + 1); }
+      if (!ga) { cheminSel.moveTo(c, r); cheminSel.lineTo(c, r + 1); }
+      if (!ha) { cheminSel.moveTo(c, r); cheminSel.lineTo(c + 1, r); }
+    }
+  }
+}
+function transfo() {
+  const { W, H } = geo(E.plan), cw = ecran.width, ch = ecran.height;
+  const k = Math.min(cw / W, ch / H) * E.zoom;
+  return { k, ox: (cw - W * k) / 2 + E.px * dpr, oy: (ch - H * k) / 2 + E.py * dpr, W, H };
+}
+function ajusterTaille() {
+  const r = $('toile').getBoundingClientRect();
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const w = Math.max(1, Math.round(r.width * dpr)), h = Math.max(1, Math.round(r.height * dpr));
+  if (ecran.width !== w || ecran.height !== h) { ecran.width = w; ecran.height = h; programmer('aucun'); }
+}
+function dessiner() {
+  if (!G) return;
+  ajusterTaille();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, ecran.width, ecran.height);
+  if (!E.pret) return;
+  if (sale.base) { if (rendreBase()) sale.base = false; }
+  if (sale.calques) { rendreCalques(); sale.calques = false; }
+  const T = transfo(), seq = sequenceCourante();
+  if (vol[seq.id]) {
+    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(toileBase, T.ox, T.oy, T.W * T.k, T.H * T.k);
+  }
+  if (E.opacite > 0) { ctx.imageSmoothingEnabled = false; ctx.drawImage(toileCalque, T.ox, T.oy, T.W * T.k, T.H * T.k); }
+  ctx.setTransform(T.k, 0, 0, T.k, T.ox, T.oy);
+  ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  if (chemins.length) {
+    ctx.lineWidth = 1.1 * dpr / T.k; ctx.globalAlpha = 0.9;
+    for (const [css, ch] of chemins) { ctx.strokeStyle = css; ctx.stroke(ch); }
+    ctx.globalAlpha = 1;
+  }
+  if (cheminSel) {
+    ctx.lineWidth = 4 * dpr / T.k; ctx.strokeStyle = '#000'; ctx.stroke(cheminSel);
+    ctx.lineWidth = 2 * dpr / T.k; ctx.strokeStyle = '#f2ab2f'; ctx.stroke(cheminSel);
+  }
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  dessinerPoints(T);
+  dessinerCurseur(T);
+  dessinerRepere(T);
+  if (survol && (E.outil === 'pinceau' || E.outil === 'gomme') && E.sel >= 0) {
+    ctx.beginPath(); ctx.arc(survol.x * dpr, survol.y * dpr, E.rayon / G.vox * T.k, 0, 2 * Math.PI);
+    ctx.lineWidth = 2 * dpr; ctx.strokeStyle = E.outil === 'pinceau' ? '#f2ab2f' : '#ff6b6b'; ctx.stroke();
+  }
+}
+function dessinerPoints(T) {
+  const coupe = E.coupes[E.plan], vis = E.isoler ? null : E.cats;
+  for (const [cle, d] of decisions) {
+    if (!d.points || !d.points.length) continue;
+    const si = parCle.get(cle); if (si === undefined) continue;
+    const s = S[si], choisi = si === E.sel;
+    if (!choisi && (E.isoler || !vis.has(s.cat))) continue;
+    d.points.forEach((pt, n) => {
+      const [c, r, sl] = enPlan(E.plan, pt.i, pt.j, pt.k);
+      if (Math.abs(sl - coupe) > 1) return;
+      const x = T.ox + (c + 0.5) * T.k, y = T.oy + (r + 0.5) * T.k;
+      if (choisi) {
+        const rr = 11 * dpr;
+        ctx.beginPath(); ctx.arc(x, y, rr, 0, 2 * Math.PI); ctx.fillStyle = '#f2ab2f'; ctx.fill();
+        ctx.lineWidth = 3 * dpr; ctx.strokeStyle = '#000'; ctx.stroke();
+        ctx.fillStyle = '#111114'; ctx.font = `800 ${12 * dpr}px Montserrat, sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText(String(n + 1), x, y + 0.5 * dpr);
+      } else {
+        ctx.beginPath(); ctx.arc(x, y, 5 * dpr, 0, 2 * Math.PI); ctx.fillStyle = s.css; ctx.fill();
+        ctx.lineWidth = 2 * dpr; ctx.strokeStyle = '#000'; ctx.stroke();
+      }
+    });
+  }
+}
+function dessinerCurseur(T) {
+  // croix bleue : le dernier endroit touché, retrouvé dans les autres plans
+  if (!E.repere) return;
+  const [c, r, s] = enPlan(E.plan, E.curseur[0], E.curseur[1], E.curseur[2]);
+  if (s !== E.coupes[E.plan]) return;
+  const x = T.ox + (c + 0.5) * T.k, y = T.oy + (r + 0.5) * T.k, a = 18 * dpr, b = 4 * dpr;
+  ctx.lineCap = 'butt';
+  for (const [coul, l] of [['#000', 4], ['#35d0e6', 2]]) {
+    ctx.strokeStyle = coul; ctx.lineWidth = l * dpr; ctx.beginPath();
+    ctx.moveTo(x - a, y); ctx.lineTo(x - b, y); ctx.moveTo(x + b, y); ctx.lineTo(x + a, y);
+    ctx.moveTo(x, y - a); ctx.lineTo(x, y - b); ctx.moveTo(x, y + b); ctx.lineTo(x, y + a); ctx.stroke();
+  }
+}
+function dessinerRepere(T) {
+  const [g, d, h, b] = ORIENT[E.plan], w = ecran.width, he = ecran.height, m = 10 * dpr;
+  ctx.font = `700 ${13 * dpr}px Montserrat, sans-serif`; ctx.fillStyle = '#c9ccd2'; ctx.textBaseline = 'middle';
+  ctx.textAlign = 'left'; ctx.fillText(g, m, he / 2); ctx.textAlign = 'right'; ctx.fillText(d, w - m, he / 2);
+  ctx.textAlign = 'center'; ctx.fillText(h, w / 2, m + 6 * dpr); ctx.fillText(b, w / 2, he - m - 6 * dpr);
+  // convention de latéralité écrite en toutes lettres
+  ctx.textAlign = 'left'; ctx.textBaseline = 'top'; ctx.font = `600 ${11 * dpr}px Montserrat, sans-serif`;
+  ctx.fillText(E.plan === 'sagittal' ? 'Sagittal : avant à gauche' : 'Vue radiologique : droite du patient à gauche', m, m);
+  ctx.textBaseline = 'middle';
+  // barre d'échelle de 10 mm
+  const l = 10 / G.vox * T.k, x2 = w - m, x1 = x2 - l, y = he - m - 22 * dpr;
+  ctx.strokeStyle = '#c9ccd2'; ctx.lineWidth = 2 * dpr; ctx.beginPath();
+  ctx.moveTo(x1, y - 4 * dpr); ctx.lineTo(x1, y); ctx.lineTo(x2, y); ctx.lineTo(x2, y - 4 * dpr); ctx.stroke();
+  ctx.textAlign = 'right'; ctx.font = `600 ${11 * dpr}px Montserrat, sans-serif`; ctx.fillText('10 mm', x2, y + 10 * dpr);
+}
+
+// ---------------------------------------------------------------------------------------------------------------
+// Commandes de la visionneuse
+// ---------------------------------------------------------------------------------------------------------------
+function construireSequences() {
+  const zone = $('sequences'); zone.textContent = '';
+  for (const s of M.sequences) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.textContent = NOM_SEQ_COURT[s.id] || s.nom; b.title = s.nom + (s.plans.length < 3 ? ' (axial seulement)' : '');
+    b.dataset.seq = s.id;
+    b.addEventListener('click', () => choisirSequence(s.id));
+    zone.appendChild(b);
+  }
+}
+function choisirSequence(id) {
+  E.seq = id;
+  const seq = sequenceCourante();
+  if (!seq.plans.includes(E.plan)) { E.plan = seq.plans[0]; toast(`${seq.nom} : coupes axiales seulement`); }
+  memoriserFiltres(); majPlan();
+  if (!vol[id]) { afficherCharge(true); assurerSequence(id); }
+  else afficherCharge(false);
+  programmer('tout');
+}
+function choisirPlan(plan) {
+  if (!sequenceCourante().plans.includes(plan)) return;
+  E.plan = plan; E.coupes[plan] = E.curseur[AXE[plan]]; E.zoom = 1; E.px = 0; E.py = 0;
+  memoriserFiltres(); majPlan(); programmer('tout');
+}
+function majPlan() {
+  const seq = sequenceCourante();
+  for (const b of $('sequences').children) b.setAttribute('aria-pressed', String(b.dataset.seq === E.seq));
+  for (const b of $('plans').children) {
+    b.setAttribute('aria-pressed', String(b.dataset.plan === E.plan));
+    b.disabled = !seq.plans.includes(b.dataset.plan);
+  }
+  const g = geo(E.plan), sl = $('coupe');
+  sl.max = g.S - 1; sl.value = E.coupes[E.plan];
+  const r = E.reglages[E.seq]; $('lum').value = r.lum; $('contraste').value = r.contraste;
+  majTexteCoupe();
+}
+function majTexteCoupe() {
+  const g = geo(E.plan), s = E.coupes[E.plan], ax = AXE[E.plan];
+  const pos = G.o[ax] + s * G.vox, nom = ['x', 'y', 'z'][ax];
+  $('coupeTxt').textContent = `Coupe ${s + 1} / ${g.S} · ${nom} = ${signe(pos)} mm`;
+}
+function allerCoupe(s) {
+  const g = geo(E.plan);
+  s = Math.max(0, Math.min(g.S - 1, Math.round(s)));
+  if (s === E.coupes[E.plan]) return;
+  E.coupes[E.plan] = s; E.curseur[AXE[E.plan]] = s;
+  $('coupe').value = s; majTexteCoupe(); programmer('tout'); majLecture();
+}
+function zoomer(f, x, y) {
+  const T = transfo();
+  if (x === undefined) { x = ecran.width / dpr / 2; y = ecran.height / dpr / 2; }
+  const c = (x * dpr - T.ox) / T.k, r = (y * dpr - T.oy) / T.k;
+  E.zoom = Math.max(1, Math.min(16, E.zoom * f));
+  if (E.zoom === 1) { E.px = 0; E.py = 0; programmer('aucun'); return; }
+  const T2 = transfo();
+  E.px += (x * dpr - c * T2.k - T2.ox) / dpr; E.py += (y * dpr - r * T2.k - T2.oy) / dpr;
+  programmer('aucun');
+}
+function centrerSur(i, j, k) {
+  if (E.zoom <= 1) return;
+  const [c, r] = enPlan(E.plan, i, j, k), T = transfo();
+  const x = T.ox + (c + 0.5) * T.k, y = T.oy + (r + 0.5) * T.k;
+  E.px += (ecran.width / 2 - x) / dpr; E.py += (ecran.height / 2 - y) / dpr;
+}
+function versImage(x, y) {
+  const T = transfo();
+  const c = Math.floor((x * dpr - T.ox) / T.k), r = Math.floor((y * dpr - T.oy) / T.k);
+  if (c < 0 || r < 0 || c >= T.W || r >= T.H) return null;
+  return { c, r, ijk: voxel(E.plan, E.coupes[E.plan], c, r) };
+}
+function structureSous(pos) {
+  if (!pos || !carte) return -1;
+  const { W } = geo(E.plan), q = pos.r * W + pos.c;
+  if (masqueSel && masqueSel[q]) return E.sel;
+  return carte[q];
+}
+function majLecture() {
+  const el = $('lecture');
+  if (!survol || !survol.pos) { el.textContent = E.outil === 'point' && E.sel >= 0 ? 'Touchez l\'image pour poser le point.' : 'Survolez ou touchez l\'image.'; return; }
+  const [i, j, k] = survol.pos.ijk, [x, y, z] = mm(i, j, k), si = structureSous(survol.pos);
+  let txt = `x ${signe(x)} · y ${signe(y)} · z ${signe(z)} mm`;
+  const seq = sequenceCourante(), v = vol[seq.id];
+  if (v && seq.id === 'adc') {
+    const f = seq.facteur, [nx, ny] = seq.forme, raw = v[(i >> 1) + nx * ((j >> 1) + ny * (k >> 1))];
+    txt += ` · ADC ${fr1.format(raw / 255 * (seq.fenetre[1] - seq.fenetre[0]) + seq.fenetre[0])} × 10⁻³ mm²/s`;
+  }
+  if (si >= 0) txt += ' · ' + S[si].nom;
+  el.textContent = txt;
+  const bulle = $('bulle');
+  if (si >= 0 && survol.souris) { bulle.textContent = S[si].nom; bulle.style.left = survol.x + 'px'; bulle.style.top = survol.y + 'px'; bulle.hidden = false; }
+  else bulle.hidden = true;
+}
+
+// Pointeur : naviguer (glisser = déplacer, toucher = choisir), point, pinceau, gomme ; deux doigts = zoom
+const pointeurs = new Map();
+let geste = null, trait = null;
+function posLocale(e) { const r = ecran.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+ecran.addEventListener('pointerdown', (e) => {
+  if (!E.pret) return;
+  if (e.pointerType !== 'touch' && e.button !== 0) return;          // clic gauche (ou stylet posé) seulement
+  if (e.pointerType !== 'touch') for (const id of [...pointeurs.keys()]) if (id !== e.pointerId) pointeurs.delete(id);
+  try { ecran.setPointerCapture(e.pointerId); } catch (err) { /* capture refusée : la vérification des boutons suffit */ }
+  const p = posLocale(e); pointeurs.set(e.pointerId, p);
+  if (pointeurs.size === 2) {
+    if (trait) finirTrait();
+    const [a, b] = [...pointeurs.values()];
+    geste = { type: 'pince', d: Math.hypot(a.x - b.x, a.y - b.y), m: { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 } };
+    return;
+  }
+  geste = { type: 'un', x0: p.x, y0: p.y, x: p.x, y: p.y, bouge: false, px: E.px, py: E.py };
+  if ((E.outil === 'pinceau' || E.outil === 'gomme') && E.sel >= 0 && peutEcrire()) { debuterTrait(); peindre(p); }
+});
+ecran.addEventListener('pointermove', (e) => {
+  // bouton relâché sans que la page le sache (hors de l'image ou de la page) : on arrête tout, rien ne se peint
+  if (e.pointerType !== 'touch' && !(e.buttons & 1) && pointeurs.has(e.pointerId)) arreterGeste();
+  const p = posLocale(e);
+  survol = { x: p.x, y: p.y, pos: E.pret ? versImage(p.x, p.y) : null, souris: e.pointerType === 'mouse' };
+  if (pointeurs.has(e.pointerId)) {
+    pointeurs.set(e.pointerId, p);
+    if (geste && geste.type === 'pince' && pointeurs.size === 2) {
+      const [a, b] = [...pointeurs.values()], d = Math.hypot(a.x - b.x, a.y - b.y), m = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+      zoomer(d / geste.d, m.x, m.y); E.px += m.x - geste.m.x; E.py += m.y - geste.m.y; geste.d = d; geste.m = m;
+    } else if (geste && geste.type === 'un') {
+      if (Math.hypot(p.x - geste.x0, p.y - geste.y0) > 6) geste.bouge = true;
+      if (trait) peindre(p);
+      else if (E.outil === 'naviguer' || E.outil === 'point') {
+        if (geste.bouge && E.zoom > 1) { E.px = geste.px + p.x - geste.x0; E.py = geste.py + p.y - geste.y0; }
+      }
+      geste.x = p.x; geste.y = p.y;
+    }
+  }
+  majLecture(); programmer('aucun');
+});
+function finPointeur(e) {
+  if (!pointeurs.has(e.pointerId)) return;
+  pointeurs.delete(e.pointerId);
+  if (geste && geste.type === 'pince') { if (pointeurs.size === 0) geste = null; return; }
+  if (trait) { finirTrait(); geste = null; return; }
+  if (geste && geste.type === 'un' && !geste.bouge && e.type === 'pointerup') toucher(posLocale(e));
+  geste = null;
+}
+ecran.addEventListener('pointerup', finPointeur);
+ecran.addEventListener('pointercancel', finPointeur);
+ecran.addEventListener('lostpointercapture', finPointeur);
+ecran.addEventListener('contextmenu', (e) => e.preventDefault());
+window.addEventListener('blur', arreterGeste);
+function arreterGeste() {
+  pointeurs.clear(); geste = null;
+  if (trait) finirTrait();
+}
+ecran.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') { survol = null; $('bulle').hidden = true; majLecture(); programmer('aucun'); } });
+let cumulMolette = 0;
+ecran.addEventListener('wheel', (e) => {
+  if (!E.pret) return;
+  e.preventDefault();
+  if (e.ctrlKey || e.metaKey) { const p = posLocale(e); zoomer(Math.exp(-e.deltaY * 0.01), p.x, p.y); return; }
+  cumulMolette += e.deltaMode === 1 ? e.deltaY * 30 : e.deltaY;
+  while (Math.abs(cumulMolette) >= 40) { allerCoupe(E.coupes[E.plan] + (cumulMolette > 0 ? -1 : 1)); cumulMolette -= Math.sign(cumulMolette) * 40; }
+}, { passive: false });
+
+function toucher(p) {
+  const pos = versImage(p.x, p.y); if (!pos) return;
+  E.curseur = pos.ijk.slice(); E.repere = E.outil === 'naviguer';
+  if (E.outil === 'point') { if (E.sel >= 0) poserPoint(pos.ijk); return; }
+  if (E.outil === 'naviguer') {
+    const si = structureSous(pos);
+    if (si >= 0 && si !== E.sel) choisir(si, { sauter: false });
+  }
+  programmer('aucun');
+}
+
+// ---------------------------------------------------------------------------------------------------------------
+// Liste, catégories, progression
+// ---------------------------------------------------------------------------------------------------------------
+function construireCategories() {
+  const zone = $('cats'); zone.textContent = '';
+  for (const c of M.categories) {
+    const lab = document.createElement('label'); lab.className = 'cat';
+    const cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = E.cats.has(c); cb.dataset.cat = c;
+    cb.addEventListener('change', () => { cb.checked ? E.cats.add(c) : E.cats.delete(c); filtresChanges(); });
+    const pt = document.createElement('span'); pt.className = 'pt'; pt.style.background = COUL_CAT[c] || '#ccc';
+    const nom = document.createElement('span'); nom.textContent = c;
+    const nb = document.createElement('span'); nb.className = 'nb'; nb.dataset.nb = c;
+    lab.append(cb, pt, nom, nb); zone.appendChild(lab);
+  }
+  const sel = $('ajoutCat'); sel.textContent = '';
+  for (const c of M.categories) { const o = document.createElement('option'); o.value = c; o.textContent = c; sel.appendChild(o); }
+}
+function filtresChanges() { memoriserFiltres(); majListe(); programmer('calques'); }
+function memoriserFiltres() { ecrireLocal('validation-irm-filtres', { cats: [...E.cats], seq: E.seq, plan: E.plan }); }
+function filtrees() {
+  const q = sansAccents(E.recherche.trim());
+  return S.filter((s) => {
+    if (!q && !E.cats.has(s.cat)) return false;
+    if (q && !q.split(/\s+/).every((m) => s.recherche.includes(m))) return false;
+    if (E.filtreSource === 'auto' && s.manuel) return false;
+    if (E.filtreSource === 'manuel' && !s.manuel) return false;
+    if (E.filtreStatut !== 'tous' && statutDe(s) !== E.filtreStatut) return false;
+    return true;
+  }).sort((a, b) => M.categories.indexOf(a.cat) - M.categories.indexOf(b.cat) || a.i - b.i);
+}
+const elParCle = new Map();
+function majListe() {
+  const zone = $('elements'), liste = filtrees();
+  zone.textContent = ''; elParCle.clear();
+  if (!liste.length) { const p = document.createElement('p'); p.className = 'vide'; p.textContent = 'Aucune structure pour ces filtres. Cochez des catégories ou videz la recherche.'; zone.appendChild(p); }
+  let cat = null; const frag = document.createDocumentFragment();
+  for (const s of liste) {
+    if (s.cat !== cat) { cat = s.cat; const h = document.createElement('div'); h.className = 'groupe'; h.textContent = cat; frag.appendChild(h); }
+    const b = document.createElement('button'); b.type = 'button'; b.dataset.cle = s.cle;
+    const d = document.createElement('span'); d.className = 'd';
+    const n = document.createElement('span'); n.className = 'n'; n.textContent = nomAffiche(s);
+    const src = document.createElement('span'); src.className = 'src'; src.textContent = s.manuel ? 'manuel' : s.statut === 'automatique' ? 'auto' : s.statut;
+    b.append(d, n, src);
+    b.addEventListener('click', () => choisir(s.i, { sauter: true }));
+    frag.appendChild(b); elParCle.set(s.cle, b); majElement(s);
+  }
+  zone.appendChild(frag);
+  majCompteursCats();
+}
+function nomAffiche(s) { const d = decisions.get(s.cle); return d && d.nom_corrige ? `${d.nom_corrige} (proposé)` : s.nom; }
+function majElement(s) {
+  const b = elParCle.get(s.cle); if (!b) return;
+  b.className = `el st-${statutDe(s)}${s.i === E.sel ? ' actif' : ''}`;
+  b.title = `${LIB[statutDe(s)]} · ${s.source}`;
+  b.querySelector('.n').textContent = nomAffiche(s);
+}
+function majCompteursCats() {
+  const tot = {}, fait = {};
+  for (const s of S) { tot[s.cat] = (tot[s.cat] || 0) + 1; const st = statutDe(s); if (st === 'valide' || st === 'supprime') fait[s.cat] = (fait[s.cat] || 0) + 1; }
+  for (const el of document.querySelectorAll('[data-nb]')) el.textContent = `${fait[el.dataset.nb] || 0}/${tot[el.dataset.nb] || 0}`;
+}
+function majProgres() {
+  const n = { valide: 0, corriger: 0, supprime: 0, attente: 0, placer: 0 };
+  for (const s of S) n[statutDe(s)]++;
+  const z = $('progres'); z.textContent = '';
+  for (const k of ['valide', 'corriger', 'supprime', 'attente', 'placer']) {
+    const p = document.createElement('span'); p.className = `pastille s-${k}`; p.textContent = `${LIB[k]} ${n[k]}`; z.appendChild(p);
+  }
+  const j = document.createElement('span'); j.className = 'jauge'; j.title = 'Structures décidées (validées ou supprimées)';
+  for (const [k, c] of [['valide', 'var(--ok)'], ['supprime', 'var(--bad)'], ['corriger', 'var(--warn)']]) {
+    const i = document.createElement('i'); i.style.width = (n[k] / S.length * 100) + '%'; i.style.background = c; j.appendChild(i);
+  }
+  z.appendChild(j);
+  majCompteursCats();
+}
+
+// ---------------------------------------------------------------------------------------------------------------
+// Fiche de la structure choisie
+// ---------------------------------------------------------------------------------------------------------------
+function choisir(si, { sauter }) {
+  const ancien = E.sel; E.sel = si;
+  const s = S[si];
+  if (ancien >= 0) majElement(S[ancien]);
+  majElement(s);
+  const el = elParCle.get(s.cle); if (el) el.scrollIntoView({ block: 'nearest' });
+  const d = decisions.get(s.cle);
+  if (sauter) {
+    if (s.plans) { for (const p of ['axial', 'coronal', 'sagittal']) E.coupes[p] = s.plans[p][2]; E.curseur = s.centre.slice(); }
+    else if (d && d.points && d.points.length) { const pt = d.points[0]; E.curseur = [pt.i, pt.j, pt.k]; for (const p of ['axial', 'coronal', 'sagittal']) E.coupes[p] = E.curseur[AXE[p]]; }
+    centrerSur(...E.curseur);
+    majPlan();
+  }
+  if (s.manuel && !(d && d.points && d.points.length)) E.outil = 'point';
+  else if (E.outil !== 'naviguer' && !(d && d.statut === 'corriger') && !s.manuel) E.outil = 'naviguer';
+  majOutil(); majFiche(); programmer('calques');
+  const chip = $('chipSel'); chip.textContent = nomAffiche(s); chip.hidden = false;
+}
+function majOutil() { $('toile').className = `toile t-${E.outil}`; for (const b of document.querySelectorAll('[data-outil]')) b.setAttribute('aria-pressed', String(b.dataset.outil === E.outil)); majLecture(); }
+function el(tag, cls, txt) { const e = document.createElement(tag); if (cls) e.className = cls; if (txt !== undefined) e.textContent = txt; return e; }
+function majFiche() {
+  const z = $('fiche'); z.textContent = '';
+  if (E.sel < 0) {
+    z.append(el('h2', '', 'Aucune structure choisie'),
+      el('p', 'desc', "Choisissez une structure dans la liste, ou touchez-la sur l'image. Les décisions sont enregistrées au fur et à mesure."));
+    z.appendChild(aide());
+    return;
+  }
+  const s = S[E.sel], d = decisions.get(s.cle) || {}, st = statutDe(s), ecr = peutEcrire();
+  z.appendChild(el('h2', '', s.nom));
+  const meta = el('div', 'meta');
+  meta.append(el('span', `pastille s-${st}`, LIB[st]), el('span', 'etiq', s.cat), el('span', 'etiq', s.cote));
+  z.appendChild(meta);
+  const src = [s.source, s.outil ? `« ${s.outil} »` : '', s.vol ? `${frEnt.format(s.vol)} mm³` : ''].filter(Boolean).join(' · ');
+  z.appendChild(el('p', 'desc', src));
+  if (s.remarque) z.appendChild(el('p', 'desc', s.remarque));
+  if (s.manuel) z.appendChild(el('p', 'note', d.points && d.points.length
+    ? 'Structure manuelle : le point posé la valide. Ajoutez un point sur une autre coupe si elle est étendue.'
+    : "Structure manuelle : choisissez la séquence et la coupe où elle se voit le mieux, puis touchez l'image pour poser son point. Le premier point la valide."));
+
+  const act = el('div', 'actions');
+  for (const [k, cls, lib, kbd] of [['valide', 'v', 'Valider', 'V'], ['corriger', 'c', 'Corriger', 'C'], ['supprime', 's', 'Supprimer', 'S']]) {
+    const b = el('button', `act ${cls}`); b.type = 'button'; b.disabled = !ecr;
+    b.append(document.createTextNode(lib), el('kbd', '', kbd));
+    b.setAttribute('aria-pressed', String(d.statut === k));
+    b.addEventListener('click', () => appliquerStatut(k));
+    act.appendChild(b);
+  }
+  z.appendChild(act);
+  if (d.statut) {
+    const r = el('button', 'lien', 'Remettre en attente'); r.type = 'button'; r.disabled = !ecr;
+    r.addEventListener('click', () => decider(s.cle, { statut: null }));
+    z.appendChild(r);
+  }
+
+  // outils de correction
+  const bl = el('div', 'bloc'); bl.appendChild(el('h3', '', s.manuel ? 'Point et contour' : 'Corriger'));
+  const oc = el('div', 'outils-c');
+  for (const [k, lib] of [['naviguer', 'Naviguer'], ['point', 'Poser un point'], ['pinceau', 'Pinceau +'], ['gomme', 'Gomme −']]) {
+    const b = el('button', 'oc', lib); b.type = 'button'; b.dataset.outil = k; b.disabled = !ecr && k !== 'naviguer';
+    b.setAttribute('aria-pressed', String(E.outil === k));
+    b.addEventListener('click', () => { E.outil = k; if ((k === 'pinceau' || k === 'gomme') && !s.manuel && !d.statut) decider(s.cle, { statut: 'corriger' }); majOutil(); programmer('aucun'); });
+    oc.appendChild(b);
+  }
+  bl.appendChild(oc);
+  const lr = el('label', 'reg'); lr.style.color = 'var(--muted)';
+  lr.append(document.createTextNode('Rayon du pinceau '));
+  const rr = document.createElement('input'); rr.type = 'range'; rr.min = '0.7'; rr.max = '7'; rr.step = '0.35'; rr.value = E.rayon; rr.id = 'rayon';
+  const rv = el('span', '', `${fr1.format(E.rayon)} mm`);
+  rr.addEventListener('input', () => { E.rayon = +rr.value; rv.textContent = `${fr1.format(E.rayon)} mm`; programmer('aucun'); });
+  lr.append(rr, rv); bl.appendChild(lr);
+  const R = retouches.get(s.cle);
+  const nb = R ? R.ajouts.size + R.retraits.size : 0;
+  const ligneR = el('div', 'ligne');
+  ligneR.appendChild(el('span', 'note', nb ? `Retouches : ${frEnt.format(R.ajouts.size)} voxels ajoutés, ${frEnt.format(R.retraits.size)} retirés.` : 'Aucune retouche du contour.'));
+  const ann = el('button', 'lien', 'Annuler le dernier trait'); ann.type = 'button'; ann.disabled = !ecr || !annulations.some((a) => a.cle === s.cle);
+  ann.addEventListener('click', annulerTrait);
+  ligneR.appendChild(ann);
+  if (nb) {
+    const eff = el('button', 'lien', 'Effacer les retouches'); eff.type = 'button'; eff.disabled = !ecr;
+    eff.addEventListener('click', () => {
+      if (eff.dataset.arme) { retouches.delete(s.cle); enregistrerRetouches(s.cle); for (let i = annulations.length - 1; i >= 0; i--) if (annulations[i].cle === s.cle) annulations.splice(i, 1); majFiche(); programmer('calques'); }
+      else { eff.dataset.arme = '1'; eff.textContent = "Confirmer l'effacement"; setTimeout(() => { delete eff.dataset.arme; eff.textContent = 'Effacer les retouches'; }, 3500); }
+    });
+    ligneR.appendChild(eff);
+  }
+  bl.appendChild(ligneR);
+  z.appendChild(bl);
+
+  // points
+  const bp = el('div', 'bloc'); bp.appendChild(el('h3', '', s.manuel ? 'Points posés' : 'Points'));
+  if (!s.manuel && d.points && d.points.length) bp.appendChild(el('p', 'note', d.statut === 'valide'
+    ? "Structure validée : ces points fixent la place de l'étiquette."
+    : 'Ces points montrent la zone fausse à Claude (avec votre commentaire).'));
+  if (d.points && d.points.length) {
+    const ul = el('ul', 'points');
+    d.points.forEach((pt, n) => {
+      const li = el('li'); const [x, y, zz] = mm(pt.i, pt.j, pt.k);
+      li.append(el('span', 'num', String(n + 1)), el('span', '', `${pt.plan || ''} · x ${signe(x)} · y ${signe(y)} · z ${signe(zz)} mm`));
+      const aller = el('button', 'lien', 'Voir'); aller.type = 'button';
+      aller.addEventListener('click', () => { E.curseur = [pt.i, pt.j, pt.k]; E.repere = true; if (pt.plan && sequenceCourante().plans.includes(pt.plan)) E.plan = pt.plan; for (const p of ['axial', 'coronal', 'sagittal']) E.coupes[p] = E.curseur[AXE[p]]; centrerSur(...E.curseur); majPlan(); programmer('tout'); });
+      const sup = el('button', 'lien', 'Retirer'); sup.type = 'button'; sup.disabled = !ecr;
+      sup.addEventListener('click', () => retirerPoints(s, d, d.points.filter((_, m) => m !== n)));
+      li.append(aller, sup);
+      const alerte = alerteLateralite(s, x);
+      if (alerte) li.appendChild(el('span', 'lat', alerte));
+      ul.appendChild(li);
+    });
+    bp.appendChild(ul);
+    if (d.points.length > 1) {
+      const tous = el('button', 'lien', `Retirer les ${d.points.length} points`); tous.type = 'button'; tous.disabled = !ecr;
+      tous.addEventListener('click', () => {
+        if (tous.dataset.arme) retirerPoints(s, d, []);
+        else { tous.dataset.arme = '1'; tous.textContent = 'Confirmer : retirer tous les points'; setTimeout(() => { delete tous.dataset.arme; tous.textContent = `Retirer les ${d.points.length} points`; }, 3500); }
+      });
+      bp.appendChild(tous);
+    }
+  } else bp.appendChild(el('p', 'note', s.manuel ? 'Aucun point pour le moment.'
+    : "Facultatif : avec « Corriger », des points montrent la zone fausse ; sur une structure validée, un point fixe la place de l'étiquette (sinon elle est placée au centre)."));
+  z.appendChild(bp);
+
+  // commentaire et nom proposé
+  const bc = el('div', 'bloc'); bc.appendChild(el('h3', '', 'Commentaire'));
+  const ta = document.createElement('textarea'); ta.className = 'champ'; ta.id = 'commentaire'; ta.disabled = !ecr;
+  ta.placeholder = 'Ce qui ne va pas, ce qu\'il faut changer…'; ta.value = d.commentaire || '';
+  ta.addEventListener('input', () => retarder('com', () => {
+    const patch = { commentaire: ta.value };
+    const actuel = decisions.get(s.cle) || {};
+    if (ta.value.trim() && !actuel.statut && !s.manuel) patch.statut = 'corriger';   // un commentaire signale une erreur
+    decider(s.cle, patch, { garderFiche: !!actuel.statut || s.manuel });
+  }));
+  const nc = document.createElement('input'); nc.className = 'champ'; nc.id = 'nomCorrige'; nc.disabled = !ecr;
+  nc.placeholder = 'Nom français proposé (si le nom est à changer)'; nc.value = d.nom_corrige || '';
+  nc.addEventListener('input', () => retarder('nom', () => decider(s.cle, { nom_corrige: nc.value.trim() }, { garderFiche: true })));
+  bc.append(ta, nc);
+  z.appendChild(bc);
+
+  const nav = el('div', 'nav');
+  const prec = el('button', 'bouton', '← Précédente'); prec.type = 'button'; prec.addEventListener('click', () => voisine(-1, false));
+  const suiv = el('button', 'bouton', 'Suivante en attente →'); suiv.type = 'button'; suiv.addEventListener('click', () => voisine(1, true));
+  nav.append(prec, suiv);
+  z.appendChild(nav);
+  z.appendChild(aide());
+  if (!ecr) z.appendChild(el('p', 'note alerte', E.modeEnr === 'connexion' ? "Connexion à l'enregistrement en cours…" : 'Lecture seule : vos droits ne permettent pas de modifier les décisions.'));
+}
+function aide() {
+  const a = el('div', 'aide');
+  const lignes = [['V C S', 'valider, corriger, supprimer'], ['N', 'structure suivante en attente'], ['↑ ↓', 'coupe suivante ou précédente (ou molette)'],
+    ['1 2 3', 'axial, coronal, sagittal ; la croix bleue garde le dernier endroit touché d\'un plan à l\'autre'], ['Z', 'annuler le dernier trait'], ['Ctrl + molette', 'zoom (deux doigts sur écran tactile)']];
+  for (const [k, t] of lignes) { const p = el('div'); p.append(el('kbd', '', k), document.createTextNode(' ' + t)); a.appendChild(p); }
+  return a;
+}
+function alerteLateralite(s, x) {
+  if (s.cote === 'gauche' && x > 3) return `Point à droite de la ligne médiane (x ${signe(x)} mm) pour une structure gauche : à vérifier.`;
+  if (s.cote === 'droit' && x < -3) return `Point à gauche de la ligne médiane (x ${signe(x)} mm) pour une structure droite : à vérifier.`;
+  return '';
+}
+const minuteries = {};
+function retarder(cle, f) { clearTimeout(minuteries[cle]); minuteries[cle] = setTimeout(f, 700); }
+function voisine(sens, enAttente) {
+  const liste = filtrees(); if (!liste.length) return;
+  let pos = liste.findIndex((s) => s.i === E.sel);
+  for (let n = 0; n < liste.length; n++) {
+    pos = (pos + sens + liste.length) % liste.length;
+    const st = statutDe(liste[pos]);
+    if (!enAttente || st === 'attente' || st === 'placer') { choisir(liste[pos].i, { sauter: true }); return; }
+  }
+  toast('Plus aucune structure en attente dans ces filtres.');
+}
+function appliquerStatut(k) {
+  if (E.sel < 0 || !peutEcrire()) return;
+  const s = S[E.sel], d = decisions.get(s.cle) || {};
+  const nouveau = d.statut === k ? null : k;
+  decider(s.cle, { statut: nouveau });
+  if (k === 'corriger' && nouveau) { if (!s.manuel) E.outil = 'pinceau'; majOutil(); setTimeout(() => { const t = $('commentaire'); if (t) t.focus(); }, 0); }
+  if ((k === 'valide' || k === 'supprime') && nouveau) toast(`${LIB[k]} : ${s.nom}`, 1600);
+}
+function poserPoint(ijk) {
+  if (!peutEcrire()) return;
+  const s = S[E.sel], d = decisions.get(s.cle) || {};
+  const pts = (d.points || []).concat([{ i: ijk[0], j: ijk[1], k: ijk[2], plan: E.plan }]);
+  const patch = { points: pts };
+  if (!d.statut) patch.statut = s.manuel ? 'valide' : 'corriger';   // automatique : un point signale une erreur
+  if (s.manuel) { E.outil = 'naviguer'; E.repere = false; }    // structure manuelle : un point par appui
+  decider(s.cle, patch); majOutil();
+  const alerte = alerteLateralite(s, mm(...ijk)[0]);
+  toast(alerte || (s.manuel ? `Point ${pts.length} posé : ${s.nom}. Pour un autre point, touchez de nouveau « Poser un point ».`
+    : `Point ${pts.length} : ${s.nom}`), alerte ? 5000 : 2600);
+}
+function retirerPoints(s, d, pts) {
+  const patch = { points: pts };
+  if (s.manuel && !pts.length && d.statut === 'valide') patch.statut = null;   // validée par son premier point
+  decider(s.cle, patch);
+}
+
+// Pinceau : voxels ajoutés ou retirés dans la coupe courante, enregistrés par structure
+function debuterTrait() { trait = { cle: S[E.sel].cle, avant: new Map(), dernier: null }; }
+function peindre(p) {
+  const s = S[E.sel]; if (!s) return;
+  let R = retouches.get(s.cle); if (!R) { R = { ajouts: new Set(), retraits: new Set() }; retouches.set(s.cle, R); }
+  const T = transfo(), cx = (p.x * dpr - T.ox) / T.k, cy = (p.y * dpr - T.oy) / T.k;
+  const pas = Math.max(0.5, E.rayon / G.vox / 2);
+  const de = trait.dernier || { cx, cy }, dist = Math.hypot(cx - de.cx, cy - de.cy), n = Math.max(1, Math.ceil(dist / pas));
+  const rv = E.rayon / G.vox, { W, H } = geo(E.plan), coupe = E.coupes[E.plan];
+  for (let t = 1; t <= n; t++) {
+    const x = de.cx + (cx - de.cx) * t / n, y = de.cy + (cy - de.cy) * t / n;
+    for (let r = Math.floor(y - rv); r <= Math.ceil(y + rv); r++) for (let c = Math.floor(x - rv); c <= Math.ceil(x + rv); c++) {
+      if (c < 0 || r < 0 || c >= W || r >= H) continue;
+      if ((c + 0.5 - x) ** 2 + (r + 0.5 - y) ** 2 > rv * rv) continue;
+      const [i, j, k] = voxel(E.plan, coupe, c, r), idx = indice(i, j, k);
+      if (!trait.avant.has(idx)) trait.avant.set(idx, R.ajouts.has(idx) ? 1 : R.retraits.has(idx) ? 2 : 0);
+      const base = dansBase(s, idx, i, j, k);
+      if (E.outil === 'pinceau') { R.retraits.delete(idx); if (!base) R.ajouts.add(idx); }
+      else { R.ajouts.delete(idx); if (base) R.retraits.add(idx); }
+    }
+  }
+  trait.dernier = { cx, cy };
+  programmer('calques');
+}
+function finirTrait() {
+  if (!trait) return;
+  if (trait.avant.size) { annulations.push(trait); if (annulations.length > 40) annulations.shift(); enregistrerRetouches(trait.cle); }
+  trait = null; majFiche();
+}
+function annulerTrait() {
+  const sel = E.sel >= 0 ? S[E.sel].cle : null;
+  let n = annulations.length - 1; while (n >= 0 && annulations[n].cle !== sel) n--;
+  if (n < 0) return;
+  const t = annulations.splice(n, 1)[0];
+  const R = retouches.get(t.cle) || { ajouts: new Set(), retraits: new Set() };
+  for (const [idx, etat] of t.avant) { R.ajouts.delete(idx); R.retraits.delete(idx); if (etat === 1) R.ajouts.add(idx); if (etat === 2) R.retraits.add(idx); }
+  retouches.set(t.cle, R); enregistrerRetouches(t.cle); majFiche(); programmer('calques');
+}
+function encoder(ens) {
+  const a = Array.from(ens).sort((x, y) => x - y); let prec = 0; const o = [];
+  for (const v of a) { o.push((v - prec).toString(36)); prec = v; }
+  return o.join(',');
+}
+function decoder(txt) {
+  const e = new Set(); if (!txt) return e; let prec = 0;
+  for (const t of txt.split(',')) { prec += parseInt(t, 36); e.add(prec); }
+  return e;
+}
+
+// ---------------------------------------------------------------------------------------------------------------
+// Enregistrement : base de données de la page (db) ; à défaut, ce navigateur seulement
+// ---------------------------------------------------------------------------------------------------------------
+E.modeEnr = 'connexion';
+let db = null, uid = null;
+const file = new Map();             // chemin → { occupe, suivant }
+const CLE_LOCALE = 'validation-irm-decisions-v1';
+let local = { statuts: {}, retouches: {}, ajouts: {} };
+
+function peutEcrire() { return E.modeEnr === 'db' || E.modeEnr === 'local'; }
+function majEtatEnr() {
+  const z = $('etatEnr'); z.classList.remove('erreur');
+  const enCours = [...file.values()].some((e) => e.occupe);
+  if (E.modeEnr === 'connexion') z.textContent = "Connexion à l'enregistrement…";
+  else if (E.modeEnr === 'lecture') z.textContent = 'Lecture seule';
+  else if (E.modeEnr === 'local') z.textContent = 'Enregistré dans ce navigateur seulement';
+  else z.textContent = enCours ? 'Enregistrement…' : 'Tout est enregistré';
+  if (E.erreurEnr) { z.textContent = E.erreurEnr; z.classList.add('erreur'); }
+}
+async function initialiserEnregistrement() {
+  let cap = null, user = null;
+  try {
+    if (window.claude && typeof window.claude.use === 'function') {
+      [cap, user] = await Promise.all([window.claude.use('db'), window.claude.use('user')]);
+    }
+  } catch (e) { cap = null; }
+  if (!cap) {
+    E.modeEnr = 'local';
+    local = Object.assign({ statuts: {}, retouches: {}, ajouts: {} }, lireLocal(CLE_LOCALE, {}));
+    for (const [cle, a] of Object.entries(local.ajouts)) ajoutees.set(cle, a);
+    for (const [cle, d] of Object.entries(local.statuts)) decisions.set(cle, d);
+    for (const [cle, r] of Object.entries(local.retouches)) retouches.set(cle, { ajouts: decoder(r.ajouts), retraits: decoder(r.retraits) });
+    if (ajoutees.size) construireStructures();
+    toutRafraichir(); return;
+  }
+  db = cap;
+  try { if (user) { uid = await user.id(); const peut = await user.can('data.write'); if (peut === false) E.modeEnr = 'lecture'; } } catch (e) { /* inconnu : on garde l'écriture */ }
+  if (E.modeEnr !== 'lecture') E.modeEnr = 'db';
+  const suivre = (col, appliquer) => db.collection(col).limit(1000).onSnapshot((snap) => {
+    let change = false;
+    for (const ch of snap.docChanges()) {
+      const chemin = `${col}/${ch.doc.id}`;
+      if (file.has(chemin)) continue;               // écriture locale en cours : l'état local fait foi
+      appliquer(ch.doc.id, ch.type === 'removed' ? null : ch.doc.data());
+      change = true;
+    }
+    if (change) toutRafraichir(col === 'ajouts');
+  }, (err) => { E.erreurEnr = 'Enregistrement interrompu (' + err.code + ') : rechargez la page.'; majEtatEnr(); });
+  suivre('ajouts', (cle, d) => { if (d) ajoutees.set(cle, { nom: d.nom, cat: d.cat, cote: d.cote }); else ajoutees.delete(cle); });
+  suivre('statuts', (cle, d) => { if (d) decisions.set(cle, d); else decisions.delete(cle); });
+  suivre('retouches', (cle, d) => { if (d) retouches.set(cle, { ajouts: decoder(d.ajouts), retraits: decoder(d.retraits) }); else retouches.delete(cle); });
+  toutRafraichir();
+}
+function toutRafraichir(structuresChangees) {
+  if (structuresChangees) { const cle = E.sel >= 0 ? S[E.sel].cle : null; construireStructures(); E.sel = cle && parCle.has(cle) ? parCle.get(cle) : -1; }
+  majEtatEnr(); majListe(); majProgres(); majFiche(); programmer('calques');
+}
+function ecrire(col, cle, data) {
+  const chemin = `${col}/${cle}`;
+  if (E.modeEnr === 'local') {
+    if (data === null) delete local[col][cle]; else local[col][cle] = data;
+    ecrireLocal(CLE_LOCALE, local); majEtatEnr(); return;
+  }
+  if (E.modeEnr !== 'db') return;
+  let e = file.get(chemin); if (!e) { e = { occupe: false, suivant: undefined }; file.set(chemin, e); }
+  e.suivant = data;
+  if (!e.occupe) vider(chemin, e);
+}
+async function vider(chemin, e) {
+  e.occupe = true; majEtatEnr();
+  while (e.suivant !== undefined) {
+    const d = e.suivant; e.suivant = undefined;
+    for (let essai = 0; essai < 2; essai++) {
+      try { const ref = db.doc(chemin); if (d === null) await ref.delete(); else await ref.set(d); E.erreurEnr = null; break; }
+      catch (err) {
+        if (err && err.code === 'unavailable' && essai === 0) { await new Promise((r) => setTimeout(r, 600 + Math.random() * 900)); continue; }
+        E.erreurEnr = err && err.code === 'quota_exceeded' ? 'Base pleine : exportez puis prévenez Claude.' : `Échec de l'enregistrement (${err && err.code || 'erreur'}).`;
+        if (err && err.code === 'invalid_argument') E.modeEnr = 'lecture';
+        break;
+      }
+    }
+  }
+  e.occupe = false; file.delete(chemin); majEtatEnr();
+}
+function decider(cle, patch, { garderFiche } = {}) {
+  const d = Object.assign({ statut: null, commentaire: '', nom_corrige: '', points: [] }, decisions.get(cle) || {}, patch);
+  d.maj = new Date().toISOString(); if (uid) d.par = uid;
+  const vide = !d.statut && !d.commentaire && !d.nom_corrige && !(d.points && d.points.length);
+  if (vide) decisions.delete(cle); else decisions.set(cle, d);
+  ecrire('statuts', cle, vide ? null : d);
+  const si = parCle.get(cle); if (si !== undefined) majElement(S[si]);
+  majProgres();
+  if (!garderFiche) majFiche();
+  if (si === E.sel) { const chip = $('chipSel'); chip.textContent = nomAffiche(S[si]); }
+  programmer('aucun');
+}
+function enregistrerRetouches(cle) {
+  const R = retouches.get(cle);
+  if (!R || (!R.ajouts.size && !R.retraits.size)) { retouches.delete(cle); ecrire('retouches', cle, null); return; }
+  const doc = { ajouts: encoder(R.ajouts), retraits: encoder(R.retraits), n_ajouts: R.ajouts.size, n_retraits: R.retraits.size,
+    grille: 'grille de 0,7 mm recadrée (manifest.json), indice = i + nx (j + ny k)', maj: new Date().toISOString() };
+  if (uid) doc.par = uid;
+  if (doc.ajouts.length + doc.retraits.length > 240000) { toast('Retouche trop étendue pour être enregistrée en une fois : annulez le dernier trait.', 6000); return; }
+  ecrire('retouches', cle, doc);
+}
+
+// Ajout d'une structure manquante
+$('formAjout').addEventListener('submit', (ev) => {
+  ev.preventDefault();
+  if (!peutEcrire()) return;
+  const nom = $('ajoutNom').value.trim(), cat = $('ajoutCat').value, cote = $('ajoutCote').value;
+  if (!nom) return;
+  const note = $('ajoutNote');
+  if ((cote === 'gauche' && !/gauche/i.test(nom)) || (cote === 'droit' && !/droite?\b/i.test(nom))) {
+    if (!note.dataset.averti) { note.dataset.averti = '1'; note.className = 'note alerte'; note.textContent = `Le nom ne précise pas le côté (${cote}). Ajoutez-le, ou appuyez de nouveau sur « Ajouter » pour garder ce nom.`; return; }
+  }
+  delete note.dataset.averti; note.className = 'note'; note.textContent = 'La structure est ajoutée aux structures manuelles : posez ensuite son point.';
+  const cle = 'ajout-' + sansAccents(nom).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 120) + '-' + Math.random().toString(36).slice(2, 6);
+  const a = { nom, cat, cote };
+  ajoutees.set(cle, a); ecrire('ajouts', cle, Object.assign({ maj: new Date().toISOString() }, uid ? { par: uid } : {}, a));
+  construireStructures(); E.cats.add(cat); construireCategories(); majListe(); majProgres();
+  choisir(parCle.get(cle), { sauter: false });
+  $('ajoutNom').value = '';
+  toast(`Ajoutée : ${nom}. Posez son point.`);
+});
+
+// Export de toutes les décisions (pour l'étape 6)
+$('btnExport').addEventListener('click', async () => {
+  const sortie = {
+    examen: M.examen, grille: M.grille, exporte_le: new Date().toISOString(),
+    structures: S.map((s) => {
+      const d = decisions.get(s.cle) || {}, R = retouches.get(s.cle);
+      return { cle: s.cle, nom: s.nom, categorie: s.cat, cote: s.cote, source: s.source, decision: statutDe(s),
+        commentaire: d.commentaire || '', nom_propose: d.nom_corrige || '',
+        points: (d.points || []).map((p) => ({ ...p, mm: mm(p.i, p.j, p.k).map((v) => Math.round(v * 100) / 100) })),
+        retouches: R ? { ajouts: encoder(R.ajouts), retraits: encoder(R.retraits) } : null };
+    }),
+  };
+  const texte = JSON.stringify(sortie, null, 1);
+  try {
+    const dl = window.claude && window.claude.use ? await window.claude.use('downloads') : null;
+    if (dl) { await dl.save({ filename: 'validation-irm-cerebrale.json', data: texte }); toast('Export enregistré.'); return; }
+  } catch (e) { if (e && e.code === 'declined') return; }
+  const z = $('fiche'); z.textContent = '';
+  const bloc = el('div', 'export');
+  bloc.append(el('h2', '', 'Export JSON'), el('p', 'desc', 'Copiez ce texte et envoyez-le à Claude.'));
+  const ta = document.createElement('textarea'); ta.className = 'champ'; ta.id = 'exportTexte'; ta.value = texte; ta.readOnly = true;
+  const cp = el('button', 'bouton', 'Copier'); cp.type = 'button';
+  cp.addEventListener('click', async () => { try { await navigator.clipboard.writeText(texte); toast('Copié.'); } catch (e) { ta.select(); } });
+  const ret = el('button', 'lien', 'Revenir à la fiche'); ret.type = 'button'; ret.addEventListener('click', majFiche);
+  bloc.append(ta, cp, ret); z.appendChild(bloc);
+});
+
+// ---------------------------------------------------------------------------------------------------------------
+// Commandes générales
+// ---------------------------------------------------------------------------------------------------------------
+$('plans').addEventListener('click', (e) => { const b = e.target.closest('[data-plan]'); if (b && !b.disabled) choisirPlan(b.dataset.plan); });
+$('coupe').addEventListener('input', (e) => allerCoupe(+e.target.value));
+$('cMoins').addEventListener('click', () => allerCoupe(E.coupes[E.plan] - 1));
+$('cPlus').addEventListener('click', () => allerCoupe(E.coupes[E.plan] + 1));
+$('opacite').addEventListener('input', (e) => { E.opacite = +e.target.value / 100; programmer('calques'); });
+$('contours').addEventListener('change', (e) => { E.contours = e.target.checked; programmer('calques'); });
+$('isoler').addEventListener('change', (e) => { E.isoler = e.target.checked; programmer('calques'); });
+$('lum').addEventListener('input', (e) => { E.reglages[E.seq].lum = +e.target.value; programmer('base'); });
+$('contraste').addEventListener('input', (e) => { E.reglages[E.seq].contraste = +e.target.value; programmer('base'); });
+$('zMoins').addEventListener('click', () => zoomer(1 / 1.4));
+$('zPlus').addEventListener('click', () => zoomer(1.4));
+$('zAjuster').addEventListener('click', () => { E.zoom = 1; E.px = 0; E.py = 0; programmer('aucun'); });
+$('recherche').addEventListener('input', (e) => { E.recherche = e.target.value; retarder('rech', majListe); });
+$('filtreStatut').addEventListener('change', (e) => { E.filtreStatut = e.target.value; majListe(); });
+$('filtreSource').addEventListener('change', (e) => { E.filtreSource = e.target.value; majListe(); });
+$('toutes').addEventListener('click', () => { E.cats = new Set(M.categories); construireCategories(); filtresChanges(); });
+$('aucune').addEventListener('click', () => { E.cats = new Set(); construireCategories(); filtresChanges(); });
+document.addEventListener('keydown', (e) => {
+  if (e.target.closest('input, textarea, select') || e.ctrlKey || e.metaKey || e.altKey) return;
+  const k = e.key;
+  if (k === 'ArrowUp' || k === 'PageUp') { allerCoupe(E.coupes[E.plan] + 1); e.preventDefault(); }
+  else if (k === 'ArrowDown' || k === 'PageDown') { allerCoupe(E.coupes[E.plan] - 1); e.preventDefault(); }
+  else if (k === 'v' || k === 'V') appliquerStatut('valide');
+  else if (k === 'c' || k === 'C') appliquerStatut('corriger');
+  else if (k === 's' || k === 'S' || k === 'Delete') appliquerStatut('supprime');
+  else if (k === 'n' || k === 'N') voisine(1, true);
+  else if (k === 'z' || k === 'Z') annulerTrait();
+  else if (k === '1') choisirPlan('axial'); else if (k === '2') choisirPlan('coronal'); else if (k === '3') choisirPlan('sagittal');
+  else if (k === 'Escape') { E.outil = 'naviguer'; E.repere = false; majOutil(); programmer('aucun'); }
+});
+new ResizeObserver(() => programmer('aucun')).observe($('toile'));
+demarrer();
+</script>

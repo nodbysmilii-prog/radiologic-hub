@@ -1,0 +1,133 @@
+{
+ "cle": "fines-2008",
+ "nom_fr": "Lobule pariétal inférieur droit (gyrus angulaire)",
+ "nom_en": "ctx-rh-inferiorparietal",
+ "cote": "droit",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-inferiorparietal",
+  "identifiant": 2008
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   31.0,
+   -49.4,
+   35.8
+  ],
+  "mni_icbm2009c_mm": [
+   31.899999618530273,
+   -54.599998474121094,
+   40.099998474121094
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    31.0,
+    -49.4,
+    23.9
+   ],
+   "mni_icbm2009c_mm": [
+    33.900001525878906,
+    -51.5,
+    22.899999618530273
+   ],
+   "coupe": "z = +23.9 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    31.0,
+    -63.4,
+    35.8
+   ],
+   "mni_icbm2009c_mm": [
+    36.70000076293945,
+    -66.19999694824219,
+    41.599998474121094
+   ],
+   "coupe": "y = -63.4 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    38.0,
+    -49.4,
+    35.8
+   ],
+   "mni_icbm2009c_mm": [
+    41.099998474121094,
+    -55.900001525878906,
+    38.900001525878906
+   ],
+   "coupe": "x = +38.0 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 10,
+     "nom": "Inferior Parietal (R)"
+    }
+   ],
+   "mesure": 0.638,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.749,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.611,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.652,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.75"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 40,
+     "nom": "Right Angular Gyrus"
+    },
+    {
+     "id": 42,
+     "nom": "Right Lateral Occipital Cortex, superior division"
+    },
+    {
+     "id": 44,
+     "nom": "Right Supramarginal Gyrus, posterior division"
+    }
+   ],
+   "mesure": 0.886,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.962,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.86,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.827,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

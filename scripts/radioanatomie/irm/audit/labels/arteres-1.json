@@ -1,0 +1,73 @@
+{
+ "cle": "arteres-1",
+ "nom_fr": "Artères (masque non nommé)",
+ "nom_en": "Arteries (unnamed TOF mask)",
+ "cote": "gauche et droit",
+ "categorie": "Artères",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "Masque TOF (seuil local)",
+  "nom_outil": "",
+  "identifiant": 1
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -29.2,
+   8.0,
+   -15.3
+  ],
+  "mni_icbm2009c_mm": [
+   -34.099998474121094,
+   9.199999809265137,
+   -20.600000381469727
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -29.2,
+    8.0,
+    -16.0
+   ],
+   "mni_icbm2009c_mm": [
+    -34.099998474121094,
+    9.199999809265137,
+    -21.299999237060547
+   ],
+   "coupe": "z = -16.0 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -29.2,
+    4.5,
+    -15.3
+   ],
+   "mni_icbm2009c_mm": [
+    -33.900001525878906,
+    6.099999904632568,
+    -20.200000762939453
+   ],
+   "coupe": "y = +4.5 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    0.9,
+    8.0,
+    -15.3
+   ],
+   "mni_icbm2009c_mm": [
+    0.800000011920929,
+    8.399999618530273,
+    -16.600000381469727
+   ],
+   "coupe": "x = +0.9 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Masque TOF (seuil local)."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

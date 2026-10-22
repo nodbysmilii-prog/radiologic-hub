@@ -1,0 +1,73 @@
+{
+ "cle": "fines-250",
+ "nom_fr": "Fornix (corps et piliers)",
+ "nom_en": "Fornix",
+ "cote": "médian",
+ "categorie": "Système limbique",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer-CC",
+  "nom_outil": "Fornix",
+  "identifiant": 250
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   0.9,
+   -5.3,
+   16.2
+  ],
+  "mni_icbm2009c_mm": [
+   0.6000000238418579,
+   -4.900000095367432,
+   14.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    0.9,
+    -5.3,
+    19.7
+   ],
+   "mni_icbm2009c_mm": [
+    0.800000011920929,
+    -5.300000190734863,
+    18.600000381469727
+   ],
+   "coupe": "z = +19.7 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    0.9,
+    -0.4,
+    16.2
+   ],
+   "mni_icbm2009c_mm": [
+    0.6000000238418579,
+    -0.10000000149011612,
+    14.5
+   ],
+   "coupe": "y = -0.4 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    1.6,
+    -5.3,
+    16.2
+   ],
+   "mni_icbm2009c_mm": [
+    1.399999976158142,
+    -4.900000095367432,
+    14.600000381469727
+   ],
+   "coupe": "x = +1.6 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : FastSurfer-CC."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

@@ -1,0 +1,73 @@
+{
+ "cle": "sillons-3",
+ "nom_fr": "Sillon postcentral gauche",
+ "nom_en": "Postcentral sulcus",
+ "cote": "gauche",
+ "categorie": "Sillons",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (limites DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -51.6,
+   -34.0,
+   44.2
+  ],
+  "mni_icbm2009c_mm": [
+   -54.79999923706055,
+   -32.70000076293945,
+   56.599998474121094
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -51.6,
+    -34.0,
+    42.8
+   ],
+   "mni_icbm2009c_mm": [
+    -55.0,
+    -32.599998474121094,
+    55.599998474121094
+   ],
+   "coupe": "z = +42.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -51.6,
+    -36.8,
+    44.2
+   ],
+   "mni_icbm2009c_mm": [
+    -55.5,
+    -35.599998474121094,
+    56.0
+   ],
+   "coupe": "y = -36.8 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -44.6,
+    -34.0,
+    44.2
+   ],
+   "mni_icbm2009c_mm": [
+    -47.70000076293945,
+    -34.099998474121094,
+    54.5
+   ],
+   "coupe": "x = -44.6 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Règle (limites DKT)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-T_OCC_right",
+ "nom_fr": "Fibres thalamo-occipitales droites",
+ "nom_en": "T_OCC_right",
+ "cote": "droit",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "T_OCC_right",
+  "identifiant": "T_OCC_right"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   15.6,
+   -91.4,
+   9.9
+  ],
+  "mni_icbm2009c_mm": [
+   17.0,
+   -94.19999694824219,
+   9.399999618530273
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    15.6,
+    -91.4,
+    1.5
+   ],
+   "mni_icbm2009c_mm": [
+    19.0,
+    -93.4000015258789,
+    -0.800000011920929
+   ],
+   "coupe": "z = +1.5 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    15.6,
+    -81.6,
+    9.9
+   ],
+   "mni_icbm2009c_mm": [
+    16.600000381469727,
+    -82.5999984741211,
+    9.5
+   ],
+   "coupe": "y = -81.6 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    15.6,
+    -91.4,
+    9.9
+   ],
+   "mni_icbm2009c_mm": [
+    17.0,
+    -94.19999694824219,
+    9.399999618530273
+   ],
+   "coupe": "x = +15.6 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-ST_PREM_left",
+ "nom_fr": "Fibres striato-prémotrices gauches",
+ "nom_en": "ST_PREM_left",
+ "cote": "gauche",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "ST_PREM_left",
+  "identifiant": "ST_PREM_left"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -20.8,
+   -0.4,
+   21.1
+  ],
+  "mni_icbm2009c_mm": [
+   -25.200000762939453,
+   0.10000000149011612,
+   21.200000762939453
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -20.8,
+    -0.4,
+    14.8
+   ],
+   "mni_icbm2009c_mm": [
+    -24.5,
+    0.20000000298023224,
+    12.699999809265137
+   ],
+   "coupe": "z = +14.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -20.8,
+    1.0,
+    21.1
+   ],
+   "mni_icbm2009c_mm": [
+    -25.399999618530273,
+    1.5,
+    21.200000762939453
+   ],
+   "coupe": "y = +1.0 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -27.1,
+    -0.4,
+    21.1
+   ],
+   "mni_icbm2009c_mm": [
+    -32.400001525878906,
+    0.800000011920929,
+    21.100000381469727
+   ],
+   "coupe": "x = -27.1 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

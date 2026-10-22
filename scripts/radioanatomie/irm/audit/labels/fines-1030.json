@@ -1,0 +1,141 @@
+{
+ "cle": "fines-1030",
+ "nom_fr": "Gyrus temporal supérieur gauche",
+ "nom_en": "ctx-lh-superiortemporal",
+ "cote": "gauche",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-superiortemporal",
+  "identifiant": 1030
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -23.6,
+   10.1,
+   -27.2
+  ],
+  "mni_icbm2009c_mm": [
+   -25.5,
+   11.300000190734863,
+   -32.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -23.6,
+    10.1,
+    9.2
+   ],
+   "mni_icbm2009c_mm": [
+    -28.299999237060547,
+    10.199999809265137,
+    7.199999809265137
+   ],
+   "coupe": "z = +9.2 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -23.6,
+    12.9,
+    -27.2
+   ],
+   "mni_icbm2009c_mm": [
+    -25.299999237060547,
+    14.0,
+    -32.29999923706055
+   ],
+   "coupe": "y = +12.9 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -48.8,
+    10.1,
+    -27.2
+   ],
+   "mni_icbm2009c_mm": [
+    -56.099998474121094,
+    12.0,
+    -31.700000762939453
+   ],
+   "coupe": "x = -48.8 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 96,
+     "nom": "Superior Temporal (L)"
+    }
+   ],
+   "mesure": 0.684,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.633,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.745,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.666,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.87"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 15,
+     "nom": "Left Planum Polare"
+    },
+    {
+     "id": 17,
+     "nom": "Left Planum Temporale"
+    },
+    {
+     "id": 19,
+     "nom": "Left Superior Temporal Gyrus, anterior division"
+    },
+    {
+     "id": 87,
+     "nom": "Left Superior Temporal Gyrus, posterior division"
+    },
+    {
+     "id": 91,
+     "nom": "Left Temporal Pole"
+    }
+   ],
+   "mesure": 0.788,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.405,
+     "verdict": "partiel"
+    },
+    "coronal": {
+     "mesure": 1.0,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.645,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

@@ -1,0 +1,197 @@
+{
+ "cle": "lobes-11",
+ "nom_fr": "Lobe frontal droit",
+ "nom_en": "Frontal lobe",
+ "cote": "droit",
+ "categorie": "Régions",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (régions DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   21.2,
+   5.9,
+   35.8
+  ],
+  "mni_icbm2009c_mm": [
+   23.200000762939453,
+   5.0,
+   37.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    21.2,
+    5.9,
+    33.7
+   ],
+   "mni_icbm2009c_mm": [
+    23.700000762939453,
+    5.5,
+    34.900001525878906
+   ],
+   "coupe": "z = +33.7 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    21.2,
+    29.7,
+    35.8
+   ],
+   "mni_icbm2009c_mm": [
+    25.5,
+    30.399999618530273,
+    33.29999923706055
+   ],
+   "coupe": "y = +29.7 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    12.1,
+    5.9,
+    35.8
+   ],
+   "mni_icbm2009c_mm": [
+    13.100000381469727,
+    4.300000190734863,
+    37.20000076293945
+   ],
+   "coupe": "x = +12.1 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "groupe",
+   "labels": [
+    {
+     "id": 42,
+     "nom": "Caudal Middle Frontal (R)"
+    },
+    {
+     "id": 7,
+     "nom": "Lateral Orbitofrontal (R)"
+    },
+    {
+     "id": 15,
+     "nom": "Medial Orbitofrontal (R)"
+    },
+    {
+     "id": 16,
+     "nom": "Paracentral (R)"
+    },
+    {
+     "id": 32,
+     "nom": "Pars Opercularis (R)"
+    },
+    {
+     "id": 44,
+     "nom": "Pars Orbitalis (R)"
+    },
+    {
+     "id": 22,
+     "nom": "Pars Triangularis (R)"
+    },
+    {
+     "id": 35,
+     "nom": "Precentral (R)"
+    },
+    {
+     "id": 1,
+     "nom": "Rostral Middle Frontal (R)"
+    },
+    {
+     "id": 38,
+     "nom": "Superior Frontal (R)"
+    }
+   ],
+   "mesure": 0.699,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.73,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.723,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.684,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.72"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "lobe HO",
+   "labels": [
+    {
+     "id": 2,
+     "nom": "Right Frontal Medial Cortex"
+    },
+    {
+     "id": 6,
+     "nom": "Right Frontal Operculum Cortex"
+    },
+    {
+     "id": 8,
+     "nom": "Right Frontal Orbital Cortex"
+    },
+    {
+     "id": 10,
+     "nom": "Right Frontal Pole"
+    },
+    {
+     "id": 12,
+     "nom": "Right Inferior Frontal Gyrus, pars opercularis"
+    },
+    {
+     "id": 14,
+     "nom": "Right Inferior Frontal Gyrus, pars triangularis"
+    },
+    {
+     "id": 50,
+     "nom": "Right Juxtapositional Lobule Cortex (formerly Supplementary Motor Cortex)"
+    },
+    {
+     "id": 52,
+     "nom": "Right Middle Frontal Gyrus"
+    },
+    {
+     "id": 66,
+     "nom": "Right Precentral Gyrus"
+    },
+    {
+     "id": 82,
+     "nom": "Right Superior Frontal Gyrus"
+    }
+   ],
+   "mesure": 0.882,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.82,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.888,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.801,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

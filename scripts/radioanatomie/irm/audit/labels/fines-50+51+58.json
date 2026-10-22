@@ -1,0 +1,73 @@
+{
+ "cle": "fines-50+51+58",
+ "nom_fr": "Corps strié droit",
+ "nom_en": "Corpus striatum",
+ "cote": "droit",
+ "categorie": "Noyaux gris centraux et structures apparentées",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (étiquettes aseg)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   21.9,
+   10.1,
+   0.8
+  ],
+  "mni_icbm2009c_mm": [
+   22.799999237060547,
+   10.800000190734863,
+   -2.799999952316284
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    21.9,
+    10.1,
+    0.1
+   ],
+   "mni_icbm2009c_mm": [
+    22.700000762939453,
+    10.699999809265137,
+    -3.4000000953674316
+   ],
+   "coupe": "z = +0.1 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    21.9,
+    10.1,
+    0.8
+   ],
+   "mni_icbm2009c_mm": [
+    22.799999237060547,
+    10.800000190734863,
+    -2.799999952316284
+   ],
+   "coupe": "y = +10.1 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    26.8,
+    10.1,
+    0.8
+   ],
+   "mni_icbm2009c_mm": [
+    28.299999237060547,
+    11.0,
+    -2.5999999046325684
+   ],
+   "coupe": "x = +26.8 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Règle (étiquettes aseg)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

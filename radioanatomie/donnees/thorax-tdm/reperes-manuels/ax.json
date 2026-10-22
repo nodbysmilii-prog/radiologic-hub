@@ -1,0 +1,283 @@
+{
+ "serie": "ax-med",
+ "note": "Repères posés à la main sur des coupes clés de la série axiale (pixels de l'image recadrée de 470 px de large), position interpolée entre deux coupes clés. Structures absentes des masques de référence. Chaque point est contrôlé par construire_atlas_thorax.py : densité attendue (« densite », UH, médiane 3 × 3 voxels), pas dans le masque de référence d'une autre structure, et pour les cavités cardiaques et l'arbre artériel pulmonaire : dans le masque du cœur de la référence (qui englobe le tronc et l'origine des artères pulmonaires). Cavités séparées sur la densité (phase mixte : cœur droit opacifié par le bolus, 200 à 350 UH ; cœur gauche à la densité de l'aorte) et le septum interventriculaire. Veine azygos : piste de densité continue (120 à 165 UH) en avant et à droite du corps vertébral, en arrière de l'œsophage. Non posés faute de visibilité à 1,5 mm : artères thoraciques internes, nerfs vagues et phréniques, crosse de l'azygos.",
+ "structures": [
+  {
+   "id": "tronc-pulm",
+   "nom": "Tronc pulmonaire",
+   "cat": "arteres",
+   "prio": 1,
+   "densite": [
+    100,
+    600
+   ],
+   "dans": "heart",
+   "kf": {
+    "70": [
+     270,
+     115
+    ],
+    "78": [
+     282,
+     112
+    ],
+    "84": [
+     276,
+     100
+    ],
+    "88": [
+     282,
+     90
+    ]
+   }
+  },
+  {
+   "id": "ap-d",
+   "nom": "Artère pulmonaire droite",
+   "cat": "arteres",
+   "prio": 1,
+   "densite": [
+    100,
+    600
+   ],
+   "kf": {
+    "72": [
+     245,
+     138
+    ],
+    "76": [
+     232,
+     138
+    ],
+    "78": [
+     207,
+     143
+    ]
+   }
+  },
+  {
+   "id": "ap-g",
+   "nom": "Artère pulmonaire gauche",
+   "cat": "arteres",
+   "prio": 1,
+   "densite": [
+    100,
+    600
+   ],
+   "kf": {
+    "72": [
+     292,
+     145
+    ],
+    "76": [
+     300,
+     148
+    ],
+    "78": [
+     298,
+     148
+    ]
+   }
+  },
+  {
+   "id": "atrium-d",
+   "nom": "Atrium droit",
+   "cat": "coeur",
+   "prio": 1,
+   "densite": [
+    150,
+    900
+   ],
+   "dans": "heart",
+   "kf": {
+    "96": [
+     220,
+     120
+    ],
+    "104": [
+     220,
+     115
+    ],
+    "112": [
+     220,
+     108
+    ],
+    "120": [
+     222,
+     105
+    ],
+    "128": [
+     225,
+     108
+    ]
+   }
+  },
+  {
+   "id": "ventricule-d",
+   "nom": "Ventricule droit",
+   "cat": "coeur",
+   "prio": 1,
+   "densite": [
+    120,
+    600
+   ],
+   "dans": "heart",
+   "kf": {
+    "100": [
+     285,
+     80
+    ],
+    "106": [
+     280,
+     80
+    ],
+    "112": [
+     268,
+     80
+    ],
+    "120": [
+     245,
+     90
+    ],
+    "128": [
+     238,
+     95
+    ],
+    "136": [
+     240,
+     95
+    ]
+   }
+  },
+  {
+   "id": "ventricule-g",
+   "nom": "Ventricule gauche",
+   "cat": "coeur",
+   "prio": 1,
+   "densite": [
+    100,
+    400
+   ],
+   "dans": "heart",
+   "kf": {
+    "112": [
+     305,
+     122
+    ],
+    "120": [
+     305,
+     115
+    ],
+    "128": [
+     305,
+     110
+    ],
+    "136": [
+     315,
+     108
+    ]
+   }
+  },
+  {
+   "id": "atrium-g",
+   "nom": "Atrium gauche",
+   "cat": "coeur",
+   "prio": 1,
+   "densite": [
+    100,
+    400
+   ],
+   "dans": "heart",
+   "kf": {
+    "90": [
+     255,
+     142
+    ],
+    "96": [
+     250,
+     138
+    ],
+    "104": [
+     265,
+     138
+    ],
+    "110": [
+     275,
+     140
+    ]
+   }
+  },
+  {
+   "id": "azygos",
+   "nom": "Veine azygos",
+   "cat": "veines",
+   "prio": 2,
+   "densite": [
+    60,
+    400
+   ],
+   "kf": {
+    "90": [
+     232,
+     156
+    ],
+    "98": [
+     231,
+     161
+    ],
+    "106": [
+     233,
+     159
+    ]
+   }
+  },
+  {
+   "id": "grand-pectoral-d",
+   "nom": "Muscle grand pectoral droit",
+   "cat": "muscles",
+   "prio": 4,
+   "densite": [
+    -10,
+    120
+   ],
+   "kf": {
+    "24": [
+     150,
+     104
+    ],
+    "30": [
+     150,
+     101
+    ],
+    "46": [
+     150,
+     86
+    ]
+   }
+  },
+  {
+   "id": "grand-pectoral-g",
+   "nom": "Muscle grand pectoral gauche",
+   "cat": "muscles",
+   "prio": 4,
+   "densite": [
+    -10,
+    120
+   ],
+   "kf": {
+    "24": [
+     370,
+     100
+    ],
+    "30": [
+     370,
+     98
+    ],
+    "46": [
+     372,
+     86
+    ]
+   }
+  }
+ ]
+}

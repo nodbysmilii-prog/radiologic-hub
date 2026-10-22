@@ -1,0 +1,14 @@
+Images IRM du genou (dossiers sag-dp/, cor-t1/, cor-dp-fs/, ax-t2/)
+
+Source : « TotalSegmentator MRI dataset », version 3.0.0
+Wasserthal J. et al., Research and Analysis, University Hospital Basel (Hôpital universitaire de Bâle)
+Zenodo, doi:10.5281/zenodo.22688334 — https://zenodo.org/records/22688334
+Cas utilisés : s0536, s0083, s0105, s0392 (fichiers mri.nii.gz).
+
+Licence : Creative Commons Attribution 4.0 International (CC BY 4.0)
+https://creativecommons.org/licenses/by/4.0/legalcode
+
+Modifications par RadiologicHub : coupes extraites dans le plan d'acquisition, orientées selon la
+convention radiologique, intensités ajustées (fenêtrage linéaire), export JPEG ; repères anatomiques
+et légendes en français ajoutés (atlas.json). Les images modifiées sont diffusées sous la même licence
+CC BY 4.0, avec cette mention.

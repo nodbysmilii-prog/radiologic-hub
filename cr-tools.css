@@ -4,8 +4,43 @@
    ========================================================= */
 
 /* ---------- Raccourcis au-dessus de l'éditeur ---------- */
-.cr-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 14px; }
-.cr-tools-label { font-size: .66rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+/* Volet « Schémas et calculateurs » : bouton, suggestions d'après le texte, outils classés par domaine,
+   puis les outils complets (pages dédiées, liens en pointillés) */
+.cr-tools { margin: 0 0 12px; }
+.cr-tools-tete { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
+.cr-tools-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: .55em 1em;
+  border-radius: 999px;
+  border: 2px solid var(--plum);
+  background: #fff;
+  font: 800 .7rem var(--font);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background .16s, color .16s;
+}
+.cr-tools-btn small { font-size: .7rem; font-weight: 700; letter-spacing: 0; color: var(--muted); }
+.cr-tools-fleche { width: 8px; height: 8px; margin-left: 2px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .16s; }
+.cr-tools-btn:hover, .cr-tools-btn[aria-expanded="true"] { background: var(--plum); color: #fff; }
+.cr-tools-btn:hover small, .cr-tools-btn[aria-expanded="true"] small { color: rgba(255, 255, 255, .85); }
+.cr-tools-btn[aria-expanded="true"] .cr-tools-fleche { transform: translateY(2px) rotate(-135deg); }
+.cr-tools-sugg { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.cr-tools-sugg:empty { display: none; }
+.cr-tools-sugg-titre { font-size: .7rem; font-weight: 700; color: var(--text); }
+.cr-tools-sugg .cr-tool-chip::after { display: none; }
+.cr-tools-panneau { margin-top: 10px; padding: 14px 16px 16px; border-radius: 16px; border: 2px solid color-mix(in srgb, var(--plum) 55%, transparent); background: #fff; }
+.cr-tools-panneau[hidden] { display: none; }
+.cr-tools-legende { margin: 0 0 10px; font-size: .8rem; font-weight: 700; color: var(--text); }
+.cr-tools-calculs { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px 18px; }
+.cr-tools-titre { margin: 0 0 6px; font-size: .64rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.cr-tools-titre small { font-size: .64rem; font-weight: 600; letter-spacing: 0; text-transform: none; }
+.cr-tools-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.cr-tools-pages { margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(17, 17, 20, .2); }
+.cr-tool-link { border-style: dashed; text-decoration: none; }
 .cr-tool-chip {
   position: relative;
   display: inline-flex;
@@ -23,8 +58,7 @@
   transition: transform .2s, background .2s, color .2s, box-shadow .2s;
 }
 .cr-tool-chip small { font-size: .6rem; font-weight: 700; text-transform: none; letter-spacing: 0; color: var(--muted); }
-.cr-tool-chip:hover { transform: translateY(-2px); }
-.cr-tool-chip:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.cr-tool-chip:hover { background: color-mix(in srgb, var(--plum) 10%, #fff); }
 .cr-tool-chip.is-suggested { background: var(--plum); color: #fff; box-shadow: 0 0 0 4px rgba(132, 7, 94, .18); }
 .cr-tool-chip.is-suggested small { color: rgba(255, 255, 255, .85); }
 .cr-tool-chip.is-suggested::after {

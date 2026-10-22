@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IRM du genou — Radioanatomie — RadiologicHub</title>
+  <meta name="description" content="Radioanatomie RadiologicHub : atlas d'IRM du genou, coupe par coupe, en sagittal DP, coronal T1, coronal DP avec saturation de la graisse et axial T2 : os, ménisques, ligaments, tendons, muscles, vaisseaux et nerfs légendés en français, par catégorie, avec un mode quiz.">
+  <link rel="icon" type="image/svg+xml" href="../assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=20261022235000">
+  <link rel="stylesheet" href="../fiche.css?v=20261012150000">
+  <link rel="stylesheet" href="radioanatomie.css?v=20261017003000">
+  <link rel="stylesheet" href="atlas-coupes.css?v=20261022230000">
+</head>
+<body class="fiche-page">
+
+  <header class="site-header is-scrolled" id="top">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="RadiologicHub — accueil">
+        <img src="../assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+        <a href="../comptes-rendus.html">Comptes rendus</a>
+        <a href="../fiches-rapides.html">Fiches rapides</a>
+        <a href="../radioanatomie/index.html" class="is-current">Radioanatomie</a>
+        <a href="../bibliotheque.html">Bibliothèque</a>
+        <a href="../communaute.html">Communauté</a>
+        <a href="../remplacements.html">Remplacements</a>
+        <a href="../index.html#masterclass" class="nav-masterclass">Masterclass</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="fiche-hero sec-down">
+      <div class="container">
+        <nav class="crumbs" aria-label="Fil d'Ariane">
+          <a href="index.html">Espace radioanatomie</a> › <a href="index.html#irm">IRM</a> › <span>Genou</span>
+        </nav>
+        <p class="marker-tag">Radioanatomie · IRM ostéo-articulaire</p>
+        <h1>IRM du <span class="hl-navy">genou</span></h1>
+        <p class="fiche-sub">Un atlas à parcourir coupe par coupe : <span class="hl-red">sagittal, coronal et axial</span>, structures légendées en français et colorées par catégorie (os, ménisques, ligaments, tendons, muscles, vaisseaux, nerfs…), avec un mode quiz.</p>
+      </div>
+    </section>
+
+    <section class="section sec-up">
+      <div class="container">
+        <div class="ac-station" data-atlas="donnees/genou-irm/atlas.json" data-base="">
+          <div class="ac-barre" role="toolbar" aria-label="Séries et options">
+            <div class="ac-series" role="group" aria-label="Série"></div>
+            <div class="ac-outils">
+              <button type="button" class="ac-btn" data-ac="categories" aria-expanded="false" aria-controls="ac-panneau">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2" fill="currentColor"/><circle cx="15" cy="12" r="2" fill="currentColor"/><circle cx="8" cy="18" r="2" fill="currentColor"/></svg><span>Catégories</span></button>
+              <button type="button" class="ac-btn" data-ac="legendes" aria-pressed="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6z"/><circle cx="12" cy="12" r="2.5"/></svg><span>Légendes</span></button>
+              <button type="button" class="ac-btn" data-ac="quiz" aria-pressed="false">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7M12 17v.5"/></svg><span>Quiz</span></button>
+            </div>
+          </div>
+          <div class="ac-scene" tabindex="0" aria-label="Image et légendes ; flèches du clavier ou molette pour changer de coupe">
+            <div class="ac-cadre">
+              <img src="" alt="">
+              <span class="ac-or ac-or-haut"></span><span class="ac-or ac-or-bas"></span><span class="ac-or ac-or-gauche"></span><span class="ac-or ac-or-droite"></span>
+            </div>
+            <svg class="ac-traits" aria-hidden="true"></svg>
+            <p class="ac-vide" hidden></p>
+            <div class="ac-chargement">Chargement de l'atlas…</div>
+          </div>
+          <div class="ac-bas">
+            <div class="ac-coupe">
+              <label for="ac-curseur" class="sr-only">Coupe</label>
+              <input type="range" id="ac-curseur" min="0" max="0" value="0" step="1">
+              <span class="ac-compteur" aria-live="polite"></span>
+            </div>
+            <div class="ac-quiz-barre" hidden>
+              <span class="ac-score" aria-live="polite"></span>
+              <button type="button" class="ac-btn" data-ac="tout">Tout révéler</button>
+              <button type="button" class="ac-btn" data-ac="recommencer">Recommencer la coupe</button>
+            </div>
+            <p class="ac-info" aria-live="polite"></p>
+          </div>
+          <aside class="ac-panneau" id="ac-panneau" aria-label="Catégories affichées">
+            <div class="ac-panneau-tete"><span>Catégories</span><button type="button" class="ac-btn" data-ac="fermer" aria-label="Fermer le menu des catégories">✕</button></div>
+            <ul class="ac-panneau-liste"></ul>
+            <div class="ac-panneau-pied"><button type="button" class="ac-btn" data-ac-toutes="1">Tout afficher</button><button type="button" class="ac-btn" data-ac-toutes="0">Tout masquer</button></div>
+          </aside>
+        </div>
+
+        <div class="ac-aide">
+          <div>
+            <h2 class="marker-sub">Comment l'utiliser</h2>
+            <ul class="fl">
+              <li><mark class="k-tech">Séries</mark> : sagittale DP, coronale T1, coronale DP avec saturation de la graisse (DP FS) et axiale T2, choisies en haut de la visionneuse.</li>
+              <li><mark class="k-key">Changer de coupe</mark> : molette, flèches du clavier, curseur, ou glisser le doigt verticalement sur l'image.</li>
+              <li><mark class="k-sign">Survoler ou toucher une étiquette</mark> : la structure ressort sur l'image, son nom et sa catégorie s'affichent sous l'image.</li>
+              <li><mark class="k-ddx">Catégories</mark> : chaque catégorie s'affiche ou se masque par un interrupteur.</li>
+              <li><mark class="k-signo">Quiz</mark> : les noms sont remplacés par « ? » ; touchez une étiquette pour révéler la structure, le compteur suit vos réponses sur chaque coupe.</li>
+            </ul>
+          </div>
+          <div>
+            <h2 class="marker-sub">Code couleur</h2>
+            <ul class="ac-legende-cats">
+              <li style="--c: #f5e6c8"><span></span>Os</li>
+              <li style="--c: #c4b5fd"><span></span>Articulation</li>
+              <li style="--c: #67e8f9"><span></span>Cavité articulaire</li>
+              <li style="--c: #fdba74"><span></span>Corps adipeux</li>
+              <li style="--c: #4ade80"><span></span>Ménisques</li>
+              <li style="--c: #d9f99d"><span></span>Ligaments</li>
+              <li style="--c: #f9a8d4"><span></span>Muscles</li>
+              <li style="--c: #e5e7eb"><span></span>Tendons</li>
+              <li style="--c: #a8a29e"><span></span>Fascias</li>
+              <li style="--c: #f87171"><span></span>Artères</li>
+              <li style="--c: #60a5fa"><span></span>Veines</li>
+              <li style="--c: #fde047"><span></span>Nerfs</li>
+            </ul>
+            <p style="margin-top: 14px; font-size: .9rem">Convention radiologique : en coronal et en axial, la droite du patient est à gauche de l'écran (les lettres <b>Lat</b> et <b>Méd</b> indiquent les côtés latéral et médial du genou) ; en sagittal, l'avant est à gauche.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section sec-up">
+      <div class="container ra-credits">
+        <h2 class="marker-sub">Source et licence</h2>
+        <p><b>Images</b> : « TotalSegmentator MRI dataset », version 3.0.0 (Wasserthal J. et al., département de recherche et d'analyse, Hôpital universitaire de Bâle), <a href="https://doi.org/10.5281/zenodo.22688334" rel="noopener" target="_blank">doi:10.5281/zenodo.22688334</a>, licence <a href="https://creativecommons.org/licenses/by/4.0/deed.fr" rel="noopener" target="_blank">CC BY 4.0</a> (<a href="donnees/genou-irm/LICENSE-TotalSegmentator-CC-BY-4.0.txt">mention</a>). IRM de routine clinique anonymisées ; quatre séries d'adultes sans anomalie visible : cas s0536 (sagittale DP, 1,5 T), s0083 (coronale T1, 3 T), s0105 (coronale DP FS, 3 T) et s0392 (axiale T2, 3 T). Ce sont quatre genoux différents (droits et gauches) : une structure n'est donc pas au même endroit d'une série à l'autre.</p>
+        <p><b>Modifications par RadiologicHub</b> : coupes extraites dans leur plan d'acquisition et orientées selon la convention radiologique, intensités ajustées (fenêtrage), repères anatomiques posés à la main coupe par coupe et légendes en français.</p>
+        <p>Données et scripts : <code>radioanatomie/donnees/genou-irm/</code>, <code>scripts/radioanatomie/preparer_genou.py</code>, <code>scripts/radioanatomie/construire_atlas_genou.py</code>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="../index.html" class="brand">
+          <img src="../assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+          <span class="brand-name">Radiologic<br>Hub</span>
+        </a>
+        <p class="footer-tagline">Outils, ressources et formation pour les radiologues et les résidents.</p>
+      </div>
+      <nav aria-label="Liens de pied de page">
+        <div class="footer-col">
+          <p class="footer-titre">Au quotidien</p>
+          <a href="../comptes-rendus.html">Comptes rendus</a>
+          <a href="../suivi-oncologique.html">Suivi oncologique</a>
+          <a href="../fiches-rapides.html">Fiches rapides</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Apprendre</p>
+          <a href="../radioanatomie/index.html">Radioanatomie</a>
+          <a href="../cas/index.html">Cas cliniques</a>
+          <a href="../index.html#cas-du-jour">Cas du jour</a>
+          <a href="../bibliotheque.html">Bibliothèque</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Réseau</p>
+          <a href="../communaute.html">Communauté</a>
+          <a href="../remplacements.html">Remplacements</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Masterclass</p>
+          <a href="../index.html#masterclass">Programme</a>
+          <a href="../index.html#tarifs">Tarifs</a>
+          <a href="../index.html#inscription">S'inscrire à une masterclass</a>
+        </div>
+      </nav>
+      <p class="copyright"><span>© <span id="year"></span> RadiologicHub · Outils, ressources et formation en radiologie</span><span class="copyright-liens"><a href="../mentions-legales.html">Mentions légales</a><a href="../index.html#inscription">Contact</a></span></p>
+    </div>
+  </footer>
+
+  <script src="atlas-coupes.js?v=20261022230000"></script>
+  <script src="../navigation.js?v=20261022235000"></script>
+  <script src="../fiche.js?v=20261022235000"></script>
+</body>
+</html>

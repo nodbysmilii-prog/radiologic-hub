@@ -1,0 +1,101 @@
+{
+ "cle": "fines-964",
+ "nom_fr": "Tractus optique droit",
+ "nom_en": "R-Optic-tract",
+ "cote": "droit",
+ "categorie": "Voies optiques",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "HypVINN",
+  "nom_outil": "R-Optic-tract",
+  "identifiant": 964
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   8.6,
+   -3.2,
+   -11.1
+  ],
+  "mni_icbm2009c_mm": [
+   9.899999618530273,
+   -3.200000047683716,
+   -15.300000190734863
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    8.6,
+    -3.2,
+    -8.3
+   ],
+   "mni_icbm2009c_mm": [
+    9.699999809265137,
+    -3.0999999046325684,
+    -12.300000190734863
+   ],
+   "coupe": "z = -8.3 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    8.6,
+    -3.2,
+    -11.1
+   ],
+   "mni_icbm2009c_mm": [
+    9.899999618530273,
+    -3.200000047683716,
+    -15.300000190734863
+   ],
+   "coupe": "y = -3.2 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    8.6,
+    -3.2,
+    -11.1
+   ],
+   "mni_icbm2009c_mm": [
+    9.899999618530273,
+    -3.200000047683716,
+    -15.300000190734863
+   ],
+   "coupe": "x = +8.6 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 17,
+     "nom": "Optic Chiasm (R)"
+    }
+   ],
+   "mesure": 0.464,
+   "verdict": "discordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.108,
+     "verdict": "discordant"
+    },
+    "coronal": {
+     "mesure": 0.814,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.649,
+     "verdict": "partiel"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.00"
+  }
+ ],
+ "remarques": [
+  "Étiquette CerebrA peu fiable selon ses auteurs (kappa 0.00) : la discordance ne suffit pas à conclure."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "faible"
+}

@@ -1,0 +1,73 @@
+{
+ "cle": "sillons-65",
+ "nom_fr": "Sillon calcarin droit",
+ "nom_en": "Calcarine sulcus",
+ "cote": "droit",
+ "categorie": "Sillons",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (limites DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   6.5,
+   -76.7,
+   7.8
+  ],
+  "mni_icbm2009c_mm": [
+   9.0,
+   -78.5,
+   8.0
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    6.5,
+    -76.7,
+    8.5
+   ],
+   "mni_icbm2009c_mm": [
+    9.0,
+    -78.5999984741211,
+    8.800000190734863
+   ],
+   "coupe": "z = +8.5 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    6.5,
+    -69.0,
+    7.8
+   ],
+   "mni_icbm2009c_mm": [
+    9.0,
+    -70.0,
+    8.199999809265137
+   ],
+   "coupe": "y = -69.0 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    7.9,
+    -76.7,
+    7.8
+   ],
+   "mni_icbm2009c_mm": [
+    10.5,
+    -78.5,
+    7.800000190734863
+   ],
+   "coupe": "x = +7.9 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Règle (limites DKT)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

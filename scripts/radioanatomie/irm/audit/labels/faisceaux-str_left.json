@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-STR_left",
+ "nom_fr": "Radiation thalamique supérieure gauche",
+ "nom_en": "STR_left",
+ "cote": "gauche",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "STR_left",
+  "identifiant": "STR_left"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -17.3,
+   -20.0,
+   14.1
+  ],
+  "mni_icbm2009c_mm": [
+   -20.700000762939453,
+   -19.200000762939453,
+   12.399999618530273
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -17.3,
+    -20.0,
+    54.0
+   ],
+   "mni_icbm2009c_mm": [
+    -19.100000381469727,
+    -21.299999237060547,
+    57.70000076293945
+   ],
+   "coupe": "z = +54.0 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -17.3,
+    -24.2,
+    14.1
+   ],
+   "mni_icbm2009c_mm": [
+    -20.299999237060547,
+    -23.5,
+    12.600000381469727
+   ],
+   "coupe": "y = -24.2 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -17.3,
+    -20.0,
+    14.1
+   ],
+   "mni_icbm2009c_mm": [
+    -20.700000762939453,
+    -19.200000762939453,
+    12.399999618530273
+   ],
+   "coupe": "x = -17.3 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

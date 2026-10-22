@@ -1,0 +1,73 @@
+{
+ "cle": "sillons-15",
+ "nom_fr": "Sillon calcarin gauche",
+ "nom_en": "Calcarine sulcus",
+ "cote": "gauche",
+ "categorie": "Sillons",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (limites DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -8.9,
+   -81.6,
+   6.4
+  ],
+  "mni_icbm2009c_mm": [
+   -10.899999618530273,
+   -80.5999984741211,
+   6.599999904632568
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -8.9,
+    -81.6,
+    6.4
+   ],
+   "mni_icbm2009c_mm": [
+    -10.899999618530273,
+    -80.5999984741211,
+    6.599999904632568
+   ],
+   "coupe": "z = +6.4 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -8.9,
+    -76.0,
+    6.4
+   ],
+   "mni_icbm2009c_mm": [
+    -11.600000381469727,
+    -72.69999694824219,
+    7.599999904632568
+   ],
+   "coupe": "y = -76.0 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -8.9,
+    -81.6,
+    6.4
+   ],
+   "mni_icbm2009c_mm": [
+    -10.899999618530273,
+    -80.5999984741211,
+    6.599999904632568
+   ],
+   "coupe": "x = -8.9 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Règle (limites DKT)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

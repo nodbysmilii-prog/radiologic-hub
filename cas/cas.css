@@ -1,0 +1,116 @@
+/* =========================================================
+   RadiologicHub — Cas cliniques bilingues (cas/<id>.html, cas/index.html)
+   S'appuie sur styles.css et fiche.css (charte, cartes, sommaire, figures,
+   code couleur k-*). Ici : bascule français / anglais, chiffres clés,
+   localisations, réponse cachée, planche annotée, annotations des images.
+   ========================================================= */
+
+/* ---------- Langue : un seul texte affiché (le français par défaut, sans JavaScript aussi) ---------- */
+html[data-langue="fr"] .t-en, html[data-langue="en"] .t-fr { display: none !important; }
+
+.cas-outils { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 4px 0 22px; }
+.cas-langue {
+  display: inline-flex; padding: 3px; border: 3px solid var(--ink); border-radius: 999px; background: #fff;
+  box-shadow: 4px 4px 0 color-mix(in srgb, var(--amber) 60%, transparent);
+}
+.cas-langue button {
+  min-width: 48px; padding: .45em .95em; border: 0; border-radius: 999px; background: transparent; color: var(--ink);
+  font: 900 .8rem var(--font); letter-spacing: .08em; cursor: pointer; transition: background .16s, color .16s;
+}
+.cas-langue button:hover { background: color-mix(in srgb, var(--amber) 30%, transparent); }
+.cas-langue button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+.cas-langue button:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.cas-langue-aide { margin: 0; color: var(--muted); font-size: .85rem; }
+
+/* Copie flottante : visible quand la bascule de l'en-tête n'est plus à l'écran */
+.cas-langue-flottante {
+  position: fixed; right: 16px; bottom: 16px; z-index: 40;
+  opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity .2s, transform .2s;
+}
+.cas-langue-flottante.is-visible { opacity: 1; transform: none; pointer-events: auto; }
+
+/* ---------- Le cas ---------- */
+.cas-recit p + p { margin-top: .7em; }
+.cas-anciens { color: var(--muted); font-size: .9em; }
+
+/* ---------- « À vous de jouer » : question, réponse cachée ---------- */
+.cas-question { margin-bottom: 22px; }
+.cas-reponse {
+  margin-top: 22px; padding: 22px 24px; border-radius: var(--radius); background: #fff; border: 4px solid var(--k-sign);
+  box-shadow: 8px 8px 0 color-mix(in srgb, var(--k-sign) 40%, transparent);
+}
+.cas-reponse p { margin: 0; }
+.cas-reponse-label { font-family: var(--font-marker); font-size: 1.15rem; color: var(--k-sign); }
+.cas-reponse-dx { margin-top: .2em !important; font-weight: 900; font-size: clamp(1.25rem, 2.6vw, 1.7rem); line-height: 1.2; text-transform: uppercase; letter-spacing: .03em; color: var(--ink); }
+.cas-reponse-precision { margin-top: .35em !important; font-weight: 700; color: var(--navy); }
+
+/* ---------- Chiffres clés ---------- */
+.cas-chiffres { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 30px; padding: 6px 12px 0 0; }
+.cas-chiffre {
+  padding: 22px 22px 18px; border-radius: var(--radius); background: var(--card); border: 4px solid var(--c);
+  box-shadow: 10px 10px 0 color-mix(in srgb, var(--c) 50%, transparent);
+}
+.cas-chiffre > b { display: block; margin-bottom: .2em; font-family: var(--font-marker); font-weight: 400; font-size: clamp(2.3rem, 5vw, 3.1rem); line-height: 1; color: var(--ink); }
+.cas-chiffre p { margin: 0; }
+.cas-colonnes + .cas-chiffres, .cas-colonnes + .case-legend { margin-top: 34px; }
+
+/* ---------- Tuiles numérotées : titres seuls ---------- */
+.cas-tuiles .tile { padding-bottom: 16px; }
+.cas-tuiles .tile h3 { margin: 0; }
+
+/* ---------- Localisations / types : pastilles ---------- */
+.cas-sites { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.cas-sites li {
+  padding: .5em 1.1em; border-radius: 999px; background: #fff; border: 3px solid var(--c);
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--c) 45%, transparent);
+  font-weight: 900; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink);
+}
+
+/* ---------- Annotations des images (tirets, rappels, chevron) ---------- */
+.cas-tiret-o { stroke: var(--ink); stroke-width: 6; stroke-linecap: round; stroke-dasharray: 10 7; }
+.cas-tiret { stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: 10 7; }
+.cas-rappel-o { stroke: var(--ink); stroke-width: 10; stroke-linecap: round; }
+.cas-rappel { stroke-width: 5; stroke-linecap: round; }
+.cas-point { stroke: var(--ink); stroke-width: 3; }
+.cas-chevron { stroke: var(--ink); stroke-width: 3.5; stroke-linejoin: round; }
+.cas-etiquette { fill: #fff; font: 800 34px var(--font); }
+
+/* ---------- Planche annotée (image + étiquettes hors image) ---------- */
+.cas-planche {
+  max-width: 780px; margin: 0; border-radius: var(--radius); overflow: hidden; border: 4px solid var(--ink); background: #000;
+  box-shadow: 10px 10px 0 color-mix(in srgb, var(--c) 45%, transparent);
+}
+.cas-planche svg.annot { position: static; display: block; width: 100%; height: auto; overflow: hidden; }
+.cas-planche figcaption { padding: 12px 18px; background: var(--card); font-size: .85rem; }
+.cas-planche figcaption strong { font-weight: 900; letter-spacing: .05em; text-transform: uppercase; }
+
+/* Légende : pictogrammes des annotations */
+.cas-lg-tirets { height: 0; border-top: 4px dashed var(--lc); }
+.cas-lg-trait { height: 8px; border-radius: 4px; background: var(--lc); border: 2px solid var(--ink); }
+.cas-lg-chevron { width: 30px; height: 22px; background: var(--lc); clip-path: polygon(0 0, 62% 0, 100% 50%, 62% 100%, 0 100%, 36% 50%); }
+
+/* ---------- Visionneuse 3D (styles de cours/cours.css) dans une fiche ---------- */
+.cas-page .v3d { margin-top: 6px; }
+.cas-page .v3d-structures .v3d-puce[data-couleur] { border-color: var(--pc) !important; }
+.cas-page .v3d-aide { margin-top: 14px; }
+
+/* ---------- Liste des cas ---------- */
+.cas-carte-note { margin: -6px 0 14px !important; font-size: .8rem !important; font-style: italic; }
+.cas-carte-note:empty { display: none; }
+
+@media (max-width: 640px) {
+  .cas-chiffres { gap: 22px; }
+  .cas-chiffre { box-shadow: 6px 6px 0 color-mix(in srgb, var(--c) 50%, transparent); }
+  .cas-langue-flottante { right: 12px; bottom: 12px; }
+}
+@media print {
+  .cas-langue, .cas-langue-aide { display: none !important; }
+  .cas-chiffre, .cas-reponse, .cas-planche { box-shadow: none !important; }
+}
+
+/* Auteur du cas : mis en valeur sous l'accroche et sur la carte de la liste */
+.cas-auteur { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 4px 0 18px; padding: 10px 18px; border-radius: 999px; border: 3px solid var(--c, var(--purple)); background: var(--card); box-shadow: 5px 5px 0 color-mix(in srgb, var(--c, var(--purple)) 45%, transparent); }
+.cas-auteur-label { font-family: var(--font-marker); font-size: 1rem; letter-spacing: .04em; color: var(--royal); }
+.cas-auteur strong { font-size: 1.08rem; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; color: var(--ink); }
+.cas-carte-auteur { margin: -4px 0 10px; font-size: .86rem; color: var(--text); }
+.cas-carte-auteur strong { color: var(--navy); }

@@ -1,0 +1,107 @@
+{
+ "cle": "fines-604",
+ "nom_fr": "Lobule V (lobe antérieur), hémisphère cérébelleux droit",
+ "nom_en": "Cbm_Right_V",
+ "cote": "droit",
+ "categorie": "Cervelet",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "CerebNet",
+  "nom_outil": "Cbm_Right_V",
+  "identifiant": 604
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   13.5,
+   -52.9,
+   -13.2
+  ],
+  "mni_icbm2009c_mm": [
+   14.800000190734863,
+   -55.20000076293945,
+   -15.199999809265137
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    13.5,
+    -52.9,
+    -18.8
+   ],
+   "mni_icbm2009c_mm": [
+    15.600000381469727,
+    -55.29999923706055,
+    -22.100000381469727
+   ],
+   "coupe": "z = -18.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    13.5,
+    -58.5,
+    -13.2
+   ],
+   "mni_icbm2009c_mm": [
+    15.399999618530273,
+    -61.400001525878906,
+    -15.699999809265137
+   ],
+   "coupe": "y = -58.5 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    0.9,
+    -52.9,
+    -13.2
+   ],
+   "mni_icbm2009c_mm": [
+    0.30000001192092896,
+    -53.5,
+    -16.899999618530273
+   ],
+   "coupe": "x = +0.9 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 46,
+     "nom": "Cerebellum Gray Matter (R)"
+    },
+    {
+     "id": 101,
+     "nom": "Vermal lobules I-V (L)"
+    },
+    {
+     "id": 50,
+     "nom": "Vermal lobules I-V (R)"
+    }
+   ],
+   "mesure": 0.887,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.863,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.92,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.753,
+     "verdict": "partiel"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.83"
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

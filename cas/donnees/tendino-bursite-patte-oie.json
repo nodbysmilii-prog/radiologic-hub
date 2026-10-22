@@ -1,0 +1,54 @@
+{
+ "id": "tendino-bursite-patte-oie",
+ "spe": "osteo", "c": "plum",
+ "badge": {"fr": "Ostéo-articulaire", "en": "Musculoskeletal"},
+ "tag": {"fr": "Cas clinique · Ostéo-articulaire · IRM", "en": "Clinical case · Musculoskeletal imaging · MRI"},
+ "titre": {"fr": "Une douleur <span class='hl-navy'>médiale</span> du genou", "en": "<span class='hl-navy'>Medial</span> knee pain"},
+ "titre_texte": {"fr": "Une douleur médiale du genou", "en": "Medial knee pain"},
+ "accroche": {"fr": "Un patient de 50 ans, un <span class='hl-red'>point douloureux exquis</span> et trois coupes d'IRM : quel est votre diagnostic ? Puis la patte d'oie en 3D, tendon par tendon.", "en": "A 50-year-old patient, a <span class='hl-red'>localized tender point</span> and three MRI images: what is your diagnosis? Then the pes anserinus in 3D, tendon by tendon."},
+ "mots": [{"fr": "IRM", "en": "MRI"}, {"fr": "Genou", "en": "Knee"}, {"fr": "Modèle 3D", "en": "3D model"}],
+ "v3d": true,
+ "sections": [
+  {"id": "cas", "num": "I", "c": "rose", "titre": {"fr": "Le cas", "en": "The case"}, "blocs": [
+   {"type": "recit", "fr": "<b>Patient de 50 ans</b> adressé pour une <mark class='k-signo'>gonalgie médiale</mark> avec un <mark class='k-key'>point douloureux exquis</mark> à la palpation.", "en": "<b>A 50-year-old patient</b> referred for <mark class='k-signo'>medial knee pain</mark> with a <mark class='k-key'>localized tender point</mark> on palpation."}
+  ]},
+  {"id": "images", "num": "II", "c": "slate", "titre": {"fr": "L'IRM", "en": "The MRI"}, "blocs": [
+   {"type": "p", "classe": "fintro", "fr": "Une IRM a été réalisée. <b>Observez avant de lire la suite.</b> Cliquez sur une image pour l'agrandir.", "en": "An MRI was performed. <b>Look before reading on.</b> Click an image to enlarge it."},
+   {"type": "galerie", "c": "slate", "images": [
+    {"src": "irm-axiale-1.jpg", "mod": {"fr": "Axiale", "en": "Axial"}, "titre": {"fr": "Coupe 1 · IRM axiale", "en": "Image 1 · Axial MRI"}, "alt": {"fr": "IRM du genou, coupe axiale", "en": "Knee MRI, axial image"}},
+    {"src": "irm-axiale-2.jpg", "mod": {"fr": "Axiale", "en": "Axial"}, "titre": {"fr": "Coupe 2 · IRM axiale", "en": "Image 2 · Axial MRI"}, "alt": {"fr": "IRM du genou, coupe axiale", "en": "Knee MRI, axial image"}},
+    {"src": "irm-axiale-3.jpg", "mod": {"fr": "Axiale", "en": "Axial"}, "titre": {"fr": "Coupe 3 · IRM axiale", "en": "Image 3 · Axial MRI"}, "alt": {"fr": "IRM du genou, coupe axiale", "en": "Knee MRI, axial image"}}
+   ]}
+  ]},
+  {"id": "diagnostic", "num": "III", "c": "amber", "titre": {"fr": "À vous de jouer", "en": "Your turn"}, "blocs": [
+   {"type": "question", "question": {"fr": "Quel est votre diagnostic ?", "en": "What is your diagnosis?"}, "reponse": {"fr": "Tendino-bursite de la patte d'oie", "en": "Pes anserine tendino-bursitis"}}
+  ]},
+  {"id": "signes-irm", "num": "IV", "c": "crimson", "titre": {"fr": "Signes IRM", "en": "MRI findings"}, "blocs": [
+   {"type": "fcard", "c": "crimson", "items": [
+    {"fr": "<mark class='k-sign'>Collection liquidienne bien limitée</mark> (<mark class='k-signo'>hypersignal T2</mark>, <mark class='k-signo'>hyposignal T1</mark>), située à la <mark class='k-tech'>face profonde des tendons de la patte d'oie</mark>, au contact du tibia.", "en": "<mark class='k-sign'>Well-defined fluid collection</mark> (<mark class='k-signo'>hyperintense on T2-weighted</mark> and <mark class='k-signo'>hypointense on T1-weighted sequences</mark>) located at the <mark class='k-tech'>deep surface of the pes anserinus tendons</mark>, adjacent to the tibia."},
+    {"fr": "<mark class='k-sign'>Épaississement</mark> et <mark class='k-sign'>hypersignal intratendineux</mark> des tendons de la patte d'oie.", "en": "<mark class='k-sign'>Thickening</mark> and <mark class='k-sign'>increased intratendinous signal</mark> of the pes anserinus tendons."}
+   ]}
+  ]},
+  {"id": "patte-oie-3d", "num": "V", "c": "plum", "titre": {"fr": "La patte d'oie en 3D", "en": "The pes anserinus in 3D"}, "blocs": [
+   {"type": "p", "classe": "fintro", "fr": "La <b>patte d'oie</b> réunit trois tendons : <mark class='k-tech'>sartorius</mark>, <mark class='k-tech'>gracile</mark> et <mark class='k-tech'>semi-tendineux</mark> <span class='cas-anciens'>(anciennement couturier, droit interne et demi-tendineux)</span>.", "en": "The <b>pes anserinus</b> is formed by three tendons: <mark class='k-tech'>sartorius</mark>, <mark class='k-tech'>gracilis</mark> and <mark class='k-tech'>semitendinosus</mark>."},
+   {"type": "v3d", "modeles": "../public/models/patte-oie/"}
+  ]},
+  {"id": "anatomie", "num": "VI", "c": "teal", "titre": {"fr": "Anatomie radiologique", "en": "Radiologic anatomy"}, "blocs": [
+   {"type": "planche", "src": "irm-anatomie.jpg", "taille": [826, 990], "vue": [0, 60, 1250, 890],
+    "alt": {"fr": "IRM axiale du genou : tendons de la patte d'oie et bourse de la patte d'oie", "en": "Axial knee MRI: pes anserinus tendons and pes anserinus bursa"},
+    "titre": {"fr": "IRM axiale du genou, côté médial à droite de l'image", "en": "Axial knee MRI, medial side on the right of the image"},
+    "reperes": [
+     {"mk": "sartorius", "c": "teal", "de": [670.9, 531.4], "a": 860, "fr": "Sartorius", "en": "Sartorius"},
+     {"mk": "gracile", "c": "green", "de": [670.9, 622.0], "a": 860, "fr": "Gracile", "en": "Gracilis"},
+     {"mk": "semi-tendineux", "c": "blue", "de": [671.6, 743.2], "a": 860, "fr": "Semi-tendineux", "en": "Semitendinosus"}
+    ],
+    "chevron": {"mk": "bourse", "c": "amber", "points": [[587.2, 638.9], [610.9, 695.8], [637.8, 707.0], [649.1, 679.5], [625.3, 623.2], [614.1, 649.5]]}},
+   {"type": "legende", "items": [
+    {"mk": "sartorius", "lg": "trait", "c": "teal", "fr": "<b>Sartorius</b>", "en": "<b>Sartorius</b>"},
+    {"mk": "gracile", "lg": "trait", "c": "green", "fr": "<b>Gracile</b>", "en": "<b>Gracilis</b>"},
+    {"mk": "semi-tendineux", "lg": "trait", "c": "blue", "fr": "<b>Semi-tendineux</b>", "en": "<b>Semitendinosus</b>"},
+    {"mk": "bourse", "lg": "chevron", "c": "amber", "fr": "<b>Chevron jaune</b> · <mark class='k-key'>bourse de la patte d'oie</mark> (bourse ansérine)", "en": "<b>Yellow chevron</b> · <mark class='k-key'>pes anserinus bursa</mark>"}
+   ]}
+  ]}
+ ]
+}

@@ -1,0 +1,133 @@
+{
+ "cle": "fines-2022",
+ "nom_fr": "Gyrus postcentral droit",
+ "nom_en": "ctx-rh-postcentral",
+ "cote": "droit",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-postcentral",
+  "identifiant": 2022
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   42.2,
+   -13.7,
+   13.4
+  ],
+  "mni_icbm2009c_mm": [
+   46.599998474121094,
+   -11.0,
+   12.0
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    42.2,
+    -13.7,
+    14.8
+   ],
+   "mni_icbm2009c_mm": [
+    46.5,
+    -11.0,
+    13.399999618530273
+   ],
+   "coupe": "z = +14.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    42.2,
+    -13.0,
+    13.4
+   ],
+   "mni_icbm2009c_mm": [
+    46.599998474121094,
+    -10.199999809265137,
+    12.0
+   ],
+   "coupe": "y = -13.0 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    49.9,
+    -13.7,
+    13.4
+   ],
+   "mni_icbm2009c_mm": [
+    56.0,
+    -11.100000381469727,
+    11.300000190734863
+   ],
+   "coupe": "x = +49.9 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 13,
+     "nom": "Postcentral (R)"
+    }
+   ],
+   "mesure": 0.633,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.552,
+     "verdict": "partiel"
+    },
+    "coronal": {
+     "mesure": 0.707,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.6,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.82"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 34,
+     "nom": "Right Central Opercular Cortex"
+    },
+    {
+     "id": 84,
+     "nom": "Right Parietal Operculum Cortex"
+    },
+    {
+     "id": 86,
+     "nom": "Right Postcentral Gyrus"
+    }
+   ],
+   "mesure": 0.902,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.917,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.917,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.96,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

@@ -10,7 +10,13 @@
 .rs-centre { text-align: center; }
 .rs-mini { margin: 12px 0 0; font-size: .76rem; line-height: 1.5; color: var(--muted); }
 .rs-aide { display: block; margin-top: 4px; font-size: .74rem; line-height: 1.45; color: var(--muted); }
-.rs-chargement { padding: 60px 0; text-align: center; font-weight: 800; color: var(--muted); }
+.rs-chargement { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 60px 0; text-align: center; font-weight: 800; color: var(--muted); }
+.rs-chargement::before { content: ""; flex: 0 0 auto; width: 18px; height: 18px; border-radius: 50%; border: 3px solid rgba(17, 17, 20, .15); border-top-color: var(--ink); animation: rs-tourne .8s linear infinite; }
+@keyframes rs-tourne { to { transform: rotate(360deg); } }
+.rs-attente { min-height: 40vh; }
+.rs-attente-lent, .rs-attente-erreur { max-width: 46ch; margin: -36px auto 0; text-align: center; font-size: .9rem; color: var(--text); }
+.rs-attente-lent { display: none; }
+.rs-attente.is-lent .rs-attente-lent { display: block; }
 .rs-ico { width: 24px; height: 24px; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .rs-lien { display: inline-block; margin-top: 8px; font-size: .8rem; font-weight: 800; color: var(--royal); text-decoration: none; }
 .rs-lien:hover { text-decoration: underline; }

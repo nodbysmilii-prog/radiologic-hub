@@ -1,0 +1,125 @@
+{
+ "cle": "fines-26",
+ "nom_fr": "Noyau accumbens gauche",
+ "nom_en": "Left-Accumbens-area",
+ "cote": "gauche",
+ "categorie": "Noyaux gris centraux et structures apparentées",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (aseg)",
+  "nom_outil": "Left-Accumbens-area",
+  "identifiant": 26
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -6.8,
+   10.1,
+   -8.3
+  ],
+  "mni_icbm2009c_mm": [
+   -7.900000095367432,
+   8.699999809265137,
+   -11.399999618530273
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -6.8,
+    10.1,
+    -6.9
+   ],
+   "mni_icbm2009c_mm": [
+    -8.100000381469727,
+    8.800000190734863,
+    -9.800000190734863
+   ],
+   "coupe": "z = -6.9 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -6.8,
+    10.1,
+    -8.3
+   ],
+   "mni_icbm2009c_mm": [
+    -7.900000095367432,
+    8.699999809265137,
+    -11.399999618530273
+   ],
+   "coupe": "y = +10.1 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -5.4,
+    10.1,
+    -8.3
+   ],
+   "mni_icbm2009c_mm": [
+    -6.300000190734863,
+    8.699999809265137,
+    -11.600000381469727
+   ],
+   "coupe": "x = -5.4 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 55,
+     "nom": "Accumbens Area (L)"
+    }
+   ],
+   "mesure": 0.564,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.734,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.556,
+     "verdict": "partiel"
+    },
+    "sagittal": {
+     "mesure": 0.626,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.76"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 11,
+     "nom": "Left Accumbens"
+    }
+   ],
+   "mesure": 0.595,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.748,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.627,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.7,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "moyenne"
+}

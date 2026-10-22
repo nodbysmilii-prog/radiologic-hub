@@ -1,0 +1,73 @@
+{
+ "cle": "sillons-63",
+ "nom_fr": "Sillon pariéto-occipital droit",
+ "nom_en": "Parieto-occipital sulcus",
+ "cote": "droit",
+ "categorie": "Sillons",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (limites DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   0.9,
+   -64.1,
+   12.7
+  ],
+  "mni_icbm2009c_mm": [
+   1.100000023841858,
+   -63.20000076293945,
+   14.300000190734863
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    0.9,
+    -64.1,
+    35.8
+   ],
+   "mni_icbm2009c_mm": [
+    2.0,
+    -66.5999984741211,
+    42.599998474121094
+   ],
+   "coupe": "z = +35.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    0.9,
+    -64.1,
+    12.7
+   ],
+   "mni_icbm2009c_mm": [
+    1.100000023841858,
+    -63.20000076293945,
+    14.300000190734863
+   ],
+   "coupe": "y = -64.1 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    16.3,
+    -64.1,
+    12.7
+   ],
+   "mni_icbm2009c_mm": [
+    18.899999618530273,
+    -62.29999923706055,
+    12.600000381469727
+   ],
+   "coupe": "x = +16.3 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Règle (limites DKT)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

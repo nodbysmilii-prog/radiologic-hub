@@ -1,0 +1,101 @@
+{
+ "cle": "fines-968",
+ "nom_fr": "Chiasma optique, moitié gauche",
+ "nom_en": "L-Chiasma-Opticum",
+ "cote": "gauche",
+ "categorie": "Voies optiques",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "HypVINN",
+  "nom_outil": "L-Chiasma-Opticum",
+  "identifiant": 968
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -4.0,
+   4.5,
+   -17.4
+  ],
+  "mni_icbm2009c_mm": [
+   -5.099999904632568,
+   6.099999904632568,
+   -18.299999237060547
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -4.0,
+    4.5,
+    -16.7
+   ],
+   "mni_icbm2009c_mm": [
+    -5.099999904632568,
+    6.0,
+    -17.799999237060547
+   ],
+   "coupe": "z = -16.7 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -4.0,
+    3.1,
+    -17.4
+   ],
+   "mni_icbm2009c_mm": [
+    -5.300000190734863,
+    4.699999809265137,
+    -18.200000762939453
+   ],
+   "coupe": "y = +3.1 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -3.3,
+    4.5,
+    -17.4
+   ],
+   "mni_icbm2009c_mm": [
+    -4.300000190734863,
+    6.199999809265137,
+    -18.0
+   ],
+   "coupe": "x = -3.3 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 68,
+     "nom": "Optic Chiasm (L)"
+    }
+   ],
+   "mesure": 0.008,
+   "verdict": "discordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.0,
+     "verdict": "discordant"
+    },
+    "coronal": {
+     "mesure": 0.047,
+     "verdict": "discordant"
+    },
+    "sagittal": {
+     "mesure": 0.03,
+     "verdict": "discordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.00"
+  }
+ ],
+ "remarques": [
+  "Étiquette CerebrA peu fiable selon ses auteurs (kappa 0.00) : la discordance ne suffit pas à conclure."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "faible"
+}

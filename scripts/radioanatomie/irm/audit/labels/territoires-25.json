@@ -1,0 +1,88 @@
+{
+ "cle": "territoires-25",
+ "nom_fr": "Territoire des branches de l'artère basilaire (gauche)",
+ "nom_en": "BAS",
+ "cote": "gauche",
+ "categorie": "Territoires vasculaires",
+ "statut_module": "transporté",
+ "source": {
+  "origine": "Atlas des territoires (Liu 2023, redécoupé)",
+  "nom_outil": "BAS",
+  "identifiant": 25
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -6.8,
+   -26.3,
+   -30.7
+  ],
+  "mni_icbm2009c_mm": [
+   -7.900000095367432,
+   -27.200000762939453,
+   -35.099998474121094
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -6.8,
+    -26.3,
+    -32.8
+   ],
+   "mni_icbm2009c_mm": [
+    -7.800000190734863,
+    -27.299999237060547,
+    -37.400001525878906
+   ],
+   "coupe": "z = -32.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -6.8,
+    -27.7,
+    -30.7
+   ],
+   "mni_icbm2009c_mm": [
+    -7.900000095367432,
+    -28.600000381469727,
+    -35.099998474121094
+   ],
+   "coupe": "y = -27.7 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -4.0,
+    -26.3,
+    -30.7
+   ],
+   "mni_icbm2009c_mm": [
+    -4.900000095367432,
+    -27.100000381469727,
+    -35.099998474121094
+   ],
+   "coupe": "x = -4.0 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "Liu et al. 2023 (territoires artériels, CC BY-SA 4.0)",
+   "type": "transporté",
+   "labels": {
+    "ids": [
+     25
+    ],
+    "noms": [
+     "Territoire des branches de l'artère basilaire (gauche)"
+    ]
+   },
+   "verdict": "redécoupé par règles géométriques (voir le rapport)"
+  }
+ ],
+ "remarques": [
+  "Territoire de l'atlas de Liu 2023 transporté sur le sujet, puis redécoupé par des règles géométriques (vidéo de référence de l'auteur) : à contrôler avec Tatu 1998.",
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Atlas des territoires (Liu 2023, redécoupé)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

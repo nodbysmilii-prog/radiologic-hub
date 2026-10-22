@@ -1,0 +1,99 @@
+{
+ "cle": "fines-984",
+ "nom_fr": "Hypothalamus postérieur droit",
+ "nom_en": "R-Post-Hypothalamus",
+ "cote": "droit",
+ "categorie": "Noyaux gris centraux et structures apparentées",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "HypVINN",
+  "nom_outil": "R-Post-Hypothalamus",
+  "identifiant": 984
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   3.0,
+   -6.7,
+   -6.2
+  ],
+  "mni_icbm2009c_mm": [
+   2.799999952316284,
+   -6.5,
+   -10.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    3.0,
+    -6.7,
+    -5.5
+   ],
+   "mni_icbm2009c_mm": [
+    2.799999952316284,
+    -6.400000095367432,
+    -9.800000190734863
+   ],
+   "coupe": "z = -5.5 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    3.0,
+    -5.3,
+    -6.2
+   ],
+   "mni_icbm2009c_mm": [
+    2.799999952316284,
+    -4.900000095367432,
+    -10.699999809265137
+   ],
+   "coupe": "y = -5.3 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    5.1,
+    -6.7,
+    -6.2
+   ],
+   "mni_icbm2009c_mm": [
+    5.400000095367432,
+    -6.5,
+    -10.100000381469727
+   ],
+   "coupe": "x = +5.1 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 26,
+     "nom": "Ventral Diencephalon (R)"
+    }
+   ],
+   "mesure": 0.891,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.878,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.733,
+     "verdict": "partiel"
+    },
+    "sagittal": {
+     "mesure": 0.983,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.93"
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

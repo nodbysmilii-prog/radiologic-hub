@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Amylose thoracique — Fiche rapide RadiologicHub</title>
+  <meta name="description" content="Fiche rapide RadiologicHub : amylose thoracique, une affection bénigne mais déroutante — amylose pulmonaire (nodulaire, alvéolo-septale), trachéobronchique, médiastinale et épanchement pleural.">
+  <link rel="icon" type="image/svg+xml" href="../assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=20261022235000">
+  <link rel="stylesheet" href="../fiche.css?v=20261012150000">
+  <style>
+    /* Mise en page propre à cette fiche (texte de l'auteur inchangé) */
+    .amy-sub { padding-left: 26px; border-left: 4px dotted color-mix(in srgb, var(--c) 40%, transparent); }
+    .amy-sub .fsec-title { font-size: clamp(1.05rem, 2vw, 1.4rem); }
+    .amy-sub .fnum { width: 48px; height: 48px; font-size: .9rem; }
+    .toc .toc-sub a { margin-left: 18px; font-size: .7rem; }
+    .toc .toc-sub a b { width: 26px; height: 26px; font-size: .62rem; }
+    .amy-p { margin: 0 0 .8em; }
+    .amy-p:last-child { margin-bottom: 0; }
+    .amy-lead { font-weight: 600; }
+    .amy-pills { list-style: none; padding: 0; margin: 12px 0 6px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .amy-pills li { margin: 0; padding: .45em 1em; border-radius: 999px; background: #fff; border: 2px solid color-mix(in srgb, var(--c) 45%, transparent); font-size: .88rem; font-weight: 600; }
+    .amy-pills li::marker { content: none; }
+    .amy-trio { list-style: none; padding: 0; margin: 12px 0 6px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .amy-trio li { margin: 0; padding: 12px 14px; border-radius: 16px; background: #fff; border: 2px solid color-mix(in srgb, var(--c) 45%, transparent); font-size: .88rem; }
+    .amy-ddx { --c: var(--k-ddx); }
+    .amy-ddx .amy-pills li { border-color: color-mix(in srgb, var(--k-ddx) 45%, transparent); }
+    .amy-ddx-title { margin: 0 0 4px; font-weight: 800; color: var(--k-ddx); }
+    .amy-bars { display: grid; gap: 10px; margin: 12px 0 4px; }
+    .amy-bars .bar { gap: 14px; padding: 10px 16px; border-radius: 14px; border: 2px solid color-mix(in srgb, var(--c) 35%, transparent); text-transform: none; letter-spacing: 0; font-size: .92rem; font-weight: 700; }
+    .amy-bars .bar::before { background: color-mix(in srgb, var(--c) 22%, transparent); border-radius: 12px; }
+    .amy-bars .bar mark { flex: 0 0 auto; }
+    .amy-schemas { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+    .amy-schemas p { margin: 0; padding: 14px 16px; border-radius: 16px; background: #fff; border: 2px solid color-mix(in srgb, var(--c) 45%, transparent); font-size: .9rem; }
+    .amy-schemas b { color: var(--c); font-size: 1rem; }
+    .amy-key .amy-pills li { border-color: rgba(0, 0, 0, .18); }
+    .amy-key .amy-concl { margin: 10px 0 0; font-size: 1.05rem; font-weight: 800; }
+    .amy-forms { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .amy-forms li { margin: 0; padding: 16px 18px; border-radius: var(--radius); background: var(--card); border: 4px solid var(--c); box-shadow: 8px 8px 0 color-mix(in srgb, var(--c) 40%, transparent); font-size: .92rem; }
+    .amy-sub .tiles { margin-top: 6px; }
+    .amy-sub .tile h3 { padding-right: 6px; }
+    /* Figures du poster */
+    .amy-figs { display: grid; gap: 34px; margin: 34px 0 30px; padding-right: 10px; }
+    .amy-figs .ex-fig { max-width: 780px; }
+    .amy-figs .ex-fig:hover { transform: none; }
+    .amy-fig-n { display: inline-block; margin: 0 8px 6px 0; padding: .2em .8em; border-radius: 999px; background: var(--c, var(--ink)); color: #fff; font-weight: 900; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; vertical-align: middle; }
+    .ex-fig figcaption .amy-fig-n + strong, .lightbox-cap .amy-fig-n + strong { display: inline; }
+    .ex-fig figcaption strong { color: var(--c); }
+    .amy-ref { display: inline-flex; align-items: center; gap: .3em; padding: .02em .6em; border-radius: 999px; background: var(--r); color: var(--rt, #111114); border: 1.5px solid rgba(0, 0, 0, .3); font-size: .78rem; font-weight: 800; white-space: nowrap; vertical-align: 1px; }
+    .amy-nw { white-space: nowrap; }
+    .amy-ref::before { content: "➜"; font-size: .95em; }
+    .amy-ref[data-r="rouge"] { --r: #e3262b; --rt: #fff; }
+    .amy-ref[data-r="jaune"] { --r: #f7dc1e; }
+    .amy-ref[data-r="blanc"] { --r: #fff; }
+    .amy-ref[data-r="noir"] { --r: #111114; --rt: #fff; }
+    .amy-ref[data-r="cercle"] { --r: #fff; border: 2.5px solid #e6c400; }
+    .amy-ref[data-r="cercle"]::before { content: ""; width: .8em; height: .8em; border: 2.5px solid #e6c400; border-radius: 50%; }
+    /* Schéma « paroi trachéobronchique » (traduit et redessiné) */
+    .amy-arbre-fig { max-width: none !important; }
+    .amy-arbre { padding: 26px 18px 22px; background: #fff; text-align: center; }
+    .amy-arbre p { margin: 0 auto; }
+    .arb-top, .arb-noeud, .arb-etat, .arb-calc { width: fit-content; max-width: 100%; padding: .5em 1.1em; border-radius: 14px; font-weight: 800; line-height: 1.35; }
+    .arb-top { background: var(--navy); color: #fff; font-size: 1rem; }
+    .arb-noeud { background: var(--teal); color: #fff; font-size: .98rem; }
+    .arb-etat { background: #fff; border: 3px solid var(--teal); color: var(--teal); font-size: .82rem; letter-spacing: .08em; text-transform: uppercase; }
+    .arb-calc { background: var(--blue); color: #fff; font-size: .85rem; }
+    .arb-v { display: block; position: relative; width: 3px; height: 26px; margin: 0 auto 7px; background: var(--ink); }
+    .arb-v::after { content: ""; position: absolute; left: 50%; bottom: -7px; transform: translateX(-50%); border: 6px solid transparent; border-top: 8px solid var(--ink); border-bottom: 0; }
+    .arb-split { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .arb-split::before { content: ""; position: absolute; top: 0; left: calc(25% - 4.5px); right: calc(25% - 4.5px); height: 3px; background: var(--ink); }
+    .arb-branches { margin-top: 0; padding-top: 0; }
+    .amy-arbre > .arb-noeud + .arb-split { margin-top: 18px; }
+    .amy-arbre > .arb-noeud + .arb-split::after { content: ""; position: absolute; left: 50%; top: -18px; width: 3px; height: 18px; transform: translateX(-50%); background: var(--ink); }
+    .arb-branche { padding: 0 0 4px; }
+    .arb-split > * { min-width: 0; }
+    .arb-branche > .arb-split { margin-top: 18px; }
+    .arb-branche > .arb-calc + .arb-split::after { content: ""; position: absolute; left: 50%; top: -18px; width: 3px; height: 18px; transform: translateX(-50%); background: var(--ink); }
+    .arb-liste { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 10px 0 12px; }
+    .arb-mal { display: inline-block; padding: .3em .75em; border-radius: 10px; background: color-mix(in srgb, var(--b) 14%, #fff); border: 2px solid var(--b); font-size: .78rem; font-weight: 700; line-height: 1.3; }
+    .arb-mal.is-amylose { background: var(--b); color: #fff; font-weight: 900; box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--k-key); }
+    .arb-feuille .arb-mal { display: block; margin: 6px auto 0; width: fit-content; max-width: 100%; hyphens: manual; }
+    .arb-q { margin: 0 0 8px !important; font-weight: 900; font-size: .74rem; letter-spacing: .06em; text-transform: uppercase; }
+    .arb-feuille img { display: block; width: min(100%, 124px); height: auto; aspect-ratio: 117 / 141; object-fit: cover; margin: 0 auto; border: 3px solid var(--b); border-radius: 10px; }
+    @media (max-width: 760px) {
+      .amy-sub { padding-left: 12px; }
+      .amy-trio, .amy-schemas, .amy-forms { grid-template-columns: 1fr; }
+      .toc .toc-sub a { margin-left: 0; }
+      .amy-figs { padding-right: 0; }
+      .amy-arbre { padding: 22px 10px 18px; }
+      .arb-branches { grid-template-columns: 1fr; gap: 26px; padding-left: 22px; }
+      .arb-branches::before { display: none; }
+      .amy-arbre > .arb-noeud + .arb-split::after { left: 6px; transform: none; }
+      .arb-branche { position: relative; padding: 14px 8px 14px; border: 3px solid color-mix(in srgb, var(--b) 60%, transparent); border-radius: 18px; background: color-mix(in srgb, var(--b) 5%, #fff); }
+      .arb-branche > .arb-v:first-child { display: none; }
+      .arb-branche::before { content: ""; position: absolute; left: -19px; top: -3px; width: 3px; height: 36px; background: var(--ink); }
+      .arb-branche:first-child::before { height: auto; bottom: -29px; }
+      .arb-branche::after { content: ""; position: absolute; left: -19px; top: 30px; width: 16px; height: 3px; background: var(--ink); }
+      .arb-q { min-height: 3.1em; display: flex; align-items: flex-end; justify-content: center; line-height: 1.5; }
+      .arb-feuille .arb-mal { font-size: .74rem; padding: .3em .5em; }
+      .arb-split { gap: 12px; }
+      .arb-split::before { left: calc(25% - 3px); right: calc(25% - 3px); }
+      .arb-branches::before { display: none; }
+    }
+    @media print {
+      .amy-sub { border-left: 0; padding-left: 0; }
+    }
+  </style>
+</head>
+<body class="fiche-page">
+
+  <div class="read-progress" aria-hidden="true"><span></span></div>
+
+  <header class="site-header is-scrolled" id="top">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="RadiologicHub — accueil">
+        <img src="../assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+        <a href="../comptes-rendus.html">Comptes rendus</a>
+        <a href="../fiches-rapides.html" class="is-current">Fiches rapides</a>
+        <a href="../radioanatomie/index.html">Radioanatomie</a>
+        <a href="../bibliotheque.html">Bibliothèque</a>
+        <a href="../communaute.html">Communauté</a>
+        <a href="../remplacements.html">Remplacements</a>
+        <a href="../index.html#masterclass" class="nav-masterclass">Masterclass</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ EN-TÊTE DE FICHE ============ -->
+    <section class="fiche-hero sec-down">
+      <div class="container">
+        <nav class="crumbs" aria-label="Fil d'Ariane">
+          <a href="../fiches-rapides.html">Fiches rapides</a> › <a href="../fiches-rapides.html#thorax">Thorax</a> › <span>Amylose thoracique</span>
+        </nav>
+        <p class="marker-tag">Fiche rapide · Imagerie thoracique</p>
+        <h1>Amylose thoracique : <span class="hl-navy">une affection bénigne mais déroutante</span></h1>
+        <p class="fiche-sub">Objectifs pédagogiques • Contexte • <span class="hl-red">Résultats (Observations)</span> • Conclusion</p>
+
+        <div class="legend" role="group" aria-label="Code couleur — cliquez pour isoler une catégorie">
+          <span class="legend-label">Code couleur :</span>
+          <button class="chip k-tech" data-k="tech" aria-pressed="false">Examen / technique</button>
+          <button class="chip k-signo" data-k="signo" aria-pressed="false">Signe d'imagerie</button>
+          <button class="chip k-sign" data-k="sign" aria-pressed="false">Orientation diagnostique</button>
+          <button class="chip k-grave" data-k="grave" aria-pressed="false">Gravité / pronostic</button>
+          <button class="chip k-ddx" data-k="ddx" aria-pressed="false">Piège / diagnostic différentiel</button>
+          <button class="chip k-key" data-k="key" aria-pressed="false">Chiffre clé</button>
+        </div>
+        <p class="legend-hint">Astuce : cliquez sur une couleur pour n'afficher qu'elle.</p>
+
+        <div class="fiche-actions">
+          <button class="btn btn-outline btn-sm" id="print-btn">Imprimer / PDF</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="container fiche-layout">
+      <!-- Sommaire -->
+      <aside class="toc" aria-label="Sommaire">
+        <p class="toc-title">Sommaire</p>
+        <ol>
+          <li><a href="#objectifs" style="--c: var(--blue)"><b>1</b>Objectifs pédagogiques</a></li>
+          <li><a href="#contexte" style="--c: var(--teal)"><b>2</b>Contexte</a></li>
+          <li><a href="#resultats" style="--c: var(--slate)"><b>3</b>Résultats (Observations)</a></li>
+          <li class="toc-sub"><a href="#pulmonaire" style="--c: var(--purple)"><b>I</b>Amylose pulmonaire</a></li>
+          <li class="toc-sub"><a href="#tracheobronchique" style="--c: var(--crimson)"><b>II</b>Amylose trachéobronchique</a></li>
+          <li class="toc-sub"><a href="#mediastinale" style="--c: var(--amber)"><b>III</b>Amylose médiastinale</a></li>
+          <li class="toc-sub"><a href="#pleural" style="--c: var(--green)"><b>IV</b>Épanchement pleural</a></li>
+          <li><a href="#conclusion" style="--c: var(--plum)"><b>4</b>Conclusion</a></li>
+        </ol>
+      </aside>
+
+      <div class="fiche-body" id="fiche-body">
+
+        <!-- 1 -->
+        <section class="fsec" id="objectifs" style="--c: var(--blue)">
+          <h2 class="fsec-title"><span class="fnum">1</span>Objectifs pédagogiques</h2>
+          <ol class="goals">
+            <li style="--c: var(--blue)">Décrire les <mark class="k-signo">caractéristiques en imagerie</mark> de l’amylose thoracique et les corréler aux <mark class="k-tech">données anatomopathologiques</mark>.</li>
+            <li style="--c: var(--k-ddx)">Mettre en lumière les difficultés diagnostiques liées au <mark class="k-ddx">mimétisme</mark> de cette affection avec d’autres pathologies thoraciques.</li>
+          </ol>
+        </section>
+
+        <!-- 2 -->
+        <section class="fsec" id="contexte" style="--c: var(--teal)">
+          <h2 class="fsec-title"><span class="fnum">2</span>Contexte</h2>
+          <div class="fcard">
+            <ul class="fl">
+              <li>L’amylose correspond au <mark class="k-key">dépôt extracellulaire de protéines amyloïdes</mark> dans divers organes, incluant les poumons.</li>
+              <li>L’amylose thoracique peut être <mark class="k-sign">isolée</mark> ou s’inscrire dans le cadre d’un <mark class="k-sign">processus systémique</mark>, et reste souvent <mark class="k-ddx">sous-diagnostiquée</mark> en raison de la diversité de ses présentations.</li>
+              <li>Le diagnostic de certitude repose sur <mark class="k-tech">l'anatomopathologie</mark>, mettant en évidence une <mark class="k-key">biréfringence vert-jaune après coloration par le rouge Congo</mark>.</li>
+              <li>Les aspects en imagerie comprennent des atteintes <mark class="k-signo">trachéobronchiques, parenchymateuses, médiastinales, ganglionnaires et pleurales</mark>, <mark class="k-ddx">simulant fréquemment des lésions malignes</mark>.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- 3 -->
+        <section class="fsec" id="resultats" style="--c: var(--slate)">
+          <h2 class="fsec-title"><span class="fnum">3</span>Résultats (Observations)</h2>
+          <div class="callout">
+            <p>L’amylose pulmonaire se manifeste sous différents aspects radiologiques, incluant des formes <mark class="k-signo">parenchymateuses nodulaires</mark>, <mark class="k-signo">alvéolo-septales diffuses</mark>, <mark class="k-signo">kystiques</mark> et <mark class="k-signo">trachéobronchiques</mark>.</p>
+          </div>
+        </section>
+
+        <!-- 3 · I -->
+        <section class="fsec amy-sub" id="pulmonaire" style="--c: var(--purple)">
+          <h2 class="fsec-title"><span class="fnum">I</span>Amylose pulmonaire</h2>
+          <div class="fcard">
+            <p class="amy-p">L’amylose pulmonaire est plus souvent un <mark class="k-sign">processus localisé</mark> qu'une atteinte systémique. Elle se présente selon deux aspects radiologiques distincts : <mark class="k-signo">l’amylose pulmonaire nodulaire</mark> et <mark class="k-signo">l’amylose alvéolo-septale</mark>. Cependant, les constatations en imagerie sont souvent <mark class="k-ddx">non spécifiques</mark>, nécessitant des investigations complémentaires pour un diagnostic de certitude.</p>
+          </div>
+
+          <h3 class="marker-sub">a. Atteinte nodulaire</h3>
+          <div class="fcard">
+            <p class="amy-p amy-lead">La présentation typique est observée chez un <mark class="k-sign">adulte asymptomatique</mark>, le plus souvent au cours de la <mark class="k-key">sixième décennie</mark>, à l’occasion d’anomalies fortuites découvertes sur une radiographie thoracique.</p>
+            <ul class="fl">
+              <li>En scanner (TDM), l’amylose nodulaire (AN) se présente sous la forme de <mark class="k-signo">nodules pulmonaires solitaires ou multiples</mark> et peut mimer diverses pathologies, notamment des <mark class="k-ddx">infections granulomateuses et des tumeurs malignes</mark>.</li>
+              <li>L’AN est communément associée aux <mark class="k-sign">formes localisées</mark> d’amylose.</li>
+              <li>Des dépôts pseudotumoraux solitaires, appelés <mark class="k-signo">amyloïdomes</mark> en l’absence de maladie systémique, sont identifiés dans environ <mark class="k-key">60 %</mark> des cas. Des nodules pulmonaires multiples sont fréquemment observés, prédominant dans les <mark class="k-signo">lobes supérieurs</mark>, présentant les caractéristiques suivantes :
+                <ul class="amy-trio">
+                  <li>Des contours lisses, lobulés ou spiculés pouvant faire <mark class="k-ddx">suspecter une malignité</mark>.</li>
+                  <li>Des <mark class="k-signo">calcifications centrales ou punctiformes</mark> parfois présentes.</li>
+                  <li>De rares cavités.</li>
+                </ul>
+              </li>
+              <li>Avec le temps, ces nodules peuvent croître et évoluer vers des masses plus volumineuses, atteignant jusqu’à <mark class="k-key">15 cm</mark>.</li>
+              <li>Une <mark class="k-signo">condensation</mark> au sein du parenchyme pulmonaire peut également être observée, pouvant évoquer d'autres affections telles qu'une <mark class="k-ddx">infection ou une inflammation</mark>.</li>
+              <li>En raison de la variabilité de la présentation en imagerie, l’obtention d’un diagnostic de certitude basé uniquement sur l’imagerie est difficile. Bien qu’une évaluation clinique détaillée puisse éveiller les soupçons, une <mark class="k-tech">confirmation histopathologique par biopsie</mark> est souvent nécessaire, la plupart des dépôts étant constitués <mark class="k-key">d’amylose AL</mark>.</li>
+              <li>L’évolution naturelle de l’amylose parenchymateuse nodulaire est généralement <mark class="k-sign">indolente</mark>, les lésions augmentant lentement en taille et en nombre. Malgré cela, le <mark class="k-sign">pronostic global demeure excellent</mark> et un traitement est rarement requis.</li>
+            </ul>
+          </div>
+
+          <div class="amy-figs">
+            <figure class="ex-fig" style="--c: var(--purple)">
+              <button class="ex-img" aria-label="Agrandir la figure 1"><img src="../assets/fiches/amylose/amylose-nodulaire.jpg?v=20261021" alt="TDM thoracique injectée : deux nodules au contact de la plèvre médiastinale, à l'apex et dans le lobe inférieur gauche" loading="lazy" style="aspect-ratio: 898 / 370"></button>
+              <figcaption><span class="amy-fig-n">Fig. 1</span><strong>Amylose nodulaire.</strong> TDM thoracique avec injection de produit de contraste iodé montrant <mark class="k-signo">deux nodules au contact de la plèvre médiastinale</mark>, l'un apical et l'autre dans le lobe inférieur gauche <span class="amy-nw"><span class="amy-ref" data-r="rouge">flèches</span>.</span></figcaption>
+            </figure>
+            <figure class="ex-fig" style="--c: var(--purple)">
+              <button class="ex-img" aria-label="Agrandir la figure 2"><img src="../assets/fiches/amylose/amylose-masse.jpg?v=20261021" alt="TDM thoracique sans injection, fenêtres parenchymateuse et médiastinale : masse calcifiée du lobe inférieur gauche" loading="lazy" style="aspect-ratio: 904 / 341"></button>
+              <figcaption><span class="amy-fig-n">Fig. 2</span><strong>Amylose parenchymateuse se présentant sous la forme d'une masse.</strong> TDM thoracique sans injection montrant une <mark class="k-signo">masse du lobe inférieur gauche contenant des calcifications</mark>.</figcaption>
+            </figure>
+          </div>
+
+          <h3 class="marker-sub">b. Amylose pulmonaire alvéolo-septale</h3>
+          <div class="fcard">
+            <p class="amy-p amy-lead">L’amylose pulmonaire alvéolo-septale, bien que moins fréquente, a souvent un <mark class="k-grave">impact clinique plus significatif</mark> que la forme parenchymateuse nodulaire. Les patients atteints de ce type sont plus fréquemment symptomatiques et présentent un risque accru d’évolution vers une <mark class="k-grave">hypertension pulmonaire et une insuffisance respiratoire</mark>. L’amylose alvéolo-septale diffuse (DASA) est rare et se rencontre plus volontiers dans le sous-type associé à une <mark class="k-sign">amylose systémique</mark>. Les signes scanographiques thoraciques de l’amylose pulmonaire sont divers et comprennent :</p>
+            <ul class="amy-pills">
+              <li>Des <mark class="k-signo">réticulations</mark>.</li>
+              <li>Un épaississement des <mark class="k-signo">septa interlobulaires</mark>.</li>
+              <li>Un épaississement de l'interstitium <mark class="k-signo">péri-bronchovasculaire</mark>.</li>
+              <li>Des <mark class="k-signo">micronodules</mark> pouvant présenter une distribution lymphatique, aléatoire ou centrilobulaire.</li>
+              <li>Des opacités en <mark class="k-signo">verre dépoli</mark>.</li>
+              <li>Des <mark class="k-signo">condensations</mark>.</li>
+            </ul>
+            <ul class="fl">
+              <li>Les micronodules peuvent être périlymphatiques, <mark class="k-ddx">mimant les aspects observés dans la lymphangite carcinomateuse</mark>.</li>
+              <li>Plus rarement, on observe des remaniements kystiques, des calcifications et des signes <mark class="k-signo">d’emphysème basal</mark>, ces derniers étant secondaires à la destruction des parois alvéolaires.</li>
+              <li class="amy-ddx">Le diagnostic différentiel en imagerie inclut :
+                <ul class="amy-pills">
+                  <li>La <mark class="k-ddx">silicose</mark></li>
+                  <li>La <mark class="k-ddx">sarcoïdose</mark></li>
+                  <li>La <mark class="k-ddx">lymphangite carcinomateuse</mark></li>
+                  <li>Les <mark class="k-ddx">pneumopathies interstitielles diffuses (PID)</mark>, en particulier lorsque la réticulation constitue le principal signe scanographique.</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+          <div class="amy-figs">
+            <figure class="ex-fig" style="--c: var(--purple)">
+              <button class="ex-img" aria-label="Agrandir la figure 3"><img src="../assets/fiches/amylose/amylose-pid.jpg?v=20261021" alt="TDM thoracique en fenêtre parenchymateuse : micronodules diffus de distribution aléatoire" loading="lazy" style="aspect-ratio: 1044 / 252"></button>
+              <figcaption><span class="amy-fig-n">Fig. 3</span><strong>Amylose parenchymateuse se présentant sous la forme d'une pneumopathie interstitielle diffuse (PID).</strong> TDM thoracique en fenêtre parenchymateuse montrant des <mark class="k-signo">micronodules de distribution aléatoire</mark>.</figcaption>
+            </figure>
+            <figure class="ex-fig" style="--c: var(--purple)">
+              <button class="ex-img" aria-label="Agrandir la figure 4"><img src="../assets/fiches/amylose/amylose-manchon-peribronchovasculaire.jpg?v=20261021" alt="TDM thoracique en fenêtre parenchymateuse : manchon péri-bronchovasculaire rétrécissant les bronches lobaires supérieures" loading="lazy" style="aspect-ratio: 878 / 370"></button>
+              <figcaption><span class="amy-fig-n">Fig. 4</span><strong>Amylose se présentant sous la forme d'un manchon péri-bronchovasculaire.</strong> TDM thoracique en fenêtre parenchymateuse montrant un <mark class="k-signo">manchon péri-bronchovasculaire</mark> débutant au niveau des bronches souches et entraînant un <mark class="k-grave">rétrécissement des bronches lobaires supérieures et de la bronche apicale du lobe inférieur gauche</mark> <span class="amy-nw"><span class="amy-ref" data-r="rouge">flèches</span>.</span></figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <!-- 3 · II -->
+        <section class="fsec amy-sub" id="tracheobronchique" style="--c: var(--crimson)">
+          <h2 class="fsec-title"><span class="fnum">II</span>Amylose trachéobronchique</h2>
+          <div class="fcard">
+            <p class="amy-p">L’amylose trachéobronchique (ATB) est principalement caractérisée par des <mark class="k-signo">dépôts amyloïdes sous-muqueux</mark> focaux, multifocaux ou diffus touchant la <mark class="k-signo">trachée et les bronches souches</mark>, l’atteinte des bronches segmentaires étant rare. Bien qu’elle soit le plus souvent <mark class="k-sign">isolée</mark>, une atteinte des voies aériennes peut s'observer au cours de l’amylose systémique, mais de façon moins fréquente. L’ATB prédomine chez l’homme (ratio de <mark class="k-key">1,6:1</mark>) au cours des <mark class="k-key">cinquième et sixième décennies</mark>, et se manifeste le plus souvent sous la forme d’une <mark class="k-sign">amylose AL localisée</mark>, rarement associée à une amylose systémique. La maladie suit généralement une <mark class="k-sign">évolution indolente</mark>, sans progression connue vers une amylose systémique.</p>
+            <p class="amy-p">L’atteinte des voies aériennes, y compris de la trachée, se présente habituellement sous forme de <mark class="k-signo">plaques sous-muqueuses</mark>, mais peut occasionnellement prendre l’aspect de dépôts solitaires <mark class="k-ddx">mimant un néoplasme endobronchique</mark>. Les symptômes associent fréquemment dyspnée, toux, sibilants (wheezing), hémoptysie et pneumopathies récidivantes.</p>
+          </div>
+
+          <div class="fcard">
+            <p class="amy-p amy-lead">Les signes scanographiques typiques comprennent :</p>
+            <div class="amy-bars">
+              <div class="bar" style="--w: 60%"><span>Un épaississement nodulaire de la paroi trachéale</span> <mark class="k-key">(60 %)</mark></div>
+              <div class="bar" style="--w: 53%"><span>Des calcifications</span> <mark class="k-key">(53 %)</mark></div>
+              <div class="bar" style="--w: 47%"><span>Une obstruction des voies aériennes</span> <mark class="k-key">(47 %)</mark></div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <p>La paroi bronchique ou trachéale atteinte peut présenter une <mark class="k-signo">hyperatténuation</mark> en rapport avec des calcifications ou des ossifications. La mise en évidence d’un <mark class="k-signo">épaississement pariétal hyperdense</mark> associé à un sténose (rétrécissement) sur un <mark class="k-key">long segment</mark> de la lumière doit <mark class="k-sign">fortement faire suspecter une amylose</mark>.</p>
+          </div>
+
+          <div class="amy-figs">
+            <figure class="ex-fig" style="--c: var(--crimson)">
+              <button class="ex-img" aria-label="Agrandir la figure 5"><img src="../assets/fiches/amylose/amylose-tracheale.jpg?v=20261021" alt="TDM thoracique injectée, coupes axiales en fenêtres médiastinale et parenchymateuse et reconstruction sagittale : épaississement circonférentiel de la paroi trachéale réduisant sa lumière" loading="lazy" style="aspect-ratio: 1050 / 542"></button>
+              <figcaption><span class="amy-fig-n">Fig. 5</span><strong>Amylose trachéale.</strong> TDM thoracique avec injection de produit de contraste, en fenêtres médiastinale et parenchymateuse, et reconstruction sagittale, montrant un <mark class="k-signo">épaississement circonférentiel étendu et un rehaussement de la paroi trachéale</mark>, <mark class="k-grave">réduisant sa lumière</mark> <span class="amy-nw"><span class="amy-ref" data-r="jaune">flèches</span>,</span> chez un patient consultant pour une dyspnée. Confirmation obtenue par <mark class="k-tech">biopsie endoscopique</mark>.</figcaption>
+            </figure>
+          </div>
+
+          <div class="fcard">
+            <p class="amy-p amy-lead">Trois schémas d’atteinte des voies aériennes ont été décrits :</p>
+            <div class="amy-schemas">
+              <p><b>Proximale</b> (atteinte trachéale haute), se manifestant souvent par des symptômes des voies aériennes supérieures.</p>
+              <p><b>Moyenne ou distale</b> (atteinte de la trachée et des bronches principales), entraînant des symptômes des voies aériennes inférieures, un <mark class="k-grave">collapsus lobaire</mark> ou des pneumopathies récidivantes.</p>
+            </div>
+          </div>
+
+          <div class="fcard amy-ddx">
+            <p class="amy-ddx-title">Le diagnostic différentiel comprend :</p>
+            <ul class="amy-pills">
+              <li>La <mark class="k-ddx">granulomatose avec polyangéite</mark></li>
+              <li>Les <mark class="k-ddx">affections granulomateuses</mark> (telles que la tuberculose ou la sarcoïdose)</li>
+              <li>Les <mark class="k-ddx">maladies inflammatoires chroniques intestinales</mark> (MICI)</li>
+            </ul>
+          </div>
+
+          <div class="fcard">
+            <p class="amy-p">Les principaux éléments permettant de la différencier d’autres pathologies (telles que la <mark class="k-ddx">trachéobronchopathie ostéo-chondroplastique</mark> ou la <mark class="k-ddx">polychondrite atrophiante</mark>) incluent <mark class="k-sign">l’atteinte de la membrane trachéale postérieure</mark> dans l’ATB, une anomalie absente dans les affections cartilagineuses.</p>
+            <div class="callout amy-key">
+              <p>Par conséquent, devant une imagerie montrant :</p>
+              <ul class="amy-pills">
+                <li>Un <mark class="k-signo">épaississement hyperdense</mark> de la paroi des voies aériennes</li>
+                <li>Un <mark class="k-signo">rétrécissement étendu</mark> (long-segmentaire)</li>
+              </ul>
+              <p class="amy-concl">Le diagnostic d’amylose doit être <mark class="k-sign">vigoureusement évoqué</mark>.</p>
+            </div>
+          </div>
+
+          <div class="amy-figs">
+            <figure class="ex-fig amy-arbre-fig" style="--c: var(--teal)">
+              <div class="amy-arbre">
+                <p class="arb-top">Atteinte diffuse ± sténosante de la paroi trachéobronchique</p>
+                <span class="arb-v" aria-hidden="true"></span>
+                <p class="arb-noeud">Membrane trachéale postérieure</p>
+                <div class="arb-split arb-branches">
+                  <div class="arb-branche" style="--b: var(--orange)">
+                    <span class="arb-v" aria-hidden="true"></span><p class="arb-etat">Épaissie</p>
+                    <div class="arb-liste"><span class="arb-mal is-amylose">Amylose</span><span class="arb-mal">Granulomatose avec polyangéite (Wegener)</span><span class="arb-mal">Tuberculose</span></div>
+                    <span class="arb-v" aria-hidden="true"></span><p class="arb-calc">Calcifications</p>
+                    <div class="arb-split">
+                    <div class="arb-feuille"><span class="arb-v" aria-hidden="true"></span><p class="arb-q">Présentes</p><img src="../assets/fiches/amylose/paroi-amylose.jpg?v=20261021" alt="Trachée en coupe axiale : paroi épaissie (en orange), y compris la membrane postérieure, avec des calcifications" loading="lazy" width="117" height="141"><div><span class="arb-mal is-amylose">Amylose</span></div></div>
+                    <div class="arb-feuille"><span class="arb-v" aria-hidden="true"></span><p class="arb-q">Absentes ou tardives</p><img src="../assets/fiches/amylose/paroi-gpa-tuberculose.jpg?v=20261021" alt="Trachée en coupe axiale : paroi épaissie (en bleu), y compris la membrane postérieure, sans calcification" loading="lazy" width="117" height="141"><div><span class="arb-mal">Granulomatose avec polyangéite (Wegener)</span><span class="arb-mal">Tuberculose</span></div></div>
+                    </div>
+                  </div>
+                  <div class="arb-branche" style="--b: var(--purple)">
+                    <span class="arb-v" aria-hidden="true"></span><p class="arb-etat">Respectée</p>
+                    <div class="arb-liste"><span class="arb-mal">Polychondrite atrophiante</span><span class="arb-mal">Trachéo&shy;broncho&shy;pathie ostéo-chondroplastique</span></div>
+                    <span class="arb-v" aria-hidden="true"></span><p class="arb-calc">Calcifications</p>
+                    <div class="arb-split">
+                    <div class="arb-feuille"><span class="arb-v" aria-hidden="true"></span><p class="arb-q">Présentes</p><img src="../assets/fiches/amylose/paroi-tboc.jpg?v=20261021" alt="Trachée en coupe axiale : nodules calcifiés de la paroi, membrane postérieure respectée" loading="lazy" width="117" height="141"><div><span class="arb-mal">Trachéo&shy;broncho&shy;pathie ostéo-chondroplastique</span></div></div>
+                    <div class="arb-feuille"><span class="arb-v" aria-hidden="true"></span><p class="arb-q">Absentes ou tardives</p><img src="../assets/fiches/amylose/paroi-polychondrite.jpg?v=20261021" alt="Trachée en coupe axiale : épaississement de la paroi antérieure et latérale (en blanc), membrane postérieure respectée" loading="lazy" width="117" height="141"><div><span class="arb-mal">Polychondrite atrophiante</span></div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <figcaption><span class="amy-fig-n">Fig. 6</span><strong>Pathologies de la paroi trachéobronchique : aspects TDM et pièges diagnostiques.</strong></figcaption>
+            </figure>
+            <figure class="ex-fig" style="--c: var(--crimson)">
+              <button class="ex-img" aria-label="Agrandir la figure 7"><img src="../assets/fiches/amylose/amylose-association.jpg?v=20261021" alt="TDM thoracique injectée : micronodules de distribution lymphatique du poumon droit et épaississement péribronchique rétrécissant les bronches" loading="lazy" style="aspect-ratio: 1004 / 554"></button>
+              <figcaption><span class="amy-fig-n">Fig. 7</span><strong>Association de deux types d'atteinte de l'amylose thoracique.</strong> TDM thoracique avec injection montrant des <mark class="k-signo">micronodules de distribution lymphatique</mark> dans le poumon droit <span class="amy-nw"><span class="amy-ref" data-r="cercle">cercles jaunes</span>,</span> associés à un <mark class="k-signo">épaississement péribronchique</mark> entraînant un <mark class="k-grave">rétrécissement de la lumière bronchique</mark> <span class="amy-nw"><span class="amy-ref" data-r="rouge">flèches rouges</span>.</span></figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <!-- 3 · III -->
+        <section class="fsec amy-sub" id="mediastinale" style="--c: var(--amber)">
+          <h2 class="fsec-title"><span class="fnum">III</span>Amylose médiastinale</h2>
+          <p class="amy-p amy-lead">L’atteinte médiastinale est le plus fréquemment observée dans le cadre d’une <mark class="k-sign">amylose systémique</mark> et peut se présenter sous forme de :</p>
+          <ul class="amy-forms">
+            <li><mark class="k-signo">Adénopathies multi-stations</mark> ou atteinte localisée à des régions anatomiques spécifiques.</li>
+            <li><mark class="k-signo">Lésions tuméfactives isolées (amyloïdomes)</mark> pouvant siéger dans n’importe quel compartiment médiastinal.</li>
+            <li>Un <mark class="k-signo">épaississement périvasculaire</mark>.</li>
+          </ul>
+          <div class="fcard" style="margin-top: 30px">
+            <p class="amy-p">Les symptômes dépendent de la localisation de la lésion et de sa proximité avec les structures adjacentes. L’atteinte médiastinale se révèle souvent par des adénopathies asymptomatiques, constituant la <mark class="k-key">troisième manifestation thoracique</mark> de l’amylose, après les atteintes des voies aériennes et parenchymateuses nodulaires.</p>
+            <p class="amy-p">Les adénopathies médiastinales peuvent présenter des calcifications punctiformes, diffuses ou en <mark class="k-signo">« coquille d’œuf »</mark>.</p>
+          </div>
+
+          <div class="amy-figs">
+            <figure class="ex-fig" style="--c: var(--amber)">
+              <button class="ex-img" aria-label="Agrandir la figure 8"><img src="../assets/fiches/amylose/amylose-conglomerat-paratracheal.jpg?v=20261021" alt="TDM thoracique injectée en fenêtre médiastinale : conglomérat d'adénopathies paratrachéales droites engainant la trachée et la veine cave supérieure" loading="lazy" style="aspect-ratio: 979 / 245"></button>
+              <figcaption><span class="amy-fig-n">Fig. 8</span>TDM thoracique avec injection, en fenêtre médiastinale, montrant un <mark class="k-signo">conglomérat d'adénopathies paratrachéales droites formant une masse</mark> <span class="amy-nw"><span class="amy-ref" data-r="blanc">flèches blanches</span>,</span> engainant la trachée et la veine cave supérieure, qui apparaît <mark class="k-grave">rétrécie</mark> <span class="amy-nw"><span class="amy-ref" data-r="jaune">flèche jaune</span>.</span></figcaption>
+            </figure>
+            <figure class="ex-fig" style="--c: var(--amber)">
+              <button class="ex-img" aria-label="Agrandir la figure 9"><img src="../assets/fiches/amylose/amylose-ganglions-calcifies.jpg?v=20261021" alt="TDM thoracique sans injection : ganglions médiastinaux à calcifications centrales" loading="lazy" style="aspect-ratio: 692 / 534"></button>
+              <figcaption><span class="amy-fig-n">Fig. 9</span><strong>Amylose ganglionnaire.</strong> TDM thoracique sans injection montrant des <mark class="k-signo">ganglions médiastinaux à calcifications centrales</mark> <span class="amy-nw"><span class="amy-ref" data-r="blanc">flèches</span>.</span></figcaption>
+            </figure>
+            <figure class="ex-fig" style="--c: var(--amber)">
+              <button class="ex-img" aria-label="Agrandir la figure 10"><img src="../assets/fiches/amylose/amylose-ganglions-hypodenses.jpg?v=20261021" alt="TDM thoracique injectée en fenêtre médiastinale : adénopathies hilaires et médiastinales, ganglions hypodenses à rehaussement périphérique" loading="lazy" style="aspect-ratio: 960 / 488"></button>
+              <figcaption><span class="amy-fig-n">Fig. 10</span><strong>Amylose ganglionnaire.</strong> TDM thoracique avec injection, en fenêtre médiastinale, montrant des <mark class="k-signo">adénopathies hilaires et interbronchiques bilatérales</mark>, ainsi que des ganglions sous-carénaires et de la fenêtre aorto-pulmonaire <mark class="k-signo">hypodenses avec rehaussement périphérique</mark> <span class="amy-nw"><span class="amy-ref" data-r="blanc">flèches</span>.</span></figcaption>
+            </figure>
+            <figure class="ex-fig" style="--c: var(--amber)">
+              <button class="ex-img" aria-label="Agrandir la figure 11"><img src="../assets/fiches/amylose/amylose-manchon-periaortique.jpg?v=20261021" alt="TDM thoracique injectée en fenêtre médiastinale, coupes axiales et sagittale : manchon tissulaire péri-aortique infiltrant le tronc et l'artère pulmonaire droite" loading="lazy" style="aspect-ratio: 919 / 455"></button>
+              <figcaption><span class="amy-fig-n">Fig. 11</span><strong>Amylose médiastinale extraganglionnaire.</strong> TDM thoracique avec injection, en fenêtre médiastinale, montrant un <mark class="k-signo">manchon de densité tissulaire péri-aortique</mark> infiltrant le tronc de l'artère pulmonaire et l'artère pulmonaire droite <span class="amy-nw"><span class="amy-ref" data-r="jaune">flèches</span>.</span></figcaption>
+            </figure>
+            <figure class="ex-fig" style="--c: var(--amber)">
+              <button class="ex-img" aria-label="Agrandir la figure 12"><img src="../assets/fiches/amylose/amylose-manchon-periaortique-radio.jpg?v=20261021" alt="Radiographie thoracique de face, puis TDM thoracique injectée (coupes axiales et coronale) : manchon péri-aortique bifocal" loading="lazy" style="aspect-ratio: 905 / 444"></button>
+              <figcaption><span class="amy-fig-n">Fig. 12</span><strong>Amylose médiastinale extraganglionnaire.</strong> Patient de 67 ans consultant pour une toux, avec sur la radiographie thoracique une <mark class="k-signo">opacité médiastinale effaçant la ligne para-aortique</mark> <span class="amy-nw"><span class="amy-ref" data-r="noir">flèche noire</span>.</span> La TDM thoracique avec injection montre un <mark class="k-signo">manchon péri-aortique bifocal</mark> <span class="amy-nw"><span class="amy-ref" data-r="jaune">flèches jaunes</span>.</span></figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <!-- 3 · IV -->
+        <section class="fsec amy-sub" id="pleural" style="--c: var(--green)">
+          <h2 class="fsec-title"><span class="fnum">IV</span>Épanchement pleural au cours de l’amylose</h2>
+          <div class="tiles">
+            <article class="tile" style="--c: var(--teal)">
+              <span class="tile-badge">A</span>
+              <h3>Prévalence et types</h3>
+              <ul class="fl">
+                <li>Les épanchements pleuraux surviennent dans environ <mark class="k-key">20 %</mark> des cas d’amylose AL.</li>
+                <li><mark class="k-key">Un tiers</mark> de ces épanchements sont <mark class="k-grave">abondants et réfractaires aux diurétiques</mark>.</li>
+                <li>Ils sont rares dans les amyloses de type AA et ATTR.</li>
+              </ul>
+            </article>
+            <article class="tile" style="--c: var(--blue)">
+              <span class="tile-badge">B</span>
+              <h3>Considérations en imagerie</h3>
+              <ul class="fl">
+                <li>Les épanchements peuvent être unilatéraux ou bilatéraux, transudatifs ou exsudatifs.</li>
+                <li>Des <mark class="k-signo">épanchements pleuraux persistants (EPP)</mark> doivent faire suspecter un <mark class="k-sign">dépôt amyloïde pleural direct</mark>, en particulier en l’absence de dysfonctionnement cardiaque ou rénal.</li>
+              </ul>
+            </article>
+            <article class="tile" style="--c: var(--k-grave)">
+              <span class="tile-badge">C</span>
+              <h3>Implications diagnostiques et pronostiques</h3>
+              <ul class="fl">
+                <li>La <mark class="k-tech">TDM et l’échographie</mark> aident à évaluer les caractéristiques de l’épanchement.</li>
+                <li>La <mark class="k-tech">biopsie pleurale</mark> peut confirmer l’infiltration amyloïde.</li>
+                <li>Les épanchements pleuraux persistants au cours de l’amylose AL sont associés à un <mark class="k-grave">mauvais pronostic</mark> en l’absence de traitement.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <!-- 4 -->
+        <section class="fsec" id="conclusion" style="--c: var(--plum)">
+          <h2 class="fsec-title"><span class="fnum">4</span>Conclusion</h2>
+          <div class="fcard">
+            <p class="amy-p">L’amylose thoracique présente des aspects radiologiques variés pouvant <mark class="k-ddx">simuler d’autres pathologies pulmonaires</mark>. La connaissance de ces caractéristiques clés est indispensable pour le radiologue afin de permettre un <mark class="k-sign">diagnostic précoce</mark> et une prise en charge adaptée, évitant ainsi des <mark class="k-grave">interventions chirurgicales inutiles</mark> et une aggravation des lésions d’organes.</p>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Image agrandie">
+    <button class="modal-close" aria-label="Fermer">&times;</button>
+    <div class="lb-wrap"><img src="" alt=""></div>
+    <p class="lightbox-cap"></p>
+  </dialog>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="../index.html" class="brand">
+          <img src="../assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+          <span class="brand-name">Radiologic<br>Hub</span>
+        </a>
+        <p class="footer-tagline">Outils, ressources et formation pour les radiologues et les résidents.</p>
+      </div>
+      <nav aria-label="Liens de pied de page">
+        <div class="footer-col">
+          <p class="footer-titre">Au quotidien</p>
+          <a href="../comptes-rendus.html">Comptes rendus</a>
+          <a href="../suivi-oncologique.html">Suivi oncologique</a>
+          <a href="../fiches-rapides.html">Fiches rapides</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Apprendre</p>
+          <a href="../radioanatomie/index.html">Radioanatomie</a>
+          <a href="../cas/index.html">Cas cliniques</a>
+          <a href="../index.html#cas-du-jour">Cas du jour</a>
+          <a href="../bibliotheque.html">Bibliothèque</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Réseau</p>
+          <a href="../communaute.html">Communauté</a>
+          <a href="../remplacements.html">Remplacements</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Masterclass</p>
+          <a href="../index.html#masterclass">Programme</a>
+          <a href="../index.html#tarifs">Tarifs</a>
+          <a href="../index.html#inscription">S'inscrire à une masterclass</a>
+        </div>
+      </nav>
+      <p class="copyright"><span>© <span id="year"></span> RadiologicHub · Outils, ressources et formation en radiologie</span><span class="copyright-liens"><a href="../mentions-legales.html">Mentions légales</a><a href="../index.html#inscription">Contact</a></span></p>
+    </div>
+  </footer>
+
+  <script src="../navigation.js?v=20261022235000"></script>
+
+  <script src="../fiche.js?v=20261022235000"></script>
+</body>
+</html>

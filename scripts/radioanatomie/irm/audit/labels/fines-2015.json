@@ -1,0 +1,137 @@
+{
+ "cle": "fines-2015",
+ "nom_fr": "Gyrus temporal moyen droit",
+ "nom_en": "ctx-rh-middletemporal",
+ "cote": "droit",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-middletemporal",
+  "identifiant": 2015
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   52.0,
+   -5.3,
+   -27.9
+  ],
+  "mni_icbm2009c_mm": [
+   60.099998474121094,
+   -2.9000000953674316,
+   -33.70000076293945
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    52.0,
+    -5.3,
+    -8.3
+   ],
+   "mni_icbm2009c_mm": [
+    61.70000076293945,
+    -5.300000190734863,
+    -13.300000190734863
+   ],
+   "coupe": "z = -8.3 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    52.0,
+    -35.4,
+    -27.9
+   ],
+   "mni_icbm2009c_mm": [
+    58.400001525878906,
+    -36.400001525878906,
+    -32.29999923706055
+   ],
+   "coupe": "y = -35.4 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    54.1,
+    -5.3,
+    -27.9
+   ],
+   "mni_icbm2009c_mm": [
+    62.400001525878906,
+    -3.200000047683716,
+    -33.70000076293945
+   ],
+   "coupe": "x = +54.1 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 28,
+     "nom": "Middle Temporal (R)"
+    }
+   ],
+   "mesure": 0.659,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.736,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.804,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.713,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.72"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 16,
+     "nom": "Right Middle Temporal Gyrus, anterior division"
+    },
+    {
+     "id": 22,
+     "nom": "Right Middle Temporal Gyrus, posterior division"
+    },
+    {
+     "id": 24,
+     "nom": "Right Middle Temporal Gyrus, temporooccipital part"
+    },
+    {
+     "id": 26,
+     "nom": "Right Temporal Pole"
+    }
+   ],
+   "mesure": 0.833,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.9,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.952,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.746,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

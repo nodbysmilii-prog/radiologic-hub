@@ -18,6 +18,9 @@
    permanentes, hauteur de leurs ancres, côté des ancres, vue de départ,
    texte d'accessibilité ; par défaut ceux des ischio-jambiers. Coude :
    ligaments, capsule et bourses (« articulaire »), filtre par loge.
+   Réglages facultatifs : « couleurs » (id → couleur de la structure ; ses
+   tendons en version éclaircie), « noms » (id → texte des étiquettes) ;
+   api.renommer() change les étiquettes (bascule de langue d'une page).
    ========================================================= */
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -101,7 +104,13 @@ export async function creerVisionneuse(conteneur, { base, manifeste, ids, onProg
       objet.traverse(o => { if (o.isMesh) maillages.push(o); });
       maillages.forEach(o => {
         o.userData.materiau = (o.material && o.material.name) || '';
-        const style = STYLES[o.userData.materiau] || STYLES['rh-muscle'];
+        let style = STYLES[o.userData.materiau] || STYLES['rh-muscle'];
+        const teinte = R.couleurs && R.couleurs[m.id];
+        if (teinte != null && o.userData.materiau !== 'rh-os' && o.userData.materiau !== 'rh-cartilage') {
+          const c = new THREE.Color(teinte);
+          if (o.userData.materiau === 'rh-tendon') c.lerp(new THREE.Color(0xffffff), 0.45);
+          style = { ...style, color: c.getHex() };
+        }
         o.material = new THREE.MeshStandardMaterial({ ...style, metalness: 0, side: THREE.FrontSide, depthWrite: !style.transparent });
         o.material.userData.base = { opacity: style.opacity ?? 1, transparent: !!style.transparent, color: style.color };
         o.userData.structure = m.id;
@@ -161,6 +170,7 @@ export async function creerVisionneuse(conteneur, { base, manifeste, ids, onProg
     const e = document.createElement('button');
     e.type = 'button';
     e.className = `v3d-etiquette v3d-${s.categorie}`;
+    if (R.noms && R.noms[s.id]) s.nom = R.noms[s.id];
     e.textContent = s.nom;
     e.dataset.structure = s.id;
     e.addEventListener('click', ev => { ev.stopPropagation(); api.selectionner(api.selection === s.id ? null : s.id); });
@@ -346,6 +356,13 @@ export async function creerVisionneuse(conteneur, { base, manifeste, ids, onProg
         mesh.material.needsUpdate = true;
         mesh.children.forEach(c => { if (c.userData.section) c.visible = coupeActive; });
       }));
+      demander();
+    },
+    /* Nouveaux textes d'étiquettes (id → nom) et nouveau texte d'accessibilité du modèle */
+    renommer(noms, libelle) {
+      structures.forEach(s => { if (noms[s.id]) { s.nom = noms[s.id]; s.etiquette.textContent = s.nom; } });
+      api.structures.forEach(s => { if (noms[s.id]) s.nom = noms[s.id]; });
+      if (libelle) renderer.domElement.setAttribute('aria-label', libelle);
       demander();
     },
     vue,

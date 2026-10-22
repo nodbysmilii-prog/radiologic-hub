@@ -1,0 +1,129 @@
+{
+ "cle": "fines-1020",
+ "nom_fr": "Gyrus frontal inférieur gauche, partie triangulaire",
+ "nom_en": "ctx-lh-parstriangularis",
+ "cote": "gauche",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-parstriangularis",
+  "identifiant": 1020
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -53.0,
+   21.3,
+   2.2
+  ],
+  "mni_icbm2009c_mm": [
+   -58.79999923706055,
+   23.799999237060547,
+   1.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -53.0,
+    21.3,
+    4.3
+   ],
+   "mni_icbm2009c_mm": [
+    -58.900001525878906,
+    23.700000762939453,
+    3.5999999046325684
+   ],
+   "coupe": "z = +4.3 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -53.0,
+    24.8,
+    2.2
+   ],
+   "mni_icbm2009c_mm": [
+    -59.20000076293945,
+    27.399999618530273,
+    1.7000000476837158
+   ],
+   "coupe": "y = +24.8 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -48.1,
+    21.3,
+    2.2
+   ],
+   "mni_icbm2009c_mm": [
+    -54.70000076293945,
+    23.899999618530273,
+    1.2999999523162842
+   ],
+   "coupe": "x = -48.1 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 73,
+     "nom": "Pars Triangularis (L)"
+    }
+   ],
+   "mesure": 0.648,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.72,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.685,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.715,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.76"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 9,
+     "nom": "Left Frontal Operculum Cortex"
+    },
+    {
+     "id": 81,
+     "nom": "Left Inferior Frontal Gyrus, pars triangularis"
+    }
+   ],
+   "mesure": 0.649,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.424,
+     "verdict": "partiel"
+    },
+    "coronal": {
+     "mesure": 0.958,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.767,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

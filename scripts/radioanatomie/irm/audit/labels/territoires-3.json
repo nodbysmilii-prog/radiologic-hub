@@ -1,0 +1,88 @@
+{
+ "cle": "territoires-3",
+ "nom_fr": "Lenticulo-striées médiales et artère de Heubner (ACA) (gauche)",
+ "nom_en": "LSM",
+ "cote": "gauche",
+ "categorie": "Territoires vasculaires",
+ "statut_module": "transporté",
+ "source": {
+  "origine": "Atlas des territoires (Liu 2023, redécoupé)",
+  "nom_outil": "LSM",
+  "identifiant": 3
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -11.0,
+   15.0,
+   9.2
+  ],
+  "mni_icbm2009c_mm": [
+   -13.100000381469727,
+   15.199999809265137,
+   7.400000095367432
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -11.0,
+    15.0,
+    -4.8
+   ],
+   "mni_icbm2009c_mm": [
+    -12.300000190734863,
+    13.600000381469727,
+    -7.0
+   ],
+   "coupe": "z = -4.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -11.0,
+    7.3,
+    9.2
+   ],
+   "mni_icbm2009c_mm": [
+    -13.899999618530273,
+    7.599999904632568,
+    6.800000190734863
+   ],
+   "coupe": "y = +7.3 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -10.3,
+    15.0,
+    9.2
+   ],
+   "mni_icbm2009c_mm": [
+    -12.399999618530273,
+    15.199999809265137,
+    7.300000190734863
+   ],
+   "coupe": "x = -10.3 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "Liu et al. 2023 (territoires artériels, CC BY-SA 4.0)",
+   "type": "transporté",
+   "labels": {
+    "ids": [
+     3
+    ],
+    "noms": [
+     "Lenticulo-striées médiales et artère de Heubner (ACA) (gauche)"
+    ]
+   },
+   "verdict": "redécoupé par règles géométriques (voir le rapport)"
+  }
+ ],
+ "remarques": [
+  "Territoire de l'atlas de Liu 2023 transporté sur le sujet, puis redécoupé par des règles géométriques (vidéo de référence de l'auteur) : à contrôler avec Tatu 1998.",
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Atlas des territoires (Liu 2023, redécoupé)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

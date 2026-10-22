@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-ST_FO_right",
+ "nom_fr": "Fibres striato-fronto-orbitaires droites",
+ "nom_en": "ST_FO_right",
+ "cote": "droit",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "ST_FO_right",
+  "identifiant": "ST_FO_right"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   17.7,
+   26.2,
+   -6.2
+  ],
+  "mni_icbm2009c_mm": [
+   18.299999237060547,
+   26.0,
+   -7.699999809265137
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    17.7,
+    26.2,
+    -7.6
+   ],
+   "mni_icbm2009c_mm": [
+    18.299999237060547,
+    25.899999618530273,
+    -9.199999809265137
+   ],
+   "coupe": "z = -7.6 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    17.7,
+    26.2,
+    -6.2
+   ],
+   "mni_icbm2009c_mm": [
+    18.299999237060547,
+    26.0,
+    -7.699999809265137
+   ],
+   "coupe": "y = +26.2 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    17.0,
+    26.2,
+    -6.2
+   ],
+   "mni_icbm2009c_mm": [
+    17.600000381469727,
+    25.899999618530273,
+    -7.800000190734863
+   ],
+   "coupe": "x = +17.0 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

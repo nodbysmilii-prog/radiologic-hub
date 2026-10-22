@@ -1,0 +1,99 @@
+{
+ "cle": "fines-625",
+ "nom_fr": "Lobule IX (tonsille), hémisphère cérébelleux droit",
+ "nom_en": "Cbm_Right_IX",
+ "cote": "droit",
+ "categorie": "Cervelet",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "CerebNet",
+  "nom_outil": "Cbm_Right_IX",
+  "identifiant": 625
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   1.6,
+   -53.6,
+   -49.6
+  ],
+  "mni_icbm2009c_mm": [
+   4.0,
+   -57.5,
+   -58.20000076293945
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    1.6,
+    -53.6,
+    -43.3
+   ],
+   "mni_icbm2009c_mm": [
+    3.4000000953674316,
+    -58.099998474121094,
+    -50.599998474121094
+   ],
+   "coupe": "z = -43.3 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    1.6,
+    -50.8,
+    -49.6
+   ],
+   "mni_icbm2009c_mm": [
+    3.799999952316284,
+    -54.400001525878906,
+    -58.099998474121094
+   ],
+   "coupe": "y = -50.8 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    5.8,
+    -53.6,
+    -49.6
+   ],
+   "mni_icbm2009c_mm": [
+    8.399999618530273,
+    -56.5,
+    -58.599998474121094
+   ],
+   "coupe": "x = +5.8 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 46,
+     "nom": "Cerebellum Gray Matter (R)"
+    }
+   ],
+   "mesure": 0.753,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.867,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.786,
+     "verdict": "partiel"
+    },
+    "sagittal": {
+     "mesure": 0.775,
+     "verdict": "partiel"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.83"
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "moyenne"
+}

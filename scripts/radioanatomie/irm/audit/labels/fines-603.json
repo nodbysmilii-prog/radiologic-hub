@@ -1,0 +1,107 @@
+{
+ "cle": "fines-603",
+ "nom_fr": "Lobule V (lobe antérieur), hémisphère cérébelleux gauche",
+ "nom_en": "Cbm_Left_V",
+ "cote": "gauche",
+ "categorie": "Cervelet",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "CerebNet",
+  "nom_outil": "Cbm_Left_V",
+  "identifiant": 603
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -6.8,
+   -58.5,
+   -9.0
+  ],
+  "mni_icbm2009c_mm": [
+   -8.300000190734863,
+   -57.900001525878906,
+   -12.199999809265137
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -6.8,
+    -58.5,
+    -18.1
+   ],
+   "mni_icbm2009c_mm": [
+    -8.600000381469727,
+    -58.79999923706055,
+    -22.399999618530273
+   ],
+   "coupe": "z = -18.1 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -6.8,
+    -58.5,
+    -9.0
+   ],
+   "mni_icbm2009c_mm": [
+    -8.300000190734863,
+    -57.900001525878906,
+    -12.199999809265137
+   ],
+   "coupe": "y = -58.5 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -1.2,
+    -58.5,
+    -9.0
+   ],
+   "mni_icbm2009c_mm": [
+    -2.0,
+    -58.20000076293945,
+    -12.5
+   ],
+   "coupe": "x = -1.2 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 97,
+     "nom": "Cerebellum Gray Matter (L)"
+    },
+    {
+     "id": 101,
+     "nom": "Vermal lobules I-V (L)"
+    },
+    {
+     "id": 50,
+     "nom": "Vermal lobules I-V (R)"
+    }
+   ],
+   "mesure": 0.91,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.926,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.912,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.753,
+     "verdict": "partiel"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.83"
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

@@ -1,0 +1,129 @@
+{
+ "cle": "fines-1013",
+ "nom_fr": "Gyrus lingual gauche",
+ "nom_en": "ctx-lh-lingual",
+ "cote": "gauche",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-lh-lingual",
+  "identifiant": 1013
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -12.4,
+   -62.7,
+   -6.9
+  ],
+  "mni_icbm2009c_mm": [
+   -16.5,
+   -61.599998474121094,
+   -10.899999618530273
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -12.4,
+    -62.7,
+    -3.4
+   ],
+   "mni_icbm2009c_mm": [
+    -16.399999618530273,
+    -61.29999923706055,
+    -6.699999809265137
+   ],
+   "coupe": "z = -3.4 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -12.4,
+    -77.4,
+    -6.9
+   ],
+   "mni_icbm2009c_mm": [
+    -17.5,
+    -79.30000305175781,
+    -12.300000190734863
+   ],
+   "coupe": "y = -77.4 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -7.5,
+    -62.7,
+    -6.9
+   ],
+   "mni_icbm2009c_mm": [
+    -9.5,
+    -61.900001525878906,
+    -9.5
+   ],
+   "coupe": "x = -7.5 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 63,
+     "nom": "Lingual (L)"
+    }
+   ],
+   "mesure": 0.667,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.715,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.675,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.745,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.75"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 47,
+     "nom": "Left Intracalcarine Cortex"
+    },
+    {
+     "id": 71,
+     "nom": "Left Lingual Gyrus"
+    }
+   ],
+   "mesure": 0.737,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.672,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.538,
+     "verdict": "partiel"
+    },
+    "sagittal": {
+     "mesure": 0.839,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

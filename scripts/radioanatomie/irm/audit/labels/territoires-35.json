@@ -1,0 +1,88 @@
+{
+ "cle": "territoires-35",
+ "nom_fr": "Territoire des branches de l'artère vertébrale et de l'artère spinale antérieure (gauche)",
+ "nom_en": "VERT",
+ "cote": "gauche",
+ "categorie": "Territoires vasculaires",
+ "statut_module": "transporté",
+ "source": {
+  "origine": "Atlas des territoires (Liu 2023, redécoupé)",
+  "nom_outil": "VERT",
+  "identifiant": 35
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -2.6,
+   -34.7,
+   -48.9
+  ],
+  "mni_icbm2009c_mm": [
+   -3.299999952316284,
+   -37.70000076293945,
+   -56.20000076293945
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -2.6,
+    -34.7,
+    -40.5
+   ],
+   "mni_icbm2009c_mm": [
+    -3.0999999046325684,
+    -36.79999923706055,
+    -46.599998474121094
+   ],
+   "coupe": "z = -40.5 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -2.6,
+    -36.8,
+    -48.9
+   ],
+   "mni_icbm2009c_mm": [
+    -3.200000047683716,
+    -40.0,
+    -56.29999923706055
+   ],
+   "coupe": "y = -36.8 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -1.9,
+    -34.7,
+    -48.9
+   ],
+   "mni_icbm2009c_mm": [
+    -2.5999999046325684,
+    -37.70000076293945,
+    -56.20000076293945
+   ],
+   "coupe": "x = -1.9 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "Liu et al. 2023 (territoires artériels, CC BY-SA 4.0)",
+   "type": "transporté",
+   "labels": {
+    "ids": [
+     35
+    ],
+    "noms": [
+     "Territoire des branches de l'artère vertébrale et de l'artère spinale antérieure (gauche)"
+    ]
+   },
+   "verdict": "redécoupé par règles géométriques (voir le rapport)"
+  }
+ ],
+ "remarques": [
+  "Territoire de l'atlas de Liu 2023 transporté sur le sujet, puis redécoupé par des règles géométriques (vidéo de référence de l'auteur) : à contrôler avec Tatu 1998.",
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Atlas des territoires (Liu 2023, redécoupé)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

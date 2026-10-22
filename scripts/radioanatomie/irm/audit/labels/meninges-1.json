@@ -1,0 +1,73 @@
+{
+ "cle": "meninges-1",
+ "nom_fr": "Faux du cerveau",
+ "nom_en": "Falx cerebri",
+ "cote": "médian",
+ "categorie": "Méninges",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (limites FastSurfer)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -2.6,
+   -47.3,
+   61.0
+  ],
+  "mni_icbm2009c_mm": [
+   -0.800000011920929,
+   -49.5,
+   66.80000305175781
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -2.6,
+    -47.3,
+    33.0
+   ],
+   "mni_icbm2009c_mm": [
+    -3.299999952316284,
+    -51.400001525878906,
+    36.0
+   ],
+   "coupe": "z = +33.0 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -2.6,
+    38.8,
+    61.0
+   ],
+   "mni_icbm2009c_mm": [
+    -3.4000000953674316,
+    38.900001525878906,
+    66.5999984741211
+   ],
+   "coupe": "y = +38.8 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    0.2,
+    -47.3,
+    61.0
+   ],
+   "mni_icbm2009c_mm": [
+    1.899999976158142,
+    -50.599998474121094,
+    66.30000305175781
+   ],
+   "coupe": "x = +0.2 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Règle (limites FastSurfer)."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

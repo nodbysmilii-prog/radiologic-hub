@@ -1,0 +1,129 @@
+{
+ "cle": "fines-2024",
+ "nom_fr": "Gyrus précentral droit",
+ "nom_en": "ctx-rh-precentral",
+ "cote": "droit",
+ "categorie": "Gyri",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "FastSurfer (DKT)",
+  "nom_outil": "ctx-rh-precentral",
+  "identifiant": 2024
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   31.7,
+   -16.5,
+   66.6
+  ],
+  "mni_icbm2009c_mm": [
+   32.099998474121094,
+   -17.700000762939453,
+   73.9000015258789
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    31.7,
+    -16.5,
+    58.2
+   ],
+   "mni_icbm2009c_mm": [
+    31.299999237060547,
+    -14.699999809265137,
+    67.5999984741211
+   ],
+   "coupe": "z = +58.2 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    31.7,
+    -12.3,
+    66.6
+   ],
+   "mni_icbm2009c_mm": [
+    31.600000381469727,
+    -13.399999618530273,
+    74.0999984741211
+   ],
+   "coupe": "y = -12.3 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    41.5,
+    -16.5,
+    66.6
+   ],
+   "mni_icbm2009c_mm": [
+    42.900001525878906,
+    -16.600000381469727,
+    73.80000305175781
+   ],
+   "coupe": "x = +41.5 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "égal",
+   "labels": [
+    {
+     "id": 35,
+     "nom": "Precentral (R)"
+    }
+   ],
+   "mesure": 0.72,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.749,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.733,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.707,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.84"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "cortex HO",
+   "labels": [
+    {
+     "id": 14,
+     "nom": "Right Central Opercular Cortex"
+    },
+    {
+     "id": 84,
+     "nom": "Right Precentral Gyrus"
+    }
+   ],
+   "mesure": 0.926,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.985,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.998,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.886,
+     "verdict": "concordant"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "élevée"
+}

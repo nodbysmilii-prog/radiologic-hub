@@ -1,0 +1,201 @@
+{
+ "cle": "lobes-13",
+ "nom_fr": "Lobe temporal droit",
+ "nom_en": "Temporal lobe",
+ "cote": "droit",
+ "categorie": "Régions",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (régions DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   43.6,
+   -43.8,
+   -2.7
+  ],
+  "mni_icbm2009c_mm": [
+   48.70000076293945,
+   -42.79999923706055,
+   -6.400000095367432
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    43.6,
+    -43.8,
+    -11.8
+   ],
+   "mni_icbm2009c_mm": [
+    50.099998474121094,
+    -42.29999923706055,
+    -17.799999237060547
+   ],
+   "coupe": "z = -11.8 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    43.6,
+    -39.6,
+    -2.7
+   ],
+   "mni_icbm2009c_mm": [
+    48.900001525878906,
+    -38.099998474121094,
+    -6.599999904632568
+   ],
+   "coupe": "y = -39.6 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    43.6,
+    -43.8,
+    -2.7
+   ],
+   "mni_icbm2009c_mm": [
+    48.70000076293945,
+    -42.79999923706055,
+    -6.400000095367432
+   ],
+   "coupe": "x = +43.6 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "groupe",
+   "labels": [
+    {
+     "id": 36,
+     "nom": "Entorhinal (R)"
+    },
+    {
+     "id": 24,
+     "nom": "Fusiform (R)"
+    },
+    {
+     "id": 3,
+     "nom": "Inferior temporal (R)"
+    },
+    {
+     "id": 28,
+     "nom": "Middle Temporal (R)"
+    },
+    {
+     "id": 18,
+     "nom": "Parahippocampal (R)"
+    },
+    {
+     "id": 45,
+     "nom": "Superior Temporal (R)"
+    },
+    {
+     "id": 14,
+     "nom": "Transverse Temporal (R)"
+    }
+   ],
+   "mesure": 0.725,
+   "verdict": "concordant",
+   "plans": {
+    "axial": {
+     "mesure": 0.755,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.756,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.745,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.72"
+  },
+  {
+   "atlas": "Harvard-Oxford (contrôle interne)",
+   "type": "lobe HO",
+   "labels": [
+    {
+     "id": 16,
+     "nom": "Right Heschl's Gyrus (includes H1 and H2)"
+    },
+    {
+     "id": 18,
+     "nom": "Right Inferior Temporal Gyrus, anterior division"
+    },
+    {
+     "id": 20,
+     "nom": "Right Inferior Temporal Gyrus, posterior division"
+    },
+    {
+     "id": 22,
+     "nom": "Right Middle Temporal Gyrus, anterior division"
+    },
+    {
+     "id": 24,
+     "nom": "Right Middle Temporal Gyrus, posterior division"
+    },
+    {
+     "id": 28,
+     "nom": "Right Parahippocampal Gyrus, anterior division"
+    },
+    {
+     "id": 30,
+     "nom": "Right Parahippocampal Gyrus, posterior division"
+    },
+    {
+     "id": 68,
+     "nom": "Right Planum Polare"
+    },
+    {
+     "id": 70,
+     "nom": "Right Planum Temporale"
+    },
+    {
+     "id": 74,
+     "nom": "Right Superior Temporal Gyrus, anterior division"
+    },
+    {
+     "id": 76,
+     "nom": "Right Superior Temporal Gyrus, posterior division"
+    },
+    {
+     "id": 88,
+     "nom": "Right Temporal Fusiform Cortex, anterior division"
+    },
+    {
+     "id": 90,
+     "nom": "Right Temporal Fusiform Cortex, posterior division"
+    },
+    {
+     "id": 92,
+     "nom": "Right Temporal Pole"
+    }
+   ],
+   "mesure": 0.663,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.47,
+     "verdict": "discordant"
+    },
+    "coronal": {
+     "mesure": 0.218,
+     "verdict": "discordant"
+    },
+    "sagittal": {
+     "mesure": 0.67,
+     "verdict": "partiel"
+    }
+   }
+  }
+ ],
+ "remarques": [],
+ "controle_lateralite": "conforme",
+ "confiance": "moyenne"
+}

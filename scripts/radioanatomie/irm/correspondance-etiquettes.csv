@@ -1,0 +1,487 @@
+﻿source;id;nom_outil;categorie;nom_fr;cote;statut;remarque
+FastSurfer (aseg);2;Left-Cerebral-White-Matter;Substance blanche;Substance blanche cérébrale gauche;gauche;automatique;Ensemble de la substance blanche de l'hémisphère (les faisceaux ne sont pas distingués par l'outil).
+FastSurfer (aseg);41;Right-Cerebral-White-Matter;Substance blanche;Substance blanche cérébrale droite;droit;automatique;Ensemble de la substance blanche de l'hémisphère (les faisceaux ne sont pas distingués par l'outil).
+FastSurfer (aseg);4;Left-Lateral-Ventricle;Ventricules et citernes;Ventricule latéral gauche;gauche;automatique;
+FastSurfer (aseg);43;Right-Lateral-Ventricle;Ventricules et citernes;Ventricule latéral droit;droit;automatique;
+FastSurfer (aseg);5;Left-Inf-Lat-Vent;Ventricules et citernes;Corne temporale du ventricule latéral gauche;gauche;automatique;
+FastSurfer (aseg);44;Right-Inf-Lat-Vent;Ventricules et citernes;Corne temporale du ventricule latéral droit;droit;automatique;
+FastSurfer (aseg);31;Left-choroid-plexus;Ventricules et citernes;Plexus choroïde du ventricule latéral gauche;gauche;automatique;
+FastSurfer (aseg);63;Right-choroid-plexus;Ventricules et citernes;Plexus choroïde du ventricule latéral droit;droit;automatique;
+FastSurfer (aseg);7;Left-Cerebellum-White-Matter;Cervelet;Corps médullaire de l'hémisphère cérébelleux gauche;gauche;automatique;Substance blanche du cervelet (noyaux du cervelet non distingués).
+FastSurfer (aseg);46;Right-Cerebellum-White-Matter;Cervelet;Corps médullaire de l'hémisphère cérébelleux droit;droit;automatique;Substance blanche du cervelet (noyaux du cervelet non distingués).
+FastSurfer (aseg);8;Left-Cerebellum-Cortex;Cervelet;Cortex de l'hémisphère cérébelleux gauche;gauche;automatique;Subdivisé en lobules par CerebNet.
+FastSurfer (aseg);47;Right-Cerebellum-Cortex;Cervelet;Cortex de l'hémisphère cérébelleux droit;droit;automatique;Subdivisé en lobules par CerebNet.
+FastSurfer (aseg);10;Left-Thalamus;Noyaux gris centraux et structures apparentées;Thalamus gauche;gauche;automatique;
+FastSurfer (aseg);49;Right-Thalamus;Noyaux gris centraux et structures apparentées;Thalamus droit;droit;automatique;
+FastSurfer (aseg);11;Left-Caudate;Noyaux gris centraux et structures apparentées;Noyau caudé gauche;gauche;automatique;
+FastSurfer (aseg);50;Right-Caudate;Noyaux gris centraux et structures apparentées;Noyau caudé droit;droit;automatique;
+FastSurfer (aseg);12;Left-Putamen;Noyaux gris centraux et structures apparentées;Putamen gauche;gauche;automatique;
+FastSurfer (aseg);51;Right-Putamen;Noyaux gris centraux et structures apparentées;Putamen droit;droit;automatique;
+FastSurfer (aseg);13;Left-Pallidum;Noyaux gris centraux et structures apparentées;Globus pallidus gauche;gauche;automatique;
+FastSurfer (aseg);52;Right-Pallidum;Noyaux gris centraux et structures apparentées;Globus pallidus droit;droit;automatique;
+FastSurfer (aseg);26;Left-Accumbens-area;Noyaux gris centraux et structures apparentées;Noyau accumbens gauche;gauche;automatique;
+FastSurfer (aseg);58;Right-Accumbens-area;Noyaux gris centraux et structures apparentées;Noyau accumbens droit;droit;automatique;
+FastSurfer (aseg);17;Left-Hippocampus;Système limbique;Hippocampe gauche;gauche;automatique;
+FastSurfer (aseg);53;Right-Hippocampus;Système limbique;Hippocampe droit;droit;automatique;
+FastSurfer (aseg);18;Left-Amygdala;Système limbique;Corps amygdaloïde (amygdale) gauche;gauche;automatique;
+FastSurfer (aseg);54;Right-Amygdala;Système limbique;Corps amygdaloïde (amygdale) droit;droit;automatique;
+FastSurfer (aseg);14;3rd-Ventricle;Ventricules et citernes;Troisième ventricule (V3);médian;automatique;
+FastSurfer (aseg);15;4th-Ventricle;Ventricules et citernes;Quatrième ventricule (V4);médian;automatique;
+FastSurfer (aseg);24;CSF;Ventricules et citernes;Liquide cérébrospinal des citernes de la base;médian;automatique;Étiquette globale de l'outil (LCS autour du tronc cérébral et à la base) : à relire, les citernes nommées viendront des points manuels.
+FastSurfer (aseg);16;Brain-Stem;—;—;—;non publié;Tronc cérébral : non publié à la demande de l'auteur (« enlève tronc cérébral », 19/10/2026), remplacé par le mésencéphale, le pont et la moelle allongée (régions dérivées). Sert de base à ces trois régions après les corrections de l'auteur (corrections-auteur.json, retouches-auteur.json) : prolongements autour du V4 retirés, pédoncules cérébraux (diencéphale ventral de l'outil) inclus, retouches au pinceau.
+FastSurfer (aseg);28;Left-VentralDC;—;—;—;non publié;"Diencéphale ventral gauche : non publié à la demande de l'auteur (« ne jamais afficher « diencéphale » comme un contour », 19/10/2026) ; étiquette globale de l'outil (hypothalamus, noyau sous-thalamique, substance noire, noyau rouge) gardée dans les données : hypothalamus et corps mamillaires viennent de HypVINN ; sa partie mésencéphalique (pédoncules cérébraux) est rendue au tronc cérébral."
+FastSurfer (aseg);60;Right-VentralDC;—;—;—;non publié;Diencéphale ventral droit : non publié (voir la ligne 28).
+FastSurfer (aseg);77;WM-hypointensities;—;—;—;non publié;Hypo-intensités de la substance blanche : pas une structure anatomique, non publiée.
+FastSurfer (DKT);1002;ctx-lh-caudalanteriorcingulate;Système limbique;Gyrus cingulaire antérieur gauche, partie caudale;gauche;automatique;
+FastSurfer (DKT);2002;ctx-rh-caudalanteriorcingulate;Système limbique;Gyrus cingulaire antérieur droit, partie caudale;droit;automatique;
+FastSurfer (DKT);1003;ctx-lh-caudalmiddlefrontal;Gyri;Gyrus frontal moyen gauche, partie caudale;gauche;automatique;
+FastSurfer (DKT);2003;ctx-rh-caudalmiddlefrontal;Gyri;Gyrus frontal moyen droit, partie caudale;droit;automatique;
+FastSurfer (DKT);1005;ctx-lh-cuneus;Gyri;Cunéus gauche;gauche;automatique;
+FastSurfer (DKT);2005;ctx-rh-cuneus;Gyri;Cunéus droit;droit;automatique;
+FastSurfer (DKT);1006;ctx-lh-entorhinal;Système limbique;Cortex entorhinal gauche;gauche;automatique;
+FastSurfer (DKT);2006;ctx-rh-entorhinal;Système limbique;Cortex entorhinal droit;droit;automatique;
+FastSurfer (DKT);1007;ctx-lh-fusiform;Gyri;Gyrus fusiforme gauche;gauche;automatique;Gyrus temporo-occipital latéral.
+FastSurfer (DKT);2007;ctx-rh-fusiform;Gyri;Gyrus fusiforme droit;droit;automatique;Gyrus temporo-occipital latéral.
+FastSurfer (DKT);1008;ctx-lh-inferiorparietal;Gyri;Lobule pariétal inférieur gauche (gyrus angulaire);gauche;automatique;Dans le protocole DKT, le gyrus supramarginal forme une région à part.
+FastSurfer (DKT);2008;ctx-rh-inferiorparietal;Gyri;Lobule pariétal inférieur droit (gyrus angulaire);droit;automatique;Dans le protocole DKT, le gyrus supramarginal forme une région à part.
+FastSurfer (DKT);1009;ctx-lh-inferiortemporal;Gyri;Gyrus temporal inférieur gauche;gauche;automatique;
+FastSurfer (DKT);2009;ctx-rh-inferiortemporal;Gyri;Gyrus temporal inférieur droit;droit;automatique;
+FastSurfer (DKT);1010;ctx-lh-isthmuscingulate;Système limbique;Isthme du gyrus cingulaire gauche;gauche;automatique;
+FastSurfer (DKT);2010;ctx-rh-isthmuscingulate;Système limbique;Isthme du gyrus cingulaire droit;droit;automatique;
+FastSurfer (DKT);1011;ctx-lh-lateraloccipital;Gyri;Gyri occipitaux latéraux gauches;gauche;automatique;
+FastSurfer (DKT);2011;ctx-rh-lateraloccipital;Gyri;Gyri occipitaux latéraux droits;droit;automatique;
+FastSurfer (DKT);1012;ctx-lh-lateralorbitofrontal;Gyri;Cortex orbitofrontal latéral gauche;gauche;automatique;"Gyri orbitaires latéraux. Corrigé par l'auteur : îlots sans parenchyme retirés entre les orbites (coupe z = −24,4 mm et au-dessous ; corrections-auteur.json)."
+FastSurfer (DKT);2012;ctx-rh-lateralorbitofrontal;Gyri;Cortex orbitofrontal latéral droit;droit;automatique;"Gyri orbitaires latéraux. Corrigé par l'auteur : îlots sans parenchyme retirés entre les orbites (coupe z = −24,4 mm et au-dessous ; corrections-auteur.json)."
+FastSurfer (DKT);1013;ctx-lh-lingual;Gyri;Gyrus lingual gauche;gauche;automatique;
+FastSurfer (DKT);2013;ctx-rh-lingual;Gyri;Gyrus lingual droit;droit;automatique;
+FastSurfer (DKT);1014;ctx-lh-medialorbitofrontal;Gyri;Cortex orbitofrontal médial gauche;gauche;automatique;"Gyrus droit (gyrus rectus) compris. Corrigé par l'auteur : îlots sans parenchyme retirés entre les orbites (coupe z = −24,4 mm et au-dessous ; corrections-auteur.json). FastSurfer n'a pas d'étiquette pour le bulbe et le tractus olfactifs (structures manuelles)."
+FastSurfer (DKT);2014;ctx-rh-medialorbitofrontal;Gyri;Cortex orbitofrontal médial droit;droit;automatique;"Gyrus droit (gyrus rectus) compris. Corrigé par l'auteur : îlots sans parenchyme retirés entre les orbites (coupe z = −24,4 mm et au-dessous ; corrections-auteur.json). FastSurfer n'a pas d'étiquette pour le bulbe et le tractus olfactifs (structures manuelles)."
+FastSurfer (DKT);1015;ctx-lh-middletemporal;Gyri;Gyrus temporal moyen gauche;gauche;automatique;
+FastSurfer (DKT);2015;ctx-rh-middletemporal;Gyri;Gyrus temporal moyen droit;droit;automatique;
+FastSurfer (DKT);1016;ctx-lh-parahippocampal;Système limbique;Gyrus parahippocampique gauche;gauche;automatique;
+FastSurfer (DKT);2016;ctx-rh-parahippocampal;Système limbique;Gyrus parahippocampique droit;droit;automatique;
+FastSurfer (DKT);1017;ctx-lh-paracentral;Gyri;Lobule paracentral gauche;gauche;automatique;
+FastSurfer (DKT);2017;ctx-rh-paracentral;Gyri;Lobule paracentral droit;droit;automatique;
+FastSurfer (DKT);1018;ctx-lh-parsopercularis;Gyri;Gyrus frontal inférieur gauche, partie operculaire;gauche;automatique;
+FastSurfer (DKT);2018;ctx-rh-parsopercularis;Gyri;Gyrus frontal inférieur droit, partie operculaire;droit;automatique;
+FastSurfer (DKT);1019;ctx-lh-parsorbitalis;Gyri;Gyrus frontal inférieur gauche, partie orbitaire;gauche;automatique;"Corrigé par l'auteur : îlots sans cortex retirés au-dessus des toits des orbites (coupe z = −19,5 mm et au-dessous ; corrections-auteur.json)."
+FastSurfer (DKT);2019;ctx-rh-parsorbitalis;Gyri;Gyrus frontal inférieur droit, partie orbitaire;droit;automatique;"Corrigé par l'auteur : îlots sans cortex retirés au-dessus des toits des orbites (coupe z = −19,5 mm et au-dessous ; corrections-auteur.json)."
+FastSurfer (DKT);1020;ctx-lh-parstriangularis;Gyri;Gyrus frontal inférieur gauche, partie triangulaire;gauche;automatique;
+FastSurfer (DKT);2020;ctx-rh-parstriangularis;Gyri;Gyrus frontal inférieur droit, partie triangulaire;droit;automatique;
+FastSurfer (DKT);1021;ctx-lh-pericalcarine;Gyri;Cortex péricalcarin gauche;gauche;automatique;Berges du sillon calcarin : cortex visuel primaire (V1).
+FastSurfer (DKT);2021;ctx-rh-pericalcarine;Gyri;Cortex péricalcarin droit;droit;automatique;Berges du sillon calcarin : cortex visuel primaire (V1).
+FastSurfer (DKT);1022;ctx-lh-postcentral;Gyri;Gyrus postcentral gauche;gauche;automatique;
+FastSurfer (DKT);2022;ctx-rh-postcentral;Gyri;Gyrus postcentral droit;droit;automatique;
+FastSurfer (DKT);1023;ctx-lh-posteriorcingulate;Système limbique;Gyrus cingulaire postérieur gauche;gauche;automatique;
+FastSurfer (DKT);2023;ctx-rh-posteriorcingulate;Système limbique;Gyrus cingulaire postérieur droit;droit;automatique;
+FastSurfer (DKT);1024;ctx-lh-precentral;Gyri;Gyrus précentral gauche;gauche;automatique;
+FastSurfer (DKT);2024;ctx-rh-precentral;Gyri;Gyrus précentral droit;droit;automatique;
+FastSurfer (DKT);1025;ctx-lh-precuneus;Gyri;Précunéus gauche;gauche;automatique;
+FastSurfer (DKT);2025;ctx-rh-precuneus;Gyri;Précunéus droit;droit;automatique;
+FastSurfer (DKT);1026;ctx-lh-rostralanteriorcingulate;Système limbique;Gyrus cingulaire antérieur gauche, partie rostrale;gauche;automatique;
+FastSurfer (DKT);2026;ctx-rh-rostralanteriorcingulate;Système limbique;Gyrus cingulaire antérieur droit, partie rostrale;droit;automatique;
+FastSurfer (DKT);1027;ctx-lh-rostralmiddlefrontal;Gyri;Gyrus frontal moyen gauche, partie rostrale;gauche;automatique;
+FastSurfer (DKT);2027;ctx-rh-rostralmiddlefrontal;Gyri;Gyrus frontal moyen droit, partie rostrale;droit;automatique;
+FastSurfer (DKT);1028;ctx-lh-superiorfrontal;Gyri;Gyrus frontal supérieur gauche;gauche;automatique;
+FastSurfer (DKT);2028;ctx-rh-superiorfrontal;Gyri;Gyrus frontal supérieur droit;droit;automatique;
+FastSurfer (DKT);1029;ctx-lh-superiorparietal;Gyri;Lobule pariétal supérieur gauche;gauche;automatique;
+FastSurfer (DKT);2029;ctx-rh-superiorparietal;Gyri;Lobule pariétal supérieur droit;droit;automatique;
+FastSurfer (DKT);1030;ctx-lh-superiortemporal;Gyri;Gyrus temporal supérieur gauche;gauche;automatique;
+FastSurfer (DKT);2030;ctx-rh-superiortemporal;Gyri;Gyrus temporal supérieur droit;droit;automatique;
+FastSurfer (DKT);1031;ctx-lh-supramarginal;Gyri;Gyrus supramarginal gauche;gauche;automatique;
+FastSurfer (DKT);2031;ctx-rh-supramarginal;Gyri;Gyrus supramarginal droit;droit;automatique;
+FastSurfer (DKT);1034;ctx-lh-transversetemporal;Gyri;Gyrus temporal transverse gauche (gyrus de Heschl);gauche;automatique;
+FastSurfer (DKT);2034;ctx-rh-transversetemporal;Gyri;Gyrus temporal transverse droit (gyrus de Heschl);droit;automatique;
+FastSurfer (DKT);1035;ctx-lh-insula;Gyri;Cortex insulaire gauche;gauche;automatique;
+FastSurfer (DKT);2035;ctx-rh-insula;Gyri;Cortex insulaire droit;droit;automatique;
+Règle (régions DKT);;;Régions;Lobe frontal gauche;gauche;dérivé;Regroupement : superiorfrontal, caudalmiddlefrontal, rostralmiddlefrontal, parsopercularis, parstriangularis, parsorbitalis, lateralorbitofrontal, medialorbitofrontal, precentral, paracentral. Substance blanche rattachée au cortex le plus proche, centre semi-ovale compris, capsules exclues. Lobule paracentral au lobe frontal, comme dans le protocole DKT (Klein et Tourville 2012).
+Règle (régions DKT);;;Régions;Lobe frontal droit;droit;dérivé;Regroupement : superiorfrontal, caudalmiddlefrontal, rostralmiddlefrontal, parsopercularis, parstriangularis, parsorbitalis, lateralorbitofrontal, medialorbitofrontal, precentral, paracentral. Substance blanche rattachée au cortex le plus proche, centre semi-ovale compris, capsules exclues. Lobule paracentral au lobe frontal, comme dans le protocole DKT (Klein et Tourville 2012).
+Règle (régions DKT);;;Régions;Lobe pariétal gauche;gauche;dérivé;Regroupement : postcentral, superiorparietal, inferiorparietal, supramarginal, precuneus. Substance blanche rattachée au cortex le plus proche, centre semi-ovale compris, capsules exclues.
+Règle (régions DKT);;;Régions;Lobe pariétal droit;droit;dérivé;Regroupement : postcentral, superiorparietal, inferiorparietal, supramarginal, precuneus. Substance blanche rattachée au cortex le plus proche, centre semi-ovale compris, capsules exclues.
+Règle (régions DKT);;;Régions;Lobe temporal gauche;gauche;dérivé;Regroupement : superiortemporal, middletemporal, inferiortemporal, transversetemporal, fusiform, entorhinal, parahippocampal. Substance blanche rattachée au cortex le plus proche, centre semi-ovale compris, capsules exclues. Gyrus parahippocampique et cortex entorhinal au lobe temporal (face médiale), comme dans le protocole DKT (Klein et Tourville 2012) et dans CerebrA et Harvard-Oxford (audit du 19/10/2026). Jonction temporo-occipitale (partie postérieure du gyrus fusiforme) : discordance entre CerebrA et Harvard-Oxford, voir le rapport d'audit.
+Règle (régions DKT);;;Régions;Lobe temporal droit;droit;dérivé;Regroupement : superiortemporal, middletemporal, inferiortemporal, transversetemporal, fusiform, entorhinal, parahippocampal. Substance blanche rattachée au cortex le plus proche, centre semi-ovale compris, capsules exclues. Gyrus parahippocampique et cortex entorhinal au lobe temporal (face médiale), comme dans le protocole DKT (Klein et Tourville 2012) et dans CerebrA et Harvard-Oxford (audit du 19/10/2026). Jonction temporo-occipitale (partie postérieure du gyrus fusiforme) : discordance entre CerebrA et Harvard-Oxford, voir le rapport d'audit.
+Règle (régions DKT);;;Régions;Lobe occipital gauche;gauche;dérivé;Regroupement : lateraloccipital, lingual, cuneus, pericalcarine. Substance blanche rattachée au cortex le plus proche, centre semi-ovale compris, capsules exclues.
+Règle (régions DKT);;;Régions;Lobe occipital droit;droit;dérivé;Regroupement : lateraloccipital, lingual, cuneus, pericalcarine. Substance blanche rattachée au cortex le plus proche, centre semi-ovale compris, capsules exclues.
+Règle (régions DKT);;;Régions;Lobe de l'insula gauche;gauche;dérivé;Regroupement : insula. Substance blanche rattachée au cortex le plus proche, centre semi-ovale compris, capsules exclues.
+Règle (régions DKT);;;Régions;Lobe de l'insula droit;droit;dérivé;Regroupement : insula. Substance blanche rattachée au cortex le plus proche, centre semi-ovale compris, capsules exclues.
+Règle (régions DKT);;;Régions;Cortex cingulaire gauche;gauche;dérivé;Regroupement : rostralanteriorcingulate, caudalanteriorcingulate, posteriorcingulate, isthmuscingulate. Cortex seul. Groupe « cortex cingulaire » du protocole DKT (Klein et Tourville 2012), à la place du « lobe limbique » (audit du 19/10/2026 : 22 % de son cortex était temporal pour CerebrA). Cortex seul, sans substance blanche.
+Règle (régions DKT);;;Régions;Cortex cingulaire droit;droit;dérivé;Regroupement : rostralanteriorcingulate, caudalanteriorcingulate, posteriorcingulate, isthmuscingulate. Cortex seul. Groupe « cortex cingulaire » du protocole DKT (Klein et Tourville 2012), à la place du « lobe limbique » (audit du 19/10/2026 : 22 % de son cortex était temporal pour CerebrA). Cortex seul, sans substance blanche.
+Règle (limites DKT);;;Sillons;Sillon central gauche;gauche;dérivé;Interface precentral | postcentral.
+Règle (limites DKT);;;Sillons;Sillon central droit;droit;dérivé;Interface precentral | postcentral.
+Règle (limites DKT);;;Sillons;Sillon précentral gauche;gauche;dérivé;Interface precentral | caudalmiddlefrontal/superiorfrontal/parsopercularis.
+Règle (limites DKT);;;Sillons;Sillon précentral droit;droit;dérivé;Interface precentral | caudalmiddlefrontal/superiorfrontal/parsopercularis.
+Règle (limites DKT);;;Sillons;Sillon postcentral gauche;gauche;dérivé;Interface postcentral | supramarginal/superiorparietal.
+Règle (limites DKT);;;Sillons;Sillon postcentral droit;droit;dérivé;Interface postcentral | supramarginal/superiorparietal.
+Règle (limites DKT);;;Sillons;Sillon frontal supérieur gauche;gauche;dérivé;Interface superiorfrontal | caudalmiddlefrontal/rostralmiddlefrontal.
+Règle (limites DKT);;;Sillons;Sillon frontal supérieur droit;droit;dérivé;Interface superiorfrontal | caudalmiddlefrontal/rostralmiddlefrontal.
+Règle (limites DKT);;;Sillons;Sillon frontal inférieur gauche;gauche;dérivé;Interface caudalmiddlefrontal/rostralmiddlefrontal | parsopercularis/parstriangularis/parsorbitalis.
+Règle (limites DKT);;;Sillons;Sillon frontal inférieur droit;droit;dérivé;Interface caudalmiddlefrontal/rostralmiddlefrontal | parsopercularis/parstriangularis/parsorbitalis.
+Règle (limites DKT);;;Sillons;Sillon intrapariétal gauche;gauche;dérivé;Interface superiorparietal | inferiorparietal/supramarginal.
+Règle (limites DKT);;;Sillons;Sillon intrapariétal droit;droit;dérivé;Interface superiorparietal | inferiorparietal/supramarginal.
+Règle (limites DKT);;;Sillons;Sillon latéral gauche (fissure sylvienne);gauche;dérivé;"Interface superiortemporal/transversetemporal | parsopercularis/parstriangularis/precentral/postcentral/supramarginal. Partie operculaire de la fissure (rameau postérieur jusqu'à sa terminaison) ; la partie insulaire forme le sillon circulaire ; les rameaux antérieurs sont nommés à part. Le rameau postérieur monte vers l'arrière en restant presque parallèle au plan axial : en coupe axiale, il est coupé en biais (zone large et îlots)."
+Règle (limites DKT);;;Sillons;Sillon latéral droit (fissure sylvienne);droit;dérivé;"Interface superiortemporal/transversetemporal | parsopercularis/parstriangularis/precentral/postcentral/supramarginal. Partie operculaire de la fissure (rameau postérieur jusqu'à sa terminaison) ; la partie insulaire forme le sillon circulaire ; les rameaux antérieurs sont nommés à part. Le rameau postérieur monte vers l'arrière en restant presque parallèle au plan axial : en coupe axiale, il est coupé en biais (zone large et îlots)."
+Règle (limites DKT);;;Sillons;Sillon circulaire de l'insula gauche;gauche;dérivé;Interface insula | parsopercularis/parstriangularis/parsorbitalis/lateralorbitofrontal/precentral/postcentral/supramarginal/superiortemporal/transversetemporal.
+Règle (limites DKT);;;Sillons;Sillon circulaire de l'insula droit;droit;dérivé;Interface insula | parsopercularis/parstriangularis/parsorbitalis/lateralorbitofrontal/precentral/postcentral/supramarginal/superiortemporal/transversetemporal.
+Règle (limites DKT);;;Sillons;Sillon temporal supérieur gauche;gauche;dérivé;Interface superiortemporal | middletemporal.
+Règle (limites DKT);;;Sillons;Sillon temporal supérieur droit;droit;dérivé;Interface superiortemporal | middletemporal.
+Règle (limites DKT);;;Sillons;Sillon temporal inférieur gauche;gauche;dérivé;Interface middletemporal | inferiortemporal.
+Règle (limites DKT);;;Sillons;Sillon temporal inférieur droit;droit;dérivé;Interface middletemporal | inferiortemporal.
+Règle (limites DKT);;;Sillons;Sillon occipito-temporal gauche;gauche;dérivé;Interface inferiortemporal | fusiform.
+Règle (limites DKT);;;Sillons;Sillon occipito-temporal droit;droit;dérivé;Interface inferiortemporal | fusiform.
+Règle (limites DKT);;;Sillons;Sillon collatéral gauche;gauche;dérivé;Interface fusiform | parahippocampal/lingual/entorhinal.
+Règle (limites DKT);;;Sillons;Sillon collatéral droit;droit;dérivé;Interface fusiform | parahippocampal/lingual/entorhinal.
+Règle (limites DKT);;;Sillons;Sillon pariéto-occipital gauche;gauche;dérivé;Interface precuneus | cuneus. Partie médiale.
+Règle (limites DKT);;;Sillons;Sillon pariéto-occipital droit;droit;dérivé;Interface precuneus | cuneus. Partie médiale.
+Règle (limites DKT);;;Sillons;Sillon du cingulum gauche;gauche;dérivé;Interface superiorfrontal/paracentral | caudalanteriorcingulate/rostralanteriorcingulate/posteriorcingulate. Sillon cingulaire.
+Règle (limites DKT);;;Sillons;Sillon du cingulum droit;droit;dérivé;Interface superiorfrontal/paracentral | caudalanteriorcingulate/rostralanteriorcingulate/posteriorcingulate. Sillon cingulaire.
+Règle (limites DKT);;;Sillons;Sillon calcarin gauche;gauche;dérivé;Interface pericalcarine | pericalcarine. Règle propre : LCS bordé des deux côtés par le cortex péricalcarin. Horizontal dans sa partie moyenne : la coupe axiale qui passe à son niveau le montre à plat (large nappe de LCS, T1 sombre et T2 clair), puis il redevient une fente fine 1 à 2 mm au-dessus et au-dessous.
+Règle (limites DKT);;;Sillons;Sillon calcarin droit;droit;dérivé;Interface pericalcarine | pericalcarine. Règle propre : LCS bordé des deux côtés par le cortex péricalcarin. Horizontal dans sa partie moyenne : la coupe axiale qui passe à son niveau le montre à plat (large nappe de LCS, T1 sombre et T2 clair), puis il redevient une fente fine 1 à 2 mm au-dessus et au-dessous.
+Règle (limites DKT);;;Sillons;Sillon latéral gauche, rameau antérieur ascendant;gauche;dérivé;Interface parstriangularis | parsopercularis. Limite entre les parties triangulaire et operculaire du gyrus frontal inférieur (protocole DKT).
+Règle (limites DKT);;;Sillons;Sillon latéral droit, rameau antérieur ascendant;droit;dérivé;Interface parstriangularis | parsopercularis. Limite entre les parties triangulaire et operculaire du gyrus frontal inférieur (protocole DKT).
+Règle (limites DKT);;;Sillons;Sillon latéral gauche, rameau antérieur horizontal;gauche;dérivé;Interface parstriangularis | parsorbitalis. Limite entre les parties triangulaire et orbitaire du gyrus frontal inférieur (protocole DKT).
+Règle (limites DKT);;;Sillons;Sillon latéral droit, rameau antérieur horizontal;droit;dérivé;Interface parstriangularis | parsorbitalis. Limite entre les parties triangulaire et orbitaire du gyrus frontal inférieur (protocole DKT).
+CerebNet;601;Cbm_Left_I_IV;Cervelet;Lobules I à IV (lobe antérieur), hémisphère cérébelleux gauche;gauche;automatique;Comprend la partie vermienne.
+CerebNet;602;Cbm_Right_I_IV;Cervelet;Lobules I à IV (lobe antérieur), hémisphère cérébelleux droit;droit;automatique;Comprend la partie vermienne.
+CerebNet;603;Cbm_Left_V;Cervelet;Lobule V (lobe antérieur), hémisphère cérébelleux gauche;gauche;automatique;Comprend la partie vermienne.
+CerebNet;604;Cbm_Right_V;Cervelet;Lobule V (lobe antérieur), hémisphère cérébelleux droit;droit;automatique;Comprend la partie vermienne.
+CerebNet;605;Cbm_Left_VI;Cervelet;Lobule VI (lobule simple), hémisphère cérébelleux gauche;gauche;automatique;
+CerebNet;607;Cbm_Right_VI;Cervelet;Lobule VI (lobule simple), hémisphère cérébelleux droit;droit;automatique;
+CerebNet;608;Cbm_Left_CrusI;Cervelet;Crus I (lobule semi-lunaire supérieur), hémisphère cérébelleux gauche;gauche;automatique;
+CerebNet;610;Cbm_Right_CrusI;Cervelet;Crus I (lobule semi-lunaire supérieur), hémisphère cérébelleux droit;droit;automatique;
+CerebNet;611;Cbm_Left_CrusII;Cervelet;Crus II (lobule semi-lunaire inférieur), hémisphère cérébelleux gauche;gauche;automatique;
+CerebNet;613;Cbm_Right_CrusII;Cervelet;Crus II (lobule semi-lunaire inférieur), hémisphère cérébelleux droit;droit;automatique;
+CerebNet;614;Cbm_Left_VIIb;Cervelet;Lobule VIIB (lobule gracile), hémisphère cérébelleux gauche;gauche;automatique;
+CerebNet;616;Cbm_Right_VIIb;Cervelet;Lobule VIIB (lobule gracile), hémisphère cérébelleux droit;droit;automatique;
+CerebNet;617;Cbm_Left_VIIIa;Cervelet;Lobule VIIIA (lobule biventral, partie antérieure), hémisphère cérébelleux gauche;gauche;automatique;
+CerebNet;619;Cbm_Right_VIIIa;Cervelet;Lobule VIIIA (lobule biventral, partie antérieure), hémisphère cérébelleux droit;droit;automatique;
+CerebNet;620;Cbm_Left_VIIIb;Cervelet;Lobule VIIIB (lobule biventral, partie postérieure), hémisphère cérébelleux gauche;gauche;automatique;
+CerebNet;622;Cbm_Right_VIIIb;Cervelet;Lobule VIIIB (lobule biventral, partie postérieure), hémisphère cérébelleux droit;droit;automatique;
+CerebNet;623;Cbm_Left_IX;Cervelet;Lobule IX (tonsille), hémisphère cérébelleux gauche;gauche;automatique;
+CerebNet;625;Cbm_Right_IX;Cervelet;Lobule IX (tonsille), hémisphère cérébelleux droit;droit;automatique;
+CerebNet;626;Cbm_Left_X;Cervelet;Lobule X (flocculus) gauche;gauche;automatique;
+CerebNet;628;Cbm_Right_X;Cervelet;Lobule X (flocculus) droit;droit;automatique;
+CerebNet;606;Cbm_Vermis_VI;Cervelet;Vermis, lobule VI (déclive);médian;automatique;
+CerebNet;630;Cbm_Vermis_VII;Cervelet;Vermis, lobule VII (folium et tuber);médian;automatique;
+CerebNet;631;Cbm_Vermis_VIII;Cervelet;Vermis, lobule VIII (pyramide);médian;automatique;
+CerebNet;624;Cbm_Vermis_IX;Cervelet;Vermis, lobule IX (uvule);médian;automatique;
+CerebNet;627;Cbm_Vermis_X;Cervelet;Vermis, lobule X (nodule);médian;automatique;
+FastSurfer-CC;255;CC_Anterior;Substance blanche;Corps calleux, cinquième antérieur (genou);médian;automatique;Découpage en cinquièmes égaux (convention FreeSurfer) : le genou en occupe la plus grande part.
+FastSurfer-CC;254;CC_Mid_Anterior;Substance blanche;Corps calleux, deuxième cinquième (tronc, partie antérieure);médian;automatique;
+FastSurfer-CC;253;CC_Central;Substance blanche;Corps calleux, cinquième central (tronc);médian;automatique;
+FastSurfer-CC;252;CC_Mid_Posterior;Substance blanche;Corps calleux, quatrième cinquième (tronc postérieur et isthme);médian;automatique;
+FastSurfer-CC;251;CC_Posterior;Substance blanche;Corps calleux, cinquième postérieur (splénium);médian;automatique;
+FastSurfer-CC;250;Fornix;Système limbique;Fornix (corps et piliers);médian;automatique;Segmenté par FastSurfer-CC avec le corps calleux.
+HypVINN;962;L-N.opticus;Voies optiques;Nerf optique gauche (segment intracrânien);gauche;automatique;
+HypVINN;961;R-N.opticus;Voies optiques;Nerf optique droit (segment intracrânien);droit;automatique;
+HypVINN;965;L-Optic-tract;Voies optiques;Tractus optique gauche;gauche;automatique;
+HypVINN;964;R-Optic-tract;Voies optiques;Tractus optique droit;droit;automatique;
+HypVINN;968;L-Chiasma-Opticum;Voies optiques;Chiasma optique, moitié gauche;gauche;automatique;
+HypVINN;967;R-Chiasma-Opticum;Voies optiques;Chiasma optique, moitié droite;droit;automatique;
+HypVINN;966;L-C.mammilare;Système limbique;Corps mamillaire gauche;gauche;automatique;
+HypVINN;963;R-C.mammilare;Système limbique;Corps mamillaire droit;droit;automatique;
+HypVINN;972;L-Fornix;Système limbique;Fornix gauche, colonne;gauche;automatique;"Partie proche de l'hypothalamus (colonne) ; le corps et les piliers viennent de FastSurfer-CC."
+HypVINN;971;R-Fornix;Système limbique;Fornix droit, colonne;droit;automatique;"Partie proche de l'hypothalamus (colonne) ; le corps et les piliers viennent de FastSurfer-CC."
+HypVINN;979;L-Ant-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus antérieur gauche;gauche;automatique;
+HypVINN;983;R-Ant-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus antérieur droit;droit;automatique;
+HypVINN;977;L-Med-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus médial gauche;gauche;automatique;
+HypVINN;981;R-Med-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus médial droit;droit;automatique;
+HypVINN;978;L-Lat-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus latéral gauche;gauche;automatique;
+HypVINN;982;R-Lat-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus latéral droit;droit;automatique;
+HypVINN;980;L-Post-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus postérieur gauche;gauche;automatique;
+HypVINN;984;R-Post-Hypothalamus;Noyaux gris centraux et structures apparentées;Hypothalamus postérieur droit;droit;automatique;
+HypVINN;969;Ant-Commisure;Substance blanche;Commissure antérieure;médian;automatique;
+HypVINN;976;Tuberal-Region;Noyaux gris centraux et structures apparentées;Région tubérale de l'hypothalamus;médian;automatique;
+HypVINN;973;Epiphysis;Glandes;Glande pinéale (épiphyse);médian;automatique;
+HypVINN;974;Hypophysis;Glandes;Hypophyse;médian;automatique;
+HypVINN;975;Infundibulum;Glandes;Tige pituitaire (infundibulum);médian;automatique;
+HypVINN;970;Third-Ventricle;—;—;—;non publié;Doublon du troisième ventricule de FastSurfer (aseg), qui est retenu.
+Règle (étiquettes aseg);;;Noyaux gris centraux et structures apparentées;Corps strié gauche;gauche;dérivé;Regroupement : Left-Caudate, Left-Putamen, Left-Accumbens-area. Noyau caudé, putamen et noyau accumbens (striatum).
+Règle (étiquettes aseg);;;Noyaux gris centraux et structures apparentées;Corps strié droit;droit;dérivé;Regroupement : Right-Caudate, Right-Putamen, Right-Accumbens-area. Noyau caudé, putamen et noyau accumbens (striatum).
+Règle (étiquettes aseg);;;Noyaux gris centraux et structures apparentées;Noyau lenticulaire gauche;gauche;dérivé;Regroupement : Left-Putamen, Left-Pallidum. Putamen et globus pallidus.
+Règle (étiquettes aseg);;;Noyaux gris centraux et structures apparentées;Noyau lenticulaire droit;droit;dérivé;Regroupement : Right-Putamen, Right-Pallidum. Putamen et globus pallidus.
+Règle (grandes régions);;;Régions;Hémisphère cérébral gauche (télencéphale);gauche;dérivé;"Lobes, noyaux gris centraux, capsules, hippocampe et amygdale ; ventricules exclus."
+Règle (grandes régions);;;Régions;Hémisphère cérébral droit (télencéphale);droit;dérivé;"Lobes, noyaux gris centraux, capsules, hippocampe et amygdale ; ventricules exclus."
+Règle (grandes régions);;;Cervelet;Hémisphère cérébelleux gauche;gauche;dérivé;Lobules hémisphériques (CerebNet, lobules I à V avec leur partie vermienne) et corps médullaire.
+Règle (grandes régions);;;Cervelet;Hémisphère cérébelleux droit;droit;dérivé;Lobules hémisphériques (CerebNet, lobules I à V avec leur partie vermienne) et corps médullaire.
+Règle (grandes régions);;;Noyaux gris centraux et structures apparentées;Hypothalamus gauche;gauche;dérivé;Réunion des quatre parties de HypVINN (antérieure, médiale, latérale, postérieure).
+Règle (grandes régions);;;Noyaux gris centraux et structures apparentées;Hypothalamus droit;droit;dérivé;Réunion des quatre parties de HypVINN (antérieure, médiale, latérale, postérieure).
+Règle (grandes régions);;;Tronc cérébral;Mésencéphale;médian;dérivé;Tronc cérébral corrigé par l'auteur (contours et pinceau), coupes axiales au-dessus de la première coupe du pont donnée par l'auteur (z = −19,5 mm) (regions.py).
+Règle (grandes régions);;;Tronc cérébral;Pont;médian;dérivé;Coupes axiales de z = −19,5 mm (première coupe, donnée par l'auteur) à z = −41,9 mm (juste au-dessus du sillon bulbo-pontique).
+Règle (grandes régions);;;Tronc cérébral;Moelle allongée (bulbe);médian;dérivé;Coupes axiales du sillon bulbo-pontique (z = −42,6 mm, chute du profil antérieur médian) au bas de la grille, partie postérieure et inférieure peinte par l'auteur comprise.
+Règle (grandes régions);;;Régions;Rhombencéphale;médian;dérivé;Pont, moelle allongée et cervelet.
+Règle (grandes régions);;;Cervelet;Cervelet;médian;dérivé;Hémisphères cérébelleux et vermis.
+Règle (grandes régions);;;Cervelet;Vermis (lobules VI à X);médian;dérivé;CerebNet ne sépare pas le vermis des hémisphères pour les lobules I à V (lobe antérieur).
+Règle (grandes régions);;;Cervelet;Lobe antérieur du cervelet;médian;dérivé;Lobules I à V (CerebNet).
+Règle (grandes régions);;;Cervelet;Lobe postérieur du cervelet;médian;dérivé;Lobules VI à IX (CerebNet), crus I et II compris.
+Règle (grandes régions);;;Cervelet;Lobe flocculo-nodulaire;médian;dérivé;Flocculus droit et gauche et nodule (lobule X).
+Règle (limites FastSurfer);;;Sillons;Fissure longitudinale du cerveau;médian;dérivé;LCS entre les hémisphères cérébraux gauche et droit.
+Règle (limites FastSurfer);;;Méninges;Faux du cerveau;médian;dérivé;Surface à égale distance des deux hémisphères dans la fissure longitudinale, au-dessus du corps calleux : position déduite, la dure-mère n'est pas vue en tant que telle.
+Règle (limites FastSurfer);;;Méninges;Tente du cervelet;médian;dérivé;Surface à égale distance des hémisphères cérébraux et du cervelet, en dehors du tronc cérébral : position déduite, à valider.
+TractSeg;AF_left;AF_left;Substance blanche;Faisceau arqué gauche;gauche;automatique;
+TractSeg;AF_right;AF_right;Substance blanche;Faisceau arqué droit;droit;automatique;
+TractSeg;ATR_left;ATR_left;Substance blanche;Radiation thalamique antérieure gauche;gauche;automatique;
+TractSeg;ATR_right;ATR_right;Substance blanche;Radiation thalamique antérieure droite;droit;automatique;
+TractSeg;CG_left;CG_left;Substance blanche;Cingulum gauche;gauche;automatique;
+TractSeg;CG_right;CG_right;Substance blanche;Cingulum droit;droit;automatique;
+TractSeg;CST_left;CST_left;Substance blanche;Faisceau corticospinal gauche;gauche;automatique;
+TractSeg;CST_right;CST_right;Substance blanche;Faisceau corticospinal droit;droit;automatique;
+TractSeg;FPT_left;FPT_left;Substance blanche;Faisceau fronto-pontique gauche;gauche;automatique;
+TractSeg;FPT_right;FPT_right;Substance blanche;Faisceau fronto-pontique droit;droit;automatique;
+TractSeg;POPT_left;POPT_left;Substance blanche;Faisceau pariéto-occipito-pontique gauche;gauche;automatique;
+TractSeg;POPT_right;POPT_right;Substance blanche;Faisceau pariéto-occipito-pontique droit;droit;automatique;
+TractSeg;IFO_left;IFO_left;Substance blanche;Faisceau fronto-occipital inférieur gauche;gauche;automatique;
+TractSeg;IFO_right;IFO_right;Substance blanche;Faisceau fronto-occipital inférieur droit;droit;automatique;
+TractSeg;ILF_left;ILF_left;Substance blanche;Faisceau longitudinal inférieur gauche;gauche;automatique;
+TractSeg;ILF_right;ILF_right;Substance blanche;Faisceau longitudinal inférieur droit;droit;automatique;
+TractSeg;MLF_left;MLF_left;Substance blanche;Faisceau longitudinal moyen gauche;gauche;automatique;
+TractSeg;MLF_right;MLF_right;Substance blanche;Faisceau longitudinal moyen droit;droit;automatique;
+TractSeg;SLF_I_left;SLF_I_left;Substance blanche;Faisceau longitudinal supérieur gauche, partie I;gauche;automatique;
+TractSeg;SLF_I_right;SLF_I_right;Substance blanche;Faisceau longitudinal supérieur droit, partie I;droit;automatique;
+TractSeg;SLF_II_left;SLF_II_left;Substance blanche;Faisceau longitudinal supérieur gauche, partie II;gauche;automatique;
+TractSeg;SLF_II_right;SLF_II_right;Substance blanche;Faisceau longitudinal supérieur droit, partie II;droit;automatique;
+TractSeg;SLF_III_left;SLF_III_left;Substance blanche;Faisceau longitudinal supérieur gauche, partie III;gauche;automatique;
+TractSeg;SLF_III_right;SLF_III_right;Substance blanche;Faisceau longitudinal supérieur droit, partie III;droit;automatique;
+TractSeg;STR_left;STR_left;Substance blanche;Radiation thalamique supérieure gauche;gauche;automatique;
+TractSeg;STR_right;STR_right;Substance blanche;Radiation thalamique supérieure droite;droit;automatique;
+TractSeg;UF_left;UF_left;Substance blanche;Faisceau unciné gauche;gauche;automatique;
+TractSeg;UF_right;UF_right;Substance blanche;Faisceau unciné droit;droit;automatique;
+TractSeg;OR_left;OR_left;Voies optiques;Radiations optiques gauches;gauche;automatique;
+TractSeg;OR_right;OR_right;Voies optiques;Radiations optiques droites;droit;automatique;
+TractSeg;ICP_left;ICP_left;Tronc cérébral;Pédoncule cérébelleux inférieur gauche;gauche;automatique;
+TractSeg;ICP_right;ICP_right;Tronc cérébral;Pédoncule cérébelleux inférieur droit;droit;automatique;
+TractSeg;SCP_left;SCP_left;Tronc cérébral;Pédoncule cérébelleux supérieur gauche;gauche;automatique;
+TractSeg;SCP_right;SCP_right;Tronc cérébral;Pédoncule cérébelleux supérieur droit;droit;automatique;
+TractSeg;T_PREF_left;T_PREF_left;Substance blanche;Fibres thalamo-préfrontales gauches;gauche;automatique;
+TractSeg;T_PREF_right;T_PREF_right;Substance blanche;Fibres thalamo-préfrontales droites;droit;automatique;
+TractSeg;T_PREM_left;T_PREM_left;Substance blanche;Fibres thalamo-prémotrices gauches;gauche;automatique;
+TractSeg;T_PREM_right;T_PREM_right;Substance blanche;Fibres thalamo-prémotrices droites;droit;automatique;
+TractSeg;T_PREC_left;T_PREC_left;Substance blanche;Fibres thalamo-précentrales gauches;gauche;automatique;
+TractSeg;T_PREC_right;T_PREC_right;Substance blanche;Fibres thalamo-précentrales droites;droit;automatique;
+TractSeg;T_POSTC_left;T_POSTC_left;Substance blanche;Fibres thalamo-postcentrales gauches;gauche;automatique;
+TractSeg;T_POSTC_right;T_POSTC_right;Substance blanche;Fibres thalamo-postcentrales droites;droit;automatique;
+TractSeg;T_PAR_left;T_PAR_left;Substance blanche;Fibres thalamo-pariétales gauches;gauche;automatique;
+TractSeg;T_PAR_right;T_PAR_right;Substance blanche;Fibres thalamo-pariétales droites;droit;automatique;
+TractSeg;T_OCC_left;T_OCC_left;Substance blanche;Fibres thalamo-occipitales gauches;gauche;automatique;
+TractSeg;T_OCC_right;T_OCC_right;Substance blanche;Fibres thalamo-occipitales droites;droit;automatique;
+TractSeg;ST_FO_left;ST_FO_left;Substance blanche;Fibres striato-fronto-orbitaires gauches;gauche;automatique;
+TractSeg;ST_FO_right;ST_FO_right;Substance blanche;Fibres striato-fronto-orbitaires droites;droit;automatique;
+TractSeg;ST_PREF_left;ST_PREF_left;Substance blanche;Fibres striato-préfrontales gauches;gauche;automatique;
+TractSeg;ST_PREF_right;ST_PREF_right;Substance blanche;Fibres striato-préfrontales droites;droit;automatique;
+TractSeg;ST_PREM_left;ST_PREM_left;Substance blanche;Fibres striato-prémotrices gauches;gauche;automatique;
+TractSeg;ST_PREM_right;ST_PREM_right;Substance blanche;Fibres striato-prémotrices droites;droit;automatique;
+TractSeg;ST_PREC_left;ST_PREC_left;Substance blanche;Fibres striato-précentrales gauches;gauche;automatique;
+TractSeg;ST_PREC_right;ST_PREC_right;Substance blanche;Fibres striato-précentrales droites;droit;automatique;
+TractSeg;ST_POSTC_left;ST_POSTC_left;Substance blanche;Fibres striato-postcentrales gauches;gauche;automatique;
+TractSeg;ST_POSTC_right;ST_POSTC_right;Substance blanche;Fibres striato-postcentrales droites;droit;automatique;
+TractSeg;ST_PAR_left;ST_PAR_left;Substance blanche;Fibres striato-pariétales gauches;gauche;automatique;
+TractSeg;ST_PAR_right;ST_PAR_right;Substance blanche;Fibres striato-pariétales droites;droit;automatique;
+TractSeg;ST_OCC_left;ST_OCC_left;Substance blanche;Fibres striato-occipitales gauches;gauche;automatique;
+TractSeg;ST_OCC_right;ST_OCC_right;Substance blanche;Fibres striato-occipitales droites;droit;automatique;
+TractSeg;FX_left;FX_left;—;—;—;non publié;Fornix trop fin pour cette diffusion (b = 800, 2 mm) : celui de FastSurfer est retenu.
+TractSeg;FX_right;FX_right;—;—;—;non publié;Fornix trop fin pour cette diffusion (b = 800, 2 mm) : celui de FastSurfer est retenu.
+TractSeg;MCP;MCP;Tronc cérébral;Pédoncules cérébelleux moyens;médian;automatique;
+TractSeg;CC;CC;Substance blanche;Fibres calleuses (ensemble);médian;automatique;Radiations du corps calleux dans les hémisphères.
+TractSeg;CC_1;CC_1;Substance blanche;Fibres calleuses du rostrum (CC 1);médian;automatique;
+TractSeg;CC_2;CC_2;Substance blanche;Fibres calleuses du genou (CC 2);médian;automatique;
+TractSeg;CC_3;CC_3;Substance blanche;Fibres calleuses du tronc, partie rostrale (CC 3, prémotrices);médian;automatique;
+TractSeg;CC_4;CC_4;Substance blanche;Fibres calleuses du tronc, partie moyenne (CC 4, motrices);médian;automatique;
+TractSeg;CC_5;CC_5;Substance blanche;Fibres calleuses du tronc, partie postérieure (CC 5, somesthésiques);médian;automatique;
+TractSeg;CC_6;CC_6;Substance blanche;Fibres calleuses de l'isthme (CC 6);médian;automatique;
+TractSeg;CC_7;CC_7;Substance blanche;Fibres calleuses du splénium (CC 7);médian;automatique;
+TractSeg;CA;CA;—;—;—;non publié;Doublon de la commissure antérieure de HypVINN, qui est retenue.
+Atlas des territoires (Liu 2023, redécoupé);1;ACA;Territoires vasculaires;Territoire superficiel de l'ACA (gauche);gauche;transporté;Branches corticales : face médiale des lobes frontal et pariétal, bord supérieur de la convexité, corps calleux.
+Atlas des territoires (Liu 2023, redécoupé);2;ACA;Territoires vasculaires;Territoire superficiel de l'ACA (droit);droit;transporté;Branches corticales : face médiale des lobes frontal et pariétal, bord supérieur de la convexité, corps calleux.
+Atlas des territoires (Liu 2023, redécoupé);3;LSM;Territoires vasculaires;Lenticulo-striées médiales et artère de Heubner (ACA) (gauche);gauche;transporté;Artère récurrente de Heubner et lenticulo-striées médiales : tête du noyau caudé et partie antérieure de la capsule interne.
+Atlas des territoires (Liu 2023, redécoupé);4;LSM;Territoires vasculaires;Lenticulo-striées médiales et artère de Heubner (ACA) (droit);droit;transporté;Artère récurrente de Heubner et lenticulo-striées médiales : tête du noyau caudé et partie antérieure de la capsule interne.
+Atlas des territoires (Liu 2023, redécoupé);7;ACM;Territoires vasculaires;Territoire superficiel de l'ACM (gauche);gauche;transporté;Branches corticales : convexité des lobes frontal, pariétal et temporal, insula.
+Atlas des territoires (Liu 2023, redécoupé);8;ACM;Territoires vasculaires;Territoire superficiel de l'ACM (droit);droit;transporté;Branches corticales : convexité des lobes frontal, pariétal et temporal, insula.
+Atlas des territoires (Liu 2023, redécoupé);5;LSL;Territoires vasculaires;Territoire profond de l'ACM (gauche);gauche;transporté;Artères lenticulo-striées latérales, branches perforantes de l'ACM : noyau lenticulaire (putamen et pallidum) et, au-dessus, couronne rayonnante le long du ventricule latéral.
+Atlas des territoires (Liu 2023, redécoupé);6;LSL;Territoires vasculaires;Territoire profond de l'ACM (droit);droit;transporté;Artères lenticulo-striées latérales, branches perforantes de l'ACM : noyau lenticulaire (putamen et pallidum) et, au-dessus, couronne rayonnante le long du ventricule latéral.
+Atlas des territoires (Liu 2023, redécoupé);23;ChA;Territoires vasculaires;Territoire de l'artère choroïdienne antérieure (gauche);gauche;transporté;Branche de la carotide interne : bras postérieur de la capsule interne, uncus, amygdale et tête de l'hippocampe.
+Atlas des territoires (Liu 2023, redécoupé);24;ChA;Territoires vasculaires;Territoire de l'artère choroïdienne antérieure (droit);droit;transporté;Branche de la carotide interne : bras postérieur de la capsule interne, uncus, amygdale et tête de l'hippocampe.
+Atlas des territoires (Liu 2023, redécoupé);17;ACP;Territoires vasculaires;Territoire de l'ACP (gauche);gauche;transporté;Branches corticales (lobe occipital, faces inférieure et médiale du lobe temporal) et perforantes (thalamus, mésencéphale). Absent au-dessus des ventricules latéraux : il apparaît au pôle occipital au niveau du corps des ventricules et s'étend vers l'avant en descendant.
+Atlas des territoires (Liu 2023, redécoupé);18;ACP;Territoires vasculaires;Territoire de l'ACP (droit);droit;transporté;Branches corticales (lobe occipital, faces inférieure et médiale du lobe temporal) et perforantes (thalamus, mésencéphale). Absent au-dessus des ventricules latéraux : il apparaît au pôle occipital au niveau du corps des ventricules et s'étend vers l'avant en descendant.
+Atlas des territoires (Liu 2023, redécoupé);25;BAS;Territoires vasculaires;Territoire des branches de l'artère basilaire (gauche);gauche;transporté;Pont (protubérance).
+Atlas des territoires (Liu 2023, redécoupé);26;BAS;Territoires vasculaires;Territoire des branches de l'artère basilaire (droit);droit;transporté;Pont (protubérance).
+Atlas des territoires (Liu 2023, redécoupé);27;ACS;Territoires vasculaires;Territoire de l'artère cérébelleuse supérieure (gauche);gauche;transporté;Face supérieure du cervelet et vermis supérieur.
+Atlas des territoires (Liu 2023, redécoupé);28;ACS;Territoires vasculaires;Territoire de l'artère cérébelleuse supérieure (droit);droit;transporté;Face supérieure du cervelet et vermis supérieur.
+Atlas des territoires (Liu 2023, redécoupé);33;AICA;Territoires vasculaires;Territoire de l'artère cérébelleuse antéro-inférieure (AICA) (gauche);gauche;transporté;Face antérieure (pétreuse) de l'hémisphère cérébelleux, flocculus, pédoncule cérébelleux moyen.
+Atlas des territoires (Liu 2023, redécoupé);34;AICA;Territoires vasculaires;Territoire de l'artère cérébelleuse antéro-inférieure (AICA) (droit);droit;transporté;Face antérieure (pétreuse) de l'hémisphère cérébelleux, flocculus, pédoncule cérébelleux moyen.
+Atlas des territoires (Liu 2023, redécoupé);29;PICA;Territoires vasculaires;Territoire de l'artère cérébelleuse postéro-inférieure (PICA) (gauche);gauche;transporté;Face inférieure (sous-occipitale) de l'hémisphère cérébelleux, vermis inférieur, partie postérieure du bulbe.
+Atlas des territoires (Liu 2023, redécoupé);30;PICA;Territoires vasculaires;Territoire de l'artère cérébelleuse postéro-inférieure (PICA) (droit);droit;transporté;Face inférieure (sous-occipitale) de l'hémisphère cérébelleux, vermis inférieur, partie postérieure du bulbe.
+Atlas des territoires (Liu 2023, redécoupé);35;VERT;Territoires vasculaires;Territoire des branches de l'artère vertébrale et de l'artère spinale antérieure (gauche);gauche;transporté;Bulbe (moelle allongée) : partie antérieure et médiane.
+Atlas des territoires (Liu 2023, redécoupé);36;VERT;Territoires vasculaires;Territoire des branches de l'artère vertébrale et de l'artère spinale antérieure (droit);droit;transporté;Bulbe (moelle allongée) : partie antérieure et médiane.
+Atlas des territoires (calque jonctionnel);1;;Territoires vasculaires;Zone jonctionnelle corticale;gauche et droit;transporté;
+Atlas des territoires (calque jonctionnel);2;;Territoires vasculaires;Zone jonctionnelle profonde;gauche et droit;transporté;
+Masque TOF (seuil local);1;;Artères;Artères (masque non nommé);gauche et droit;automatique;Vaisseaux du TOF, sans nom : les noms viennent des points manuels.
+Points manuels (navigateur);;;Artères;Artère carotide interne gauche (segment supraclinoïdien);gauche;manuel;
+Points manuels (navigateur);;;Artères;Artère carotide interne droite (segment supraclinoïdien);droit;manuel;
+Points manuels (navigateur);;;Artères;Artère cérébrale antérieure gauche, segment A1;gauche;manuel;
+Points manuels (navigateur);;;Artères;Artère cérébrale antérieure droite, segment A1;droit;manuel;
+Points manuels (navigateur);;;Artères;Artère cérébrale antérieure gauche, segment A2;gauche;manuel;
+Points manuels (navigateur);;;Artères;Artère cérébrale antérieure droite, segment A2;droit;manuel;
+Points manuels (navigateur);;;Artères;Artère péricalleuse gauche;gauche;manuel;
+Points manuels (navigateur);;;Artères;Artère péricalleuse droite;droit;manuel;
+Points manuels (navigateur);;;Artères;Artère calloso-marginale gauche;gauche;manuel;
+Points manuels (navigateur);;;Artères;Artère calloso-marginale droite;droit;manuel;
+Points manuels (navigateur);;;Artères;Artère cérébrale moyenne gauche, segment M1;gauche;manuel;
+Points manuels (navigateur);;;Artères;Artère cérébrale moyenne droite, segment M1;droit;manuel;
+Points manuels (navigateur);;;Artères;Artère cérébrale moyenne gauche, segment M2 (branches insulaires);gauche;manuel;
+Points manuels (navigateur);;;Artères;Artère cérébrale moyenne droite, segment M2 (branches insulaires);droit;manuel;
+Points manuels (navigateur);;;Artères;Artères lenticulo-striées latérales gauches;gauche;manuel;
+Points manuels (navigateur);;;Artères;Artères lenticulo-striées latérales droites;droit;manuel;
+Points manuels (navigateur);;;Artères;Artère communicante postérieure gauche;gauche;manuel;
+Points manuels (navigateur);;;Artères;Artère communicante postérieure droite;droit;manuel;
+Points manuels (navigateur);;;Artères;Artère choroïdienne antérieure gauche;gauche;manuel;
+Points manuels (navigateur);;;Artères;Artère choroïdienne antérieure droite;droit;manuel;
+Points manuels (navigateur);;;Artères;Artère cérébrale postérieure gauche, segment P1;gauche;manuel;
+Points manuels (navigateur);;;Artères;Artère cérébrale postérieure droite, segment P1;droit;manuel;
+Points manuels (navigateur);;;Artères;Artère cérébrale postérieure gauche, segment P2;gauche;manuel;
+Points manuels (navigateur);;;Artères;Artère cérébrale postérieure droite, segment P2;droit;manuel;
+Points manuels (navigateur);;;Artères;Artère cérébelleuse supérieure gauche;gauche;manuel;
+Points manuels (navigateur);;;Artères;Artère cérébelleuse supérieure droite;droit;manuel;
+Points manuels (navigateur);;;Sinus veineux;Sinus transverse gauche;gauche;manuel;
+Points manuels (navigateur);;;Sinus veineux;Sinus transverse droit;droit;manuel;
+Points manuels (navigateur);;;Sinus veineux;Sinus sigmoïde gauche;gauche;manuel;
+Points manuels (navigateur);;;Sinus veineux;Sinus sigmoïde droit;droit;manuel;
+Points manuels (navigateur);;;Sinus veineux;Sinus caverneux gauche;gauche;manuel;
+Points manuels (navigateur);;;Sinus veineux;Sinus caverneux droit;droit;manuel;
+Points manuels (navigateur);;;Sinus veineux;Veine cérébrale interne gauche;gauche;manuel;
+Points manuels (navigateur);;;Sinus veineux;Veine cérébrale interne droite;droit;manuel;
+Points manuels (navigateur);;;Sinus veineux;Veine basale gauche (de Rosenthal);gauche;manuel;
+Points manuels (navigateur);;;Sinus veineux;Veine basale droite (de Rosenthal);droit;manuel;
+Points manuels (navigateur);;;Sinus veineux;Veine thalamo-striée gauche;gauche;manuel;
+Points manuels (navigateur);;;Sinus veineux;Veine thalamo-striée droite;droit;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Citerne ambiante gauche;gauche;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Citerne ambiante droite;droit;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Citerne de l'angle ponto-cérébelleux gauche;gauche;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Citerne de l'angle ponto-cérébelleux droite;droit;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Citerne sylvienne gauche;gauche;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Citerne sylvienne droite;droit;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Nerf oculomoteur gauche (III);gauche;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Nerf oculomoteur droit (III);droit;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Nerf trijumeau gauche (V);gauche;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Nerf trijumeau droit (V);droit;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Nerf abducens gauche (VI);gauche;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Nerf abducens droit (VI);droit;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Nerfs facial et vestibulocochléaire gauches (VII, VIII);gauche;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Nerfs facial et vestibulocochléaire droits (VII, VIII);droit;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Pédoncule cérébral gauche;gauche;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Pédoncule cérébral droit;droit;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Colliculus supérieur gauche;gauche;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Colliculus supérieur droit;droit;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Colliculus inférieur gauche;gauche;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Colliculus inférieur droit;droit;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Olive bulbaire gauche;gauche;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Olive bulbaire droite;droit;manuel;
+Points manuels (navigateur);;;Noyaux gris centraux et structures apparentées;Noyau rouge gauche;gauche;manuel;
+Points manuels (navigateur);;;Noyaux gris centraux et structures apparentées;Noyau rouge droit;droit;manuel;
+Points manuels (navigateur);;;Noyaux gris centraux et structures apparentées;Substance noire gauche;gauche;manuel;
+Points manuels (navigateur);;;Noyaux gris centraux et structures apparentées;Substance noire droite;droit;manuel;
+Points manuels (navigateur);;;Noyaux gris centraux et structures apparentées;Noyau sous-thalamique gauche;gauche;manuel;
+Points manuels (navigateur);;;Noyaux gris centraux et structures apparentées;Noyau sous-thalamique droit;droit;manuel;
+Points manuels (navigateur);;;Noyaux gris centraux et structures apparentées;Claustrum gauche;gauche;manuel;
+Points manuels (navigateur);;;Noyaux gris centraux et structures apparentées;Claustrum droit;droit;manuel;
+Points manuels (navigateur);;;Cervelet;Noyau dentelé gauche;gauche;manuel;
+Points manuels (navigateur);;;Cervelet;Noyau dentelé droit;droit;manuel;
+Points manuels (navigateur);;;Voies optiques;Corps géniculé latéral gauche;gauche;manuel;
+Points manuels (navigateur);;;Voies optiques;Corps géniculé latéral droit;droit;manuel;
+Points manuels (navigateur);;;Substance blanche;Capsule interne gauche, bras antérieur;gauche;manuel;
+Points manuels (navigateur);;;Substance blanche;Capsule interne droite, bras antérieur;droit;manuel;
+Points manuels (navigateur);;;Substance blanche;Capsule interne gauche, genou;gauche;manuel;
+Points manuels (navigateur);;;Substance blanche;Capsule interne droite, genou;droit;manuel;
+Points manuels (navigateur);;;Substance blanche;Capsule interne gauche, bras postérieur;gauche;manuel;
+Points manuels (navigateur);;;Substance blanche;Capsule interne droite, bras postérieur;droit;manuel;
+Points manuels (navigateur);;;Substance blanche;Capsule externe gauche;gauche;manuel;
+Points manuels (navigateur);;;Substance blanche;Capsule externe droite;droit;manuel;
+Points manuels (navigateur);;;Substance blanche;Capsule extrême gauche;gauche;manuel;
+Points manuels (navigateur);;;Substance blanche;Capsule extrême droite;droit;manuel;
+Points manuels (navigateur);;;Substance blanche;Couronne rayonnante gauche;gauche;manuel;
+Points manuels (navigateur);;;Substance blanche;Couronne rayonnante droite;droit;manuel;
+Points manuels (navigateur);;;Substance blanche;Centre semi-ovale gauche;gauche;manuel;
+Points manuels (navigateur);;;Substance blanche;Centre semi-ovale droit;droit;manuel;
+Points manuels (navigateur);;;Système limbique;Pilier postérieur du fornix gauche;gauche;manuel;
+Points manuels (navigateur);;;Système limbique;Pilier postérieur du fornix droit;droit;manuel;
+Points manuels (navigateur);;;Système limbique;Bulbe olfactif gauche;gauche;manuel;
+Points manuels (navigateur);;;Système limbique;Bulbe olfactif droit;droit;manuel;
+Points manuels (navigateur);;;Système limbique;Tractus olfactif gauche;gauche;manuel;
+Points manuels (navigateur);;;Système limbique;Tractus olfactif droit;droit;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Pyramide bulbaire gauche;gauche;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Pyramide bulbaire droite;droit;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Sillon pré-olivaire gauche;gauche;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Sillon pré-olivaire droit;droit;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Sillon rétro-olivaire gauche;gauche;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Sillon rétro-olivaire droit;droit;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Faisceau gracile gauche;gauche;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Faisceau gracile droit;droit;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Faisceau cunéiforme gauche;gauche;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Faisceau cunéiforme droit;droit;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Tubercule gracile gauche;gauche;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Tubercule gracile droit;droit;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Tubercule cunéiforme gauche;gauche;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Tubercule cunéiforme droit;droit;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Ouverture latérale gauche du quatrième ventricule (foramen de Luschka);gauche;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Ouverture latérale droite du quatrième ventricule (foramen de Luschka);droit;manuel;
+Points manuels (navigateur);;;Méninges;Cavum trigéminal gauche (cavum de Meckel);gauche;manuel;
+Points manuels (navigateur);;;Méninges;Cavum trigéminal droit (cavum de Meckel);droit;manuel;
+Points manuels (navigateur);;;Gyri;Opercule frontal gauche;gauche;manuel;
+Points manuels (navigateur);;;Gyri;Opercule frontal droit;droit;manuel;
+Points manuels (navigateur);;;Gyri;Opercule pariétal gauche;gauche;manuel;
+Points manuels (navigateur);;;Gyri;Opercule pariétal droit;droit;manuel;
+Points manuels (navigateur);;;Gyri;Opercule temporal gauche;gauche;manuel;
+Points manuels (navigateur);;;Gyri;Opercule temporal droit;droit;manuel;
+Points manuels (navigateur);;;Régions;Pôle frontal gauche;gauche;manuel;
+Points manuels (navigateur);;;Régions;Pôle frontal droit;droit;manuel;
+Points manuels (navigateur);;;Régions;Pôle temporal gauche;gauche;manuel;
+Points manuels (navigateur);;;Régions;Pôle temporal droit;droit;manuel;
+Points manuels (navigateur);;;Régions;Pôle occipital gauche;gauche;manuel;
+Points manuels (navigateur);;;Régions;Pôle occipital droit;droit;manuel;
+Points manuels (navigateur);;;Sillons;Sillon subpariétal gauche;gauche;manuel;
+Points manuels (navigateur);;;Sillons;Sillon subpariétal droit;droit;manuel;
+Points manuels (navigateur);;;Sillons;Sillon paracentral gauche;gauche;manuel;
+Points manuels (navigateur);;;Sillons;Sillon paracentral droit;droit;manuel;
+Points manuels (navigateur);;;Artères;Artère communicante antérieure;médian;manuel;
+Points manuels (navigateur);;;Artères;Artère basilaire (sommet);médian;manuel;
+Points manuels (navigateur);;;Sinus veineux;Sinus sagittal supérieur;médian;manuel;
+Points manuels (navigateur);;;Sinus veineux;Sinus sagittal inférieur;médian;manuel;
+Points manuels (navigateur);;;Sinus veineux;Sinus droit;médian;manuel;
+Points manuels (navigateur);;;Sinus veineux;Confluent des sinus (torcular);médian;manuel;
+Points manuels (navigateur);;;Sinus veineux;Grande veine cérébrale (veine de Galien);médian;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Citerne prépontique;médian;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Citerne interpédonculaire;médian;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Citerne quadrigéminale;médian;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Citerne suprasellaire (chiasmatique);médian;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Grande citerne (cisterna magna);médian;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Aqueduc du mésencéphale;médian;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Septum pellucidum;médian;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Plancher du quatrième ventricule;médian;manuel;
+Points manuels (navigateur);;;Substance blanche;Corps calleux, rostrum;médian;manuel;
+Points manuels (navigateur);;;Substance blanche;Commissure postérieure;médian;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Partie basilaire du pont;médian;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Tegmentum du pont;médian;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Tegmentum du mésencéphale;médian;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Lame tectale (tectum);médian;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Fosse interpédonculaire;médian;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Sillon basilaire;médian;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Foramen cæcum;médian;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Fissure médiane antérieure du bulbe;médian;manuel;
+Points manuels (navigateur);;;Tronc cérébral;Canal central du bulbe;médian;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Fosse rhomboïde;médian;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Sillon médian de la fosse rhomboïde;médian;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Voile médullaire supérieur;médian;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Voile médullaire inférieur;médian;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Fastigium;médian;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Ouverture médiane du quatrième ventricule (foramen de Magendie);médian;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Toile choroïdienne du troisième ventricule;médian;manuel;
+Points manuels (navigateur);;;Ventricules et citernes;Plexus choroïde du quatrième ventricule;médian;manuel;
+Points manuels (navigateur);;;Sillons;Fissure transverse du cerveau;médian;manuel;
+Points manuels (navigateur);;;Méninges;Dure-mère crânienne;médian;manuel;
+Points manuels (navigateur);;;Méninges;Arachnoïde;médian;manuel;
+Points manuels (navigateur);;;Méninges;Pie-mère crânienne;médian;manuel;
+Points manuels (navigateur);;;Méninges;Espace épidural (virtuel);médian;manuel;
+Points manuels (navigateur);;;Méninges;Espace subdural (virtuel);médian;manuel;
+Points manuels (navigateur);;;Méninges;Espace subarachnoïdien;médian;manuel;
+Points manuels (navigateur);;;Méninges;Granulations arachnoïdiennes;médian;manuel;
+Points manuels (navigateur);;;Méninges;Incisure de la tente du cervelet;médian;manuel;
+Points manuels (navigateur);;;Glandes;Hypophyse;médian;manuel;Déjà segmenté par HypVINN : point manuel facultatif (contrôle).
+Points manuels (navigateur);;;Glandes;Glande pinéale (épiphyse);médian;manuel;Déjà segmenté par HypVINN : point manuel facultatif (contrôle).

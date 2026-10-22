@@ -1,0 +1,73 @@
+{
+ "cle": "sillons-4",
+ "nom_fr": "Sillon frontal supérieur gauche",
+ "nom_en": "Superior frontal sulcus",
+ "cote": "gauche",
+ "categorie": "Sillons",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (limites DKT)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -31.3,
+   55.6,
+   16.2
+  ],
+  "mni_icbm2009c_mm": [
+   -34.400001525878906,
+   59.900001525878906,
+   19.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -31.3,
+    55.6,
+    32.3
+   ],
+   "mni_icbm2009c_mm": [
+    -34.400001525878906,
+    57.29999923706055,
+    36.0
+   ],
+   "coupe": "z = +32.3 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -31.3,
+    47.9,
+    16.2
+   ],
+   "mni_icbm2009c_mm": [
+    -32.5,
+    54.099998474121094,
+    21.100000381469727
+   ],
+   "coupe": "y = +47.9 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -25.0,
+    55.6,
+    16.2
+   ],
+   "mni_icbm2009c_mm": [
+    -27.899999618530273,
+    59.0,
+    21.399999618530273
+   ],
+   "coupe": "x = -25.0 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Règle (limites DKT)."
+ ],
+ "controle_lateralite": "conforme",
+ "confiance": "hors atlas"
+}

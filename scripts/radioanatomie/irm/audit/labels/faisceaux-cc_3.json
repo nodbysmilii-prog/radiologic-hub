@@ -1,0 +1,73 @@
+{
+ "cle": "faisceaux-CC_3",
+ "nom_fr": "Fibres calleuses du tronc, partie rostrale (CC 3, prémotrices)",
+ "nom_en": "CC_3",
+ "cote": "médian",
+ "categorie": "Substance blanche",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "TractSeg",
+  "nom_outil": "CC_3",
+  "identifiant": "CC_3"
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   28.2,
+   4.5,
+   40.0
+  ],
+  "mni_icbm2009c_mm": [
+   29.299999237060547,
+   2.5,
+   43.5
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    28.2,
+    4.5,
+    36.5
+   ],
+   "mni_icbm2009c_mm": [
+    30.299999237060547,
+    4.400000095367432,
+    38.599998474121094
+   ],
+   "coupe": "z = +36.5 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    28.2,
+    10.8,
+    40.0
+   ],
+   "mni_icbm2009c_mm": [
+    29.100000381469727,
+    8.899999618530273,
+    44.20000076293945
+   ],
+   "coupe": "y = +10.8 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -30.6,
+    4.5,
+    40.0
+   ],
+   "mni_icbm2009c_mm": [
+    -30.799999237060547,
+    4.699999809265137,
+    44.20000076293945
+   ],
+   "coupe": "x = -30.6 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : TractSeg."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

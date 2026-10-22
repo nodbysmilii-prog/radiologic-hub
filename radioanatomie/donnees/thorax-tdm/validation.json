@@ -1,0 +1,141 @@
+{
+ "cas": "s0310",
+ "controles": [
+  {
+   "controle": "côtés : foie à droite de la rate (+x = droite du patient)",
+   "ok": true,
+   "detail": "x foie 152, rate 52"
+  },
+  {
+   "controle": "arc aortique à gauche de la trachée",
+   "ok": true,
+   "detail": "x arc 101, trachée 110"
+  },
+  {
+   "controle": "veine cave supérieure à droite de l'aorte ascendante",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "controle": "aorte descendante en arrière de l'aorte ascendante",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "controle": "lobe moyen en avant du lobe inférieur droit",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "controle": "scissure horizontale au-dessus de la base du lobe moyen",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "controle": "bronches principales séparées des deux côtés sous la bifurcation",
+   "ok": true,
+   "detail": "droite 637 voxels, gauche 610"
+  },
+  {
+   "controle": "bronche principale gauche plus longue que la droite",
+   "ok": true,
+   "detail": "hauteur gauche 20 mm, droite 14 mm"
+  },
+  {
+   "controle": "carène en regard de T4 à T6",
+   "ok": true,
+   "detail": "vertèbres au niveau de la carène : T[5, 6]"
+  },
+  {
+   "controle": "2e côte droite articulée avec T1-T2",
+   "ok": true,
+   "detail": "tête z 173, T1-T2 z 151-182"
+  },
+  {
+   "controle": "3e côte droite articulée avec T2-T3",
+   "ok": true,
+   "detail": "tête z 164, T2-T3 z 138-173"
+  },
+  {
+   "controle": "4e côte droite articulée avec T3-T4",
+   "ok": true,
+   "detail": "tête z 152, T3-T4 z 126-162"
+  },
+  {
+   "controle": "5e côte droite articulée avec T4-T5",
+   "ok": true,
+   "detail": "tête z 139, T4-T5 z 108-149"
+  },
+  {
+   "controle": "6e côte droite articulée avec T5-T6",
+   "ok": true,
+   "detail": "tête z 123, T5-T6 z 90-136"
+  },
+  {
+   "controle": "7e côte droite articulée avec T6-T7",
+   "ok": true,
+   "detail": "tête z 109, T6-T7 z 75-120"
+  },
+  {
+   "controle": "8e côte gauche articulée avec T7-T8",
+   "ok": true,
+   "detail": "tête z 87, T7-T8 z 60-107"
+  },
+  {
+   "controle": "9e côte gauche articulée avec T8-T9",
+   "ok": true,
+   "detail": "tête z 74, T8-T9 z 45-93"
+  },
+  {
+   "controle": "10e côte gauche articulée avec T9-T10",
+   "ok": true,
+   "detail": "tête z 56, T9-T10 z 31-77"
+  },
+  {
+   "controle": "densité aorte 120 à 500 UH",
+   "ok": true,
+   "detail": "médiane 165 UH"
+  },
+  {
+   "controle": "densité veine cave supérieure 120 à 900 UH",
+   "ok": true,
+   "detail": "médiane 405 UH"
+  },
+  {
+   "controle": "densité veines pulmonaires 110 à 500 UH",
+   "ok": true,
+   "detail": "médiane 156 UH"
+  },
+  {
+   "controle": "densité cœur 100 à 500 UH",
+   "ok": true,
+   "detail": "médiane 168 UH"
+  },
+  {
+   "controle": "densité trachée -1100 à -800 UH",
+   "ok": true,
+   "detail": "médiane -925 UH"
+  },
+  {
+   "controle": "densité foie 30 à 120 UH",
+   "ok": true,
+   "detail": "médiane 64 UH"
+  },
+  {
+   "controle": "densité moelle spinale 0 à 90 UH",
+   "ok": true,
+   "detail": "médiane 41 UH"
+  },
+  {
+   "controle": "8817 étiquettes de référence ou calculées, toutes dans leur masque",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "controle": "212 positions de repères manuels contrôlées (densité, voisinage)",
+   "ok": true,
+   "detail": ""
+  }
+ ],
+ "echecs": 0
+}

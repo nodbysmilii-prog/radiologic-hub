@@ -1,0 +1,73 @@
+{
+ "cle": "sillons-100",
+ "nom_fr": "Fissure longitudinale du cerveau",
+ "nom_en": "Longitudinal cerebral fissure",
+ "cote": "médian",
+ "categorie": "Sillons",
+ "statut_module": "dérivé",
+ "source": {
+  "origine": "Règle (limites FastSurfer)",
+  "nom_outil": "",
+  "identifiant": ""
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -1.2,
+   -77.4,
+   39.3
+  ],
+  "mni_icbm2009c_mm": [
+   -0.4000000059604645,
+   -78.5999984741211,
+   44.599998474121094
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -1.2,
+    -77.4,
+    27.4
+   ],
+   "mni_icbm2009c_mm": [
+    -0.6000000238418579,
+    -78.5,
+    31.5
+   ],
+   "coupe": "z = +27.4 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -1.2,
+    35.3,
+    39.3
+   ],
+   "mni_icbm2009c_mm": [
+    -1.899999976158142,
+    37.099998474121094,
+    44.099998474121094
+   ],
+   "coupe": "y = +35.3 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    0.2,
+    -77.4,
+    39.3
+   ],
+   "mni_icbm2009c_mm": [
+    0.800000011920929,
+    -78.5,
+    44.599998474121094
+   ],
+   "coupe": "x = +0.2 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : Règle (limites FastSurfer)."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

@@ -1,0 +1,73 @@
+{
+ "cle": "fines-974",
+ "nom_fr": "Hypophyse",
+ "nom_en": "Hypophysis",
+ "cote": "médian",
+ "categorie": "Glandes",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "HypVINN",
+  "nom_outil": "Hypophysis",
+  "identifiant": 974
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   4.4,
+   5.2,
+   -27.2
+  ],
+  "mni_icbm2009c_mm": [
+   6.099999904632568,
+   5.800000190734863,
+   -28.100000381469727
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    4.4,
+    5.2,
+    -27.2
+   ],
+   "mni_icbm2009c_mm": [
+    6.099999904632568,
+    5.800000190734863,
+    -28.100000381469727
+   ],
+   "coupe": "z = -27.2 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    4.4,
+    5.2,
+    -27.2
+   ],
+   "mni_icbm2009c_mm": [
+    6.099999904632568,
+    5.800000190734863,
+    -28.100000381469727
+   ],
+   "coupe": "y = +5.2 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -3.3,
+    5.2,
+    -27.2
+   ],
+   "mni_icbm2009c_mm": [
+    -5.599999904632568,
+    5.900000095367432,
+    -28.899999618530273
+   ],
+   "coupe": "x = -3.3 mm"
+  }
+ },
+ "atlas": [],
+ "remarques": [
+  "Aucune étiquette de CerebrA ni de Harvard-Oxford : non confirmée par un atlas de référence ; source gardée : HypVINN."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "hors atlas"
+}

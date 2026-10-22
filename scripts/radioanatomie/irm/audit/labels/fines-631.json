@@ -1,0 +1,105 @@
+{
+ "cle": "fines-631",
+ "nom_fr": "Vermis, lobule VIII (pyramide)",
+ "nom_en": "Cbm_Vermis_VIII",
+ "cote": "médian",
+ "categorie": "Cervelet",
+ "statut_module": "automatique",
+ "source": {
+  "origine": "CerebNet",
+  "nom_outil": "Cbm_Vermis_VIII",
+  "identifiant": 631
+ },
+ "convention_affichage": "vue radiologique : droite du patient à gauche de l'écran en axial et en coronal ; avant à gauche en sagittal ; lettres D et G sur l'image",
+ "coordonnees": {
+  "sujet_mm": [
+   -0.5,
+   -66.2,
+   -34.2
+  ],
+  "mni_icbm2009c_mm": [
+   -0.699999988079071,
+   -68.5999984741211,
+   -40.400001525878906
+  ]
+ },
+ "plans": {
+  "axial": {
+   "sujet_mm": [
+    -0.5,
+    -66.2,
+    -33.5
+   ],
+   "mni_icbm2009c_mm": [
+    -0.699999988079071,
+    -68.4000015258789,
+    -39.599998474121094
+   ],
+   "coupe": "z = -33.5 mm"
+  },
+  "coronal": {
+   "sujet_mm": [
+    -0.5,
+    -64.8,
+    -34.2
+   ],
+   "mni_icbm2009c_mm": [
+    -0.8999999761581421,
+    -67.0999984741211,
+    -40.400001525878906
+   ],
+   "coupe": "y = -64.8 mm"
+  },
+  "sagittal": {
+   "sujet_mm": [
+    -1.2,
+    -66.2,
+    -34.2
+   ],
+   "mni_icbm2009c_mm": [
+    -1.5,
+    -68.5,
+    -40.400001525878906
+   ],
+   "coupe": "x = -1.2 mm"
+  }
+ },
+ "atlas": [
+  {
+   "atlas": "CerebrA (contrôle interne)",
+   "type": "partie",
+   "labels": [
+    {
+     "id": 71,
+     "nom": "Vermal lobules VIII-X (L)"
+    },
+    {
+     "id": 20,
+     "nom": "Vermal lobules VIII-X (R)"
+    }
+   ],
+   "mesure": 0.769,
+   "verdict": "partiel",
+   "plans": {
+    "axial": {
+     "mesure": 0.877,
+     "verdict": "concordant"
+    },
+    "coronal": {
+     "mesure": 0.8,
+     "verdict": "concordant"
+    },
+    "sagittal": {
+     "mesure": 0.895,
+     "verdict": "concordant"
+    }
+   },
+   "fiabilite_publiee": "Dice/kappa de CerebrA contre Mindboggle-101 (Manera 2020) : 0.44"
+  }
+ ],
+ "remarques": [
+  "Étiquette CerebrA peu fiable selon ses auteurs (kappa 0.44) : la discordance ne suffit pas à conclure."
+ ],
+ "controle_lateralite": "sans objet (structure médiane ou des deux côtés)",
+ "confiance": "moyenne"
+}
