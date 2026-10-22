@@ -9,6 +9,9 @@
      catégories à interrupteurs ; les étiquettes se répartissent sans se chevaucher.
    • Défilement : molette, flèches du clavier, glisser verticalement sur l'image, curseur.
    • Quiz : les noms sont masqués (« ? ») ; toucher une étiquette révèle la structure.
+   • Calque facultatif (champ « calque » d'une série : un PNG transparent par coupe, par exemple
+     les lobes pulmonaires) : bouton « Lobes » ajouté à la barre, affiché par défaut.
+   • Numéros de fichiers sur « chiffres » caractères (2 par défaut).
    ========================================================= */
 (function () {
   'use strict';
@@ -42,7 +45,10 @@
   const nomStructure = id => A.structures[id].nom;
   const cat = id => A.categories.find(c => c.id === A.structures[id].cat);
   const cleVu = id => `${S().id}:${k()}:${id}`;
-  const fichier = (s, c) => `${station.dataset.base}${s.dossier}${String(c).padStart(2, '0')}.jpg`;
+  const numero = (s, c) => String(c).padStart(s.chiffres || 2, '0');
+  const fichier = (s, c) => `${station.dataset.base}${s.dossier}${numero(s, c)}.jpg`;
+  const fichierCalque = (s, c) => `${station.dataset.base}${s.calque}${numero(s, c)}.png`;
+  let calque = null;
 
   /* ---------- Chargement ---------- */
   fetch(station.dataset.base + station.dataset.atlas)
@@ -56,6 +62,7 @@
       });
       construireSeries();
       construireCategories();
+      if (A.series.some(s => s.calque)) construireCalque();
       $('.ac-chargement', station)?.remove();
       changerSerie(0);
       new ResizeObserver(() => dessiner()).observe(scene);
@@ -71,6 +78,19 @@
       b.addEventListener('click', () => changerSerie(i));
       boite.appendChild(b);
     });
+  }
+
+  function construireCalque() {
+    etat.calque = true;
+    calque = document.createElement('img');
+    calque.className = 'ac-calque'; calque.alt = ''; calque.hidden = true;
+    img.after(calque);
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'ac-btn'; b.dataset.ac = 'calque'; b.setAttribute('aria-pressed', 'true');
+    b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="m3 13 9 5 9-5"/></svg><span>Lobes</span>';
+    b.title = 'Afficher ou masquer les lobes pulmonaires colorés';
+    b.addEventListener('click', () => { etat.calque = !etat.calque; b.setAttribute('aria-pressed', String(etat.calque)); dessiner(); });
+    $('.ac-outils', station).prepend(b);
   }
 
   function construireCategories() {
@@ -137,6 +157,10 @@
     const s = S(), c = k();
     const m = mesures();
     img.src = fichier(s, c);
+    if (calque) {
+      calque.hidden = !(s.calque && etat.calque);
+      if (!calque.hidden) calque.src = fichierCalque(s, c);
+    }
     img.alt = `${s.nom}, coupe ${c + 1} sur ${s.coupes}`;
     [c - 1, c + 1].forEach(n => { if (n >= 0 && n < s.coupes) new Image().src = fichier(s, n); });
     compteur.textContent = `Coupe ${c + 1} / ${s.coupes}`;
@@ -224,7 +248,7 @@
       info.innerHTML = `<b>${nomStructure(id)}</b> · ${ct.nom}`;
     } else {
       info.style.removeProperty('--c');
-      info.textContent = `${s.description} · genou ${s.cote} · coupe ${k() + 1} / ${s.coupes}`;
+      info.textContent = `${s.description}${s.cote ? ` · genou ${s.cote}` : ''} · coupe ${k() + 1} / ${s.coupes}`;
     }
   }
 

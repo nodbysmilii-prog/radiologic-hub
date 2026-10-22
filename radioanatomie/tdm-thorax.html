@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TDM thoracique injectée — Radioanatomie — RadiologicHub</title>
+  <meta name="description" content="Radioanatomie RadiologicHub : atlas de TDM thoracique injectée, coupe par coupe, en axial (fenêtres médiastinale et parenchymateuse), coronal et sagittal : vaisseaux, cœur, voies aériennes, lobes et scissures, os numérotés, légendés en français, lobes colorés et mode quiz.">
+  <link rel="icon" type="image/svg+xml" href="../assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=20261022170000">
+  <link rel="stylesheet" href="../fiche.css?v=20261012150000">
+  <link rel="stylesheet" href="radioanatomie.css?v=20261017003000">
+  <link rel="stylesheet" href="atlas-coupes.css?v=20261022230000">
+</head>
+<body class="fiche-page">
+
+  <header class="site-header is-scrolled" id="top">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="RadiologicHub — accueil">
+        <img src="../assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+        <a href="../index.html#masterclass">Masterclass</a>
+        <a href="../fiches-rapides.html">Fiches rapides</a>
+        <a href="../radioanatomie/index.html" class="is-current">Radioanatomie</a>
+        <a href="../bibliotheque.html">Bibliothèque</a>
+        <a href="../comptes-rendus.html">Comptes rendus</a>
+        <a href="../remplacements.html">Remplacements</a>
+        <a href="../communaute.html">Communauté</a>
+        <a href="../index.html#tarifs">Tarifs</a>
+        <a href="../index.html#inscription" class="btn btn-ink btn-sm">S'inscrire</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="fiche-hero sec-down">
+      <div class="container">
+        <nav class="crumbs" aria-label="Fil d'Ariane">
+          <a href="index.html">Espace radioanatomie</a> › <a href="index.html#tdm">TDM</a> › <span>Thorax</span>
+        </nav>
+        <p class="marker-tag">Radioanatomie · TDM thoracique</p>
+        <h1>TDM thoracique <span class="hl-navy">injectée</span></h1>
+        <p class="fiche-sub">Un atlas à parcourir coupe par coupe, de l'orifice supérieur du thorax aux coupoles : <span class="hl-red">axial en fenêtres médiastinale et parenchymateuse, coronal et sagittal</span>, structures légendées en français et colorées par catégorie, lobes pulmonaires colorés, mode quiz. Chaque étiquette est vérifiée sur des segmentations relues par des radiologues.</p>
+      </div>
+    </section>
+
+    <section class="section sec-up">
+      <div class="container">
+        <div class="ac-station" data-atlas="donnees/thorax-tdm/atlas.json" data-base="">
+          <div class="ac-barre" role="toolbar" aria-label="Séries et options">
+            <div class="ac-series" role="group" aria-label="Série"></div>
+            <div class="ac-outils">
+              <button type="button" class="ac-btn" data-ac="categories" aria-expanded="false" aria-controls="ac-panneau">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2" fill="currentColor"/><circle cx="15" cy="12" r="2" fill="currentColor"/><circle cx="8" cy="18" r="2" fill="currentColor"/></svg><span>Catégories</span></button>
+              <button type="button" class="ac-btn" data-ac="legendes" aria-pressed="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6z"/><circle cx="12" cy="12" r="2.5"/></svg><span>Légendes</span></button>
+              <button type="button" class="ac-btn" data-ac="quiz" aria-pressed="false">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7M12 17v.5"/></svg><span>Quiz</span></button>
+            </div>
+          </div>
+          <div class="ac-scene" tabindex="0" aria-label="Image et légendes ; flèches du clavier ou molette pour changer de coupe">
+            <div class="ac-cadre">
+              <img src="" alt="">
+              <span class="ac-or ac-or-haut"></span><span class="ac-or ac-or-bas"></span><span class="ac-or ac-or-gauche"></span><span class="ac-or ac-or-droite"></span>
+            </div>
+            <svg class="ac-traits" aria-hidden="true"></svg>
+            <p class="ac-vide" hidden></p>
+            <div class="ac-chargement">Chargement de l'atlas…</div>
+          </div>
+          <div class="ac-bas">
+            <div class="ac-coupe">
+              <label for="ac-curseur" class="sr-only">Coupe</label>
+              <input type="range" id="ac-curseur" min="0" max="0" value="0" step="1">
+              <span class="ac-compteur" aria-live="polite"></span>
+            </div>
+            <div class="ac-quiz-barre" hidden>
+              <span class="ac-score" aria-live="polite"></span>
+              <button type="button" class="ac-btn" data-ac="tout">Tout révéler</button>
+              <button type="button" class="ac-btn" data-ac="recommencer">Recommencer la coupe</button>
+            </div>
+            <p class="ac-info" aria-live="polite"></p>
+          </div>
+          <aside class="ac-panneau" id="ac-panneau" aria-label="Catégories affichées">
+            <div class="ac-panneau-tete"><span>Catégories</span><button type="button" class="ac-btn" data-ac="fermer" aria-label="Fermer le menu des catégories">✕</button></div>
+            <ul class="ac-panneau-liste"></ul>
+            <div class="ac-panneau-pied"><button type="button" class="ac-btn" data-ac-toutes="1">Tout afficher</button><button type="button" class="ac-btn" data-ac-toutes="0">Tout masquer</button></div>
+          </aside>
+        </div>
+
+        <div class="ac-aide">
+          <div>
+            <h2 class="marker-sub">Comment l'utiliser</h2>
+            <ul class="fl">
+              <li><mark class="k-tech">Séries</mark> : axiale en fenêtre médiastinale (vaisseaux, cœur, médiastin) et en fenêtre parenchymateuse (bronches, scissures, lobes), coronale et sagittale.</li>
+              <li><mark class="k-key">Changer de coupe</mark> : molette, flèches du clavier, curseur, ou glisser le doigt verticalement sur l'image. Les coupes axiales défilent de haut en bas, comme à la console.</li>
+              <li><mark class="k-sign">Lobes</mark> : les 5 lobes colorés, scissures soulignées en blanc ; un bouton les masque pour lire le parenchyme.</li>
+              <li><mark class="k-ddx">Catégories</mark> : chaque catégorie s'affiche ou se masque par un interrupteur.</li>
+              <li><mark class="k-signo">Quiz</mark> : les noms sont remplacés par « ? » ; touchez une étiquette pour révéler la structure.</li>
+            </ul>
+          </div>
+          <div>
+            <h2 class="marker-sub">Code couleur</h2>
+            <ul class="ac-legende-cats">
+              <li style="--c: #e5e7eb"><span></span>Poumons et scissures</li>
+              <li style="--c: #67e8f9"><span></span>Voies aériennes</li>
+              <li style="--c: #f87171"><span></span>Artères</li>
+              <li style="--c: #60a5fa"><span></span>Veines</li>
+              <li style="--c: #f472b6"><span></span>Cœur</li>
+              <li style="--c: #c4b5fd"><span></span>Viscères et glandes</li>
+              <li style="--c: #fb923c"><span></span>Muscles</li>
+              <li style="--c: #fde047"><span></span>Système nerveux</li>
+              <li style="--c: #f5e6c8"><span></span>Os et cartilages</li>
+            </ul>
+            <p style="margin-top: 14px; font-size: .9rem">Lobes colorés : <b style="color:#b77800">supérieur droit</b>, <b style="color:#3f7a59">moyen</b>, <b style="color:#3c67b8">inférieur droit</b>, <b style="color:#c4560f">supérieur gauche</b>, <b style="color:#2a9d8f">inférieur gauche</b>. Convention radiologique : en axial et en coronal, la droite du patient est à gauche de l'écran (lettres <b>D</b> et <b>G</b>) ; en sagittal, l'avant est à gauche.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section sec-up">
+      <div class="container ra-credits">
+        <h2 class="marker-sub">D'où viennent les étiquettes</h2>
+        <ul class="fl">
+          <li><mark class="k-sign">Segmentations de référence</mark> (71 structures) : trachée, œsophage, thyroïde, lobes, aorte et ses branches, veines caves et brachiocéphaliques, veines pulmonaires, auricule gauche, côtes et vertèbres numérotées, sternum, scapulas, clavicules, moelle spinale, muscles érecteurs du rachis, foie, estomac, rate. Ces masques ont été relus et corrigés par des radiologues (jeu TotalSegmentator) ; chaque étiquette est posée au point le plus intérieur de la structure sur la coupe.</li>
+          <li><mark class="k-tech">Structures calculées</mark> (18) à partir de ces masques et du scanner : aorte ascendante, arc, aorte thoracique descendante puis aorte abdominale sous le hiatus (disque T12-L1) ; carène et bronches principales (le masque « trachée » de référence se divise en deux à la bifurcation, en regard de T5) ; scissures (interface entre deux lobes) ; hiles ; apex et bases ; veines pulmonaires droites et gauches.</li>
+          <li><mark class="k-key">Repères manuels</mark> (10) pour ce que la référence ne contient pas : tronc et artères pulmonaires, les 4 cavités cardiaques (séparées sur leur densité : en phase mixte, le cœur droit est opacifié par le bolus), veine azygos, grands pectoraux. Chacun des 212 points est contrôlé : densité attendue, et pas dans le masque d'une autre structure ; cavités et arbre pulmonaire dans le masque du cœur.</li>
+          <li><mark class="k-grave">Non légendés</mark> faute d'être visibles de façon sûre à 1,5 mm : artères thoraciques internes, nerfs vagues et phréniques, crosse de l'azygos, segments pulmonaires (sans arbre bronchique segmentaire validé, seuls les 5 lobes sont montrés).</li>
+        </ul>
+        <p><b>Contrôles automatiques</b> (<a href="donnees/thorax-tdm/validation.json">rapport</a>) : côtés (foie à droite de la rate), arc aortique à gauche de la trachée, veine cave supérieure à droite de l'aorte ascendante, carène en regard de T4–T6, bronche principale gauche plus longue que la droite, chaque côte de la 2e à la 10e articulée avec sa vertèbre, lobe moyen en avant du lobe inférieur, densités de la phase injectée (aorte, veine cave supérieure, veines pulmonaires, cœur).</p>
+        <h2 class="marker-sub" style="margin-top: 26px">Source et licence</h2>
+        <p><b>Images et segmentations de référence</b> : « Dataset with segmentations of 117 important anatomical structures in 1228 CT images », version 2.0.1 (Wasserthal J. et al., TotalSegmentator, Hôpital universitaire de Bâle), <a href="https://doi.org/10.5281/zenodo.10047292" rel="noopener" target="_blank">doi:10.5281/zenodo.10047292</a>, licence <a href="https://creativecommons.org/licenses/by/4.0/deed.fr" rel="noopener" target="_blank">CC BY 4.0</a> (<a href="donnees/thorax-tdm/LICENSE-TotalSegmentator-CC-BY-4.0.txt">mention</a>). Scanner de routine clinique anonymisé, cas s0310 : femme de 23 ans, TDM cervico-thoracique injectée, sans pathologie selon les métadonnées du jeu de données ; phase mixte vérifiée sur les densités (aorte 165 UH, veines pulmonaires 156 UH, cœur 168 UH) ; voxels de 1,5 mm.</p>
+        <p><b>Modifications par RadiologicHub</b> : coupes axiales, coronales et sagittales orientées selon la convention radiologique, fenêtrage, recadrage sur le patient, agrandissement × 2, calque des lobes, étiquettes en français posées comme décrit ci-dessus.</p>
+        <p>Données et scripts : <code>radioanatomie/donnees/thorax-tdm/</code>, <code>scripts/radioanatomie/preparer_tdm_thorax.py</code>, <code>scripts/radioanatomie/construire_atlas_thorax.py</code>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="../index.html" class="brand">
+        <img src="../assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav aria-label="Liens de pied de page">
+        <a href="../index.html#masterclass">Masterclass</a>
+        <a href="../fiches-rapides.html">Fiches rapides</a>
+        <a href="../radioanatomie/index.html">Radioanatomie</a>
+        <a href="../bibliotheque.html">Bibliothèque</a>
+        <a href="../comptes-rendus.html">Comptes rendus</a>
+        <a href="../communaute.html">Communauté</a>
+        <a href="../remplacements.html">Remplacements</a>
+        <a href="../index.html#cas-du-jour">Cas du jour</a>
+        <a href="../mentions-legales.html">Mentions légales</a>
+        <a href="../index.html#inscription">Contact</a>
+      </nav>
+      <p class="copyright">© <span id="year"></span> RadiologicHub · Formation en radiologie d'urgence</p>
+    </div>
+  </footer>
+
+  <script src="atlas-coupes.js?v=20261022230000"></script>
+  <script src="../fiche.js?v=20261012150000"></script>
+</body>
+</html>

@@ -41,6 +41,8 @@
 .ac-scene:focus-visible { box-shadow: inset 0 0 0 2px var(--amber); }
 .ac-cadre { position: absolute; background: #000; }
 .ac-cadre img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; image-rendering: auto; }
+.ac-cadre .ac-calque { pointer-events: none; }
+.ac-cadre .ac-calque[hidden] { display: none; }
 .ac-or { position: absolute; font: 800 .68rem var(--font); color: #ffd36b; text-shadow: 0 0 3px #000, 0 0 3px #000; pointer-events: none; }
 .ac-or-haut { top: 4px; left: 50%; transform: translateX(-50%); }
 .ac-or-bas { bottom: 4px; left: 50%; transform: translateX(-50%); }
@@ -118,7 +120,7 @@
   .ac-outils { margin-left: 0; }
   .ac-btn { min-height: 30px; padding: 0 10px; font-size: .7rem; }
   .ac-station { margin-inline: -16px; border-radius: 0; border-left: 0; border-right: 0; box-shadow: none; }
-  .ac-etiq { --lignes: 3; font-size: .66rem; line-height: 1.2; }
+  .ac-etiq { --lignes: 4; font-size: .66rem; line-height: 1.2; overflow-wrap: anywhere; -webkit-hyphens: auto; hyphens: auto; }
   .ac-etiq.cote-g { padding-right: 6px; }
   .ac-etiq.cote-d { padding-left: 6px; }
 }
