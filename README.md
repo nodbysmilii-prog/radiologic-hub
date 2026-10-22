@@ -693,6 +693,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 22/10/2026 | Accueil, **Cas du jour** : une image par cas à côté de la vignette (au-dessus sur téléphone) — IRM T1 axiale (striatopathie), TDM axiale (hernie d'Amyand), angioscanner axial (sarcome de l'artère pulmonaire), IRM coronale T1 gadolinium (schwannome du V3), reprises des cas complets ; `script.js` et `finition.css` : `?v=` changé |
 | 22/10/2026 | **Mise en ligne de la refonte** (branche `claude/refonte-ergonomie` fusionnée dans la branche en ligne) : navigation commune, accueil, comptes rendus, cas cliniques, fiches Neuro / Thorax, radioanatomie, dictée ; toujours **sans le cours des ischio-jambiers** (en attente de validation) |
 | 22/10/2026 | Dictée vocale : « lise » → lyse, « ostéo lise » → ostéolyse, variantes de « s'étendant » (s'est tendant, ses tendant, c'étendant…) ; tests |
 | 22/10/2026 | Dictée vocale : catégorie « Oreille, rachis, neuro » du lexique (lytique, conservée, interapophysaire, tri-ventriculaire, s'étendant, ptérygoïdien, épitympan, attico-antral, malleus, incudo-malléaire, incus, ossifiante, hypodensité pré-stapédienne, otospongiose) ; majuscule d'une erreur gardée seulement en début de phrase ; **publiée sur le site en ligne** (fichiers de la dictée seulement) |
