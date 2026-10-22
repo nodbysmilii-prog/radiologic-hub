@@ -90,6 +90,7 @@ const COURSES = [
 const CASES = [
   {
     tab: 'Cas 1 · Neuro',
+    image: { src: 'assets/cas/striatopathie-diabetique/irm-t1-axiale.jpg', alt: "IRM cérébrale, coupe axiale T1 sans injection", legende: "IRM axiale T1 sans injection" },
     vignette: 'Homme de 56 ans aux antécédents de <span class="hl-navy">diabète de type 2 mal équilibré</span>, consulte pour des <span class="hl-red">mouvements involontaires et brusques</span> d\'apparition soudaine du bras et de la jambe droits. L\'IRM montre un <span class="hl-navy">hypersignal T1 du putamen gauche</span>.',
     question: 'Quel est votre diagnostic ?',
     options: ['Hématome des noyaux gris', 'Striatopathie diabétique', 'Calcifications (Fahr)', 'Dépôts de manganèse'],
@@ -106,6 +107,7 @@ const CASES = [
   },
   {
     tab: 'Cas 2 · Digestif',
+    image: { src: 'assets/cas/hernie-amyand/tdm-axiale.jpg', alt: "Scanner abdomino-pelvien injecté, coupe axiale", legende: "TDM axiale injectée" },
     vignette: 'Patient consultant pour une <span class="hl-red">tuméfaction inguinale droite douloureuse</span> et irréductible. Au scanner, une <span class="hl-navy">structure tubulaire borgne et épaissie</span> se trouve dans le sac herniaire, au contact du cæcum.',
     question: 'Comment s\'appelle cette hernie ?',
     options: ['Hernie de Littré', "Hernie d'Amyand", 'Hernie de Richter', 'Hernie de De Garengeot'],
@@ -122,6 +124,7 @@ const CASES = [
   },
   {
     tab: 'Cas 3 · Thorax',
+    image: { src: 'assets/cas/sarcome-artere-pulmonaire/tdm-axiale-1.jpg', alt: "Angioscanner thoracique, coupe axiale au niveau du tronc de l'artère pulmonaire", legende: "Angioscanner thoracique, coupe axiale" },
     vignette: 'Femme de 52 ans aux urgences pour une <span class="hl-red">dyspnée progressive</span> depuis 3 mois, aggravée depuis 2 semaines, avec <span class="hl-red">douleurs thoraciques</span>, toux sèche et <span class="hl-navy">palpitations</span>. L\'angioscanner montre un défaut endoluminal du tronc de l\'artère pulmonaire qui le distend.',
     question: 'Quel diagnostic évoquez-vous en premier ?',
     options: ['Embolie pulmonaire chronique', "Sarcome de l'artère pulmonaire", 'Lymphome médiastinal', "Anévrisme de l'artère pulmonaire"],
@@ -138,6 +141,7 @@ const CASES = [
   },
   {
     tab: 'Cas 4 · Tête et cou',
+    image: { src: 'assets/cas/schwannome-v3/irm-coronal-t1-gado.jpg', alt: "IRM, coupe coronale T1 après injection de gadolinium", legende: "IRM coronale T1 gadolinium" },
     vignette: 'Femme de 41 ans : <span class="hl-red">menton et lèvre inférieure droits engourdis</span> depuis 8 mois, <span class="hl-red">mâchoire qui dévie à droite</span> à l\'ouverture de la bouche, oreille droite « bouchée ». L\'IRM montre une <span class="hl-navy">masse bien limitée, en haltère, de la fosse infratemporale droite</span>, qui remonte le long d\'un nerf jusqu\'à la base du crâne.',
     question: 'Par quel orifice la masse remonte-t-elle vers la base du crâne ?',
     options: ['Fissure orbitaire supérieure', 'Foramen rond', 'Foramen ovale', 'Foramen épineux'],
@@ -252,7 +256,10 @@ function renderCase(i) {
   });
   quizCard.innerHTML = `
     <p class="quiz-meta">Cas ${i + 1} / ${CASES.length}</p>
-    <p class="quiz-vignette">${c.vignette}</p>
+    <div class="quiz-cas${c.image ? ' a-image' : ''}">
+      ${c.image ? `<figure class="quiz-image"><img src="${c.image.src}" alt="${c.image.alt}" loading="lazy" decoding="async"><figcaption>${c.image.legende}</figcaption></figure>` : ''}
+      <p class="quiz-vignette">${c.vignette}</p>
+    </div>
     <p class="quiz-question">${c.question}</p>
     <div class="options">${c.options.map((o, j) => `<button class="option" data-opt="${j}">${o}</button>`).join('')}</div>
     <div class="answer" aria-live="polite">

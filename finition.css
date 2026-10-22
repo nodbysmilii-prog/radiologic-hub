@@ -346,3 +346,13 @@ h2 { font-size: clamp(1.35rem, 2.6vw, 1.9rem); line-height: 1.18; }
   .regle { display: none; }
   .fsec-title::after { display: none; }
 }
+
+/* Cas du jour : l'image du cas à côté de la vignette (au-dessus sur téléphone) */
+.quiz-cas.a-image { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: clamp(18px, 3vw, 32px); align-items: center; }
+.quiz-image { margin: 0; background: #000; border: 3px solid var(--ink); border-radius: 16px; overflow: hidden; }
+.quiz-image img { display: block; width: 100%; height: auto; max-height: 340px; object-fit: contain; background: #000; }
+.quiz-image figcaption { background: var(--ink); color: #fff; font-size: .78rem; font-weight: 700; letter-spacing: .03em; padding: 6px 10px; }
+@media (max-width: 720px) {
+  .quiz-cas.a-image { grid-template-columns: minmax(0, 1fr); }
+  .quiz-image img { max-height: 300px; }
+}
