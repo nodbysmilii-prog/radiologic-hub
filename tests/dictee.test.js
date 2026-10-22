@@ -248,7 +248,8 @@ test('lexique : erreurs de transcription corrigées selon le contexte', () => {
   assert.equal(T.corriger('la durmer'), 'la dure-mère');
   assert.equal(T.corriger('la dure mère'), 'la dure-mère', 'toujours avec un trait d\'union');
   assert.equal(T.corriger('épaississement dur mais rien'), 'épaississement dure-mérien');
-  assert.equal(T.corriger('contours microbuler'), 'contours microlobulé');
+  assert.equal(T.corriger('contours microbuler'), 'contours microlobulés');
+  assert.equal(T.corriger('nodule microbuler'), 'nodule microlobulé');
   assert.equal(T.corriger('de taille de taille normale'), 'le foie est de taille normale');
   assert.equal(T.corriger('de taille normale'), 'de taille normale', '« de taille » légitime conservé');
   assert.equal(T.corriger('l\'aube supérieur droit'), 'lobe supérieur droit');
@@ -280,4 +281,12 @@ test('« et » → « est » aussi quand la phrase est dictée en deux fois (pau
   assert.equal('Le foie et'.slice(0, 10 - r.retirer) + r.texte, 'Le foie et la rate');
   assert.equal(T.corriger("Le foie et d'échostructure homogène"), "Le foie est d'échostructure homogène");
   assert.equal(T.corriger("le foie et d'aspect normal"), "le foie est d'aspect normal");
+});
+
+test('« contour régulier » → « contours réguliers »', () => {
+  assert.equal(T.corriger('de contour régulier'), 'de contours réguliers');
+  assert.equal(T.corriger('Contours régulier et nets'), 'Contours réguliers et nets');
+  assert.equal(T.corriger('contour irrégulier'), 'contours irréguliers');
+  assert.equal(T.corriger('contour microbuler'), 'contours microlobulés');
+  assert.equal(T.corriger('le foie et de contour régulier'), 'le foie est de contours réguliers');
 });

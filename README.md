@@ -693,6 +693,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 22/10/2026 | Dictée vocale : accord « contour régulier » → « contours réguliers » (irréguliers, nets, flous, lobulés, microlobulés, polylobés, spiculés, lisses, bosselés, mal / bien définis), catégorie « Accords fréquents » du lexique ; tests |
 | 22/10/2026 | Dictée vocale : « le foie et » restait écrit quand on marquait une pause après « et » — le « et » déjà inséré devient « est » dès que la suite dictée est un attribut ; « et d'échostructure », « et d'aspect », « et d'allure »… → « est » ; tests |
 | 22/10/2026 | Dictée vocale : **couche de correction des erreurs de transcription** avant insertion dans le compte rendu — lexique JSON par catégorie modifiable sans code (`dictee/lexique.js`, avec contexte), hypersignal / hyposignal soudés, dure-mère / dure-mérien avec trait d'union, règle contextuelle prioritaire « et » → « est » (sujet singulier + attribut, vraies conjonctions conservées) ; tests |
 | 22/10/2026 | Cas « Une tuméfaction préauriculaire indolore » : **cas du Dr Boubaker Guermazi**, nommé en valeur sous l'accroche (« Cas proposé par ») et sur sa carte de la liste des cas ; champ `auteur` ajouté aux données des cas (`scripts/cas/construire_cas.py`, styles dans `cas/cas.css`). |

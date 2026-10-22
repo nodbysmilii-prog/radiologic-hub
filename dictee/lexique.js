@@ -56,6 +56,20 @@
       { "terme": "T1", "erreurs": ["thé un", "té un"] },
       { "terme": "T2", "erreurs": ["thé deux", "té deux"] }
     ],
+    "Accords fréquents": [
+      { "terme": "contours réguliers", "erreurs": ["contour régulier", "contours régulier", "contour réguliers"] },
+      { "terme": "contours irréguliers", "erreurs": ["contour irrégulier", "contours irrégulier", "contour irréguliers"] },
+      { "terme": "contours nets", "erreurs": ["contour net", "contours net", "contour nets"] },
+      { "terme": "contours flous", "erreurs": ["contour flou", "contours flou", "contour flous"] },
+      { "terme": "contours lobulés", "erreurs": ["contour lobulé", "contours lobulé", "contour lobulés"] },
+      { "terme": "contours microlobulés", "erreurs": ["contour microlobulé", "contour microbuler", "contour microbulé", "contours microlobulé", "contours microbuler", "contours microbulé", "contour microlobulés"] },
+      { "terme": "contours polylobés", "erreurs": ["contour polylobé", "contours polylobé", "contour polylobés"] },
+      { "terme": "contours spiculés", "erreurs": ["contour spiculé", "contours spiculé", "contour spiculés"] },
+      { "terme": "contours lisses", "erreurs": ["contour lisse", "contours lisse", "contour lisses"] },
+      { "terme": "contours bosselés", "erreurs": ["contour bosselé", "contours bosselé", "contour bosselés"] },
+      { "terme": "contours mal définis", "erreurs": ["contour mal défini", "contours mal défini", "contour mal définis"] },
+      { "terme": "contours bien définis", "erreurs": ["contour bien défini", "contours bien défini", "contour bien définis"] }
+    ],
     "Sémiologie et pathologie": [
       { "terme": "nodule", "erreurs": ["no dule", "nos dules"] },
       { "terme": "kyste", "erreurs": ["quiste", "kiste"] },
