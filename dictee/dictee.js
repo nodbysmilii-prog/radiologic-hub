@@ -31,6 +31,7 @@
     moteur: M.defaut,
     toucheBasculer: { key: 'F9', ctrl: false, alt: false, shift: false, meta: false },
     toucheArreter: { key: 'Escape', ctrl: false, alt: false, shift: false, meta: false },
+    surOrdinateur: false,
   };
   const lire = () => { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
   let reglages = { ...DEFAUT, ...lire() };
@@ -93,7 +94,8 @@
     }
     if (nouvelleCible) cible = nouvelleCible;
     if (actif) { majInterface(); return; }                 // déjà en cours : on change seulement de cible
-    session = mo.creer({ langue: 'fr-FR', surIntermediaire, surFinal, surEtat, surErreur, choisir: T.meilleureHypothese });
+    session = mo.creer({ langue: 'fr-FR', surIntermediaire, surFinal, surEtat, surErreur, choisir: T.meilleureHypothese,
+      surOrdinateur: !!reglages.surOrdinateur, vocabulaire: vocabulaire() });
     actif = true;
     debut = Date.now();
     tick();
@@ -156,7 +158,10 @@
     if (cible.type === 'editeur') {
       const s = editor.selectionStart, e = editor.selectionEnd;
       const r = T.assembler(actions, editor.value.slice(0, s));
-      if (r.texte || r.retirer) ED.remplacer(s - r.retirer, e, r.texte);
+      if (r.texte || r.retirer) {
+        ED.remplacer(s - r.retirer, e, r.texte);
+        window.dispatchEvent(new CustomEvent('rh:dictee-insere', { detail: { debut: s - r.retirer, fin: s - r.retirer + r.texte.length } }));
+      }
       return;
     }
     const el = cible.el, s = el.selectionStart ?? el.value.length, e = el.selectionEnd ?? s;
@@ -501,6 +506,110 @@
     [micBtn, champBtn, ...$$('.dt-mini')].forEach(b => b.classList.toggle('is-ko', !ok));
   }
 
+  /* ---------- Vocabulaire médical : reconnaissance sur l'ordinateur (Chrome) ---------- */
+  // Termes du lexique du site + termes de « Mes corrections » : la liste que Chrome favorise.
+  function vocabulaire() {
+    return [...new Set([...perso.map(c => c.ecrit), ...(T.VOCABULAIRE || [])].map(t => String(t).trim()).filter(t => t && t.length <= 60))].slice(0, 400);
+  }
+  const localOn = $('#dt-local-on'), localEtat = $('#dt-local-etat'), localInst = $('#dt-local-installer');
+  const SO = M.get('webspeech').surOrdinateur;
+  async function majLocal() {
+    localOn.checked = !!reglages.surOrdinateur;
+    if (!SO || !SO.pris()) {
+      localOn.disabled = true; localInst.hidden = true;
+      localEtat.textContent = 'Non disponible dans ce navigateur (il faut une version récente de Chrome sur ordinateur).';
+      return;
+    }
+    const e = await SO.etat('fr-FR');
+    localOn.disabled = false;
+    localInst.hidden = !(e === 'downloadable');
+    localEtat.textContent = {
+      available: `Français installé sur cet ordinateur. ${vocabulaire().length} termes médicaux favorisés${reglages.surOrdinateur ? '' : ' une fois la case cochée'}. La voix reste sur l'ordinateur.`,
+      downloadable: 'Le français n\'est pas encore installé sur cet ordinateur : cliquez sur « Installer le français » (téléchargement gratuit par Chrome, une seule fois).',
+      downloading: 'Installation du français en cours…',
+      unavailable: 'Chrome ne propose pas encore le français sur l\'ordinateur : la dictée continue par le service du navigateur (sans liste de vocabulaire).',
+    }[e] || 'Non disponible dans ce navigateur.';
+    if (e === 'downloading') setTimeout(majLocal, 4000);
+  }
+  localOn.addEventListener('change', async () => {
+    if (actif) arreter();
+    reglages.surOrdinateur = localOn.checked; sauver();
+    if (localOn.checked && (await SO.etat('fr-FR')) !== 'available') {
+      message('Installez d\'abord le français sur cet ordinateur (bouton dans ⚙ Réglages).', true);
+    }
+    majLocal();
+  });
+  localInst.addEventListener('click', async () => {
+    localEtat.textContent = 'Installation du français en cours…';
+    const ok = await SO.installer('fr-FR');
+    message(ok ? 'Français installé : la dictée peut se faire sur cet ordinateur.' : 'Installation impossible pour le moment.', !ok);
+    majLocal();
+  });
+  $('#dt-reglages-btn').addEventListener('click', majLocal);
+
+  /* ---------- Apprentissage automatique : un mot dicté corrigé à la main ---------- */
+  // Zones du compte rendu insérées par la dictée (positions suivies à chaque frappe, 10 min).
+  let zones = [], avantSaisie = null, candidat = null, minuterieApp = null;
+  window.addEventListener('rh:dictee-insere', e => {
+    zones.push({ a: e.detail.debut, b: e.detail.fin, t: Date.now() });
+    zones = zones.filter(z => Date.now() - z.t < 600000).slice(-30);
+  });
+  const motAutour = (v, p) => {
+    let a = p, b = p;
+    while (a > 0 && /[\p{L}\p{N}'’-]/u.test(v[a - 1])) a--;
+    while (b < v.length && /[\p{L}\p{N}'’-]/u.test(v[b])) b++;
+    return { a, b };
+  };
+  editor.addEventListener('beforeinput', () => {
+    const v = editor.value, s0 = editor.selectionStart, e0 = editor.selectionEnd;
+    avantSaisie = { long: v.length, a: s0, b: e0 };
+    if (candidat) return;
+    const z = zones.find(z => s0 >= z.a && e0 <= z.b);
+    if (!z) return;
+    // mot (ou groupe de mots sélectionné) qui va être corrigé
+    const d = motAutour(v, s0), f = e0 > s0 ? motAutour(v, e0) : d;
+    const dit = v.slice(d.a, f.b).trim();
+    if (!dit || dit.length > 40 || !/\p{L}/u.test(dit)) return;
+    candidat = { dit, a: d.a, long: f.b - d.a, delta: 0 };
+  });
+  editor.addEventListener('input', () => {
+    if (!avantSaisie) return;
+    const delta = editor.value.length - avantSaisie.long, { a, b } = avantSaisie;
+    zones.forEach(z => { if (z.a >= b) { z.a += delta; z.b += delta; } else if (z.b > a) z.b += delta; });
+    if (candidat) {
+      if (a < candidat.a || a > candidat.a + candidat.long + candidat.delta + 1) { candidat = null; return; }
+      candidat.delta += delta;
+      clearTimeout(minuterieApp);
+      minuterieApp = setTimeout(proposerApprentissage, 1600);
+    }
+    avantSaisie = null;
+  });
+  editor.addEventListener('blur', () => { if (candidat) { clearTimeout(minuterieApp); proposerApprentissage(); } });
+  function proposerApprentissage() {
+    const c = candidat; candidat = null;
+    if (!c) return;
+    const n = editor.value.slice(c.a, c.a + c.long + c.delta);
+    const r = motAutour(editor.value, c.a + Math.max(0, c.long + c.delta));
+    const ecrit = editor.value.slice(c.a, Math.max(r.b, c.a + n.length)).trim();
+    if (!ecrit || ecrit.length > 60 || T.norm(ecrit) === T.norm(c.dit) || !/\p{L}/u.test(ecrit)) return;
+    if (perso.some(p => T.norm(p.dit) === T.norm(c.dit) && p.ecrit === ecrit)) return;
+    const boite = $('#dt-propose');
+    boite.innerHTML = `Vous avez corrigé « <b>${esc(c.dit)}</b> » en « <b>${esc(ecrit)}</b> ». L'apprendre pour les prochaines dictées ? `
+      + '<button type="button" class="btn btn-ink btn-sm" data-r="oui">Apprendre</button> <button type="button" class="btn btn-outline btn-sm" data-r="non">Non</button>';
+    boite.hidden = false;
+    boite.onclick = ev => {
+      const r2 = ev.target.closest('[data-r]'); if (!r2) return;
+      if (r2.dataset.r === 'oui') {
+        perso = perso.filter(p => T.norm(p.dit) !== T.norm(c.dit)).concat({ dit: c.dit, ecrit });
+        majPerso();
+        message(`Appris : « ${c.dit} » → « ${ecrit} ».`);
+      }
+      boite.hidden = true;
+    };
+    clearTimeout(boite._t); boite._t = setTimeout(() => { boite.hidden = true; }, 20000);
+  }
+
   majReglages();
   majSections();
+  majLocal();
 })();

@@ -91,3 +91,13 @@
 .dt-perso-vide { color: #666; font-style: italic; }
 .dt-perso-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 .dt-perso-import { cursor: pointer; }
+
+/* Vocabulaire médical (reconnaissance sur l'ordinateur) et apprentissage des corrections */
+.dt-local { margin: 10px 0 14px; padding: 10px 14px 12px; border: 2px dashed var(--ink); border-radius: 14px; }
+.dt-local legend { padding: 0 6px; font-size: .72rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+.dt-check { display: block; font-weight: 600; }
+.dt-check input { margin: 0 6px 0 0; vertical-align: -2px; }
+.dt-local .btn[hidden] { display: none; }
+.dt-propose { margin: 8px 0 0; padding: 8px 12px; border-radius: 12px; background: #eef4ff; border: 2px solid #3c67b8; font-size: .85rem; font-weight: 600; }
+.dt-propose[hidden] { display: none; }
+.dt-propose .btn { margin-left: 4px; }

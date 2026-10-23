@@ -47,13 +47,21 @@
     raison: () => 'Votre navigateur ne permet pas la dictée vocale (Firefox ne prend pas en charge la Web Speech API) : utilisez Chrome, Edge ou Safari.',
     creer(o) {
       const R = Reco();
-      let rec = null, voulu = false, fatale = false, relances = [];
+      let rec = null, voulu = false, fatale = false, relances = [], sansPhrases = false;
       const nouveau = () => {
         const r = new R();
         r.lang = o.langue || 'fr-FR';
         r.continuous = true;
         r.interimResults = true;
         r.maxAlternatives = o.choisir ? 5 : 1;
+        // Reconnaissance sur l'ordinateur (Chrome récent) : gratuite, et seule à accepter une liste de
+        // vocabulaire à favoriser (« contextual biasing ») — les termes médicaux du site et ceux appris.
+        if (o.surOrdinateur && 'processLocally' in r) {
+          r.processLocally = true;
+          if (!sansPhrases && o.vocabulaire && o.vocabulaire.length && root.SpeechRecognitionPhrase && 'phrases' in r) {
+            try { o.vocabulaire.slice(0, 400).forEach(m => r.phrases.push(new root.SpeechRecognitionPhrase(m, 5))); } catch (err) { sansPhrases = true; }
+          }
+        }
         r.onstart = () => o.surEtat && o.surEtat('ecoute');
         r.onresult = e => {
           let inter = '';
@@ -68,8 +76,15 @@
           if (o.surIntermediaire) o.surIntermediaire(inter.trim());
         };
         r.onerror = e => {
-          // silence, ou avertissement de Chrome sur la liste de vocabulaire : on relance sans s'arrêter
-          if (e.error === 'no-speech' || e.error === 'aborted' || e.error === 'phrases-not-supported') return;
+          // silence : on relance sans s'arrêter
+          if (e.error === 'no-speech' || e.error === 'aborted') return;
+          // liste de vocabulaire refusée : on relance sans la liste (jamais d'arrêt de la dictée pour ça)
+          if (e.error === 'phrases-not-supported') { sansPhrases = true; return; }
+          if (o.surOrdinateur && (e.error === 'language-not-supported' || e.error === 'service-not-allowed')) {
+            fatale = true;
+            if (o.surErreur) o.surErreur({ code: e.error, fatale, message: 'Le français n\'est pas encore installé sur cet ordinateur : ⚙ Réglages › « Installer le français ». En attendant, décochez « Reconnaissance sur cet ordinateur ».' });
+            return;
+          }
           fatale = !!ERREURS[e.error];
           if (o.surErreur) o.surErreur({ code: e.error, fatale, message: ERREURS[e.error] || `Erreur de reconnaissance vocale (${e.error}).` });
         };
@@ -80,7 +95,7 @@
           relances = relances.filter(x => t - x < 10000);
           if (voulu && !fatale && relances.length < 5) {
             relances.push(t);
-            try { r.start(); return; } catch (err) { /* déjà démarrée */ }
+            try { rec = nouveau(); rec.start(); return; } catch (err) { /* déjà démarrée */ }
           }
           voulu = false;
           if (o.surEtat) o.surEtat('arret');
@@ -109,6 +124,21 @@
     disponible: () => false,
     raison: () => 'Transcription locale en préparation (Whisper dans le navigateur, WebGPU) : l\'audio ne quittera pas le poste.',
     creer() { throw new Error('Moteur Whisper local non disponible dans cette version.'); },
+  };
+
+  /* Reconnaissance sur l'ordinateur : état et installation du français (Chrome récent) */
+  webspeech.surOrdinateur = {
+    pris: () => !!(Reco() && Reco().available),
+    etat: async (langue = 'fr-FR') => {
+      const R = Reco();
+      if (!R || !R.available) return 'non-pris-en-charge';
+      try { return await R.available({ langs: [langue], processLocally: true }); } catch (err) { return 'non-pris-en-charge'; }
+    },
+    installer: async (langue = 'fr-FR') => {
+      const R = Reco();
+      if (!R || !R.install) return false;
+      try { return await R.install({ langs: [langue], processLocally: true }); } catch (err) { return false; }
+    },
   };
 
   const MOTEURS = { webspeech, 'whisper-local': whisperLocal };
