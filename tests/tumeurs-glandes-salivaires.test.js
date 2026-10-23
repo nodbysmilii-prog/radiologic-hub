@@ -32,7 +32,7 @@ test('figures « tracées à la main » produites par le script', () => {
 });
 
 test('seuils et conduites du cours', () => {
-  for (const t of ['90 %', '≥ 1,4', '1,0 à 1,4', '< 1,0', '1,27 à 1,6', 'ADC de la lésion', '5 à 10 min', '< 5 %',
+  for (const t of ['90 %', '≥ 1,4', '0,9 à 1,4', '< 0,9', '< 0,7', '1,27 à 1,6', 'ADC de la lésion', '5 à 10 min', '< 5 %',
     'IRM avant la cytoponction', 'critère le plus péjoratif', 'La perfusion l\'emporte : malignité',
     'La morphologie l\'emporte : malignité', 'refaire l\'IRM à 1 mois', 'T2 avec Fat Sat', 'nerf facial +++',
     'trajet intrapétreux du VII', 'Suivi clinique'])
@@ -44,7 +44,7 @@ test('choix de l\'auteur (23/10/2026) et repères de la littérature', () => {
   assert.match(HTML, /dt-leaf is-warn" href="#perfusion">Malin &gt; bénin/);
   assert.match(HTML, /dt-leaf is-bad" href="#perfusion"><small class="dt-kicker">la plus péjorative <\/small>Malin &gt; bénin/);
   for (const t of ['plus malin que bénin', 'courbe C reste la plus péjorative', 'toujours le versant malin',
-    'Tpeak', '≤ 120 s', '5 min', '91 %', 'doi:10.1148/radiol.2262011486'])
+    'Tpeak', '≤ 120 s', '5 min', '59 %', 'doi:10.4329/wjr.v15.i1.20', 'doi:10.1007/s11547-020-01182-2'])
     assert.ok(texte.includes(t), t);
   const courbes = HTML.match(/<!-- GEN:courbes -->([^]*?)<!-- \/GEN:courbes -->/)[1];
   for (const t of ['120 s', '5 min', 'pic précoce : ≤ 120 s']) assert.ok(courbes.includes(t), t);
@@ -59,9 +59,14 @@ test('arbres décisionnels : prise en charge IRM + FNAC et algorithme des lésio
 
 test('ADC de la lésion, plus de rCDA (choix de l\'auteur, 23/10/2026)', () => {
   assert.ok(!/rCDA|rcda/.test(HTML), 'le rCDA ne doit plus apparaître');
-  for (const t of ['doi:10.1148/radiol.2493072045', 'doi:10.1016/j.diii.2020.08.002']) assert.ok(texte.includes(t), t);
+  for (const t of ['doi:10.1007/s11547-020-01182-2', 'doi:10.1016/j.diii.2020.08.002', '94,9 %', '94,6 %', 'chevauchement important']) assert.ok(texte.includes(t), t);
   const adc = HTML.match(/<!-- GEN:adc -->([^]*?)<!-- \/GEN:adc -->/)[1];
-  for (const t of ['1,0', '1,4', 'Warthin', 'Malin', 'Adénome pléomorphe', 'seuil AP / malin selon les études : 1,27 à 1,6']) assert.ok(adc.includes(t), t);
+  for (const t of ['0,7', '0,9', '1,4', 'Warthin', 'Carcinome', 'adénome pléomorphe', '+ courbe A', '+ courbe B', '+ courbe C', 'lymphome : &lt; 0,7 + courbe C', 'seuil AP / malin selon les études : 1,27 à 1,6']) assert.ok(adc.includes(t), t);
+  // références : seulement des articles de 2020 ou plus récents (demande de l'auteur, 23/10/2026)
+  const annees = [...HTML.matchAll(/(?:<i>[^<]+<\/i>|et al\.|Beyhan M\.) (?:[^<]*?)?(19\d\d|20\d\d)/g)].map(m => +m[1]);
+  assert.ok(annees.length >= 6, 'références trouvées');
+  assert.ok(annees.every(a => a >= 2020), 'référence antérieure à 2020 : ' + annees);
+  assert.ok(!/radiol\.2262011486|radiol\.2493072045/.test(HTML), 'articles de 2003 et 2008 retirés');
 });
 
 test('carte dans Fiches rapides › Tête et cou', () => {
