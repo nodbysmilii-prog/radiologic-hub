@@ -722,7 +722,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
-| 23/10/2026 | Dictée vocale : Chrome renvoyait encore « phrases-not-supported » sans liste de vocabulaire — liste vide déclarée explicitement et cette erreur ignorée (l'écoute reprend seule) ; `?v=` changé |
+| 23/10/2026 | Dictée vocale : Chrome renvoyait encore « phrases-not-supported » sans liste de vocabulaire — cette erreur est désormais ignorée (l'écoute reprend seule) ; `?v=` changé |
 | 23/10/2026 | Dictée vocale : **« Erreur de reconnaissance vocale » corrigée** — la liste de vocabulaire médical envoyée à Chrome (`SpeechRecognitionPhrase`, ajoutée le 22/10) est refusée par les versions récentes de Chrome quand la reconnaissance passe par leurs serveurs (« phrases-not-supported ») et bloquait la dictée : retirée ; le choix entre 5 hypothèses, le lexique et « Mes corrections » sont conservés ; `?v=` changé |
 | 23/10/2026 | Dictée vocale : **essai Whisper local retiré** à la demande de l'auteur (pas de texte en temps réel, trop de fautes) — moteur, service local, scripts d'installation et tests supprimés ; retour à la dictée du navigateur avec lexique, « et » / « est » et « Mes corrections » ; `?v=` de la dictée changé |
 | 22/10/2026 | **Mise en ligne de l'Espace DICOM (démonstration)** à la demande de l'auteur : branche `apercu/espace-dicom` fusionnée (pages `espace-dicom.html` et `espace-dicom-visionneuse.html`, visionneuse OHIF préconstruite dans `dicom/ohif/`, courbe de perfusion) ; lien « Espace DICOM » dans le pied de page ; le serveur (Orthanc, dicom-api, Supabase) reste à installer, les examens sont traités dans le navigateur |

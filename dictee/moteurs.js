@@ -54,8 +54,6 @@
         r.continuous = true;
         r.interimResults = true;
         r.maxAlternatives = o.choisir ? 5 : 1;
-        // Chrome récent : liste de vocabulaire explicitement vide (sinon « phrases-not-supported » sur certaines versions)
-        if ('phrases' in r) { try { r.phrases = []; } catch (err) { /* lecture seule */ } }
         r.onstart = () => o.surEtat && o.surEtat('ecoute');
         r.onresult = e => {
           let inter = '';
