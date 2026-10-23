@@ -93,7 +93,7 @@
     }
     if (nouvelleCible) cible = nouvelleCible;
     if (actif) { majInterface(); return; }                 // déjà en cours : on change seulement de cible
-    session = mo.creer({ langue: 'fr-FR', surIntermediaire, surFinal, surEtat, surErreur, choisir: T.meilleureHypothese, vocabulaire: T.VOCABULAIRE });
+    session = mo.creer({ langue: 'fr-FR', surIntermediaire, surFinal, surEtat, surErreur, choisir: T.meilleureHypothese });
     actif = true;
     debut = Date.now();
     tick();

@@ -37,6 +37,7 @@
     'audio-capture': 'Aucun micro détecté : branchez ou sélectionnez un micro.',
     network: 'Le service de reconnaissance du navigateur est injoignable : une connexion internet est nécessaire.',
     'language-not-supported': 'Le français n\'est pas disponible pour la reconnaissance vocale de ce navigateur.',
+    'phrases-not-supported': 'Ce navigateur refuse la liste de vocabulaire : rechargez la page (Ctrl+F5).',
   };
 
   const webspeech = {
@@ -54,10 +55,6 @@
         r.continuous = true;
         r.interimResults = true;
         r.maxAlternatives = o.choisir ? 5 : 1;
-        // vocabulaire médical proposé au moteur quand le navigateur le permet (Chrome récent)
-        if (o.vocabulaire && 'phrases' in r && root.SpeechRecognitionPhrase) {
-          try { r.phrases = o.vocabulaire.slice(0, 500).map(m => new root.SpeechRecognitionPhrase(m, 5)); } catch (err) { /* non pris en charge */ }
-        }
         r.onstart = () => o.surEtat && o.surEtat('ecoute');
         r.onresult = e => {
           let inter = '';
