@@ -292,46 +292,58 @@ def fig_adc():
     """Réglette de l'ADC de la lésion (× 10⁻³ mm²/s), lue avec la courbe de perfusion.
     Seuils : Pietragalla M et al., Radiol Med 2020;125:851-63 (doi:10.1007/s11547-020-01182-2) :
     ADC ≥ 1,4 + courbe A → bénin ; 0,9 à 1,4 + courbe C → carcinome ; < 0,9 + courbe B → Warthin ;
-    lymphome < 0,7 + courbe C. Plage des seuils AP / malin publiés : 1,267 à 1,60 (Coudert H et al.,
-    Diagn Interv Imaging 2021;102:121-30, doi:10.1016/j.diii.2020.08.002). Articles de 2020 ou plus récents seulement."""
-    x0, x1, vmax = 40, 620, 2.4
-    X = lambda v: x0 + v / vmax * (x1 - x0)
-    yb, h = 132, 34
-    zones = [(0, 0.9, 'var(--purple)', 'Warthin', '#fff'),
+    lymphome < 0,7 + courbe C. Plancher du Warthin à 0,8 : précision de l'auteur (23/10/2026) — le Warthin
+    n'est jamais sous 0,8 ; en dessous, on retient le versant malin. Plage des seuils adénome pléomorphe /
+    tumeur maligne : 1,267 à 1,60 (Coudert H et al., Diagn Interv Imaging 2021;102:121-30,
+    doi:10.1016/j.diii.2020.08.002). Articles de 2020 ou plus récents seulement.
+    L'axe commence à 0,4 (coupure dessinée) pour que la bande du Warthin reste lisible."""
+    x0, x1, vmin, vmax = 52, 620, 0.4, 2.4
+    X = lambda v: x0 + (v - vmin) / (vmax - vmin) * (x1 - x0)
+    yb, h = 158, 34
+    zones = [(vmin, 0.8, 'color-mix(in srgb, var(--k-grave) 72%, #000)', 'Malin', '#fff'),
+             (0.8, 0.9, 'var(--purple)', '', '#fff'),
              (0.9, 1.4, 'var(--k-grave)', 'Carcinome', '#fff'),
              (1.4, vmax, 'var(--k-sign)', 'Bénin (adénome pléomorphe)', '#fff')]
     s = ''
     for a, b, c, t, fg in zones:
         s += f'<rect x="{X(a):.1f}" y="{yb:.1f}" width="{X(b) - X(a):.1f}" height="{h}" style="fill: {c}"/>'
-        s += texte((X(a) + X(b)) / 2, yb + 23, t, 15, fg, 'middle')
-    s += segment(X(0), yb, X(vmax), yb, 'var(--ink)', 90, 2.6, 16, 0.5)
-    s += segment(X(0), yb + h, X(vmax), yb + h, 'var(--ink)', 91, 2.6, 16, 0.5)
-    s += segment(X(0), yb, X(0), yb + h, 'var(--ink)', 92, 2.6, 3, 0.2)
+        if t:
+            s += texte((X(a) + X(b)) / 2, yb + 23, t, 15, fg, 'middle')
+    s += segment(X(vmin), yb, X(vmax), yb, 'var(--ink)', 90, 2.6, 16, 0.5)
+    s += segment(X(vmin), yb + h, X(vmax), yb + h, 'var(--ink)', 91, 2.6, 16, 0.5)
     s += segment(X(vmax), yb, X(vmax), yb + h, 'var(--ink)', 93, 2.6, 3, 0.2)
+    # coupure de l'axe au début (l'échelle ne commence pas à 0)
+    for dx in (-10, -4):
+        s += segment(X(vmin) + dx - 5, yb + h + 6, X(vmin) + dx + 5, yb - 6, 'var(--ink)', 94 + dx, 2.4, 3, 0.2)
     # graduations
-    for v, t in ((0, '0'), (0.7, '0,7'), (0.9, '0,9'), (1.4, '1,4'), (2, '2,0')):
+    for v, t in ((0.5, '0,5'), (0.7, '0,7'), (0.8, '0,8'), (0.9, '0,9'), (1.4, '1,4'), (2, '2,0')):
         s += segment(X(v), yb - 2, X(v), yb - 12, 'var(--ink)', 100 + int(v * 10), 2, 3, 0.2)
-        s += texte(X(v), yb - 17, t, 15, 'var(--ink)', 'middle')
-    # plage des seuils AP / malin selon les études (au-dessus)
-    yw = yb - 50
+        s += texte(X(v), yb - 17, t, 14, 'var(--ink)', 'middle')
+    # seuil adénome pléomorphe / tumeur maligne selon les études (au-dessus, à droite, sa propre ligne)
+    s += texte(x1, 52, 'seuil adénome pléomorphe / tumeur maligne : 1,27 à 1,6 selon les études', 12, 'var(--slate)', 'end')
+    yw = 72
     s += segment(X(1.267), yw, X(1.6), yw, 'var(--slate)', 110, 3, 6, 0.4)
     s += segment(X(1.267), yw - 7, X(1.267), yw + 7, 'var(--slate)', 111, 3, 3, 0.2)
     s += segment(X(1.6), yw - 7, X(1.6), yw + 7, 'var(--slate)', 112, 3, 3, 0.2)
-    s += texte(X(1.43), yw - 14, 'seuil adénome pléomorphe / tumeur maligne : 1,27 à 1,6 selon les études', 13, 'var(--slate)', 'middle')
-    # courbe associée sous chaque zone
+    # Warthin : bande étroite 0,8 à 0,9, étiquette au-dessus à gauche avec flèche
+    xw = (X(0.8) + X(0.9)) / 2
+    s += texte(x0, 98, 'Warthin : 0,8 à 0,9 + courbe B', 14, 'var(--purple)', 'start')
+    s += fleche(xw - 22, 104, xw, yb - 34, 'var(--purple)', 108, 2.2, 8)
+    # courbe associée sous les zones
     yc = yb + h + 26
-    for v, t, c in ((0.45, '+ courbe B', 'var(--purple)'), (1.15, '+ courbe C', 'var(--k-grave)'), (1.9, '+ courbe A', 'var(--k-sign)')):
+    for v, t, c in ((1.15, '+ courbe C', 'var(--k-grave)'), (1.9, '+ courbe A', 'var(--k-sign)')):
         s += texte(X(v), yc, t, 15, c, 'middle')
-    # lymphome : < 0,7 + courbe C (crochet sous la zone)
-    yl = yc + 34
-    s += segment(X(0), yl, X(0.7), yl, 'var(--k-grave)', 120, 3, 6, 0.4)
-    s += segment(X(0), yl - 7, X(0), yl + 7, 'var(--k-grave)', 121, 3, 3, 0.2)
+    # sous 0,8 : jamais un Warthin → versant malin ; lymphome < 0,7 + courbe C
+    s += texte(X(vmin) + 2, yc + 30, '&lt; 0,8 : jamais un Warthin → versant malin', 13, 'var(--k-grave)', 'start')
+    yl = yc + 50
+    s += segment(X(vmin), yl, X(0.7), yl, 'var(--k-grave)', 120, 3, 6, 0.4)
     s += segment(X(0.7), yl - 7, X(0.7), yl + 7, 'var(--k-grave)', 122, 3, 3, 0.2)
-    s += texte(X(0.02), yl + 26, 'lymphome : &lt; 0,7 + courbe C', 14, 'var(--k-grave)', 'start')
-    s += texte(X(1.2), 22, 'ADC de la lésion (× 10⁻³ mm²/s), lu avec la courbe', 16, 'var(--ink)', 'middle')
-    return svg(660, 290, s, "Réglette de l'ADC de la lésion en 10 puissance moins 3 millimètres carrés par seconde, "
-               "lu avec la courbe de perfusion : moins de 0,9 avec une courbe B, Warthin ; de 0,9 à 1,4 avec une courbe C, carcinome ; "
-               "1,4 ou plus avec une courbe A, tumeur bénigne (adénome pléomorphe) ; lymphome : moins de 0,7 avec une courbe C ; "
+    s += texte(X(vmin) + 2, yl + 24, 'lymphome : &lt; 0,7 + courbe C', 14, 'var(--k-grave)', 'start')
+    s += texte(X(1.4), 22, 'ADC de la lésion (× 10⁻³ mm²/s), lu avec la courbe', 16, 'var(--ink)', 'middle')
+    return svg(660, 320, s, "Réglette de l'ADC de la lésion en 10 puissance moins 3 millimètres carrés par seconde, "
+               "lu avec la courbe de perfusion : Warthin de 0,8 à 0,9 avec une courbe B, jamais sous 0,8 ; "
+               "moins de 0,8 : versant malin, lymphome si moins de 0,7 avec une courbe C ; "
+               "de 0,9 à 1,4 avec une courbe C, carcinome ; 1,4 ou plus avec une courbe A, tumeur bénigne (adénome pléomorphe) ; "
                "seuil entre adénome pléomorphe et tumeur maligne de 1,27 à 1,6 selon les études")
 
 
