@@ -153,6 +153,32 @@
     [`(?<![\\p{L}])(?:in|un|en|hein)[\\s-]*(?:cu|cul|ku|cou|q)[\\s-]*(?:d['’]?[\\s-]*)?(?:o|eau|au|aux|os|do|dos|deau|dot)?[\\s-]*(mall?[ée]aires?|malaires?|mall?[ée]ables?|mall[ée]aires?|st?ap[ée]di[ae]ns?|st?ap[ée]diennes?)(?![\\p{L}])`, 'giu',
       (m, suite) => 'incudo-' + (/^st?ap/i.test(suite) ? suite.toLowerCase().replace(/^st?ap[ée]di/, 'stapédi') : 'malléaire' + (/s$/i.test(suite) ? 's' : ''))],
 
+    // cortico-sous-cortical(e)(s) : « corticosocorticale », « cortico sot corticale », « cortico-sous corticale »…
+    [`(?<![\\p{L}])cortico[\\s-]*(?:so|sou|sous|sot|seau|sceau|saut|su)[\\s-]*cortica(le?s?|ux)(?![\\p{L}])`, 'giu', (m, fin) => `cortico-sous-cortica${fin.toLowerCase()}`],
+
+    // latéro-aortique, latéro-cave… : « latéraux aortique », « latéro aortique » ; « latéral(e) » seulement devant aortique / cave
+    // (« paroi latérale trachéale » reste écrit)
+    [`(?<![\\p{L}])(?:lat[ée]r(?:o|os|aux|eau|eaux|ault?)[\\s-]+(aortiques?|caves?|trach[ée]al(?:es?)?|trach[ée]aux|vert[ée]bral(?:es?)?|vert[ée]braux)|lat[ée]rale?s?[\\s-]+(aortiques?|caves?))(?![\\p{L}])`, 'giu',
+      (m, a, b) => `latéro-${(a || b).toLowerCase()}`],
+
+    // « rehausser » → participe : rehaussé, ou rehaussée(s) / rehaussés selon le nom qui précède
+    // (« se rehausser », « peut rehausser »… restent écrits)
+    [`(?<![\\p{L}])(?<!(?:se|s['’]|de|d['’]|à|pour|sans|peut|peuvent|va|vont|faut|doit|ne)[ \\t]+)rehausser(?![\\p{L}])`, 'giu',
+      (m, i, tout) => {
+        const mots = (tout.slice(Math.max(0, i - 80), i).split(/[.;:!?\n]/).pop().toLowerCase().match(/\p{L}+/gu) || []).reverse();
+        const nom = mots.find(w => /^(?:l[ée]sions?|masses?|formations?|parois?|plages?|zones?|images?|structures?|collections?|tumeurs?|prises?|muqueuses?|portions?|composantes?|parties?|cloisons?|coques?|capsules?|anses?|ad[ée]nopathies?|ad[ée]nom[ée]galies?|m[ée]tastases?|n[ée]oformations?|nodules?|micronodules?|ganglions?|kystes?|foyers?|[ée]paississements?|tissus?|processus|contenus?|parenchymes?|polypes?|septas?|vaisseaux|nodules)$/u.test(w));
+        const fem = nom && /^(?:l[ée]sion|masse|formation|paroi|plage|zone|image|structure|collection|tumeur|prise|muqueuse|portion|composante|partie|cloison|coque|capsule|anse|ad[ée]nopathie|ad[ée]nom[ée]galie|m[ée]tastase|n[ée]oformation)/u.test(nom);
+        const pl = nom && /[sx]$/.test(nom) && nom !== 'processus';
+        return 'rehaussé' + (fem ? 'e' : '') + (pl ? 's' : '');
+      }],
+
+    // décelable(s) : « des sables », « dessables », « des celables » ; pluriel si le mot d'avant est au pluriel
+    [`(?<![\\p{L}])(?:des|dès|dé)[\\s-]*(?:sables?|celables?|ce[\\s-]+lables?)(?![\\p{L}])`, 'giu',
+      (m, i, tout) => {
+        const avant = (tout.slice(0, i).match(/(\p{L}+)[\s,]*$/u) || [])[1] || '';
+        return /[sx]$/i.test(avant) && !/^(?:pas|plus|sans|non|jamais|ailleurs|moins|tous|toujours)$/i.test(avant) ? 'décelables' : 'décelable';
+      }],
+
     // « segment 7 » → « segment VII » (segments hépatiques)
     ['\\bsegment (\\d)\\b', 'gi', (m, n) => `segment ${['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'][+n] || n}`],
   ],
