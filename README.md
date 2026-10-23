@@ -244,6 +244,14 @@ Liste tenue à jour à **chaque** erreur signalée au micro. Une correction ajou
 
 | Signalée le | Chrome écrit | Corrigé en |
 |---|---|---|
+| 23/10/2026 | adénomégalie suisse et sous mésocolique | **sus- et sous-mésocolique** (« suisse » + adjectif → « sus- » : sus-claviculaire, sus-hépatique…) |
+| 23/10/2026 | collant transverse | **côlon** transverse (droit, gauche, sigmoïde…) |
+| 23/10/2026 | arthrose un thérapophisaire | arthrose **interapophysaire** |
+| 23/10/2026 | espace inframediacinal postérieur | espace **infra-médiastinal** postérieur (et médiacinal → médiastinal) |
+| 23/10/2026 | appendice rétroSECAL | appendice **rétro-cæcal** |
+| 23/10/2026 | épanchement en interrence | épanchement en **inter-anses** |
+| 23/10/2026 | plage d'hyperdensité envers dépoli | plage d'hyperdensité **en verre dépoli** |
+| 23/10/2026 | l'angulaire inférieur | **lingulaire** inférieur (et l'angula → la lingula) |
 | 23/10/2026 | épaississement pariétal circonférentiel et réguliers | … circonférentiel et **régulier** (pluriel en trop après « et » quand le nom est au singulier) |
 | 23/10/2026 | dernière ans iléale, hanse iléale, anse iliaque, anse iliale | dernière **anse iléale** (et anses iléales) |
 | 23/10/2026 | lyse mite / aspect mite | lyse **mitée** / aspect **mité** |
@@ -764,6 +772,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 23/10/2026 | Dictée vocale : sus- et sous-mésocolique (« suisse » + adjectif → sus-), côlon transverse, interapophysaire, infra-médiastinal, rétro-cæcal, inter-anses, en verre dépoli, lingulaire ; ajoutés à la liste permanente des erreurs signalées ; tests ; `?v=` changé |
 | 23/10/2026 | Dictée vocale : « circonférentiel et réguliers » → **régulier** (pluriel en trop après « et » quand le nom est au singulier) ; **anse iléale** mieux reconnue (« ans iléale », « hanse iléale », « anse iliaque »…) ; nouvelle section **« Dictée vocale : erreurs signalées par l'auteur (liste permanente) »** qui récapitule toutes les erreurs corrigées ; consigne ajoutée dans `CLAUDE.md` ; tests ; `?v=` changé |
 | 23/10/2026 | Dictée vocale : nouvelles erreurs signalées par l'auteur — mité(e), d'échostructure, cortico-sous-corticale, homolatéral, exophytique, anse iléale, iléo-cæcale, rehaussé(e)(s) selon le nom, produit de contraste, fosse(s) iliaque(s), latéro-aortique, pré-cave / rétro-cave, pré-aortico-cave, rétro-sternal, décelable(s) ; **accords au pluriel oubliés** (« les vaisseau mésentérique sont perméable » → « les vaisseaux mésentériques sont perméables ») ; contrôle : aucune des 1 113 phrases des comptes rendus types n'est modifiée ; tests ; `?v=` changé |
 | 23/10/2026 | Dictée vocale : règle **incudo-malléaire / incudo-stapédien(ne)** couvrant les découpages de la dictée (« un cul d'eau », « in cudo », « en cu do »… suivis de « malaire », « maléaire », « malléable »…) ; tests ; `?v=` changé |

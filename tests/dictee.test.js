@@ -365,3 +365,14 @@ test('dictées de l\'auteur : « et réguliers » au singulier, anse iléale', (
   for (const s of ['les parois fines et régulières', 'contours réguliers et nets', 'ganglions iliaques', 'fosse iliaque droite'])
     assert.equal(T.corriger(s), s, s);
 });
+
+test('dictées de l\'auteur : sus- et sous-mésocolique, côlon, infra-médiastinal, rétro-cæcal, inter-anses, verre dépoli, lingulaire', () => {
+  for (const [dit, ecrit] of [
+    ['adénomégalie suisse et sous mésocolique', 'adénomégalie sus- et sous-mésocolique'], ['adénopathie suisse claviculaire', 'adénopathie sus-claviculaire'],
+    ['le collant transverse', 'le côlon transverse'], ['arthrose un thérapophisaire', 'arthrose interapophysaire'],
+    ["l'espace inframediacinal postérieur", "l'espace infra-médiastinal postérieur"], ['appendice rétroSECAL', 'appendice rétro-cæcal'],
+    ['épanchement de faible abondance en interrence', 'épanchement de faible abondance en inter-anses'],
+    ["plage d'hyperdensité envers dépoli", "plage d'hyperdensité en verre dépoli"], ["segment l'angulaire inférieur", 'segment lingulaire inférieur'],
+  ]) assert.equal(T.corriger(dit), ecrit, dit);
+  for (const s of ['un collant', 'la lingula', 'angle colique gauche']) assert.equal(T.corriger(s), s, s);
+});
