@@ -155,6 +155,57 @@
     });
   }
 
+  /* ---------- Accords au pluriel oubliés ----------
+     La reconnaissance oublie souvent les « s » : « les vaisseau mésentérique sont perméable ».
+       • déterminant pluriel + nom : « les vaisseau » → vaisseaux, « les anse » → anses (noms courants seulement :
+         « on les retrouve » reste écrit) ;
+       • puis les adjectifs qui suivent ce nom pluriel : « vaisseaux mésentérique supérieur » → mésentériques supérieurs ;
+       • « sont / restent… » (+ adverbe) + adjectif : « sont perméable » → « sont perméables ».
+     Droit / gauche ne sont jamais accordés (« les reins droit et gauche »), ni les adjectifs en -al (genre inconnu). */
+  const DET_PL = "(?:les|des|ces|ses|leurs|nos|aux|deux|trois|quatre|cinq|six|plusieurs|quelques|multiples|nombreux|nombreuses|certains|certaines|divers|diverses)";
+  const NOMS_COURANTS = /^(?:anse|art[èe]re|veine|l[ée]sion|nodule|micronodule|ganglion|ad[ée]nopathie|ad[ée]nom[ée]galie|structure|cavit[ée]|c[ôo]te|vert[èe]bre|plage|zone|image|opacit[ée]|calcification|bronche|glande|uret[èe]re|citerne|kyste|lobe|segment|muscle|tendon|ligament|paroi|branche|racine|lame|apophyse|articulation|condensation|formation|ost[ée]ophyte|hernie|fracture|m[ée]tastase|bulle|contour|limite|cavit[ée]|cellule|lacune|l[ée]sion|s[ée]quelle|cloison|travée|vaisseau)$/iu;
+  const PAS_ADJ = /^(?:qui|que|aussi|ainsi|encore|comme|entre|contre|autre|même|une|celle|elle|notre|votre|voire|ensuite|puis|mais|donc|alors|avant|devant|pendant|durant|maintenant|cependant|apr[èe]s|selon|parfois|toujours|tr[èe]s|plus|moins|peu|bien|mal|tout|toute|souvent|surtout|droite?|gauche|ici|non|valeur|hauteur|largeur|[ée]paisseur|longueur|profondeur|tumeur|douleur|ant[ée]rieure?ment)$/iu;
+  const ADJ = /^(?:\p{L}{2,}(?:ique|aire|oire|able|ible|é|ée|ssi|ssie|eur|eure|ien|ienne|ier|ière|[èe]ne|ive|if|ante?|ente|éale)|libre|fine?|mince|souple|large|nette?|petite?|grande?|multiple|pr[ée]sente?|absente?|intacte?)$/iu;
+  const estAdj = w => { const d = w.split('-').pop(); return d.length > 2 && !PAS_ADJ.test(d) && !/ment$/iu.test(d) && ADJ.test(d); };
+  const pluriel = w => (/eau$/iu.test(w) ? w + 'x' : w + 's');
+  const pluralise = w => (/[sx]$/iu.test(w) ? (estAdj(w.replace(/[sx]$/iu, '')) ? w : null) : estAdj(w) ? pluriel(w) : null);
+  // suite d'adjectifs (jusqu'à 3) à partir de la position i : chacun mis au pluriel, arrêt au premier mot qui n'en est pas un
+  const RE_MOT = /[ \t]+([\p{L}-]+)/uy;
+  function suiteAdj(t, i) {
+    let out = '', n = 0, m;
+    RE_MOT.lastIndex = i;
+    while (n < 3 && (m = RE_MOT.exec(t))) {
+      const p = pluralise(m[1]);
+      if (p === null) break;
+      out += m[0].slice(0, m[0].length - m[1].length) + p; i = RE_MOT.lastIndex; n++;
+    }
+    return { out, fin: i };
+  }
+  const QUANTITE = '(?:[ \\t]+(?:deux|trois|quatre|cinq|six|plusieurs|autres|petits|petites|gros|grosses|grands|grandes|multiples|nombreux|nombreuses|derni[èe]res|derniers|premi[èe]res|premiers))?';
+  const RE_GN_PL = new RegExp(`${AV}(${DET_PL}${QUANTITE}[ \\t]+)([\\p{L}-]+)${AP}`, 'giu');
+  const RE_VERBE_PL = new RegExp(`${AV}(?:sont|restent|semblent|paraissent|apparaissent|demeurent|deviennent)(?:[ \\t]+(?:bien|tous|toutes|normalement|partiellement|totalement|discr[èe]tement|l[ée]g[èe]rement|mod[ée]r[ée]ment|nettement|tr[èe]s|peu|non|globalement|[ée]galement|toujours|actuellement)${AP})*`, 'giu');
+  const PAS_NOM = /^(?:plus|moins|fois|tr[èe]s|mais|puis|sous|dans|sans|vers|apr[èe]s|depuis|alors|toujours|parfois|tous|cas|deux|trois|six)$/iu;
+  // remplace chaque correspondance de re ; nom(m) donne le début corrigé (ou null), puis les adjectifs qui suivent
+  function accorder(t, re, nom) {
+    let out = '', last = 0, m;
+    re.lastIndex = 0;
+    while ((m = re.exec(t))) {
+      const debut = nom(m);
+      if (debut === null) continue;
+      const s = suiteAdj(t, m.index + m[0].length);
+      out += t.slice(last, m.index) + debut + s.out;
+      last = re.lastIndex = s.fin;
+    }
+    return out + t.slice(last);
+  }
+  function accords(texte) {
+    const t = accorder(texte, RE_GN_PL, ([, det, nom]) =>
+      /eau$/iu.test(nom) ? det + nom + 'x'
+        : NOMS_COURANTS.test(nom) ? det + nom + 's'
+          : /[sx]$/iu.test(nom) && !PAS_NOM.test(nom) ? det + nom : null);
+    return accorder(t, RE_VERBE_PL, m => m[0]);
+  }
+
   /* ---------- Nombres, dimensions, unités, dictionnaire ---------- */
   const NUM = '(\\d+(?:[.,]\\d+)?)';
   const UNIT = '(millim[eè]tres?|mm|centim[eè]tres?|cm)';
@@ -180,6 +231,7 @@
     UNITES.forEach(({ re, ecrit }) => { t = t.replace(re, `$1 ${ecrit}`); });
     t = expressions(remplacer(t));
     REGLES.forEach(({ re, r }) => { t = t.replace(re, r); });
+    t = accords(t);
     t = etEst(t);
     return t.replace(/[ \t]{2,}/g, ' ').replace(/ +([.,])/g, '$1').trim();
   }

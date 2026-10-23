@@ -334,3 +334,23 @@ test('incudo-malléaire / incudo-stapédien : formes découpées par la dictée'
   assert.equal(T.corriger('articulation un cudo stapédienne'), 'articulation incudo-stapédienne');
   for (const s of ['os malaire', 'un cul de sac', 'un cou']) assert.equal(T.corriger(s), s, s);
 });
+
+test('dictées de l\'auteur : abdomen, thorax, accords oubliés', () => {
+  for (const [dit, ecrit] of [
+    ['lyse mite', 'lyse mitée'], ['aspect mite', 'aspect mité'], ['Foie déco structure homogène', "Foie d'échostructure homogène"],
+    ['atteinte corticosocorticale', 'atteinte cortico-sous-corticale'], ['hématome omolatéral', 'hématome homolatéral'],
+    ['lésion exofytique', 'lésion exophytique'], ['Les vaisseau mésentérique sont perméable.', 'Les vaisseaux mésentériques sont perméables.'],
+    ['dernière anse idéale', 'dernière anse iléale'], ['les anse idéale', 'les anses iléales'],
+    ['lésion rehausser après injection', 'lésion rehaussée après injection'], ['nodule rehausser', 'nodule rehaussé'],
+    ['les lésions non rehausser', 'les lésions non rehaussées'], ['injection de produits de contraste', 'injection de produit de contraste'],
+    ['fossiliaque droite', 'fosse iliaque droite'], ['les deux fossiliaques', 'les deux fosses iliaques'],
+    ['adénomégalie latéraux aortique gauche', 'adénomégalie latéro-aortique gauche'],
+    ['adénopathie très cave', 'adénopathie pré-cave'], ['adénopathie précase', 'adénopathie pré-cave'],
+    ['espace rétrosternal prêt aortico cave', 'espace rétro-sternal pré-aortico-cave'],
+    ["pas d'épanchement des sables", "pas d'épanchement décelable"], ['adénopathies des sables', 'adénopathies décelables'],
+  ]) assert.equal(T.corriger(dit), ecrit, dit);
+  // textes déjà corrects : rien ne change
+  for (const s of ['on les retrouve', 'les reins droit et gauche sont de taille normale', 'des deux côtés', 'qui se rehausse',
+    'la paroi latérale trachéale', 'les lésions décrites', 'Les reins sont symétriques et de taille normale.'])
+    assert.equal(T.corriger(s), s, s);
+});
