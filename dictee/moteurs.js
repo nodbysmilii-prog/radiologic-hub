@@ -85,6 +85,11 @@
             if (o.surErreur) o.surErreur({ code: e.error, fatale, message: 'Le français n\'est pas encore installé sur cet ordinateur : ⚙ Réglages › « Installer le français ». En attendant, décochez « Reconnaissance sur cet ordinateur ».' });
             return;
           }
+          if (o.surOrdinateur && !ERREURS[e.error]) {
+            fatale = true;
+            if (o.surErreur) o.surErreur({ code: e.error, fatale, message: `Reconnaissance sur l'ordinateur impossible (${e.error}) : décochez « Reconnaissance sur cet ordinateur » dans ⚙ Réglages pour dicter normalement.` });
+            return;
+          }
           fatale = !!ERREURS[e.error];
           if (o.surErreur) o.surErreur({ code: e.error, fatale, message: ERREURS[e.error] || `Erreur de reconnaissance vocale (${e.error}).` });
         };
