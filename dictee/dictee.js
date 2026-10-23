@@ -122,6 +122,23 @@
     $('#dt-diag').textContent = `Diagnostic : écoute ${o(etapes.demarre)} · micro ${o(etapes.micro)} · son ${o(etapes.son)} · voix ${o(etapes.voix)} · texte reçu ${etapes.texte || 0} · mode ${etapes.mode}${etapes.erreur ? ' · dernière erreur : ' + etapes.erreur : ''}`;
     $('#dt-diag').hidden = false;
   }
+  /* Phrase en cours de dictée (depuis le dernier point ou le début de la zone dictée) : corrections recalculées */
+  let zoneDictee = null;
+  function recorrigerPhrase(fin) {
+    const v = editor.value;
+    let a = Math.max(zoneDictee.debut, ...['.', '!', '?', '\n', ':'].map(c => v.lastIndexOf(c, fin - 2) + 1));
+    const seg = v.slice(a, fin);
+    const tete = seg.match(/^\s*/)[0], queue = seg.match(/\s*$/)[0];
+    const corps = seg.trim();
+    if (!corps) return fin;
+    const corrige = T.corriger(corps);
+    if (corrige === corps) return fin;
+    // la casse du premier mot est gardée (majuscule de début de phrase)
+    const remis = tete + (/^\p{Lu}/u.test(corps) ? corrige.replace(/^\p{Ll}/u, c => c.toUpperCase()) : corrige) + queue;
+    ED.remplacer(a, fin, remis);
+    zoneDictee.fin = a + remis.length;
+    return zoneDictee.fin;
+  }
   function surEtat(etat) {
     if (etat === 'arret' && actif) { actif = false; clearInterval(chrono); majInterface(); }
   }
@@ -169,8 +186,14 @@
       const s = editor.selectionStart, e = editor.selectionEnd;
       const r = T.assembler(actions, editor.value.slice(0, s));
       if (r.texte || r.retirer) {
-        ED.remplacer(s - r.retirer, e, r.texte);
-        window.dispatchEvent(new CustomEvent('rh:dictee-insere', { detail: { debut: s - r.retirer, fin: s - r.retirer + r.texte.length } }));
+        const d = s - r.retirer;
+        ED.remplacer(d, e, r.texte);
+        let fin = d + r.texte.length;
+        // Chrome découpe la dictée à chaque micro-pause : on corrige la phrase dictée en entier
+        // (« contour » | « régulier », « le foie et » | « homogène »), sans toucher au texte tapé avant.
+        if (zoneDictee && zoneDictee.fin === d) zoneDictee.fin = fin; else zoneDictee = { debut: d, fin };
+        fin = recorrigerPhrase(fin);
+        window.dispatchEvent(new CustomEvent('rh:dictee-insere', { detail: { debut: d, fin } }));
       }
       return;
     }

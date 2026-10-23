@@ -722,6 +722,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 23/10/2026 | Dictée vocale : **corrections sur la phrase entière** — Chrome découpe la dictée à chaque micro-pause, si bien que « contour » | « régulier » ou « le foie et » | « homogène » échappaient aux corrections ; après chaque morceau, la phrase dictée (depuis le dernier point, sans toucher au texte tapé avant) est corrigée en entier ; `?v=` changé |
 | 23/10/2026 | Dictée vocale : option **« Reconnaissance sur cet ordinateur » retirée** — sur le Mac de l'auteur, l'installation du français dans Chrome a bloqué toute reconnaissance de Chrome (la démonstration de Google ne marchait plus non plus ; le téléphone fonctionne) ; marche à suivre : retirer le français des « Sous-titres instantanés » de Chrome, mettre Chrome à jour ou utiliser Safari ; voyant de diagnostic, lexique, « Mes corrections » et apprentissage des corrections manuelles conservés ; `?v=` changé |
 | 23/10/2026 | Dictée vocale : **voyant de diagnostic** sous la barre de dictée (écoute, micro, son, voix, texte reçu, mode serveur / ordinateur, dernière erreur) pour trouver où la dictée bloque ; `?v=` changé |
 | 23/10/2026 | Dictée vocale : la reconnaissance sur l'ordinateur ne bloque plus jamais la dictée — muette après 8 s ou en erreur, elle repasse seule à la dictée normale avec un message ; version de la dictée affichée dans ⚙ Réglages (repérer un cache ancien) ; `?v=` changé |
