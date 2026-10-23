@@ -32,7 +32,7 @@ test('figures « tracées à la main » produites par le script', () => {
 });
 
 test('seuils et conduites du cours', () => {
-  for (const t of ['90 %', '≥ 1,4', '0,9 à 1,4', '0,8 à 0,9', 'jamais sous 0,8', '< 0,8', '< 0,7', '1,27 à 1,6', 'ADC de la lésion', '5 à 10 min', '< 5 %',
+  for (const t of ['90 %', '≥ 1,4', '0,9 à 1,4', '0,8 à 0,9', 'jamais sous 0,8', '< 0,8', 'AP cellulaire jusqu\'à ≈ 1,2', '< 0,7', '1,27 à 1,6', 'ADC de la lésion', '5 à 10 min', '< 5 %',
     'IRM avant la cytoponction', 'critère le plus péjoratif', 'La perfusion l\'emporte : malignité',
     'La morphologie l\'emporte : malignité', 'refaire l\'IRM à 1 mois', 'T2 avec Fat Sat', 'nerf facial +++',
     'trajet intrapétreux du VII', 'Suivi clinique'])
@@ -61,7 +61,7 @@ test('ADC de la lésion, plus de rCDA (choix de l\'auteur, 23/10/2026)', () => {
   assert.ok(!/rCDA|rcda/.test(HTML), 'le rCDA ne doit plus apparaître');
   for (const t of ['doi:10.1007/s11547-020-01182-2', 'doi:10.1016/j.diii.2020.08.002', '94,9 %', '94,6 %', 'chevauchement important']) assert.ok(texte.includes(t), t);
   const adc = HTML.match(/<!-- GEN:adc -->([^]*?)<!-- \/GEN:adc -->/)[1];
-  for (const t of ['0,7', '0,8', '0,9', '1,4', 'Warthin : 0,8 à 0,9 + courbe B', '&lt; 0,8 : jamais un Warthin → versant malin', 'Carcinome', 'adénome pléomorphe', '+ courbe A', '+ courbe C', 'lymphome : &lt; 0,7 + courbe C', 'seuil adénome pléomorphe / tumeur maligne : 1,27 à 1,6 selon les études']) assert.ok(adc.includes(t), t);
+  for (const t of ['0,7', '0,8', '0,9', '1,4', 'Warthin : 0,8 à 0,9 + courbe B', '&lt; 0,8 : jamais un Warthin → versant malin', 'AP cellulaire : jusqu\'à ≈ 1,2', 'Carcinome', 'adénome pléomorphe', '+ courbe A', '+ courbe C', 'lymphome : &lt; 0,7 + courbe C', 'seuil adénome pléomorphe / tumeur maligne : 1,27 à 1,6 selon les études']) assert.ok(adc.includes(t), t);
   // références : seulement des articles de 2020 ou plus récents (demande de l'auteur, 23/10/2026)
   const annees = [...HTML.matchAll(/(?:<i>[^<]+<\/i>|et al\.|Beyhan M\.) (?:[^<]*?)?(19\d\d|20\d\d)/g)].map(m => +m[1]);
   assert.ok(annees.length >= 6, 'références trouvées');
