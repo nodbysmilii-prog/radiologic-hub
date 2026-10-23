@@ -47,7 +47,7 @@
     raison: () => 'Votre navigateur ne permet pas la dictée vocale (Firefox ne prend pas en charge la Web Speech API) : utilisez Chrome, Edge ou Safari.',
     creer(o) {
       const R = Reco();
-      let rec = null, voulu = false, fatale = false, relances = [], sansPhrases = false;
+      let rec = null, voulu = false, fatale = false, relances = [], sansPhrases = false, local = !!o.surOrdinateur, recu = false, garde = null;
       const nouveau = () => {
         const r = new R();
         r.lang = o.langue || 'fr-FR';
@@ -56,7 +56,7 @@
         r.maxAlternatives = o.choisir ? 5 : 1;
         // Reconnaissance sur l'ordinateur (Chrome récent) : gratuite, et seule à accepter une liste de
         // vocabulaire à favoriser (« contextual biasing ») — les termes médicaux du site et ceux appris.
-        if (o.surOrdinateur && 'processLocally' in r) {
+        if (local && 'processLocally' in r) {
           r.processLocally = true;
           if (!sansPhrases && o.vocabulaire && o.vocabulaire.length && root.SpeechRecognitionPhrase && 'phrases' in r) {
             try { o.vocabulaire.slice(0, 400).forEach(m => r.phrases.push(new root.SpeechRecognitionPhrase(m, 5))); } catch (err) { sansPhrases = true; }
@@ -64,6 +64,7 @@
         }
         r.onstart = () => o.surEtat && o.surEtat('ecoute');
         r.onresult = e => {
+          recu = true; clearTimeout(garde);
           let inter = '';
           for (let i = e.resultIndex; i < e.results.length; i++) {
             const res = e.results[i];
@@ -80,12 +81,17 @@
           if (e.error === 'no-speech' || e.error === 'aborted') return;
           // liste de vocabulaire refusée : on relance sans la liste (jamais d'arrêt de la dictée pour ça)
           if (e.error === 'phrases-not-supported') { sansPhrases = true; return; }
-          if (o.surOrdinateur && (e.error === 'language-not-supported' || e.error === 'service-not-allowed')) {
+          if (local && !recu && e.error !== 'not-allowed' && e.error !== 'audio-capture') {   // l'ordinateur échoue : on repasse à la dictée normale, avec un message
+            local = false;
+            if (o.surErreur) o.surErreur({ code: e.error, fatale: false, message: `Reconnaissance sur l'ordinateur indisponible (${e.error}) : dictée normale utilisée.` });
+            return;
+          }
+          if (local && (e.error === 'language-not-supported' || e.error === 'service-not-allowed')) {
             fatale = true;
             if (o.surErreur) o.surErreur({ code: e.error, fatale, message: 'Le français n\'est pas encore installé sur cet ordinateur : ⚙ Réglages › « Installer le français ». En attendant, décochez « Reconnaissance sur cet ordinateur ».' });
             return;
           }
-          if (o.surOrdinateur && !ERREURS[e.error]) {
+          if (local && !ERREURS[e.error]) {
             fatale = true;
             if (o.surErreur) o.surErreur({ code: e.error, fatale, message: `Reconnaissance sur l'ordinateur impossible (${e.error}) : décochez « Reconnaissance sur cet ordinateur » dans ⚙ Réglages pour dicter normalement.` });
             return;
@@ -112,9 +118,16 @@
           voulu = true; fatale = false; relances = [];
           rec = nouveau();
           try { rec.start(); } catch (err) { /* déjà démarrée */ }
+          // Reconnaissance sur l'ordinateur muette après 8 s d'écoute : retour à la dictée normale
+          if (local) garde = setTimeout(() => {
+            if (recu || !voulu) return;
+            local = false;
+            if (o.surErreur) o.surErreur({ code: 'local-muet', fatale: false, message: 'La reconnaissance sur l\'ordinateur ne répond pas : dictée normale utilisée (vous pouvez décocher la case dans ⚙).' });
+            try { rec.abort ? rec.abort() : rec.stop(); } catch (err) { /* déjà arrêtée */ }   // onend relance sans le mode local
+          }, 8000);
         },
         arreter() {
-          voulu = false;
+          voulu = false; clearTimeout(garde);
           if (rec) { try { rec.stop(); } catch (err) { /* déjà arrêtée */ } }
         },
       };

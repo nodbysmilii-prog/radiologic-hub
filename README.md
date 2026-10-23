@@ -722,6 +722,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 23/10/2026 | Dictée vocale : la reconnaissance sur l'ordinateur ne bloque plus jamais la dictée — muette après 8 s ou en erreur, elle repasse seule à la dictée normale avec un message ; version de la dictée affichée dans ⚙ Réglages (repérer un cache ancien) ; `?v=` changé |
 | 23/10/2026 | Dictée vocale : « Reconnaissance sur cet ordinateur » n'agit que si le français est réellement installé (sinon dictée normale) ; toute erreur de la reconnaissance sur l'ordinateur affiche son code et la marche à suivre au lieu d'un silence ; `?v=` changé |
 | 23/10/2026 | Dictée vocale : ligne « Whisper local (WebGPU) — bientôt » retirée de la liste des moteurs (essai abandonné) ; `?v=` changé |
 | 23/10/2026 | Dictée vocale : **vocabulaire médical favorisé par Chrome** — option « Reconnaissance sur cet ordinateur » (⚙ Réglages) : Chrome récent transcrit sur l'ordinateur (gratuit, français à installer une fois depuis le site) et favorise une liste de 212 termes (lexique, dictionnaire, « Mes corrections ») ; si Chrome refuse la liste, la dictée reprend sans elle. **Apprentissage automatique** : quand un mot dicté est corrigé à la main, la dictée propose « Apprendre » (ajouté à « Mes corrections ») ; `?v=` changé |
