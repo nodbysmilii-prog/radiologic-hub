@@ -1,0 +1,1126 @@
+{
+ "source": "Z-Anatomy (CC BY-SA 4.0), commit 2b6cf98a8ca012571ecb252e5c077b42a21b3b61, dérivé de BodyParts3D (CC BY-SA 2.1 JP)",
+ "repere": "centré sur le cavum, ×10, +Y haut, +Z avant du patient, −X côté droit du patient",
+ "structures": [
+  {
+   "id": "sphenoide",
+   "nom": "Sphénoïde",
+   "cat": "os"
+  },
+  {
+   "id": "occipital",
+   "nom": "Occipital",
+   "cat": "os"
+  },
+  {
+   "id": "vomer",
+   "nom": "Vomer",
+   "cat": "os"
+  },
+  {
+   "id": "atlas",
+   "nom": "Atlas (C1)",
+   "cat": "os"
+  },
+  {
+   "id": "axis",
+   "nom": "Axis (C2)",
+   "cat": "os"
+  },
+  {
+   "id": "mandibule",
+   "nom": "Mandibule",
+   "cat": "os-contexte"
+  },
+  {
+   "id": "temporal-d",
+   "nom": "Temporal droit",
+   "cat": "os"
+  },
+  {
+   "id": "temporal-g",
+   "nom": "Temporal gauche",
+   "cat": "os"
+  },
+  {
+   "id": "maxillaire-d",
+   "nom": "Maxillaire droit",
+   "cat": "os"
+  },
+  {
+   "id": "maxillaire-g",
+   "nom": "Maxillaire gauche",
+   "cat": "os"
+  },
+  {
+   "id": "palatin-d",
+   "nom": "Palatin droit",
+   "cat": "os"
+  },
+  {
+   "id": "palatin-g",
+   "nom": "Palatin gauche",
+   "cat": "os"
+  },
+  {
+   "id": "pterygoidien-medial-d",
+   "nom": "Ptérygoïdien médial droit",
+   "cat": "muscle"
+  },
+  {
+   "id": "pterygoidien-medial-g",
+   "nom": "Ptérygoïdien médial gauche",
+   "cat": "muscle"
+  },
+  {
+   "id": "pterygoidien-lateral-sup-d",
+   "nom": "Ptérygoïdien latéral (chef sup.) droit",
+   "cat": "muscle"
+  },
+  {
+   "id": "pterygoidien-lateral-sup-g",
+   "nom": "Ptérygoïdien latéral (chef sup.) gauche",
+   "cat": "muscle"
+  },
+  {
+   "id": "pterygoidien-lateral-inf-d",
+   "nom": "Ptérygoïdien latéral (chef inf.) droit",
+   "cat": "muscle"
+  },
+  {
+   "id": "pterygoidien-lateral-inf-g",
+   "nom": "Ptérygoïdien latéral (chef inf.) gauche",
+   "cat": "muscle"
+  },
+  {
+   "id": "constricteur-sup-d",
+   "nom": "Constricteur supérieur du pharynx droit",
+   "cat": "pharynx"
+  },
+  {
+   "id": "constricteur-sup-g",
+   "nom": "Constricteur supérieur du pharynx gauche",
+   "cat": "pharynx"
+  },
+  {
+   "id": "long-tete-d",
+   "nom": "Long de la tête droit",
+   "cat": "prevertebral"
+  },
+  {
+   "id": "long-tete-g",
+   "nom": "Long de la tête gauche",
+   "cat": "prevertebral"
+  },
+  {
+   "id": "long-cou-d",
+   "nom": "Long du cou droit",
+   "cat": "prevertebral"
+  },
+  {
+   "id": "long-cou-g",
+   "nom": "Long du cou gauche",
+   "cat": "prevertebral"
+  },
+  {
+   "id": "nasopharynx",
+   "nom": "Nasopharynx (cavum)",
+   "cat": "muqueuse"
+  },
+  {
+   "id": "oropharynx",
+   "nom": "Oropharynx",
+   "cat": "muqueuse"
+  },
+  {
+   "id": "voile",
+   "nom": "Voile du palais",
+   "cat": "muqueuse"
+  },
+  {
+   "id": "trompe-d",
+   "nom": "Trompe auditive droit",
+   "cat": "muqueuse"
+  },
+  {
+   "id": "trompe-g",
+   "nom": "Trompe auditive gauche",
+   "cat": "muqueuse"
+  },
+  {
+   "id": "sinus-caverneux-d",
+   "nom": "Sinus caverneux droit",
+   "cat": "veine"
+  },
+  {
+   "id": "sinus-caverneux-g",
+   "nom": "Sinus caverneux gauche",
+   "cat": "veine"
+  },
+  {
+   "id": "ganglions-retropharynges-d",
+   "nom": "Ganglions rétropharyngés droit",
+   "cat": "ganglion"
+  },
+  {
+   "id": "ganglions-retropharynges-g",
+   "nom": "Ganglions rétropharyngés gauche",
+   "cat": "ganglion"
+  },
+  {
+   "id": "carotide-interne-d",
+   "nom": "Carotide interne droite",
+   "cat": "artere"
+  },
+  {
+   "id": "carotide-interne-g",
+   "nom": "Carotide interne gauche",
+   "cat": "artere"
+  },
+  {
+   "id": "jugulaire-interne-d",
+   "nom": "Jugulaire interne droite",
+   "cat": "veine"
+  },
+  {
+   "id": "jugulaire-interne-g",
+   "nom": "Jugulaire interne gauche",
+   "cat": "veine"
+  },
+  {
+   "id": "trijumeau-d",
+   "nom": "Trijumeau (V) droit",
+   "cat": "nerf"
+  },
+  {
+   "id": "trijumeau-g",
+   "nom": "Trijumeau (V) gauche",
+   "cat": "nerf"
+  },
+  {
+   "id": "v2-d",
+   "nom": "Nerf maxillaire (V2) droit",
+   "cat": "nerf"
+  },
+  {
+   "id": "v2-g",
+   "nom": "Nerf maxillaire (V2) gauche",
+   "cat": "nerf"
+  },
+  {
+   "id": "v3-ant-d",
+   "nom": "Nerf mandibulaire (V3) droit",
+   "cat": "nerf"
+  },
+  {
+   "id": "v3-ant-g",
+   "nom": "Nerf mandibulaire (V3) gauche",
+   "cat": "nerf"
+  },
+  {
+   "id": "v3-post-d",
+   "nom": "Nerf mandibulaire (V3) droit",
+   "cat": "nerf"
+  },
+  {
+   "id": "v3-post-g",
+   "nom": "Nerf mandibulaire (V3) gauche",
+   "cat": "nerf"
+  },
+  {
+   "id": "espace-masticateur-d",
+   "nom": "Espace masticateur / fosse infratemporale droit",
+   "cat": "espace",
+   "espace": "espace-masticateur"
+  },
+  {
+   "id": "espace-parapharynge-d",
+   "nom": "Espace parapharyngé droit",
+   "cat": "espace",
+   "espace": "espace-parapharynge"
+  },
+  {
+   "id": "espace-carotidien-d",
+   "nom": "Espace carotidien droit",
+   "cat": "espace",
+   "espace": "espace-carotidien"
+  },
+  {
+   "id": "espace-masticateur-g",
+   "nom": "Espace masticateur / fosse infratemporale gauche",
+   "cat": "espace",
+   "espace": "espace-masticateur"
+  },
+  {
+   "id": "espace-parapharynge-g",
+   "nom": "Espace parapharyngé gauche",
+   "cat": "espace",
+   "espace": "espace-parapharynge"
+  },
+  {
+   "id": "espace-carotidien-g",
+   "nom": "Espace carotidien gauche",
+   "cat": "espace",
+   "espace": "espace-carotidien"
+  },
+  {
+   "id": "espace-retropharynge",
+   "nom": "Espace rétropharyngé",
+   "cat": "espace",
+   "espace": "espace-retropharynge"
+  },
+  {
+   "id": "fosse-pterygopalatine-d",
+   "nom": "Fosse ptérygopalatine droite",
+   "cat": "espace",
+   "espace": "fosse-pterygopalatine"
+  },
+  {
+   "id": "fosse-pterygopalatine-g",
+   "nom": "Fosse ptérygopalatine gauche",
+   "cat": "espace",
+   "espace": "fosse-pterygopalatine"
+  }
+ ],
+ "foramens": [
+  {
+   "id": "foramen-rond-d",
+   "base": "foramen-rond",
+   "nom": "Foramen rond (droit)",
+   "contenu": "V2",
+   "pos": [
+    -0.1616,
+    0.4597,
+    0.1413
+   ]
+  },
+  {
+   "id": "foramen-rond-g",
+   "base": "foramen-rond",
+   "nom": "Foramen rond (gauche)",
+   "contenu": "V2",
+   "pos": [
+    0.1616,
+    0.4597,
+    0.1413
+   ]
+  },
+  {
+   "id": "foramen-ovale-d",
+   "base": "foramen-ovale",
+   "nom": "Foramen ovale (droit)",
+   "contenu": "V3",
+   "pos": [
+    -0.2235,
+    0.3506,
+    -0.0234
+   ]
+  },
+  {
+   "id": "foramen-ovale-g",
+   "base": "foramen-ovale",
+   "nom": "Foramen ovale (gauche)",
+   "contenu": "V3",
+   "pos": [
+    0.2235,
+    0.3506,
+    -0.0234
+   ]
+  },
+  {
+   "id": "foramen-lacerum-d",
+   "base": "foramen-lacerum",
+   "nom": "Foramen lacerum (droit)",
+   "contenu": "fibrocartilage",
+   "pos": [
+    -0.2117,
+    0.2651,
+    -0.1272
+   ]
+  },
+  {
+   "id": "foramen-lacerum-g",
+   "base": "foramen-lacerum",
+   "nom": "Foramen lacerum (gauche)",
+   "contenu": "fibrocartilage",
+   "pos": [
+    0.2117,
+    0.2651,
+    -0.1272
+   ]
+  },
+  {
+   "id": "canal-carotidien-d",
+   "base": "canal-carotidien",
+   "nom": "Canal carotidien (droit)",
+   "contenu": "carotide interne",
+   "pos": [
+    -0.2359,
+    0.261,
+    -0.1687
+   ]
+  },
+  {
+   "id": "canal-carotidien-g",
+   "base": "canal-carotidien",
+   "nom": "Canal carotidien (gauche)",
+   "contenu": "carotide interne",
+   "pos": [
+    0.2359,
+    0.261,
+    -0.1687
+   ]
+  },
+  {
+   "id": "foramen-jugulaire-d",
+   "base": "foramen-jugulaire",
+   "nom": "Foramen jugulaire (droit)",
+   "contenu": "IX, X, XI, jugulaire interne",
+   "pos": [
+    -0.3662,
+    0.2648,
+    -0.3283
+   ]
+  },
+  {
+   "id": "foramen-jugulaire-g",
+   "base": "foramen-jugulaire",
+   "nom": "Foramen jugulaire (gauche)",
+   "contenu": "IX, X, XI, jugulaire interne",
+   "pos": [
+    0.3662,
+    0.2648,
+    -0.3283
+   ]
+  },
+  {
+   "id": "canal-hypoglosse-d",
+   "base": "canal-hypoglosse",
+   "nom": "Canal de l'hypoglosse (droit)",
+   "contenu": "XII",
+   "pos": [
+    -0.2063,
+    0.1614,
+    -0.2624
+   ]
+  },
+  {
+   "id": "canal-hypoglosse-g",
+   "base": "canal-hypoglosse",
+   "nom": "Canal de l'hypoglosse (gauche)",
+   "contenu": "XII",
+   "pos": [
+    0.2063,
+    0.1614,
+    -0.2624
+   ]
+  },
+  {
+   "id": "canal-pterygoidien-d",
+   "base": "canal-pterygoidien",
+   "nom": "Canal ptérygoïdien (droit)",
+   "contenu": "nerf vidien",
+   "pos": [
+    -0.1797,
+    0.2665,
+    0.052
+   ]
+  },
+  {
+   "id": "canal-pterygoidien-g",
+   "base": "canal-pterygoidien",
+   "nom": "Canal ptérygoïdien (gauche)",
+   "contenu": "nerf vidien",
+   "pos": [
+    0.1797,
+    0.2665,
+    0.052
+   ]
+  },
+  {
+   "id": "foramen-sphenopalatin-d",
+   "base": "foramen-sphenopalatin",
+   "nom": "Foramen sphénopalatin (droit)",
+   "contenu": "cavité nasale ↔ FPP",
+   "pos": [
+    -0.1299,
+    0.3704,
+    0.2086
+   ]
+  },
+  {
+   "id": "foramen-sphenopalatin-g",
+   "base": "foramen-sphenopalatin",
+   "nom": "Foramen sphénopalatin (gauche)",
+   "contenu": "cavité nasale ↔ FPP",
+   "pos": [
+    0.1299,
+    0.3704,
+    0.2086
+   ]
+  },
+  {
+   "id": "fissure-orbitaire-inf-d",
+   "base": "fissure-orbitaire-inf",
+   "nom": "Fissure orbitaire inférieure (droit)",
+   "contenu": "FPP ↔ orbite",
+   "pos": [
+    -0.2131,
+    0.3519,
+    0.2455
+   ]
+  },
+  {
+   "id": "fissure-orbitaire-inf-g",
+   "base": "fissure-orbitaire-inf",
+   "nom": "Fissure orbitaire inférieure (gauche)",
+   "contenu": "FPP ↔ orbite",
+   "pos": [
+    0.2131,
+    0.3519,
+    0.2455
+   ]
+  },
+  {
+   "id": "fissure-orbitaire-sup-d",
+   "base": "fissure-orbitaire-sup",
+   "nom": "Fissure orbitaire supérieure (droit)",
+   "contenu": "orbite ↔ endocrâne",
+   "pos": [
+    -0.1716,
+    0.5297,
+    0.1813
+   ]
+  },
+  {
+   "id": "fissure-orbitaire-sup-g",
+   "base": "fissure-orbitaire-sup",
+   "nom": "Fissure orbitaire supérieure (gauche)",
+   "contenu": "orbite ↔ endocrâne",
+   "pos": [
+    0.1716,
+    0.5297,
+    0.1813
+   ]
+  }
+ ],
+ "points": {
+  "foramen-rond": [
+   -0.1616,
+   0.4597,
+   0.1413
+  ],
+  "foramen-ovale": [
+   -0.2235,
+   0.3506,
+   -0.0234
+  ],
+  "canal-carotidien": [
+   -0.2359,
+   0.261,
+   -0.1687
+  ],
+  "foramen-lacerum": [
+   -0.2117,
+   0.2651,
+   -0.1272
+  ],
+  "foramen-jugulaire": [
+   -0.3662,
+   0.2648,
+   -0.3283
+  ],
+  "canal-hypoglosse": [
+   -0.2063,
+   0.1614,
+   -0.2624
+  ],
+  "fissure-orbitaire-inf": [
+   -0.2131,
+   0.3519,
+   0.2455
+  ],
+  "fpp": [
+   -0.1899,
+   0.3404,
+   0.1986
+  ],
+  "foramen-sphenopalatin": [
+   -0.1299,
+   0.3704,
+   0.2086
+  ],
+  "canal-pterygoidien": [
+   -0.1797,
+   0.2665,
+   0.052
+  ],
+  "fissure-orbitaire-sup": [
+   -0.1716,
+   0.5297,
+   0.1813
+  ],
+  "sinus-caverneux": [
+   -0.0809,
+   0.5617,
+   -0.0286
+  ],
+  "ostium-trompe": [
+   -0.0954,
+   0.3359,
+   -0.05
+  ],
+  "rosenmuller": [
+   -0.0954,
+   0.3659,
+   -0.12
+  ],
+  "choane": [
+   -0.04,
+   0.2215,
+   0.3283
+  ],
+  "oropharynx": [
+   -0.2375,
+   -0.104,
+   0.1501
+  ],
+  "prevertebral": [
+   -0.1369,
+   -0.0621,
+   -0.1351
+  ],
+  "clivus": [
+   -0.02,
+   0.27,
+   -0.2042
+  ],
+  "parapharynge": [
+   -0.243,
+   0.0322,
+   0.0709
+  ],
+  "carotidien": [
+   -0.3036,
+   -0.0496,
+   -0.1598
+  ],
+  "retropharynge": [
+   -0.0381,
+   0.03,
+   -0.082
+  ],
+  "fosse-infratemporale": [
+   -0.373,
+   0.1736,
+   0.1628
+  ]
+ },
+ "tumeur": [
+  -0.0954,
+  0.3659,
+  -0.12
+ ],
+ "voies": [
+  {
+   "id": "anterieure",
+   "nom": "Antérieure",
+   "trajets": [
+    {
+     "id": "cavites-nasales",
+     "texte": "Cavités nasales (continuité directe)",
+     "par": [
+      "rosenmuller",
+      "choane"
+     ],
+     "pts": [
+      [
+       -0.0954,
+       0.3659,
+       -0.12
+      ],
+      [
+       -0.04,
+       0.2215,
+       0.3283
+      ]
+     ]
+    },
+    {
+     "id": "fpp",
+     "texte": "Fosse ptérygopalatine par le foramen sphénopalatin",
+     "par": [
+      "rosenmuller",
+      "foramen-sphenopalatin",
+      "fpp"
+     ],
+     "pts": [
+      [
+       -0.0954,
+       0.3659,
+       -0.12
+      ],
+      [
+       -0.1299,
+       0.3704,
+       0.2086
+      ],
+      [
+       -0.1899,
+       0.3404,
+       0.1986
+      ]
+     ]
+    },
+    {
+     "id": "v2",
+     "texte": "FPP → foramen rond (V2) → sinus caverneux",
+     "par": [
+      "fpp",
+      "foramen-rond",
+      "sinus-caverneux"
+     ],
+     "pts": [
+      [
+       -0.1899,
+       0.3404,
+       0.1986
+      ],
+      [
+       -0.1616,
+       0.4597,
+       0.1413
+      ],
+      [
+       -0.0809,
+       0.5617,
+       -0.0286
+      ]
+     ]
+    },
+    {
+     "id": "orbite",
+     "texte": "FPP → fissure orbitaire inf. → apex orbitaire → fissure orbitaire sup. → endocrâne",
+     "par": [
+      "fpp",
+      "fissure-orbitaire-inf",
+      "fissure-orbitaire-sup",
+      "sinus-caverneux"
+     ],
+     "pts": [
+      [
+       -0.1899,
+       0.3404,
+       0.1986
+      ],
+      [
+       -0.2131,
+       0.3519,
+       0.2455
+      ],
+      [
+       -0.1716,
+       0.5297,
+       0.1813
+      ],
+      [
+       -0.0809,
+       0.5617,
+       -0.0286
+      ]
+     ]
+    },
+    {
+     "id": "vidien",
+     "texte": "FPP → canal ptérygoïdien (nerf vidien)",
+     "par": [
+      "fpp",
+      "canal-pterygoidien",
+      "foramen-lacerum"
+     ],
+     "pts": [
+      [
+       -0.1899,
+       0.3404,
+       0.1986
+      ],
+      [
+       -0.1797,
+       0.2665,
+       0.052
+      ],
+      [
+       -0.2117,
+       0.2651,
+       -0.1272
+      ]
+     ]
+    },
+    {
+     "id": "fit",
+     "texte": "FPP → fosse infratemporale → V3 → foramen ovale → endocrâne",
+     "par": [
+      "fpp",
+      "fosse-infratemporale",
+      "foramen-ovale",
+      "sinus-caverneux"
+     ],
+     "pts": [
+      [
+       -0.1899,
+       0.3404,
+       0.1986
+      ],
+      [
+       -0.373,
+       0.1736,
+       0.1628
+      ],
+      [
+       -0.2235,
+       0.3506,
+       -0.0234
+      ],
+      [
+       -0.0809,
+       0.5617,
+       -0.0286
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "laterale",
+   "nom": "Latérale",
+   "trajets": [
+    {
+     "id": "pps",
+     "texte": "Espace parapharyngé (franchissement du fascia pharyngo-basilaire)",
+     "par": [
+      "rosenmuller",
+      "parapharynge"
+     ],
+     "pts": [
+      [
+       -0.0954,
+       0.3659,
+       -0.12
+      ],
+      [
+       -0.243,
+       0.0322,
+       0.0709
+      ]
+     ]
+    },
+    {
+     "id": "eustache",
+     "texte": "Voie indirecte par l'orifice d'Eustache → espace masticateur → V3 → foramen ovale → endocrâne",
+     "par": [
+      "rosenmuller",
+      "ostium-trompe",
+      "fosse-infratemporale",
+      "foramen-ovale",
+      "sinus-caverneux"
+     ],
+     "pts": [
+      [
+       -0.0954,
+       0.3659,
+       -0.12
+      ],
+      [
+       -0.0954,
+       0.3359,
+       -0.05
+      ],
+      [
+       -0.373,
+       0.1736,
+       0.1628
+      ],
+      [
+       -0.2235,
+       0.3506,
+       -0.0234
+      ],
+      [
+       -0.0809,
+       0.5617,
+       -0.0286
+      ]
+     ]
+    },
+    {
+     "id": "lacerum",
+     "texte": "Foramen lacerum → extension intracrânienne",
+     "par": [
+      "rosenmuller",
+      "foramen-lacerum",
+      "sinus-caverneux"
+     ],
+     "pts": [
+      [
+       -0.0954,
+       0.3659,
+       -0.12
+      ],
+      [
+       -0.2117,
+       0.2651,
+       -0.1272
+      ],
+      [
+       -0.0809,
+       0.5617,
+       -0.0286
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "posterieure",
+   "nom": "Postérieure",
+   "trajets": [
+    {
+     "id": "rpp",
+     "texte": "Espace rétropharyngé → muscles prévertébraux",
+     "par": [
+      "rosenmuller",
+      "retropharynge",
+      "prevertebral"
+     ],
+     "pts": [
+      [
+       -0.0954,
+       0.3659,
+       -0.12
+      ],
+      [
+       -0.0381,
+       0.03,
+       -0.082
+      ],
+      [
+       -0.1369,
+       -0.0621,
+       -0.1351
+      ]
+     ]
+    },
+    {
+     "id": "carotidien",
+     "texte": "Espace carotidien",
+     "par": [
+      "rosenmuller",
+      "retropharynge",
+      "carotidien"
+     ],
+     "pts": [
+      [
+       -0.0954,
+       0.3659,
+       -0.12
+      ],
+      [
+       -0.0381,
+       0.03,
+       -0.082
+      ],
+      [
+       -0.3036,
+       -0.0496,
+       -0.1598
+      ]
+     ]
+    },
+    {
+     "id": "jugulaire",
+     "texte": "Foramen jugulaire",
+     "par": [
+      "carotidien",
+      "foramen-jugulaire"
+     ],
+     "pts": [
+      [
+       -0.3036,
+       -0.0496,
+       -0.1598
+      ],
+      [
+       -0.3662,
+       0.2648,
+       -0.3283
+      ]
+     ]
+    },
+    {
+     "id": "hypoglosse",
+     "texte": "Canal de l'hypoglosse",
+     "par": [
+      "retropharynge",
+      "canal-hypoglosse"
+     ],
+     "pts": [
+      [
+       -0.0381,
+       0.03,
+       -0.082
+      ],
+      [
+       -0.2063,
+       0.1614,
+       -0.2624
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "inferieure",
+   "nom": "Inférieure",
+   "trajets": [
+    {
+     "id": "oropharynx",
+     "texte": "Muqueuse oropharyngée, loge amygdalienne (parfois sous-muqueuse)",
+     "par": [
+      "rosenmuller",
+      "oropharynx"
+     ],
+     "pts": [
+      [
+       -0.0954,
+       0.3659,
+       -0.12
+      ],
+      [
+       -0.2375,
+       -0.104,
+       0.1501
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "superieure",
+   "nom": "Supérieure (intracrânienne)",
+   "trajets": [
+    {
+     "id": "base",
+     "texte": "Lyse directe de la base du crâne (clivus)",
+     "par": [
+      "rosenmuller",
+      "clivus",
+      "sinus-caverneux"
+     ],
+     "pts": [
+      [
+       -0.0954,
+       0.3659,
+       -0.12
+      ],
+      [
+       -0.02,
+       0.27,
+       -0.2042
+      ],
+      [
+       -0.0809,
+       0.5617,
+       -0.0286
+      ]
+     ]
+    },
+    {
+     "id": "lacerum-sup",
+     "texte": "Foramen lacerum",
+     "par": [
+      "rosenmuller",
+      "foramen-lacerum",
+      "sinus-caverneux"
+     ],
+     "pts": [
+      [
+       -0.0954,
+       0.3659,
+       -0.12
+      ],
+      [
+       -0.2117,
+       0.2651,
+       -0.1272
+      ],
+      [
+       -0.0809,
+       0.5617,
+       -0.0286
+      ]
+     ]
+    },
+    {
+     "id": "ovale-sup",
+     "texte": "Foramen ovale",
+     "par": [
+      "fosse-infratemporale",
+      "foramen-ovale",
+      "sinus-caverneux"
+     ],
+     "pts": [
+      [
+       -0.373,
+       0.1736,
+       0.1628
+      ],
+      [
+       -0.2235,
+       0.3506,
+       -0.0234
+      ],
+      [
+       -0.0809,
+       0.5617,
+       -0.0286
+      ]
+     ]
+    },
+    {
+     "id": "fo-sup",
+     "texte": "Fissures orbitaires inf. puis sup.",
+     "par": [
+      "fpp",
+      "fissure-orbitaire-inf",
+      "fissure-orbitaire-sup",
+      "sinus-caverneux"
+     ],
+     "pts": [
+      [
+       -0.1899,
+       0.3404,
+       0.1986
+      ],
+      [
+       -0.2131,
+       0.3519,
+       0.2455
+      ],
+      [
+       -0.1716,
+       0.5297,
+       0.1813
+      ],
+      [
+       -0.0809,
+       0.5617,
+       -0.0286
+      ]
+     ]
+    }
+   ]
+  }
+ ],
+ "empreinte": "c573449f2064",
+ "octets": 532896
+}
