@@ -317,7 +317,7 @@ def fig_adc():
     s += segment(X(1.267), yw, X(1.6), yw, 'var(--slate)', 110, 3, 6, 0.4)
     s += segment(X(1.267), yw - 7, X(1.267), yw + 7, 'var(--slate)', 111, 3, 3, 0.2)
     s += segment(X(1.6), yw - 7, X(1.6), yw + 7, 'var(--slate)', 112, 3, 3, 0.2)
-    s += texte(X(1.43), yw - 14, 'seuil AP / malin selon les études : 1,27 à 1,6', 13, 'var(--slate)', 'middle')
+    s += texte(X(1.43), yw - 14, 'seuil adénome pléomorphe / tumeur maligne : 1,27 à 1,6 selon les études', 13, 'var(--slate)', 'middle')
     # courbe associée sous chaque zone
     yc = yb + h + 26
     for v, t, c in ((0.45, '+ courbe B', 'var(--purple)'), (1.15, '+ courbe C', 'var(--k-grave)'), (1.9, '+ courbe A', 'var(--k-sign)')):
@@ -332,7 +332,7 @@ def fig_adc():
     return svg(660, 290, s, "Réglette de l'ADC de la lésion en 10 puissance moins 3 millimètres carrés par seconde, "
                "lu avec la courbe de perfusion : moins de 0,9 avec une courbe B, Warthin ; de 0,9 à 1,4 avec une courbe C, carcinome ; "
                "1,4 ou plus avec une courbe A, tumeur bénigne (adénome pléomorphe) ; lymphome : moins de 0,7 avec une courbe C ; "
-               "seuil adénome pléomorphe / malin de 1,27 à 1,6 selon les études")
+               "seuil entre adénome pléomorphe et tumeur maligne de 1,27 à 1,6 selon les études")
 
 
 def main():

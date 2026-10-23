@@ -61,12 +61,14 @@ test('ADC de la lésion, plus de rCDA (choix de l\'auteur, 23/10/2026)', () => {
   assert.ok(!/rCDA|rcda/.test(HTML), 'le rCDA ne doit plus apparaître');
   for (const t of ['doi:10.1007/s11547-020-01182-2', 'doi:10.1016/j.diii.2020.08.002', '94,9 %', '94,6 %', 'chevauchement important']) assert.ok(texte.includes(t), t);
   const adc = HTML.match(/<!-- GEN:adc -->([^]*?)<!-- \/GEN:adc -->/)[1];
-  for (const t of ['0,7', '0,9', '1,4', 'Warthin', 'Carcinome', 'adénome pléomorphe', '+ courbe A', '+ courbe B', '+ courbe C', 'lymphome : &lt; 0,7 + courbe C', 'seuil AP / malin selon les études : 1,27 à 1,6']) assert.ok(adc.includes(t), t);
+  for (const t of ['0,7', '0,9', '1,4', 'Warthin', 'Carcinome', 'adénome pléomorphe', '+ courbe A', '+ courbe B', '+ courbe C', 'lymphome : &lt; 0,7 + courbe C', 'seuil adénome pléomorphe / tumeur maligne : 1,27 à 1,6 selon les études']) assert.ok(adc.includes(t), t);
   // références : seulement des articles de 2020 ou plus récents (demande de l'auteur, 23/10/2026)
   const annees = [...HTML.matchAll(/(?:<i>[^<]+<\/i>|et al\.|Beyhan M\.) (?:[^<]*?)?(19\d\d|20\d\d)/g)].map(m => +m[1]);
   assert.ok(annees.length >= 6, 'références trouvées');
   assert.ok(annees.every(a => a >= 2020), 'référence antérieure à 2020 : ' + annees);
-  assert.ok(!/radiol\.2262011486|radiol\.2493072045/.test(HTML), 'articles de 2003 et 2008 retirés');
+  assert.ok(!/radiol\.2262011486|radiol\.2493072045|Yabuuchi|2003/.test(HTML), 'articles de 2003 et 2008 jamais cités');
+  assert.ok(!/AP \/ malin/.test(HTML), 'abréviation « AP / malin » écrite en toutes lettres');
+  assert.ok(texte.includes('≤ 120 s') && texte.includes('30 %'), 'pic précoce et wash-out gardés');
 });
 
 test('carte dans Fiches rapides › Tête et cou', () => {
