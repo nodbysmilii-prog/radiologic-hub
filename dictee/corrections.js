@@ -179,6 +179,9 @@
         return /[sx]$/i.test(avant) && !/^(?:pas|plus|sans|non|jamais|ailleurs|moins|tous|toujours)$/i.test(avant) ? 'décelables' : 'décelable';
       }],
 
+    // « suisse » + adjectif → « sus- » (« suisse claviculaire » → sus-claviculaire, « suisse mésocolique » → sus-mésocolique)
+    [`(?<![\\p{L}])suisses?[\\s-]+(m[ée]socoliques?|claviculaires?|h[ée]patiques?|ombilicale?s?|pubiens?|pubiennes?|jacente?s?|aortiques?|r[ée]nale?s?|r[ée]naux|tentoriel(?:le)?s?|glottiques?|hyo[ïi]diens?|hyo[ïi]diennes?|sellaires?|spinale?s?|[ée]pineu(?:x|se|ses)|acromiale?s?|condylien(?:ne)?s?|m[ée]sial|aortique)(?![\\p{L}])`, 'giu', (m, x) => `sus-${x.toLowerCase()}`],
+
     // « segment 7 » → « segment VII » (segments hépatiques)
     ['\\bsegment (\\d)\\b', 'gi', (m, n) => `segment ${['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'][+n] || n}`],
   ],
