@@ -37,7 +37,6 @@
     'audio-capture': 'Aucun micro détecté : branchez ou sélectionnez un micro.',
     network: 'Le service de reconnaissance du navigateur est injoignable : une connexion internet est nécessaire.',
     'language-not-supported': 'Le français n\'est pas disponible pour la reconnaissance vocale de ce navigateur.',
-    'phrases-not-supported': 'Ce navigateur refuse la liste de vocabulaire : rechargez la page (Ctrl+F5).',
   };
 
   const webspeech = {
@@ -55,6 +54,8 @@
         r.continuous = true;
         r.interimResults = true;
         r.maxAlternatives = o.choisir ? 5 : 1;
+        // Chrome récent : liste de vocabulaire explicitement vide (sinon « phrases-not-supported » sur certaines versions)
+        if ('phrases' in r) { try { r.phrases = []; } catch (err) { /* lecture seule */ } }
         r.onstart = () => o.surEtat && o.surEtat('ecoute');
         r.onresult = e => {
           let inter = '';
@@ -69,7 +70,8 @@
           if (o.surIntermediaire) o.surIntermediaire(inter.trim());
         };
         r.onerror = e => {
-          if (e.error === 'no-speech' || e.error === 'aborted') return;      // silence : on relance
+          // silence, ou avertissement de Chrome sur la liste de vocabulaire : on relance sans s'arrêter
+          if (e.error === 'no-speech' || e.error === 'aborted' || e.error === 'phrases-not-supported') return;
           fatale = !!ERREURS[e.error];
           if (o.surErreur) o.surErreur({ code: e.error, fatale, message: ERREURS[e.error] || `Erreur de reconnaissance vocale (${e.error}).` });
         };
