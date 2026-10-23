@@ -203,7 +203,24 @@
       /eau$/iu.test(nom) ? det + nom + 'x'
         : NOMS_COURANTS.test(nom) ? det + nom + 's'
           : /[sx]$/iu.test(nom) && !PAS_NOM.test(nom) ? det + nom : null);
-    return accorder(t, RE_VERBE_PL, m => m[0]);
+    return etSingulier(accorder(t, RE_VERBE_PL, m => m[0]));
+  }
+
+  /* Pluriel en trop après « et » : « épaississement pariétal circonférentiel et réguliers » → régulier.
+     Adjectif singulier + « et » + adjectif au pluriel, ramené au singulier quand le nom décrit est au singulier
+     (le nom = premier mot avant eux qui n'est pas un adjectif ; rien n'est changé si c'est un verbe ou un petit mot). */
+  const ADJ_EL = w => estAdj(w) || /(?:el|al|elle|ale|ndi|nci|rci|lli)$/iu.test(w);
+  const NON_NOM = /^(?:est|sont|et|ou|de|du|des|la|le|les|un|une|en|au|aux|à|avec|sans|par|pour|sur|dans|très|peu|bien|non|plus|moins|qui|que)$/iu;
+  const singulier = w => w.replace(/aux$/iu, 'al').replace(/[sx]$/iu, '');
+  const RE_ET_PL = new RegExp(`${AV}(\\p{L}+)([ \\t]+et[ \\t]+)(\\p{L}+[sx])${AP}`, 'giu');
+  function etSingulier(texte) {
+    return texte.replace(RE_ET_PL, (m, a, et, b, i, tout) => {
+      if (/[sx]$/iu.test(a) || !ADJ_EL(a) || !ADJ_EL(singulier(b))) return m;
+      const mots = (tout.slice(0, i).split(/[.;:!?,\n(]/).pop().match(/[\p{L}'’]+/gu) || []).reverse();
+      const nom = mots.find(w => !ADJ_EL(w));
+      if (!nom || nom.length < 3 || NON_NOM.test(nom) || /[sxz]$/iu.test(nom)) return m;
+      return a + et + singulier(b);
+    });
   }
 
   /* ---------- Nombres, dimensions, unités, dictionnaire ---------- */

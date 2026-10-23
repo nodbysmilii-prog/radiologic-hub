@@ -116,6 +116,8 @@
       { "terme": "exophytiques", "erreurs": ["exofytiques", "exo fytiques", "exofitiques", "exo phytiques", "exophitiques"] },
       { "terme": "endophytique", "erreurs": ["endofytique", "endo fytique", "endofitique", "endo phytique", "endophitique"] },
       { "terme": "endophytiques", "erreurs": ["endofytiques", "endo fytiques", "endofitiques", "endo phytiques"] },
+      { "terme": "anse iléale", "erreurs": ["ans iléale", "hanse iléale", "anse iliaque", "anse iliale", "anse iléal", "anse il est al", "anse il éal", "en ciléale", "en si léale", "anse si léale", "ans il éale", "hanse il éale", "anse ilé ale", "ans iliaque", "anse il y ale", "anse hilé ale", "anse idéal", "ans idéale", "hanse idéale"] },
+      { "terme": "anses iléales", "erreurs": ["ans iléales", "hanses iléales", "anses iliaques", "anses iliales", "anses il éales", "anse iléales", "anses idéals", "ans idéales"] },
       { "terme": "iléale", "erreurs": ["idéale", "il éale", "iléal", "idéal"], "avant": ["anse", "dernière anse", "anse grêle", "région", "muqueuse", "sténose", "invagination"] },
       { "terme": "iléales", "erreurs": ["idéales", "il éales", "idéals"], "avant": ["anses", "dernières anses", "anses grêles"] },
       { "terme": "iléo-cæcale", "erreurs": ["idéo cæcale", "idéo cécale", "iléo cécale", "iléo cæcale", "il éo cécale", "idéo caecale", "iléo caecale", "iléocæcale", "iléocécale"] },

@@ -354,3 +354,14 @@ test('dictées de l\'auteur : abdomen, thorax, accords oubliés', () => {
     'la paroi latérale trachéale', 'les lésions décrites', 'Les reins sont symétriques et de taille normale.'])
     assert.equal(T.corriger(s), s, s);
 });
+
+test('dictées de l\'auteur : « et réguliers » au singulier, anse iléale', () => {
+  for (const [dit, ecrit] of [
+    ['Épaississement pariétal circonférentiel et réguliers.', 'Épaississement pariétal circonférentiel et régulier.'],
+    ['paroi fine et régulières', 'paroi fine et régulière'], ['nodule arrondi et réguliers', 'nodule arrondi et régulier'],
+    ['dernière ans iléale', 'dernière anse iléale'], ['dernière anse iliaque', 'dernière anse iléale'],
+    ['dernière hanse iléale', 'dernière anse iléale'], ['les anses iliaques', 'les anses iléales'],
+  ]) assert.equal(T.corriger(dit), ecrit, dit);
+  for (const s of ['les parois fines et régulières', 'contours réguliers et nets', 'ganglions iliaques', 'fosse iliaque droite'])
+    assert.equal(T.corriger(s), s, s);
+});

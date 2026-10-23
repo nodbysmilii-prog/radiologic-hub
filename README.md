@@ -13,6 +13,7 @@
 1. [Ce que contient le site](#ce-que-contient-le-site)
 2. [Fiches rapides disponibles](#fiches-rapides-disponibles)
 3. [Comptes rendus types et phrases automatiques](#comptes-rendus-types-et-phrases-automatiques)
+   - [Dictée vocale : erreurs signalées par l'auteur](#dictée-vocale--erreurs-signalées-par-lauteur-liste-permanente)
 4. [Suivi oncologique (RECIST 1.1 / Lugano)](#suivi-oncologique-recist-11--lugano)
 5. [Remplacements (mise en relation)](#remplacements-mise-en-relation)
 6. [Communauté (réseau des radiologues)](#communauté-réseau-des-radiologues)
@@ -236,6 +237,47 @@ Deux nouvelles spécialités (**ORL / tête et cou**, **TAP / corps entier**), u
 | 🟣 Violet | `k-ddx` | Mes phrases (perso) | — |
 
 ---
+
+### Dictée vocale : erreurs signalées par l'auteur (liste permanente)
+
+Liste tenue à jour à **chaque** erreur signalée au micro. Une correction ajoutée ici est **générale** : elle est écrite dans les fichiers du site (`dictee/lexique.js`, `dictee/corrections.js`, `dictee/traitement.js`), donc appliquée pour **tous les utilisateurs, sur tous les appareils**, et vérifiée par les tests (`tests/dictee.test.js`). Les corrections apprises avec « Apprendre » ou **Aa → Mes corrections** restent, elles, dans le navigateur de la personne qui les a ajoutées.
+
+| Signalée le | Chrome écrit | Corrigé en |
+|---|---|---|
+| 23/10/2026 | épaississement pariétal circonférentiel et réguliers | … circonférentiel et **régulier** (pluriel en trop après « et » quand le nom est au singulier) |
+| 23/10/2026 | dernière ans iléale, hanse iléale, anse iliaque, anse iliale | dernière **anse iléale** (et anses iléales) |
+| 23/10/2026 | lyse mite / aspect mite | lyse **mitée** / aspect **mité** |
+| 23/10/2026 | déco structure | **d'échostructure** |
+| 23/10/2026 | corticosocorticale | **cortico-sous-corticale** |
+| 23/10/2026 | omolatéral | **homolatéral** |
+| 23/10/2026 | exofytique | **exophytique** |
+| 23/10/2026 | les vaisseau mésentérique sont perméable | les **vaisseaux mésentériques** sont **perméables** (accords au pluriel oubliés) |
+| 23/10/2026 | anse idéale | **anse iléale** |
+| 23/10/2026 | rehausser | **rehaussé(e)(s)** selon le nom |
+| 23/10/2026 | produits de contraste | **produit de contraste** |
+| 23/10/2026 | fossiliaque droite | **fosse iliaque** droite |
+| 23/10/2026 | adénomégalie latéraux aortique | **latéro-aortique** |
+| 23/10/2026 | très cave, précase | **pré-cave** |
+| 23/10/2026 | espace rétrosternal prêt aortico cave | espace **rétro-sternal pré-aortico-cave** |
+| 23/10/2026 | des sables | **décelable(s)** |
+| 23/10/2026 | un cul d'eau malléaire, in cudo maléaire, incudo malaire | **incudo-malléaire** (et incudo-stapédien) |
+| 22/10/2026 | lithique, lise | **lytique**, **lyse** |
+| 22/10/2026 | conserver | **conservée** |
+| 22/10/2026 | interapophisaire | **interapophysaire** |
+| 22/10/2026 | prix ventriculaire | **tri-ventriculaire** |
+| 22/10/2026 | c'est tendant | **s'étendant** |
+| 22/10/2026 | pérégoïdien | **ptérygoïdien** |
+| 22/10/2026 | épithimpan | **épitympan** |
+| 22/10/2026 | atiko entrailles | **attico-antral** |
+| 22/10/2026 | tête du Mali us | tête du **malleus** |
+| 22/10/2026 | un CUS | **incus** |
+| 22/10/2026 | aussi fiente | **ossifiante** |
+| 22/10/2026 | hypotensité prestapédienne | **hypodensité pré-stapédienne** |
+| 22/10/2026 | autospongiose | **otospongiose** |
+| 22/10/2026 | durmer, la grammaire | **dure-mère** |
+| 22/10/2026 | micro nodule sans trop lobulaire brancher | **micronodules centrolobulaires branchés** |
+| 22/10/2026 | contour régulier | **contours réguliers** |
+| 22/10/2026 | le foie et homogène | le foie **est** homogène |
 
 ## Suivi oncologique (RECIST 1.1 / Lugano)
 
@@ -722,6 +764,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 23/10/2026 | Dictée vocale : « circonférentiel et réguliers » → **régulier** (pluriel en trop après « et » quand le nom est au singulier) ; **anse iléale** mieux reconnue (« ans iléale », « hanse iléale », « anse iliaque »…) ; nouvelle section **« Dictée vocale : erreurs signalées par l'auteur (liste permanente) »** qui récapitule toutes les erreurs corrigées ; consigne ajoutée dans `CLAUDE.md` ; tests ; `?v=` changé |
 | 23/10/2026 | Dictée vocale : nouvelles erreurs signalées par l'auteur — mité(e), d'échostructure, cortico-sous-corticale, homolatéral, exophytique, anse iléale, iléo-cæcale, rehaussé(e)(s) selon le nom, produit de contraste, fosse(s) iliaque(s), latéro-aortique, pré-cave / rétro-cave, pré-aortico-cave, rétro-sternal, décelable(s) ; **accords au pluriel oubliés** (« les vaisseau mésentérique sont perméable » → « les vaisseaux mésentériques sont perméables ») ; contrôle : aucune des 1 113 phrases des comptes rendus types n'est modifiée ; tests ; `?v=` changé |
 | 23/10/2026 | Dictée vocale : règle **incudo-malléaire / incudo-stapédien(ne)** couvrant les découpages de la dictée (« un cul d'eau », « in cudo », « en cu do »… suivis de « malaire », « maléaire », « malléable »…) ; tests ; `?v=` changé |
 | 23/10/2026 | Dictée vocale : **corrections sur la phrase entière** — Chrome découpe la dictée à chaque micro-pause, si bien que « contour » | « régulier » ou « le foie et » | « homogène » échappaient aux corrections ; après chaque morceau, la phrase dictée (depuis le dernier point, sans toucher au texte tapé avant) est corrigée en entier ; `?v=` changé |
