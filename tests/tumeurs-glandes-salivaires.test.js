@@ -22,7 +22,7 @@ test('6 parties dans l\'ordre, sommaire, feuilles de style', () => {
 });
 
 test('figures « tracées à la main » produites par le script', () => {
-  for (const nom of ['rcda', 'courbes', 'courbe-a', 'courbe-b', 'courbe-c', 'mini-a', 'mini-b', 'mini-c']) {
+  for (const nom of ['adc', 'courbes', 'courbe-a', 'courbe-b', 'courbe-c', 'mini-a', 'mini-b', 'mini-c']) {
     const m = HTML.match(new RegExp(`<!-- GEN:${nom} -->([^]*?)<!-- /GEN:${nom} -->`));
     assert.ok(m, nom);
     assert.match(m[1], /^<svg viewBox="[^"]+" role="img" aria-label="[^"]+"/, nom);
@@ -32,7 +32,7 @@ test('figures « tracées à la main » produites par le script', () => {
 });
 
 test('seuils et conduites du cours', () => {
-  for (const t of ['90 %', '> 1,3', '1 à 1,3', '< 1', '≈ 0,5', '0,8 à 1', '2,06', '0,83', '5 à 10 min', '< 5 %',
+  for (const t of ['90 %', '≥ 1,4', '1,0 à 1,4', '< 1,0', '1,27 à 1,6', 'ADC de la lésion', '5 à 10 min', '< 5 %',
     'IRM avant la cytoponction', 'critère le plus péjoratif', 'La perfusion l\'emporte : malignité',
     'La morphologie l\'emporte : malignité', 'refaire l\'IRM à 1 mois', 'T2 avec Fat Sat', 'nerf facial +++',
     'trajet intrapétreux du VII', 'Suivi clinique'])
@@ -55,6 +55,13 @@ test('arbres décisionnels : prise en charge IRM + FNAC et algorithme des lésio
   const algo = HTML.slice(HTML.indexOf('id="algorithme"'), HTML.indexOf('id="synthese"'));
   for (const t of ['Courbe A', 'Courbe B', 'Courbe C', 'Hypersignal T1 présent', 'Tumeur de Warthin', 'Moins de 1 cm', 'Lésion infiltrante'])
     assert.ok(algo.includes(t), t);
+});
+
+test('ADC de la lésion, plus de rCDA (choix de l\'auteur, 23/10/2026)', () => {
+  assert.ok(!/rCDA|rcda/.test(HTML), 'le rCDA ne doit plus apparaître');
+  for (const t of ['doi:10.1148/radiol.2493072045', 'doi:10.1016/j.diii.2020.08.002']) assert.ok(texte.includes(t), t);
+  const adc = HTML.match(/<!-- GEN:adc -->([^]*?)<!-- \/GEN:adc -->/)[1];
+  for (const t of ['1,0', '1,4', 'Warthin', 'Malin', 'Adénome pléomorphe', 'seuil AP / malin selon les études : 1,27 à 1,6']) assert.ok(adc.includes(t), t);
 });
 
 test('carte dans Fiches rapides › Tête et cou', () => {

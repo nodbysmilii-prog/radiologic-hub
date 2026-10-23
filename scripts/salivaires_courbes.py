@@ -6,7 +6,7 @@ Produit, et écrit dans fiches/tumeurs-glandes-salivaires.html entre les marqueu
   • courbes      : les 3 courbes de perfusion A / B / C superposées ;
   • courbe-a/b/c : chaque courbe seule, annotée ;
   • mini-a/b/c   : vignettes des profils ;
-  • rcda         : réglette du rCDA (seuils du cours).
+  • adc          : réglette de l'ADC de la lésion (seuils publiés, voir fig_adc).
 
 Les courbes sont CALCULÉES (pas dessinées au jugé) puis vérifiées :
   A : monte jusqu'à la fin, sans pic (Tpeak > 120 s) ;
@@ -287,60 +287,59 @@ def fig_mini(k):
     return svg(150, 84, s, f'Courbe de perfusion de type {k}')
 
 
-def fig_rcda():
+def fig_adc():
+    """Réglette de l'ADC de la lésion (× 10⁻³ mm²/s).
+    Seuils : Yabuuchi H et al., Radiology 2008;249:909-16 (doi:10.1148/radiol.2493072045) :
+    1,4 entre adénome pléomorphe et carcinome, 1,0 entre Warthin et carcinome.
+    Plage des seuils AP / malin publiés : 1,267 à 1,60 (Coudert H et al., Diagn Interv Imaging 2021;102:121-30,
+    doi:10.1016/j.diii.2020.08.002). Moyennes publiées : AP 1,93-1,99 ; Warthin 0,92-1,01 ; malins 1,20-1,26
+    (Eravcı 2020, doi:10.5152/tao.2020.5379 ; Abdel Razek 2021, doi:10.1016/j.ijom.2021.03.019)."""
     x0, x1, vmax = 40, 620, 2.4
     X = lambda v: x0 + v / vmax * (x1 - x0)
     yb, h = 132, 34
-    zones = [(0, 1, 'var(--k-grave)', 'Tumeur maligne', '#fff'),
-             (1, 1.3, 'var(--amber)', '', 'var(--ink)'),
-             (1.3, vmax, 'var(--k-sign)', 'Adénome pléomorphe', '#fff')]
+    zones = [(0, 1.0, 'var(--purple)', 'Warthin', '#fff'),
+             (1.0, 1.4, 'var(--k-grave)', 'Malin', '#fff'),
+             (1.4, vmax, 'var(--k-sign)', 'Adénome pléomorphe', '#fff')]
     s = ''
     for a, b, c, t, fg in zones:
         s += f'<rect x="{X(a):.1f}" y="{yb:.1f}" width="{X(b) - X(a):.1f}" height="{h}" style="fill: {c}"/>'
-        if t:
-            s += texte((X(a) + X(b)) / 2, yb + 23, t, 15, fg, 'middle')
+        s += texte((X(a) + X(b)) / 2, yb + 23, t, 15, fg, 'middle')
     s += segment(X(0), yb, X(vmax), yb, 'var(--ink)', 90, 2.6, 16, 0.5)
     s += segment(X(0), yb + h, X(vmax), yb + h, 'var(--ink)', 91, 2.6, 16, 0.5)
     s += segment(X(0), yb, X(0), yb + h, 'var(--ink)', 92, 2.6, 3, 0.2)
     s += segment(X(vmax), yb, X(vmax), yb + h, 'var(--ink)', 93, 2.6, 3, 0.2)
-    # zone intermédiaire : texte au-dessous (trop étroite)
-    s += fleche(X(1.15), yb + h + 104, X(1.15), yb + h + 6, 'var(--gold)', 94, 2, 8)
-    s += texte(X(1.15) - 8, yb + h + 124, 'AP cellulaire ou grade intermédiaire', 13, 'var(--gold)', 'start')
     # graduations
-    for v, t in ((0, '0'), (0.5, '0,5'), (1, '1'), (1.3, '1,3'), (2, '2')):
+    for v, t in ((0, '0'), (0.5, '0,5'), (1, '1,0'), (1.4, '1,4'), (2, '2,0')):
         s += segment(X(v), yb - 2, X(v), yb - 12, 'var(--ink)', 100 + int(v * 10), 2, 3, 0.2)
         s += texte(X(v), yb - 17, t, 15, 'var(--ink)', 'middle')
-    # Warthin 0,8 - 1 (au-dessus)
-    yw = yb - 48
-    s += segment(X(0.8), yw, X(1), yw, 'var(--purple)', 110, 3, 6, 0.4)
-    s += segment(X(0.8), yw - 7, X(0.8), yw + 7, 'var(--purple)', 111, 3, 3, 0.2)
-    s += segment(X(1), yw - 7, X(1), yw + 7, 'var(--purple)', 112, 3, 3, 0.2)
-    s += texte(X(0.9), yw - 14, 'Warthin : 0,8 à 1 (exception)', 14, 'var(--purple)', 'middle')
-    # lymphome ≈ 0,5 et moyennes du cours (au-dessous)
-    for v, t1, t2, c, dy in ((0.5, '≈ 0,5', 'lymphome, tumeur très agressive', 'var(--k-grave)', 0),
-                             (0.83, '0,83', 'moyenne des malins', 'var(--k-grave)', 46),
-                             (2.06, '2,06', 'moyenne des AP', 'var(--k-sign)', 0)):
-        yy = yb + h + 8 + dy
+    # plage des seuils AP / malin selon les études (au-dessus)
+    yw = yb - 50
+    s += segment(X(1.267), yw, X(1.6), yw, 'var(--slate)', 110, 3, 6, 0.4)
+    s += segment(X(1.267), yw - 7, X(1.267), yw + 7, 'var(--slate)', 111, 3, 3, 0.2)
+    s += segment(X(1.6), yw - 7, X(1.6), yw + 7, 'var(--slate)', 112, 3, 3, 0.2)
+    s += texte(X(1.43), yw - 14, 'seuil AP / malin selon les études : 1,27 à 1,6', 13, 'var(--slate)', 'middle')
+    # moyennes publiées (au-dessous)
+    for v, t1, t2, c in ((0.96, '≈ 0,9 à 1,0', 'moyenne Warthin', 'var(--purple)'),
+                         (1.23, '≈ 1,2 à 1,3', 'moyenne malins', 'var(--k-grave)'),
+                         (1.96, '≈ 1,9 à 2,0', 'moyenne AP', 'var(--k-sign)')):
         s += f'<path d="M{X(v):.1f} {yb + h + 1:.1f} l-6 9 h12 z" style="fill: {c}" stroke="var(--ink)" stroke-width="1.4"/>'
+        dy = 46 if v == 1.23 else 0
         if dy:
-            s += tirets(X(v), yb + h + 10, X(v), yy + 4, c, 120)
-        s += texte(X(v), yy + 22, t1, 15, c, 'middle')
-        if v == 0.5:   # à gauche du pointillé de 0,83, sur deux lignes
-            s += texte(X(0.4), yy + 39, 'lymphome ou tumeur', 12, 'var(--muted)', 'middle')
-            s += texte(X(0.4), yy + 54, 'très agressive', 12, 'var(--muted)', 'middle')
-        else:
-            s += texte(X(v), yy + 39, t2, 12, 'var(--muted)', 'middle')
-    # sens de lecture
-    s += fleche(X(0.15), 36, X(2.2), 36, 'var(--k-sign)', 130, 2.6, 11)
-    s += texte(X(1.18), 24, 'rCDA plus élevé → risque de malignité plus faible', 15, 'var(--k-sign)', 'middle')
-    return svg(660, 310, s, 'Réglette du rCDA : inférieur à 1 tumeur maligne (environ 0,5 lymphome ou tumeur très agressive), '
-               'de 1 à 1,3 adénome pléomorphe cellulaire ou tumeur de grade intermédiaire, supérieur à 1,3 adénome pléomorphe ; '
-               'Warthin 0,8 à 1 ; moyennes du cours 0,83 pour les tumeurs malignes et 2,06 pour les adénomes pléomorphes')
+            s += tirets(X(v), yb + h + 10, X(v), yb + h + 8 + dy + 4, c, 120)
+        s += texte(X(v), yb + h + 30 + dy, t1, 14, c, 'middle')
+        s += texte(X(v), yb + h + 47 + dy, t2, 12, 'var(--muted)', 'middle')
+    # lymphome : plus bas encore (flèche vers la gauche)
+    s += fleche(X(0.62), yb + h + 112, X(0.08), yb + h + 112, 'var(--k-grave)', 130, 2.2, 9)
+    s += texte(X(0.06), yb + h + 132, 'lymphome : ADC plus bas que les carcinomes', 12, 'var(--k-grave)', 'start')
+    s += texte(X(1.2), 22, 'ADC de la lésion (× 10⁻³ mm²/s)', 16, 'var(--ink)', 'middle')
+    return svg(660, 320, s, "Réglette de l'ADC de la lésion en 10 puissance moins 3 millimètres carrés par seconde : "
+               "inférieur à 1,0 Warthin, de 1,0 à 1,4 tumeur maligne, 1,4 ou plus adénome pléomorphe ; "
+               "seuil adénome pléomorphe / malin de 1,27 à 1,6 selon les études ; lymphome plus bas que les carcinomes")
 
 
 def main():
     mesures = verifier()
-    figures = {'courbes': fig_courbes(), 'rcda': fig_rcda()}
+    figures = {'courbes': fig_courbes(), 'adc': fig_adc()}
     for k in 'ABC':
         figures['courbe-' + k.lower()] = fig_une(k)
         figures['mini-' + k.lower()] = fig_mini(k)
