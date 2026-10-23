@@ -722,6 +722,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 23/10/2026 | Dictée vocale : règle **incudo-malléaire / incudo-stapédien(ne)** couvrant les découpages de la dictée (« un cul d'eau », « in cudo », « en cu do »… suivis de « malaire », « maléaire », « malléable »…) ; tests ; `?v=` changé |
 | 23/10/2026 | Dictée vocale : **corrections sur la phrase entière** — Chrome découpe la dictée à chaque micro-pause, si bien que « contour » | « régulier » ou « le foie et » | « homogène » échappaient aux corrections ; après chaque morceau, la phrase dictée (depuis le dernier point, sans toucher au texte tapé avant) est corrigée en entier ; `?v=` changé |
 | 23/10/2026 | Dictée vocale : option **« Reconnaissance sur cet ordinateur » retirée** — sur le Mac de l'auteur, l'installation du français dans Chrome a bloqué toute reconnaissance de Chrome (la démonstration de Google ne marchait plus non plus ; le téléphone fonctionne) ; marche à suivre : retirer le français des « Sous-titres instantanés » de Chrome, mettre Chrome à jour ou utiliser Safari ; voyant de diagnostic, lexique, « Mes corrections » et apprentissage des corrections manuelles conservés ; `?v=` changé |
 | 23/10/2026 | Dictée vocale : **voyant de diagnostic** sous la barre de dictée (écoute, micro, son, voix, texte reçu, mode serveur / ordinateur, dernière erreur) pour trouver où la dictée bloque ; `?v=` changé |
