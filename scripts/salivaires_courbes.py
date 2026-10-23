@@ -329,6 +329,13 @@ def fig_adc():
     xw = (X(0.8) + X(0.9)) / 2
     s += texte(x0, 98, 'Warthin : 0,8 à 0,9 + courbe B', 14, 'var(--purple)', 'start')
     s += fleche(xw - 22, 104, xw, yb - 34, 'var(--purple)', 108, 2.2, 8)
+    # adénome pléomorphe cellulaire : peut descendre jusqu'à ≈ 1,2 (précision de l'auteur, 23/10/2026),
+    # donc chevauche la zone des carcinomes ; crochet 1,2 à 1,4 au-dessus de la barre, étiquette à droite
+    ya = 112
+    s += segment(X(1.2), ya, X(1.4), ya, 'var(--k-sign)', 114, 3, 6, 0.4)
+    s += segment(X(1.2), ya - 7, X(1.2), ya + 7, 'var(--k-sign)', 115, 3, 3, 0.2)
+    s += segment(X(1.4), ya - 7, X(1.4), ya + 7, 'var(--k-sign)', 116, 3, 3, 0.2)
+    s += texte(X(1.43), ya + 5, '← AP cellulaire : jusqu\'à ≈ 1,2', 13, 'var(--k-sign)', 'start')
     # courbe associée sous les zones
     yc = yb + h + 26
     for v, t, c in ((1.15, '+ courbe C', 'var(--k-grave)'), (1.9, '+ courbe A', 'var(--k-sign)')):
