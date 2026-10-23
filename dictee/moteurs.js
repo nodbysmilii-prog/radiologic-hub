@@ -141,7 +141,7 @@
     },
   };
 
-  const MOTEURS = { webspeech, 'whisper-local': whisperLocal };
+  const MOTEURS = { webspeech };   // Whisper : essayé puis retiré (pas de temps réel) ; emplacement gardé ci-dessus
   RH.moteurs = {
     liste: () => Object.values(MOTEURS),
     get: id => MOTEURS[id] || webspeech,
