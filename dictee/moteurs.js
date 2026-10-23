@@ -62,9 +62,14 @@
             try { o.vocabulaire.slice(0, 400).forEach(m => r.phrases.push(new root.SpeechRecognitionPhrase(m, 5))); } catch (err) { sansPhrases = true; }
           }
         }
-        r.onstart = () => o.surEtat && o.surEtat('ecoute');
+        const diag = k => { if (o.surDiag) o.surDiag(k, local && 'processLocally' in r ? 'sur l\'ordinateur' : 'serveur Google'); };
+        diag('depart');
+        r.onstart = () => { diag('demarre'); if (o.surEtat) o.surEtat('ecoute'); };
+        r.onaudiostart = () => diag('micro');
+        r.onsoundstart = () => diag('son');
+        r.onspeechstart = () => diag('voix');
         r.onresult = e => {
-          recu = true; clearTimeout(garde);
+          recu = true; clearTimeout(garde); diag('texte');
           let inter = '';
           for (let i = e.resultIndex; i < e.results.length; i++) {
             const res = e.results[i];
@@ -78,6 +83,7 @@
         };
         r.onerror = e => {
           // silence : on relance sans s'arrêter
+          diag('erreur:' + e.error);
           if (e.error === 'no-speech' || e.error === 'aborted') return;
           // liste de vocabulaire refusée : on relance sans la liste (jamais d'arrêt de la dictée pour ça)
           if (e.error === 'phrases-not-supported') { sansPhrases = true; return; }
