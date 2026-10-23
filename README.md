@@ -779,6 +779,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 23/10/2026 | Fiche **glandes salivaires** : le **Warthin va de 0,8 à 1,2** d'ADC (précision de l'auteur) — réglette refaite : bande « Chevauchement » de 0,8 à 1,4 où Warthin (+ courbe B, 0,8 à 1,2), carcinome (+ courbe C, 0,9 à 1,4) et AP cellulaire (1,2 à 1,4) se recouvrent, « la courbe tranche » ; sous 0,8 versant malin, lymphome < 0,7 + courbe C ; tableau, profil Warthin, légende et carte « Testez-vous » corrigés ; test mis à jour |
 | 23/10/2026 | Fiche **glandes salivaires** : l'**adénome pléomorphe cellulaire** peut descendre jusqu'à **≈ 1,2** d'ADC (précision de l'auteur) — crochet 1,2 à 1,4 sur la réglette, tableau (chevauchement avec la zone des carcinomes : la courbe et la morphologie tranchent) et profil AP ; test mis à jour |
 | 23/10/2026 | Fiche **glandes salivaires**, réglette de l'ADC : le Warthin **ne descend jamais sous 0,8** (précision de l'auteur) — bande Warthin 0,8 à 0,9 + courbe B (au lieu de 0 à 0,9), sous 0,8 « jamais un Warthin → versant malin », lymphome < 0,7 + courbe C ; axe commencé à 0,4 (coupure dessinée) pour garder la bande lisible ; tableau, profil Warthin et carte « Testez-vous » corrigés ; test mis à jour |
 | 23/10/2026 | Fiche **glandes salivaires** : abréviation « AP / malin » écrite en toutes lettres (« seuil adénome pléomorphe / tumeur maligne ») dans la réglette et l'encadré ; pic précoce (≤ 120 s) et wash-out (30 %) gardés, l'article de 2003 n'est cité nulle part (vérifié par le test) |
