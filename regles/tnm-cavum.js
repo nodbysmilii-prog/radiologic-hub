@@ -1,7 +1,9 @@
 /* =========================================================
    RadiologicHub — Cancer du cavum (nasopharynx) : classification TNM 8e édition
    ---------------------------------------------------------
-   Définitions T et N : fiche de l'auteur (partie V), reformulées au minimum.
+   Définitions T et N : fiche de l'auteur (partie V), reformulées au minimum ; T4 (tissus mous au-delà du
+   ptérygoïdien latéral, à la place de « fosse infratemporale »), N1 (rétropharyngés uni- ou bilatéraux) et
+   « ≤ 6 cm » alignés sur la 8e édition, à la demande de l'auteur (23/10/2026).
    N0 et M0 / M1 : définitions usuelles (absentes de la fiche).
    Regroupement en stades : AJCC / UICC 8e édition (nasopharynx) :
      I    T1 N0 M0
@@ -22,12 +24,12 @@
     T1: 'Tumeur du nasopharynx ± oropharynx / fosse nasale, sans extension parapharyngée.',
     T2: 'Extension parapharyngée et/ou aux tissus mous adjacents (ptérygoïdiens médial et latéral, muscles prévertébraux).',
     T3: 'Extension osseuse (base du crâne, vertèbres cervicales, ptérygoïde) et/ou aux cavités sinusiennes.',
-    T4: 'Extension intracrânienne et/ou aux nerfs crâniens, hypopharynx, orbite, parotide, canal carotidien, foramen jugulaire, sinus caverneux ou fosse infratemporale.',
+    T4: 'Extension intracrânienne et/ou aux nerfs crâniens, hypopharynx, orbite, parotide, canal carotidien, foramen jugulaire, sinus caverneux, et/ou infiltration étendue des tissus mous au-delà de la face latérale du muscle ptérygoïdien latéral.',
   };
   const N = {
     N0: 'Pas d\'adénopathie régionale.',
-    N1: 'Adénopathies cervicales unilatérales < 6 cm, au-dessus du bord inférieur du cricoïde, ou ganglions rétropharyngés bilatéraux.',
-    N2: 'Adénopathies cervicales bilatérales < 6 cm, au-dessus du bord inférieur du cricoïde.',
+    N1: 'Adénopathies cervicales unilatérales et/ou ganglions rétropharyngés uni- ou bilatéraux, ≤ 6 cm, au-dessus du bord inférieur du cricoïde.',
+    N2: 'Adénopathies cervicales bilatérales ≤ 6 cm, au-dessus du bord inférieur du cricoïde.',
     N3: 'Adénopathies uni- ou bilatérales > 6 cm et/ou sous le bord inférieur du cricoïde.',
   };
   const M = { M0: 'Pas de métastase à distance.', M1: 'Métastase(s) à distance.' };
