@@ -1,0 +1,86 @@
+/* =========================================================
+   RadiologicHub — fiche « Tumeurs des glandes salivaires : l'IRM »
+   Risque selon la glande, réglette du signal T2, réglette du rCDA,
+   courbes de perfusion A / B / C tracées à la main (SVG produits par
+   scripts/salivaires_courbes.py), matrice des discordances,
+   chaîne de synthèse.
+   ========================================================= */
+
+/* ---------- Risque de malignité selon la glande ---------- */
+.sal-risque { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: end; gap: 14px; margin: 6px 0 4px; padding: 0 4px; }
+.sal-gl { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+.sal-gl i { display: block; width: var(--d); height: var(--d); border-radius: 50% 46% 52% 44%; border: 3px solid var(--ink); background: color-mix(in srgb, var(--k-grave) var(--r), #fff); box-shadow: 4px 4px 0 rgba(17, 17, 20, .8); }
+.sal-gl b { font-size: .86rem; }
+.sal-gl small { font-size: .72rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--k-grave); }
+.sal-fleche { position: relative; margin: 14px 4px 0; padding-top: 12px; font-family: var(--font-marker); font-size: 1rem; color: var(--k-grave); text-align: center; }
+.sal-fleche::before { content: ""; position: absolute; top: 0; left: 4%; right: 4%; height: 4px; border-radius: 4px; background: linear-gradient(90deg, var(--k-grave), color-mix(in srgb, var(--k-grave) 20%, #fff)); }
+.sal-fleche::after { content: ""; position: absolute; top: -6px; left: calc(4% - 10px); border: 8px solid transparent; border-right: 12px solid var(--k-grave); border-left: 0; }
+
+/* ---------- Réglette du signal T2 ---------- */
+.sal-t2 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0 0 18px; border: 4px solid var(--ink); border-radius: var(--radius); overflow: hidden; box-shadow: 8px 8px 0 color-mix(in srgb, var(--purple) 40%, transparent); }
+.sal-t2 > div { display: flex; flex-direction: column; gap: 6px; padding: 16px 16px 18px; background: var(--g); color: var(--fg, var(--ink)); }
+.sal-t2 > div + div { border-left: 3px solid var(--ink); }
+.sal-t2 b { font-size: .9rem; }
+.sal-t2 span { font-size: .84rem; line-height: 1.4; }
+.sal-t2 .sal-tag { align-self: flex-start; padding: 3px 10px; border-radius: 999px; font-size: .7rem; font-weight: 900; letter-spacing: .05em; text-transform: uppercase; background: var(--tc); color: #fff; border: 2px solid var(--ink); }
+
+/* ---------- Figures SVG (courbes, réglette rCDA) ---------- */
+.sal-fig { margin: 0 0 30px; padding: 16px 14px 12px; border: 4px solid var(--ink); border-radius: var(--radius); background: #fffdf6; box-shadow: 10px 10px 0 color-mix(in srgb, var(--c, var(--purple)) 45%, transparent); }
+.sal-fig svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sal-fig figcaption { margin-top: 10px; font-size: .8rem; color: var(--muted); text-align: center; line-height: 1.45; }
+.sal-glisser { display: none; margin: 0 0 6px; font-size: .72rem; font-weight: 800; color: var(--muted); text-align: center; }
+.sal-fig .main { font-family: "Permanent Marker", var(--font); }
+.sal-trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 0 0 30px; }
+.sal-trio .sal-fig { margin: 0; padding: 12px 10px 10px; box-shadow: 6px 6px 0 color-mix(in srgb, var(--c) 55%, transparent); }
+.sal-trio h4 { display: flex; align-items: center; gap: 9px; margin: 0 0 4px; font-size: .95rem; }
+.sal-trio h4 b { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; border: 3px solid var(--ink); background: var(--c); color: #fff; font-family: "Permanent Marker", var(--font); font-weight: 400; font-size: 1.15rem; }
+.sal-trio p { margin: 6px 2px 0; font-size: .8rem; line-height: 1.4; }
+
+/* ---------- Matrice des discordances perfusion / morphologie ---------- */
+.sal-matrice { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 0 0 18px; }
+.sal-cas { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 8px; padding: 16px; border: 4px solid var(--ink); border-radius: var(--radius); background: #fff; box-shadow: 6px 6px 0 color-mix(in srgb, var(--k-grave) 45%, transparent); }
+.sal-cas > span { padding: 9px 10px; border-radius: 14px; border: 3px solid var(--bc); background: color-mix(in srgb, var(--bc) 12%, #fff); font-size: .82rem; font-weight: 800; text-align: center; line-height: 1.3; }
+.sal-cas > i { font-style: normal; font-size: 1.5rem; font-weight: 900; }
+.sal-cas .sal-gagne { position: relative; }
+.sal-cas .sal-gagne::after { content: "l'emporte"; position: absolute; top: -12px; right: -6px; padding: 1px 8px; border-radius: 999px; background: var(--ink); color: #fff; font-size: .6rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+.sal-cas > strong { grid-column: 1 / -1; padding: 8px; border-radius: 12px; background: var(--k-grave); color: #fff; text-align: center; font-size: .86rem; letter-spacing: .03em; }
+
+/* ---------- Chaîne de synthèse ---------- */
+.sal-chaine { list-style: none; display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px 0; margin: 0 0 16px; padding: 0; counter-reset: ch; }
+.sal-chaine li { counter-increment: ch; position: relative; flex: 1 1 120px; display: flex; flex-direction: column; justify-content: center; gap: 2px; min-height: 76px; padding: 10px 22px 10px 26px; background: var(--c); color: #fff; font-size: .8rem; font-weight: 800; line-height: 1.25; clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%, 16px 50%); }
+.sal-chaine li:first-child { padding-left: 16px; clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%); border-radius: 14px 0 0 14px; }
+.sal-chaine li::before { content: counter(ch); font-size: .64rem; font-weight: 900; opacity: .8; }
+.sal-chaine li small { font-weight: 600; font-size: .7rem; opacity: .92; }
+.sal-verdict { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 14px 18px; border: 4px solid var(--ink); border-radius: var(--radius); background: #fff; box-shadow: 6px 6px 0 color-mix(in srgb, var(--k-grave) 50%, transparent); font-size: .9rem; }
+.sal-verdict b { padding: 4px 12px; border-radius: 999px; background: var(--k-grave); color: #fff; font-size: .78rem; letter-spacing: .05em; text-transform: uppercase; }
+
+/* ---------- Profils à connaître ---------- */
+.sal-profils { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0 0 20px; }
+.sal-profil { display: flex; flex-direction: column; gap: 8px; padding: 18px 16px 16px; border: 4px solid var(--ink); border-top: 12px solid var(--c); border-radius: var(--radius); background: #fff; box-shadow: 6px 6px 0 color-mix(in srgb, var(--c) 50%, transparent); }
+.sal-profil h4 { margin: 0; font-size: 1.05rem; color: var(--c); }
+.sal-profil dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 10px; margin: 0; font-size: .82rem; }
+.sal-profil dt { font-weight: 900; color: var(--muted); font-size: .7rem; letter-spacing: .05em; text-transform: uppercase; padding-top: 2px; }
+.sal-profil dd { margin: 0; line-height: 1.38; }
+.sal-profil .sal-mini { max-width: 150px; align-self: flex-end; margin-top: auto; }
+.sal-profil .sal-mini svg { display: block; width: 100%; height: auto; }
+
+@media (max-width: 860px) {
+  .sal-trio, .sal-profils { grid-template-columns: 1fr; }
+  .sal-trio .sal-fig { max-width: 440px; }
+  .sal-matrice { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .sal-large .sal-defile { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .sal-large .sal-defile svg { min-width: 600px; }
+  .sal-large .sal-glisser { display: block; }
+  .sal-t2 { grid-template-columns: 1fr; }
+  .sal-t2 > div + div { border-left: 0; border-top: 3px solid var(--ink); }
+  .sal-chaine li, .sal-chaine li:first-child { flex-basis: 100%; clip-path: none; border-radius: 12px; padding: 10px 14px; min-height: 0; }
+  .sal-chaine li + li::after { content: "↓"; position: absolute; top: -13px; left: 18px; color: var(--ink); font-weight: 900; }
+  .sal-cas { grid-template-columns: 1fr; text-align: center; }
+  .sal-cas > i { justify-self: center; }
+  .sal-cas .sal-gagne::after { right: 50%; transform: translateX(50%); }
+}
+@media print {
+  .sal-fig, .sal-cas, .sal-profil, .sal-verdict, .sal-t2 { box-shadow: none !important; }
+}
