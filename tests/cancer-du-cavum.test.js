@@ -29,8 +29,10 @@ test('chiffres et messages clés du cours', () => {
 });
 
 test('TNM : définitions de la fiche et regroupement en stades AJCC / UICC 8e édition', () => {
-  assert.match(R.T.T2, /parapharyngée/); assert.match(R.T.T4, /fosse infratemporale/);
-  assert.match(R.N.N1, /rétropharyngés bilatéraux/); assert.match(R.N.N3, /> 6 cm/);
+  assert.match(R.T.T2, /parapharyngée/); assert.match(R.T.T4, /au-delà de la face latérale du muscle ptérygoïdien latéral/);
+  assert.doesNotMatch(R.T.T4, /fosse infratemporale/, 'T4 : formulation de la 8e édition (demande de l\'auteur)');
+  assert.match(R.N.N1, /rétropharyngés uni- ou bilatéraux, ≤ 6 cm/); assert.match(R.N.N2, /≤ 6 cm/); assert.match(R.N.N3, /> 6 cm/);
+  assert.ok(texte.includes('> 8 mm'), 'seuil rétropharyngé de 8 mm gardé (choix de l\'auteur)');
   const cas = [['T1', 'N0', 'M0', 'I'], ['T1', 'N1', 'M0', 'II'], ['T2', 'N0', 'M0', 'II'], ['T2', 'N1', 'M0', 'II'],
     ['T1', 'N2', 'M0', 'III'], ['T2', 'N2', 'M0', 'III'], ['T3', 'N0', 'M0', 'III'], ['T3', 'N2', 'M0', 'III'],
     ['T4', 'N0', 'M0', 'IVA'], ['T1', 'N3', 'M0', 'IVA'], ['T4', 'N3', 'M0', 'IVA'], ['T1', 'N0', 'M1', 'IVB']];
