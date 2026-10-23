@@ -91,7 +91,9 @@
   const VOCAB = new Set();
   [...Object.values((LEXIQUE && LEXIQUE.categories) || {}).flat().map(e => e.terme), ...(DICO.remplacements || []).map(r => r[1])]
     .forEach(t => String(t).split(/[\s']+/).forEach(m => { if (m.length > 3) VOCAB.add(norm(m)); }));
-  const VOCABULAIRE = [...new Set([...Object.values((LEXIQUE && LEXIQUE.categories) || {}).flat().map(e => e.terme)])];
+  // Termes favorisés par la reconnaissance sur l'ordinateur : lexique + formes écrites du dictionnaire
+  const VOCABULAIRE = [...new Set([...Object.values((LEXIQUE && LEXIQUE.categories) || {}).flat().map(e => e.terme),
+    ...(DICO.remplacements || []).map(r => r[1]), ...(DICO.expressions || []).map(r => r[1])].filter(t => t && t.length >= 2))];
   function meilleureHypothese(hypotheses) {
     // note = termes médicaux reconnus après correction ; le moteur classe ses hypothèses (la 1re est un peu favorisée)
     const note = h => corriger(h).split(/[\s,.;:'’]+/).filter(m => VOCAB.has(norm(m))).length;

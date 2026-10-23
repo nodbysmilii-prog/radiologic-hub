@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="finition.css?v=20261022310000">
   <link rel="stylesheet" href="cr.css?v=20261022235000">
   <link rel="stylesheet" href="cr-tools.css?v=20261022235000">
-  <link rel="stylesheet" href="dictee/dictee.css?v=20261023120000">
+  <link rel="stylesheet" href="dictee/dictee.css?v=20261023160000">
 </head>
 <body>
 
@@ -136,6 +136,7 @@
             <p class="dt-warn" id="dt-warn">La dictée passe par le service du navigateur : ne dictez pas d'identité patient.</p>
             <p class="dt-unsupported" id="dt-unsupported" hidden></p>
             <p class="dt-msg" id="dt-msg" role="status" aria-live="polite"></p>
+            <p class="dt-propose" id="dt-propose" role="status" aria-live="polite" hidden></p>
           </div>
           <div class="dt-panel" id="dt-aide" hidden>
             <p class="dt-panel-title">Commandes vocales</p>
@@ -148,7 +149,7 @@
               <li><b>« insérer modèle scanner thoracique »</b> : examen complet (vide → chargé ; sinon « remplacer », « insérer » ou « annuler ») ; <b>« insérer la phrase foie normal »</b> : inséré au curseur</li>
               <li><b>« arrêter la dictée »</b></li>
             </ul>
-            <p class="dt-panel-note">Corrections automatiques : « pi rads » → PI-RADS, « 12 virgule 5 » → 12,5, « 12 sur 8 millimètres » → 12 x 8 mm, « 12 sur 8 sur 6 » → 12 x 8 x 6 mm, « 4 sur 5 » → 4/5… , « hyper signal » → hypersignal, « la grammaire » → la dure-mère, « le foie et homogène » → le foie est homogène (dictionnaire : <code>dictee/corrections.js</code> ; erreurs de transcription : <code>dictee/lexique.js</code>, à enrichir). « Point » reste un mot dans « point de départ », « point d'appel »… Le texte dicté reste modifiable au clavier à tout moment.</p>
+            <p class="dt-panel-note">Corrections automatiques : « pi rads » → PI-RADS, « 12 virgule 5 » → 12,5, « 12 sur 8 millimètres » → 12 x 8 mm, « 12 sur 8 sur 6 » → 12 x 8 x 6 mm, « 4 sur 5 » → 4/5… , « hyper signal » → hypersignal, « la grammaire » → la dure-mère, « le foie et homogène » → le foie est homogène (dictionnaire : <code>dictee/corrections.js</code> ; erreurs de transcription : <code>dictee/lexique.js</code>, à enrichir). « Point » reste un mot dans « point de départ », « point d'appel »… Le texte dicté reste modifiable au clavier à tout moment : si vous corrigez un mot dicté, la dictée propose de l'<b>apprendre</b>.</p>
           </div>
           <div class="dt-panel" id="dt-perso" hidden>
             <p class="dt-panel-title">Mes corrections — apprendre à la dictée</p>
@@ -170,6 +171,12 @@
               <label for="dt-moteur">Moteur de transcription</label>
               <select id="dt-moteur"></select>
             </div>
+            <fieldset class="dt-local" id="dt-local">
+              <legend>Vocabulaire médical (Chrome)</legend>
+              <label class="dt-check"><input type="checkbox" id="dt-local-on"> Reconnaissance <b>sur cet ordinateur</b>, avec la liste des termes médicaux du site et de vos corrections apprises</label>
+              <p class="dt-panel-note" id="dt-local-etat">Vérification…</p>
+              <button class="btn btn-outline btn-sm" type="button" id="dt-local-installer" hidden>Installer le français (gratuit, une fois)</button>
+            </fieldset>
             <div class="dt-set">
               <span>Touche démarrer / arrêter</span>
               <button class="btn btn-outline btn-sm dt-key" type="button" data-touche="toucheBasculer"></button>
@@ -410,8 +417,8 @@
   <script src="cr.js?v=20261012200000"></script>
   <script src="dictee/corrections.js?v=20261022290000"></script>
   <script src="dictee/lexique.js?v=20261023120000"></script>
-  <script src="dictee/traitement.js?v=20261023120000"></script>
-  <script src="dictee/moteurs.js?v=20261023141000"></script>
-  <script src="dictee/dictee.js?v=20261023130000"></script>
+  <script src="dictee/traitement.js?v=20261023160000"></script>
+  <script src="dictee/moteurs.js?v=20261023160000"></script>
+  <script src="dictee/dictee.js?v=20261023160000"></script>
 </body>
 </html>
