@@ -31,7 +31,6 @@
     moteur: M.defaut,
     toucheBasculer: { key: 'F9', ctrl: false, alt: false, shift: false, meta: false },
     toucheArreter: { key: 'Escape', ctrl: false, alt: false, shift: false, meta: false },
-    surOrdinateur: false,
   };
   const lire = () => { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
   let reglages = { ...DEFAUT, ...lire() };
@@ -95,7 +94,7 @@
     if (nouvelleCible) cible = nouvelleCible;
     if (actif) { majInterface(); return; }                 // déjà en cours : on change seulement de cible
     session = mo.creer({ langue: 'fr-FR', surIntermediaire, surFinal, surEtat, surErreur, choisir: T.meilleureHypothese,
-      surOrdinateur: !!reglages.surOrdinateur && etatLocal === 'available', vocabulaire: vocabulaire(), surDiag });
+      surOrdinateur: false, vocabulaire: vocabulaire(), surDiag });
     actif = true;
     debut = Date.now();
     tick();
@@ -522,45 +521,8 @@
   function vocabulaire() {
     return [...new Set([...perso.map(c => c.ecrit), ...(T.VOCABULAIRE || [])].map(t => String(t).trim()).filter(t => t && t.length <= 60))].slice(0, 400);
   }
-  const localOn = $('#dt-local-on'), localEtat = $('#dt-local-etat'), localInst = $('#dt-local-installer');
-  const SO = M.get('webspeech').surOrdinateur;
-  let etatLocal = 'inconnu';     // la case n'agit que si le français est réellement installé
-  async function majLocal() {
-    localOn.checked = !!reglages.surOrdinateur;
-    if (!SO || !SO.pris()) {
-      localOn.disabled = true; localInst.hidden = true;
-      localEtat.textContent = 'Non disponible dans ce navigateur (il faut une version récente de Chrome sur ordinateur).';
-      return;
-    }
-    const e = await SO.etat('fr-FR');
-    etatLocal = e;
-    localOn.disabled = false;
-    localInst.hidden = !(e === 'downloadable');
-    localEtat.textContent = {
-      available: `Français installé sur cet ordinateur. ${vocabulaire().length} termes médicaux favorisés${reglages.surOrdinateur ? '' : ' une fois la case cochée'}. La voix reste sur l'ordinateur.`,
-      downloadable: 'Le français n\'est pas encore installé sur cet ordinateur : cliquez sur « Installer le français » (téléchargement gratuit par Chrome, une seule fois).',
-      downloading: 'Installation du français en cours…',
-      unavailable: 'Chrome ne propose pas encore le français sur l\'ordinateur : la dictée continue par le service du navigateur (sans liste de vocabulaire).',
-      'non-pris-en-charge': 'Non disponible dans ce navigateur.',
-    }[e] || 'Non disponible dans ce navigateur.';
-    if (reglages.surOrdinateur && e !== 'available') localEtat.textContent += ' En attendant, la dictée fonctionne normalement (service du navigateur).';
-    if (e === 'downloading') setTimeout(majLocal, 4000);
-  }
-  localOn.addEventListener('change', async () => {
-    if (actif) arreter();
-    reglages.surOrdinateur = localOn.checked; sauver();
-    if (localOn.checked && (await SO.etat('fr-FR')) !== 'available') {
-      message('Installez d\'abord le français sur cet ordinateur (bouton dans ⚙ Réglages).', true);
-    }
-    majLocal();
-  });
-  localInst.addEventListener('click', async () => {
-    localEtat.textContent = 'Installation du français en cours…';
-    const ok = await SO.installer('fr-FR');
-    message(ok ? 'Français installé : la dictée peut se faire sur cet ordinateur.' : 'Installation impossible pour le moment.', !ok);
-    majLocal();
-  });
-  $('#dt-reglages-btn').addEventListener('click', majLocal);
+  // « Reconnaissance sur cet ordinateur » retirée le 23/10 : sur certains Mac, l'installation du français
+  // dans Chrome a bloqué toute reconnaissance (y compris la démonstration de Google).
 
   /* ---------- Apprentissage automatique : un mot dicté corrigé à la main ---------- */
   // Zones du compte rendu insérées par la dictée (positions suivies à chaque frappe, 10 min).
@@ -626,5 +588,4 @@
 
   majReglages();
   majSections();
-  majLocal();
 })();
