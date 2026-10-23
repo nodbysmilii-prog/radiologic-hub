@@ -148,6 +148,11 @@
     // adjectifs anatomiques composés : « lombo sacré » → lombo-sacré, « sacro iliaques » → sacro-iliaques…
     [`(?<![\\p{L}])(lombo|sacro|gl[ée]no|f[ée]moro|acromio|coraco|v[ée]sico|abdomino|thoraco|cervico|dorso|tibio|ilio|costo|sterno|calcan[ée]o|talo|scapho|m[ée]tacarpo|m[ée]tatarso)\\s+(\\p{L}{3,})`, 'giu', (m, p, x) => `${p}-${x}`],
 
+    // incudo-malléaire / incudo-stapédien(ne) : toutes les façons dont la dictée découpe « incudo »
+    // (« in cudo », « un cul d'eau », « un cul do », « en cu do »…) suivies de « malléaire » mal écrit (« malaire », « maléaire »…)
+    [`(?<![\\p{L}])(?:in|un|en|hein)[\\s-]*(?:cu|cul|ku|cou|q)[\\s-]*(?:d['’]?[\\s-]*)?(?:o|eau|au|aux|os|do|dos|deau|dot)?[\\s-]*(mall?[ée]aires?|malaires?|mall?[ée]ables?|mall[ée]aires?|st?ap[ée]di[ae]ns?|st?ap[ée]diennes?)(?![\\p{L}])`, 'giu',
+      (m, suite) => 'incudo-' + (/^st?ap/i.test(suite) ? suite.toLowerCase().replace(/^st?ap[ée]di/, 'stapédi') : 'malléaire' + (/s$/i.test(suite) ? 's' : ''))],
+
     // « segment 7 » → « segment VII » (segments hépatiques)
     ['\\bsegment (\\d)\\b', 'gi', (m, n) => `segment ${['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'][+n] || n}`],
   ],

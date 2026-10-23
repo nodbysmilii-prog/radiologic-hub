@@ -326,3 +326,11 @@ test('corrections apprises (« Mes corrections ») et choix entre hypothèses du
   assert.equal(T.meilleureHypothese(['la date de la grand-mère', 'prise de contraste de la dure-mère']), 'prise de contraste de la dure-mère');
   assert.ok(T.VOCABULAIRE.includes('hypersignal') && T.VOCABULAIRE.length > 50);
 });
+
+test('incudo-malléaire / incudo-stapédien : formes découpées par la dictée', () => {
+  for (const s of ["un cul d'eau malléaire", 'un cul do malaire', 'in cudo maléaire', 'incudo malléaire', 'en cu do malléable'])
+    assert.equal(T.corriger(`luxation ${s}`), 'luxation incudo-malléaire', s);
+  assert.equal(T.corriger('articulations incudo malléaires'), 'articulations incudo-malléaires');
+  assert.equal(T.corriger('articulation un cudo stapédienne'), 'articulation incudo-stapédienne');
+  for (const s of ['os malaire', 'un cul de sac', 'un cou']) assert.equal(T.corriger(s), s, s);
+});
