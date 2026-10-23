@@ -95,7 +95,7 @@
     if (nouvelleCible) cible = nouvelleCible;
     if (actif) { majInterface(); return; }                 // déjà en cours : on change seulement de cible
     session = mo.creer({ langue: 'fr-FR', surIntermediaire, surFinal, surEtat, surErreur, choisir: T.meilleureHypothese,
-      surOrdinateur: !!reglages.surOrdinateur && etatLocal === 'available', vocabulaire: vocabulaire() });
+      surOrdinateur: !!reglages.surOrdinateur && etatLocal === 'available', vocabulaire: vocabulaire(), surDiag });
     actif = true;
     debut = Date.now();
     tick();
@@ -112,6 +112,17 @@
   }
   const basculer = c => (actif ? arreter() : demarrer(c));
 
+  /* Voyant de diagnostic : micro, son, voix, texte reçu, mode, dernière erreur */
+  let etapes = {};
+  function surDiag(k, mode) {
+    if (k === 'depart') etapes = { mode };
+    else if (k.startsWith('erreur:')) etapes.erreur = k.slice(7);
+    else etapes[k] = (etapes[k] || 0) + 1;
+    etapes.mode = mode;
+    const o = v => (v ? '✓' : '—');
+    $('#dt-diag').textContent = `Diagnostic : écoute ${o(etapes.demarre)} · micro ${o(etapes.micro)} · son ${o(etapes.son)} · voix ${o(etapes.voix)} · texte reçu ${etapes.texte || 0} · mode ${etapes.mode}${etapes.erreur ? ' · dernière erreur : ' + etapes.erreur : ''}`;
+    $('#dt-diag').hidden = false;
+  }
   function surEtat(etat) {
     if (etat === 'arret' && actif) { actif = false; clearInterval(chrono); majInterface(); }
   }
