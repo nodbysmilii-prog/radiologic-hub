@@ -31,7 +31,6 @@
     moteur: M.defaut,
     toucheBasculer: { key: 'F9', ctrl: false, alt: false, shift: false, meta: false },
     toucheArreter: { key: 'Escape', ctrl: false, alt: false, shift: false, meta: false },
-    whisperAdresse: 'http://127.0.0.1:8737', whisperJeton: '', whisperMode: 'arret',
   };
   const lire = () => { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
   let reglages = { ...DEFAUT, ...lire() };
@@ -54,7 +53,6 @@
   };
 
   /* ---------- État de la dictée ---------- */
-  let sansRemplacer = false, derniereMesure = null;
   let session = null, actif = false, cible = { type: 'editeur' }, attente = null, debut = 0, chrono = null;
   const micBtn = $('#dt-mic'), recEl = $('#dt-rec'), tempsEl = $('#dt-temps'), liveEl = $('#dt-live');
   const bulle = $('#dt-bulle'), champBtn = $('#dt-champ');
@@ -95,10 +93,7 @@
     }
     if (nouvelleCible) cible = nouvelleCible;
     if (actif) { majInterface(); return; }                 // déjà en cours : on change seulement de cible
-    session = mo.creer({ langue: 'fr-FR', surIntermediaire, surFinal, surEtat, surErreur, choisir: T.meilleureHypothese, vocabulaire: T.VOCABULAIRE,
-      surInfo: (t, occupe) => { liveEl.textContent = t; badgeOccupe(occupe); },
-      surMesure: r => { derniereMesure = r; },
-      whisper: { adresse: reglages.whisperAdresse, jeton: reglages.whisperJeton, mode: reglages.whisperMode, contexte: contexteExamen } });
+    session = mo.creer({ langue: 'fr-FR', surIntermediaire, surFinal, surEtat, surErreur, choisir: T.meilleureHypothese, vocabulaire: T.VOCABULAIRE });
     actif = true;
     debut = Date.now();
     tick();
@@ -136,14 +131,9 @@
   }
 
   /* ---------- Texte final : commandes, corrections, insertion ---------- */
-  function surFinal(t, meta = {}) {
-    if (!meta.moteur) liveEl.textContent = '';
+  function surFinal(t) {
+    liveEl.textContent = '';
     bulle.hidden = true;
-    sansRemplacer = !!meta.sansRemplacer;
-    if (meta.brut != null) {          // texte brut du moteur, avant les corrections du site
-      $('#dt-brut').hidden = false;
-      $('#dt-brut-texte').textContent = meta.brut + (meta.calcul != null ? `  (${meta.modele || 'whisper'} : ${meta.duree} s d'audio, ${meta.calcul} s de calcul)` : '');
-    }
     if (attente) { repondre(t); return; }
     const acts = T.analyser(t);
     let groupe = [];
@@ -164,13 +154,12 @@
   function inserer(actions) {
     if (!zoneValide()) { arreter(); message('Le champ dicté a disparu : dictée arrêtée.', true); return; }
     if (cible.type === 'editeur') {
-      // Whisper : le texte arrive après coup ; il s'insère au curseur sans écraser une sélection éventuelle
-      const e = editor.selectionEnd, s = sansRemplacer ? e : editor.selectionStart;
+      const s = editor.selectionStart, e = editor.selectionEnd;
       const r = T.assembler(actions, editor.value.slice(0, s));
       if (r.texte || r.retirer) ED.remplacer(s - r.retirer, e, r.texte);
       return;
     }
-    const el = cible.el, e = el.selectionEnd ?? el.value.length, s = sansRemplacer ? e : (el.selectionStart ?? e);
+    const el = cible.el, s = el.selectionStart ?? el.value.length, e = el.selectionEnd ?? s;
     const r = T.assembler(actions, el.value.slice(0, s));
     const texte = el.tagName === 'INPUT' ? r.texte.replace(/\s*\n\s*/g, ' ') : r.texte;
     el.setRangeText(texte, Math.max(0, s - r.retirer), e, 'end');
@@ -512,56 +501,6 @@
     [micBtn, champBtn, ...$$('.dt-mini')].forEach(b => b.classList.toggle('is-ko', !ok));
   }
 
-  /* ---------- Whisper local : contexte initial, réglages, état ---------- */
-  // Contexte court selon l'examen du compte rendu (titre) : quelques termes, jamais tout le lexique.
-  const CONTEXTES = [
-    [/thora|poumon|pulmon|embol|m[ée]diastin/i, 'parenchyme pulmonaire, verre dépoli, condensation, épanchement pleural, médiastin, adénomégalie, nodule, embolie pulmonaire, Qanadli, hile'],
-    [/c[ée]r[ée]br|enc[ée]phal|neuro|cr[âa]ne|m[ée]dullaire/i, 'hypersignal FLAIR, hyposignal T1, substance blanche, dure-mère, leucoaraïose, ventricules, sus-tentoriel, sous-tentoriel, diffusion, ADC'],
-    [/abdo|foie|h[ée]pat|pelv|r[ée]n|uro|digest|ent[ée]ro/i, 'foie, vésicule biliaire, voies biliaires, pancréas, rate, reins, cavités pyélocalicielles, hypodense, hyperdense, épanchement péritonéal'],
-    [/rachis|lomb|cervic|genou|[ée]paule|coude|cheville|os|articul/i, 'interapophysaire, discopathie, hernie discale, foramen, canal rachidien, ostéophyte, épanchement articulaire, ménisque, tendon, ligament'],
-    [/sein|mammo/i, 'BI-RADS, opacité, microcalcifications, distorsion architecturale, ganglion axillaire'],
-    [/thyro|cervical|cou\b/i, 'EU-TIRADS, nodule thyroïdien, isthme, lobe, hypoéchogène, adénopathie'],
-  ];
-  function contexteExamen() {
-    // titre de l'examen seulement (ligne en majuscules d'un compte rendu type), jamais le texte dicté
-    const l1 = (editor.value.split('\n').find(l => l.trim()) || '').trim();
-    const titre = l1.length <= 90 && /\p{L}/u.test(l1) && l1 === l1.toUpperCase() ? l1 : '';
-    const termes = (CONTEXTES.find(([re]) => re.test(titre)) || [, 'hypodense, hyperdense, hypersignal, hyposignal, rehaussement, millimètres'])[1];
-    return `Compte rendu radiologique${titre ? ` : ${titre.toLowerCase()}` : ''}. Termes : ${termes}.`;
-  }
-
-  const fsW = $('#dt-whisper'), badge = $('#dt-w-badge'), detail = $('#dt-w-etat-detail');
-  const champsW = { whisperAdresse: $('#dt-w-adresse'), whisperJeton: $('#dt-w-jeton'), whisperMode: $('#dt-w-mode') };
-  Object.entries(champsW).forEach(([k, el]) => {
-    el.value = reglages[k];
-    el.addEventListener('change', () => { reglages[k] = el.value.trim(); sauver(); verifierWhisper(); });
-  });
-  let etatW = null;
-  function badgeOccupe(occupe) { badge.classList.toggle('is-occupe', !!occupe); }
-  async function verifierWhisper() {
-    const mo = moteur();
-    const w = mo.id === 'whisper-local';
-    fsW.hidden = !w; badge.hidden = !w;
-    if (!w || !mo.etat) return;
-    const cfg = { adresse: reglages.whisperAdresse, jeton: reglages.whisperJeton };
-    let txt, cls;
-    try {
-      etatW = await mo.etat(cfg);
-      if (!etatW.appaire) { txt = 'Whisper local : appairage requis'; cls = 'is-attention'; }
-      else if (!etatW.pret) { txt = 'Whisper local : modèle non installé'; cls = 'is-ko'; }
-      else { txt = `Whisper local : prêt (${etatW.modele}${etatW.vad ? ', détection de la voix' : ''})`; cls = 'is-ok'; }
-    } catch (err) {
-      etatW = null; txt = 'Whisper local : service arrêté'; cls = 'is-ko';
-    }
-    badge.textContent = txt;
-    badge.className = 'dt-w-badge ' + cls;
-    detail.textContent = txt + (cls === 'is-ko' && !etatW ? ' — démarrez « Dictée Whisper » (outils/whisper-local) sur cet ordinateur.' : '');
-  }
-  $('#dt-w-tester').addEventListener('click', verifierWhisper);
-  moteurSel.addEventListener('change', verifierWhisper);
-  window.addEventListener('focus', () => { if (!actif) verifierWhisper(); });
-
   majReglages();
   majSections();
-  verifierWhisper();
 })();
