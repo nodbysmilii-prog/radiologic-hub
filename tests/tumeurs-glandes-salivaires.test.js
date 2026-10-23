@@ -39,6 +39,17 @@ test('seuils et conduites du cours', () => {
     assert.ok(texte.includes(t), t);
 });
 
+test('choix de l\'auteur (23/10/2026) et repères de la littérature', () => {
+  // B et C sans hypersignal T1 : même conclusion, versant malin ; C la plus péjorative
+  assert.match(HTML, /dt-leaf is-warn" href="#perfusion">Malin &gt; bénin/);
+  assert.match(HTML, /dt-leaf is-bad" href="#perfusion"><small class="dt-kicker">la plus péjorative <\/small>Malin &gt; bénin/);
+  for (const t of ['plus malin que bénin', 'courbe C reste la plus péjorative', 'toujours le versant malin',
+    'Tpeak', '≤ 120 s', '5 min', '91 %', 'doi:10.1148/radiol.2262011486'])
+    assert.ok(texte.includes(t), t);
+  const courbes = HTML.match(/<!-- GEN:courbes -->([^]*?)<!-- \/GEN:courbes -->/)[1];
+  for (const t of ['120 s', '5 min', 'pic précoce : ≤ 120 s']) assert.ok(courbes.includes(t), t);
+});
+
 test('arbres décisionnels : prise en charge IRM + FNAC et algorithme des lésions de plus de 1 cm', () => {
   assert.equal((HTML.match(/<div class="dtree" data-dtree/g) || []).length, 2);
   const algo = HTML.slice(HTML.indexOf('id="algorithme"'), HTML.indexOf('id="synthese"'));

@@ -9,9 +9,11 @@ Produit, et écrit dans fiches/tumeurs-glandes-salivaires.html entre les marqueu
   • rcda         : réglette du rCDA (seuils du cours).
 
 Les courbes sont CALCULÉES (pas dessinées au jugé) puis vérifiées :
-  A : monte jusqu'à la fin, sans pic ;
-  B : pic précoce, wash-out > 30 % ;
-  C : pic précoce, wash-out < 30 %.
+  A : monte jusqu'à la fin, sans pic (Tpeak > 120 s) ;
+  B : pic précoce (Tpeak ≤ 120 s), wash-out > 30 % ;
+  C : pic précoce (Tpeak ≤ 120 s), wash-out < 30 %.
+Seuils de Yabuuchi H et al., Radiology 2003;226:345-54 (doi:10.1148/radiol.2262011486) : Tpeak 120 s,
+wash-out 30 %, acquisition dynamique de 5 min.
 wash-out = (signal au pic − signal en fin d'acquisition) / (signal au pic − signal avant injection).
 Le tremblé « fait main » est ajouté APRÈS ces vérifications (déplacement < 1 px, sans effet sur
 la forme). Relancer après toute modification : python3 scripts/salivaires_courbes.py
@@ -23,8 +25,10 @@ from pathlib import Path
 RACINE = Path(__file__).resolve().parent.parent
 FICHE = RACINE / 'fiches' / 'tumeurs-glandes-salivaires.html'
 
-T0 = 0.06          # injection (temps normalisé 0 → 1)
-PRECOCE = 0.36     # fin de la phase précoce (zone grisée)
+T0 = 0.06          # injection (temps normalisé 0 → 1 ; de l'injection à t = 1 : 5 min d'acquisition)
+DUREE = 300        # secondes entre l'injection et la fin de l'acquisition (5 min)
+# fin de la phase précoce : Tpeak ≤ 120 s (Yabuuchi H et al., Radiology 2003;226:345-54, doi:10.1148/radiol.2262011486)
+PRECOCE = T0 + 120 / DUREE * (1 - T0)
 COULEURS = {'A': 'var(--k-sign)', 'B': 'var(--orange)', 'C': 'var(--k-grave)'}
 
 
@@ -193,7 +197,7 @@ class Repere:
         s = fleche(o[0], o[1], self.x1 + 26, o[1], 'var(--ink)', seed, 2.8)
         s += fleche(o[0], o[1], o[0], self.yhaut - 26, 'var(--ink)', seed + 5, 2.8)
         if legendes:
-            s += texte(self.x1 + 22, o[1] + 26, 'Temps', taille, 'var(--ink)', 'end')
+            s += texte(self.x1 + 22, o[1] - 12, 'Temps', taille, 'var(--ink)', 'end')
             s += texte(o[0] - 14, self.yhaut - 8, 'Signal', taille, 'var(--ink)', 'end',
                        f' transform="rotate(-90 {o[0] - 14:.1f} {self.yhaut - 8:.1f})"')
         return s
@@ -202,12 +206,16 @@ class Repere:
         xa, xb = self.X(T0), self.X(PRECOCE)
         return (f'<rect x="{xa:.1f}" y="{self.yhaut - 18:.1f}" width="{xb - xa:.1f}" height="{self.ybas - self.yhaut + 18:.1f}" '
                 f'rx="8" style="fill: color-mix(in srgb, var(--amber) 16%, transparent)"/>'
-                + texte((xa + xb) / 2, self.yhaut - 24, 'phase précoce', taille, 'var(--gold)', 'middle'))
+                + texte((xa + xb) / 2, self.yhaut - 24, 'pic précoce : ≤ 120 s', taille, 'var(--gold)', 'middle'))
 
     def injection(self, seed, taille=12):
-        x = self.X(T0)
-        return (segment(x, self.ybas + 4, x, self.ybas + 20, 'var(--ink)', seed, 2, 3, 0.2)
-                + texte(x, self.ybas + 36, 'injection', taille, 'var(--muted)', 'middle'))
+        """Repères de temps sous l'axe : injection, 120 s (fin de la phase précoce), 5 min (fin de l'acquisition)."""
+        s = ''
+        for i, (t, nom) in enumerate(((T0, 'injection'), (PRECOCE, '120 s'), (1, '5 min'))):
+            x = self.X(t)
+            s += (segment(x, self.ybas + 4, x, self.ybas + 20, 'var(--ink)', seed + i, 2, 3, 0.2)
+                  + texte(x, self.ybas + 36, nom, taille, 'var(--muted)', 'middle'))
+        return s
 
 
 def svg(w, h, contenu, label):
@@ -229,7 +237,7 @@ def fig_courbes():
     s = R.precoce(15) + R.axes(1, True, 17) + R.injection(3, 13)
     # seuil de 30 % sous le pic (B et C culminent à 100)
     s += tirets(R.X(0.24), R.Y(100), R.X(1), R.Y(100), 'var(--slate)', 4)
-    s += texte(R.X(0.44), R.Y(100) - 16, 'niveau du pic', 13, 'var(--slate)', 'middle')
+    s += texte(R.X(0.7), R.Y(100) - 16, 'niveau du pic', 13, 'var(--slate)', 'middle')
     s += tirets(R.X(0.24), R.Y(70), R.X(1), R.Y(70), 'var(--slate)', 6)
     s += texte(R.X(0.27), R.Y(70) + 20, '30 % sous le pic', 13, 'var(--slate)', 'start')
     for i, k in enumerate('ABC'):
@@ -343,7 +351,7 @@ def main():
         html = motif.sub(lambda m: m.group(1) + contenu + m.group(2), html)
     FICHE.write_text(html, encoding='utf-8')
     for k, (tp, wo) in mesures.items():
-        print(f'courbe {k} : pic à t = {tp}, wash-out = {wo} %')
+        print(f'courbe {k} : pic à {round((tp - T0) / (1 - T0) * DUREE)} s après l\'injection, wash-out = {wo} %')
 
 
 if __name__ == '__main__':
