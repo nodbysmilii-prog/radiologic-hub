@@ -95,7 +95,7 @@
     if (nouvelleCible) cible = nouvelleCible;
     if (actif) { majInterface(); return; }                 // déjà en cours : on change seulement de cible
     session = mo.creer({ langue: 'fr-FR', surIntermediaire, surFinal, surEtat, surErreur, choisir: T.meilleureHypothese,
-      surOrdinateur: !!reglages.surOrdinateur, vocabulaire: vocabulaire() });
+      surOrdinateur: !!reglages.surOrdinateur && etatLocal === 'available', vocabulaire: vocabulaire() });
     actif = true;
     debut = Date.now();
     tick();
@@ -513,6 +513,7 @@
   }
   const localOn = $('#dt-local-on'), localEtat = $('#dt-local-etat'), localInst = $('#dt-local-installer');
   const SO = M.get('webspeech').surOrdinateur;
+  let etatLocal = 'inconnu';     // la case n'agit que si le français est réellement installé
   async function majLocal() {
     localOn.checked = !!reglages.surOrdinateur;
     if (!SO || !SO.pris()) {
@@ -521,6 +522,7 @@
       return;
     }
     const e = await SO.etat('fr-FR');
+    etatLocal = e;
     localOn.disabled = false;
     localInst.hidden = !(e === 'downloadable');
     localEtat.textContent = {
@@ -528,7 +530,9 @@
       downloadable: 'Le français n\'est pas encore installé sur cet ordinateur : cliquez sur « Installer le français » (téléchargement gratuit par Chrome, une seule fois).',
       downloading: 'Installation du français en cours…',
       unavailable: 'Chrome ne propose pas encore le français sur l\'ordinateur : la dictée continue par le service du navigateur (sans liste de vocabulaire).',
+      'non-pris-en-charge': 'Non disponible dans ce navigateur.',
     }[e] || 'Non disponible dans ce navigateur.';
+    if (reglages.surOrdinateur && e !== 'available') localEtat.textContent += ' En attendant, la dictée fonctionne normalement (service du navigateur).';
     if (e === 'downloading') setTimeout(majLocal, 4000);
   }
   localOn.addEventListener('change', async () => {
