@@ -370,9 +370,18 @@
     const a = ED.ancre(editor.selectionEnd);
     if (!a.visible) { champBtn.hidden = true; return; }
     champBtn.hidden = false;
-    const wrapW = editor.parentElement.clientWidth;
-    champBtn.style.left = `${Math.max(8, Math.min(a.left - 20, wrapW - champBtn.offsetWidth - 8))}px`;
-    champBtn.style.top = `${a.top > 36 ? a.top - 34 : a.bottom + 4}px`;
+    // À droite du champ, sur sa ligne, quand le champ finit la ligne et qu'il y a la place ; sinon sous la ligne
+    // (au-dessus, le bouton masquait le texte de la ligne précédente, souvent le titre de la rubrique)
+    const wrapW = editor.parentElement.clientWidth, w = champBtn.offsetWidth, hB = champBtn.offsetHeight;
+    const v = editor.value, fin = v.indexOf('\n', editor.selectionEnd);
+    const finDeLigne = !v.slice(editor.selectionEnd, fin < 0 ? v.length : fin).trim();
+    if (finDeLigne && a.left + 10 + w < wrapW - 8) {
+      champBtn.style.left = `${a.left + 10}px`;
+      champBtn.style.top = `${(a.top + a.bottom - hB) / 2}px`;
+    } else {
+      champBtn.style.left = `${Math.max(8, Math.min(a.left - 20, wrapW - w - 8))}px`;
+      champBtn.style.top = `${a.bottom + 4}px`;
+    }
   }
   ['select', 'keyup', 'mouseup', 'focus', 'cr:change', 'scroll'].forEach(ev => editor.addEventListener(ev, () => setTimeout(majChamp, 0)));
   editor.addEventListener('blur', () => setTimeout(() => { if (document.activeElement !== champBtn) champBtn.hidden = true; }, 150));
