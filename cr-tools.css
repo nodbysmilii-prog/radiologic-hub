@@ -35,7 +35,7 @@
 .cr-tools-panneau { margin-top: 10px; padding: 14px 16px 16px; border-radius: 16px; border: 2px solid color-mix(in srgb, var(--plum) 55%, transparent); background: #fff; }
 .cr-tools-panneau[hidden] { display: none; }
 .cr-tools-legende { margin: 0 0 10px; font-size: .8rem; font-weight: 700; color: var(--text); }
-.cr-tools-calculs { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px 18px; }
+.cr-tools-calculs { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px 12px; align-items: start; }
 .cr-tools-titre { margin: 0 0 6px; font-size: .64rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 .cr-tools-titre small { font-size: .64rem; font-weight: 600; letter-spacing: 0; text-transform: none; }
 .cr-tools-chips { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -291,3 +291,18 @@
 .tl-cases { display: grid; gap: 6px; margin: 0 0 12px; }
 .tl-cases .tf-check { align-items: flex-start; line-height: 1.35; }
 .tl-cases .tf-check input { flex: none; margin-top: 1px; }
+
+/* ---------- Groupes repliables du volet « Schémas et calculateurs » ---------- */
+details.cr-tools-groupe { border: 2px solid rgba(17, 17, 20, .1); border-radius: 12px; background: #fff; }
+details.cr-tools-groupe[open] { border-color: color-mix(in srgb, var(--plum) 45%, transparent); }
+details.cr-tools-groupe > summary { display: flex; align-items: center; gap: 8px; margin: 0; padding: 9px 12px; cursor: pointer; list-style: none; border-radius: 10px; color: var(--ink); }
+details.cr-tools-groupe > summary::-webkit-details-marker { display: none; }
+details.cr-tools-groupe > summary::before { content: ""; flex: none; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(-45deg); transition: transform .15s; }
+details.cr-tools-groupe[open] > summary::before { transform: rotate(45deg) translate(-2px, -1px); }
+details.cr-tools-groupe > summary:hover { background: color-mix(in srgb, var(--plum) 8%, #fff); }
+details.cr-tools-groupe > summary:focus-visible { outline: 3px solid var(--cornflower); outline-offset: 2px; }
+details.cr-tools-groupe > summary small { padding: 0 7px; border-radius: 999px; background: rgba(17, 17, 20, .08); font-size: .62rem; font-weight: 800; letter-spacing: 0; color: var(--muted); }
+.cr-tools-groupe-sugg { margin-left: auto; padding: 1px 8px; border-radius: 999px; background: var(--plum); color: #fff; font-size: .58rem; font-weight: 800; letter-spacing: .04em; }
+.cr-tools-groupe-sugg[hidden] { display: none; }
+details.cr-tools-groupe > .cr-tools-chips { padding: 2px 12px 12px; }
+details.cr-tools-groupe[open] { grid-column: 1 / -1; }

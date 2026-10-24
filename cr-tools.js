@@ -1380,7 +1380,7 @@
      ======================================================= */
   const QA = window.RHRegles && window.RHRegles.qanadli;
   const QANADLI = QA && {
-    title: 'Embolie pulmonaire — défects et index de Qanadli', chip: 'Embolie pulmonaire', sub: 'défects + Qanadli',
+    title: 'Embolie pulmonaire — score de Qanadli', chip: 'Embolie pulmonaire', sub: 'score de Qanadli',
     keys: ['qanadli', 'embolie'], suggest: /qanadli|embolie pulmonaire|embole/,
     hint: 'Cliquez les artères atteintes : partiel, total ou sous-segmentaire (un second clic annule). Un embole proximal ou lobaire compte pour toutes les artères d\'aval. « Insérer » rédige les défects poumon par poumon et lobe par lobe, l\'index de Qanadli et la conclusion, à leur place dans le compte rendu.',
     preview: 'Texte rédigé',
@@ -1643,26 +1643,43 @@
   ];
   const chip = (k, cls = '') => `<button type="button" class="cr-tool-chip${cls}" data-tool="${k}">${esc(TOOLS[k].chip)}<small>${esc(TOOLS[k].sub)}</small></button>`;
   const calculs = document.getElementById('cr-tools-calculs') || chipsBox;
+  // Groupes repliables : fermés par défaut, état mémorisé dans ce navigateur
+  const CLE_GROUPES = 'rh-cr-groupes-ouverts';
+  let groupesOuverts = [];
+  try { groupesOuverts = JSON.parse(localStorage.getItem(CLE_GROUPES) || '[]'); } catch (e) { groupesOuverts = []; }
   const classes = new Set(GROUPES.flatMap(([, ks]) => ks));
   const autres = Object.keys(TOOLS).filter(k => !classes.has(k));
   calculs.insertAdjacentHTML('beforeend', [...GROUPES, ['Autres', autres]].map(([titre, ks]) => {
     const l = ks.filter(k => TOOLS[k]);
-    return l.length ? `<div class="cr-tools-groupe"><p class="cr-tools-titre">${titre}</p><div class="cr-tools-chips">${l.map(k => chip(k)).join('')}</div></div>` : '';
+    return l.length ? `<details class="cr-tools-groupe" data-groupe="${esc(titre)}"${groupesOuverts.includes(titre) ? ' open' : ''}><summary class="cr-tools-titre">${titre} <small>${l.length}</small><span class="cr-tools-groupe-sugg" hidden>suggéré</span></summary><div class="cr-tools-chips">${l.map(k => chip(k)).join('')}</div></details>` : '';
   }).join(''));
+  calculs.addEventListener('toggle', e => {
+    const d = e.target.closest && e.target.closest('details[data-groupe]');
+    if (!d) return;
+    groupesOuverts = [...calculs.querySelectorAll('details[data-groupe][open]')].map(x => x.dataset.groupe);
+    try { localStorage.setItem(CLE_GROUPES, JSON.stringify(groupesOuverts)); } catch (err) { /* stockage indisponible */ }
+  }, true);
   const nb = document.getElementById('cr-tools-nb');
   if (nb) nb.textContent = `(${Object.keys(TOOLS).length})`;
   const suggBox = document.getElementById('cr-tools-sugg');
   chipsBox.addEventListener('click', e => { const b = e.target.closest('[data-tool]'); if (b) open(b.dataset.tool); });
+  const NORMALE = /^\s*[•*-]?\s*(absence|pas d|aucun|sans )|normal|sans anomalie|permeables?\b|\blibres?\b|non distendu|non dilate|en place/;
   let sugTimer;
   const suggest = () => {
     clearTimeout(sugTimer);
     sugTimer = setTimeout(() => {
-      const t = norm(editor.value);
+      // les phrases normales du modèle (« Absence de… », « … d'aspect normal ») ne suggèrent rien
+      const t = norm(editor.value).split('\n').filter(l => !NORMALE.test(l)).join('\n');
       const on = Object.keys(TOOLS).filter(k => TOOLS[k].suggest.test(t));
       calculs.querySelectorAll('[data-tool]').forEach(b => {
         const s = on.includes(b.dataset.tool);
         b.classList.toggle('is-suggested', s);
         b.title = s ? 'Outil suggéré d\'après le compte rendu' : '';
+      });
+      // groupe fermé contenant un outil suggéré : repère « suggéré » sur son titre
+      calculs.querySelectorAll('details[data-groupe]').forEach(d => {
+        const m = d.querySelector('.cr-tools-groupe-sugg');
+        if (m) m.hidden = !d.querySelector('[data-tool].is-suggested');
       });
       if (suggBox) suggBox.innerHTML = on.length ? `<span class="cr-tools-sugg-titre">Suggérés :</span>${on.map(k => chip(k, ' is-suggested')).join('')}` : '';
     }, 250);
