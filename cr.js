@@ -680,8 +680,20 @@
     return true;
   };
 
+  // Copie enrichie (titre centré en gras, rubriques en gras : regles/mise-en-forme.js) + texte brut ;
+  // le logiciel où l'on colle prend la version qu'il sait lire
+  const MF = window.RHRegles && window.RHRegles.miseEnForme;
   const copyText = async () => {
     try {
+      if (MF && window.ClipboardItem && navigator.clipboard.write) {
+        try {
+          await navigator.clipboard.write([new ClipboardItem({
+            'text/html': new Blob([MF.html(editor.value)], { type: 'text/html' }),
+            'text/plain': new Blob([editor.value], { type: 'text/plain' }),
+          })]);
+          return true;
+        } catch (e) { /* texte brut ci-dessous */ }
+      }
       await navigator.clipboard.writeText(editor.value);
       return true;
     } catch (e) {
@@ -711,6 +723,10 @@
   $('#cr-download').addEventListener('click', () => {
     if (isEmpty()) return;
     download(new Blob(['﻿' + editor.value.replace(/\n/g, '\r\n')], { type: 'text/plain;charset=utf-8' }), 'compte-rendu.txt');
+  });
+  $('#cr-download-doc') && $('#cr-download-doc').addEventListener('click', () => {
+    if (isEmpty() || !MF) return;
+    download(new Blob(['﻿' + MF.word(editor.value)], { type: 'application/msword' }), 'compte-rendu.doc');
   });
 
   /* ---------- Schémas joints (outils PI-RADS, BI-RADS, EU-TIRADS) ---------- */
@@ -826,7 +842,7 @@
     pr.textContent = '';
     const t = document.createElement('div');
     t.className = 'cr-print-text';
-    t.textContent = editor.value;
+    if (MF) t.innerHTML = MF.html(editor.value, { police: 'inherit' }); else t.textContent = editor.value;
     pr.appendChild(t);
     attachments.forEach(a => {
       const f = document.createElement('figure');
