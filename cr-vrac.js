@@ -31,8 +31,10 @@
 
   const afficher = b => {
     bilan.hidden = !b.length;
-    bilan.innerHTML = b.map(x => `<li class="${x.remplace ? '' : 'is-ailleurs'}"><span class="cr-vrac-organe">${esc(x.nom || 'non reconnu')}</span> <b>${esc(x.texte)}</b>
-      <small>${x.remplace ? `${x.rubrique ? `${esc(x.rubrique)} › ` : ''}à la place de « ${esc(x.remplace)} »` : 'pas de phrase de cet organe dans le modèle → « Par ailleurs : »'}</small></li>`).join('');
+    bilan.innerHTML = b.map(x => `<li class="${x.remplace || x.role ? '' : 'is-ailleurs'}${x.role === 'principale' ? ' is-principale' : ''}"><span class="cr-vrac-organe">${esc(x.nom || 'non reconnu')}</span> <b>${esc(x.texte)}</b>
+      <small>${x.role === 'principale' ? '<b>pathologie principale</b> : ' : x.role === 'associee' ? 'regroupée sous la pathologie principale : ' : ''}${
+        x.tete ? 'en tête de sa région' : x.remplace ? `${x.rubrique ? `${esc(x.rubrique)} › ` : ''}à la place de « ${esc(x.remplace)} »` : 'pas de phrase de cet organe dans le modèle → « Par ailleurs : »'}${
+        /\[[^\]]+\]/.test(x.texte) ? ' · champ à choisir dans le compte rendu' : ''}</small></li>`).join('');
   };
 
   $('vrac-generer').addEventListener('click', () => {

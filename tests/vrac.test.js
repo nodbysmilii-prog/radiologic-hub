@@ -12,7 +12,8 @@ const IDS = [...CR.matchAll(/^ {4}id: '([^']+)'/gm)].map(m => m[1]);
 
 test('mise en forme : abréviations, unités, « du lobe », « de 8 mm », traits d\'union', () => {
   assert.equal(V.phrase('nodule LID 8mm'), 'Nodule du lobe inférieur droit de 8 mm.');
-  assert.equal(V.phrase('ADP sous carinaire 12mm'), 'Adénopathie sous-carinaire de 12 mm.');
+  assert.equal(V.phrase('ADP sous carinaire 12mm'), 'Adénopathie sous-carinaire de 12 mm de petit axe.');
+  assert.equal(V.phrase('stéatose hepatique, lithiase vesiculaire aigue'), 'Stéatose hépatique, lithiase vésiculaire aiguë.');
   assert.equal(V.phrase('ADP médiastinales multiples'), 'Adénopathies médiastinales multiples.');
   assert.equal(V.phrase('masse 3x4cm du LSG'), 'Masse de 3 x 4 cm du lobe supérieur gauche.');
   assert.equal(V.phrase('nodule de 2.5 cm'), 'Nodule de 2,5 cm.');
@@ -90,4 +91,25 @@ test('page Comptes rendus : volet « Écrire en vrac » et scripts versionnés',
   assert.match(html, /regles\/vrac\.js\?v=\d+/);
   assert.match(html, /cr-vrac\.js\?v=\d+/);
   assert.ok(html.indexOf('regles/vrac.js') < html.indexOf('cr-vrac.js') && html.indexOf('cr.js?v') < html.indexOf('cr-vrac.js'));
+});
+
+test('cas de l\'auteur : appendicite en tête, épanchement et ganglions juste en dessous, rédaction', () => {
+  const r = V.generer(modele('tdm-abdo-pelvienne-injectee'), 'appendicite latéro-caecal 9mm\nepanchement de faible abondance pelvien\nganglions mesenteriques plus volumineux 10mm');
+  const app = 'Appendicite latéro-cæcale [interne / externe] d\'épaisseur maximale estimée à 9 mm, [associée à une densification de la graisse péri-appendiculaire / sans densification de la graisse péri-appendiculaire].';
+  const ep = 'Épanchement intra-péritonéal de faible abondance en pelvien.';
+  const gg = 'Ganglions mésentériques [de forme ovalaire et de contours réguliers / de forme arrondie / à centre nécrotique] dont le plus volumineux mesure 10 mm de petit axe.';
+  assert.ok(r.texte.includes(`RÉSULTATS :\n• ${app}\n• ${ep}\n• ${gg}\n• Foie non dysmorphique`), 'en tête des résultats, signes associés juste en dessous');
+  assert.ok(!r.texte.includes('Absence d\'épanchement intra-abdominal'));
+  assert.ok(!r.texte.includes('Absence d\'adénomégalie intra- ou rétro-péritonéale'));
+  assert.ok(r.texte.endsWith('AU TOTAL :\n• Appendicite latéro-cæcale d\'épaisseur maximale estimée à 9 mm.\n• ' + ep + '\n• Ganglions mésentériques dont le plus volumineux mesure 10 mm de petit axe.'), 'conclusion : pathologie principale d\'abord, sans les champs à choisir');
+  assert.deepEqual(r.bilan.map(b => b.role), ['principale', 'associee', 'associee']);
+});
+
+test('pathologie principale avec sa ligne (cholécystite) ; épanchement localisé non réécrit', () => {
+  const r = V.generer(modele('tdm-tap'), 'nodule LID 8mm\ncholécystite aigue lithiasique\népanchement péri-vésiculaire\nstéatose hépatique');
+  assert.match(r.texte, /• Cholécystite aiguë lithiasique\.\n• Épanchement péri-vésiculaire\.\n• Le pancréas/);
+  assert.match(r.texte, /AU TOTAL :\n• Cholécystite aiguë lithiasique\.\n• Épanchement péri-vésiculaire\.\n• Nodule du lobe inférieur droit de 8 mm\.\n• Stéatose hépatique\.$/);
+  assert.equal(V.phrase('appendicite aigue pelvienne de 11mm avec stercolithe et infiltration de la graisse'), 'Appendicite aiguë pelvienne d\'épaisseur maximale estimée à 11 mm, avec stercolithe et infiltration de la graisse.');
+  assert.equal(V.phrase('adénopathies iliaques droites dont la plus volumineuse mesure 15 mm'), 'Adénopathies iliaques droites [de forme ovalaire et de contours réguliers / de forme arrondie / à centre nécrotique] dont la plus volumineuse mesure 15 mm de petit axe.');
+  assert.equal(V.phrase('épanchement de moyenne abondance dans le Douglas'), 'Épanchement intra-péritonéal de moyenne abondance dans le cul-de-sac de Douglas.');
 });
