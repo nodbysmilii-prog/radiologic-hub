@@ -358,6 +358,10 @@ kbd {
 .cr-choix { display: flex; align-items: flex-start; gap: 10px; }
 .cr-choix-n { flex: none; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--ink); background: #fff; font-size: .68rem; font-weight: 800; color: var(--ink); }
 .cr-choix.is-active .cr-choix-n { background: var(--ink); color: #fff; }
+.cr-choix.is-multi .cr-choix-n { border-radius: 6px; font-size: .8rem; }
+.cr-choix.is-coche .cr-choix-n { background: var(--green, #548c6c); border-color: var(--green, #548c6c); color: #fff; }
+.cr-choix.is-coche .cr-choix-txt { font-weight: 800; }
+.cr-pop-valider { margin-right: 6px; padding: 3px 10px; border: 2px solid var(--ink); border-radius: 999px; background: var(--ink); color: #fff; font: inherit; font-size: .7rem; font-weight: 900; cursor: pointer; }
 .cr-choix-txt { padding-top: 2px; font-size: .84rem; font-weight: 600; line-height: 1.4; color: var(--ink); }
 .cr-pop-help { margin: 0; padding: 7px 14px; border-top: 2px dashed rgba(0, 0, 0, .15); font-size: .64rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
 .cr-pop-help kbd { font-size: .62rem; }

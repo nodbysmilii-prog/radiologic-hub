@@ -250,15 +250,18 @@
   const HELP = {
     phrase: help.innerHTML,
     choix: 'Clic ou <kbd>↑</kbd><kbd>↓</kbd> + <kbd>Entrée</kbd> choisir · <kbd>Tab</kbd> champ suivant · <kbd>Échap</kbd> fermer',
+    multi: '<button type="button" class="cr-pop-valider">Valider</button> Clic ou <kbd>Espace</kbd> cocher plusieurs · <kbd>Entrée</kbd> valider · <kbd>Échap</kbd> fermer',
   };
   // mode « phrase » : mots-clés proposés ; mode « choix » : options d'un champ [a / b / c]
-  const sug = { mode: 'phrase', items: [], active: 0, token: null, engaged: false, dismissed: -1 };
+  const sug = { mode: 'phrase', items: [], active: 0, token: null, engaged: false, dismissed: -1, multi: false, coches: new Set() };
 
   const closePop = () => {
     sug.mode = 'phrase';
     sug.items = [];
     sug.token = null;
     sug.engaged = false;
+    sug.multi = false;
+    sug.coches = new Set();
     if (pop.hidden) return;
     pop.hidden = true;
     editor.setAttribute('aria-expanded', 'false');
@@ -268,15 +271,16 @@
   const renderPop = () => {
     const choix = sug.mode === 'choix';
     list.innerHTML = sug.items.map((p, i) => choix ? `
-      <li class="cr-sug cr-choix${i === sug.active ? ' is-active' : ''}" role="option" id="cr-sug-${i}" aria-selected="${i === sug.active}" data-i="${i}">
-        <span class="cr-choix-n">${i + 1}</span><span class="cr-choix-txt">${esc(p.text)}</span>
+      <li class="cr-sug cr-choix${i === sug.active ? ' is-active' : ''}${sug.multi ? ' is-multi' : ''}${sug.coches.has(i) ? ' is-coche' : ''}" role="option" id="cr-sug-${i}" aria-selected="${sug.multi ? sug.coches.has(i) : i === sug.active}" data-i="${i}">
+        <span class="cr-choix-n">${sug.multi ? (sug.coches.has(i) ? '✓' : '') : i + 1}</span><span class="cr-choix-txt">${esc(p.text)}</span>
       </li>` : `
       <li class="cr-sug${i === sug.active ? ' is-active' : ''}" role="option" id="cr-sug-${i}" aria-selected="${i === sug.active}" data-i="${i}">
         <span class="cr-sug-head">${keyChip(p)} ${esc(p.label)}${p.mod ? ` <span class="cr-mod">${esc(p.mod)}</span>` : ''}</span>
         <span class="cr-sug-prev">${esc(p.text)}</span>
       </li>`).join('');
     list.setAttribute('aria-label', choix ? 'Choix du champ' : 'Phrases proposées');
-    help.innerHTML = HELP[sug.mode];
+    list.setAttribute('aria-multiselectable', String(!!sug.multi));
+    help.innerHTML = HELP[sug.multi ? 'multi' : sug.mode];
     editor.setAttribute('aria-activedescendant', 'cr-sug-' + sug.active);
     const act = list.children[sug.active];
     if (act) {
@@ -326,18 +330,48 @@
     if (!choix) { insertPhrase(p, tok.start, tok.end); return; }
     if (editor.value.slice(tok.start, tok.end) !== tok.raw) return; // champ modifié entre-temps
     replaceRange(tok.start, tok.end, p.text);
+    if (/^(absence|pas d)/i.test(p.text)) sansDetails(tok.start + p.text.length);
     revealCaret();
   };
 
+  /* Champ à choix multiples [a + b + c] : options cochées jointes « a, b et c » ; un « (s) » plus tôt
+     sur la ligne (« chaîne(s) ») s'accorde avec le nombre d'options cochées */
+  const acceptMulti = () => {
+    const tok = sug.token, items = sug.items;
+    const ix = sug.coches.size ? [...sug.coches].sort((a, b) => a - b) : [sug.active];
+    closePop();
+    if (!tok || editor.value.slice(tok.start, tok.end) !== tok.raw) return;
+    const t = ix.map(i => items[i].text);
+    const texte = t.length < 2 ? t.join('') : `${t.slice(0, -1).join(', ')} et ${t[t.length - 1]}`;
+    const debut = editor.value.lastIndexOf('\n', tok.start - 1) + 1;
+    const avant = editor.value.slice(debut, tok.start), accorde = avant.replace(/\(s\)/g, ix.length > 1 ? 's' : '');
+    replaceRange(debut, tok.end, accorde + texte);
+    const fin = debut + accorde.length + texte.length;
+    editor.setSelectionRange(fin, fin);
+    revealCaret();
+  };
+
+  /* « Absence de … » choisi : les précisions qui suivent sur la ligne (champs [ … ] encore à remplir,
+     chaîne(s), abondance…) n'ont plus lieu d'être ; la ligne se termine après le choix */
+  function sansDetails(pos) {
+    const v = editor.value, fin = v.indexOf('\n', pos) < 0 ? v.length : v.indexOf('\n', pos);
+    const reste = v.slice(pos, fin);
+    if (!/\[[^\]]+\]/.test(reste)) return;
+    const ponct = /([.;,])\s*$/.exec(reste);
+    replaceRange(pos, fin, ponct ? ponct[1] : '');
+    editor.setSelectionRange(pos, pos);
+  }
+
   /* Champ à choix [droite / gauche / codominance] sélectionné ou cliqué : ses options en liste */
-  const CHOICE_SEP = /\s+\/\s+/;
+  const CHOICE_SEP = /\s+\/\s+/, MULTI_SEP = /\s+\+\s+/;
   const choiceField = () => {
     const a = editor.selectionStart, b = editor.selectionEnd;
     const f = fieldsIn().find(([s, e]) => s <= a && b <= e && (a < b || (s < a && a < e)));
     if (!f) return null;
     const raw = editor.value.slice(f[0], f[1]);
-    const opts = raw.slice(1, -1).split(CHOICE_SEP).map(o => o.trim());
-    return opts.length > 1 && opts.every(Boolean) ? { start: f[0], end: f[1], raw, opts } : null;
+    const multi = !CHOICE_SEP.test(raw) && MULTI_SEP.test(raw);
+    const opts = raw.slice(1, -1).split(multi ? MULTI_SEP : CHOICE_SEP).map(o => o.trim());
+    return opts.length > 1 && opts.every(Boolean) ? { start: f[0], end: f[1], raw, opts, multi } : null;
   };
   const fieldSelected = () => sug.token && editor.selectionStart === sug.token.start && editor.selectionEnd === sug.token.end;
   function showChoices() {
@@ -346,6 +380,8 @@
     sug.mode = 'choix';
     sug.items = f.opts.map(text => ({ text }));
     sug.token = f;
+    sug.multi = f.multi;
+    sug.coches = new Set();
     sug.active = 0;
     sug.engaged = false;
     pop.hidden = false;
@@ -415,6 +451,12 @@
         return;
       }
       const choix = sug.mode === 'choix';
+      if (choix && sug.multi && (e.key === ' ' || e.key === 'Enter')) {
+        e.preventDefault();
+        if (e.key === 'Enter') acceptMulti();
+        else { sug.coches.has(sug.active) ? sug.coches.delete(sug.active) : sug.coches.add(sug.active); renderPop(); }
+        return;
+      }
       if (choix && e.key === 'Tab') closePop(); // Tab : champ suivant, sans choisir
       else if ((e.key === 'Tab' && !e.shiftKey) || (e.key === 'Enter' && (sug.engaged || (choix && fieldSelected())))) {
         e.preventDefault();
@@ -443,9 +485,12 @@
   editor.addEventListener('scroll', () => { if (!pop.hidden && sug.token) placePop(sug.token.start); });
   window.addEventListener('resize', closePop);
   pop.addEventListener('mousedown', e => e.preventDefault()); // garde le focus dans l'éditeur
+  pop.addEventListener('click', e => { if (e.target.closest('.cr-pop-valider')) acceptMulti(); });
   list.addEventListener('click', e => {
     const li = e.target.closest('.cr-sug');
-    if (li) accept(+li.dataset.i);
+    if (!li) return;
+    if (sug.multi) { const i = +li.dataset.i; sug.active = i; sug.coches.has(i) ? sug.coches.delete(i) : sug.coches.add(i); renderPop(); }
+    else accept(+li.dataset.i);
   });
 
   autoBox.checked = store.get(KEY.auto, false) === true;

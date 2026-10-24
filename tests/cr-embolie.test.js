@@ -11,3 +11,11 @@ test('embolie pulmonaire : segments apical / dorsal / ventral du lobe supérieur
   assert.ok(CR.includes('[segment apical du lobe supérieur / dorsal / ventral du lobe supérieur / latéral du lobe moyen / médial du lobe moyen / lingulaire supérieur /'));
   assert.ok(!CR.includes('segment apical / postérieur / antérieur du lobe supérieur'));
 });
+
+test('embolie pulmonaire : adénomégalies médiastinales, chaînes en choix multiples [a + b + …]', () => {
+  const l = CR.split('\n').find(x => x.includes('Adénomégalies médiastinales] : chaîne(s)'));
+  assert.equal(l, '• [Absence d\'adénomégalie médiastinale / Adénomégalie médiastinale / Adénomégalies médiastinales] : chaîne(s) [pré-vasculaire + rétro-trachéale + latéro-trachéale haute droite + latéro-trachéale haute gauche + latéro-trachéale basse droite + latéro-trachéale basse gauche + para-aortique + sous-aortique + sous-carinaire + para-œsophagienne + du ligament triangulaire + hilaire].');
+  const cr = fs.readFileSync(path.join(__dirname, '..', 'cr.js'), 'utf8');
+  assert.ok(cr.includes('MULTI_SEP = /\\s+\\+\\s+/'), 'champ [a + b] reconnu par l\'éditeur');
+  assert.match(cr, /function sansDetails/, '« Absence de … » retire les précisions de la ligne');
+});
