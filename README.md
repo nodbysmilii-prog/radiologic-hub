@@ -242,6 +242,15 @@ Deux nouvelles spécialités (**ORL / tête et cou**, **TAP / corps entier**), u
 
 ---
 
+### « Écrire en vrac » : règles apprises des retours de l'auteur (liste permanente)
+
+Chaque retour de l'auteur sur un compte rendu généré devient une **règle générale** dans `regles/vrac.js` (valable pour tous les examens et tous les utilisateurs), avec un test dans `tests/vrac.test.js` et une ligne en haut de ce tableau (consigne dans `CLAUDE.md`). Le site n'apprend pas tout seul : il applique ces règles, qui s'enrichissent à chaque retour.
+
+| Retour du | Ce que l'auteur a signalé | Règle ajoutée |
+|---|---|---|
+| 24/10/2026 | Conclusion trop longue (copie des résultats) ; ganglions mésentériques sans valeur pathologique | **Conclusion concise** : synthèse (« Appendicite aiguë non compliquée », « compliquée d'un abcès… » si une complication est notée ; « Épanchement intra-péritonéal de faible abondance » sans la localisation ; sinon la proposition principale, sans les détails après la virgule) ; **ganglions sans caractère suspect** (ni nécrose, ni forme arrondie, ni « suspect », petit axe < 15 mm) **absents de la conclusion**, toujours décrits dans les résultats |
+| 24/10/2026 | Appendicite reléguée à la fin ; épanchement et ganglions éparpillés ; phrases recopiées telles quelles | **Pathologie principale en tête** (résultats et conclusion), **signes associés** (épanchement, ganglions de la même région) **juste en dessous** ; **rédaction** dans le style de l'auteur (« appendicite latéro-cæcale interne d'épaisseur maximale estimée à 9 mm, associée à une densification de la graisse péri-appendiculaire », « ganglions mésentériques de forme ovalaire et de contours réguliers dont le plus volumineux mesure 10 mm de petit axe », « épanchement intra-péritonéal de faible abondance en pelvien ») ; ce qui n'a pas été noté devient un champ à choisir ; accents rétablis |
+
 ### Dictée vocale : erreurs signalées par l'auteur (liste permanente)
 
 Liste tenue à jour à **chaque** erreur signalée au micro. Une correction ajoutée ici est **générale** : elle est écrite dans les fichiers du site (`dictee/lexique.js`, `dictee/corrections.js`, `dictee/traitement.js`), donc appliquée pour **tous les utilisateurs, sur tous les appareils**, et vérifiée par les tests (`tests/dictee.test.js`). Les corrections apprises avec « Apprendre » ou **Aa → Mes corrections** restent, elles, dans le navigateur de la personne qui les a ajoutées.
@@ -792,6 +801,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 24/10/2026 | « Écrire en vrac », retour de l'auteur : **conclusion concise** (synthèse : « Appendicite aiguë non compliquée », complications nommées, épanchement sans localisation, ganglions réactionnels omis) ; nouvelle section **« Écrire en vrac : règles apprises des retours de l'auteur (liste permanente) »** et consigne dans `CLAUDE.md` ; tests ; `?v=` changé |
 | 24/10/2026 | « Écrire en vrac », retour de l'auteur (appendicite) : **pathologie principale en tête** des résultats et de la conclusion, **épanchement et ganglions juste en dessous** ; **rédaction** des constatations fréquentes (appendicite, ganglions « dont le plus volumineux mesure … de petit axe », épanchement intra-péritonéal) avec champs à choisir pour ce qui n'a pas été noté ; accents rétablis ; conclusion sans les champs ; bilan « pathologie principale / regroupée » (`regles/vrac.js`, `cr-vrac.js`, `cr-tools.css`, `?v=` changés ; 2 tests ajoutés) |
 | 24/10/2026 | Comptes rendus : nouveau volet **« Écrire en vrac »** (demande de l'auteur) : on note seulement le pathologique, en vrac ; le compte rendu est généré à partir du compte rendu type choisi, **chaque constatation remplaçant à sa place la phrase normale de l'organe** (≈ 50 organes, étages vertébraux, abréviations, mise en forme), « Par ailleurs : » pour le reste, indication et conclusion ; bilan des placements ; sans envoi de données (`regles/vrac.js`, `cr-vrac.js`, `cr-tools.css`, `cr.js` : `?v=` changés) ; `tests/vrac.test.js` (7 tests, les 42 modèles vérifiés) ; vérifié dans Chromium (1366 et 390 px) |
 | 24/10/2026 | Comptes rendus › embolie pulmonaire, demande de l'auteur : chaînes médiastinales avec leur **numéro IASLC** (3a, 3p, 2R / 2L, 4R / 4L, 6, 5, 7, 8, 9) et **hilaire droite (10R) / gauche (10L)** ; `cr-data.js?v=` changé |

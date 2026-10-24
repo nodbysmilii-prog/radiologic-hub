@@ -222,6 +222,42 @@
   /* Conclusion : la phrase sans les champs à choisir (déjà choisis dans les résultats) */
   const sansOptions = p => p.replace(/\s*,?\s*\[[^\]]*\]/g, '').replace(/\s+([,.])/g, '$1').replace(/,\./g, '.').replace(/\s{2,}/g, ' ').trim();
 
+  /* Conclusion CONCISE (retour de l'auteur, 24/10/2026) : une synthèse, pas la copie des résultats.
+     • pathologie inflammatoire aiguë : « Appendicite aiguë non compliquée » (sans position ni mesure ;
+       « compliquée d'un abcès… » si une complication est notée) ;
+     • épanchement : « Épanchement intra-péritonéal de faible abondance » (sans la localisation) ;
+     • ganglions sans caractère suspect : absents de la conclusion (réactionnels, sans valeur pathologique) ;
+     • le reste : la proposition principale, sans les détails après la première virgule ni les champs à choisir. */
+  const COMPLICATIONS = [[/abces/, 'd\'un abcès'], [/perfor/, 'd\'une perforation'], [/pneumoperitoine/, 'd\'un pneumopéritoine'], [/peritonite/, 'd\'une péritonite'],
+    [/collection/, 'd\'une collection'], [/plastron/, 'd\'un plastron'], [/gangren/, 'd\'une gangrène'], [/emphysemat/, 'd\'une forme emphysémateuse'], [/fistule/, 'd\'une fistule'], [/occlusion|obstacle/, 'd\'une occlusion']];
+  const compliquee = n => {
+    if (/non compliqu/.test(n)) return ' non compliquée';
+    const c = COMPLICATIONS.filter(([re]) => re.test(n)).map(([, t]) => t);
+    return c.length ? ` compliquée ${c.length < 2 ? c[0] : c.slice(0, -1).join(', ') + ' et ' + c[c.length - 1]}` : ' non compliquée';
+  };
+  const CONCLUSIONS = [
+    { re: /appendicite/, conclure: n => `Appendicite aiguë${compliquee(n)}` },
+    { re: /cholecystite/, conclure: n => `Cholécystite aiguë${/alithiasi/.test(n) ? ' alithiasique' : /lithiasi|calcul|lithiase/.test(n) ? ' lithiasique' : ''}${compliquee(n)}` },
+    { re: /diverticulite|sigmoidite/, conclure: n => `${/sigmoidite/.test(n) ? 'Sigmoïdite' : 'Diverticulite'}${/sigmoid/.test(n) && !/sigmoidite/.test(n) ? ' sigmoïdienne' : ''}${/diverticul/.test(n) && /sigmoidite/.test(n) ? ' diverticulaire' : ''}${compliquee(n)}` },
+    { re: /pyelonephrite/, conclure: n => `Pyélonéphrite aiguë${/droite/.test(n) ? ' droite' : /gauche/.test(n) ? ' gauche' : ''}${compliquee(n)}` },
+    { re: /^epanchement/, conclure: (n, p) => {
+      if (/pleur|pericard/.test(n)) return p.split(',')[0].replace(/\.$/, '');
+      const ab = /de (faible|moyenne|grande) abondance/.exec(n);
+      return `Épanchement ${/intra-peritoneal|peritoneal|abdominal|pelvien|douglas/.test(n) ? 'intra-péritonéal' : p.split(',')[0].replace(/^Épanchement\s*/i, '').replace(/\s*(de (faible|moyenne|grande) abondance|en pelvien|dans le cul-de-sac de douglas)\b.*$/i, '')}${ab ? ` de ${ab[1]} abondance` : ''}`.replace(/\s+/g, ' ').trim();
+    } },
+    { re: /^(ganglions?|adenopathies?|adenomegalies?)\b/, conclure: (n, p) => {
+      const m = /(\d+(?:,\d+)?) (mm|cm)/.exec(n);
+      const mm = m ? parseFloat(m[1].replace(',', '.')) * (m[2] === 'cm' ? 10 : 1) : 0;
+      if (!/suspect|necro|metasta|tumoral|conglomer|infiltr|arrondi/.test(n) && mm < 15) return null;   // réactionnels : pas en conclusion
+      return p.replace(/\s+dont (le|la) plus volumineu.*$/i, '').split(',')[0];
+    } },
+  ];
+  function conclure(p) {
+    const q = sansOptions(p), n = norm(q);
+    for (const C of CONCLUSIONS) if (C.re.test(n)) { const c = C.conclure(n, q); return c == null ? null : c.replace(/[.\s]+$/, '') + '.'; }
+    return q.split(/,\s/)[0].replace(/[.\s]+$/, '') + '.';
+  }
+
   /* Pathologie principale (aiguë, tumorale, traumatique…) et signes associés regroupés sous elle */
   const PRINCIPALE = /appendicite|cholecystite|angiocholite|diverticulite|sigmoidite|colite|ileite|enterite|occlusion|volvulus|invagination|perforation|pneumoperitoine|abces|peritonite|pancreatite|pyelonephrite|nephrite|torsion|grossesse extra|\bgeu\b|hemorrag|hematome|embolie|dissection|rupture|ischemi|infarctus|\bavc\b|thrombose|fracture|tumeur|tumoral|masse|carcinome|neoplasi|cancer|suspecte? de malignite|metasta|lymphome|pneumopathie|pneumothorax|meningiome|gliome|hernie etranglee|ulcere perfore|fistule|hydrocephalie aigue/;
   const REGION = {};
@@ -399,7 +435,7 @@
     // ordre : pathologie principale, signes associés, puis le reste dans l'ordre du compte rendu
     const lp = bilan.find(b => b.role === 'principale');
     const rang = b => b.role === 'principale' ? 0 : b.role === 'associee' || (lp && b.ligne === lp.ligne) ? 1 : 2;
-    const constats = bilan.map((b, n) => ({ b, n })).sort((x, y) => rang(x.b) - rang(y.b) || (x.b.ligne ?? 1e9) - (y.b.ligne ?? 1e9) || x.n - y.n).map(x => sansOptions(x.b.texte));
+    const constats = bilan.map((b, n) => ({ b, n })).sort((x, y) => rang(x.b) - rang(y.b) || (x.b.ligne ?? 1e9) - (y.b.ligne ?? 1e9) || x.n - y.n).map(x => conclure(x.b.texte)).filter(Boolean).filter((c, i, a) => a.indexOf(c) === i);
     const ccl = conclusion.length ? conclusion : constats;
     let k = T.findIndex(CONCLUSION);
     if (ccl.length) {
@@ -411,5 +447,5 @@
     return { texte, bilan, conclusionEcrite: conclusion.length > 0, indication: !!indication };
   }
 
-  return { ORGANES, organes, phrase, decouper, generer, niveau, norm };
+  return { ORGANES, organes, phrase, decouper, generer, niveau, conclure, norm };
 });

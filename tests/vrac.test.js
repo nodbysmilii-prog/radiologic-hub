@@ -101,15 +101,29 @@ test('cas de l\'auteur : appendicite en tête, épanchement et ganglions juste e
   assert.ok(r.texte.includes(`RÉSULTATS :\n• ${app}\n• ${ep}\n• ${gg}\n• Foie non dysmorphique`), 'en tête des résultats, signes associés juste en dessous');
   assert.ok(!r.texte.includes('Absence d\'épanchement intra-abdominal'));
   assert.ok(!r.texte.includes('Absence d\'adénomégalie intra- ou rétro-péritonéale'));
-  assert.ok(r.texte.endsWith('AU TOTAL :\n• Appendicite latéro-cæcale d\'épaisseur maximale estimée à 9 mm.\n• ' + ep + '\n• Ganglions mésentériques dont le plus volumineux mesure 10 mm de petit axe.'), 'conclusion : pathologie principale d\'abord, sans les champs à choisir');
+  assert.ok(r.texte.endsWith('AU TOTAL :\n• Appendicite aiguë non compliquée.\n• Épanchement intra-péritonéal de faible abondance.'), 'conclusion concise ; ganglions réactionnels absents');
   assert.deepEqual(r.bilan.map(b => b.role), ['principale', 'associee', 'associee']);
 });
 
 test('pathologie principale avec sa ligne (cholécystite) ; épanchement localisé non réécrit', () => {
   const r = V.generer(modele('tdm-tap'), 'nodule LID 8mm\ncholécystite aigue lithiasique\népanchement péri-vésiculaire\nstéatose hépatique');
   assert.match(r.texte, /• Cholécystite aiguë lithiasique\.\n• Épanchement péri-vésiculaire\.\n• Le pancréas/);
-  assert.match(r.texte, /AU TOTAL :\n• Cholécystite aiguë lithiasique\.\n• Épanchement péri-vésiculaire\.\n• Nodule du lobe inférieur droit de 8 mm\.\n• Stéatose hépatique\.$/);
+  assert.match(r.texte, /AU TOTAL :\n• Cholécystite aiguë lithiasique non compliquée\.\n• Épanchement péri-vésiculaire\.\n• Nodule du lobe inférieur droit de 8 mm\.\n• Stéatose hépatique\.$/);
   assert.equal(V.phrase('appendicite aigue pelvienne de 11mm avec stercolithe et infiltration de la graisse'), 'Appendicite aiguë pelvienne d\'épaisseur maximale estimée à 11 mm, avec stercolithe et infiltration de la graisse.');
   assert.equal(V.phrase('adénopathies iliaques droites dont la plus volumineuse mesure 15 mm'), 'Adénopathies iliaques droites [de forme ovalaire et de contours réguliers / de forme arrondie / à centre nécrotique] dont la plus volumineuse mesure 15 mm de petit axe.');
   assert.equal(V.phrase('épanchement de moyenne abondance dans le Douglas'), 'Épanchement intra-péritonéal de moyenne abondance dans le cul-de-sac de Douglas.');
+});
+
+test('conclusion concise (retour de l\'auteur) : synthèse, complications, ganglions réactionnels omis', () => {
+  assert.equal(V.conclure(V.phrase('appendicite latéro-caecal interne 9mm')), 'Appendicite aiguë non compliquée.');
+  assert.equal(V.conclure(V.phrase('appendicite pelvienne 12 mm avec abcès péri-appendiculaire et pneumopéritoine')), 'Appendicite aiguë compliquée d\'un abcès et d\'un pneumopéritoine.');
+  assert.equal(V.conclure(V.phrase('epanchement de faible abondance pelvien')), 'Épanchement intra-péritonéal de faible abondance.');
+  assert.equal(V.conclure(V.phrase('ganglions mesenteriques plus volumineux 9mm')), null, 'ganglions réactionnels : pas en conclusion');
+  assert.equal(V.conclure(V.phrase('ADP coeliaque nécrotique 25 mm')), 'Adénopathie cœliaque nécrotique de 25 mm de petit axe.');
+  assert.equal(V.conclure(V.phrase('cholécystite aigue lithiasique, paroi épaissie 5 mm')), 'Cholécystite aiguë lithiasique non compliquée.');
+  assert.equal(V.conclure(V.phrase('nodule LID 8mm, solide, à contours réguliers')), 'Nodule du lobe inférieur droit de 8 mm.');
+  assert.equal(V.conclure(V.phrase('sigmoïdite diverticulaire avec abcès de 3 cm')), 'Sigmoïdite diverticulaire compliquée d\'un abcès.');
+  const r = V.generer(modele('tdm-abdo-pelvienne-injectee'), 'appendicite latéro-caecal interne 9mm\nganglions mesenteriques plus volumineux 9mm\nepanchement de faible abondance pelvien');
+  assert.ok(r.texte.endsWith('AU TOTAL :\n• Appendicite aiguë non compliquée.\n• Épanchement intra-péritonéal de faible abondance.'));
+  assert.match(r.texte, /• Ganglions mésentériques [^\n]*dont le plus volumineux mesure 9 mm de petit axe\./, 'les ganglions restent décrits dans les résultats');
 });
