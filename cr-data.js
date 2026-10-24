@@ -528,7 +528,7 @@ Acquisition hélicoïdale centrée sur l'étage thoracique avec injection de pro
 
 RÉSULTATS :
 Étude vasculaire :
-• [Absence de défect endoluminal des artères pulmonaires / Défect endoluminal partiel / Défect endoluminal total] [du tronc de l'artère pulmonaire / de l'artère pulmonaire / de l'artère lobaire / de l'artère segmentaire / de l'artère sous-segmentaire] [droite / gauche] : [segment apical / postérieur / antérieur du lobe supérieur / latéral / médial du lobe moyen / lingulaire supérieur / lingulaire inférieur / apical du lobe inférieur (Nelson) / médio-basal / antéro-basal / latéro-basal / postéro-basal]. Siège de l'embole déterminé selon la classification de Boyden.
+• [Absence de défect endoluminal des artères pulmonaires / Défect endoluminal partiel / Défect endoluminal total] [du tronc de l'artère pulmonaire / de l'artère pulmonaire / de l'artère lobaire / de l'artère segmentaire / de l'artère sous-segmentaire] [droite / gauche] : [segment apical du lobe supérieur / dorsal / ventral du lobe supérieur / latéral du lobe moyen / médial du lobe moyen / lingulaire supérieur / lingulaire inférieur / apical du lobe inférieur (Nelson) / médio-basal / antéro-basal / latéro-basal / postéro-basal]. Siège de l'embole déterminé selon la classification de Boyden.
 • Index d'obstruction de Qanadli (calcul automatique) : [x]/40, soit [x] %.
 • [Absence de dilatation des cavités droites / Dilatation des cavités droites avec un rapport VD/VG > 1 (VD/VG = « x »)].
 • [Absence de reflux cave sus-hépatique / Reflux cave sus-hépatique].
