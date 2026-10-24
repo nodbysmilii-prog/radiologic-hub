@@ -107,10 +107,97 @@
     'tentoriel(?:le)?s?', 'durale?s?', 'arachnoïdien(?:ne)?s?', 'arachnoidien(?:ne)?s?', 'chondrale?s?', 'corticale?s?', 'vésicale?s?', 'vesicale?s?', 'caves?',
     'trachéale?s?', 'tracheale?s?', 'sternale?s?', 'axiale?s?', 'lobulaires?', 'scissurale?s?', 'ventriculaires?', 'oesophagiennes?', 'œsophagiennes?', 'vasculaires?'].join('|');
 
-  /* Mise en forme d'une constatation : abréviations, unités, nombres, majuscule, point final */
+  /* Accents oubliés (texte tapé vite) : début de mot sans accent → forme accentuée (le reste du mot est gardé :
+     « hepatiques » → « hépatiques ») */
+  const ACCENTS = [
+    ['hepat', 'hépat'], ['vesicul', 'vésicul'], ['parietal', 'pariétal'], ['parietaux', 'pariétaux'], ['mesenteri', 'mésentéri'], ['peritone', 'péritone'],
+    ['peritonite', 'péritonite'], ['pneumoperitoine', 'pneumopéritoine'], ['epanchement', 'épanchement'], ['renal', 'rénal'], ['renaux', 'rénaux'],
+    ['surrenal', 'surrénal'], ['pancrea', 'pancréa'], ['splen', 'splén'], ['pericard', 'péricard'], ['epaissi', 'épaissi'], ['homogene', 'homogène'],
+    ['heterogene', 'hétérogène'], ['lesion', 'lésion'], ['legere', 'légère'], ['leger', 'léger'], ['modere', 'modéré'], ['severe', 'sévère'], ['abces', 'abcès'],
+    ['ileal', 'iléal'], ['ileon', 'iléon'], ['ileo', 'iléo'], ['epiploi', 'épiploï'], ['steatos', 'stéatos'], ['hydronephros', 'hydronéphros'], ['pyelo', 'pyélo'],
+    ['uretere', 'uretère'], ['ureter', 'urétér'], ['vesical', 'vésical'], ['uterus', 'utérus'], ['uterin', 'utérin'], ['cholecyst', 'cholécyst'],
+    ['choledoque', 'cholédoque'], ['adenomegal', 'adénomégal'], ['adenopath', 'adénopath'], ['metasta', 'métasta'], ['necros', 'nécros'], ['necroti', 'nécroti'],
+    ['hemorrag', 'hémorrag'], ['hematome', 'hématome'], ['dilate', 'dilaté'], ['defect', 'défect'], ['emphyseme', 'emphysème'], ['sigmoide', 'sigmoïde'],
+    ['sigmoidien', 'sigmoïdien'], ['sigmoidite', 'sigmoïdite'], ['grele', 'grêle'], ['duoden', 'duodén'], ['oesophag', 'œsophag'], ['hydroaeri', 'hydroaéri'],
+    ['aerique', 'aérique'], ['densite', 'densité'], ['echogene', 'échogène'], ['hypoechogene', 'hypoéchogène'], ['hyperechogene', 'hyperéchogène'],
+    ['anechogene', 'anéchogène'], ['echostructure', 'échostructure'], ['coeliaque', 'cœliaque'], ['celiaque', 'cœliaque'], ['inferieur', 'inférieur'],
+    ['superieur', 'supérieur'], ['anterieur', 'antérieur'], ['posterieur', 'postérieur'], ['lateral', 'latéral'], ['lateraux', 'latéraux'], ['etendu', 'étendu'],
+    ['elargi', 'élargi'], ['reactionnel', 'réactionnel'], ['infiltre', 'infiltré'], ['calcifie', 'calcifié'], ['hemangiome', 'hémangiome'], ['cerebr', 'cérébr'],
+    ['cerebel', 'cérébel'], ['ischemi', 'ischémi'], ['peri-', 'péri-'], ['retro-', 'rétro-'], ['latero-', 'latéro-'], ['pre-', 'pré-'], ['medial', 'médial'],
+    ['mediastin', 'médiastin'], ['caecal', 'cæcal'], ['caecum', 'cæcum'],
+    ['tres', 'très'], ['deja', 'déjà'], ['aigue', 'aiguë'], ['aigues', 'aiguës'], ['evolutive', 'évolutive'], ['etage', 'étage'], ['region', 'région'], ['peri', 'péri'],
+  ].map(([a, b]) => [new RegExp(`(?<![A-Za-zÀ-ÿ])${a.replace(/-/g, '\\-')}${/-$/.test(a) || a === 'tres' || a === 'deja' || a === 'aigue' || a === 'aigues' || a === 'peri' ? (a === 'peri' ? '(?=-)' : '\\b') : ''}`, 'gi'), b]);
+  function accents(t) {
+    for (const [re, b] of ACCENTS) t = t.replace(re, m => /^[A-Z]/.test(m) ? b.charAt(0).toUpperCase() + b.slice(1) : b);
+    return t;
+  }
+
+  /* Rédaction de constatations fréquentes, dans le style de l'auteur ; rien n'est inventé : ce qui n'a pas été
+     noté devient un champ à choisir [a / b] (cliquer dessus ou Tab dans l'éditeur) */
+  const MESURE = /(\d+(?:[.,]\d+)?)\s*(mm|cm)\b/i;
+  const reste = (t, ...res) => { for (const re of res) t = t.replace(re, ' '); return t.replace(/\s*,\s*/g, ', ').replace(/^[\s,;:-]+|[\s,;:-]+$/g, '').replace(/\b(de|à|a|avec|et|mesurant)\s*$/i, '').replace(/^(de|à|a|avec|et)\s+/i, '').replace(/\s+/g, ' ').trim(); };
+  const RECETTES = [
+    // Appendicite : position, épaisseur maximale, densification de la graisse péri-appendiculaire
+    { re: /appendicite/, rediger(t) {
+      const n = norm(t);
+      const aigue = /aigu/.test(n) ? ' aiguë' : '';
+      const P = /(lat[ée]ro-?\s?c[aæ]e?cale?|r[ée]tro-?\s?c[aæ]e?cale?|pelvienne?|sous-?\s?h[ée]patique|m[ée]so-?\s?c(?:oe|œ)liaque|pr[ée]-?\s?il[ée]ale?|r[ée]tro-?\s?il[ée]ale?)(?:\s+(interne|externe))?/i;
+      const pm = P.exec(t);
+      let pos = '';
+      if (pm) {
+        const b = norm(pm[1]).replace(/\s/g, '');
+        pos = /latero/.test(b) ? 'latéro-cæcale' : /retro-?caec|retro-?cec/.test(b) ? 'rétro-cæcale' : /pelvien/.test(b) ? 'pelvienne' : /sous/.test(b) ? 'sous-hépatique' : /meso/.test(b) ? 'méso-cœliaque' : /pre/.test(b) ? 'pré-iléale' : 'rétro-iléale';
+        pos = ' ' + pos + (pm[2] ? ' ' + pm[2].toLowerCase() : /latero/.test(b) ? ' [interne / externe]' : '');
+      }
+      const m = MESURE.exec(t);
+      const mesure = m ? `${m[1]} ${m[2]}` : '[x] mm';
+      const r = reste(t, /appendicites?/i, /aigu[eë]?s?/i, P, MESURE, /d'?[ée]paisseur( maximale?)?|de diam[eè]tre|diam[eè]tre|calibre/i);
+      const graisse = /graisse|densifi|infiltr/.test(n) ? '' : ', [associée à une densification de la graisse péri-appendiculaire / sans densification de la graisse péri-appendiculaire]';
+      return `Appendicite${aigue}${pos} d'épaisseur maximale estimée à ${mesure}${r ? ', ' + r : ''}${graisse}`;
+    } },
+    // Ganglions : « dont le plus volumineux mesure X mm de petit axe », forme et contours à choisir
+    { re: /^(ganglions?|adenopathies?|adenomegalies?)\b/, rediger(t) {
+      const n = norm(t);
+      const m = MESURE.exec(t);
+      if (!m) return null;
+      const pluriel = /^(ganglions|adenopathies|adenomegalies)\b/.test(n);
+      const plusVol = /plus volumineu/.test(n);
+      const fem = /^adeno/.test(n);
+      // tête : nom + localisation, sans « dont le plus volumineux mesure »
+      let tete = t.slice(0, m.index);
+      const d = /\s*(,\s*)?(dont\b|(le|la) plus volumineu|plus volumineu)/i.exec(tete);
+      if (d) tete = tete.slice(0, d.index);
+      tete = tete.replace(/\s*\b(de|mesurant|mesure|à|a)\s*$/i, '').trim();
+      const apres = reste(t.slice(m.index + m[0].length), /^\s*de petit axe/i);
+      const forme = !(pluriel || plusVol) || /forme|contour|ovalaire|arrondi|necros|hile|homogene|heterogene/.test(n) ? '' : ' [de forme ovalaire et de contours réguliers / de forme arrondie / à centre nécrotique]';
+      const mesure = `${m[1]} ${m[2]} de petit axe`;
+      return pluriel || plusVol
+        ? `${tete}${forme} dont ${fem ? 'la plus volumineuse' : 'le plus volumineux'} mesure ${mesure}${apres ? ', ' + apres : ''}`
+        : `${tete} de ${mesure}${apres ? ', ' + apres : ''}`;
+    } },
+    // Épanchement abdominal : « intra-péritonéal de faible abondance en pelvien »
+    { re: /^epanchement\b(?!.*(pleur|pericard|articul|sous-dural|peri-?[a-z]|sous-capsul|loge|collecte))/, rediger(t) {
+      const n = norm(t);
+      const ab = /(faible|petite|minime|moyenne|grande|abondant)/.exec(n);
+      const abondance = ab ? (/(faible|petite|minime)/.test(ab[1]) ? 'de faible abondance' : ab[1] === 'moyenne' ? 'de moyenne abondance' : 'de grande abondance') : '[de faible / de moyenne / de grande] abondance';
+      let lieu = '';
+      if (/pelvi/.test(n)) lieu = ' en pelvien';
+      else if (/douglas/.test(n)) lieu = ' dans le cul-de-sac de Douglas';
+      const autres = reste(t, /^[ée]panchements?/i, /intra-?\s?p[ée]riton[ée]al|intra-?\s?abdominal|p[ée]riton[ée]al/i, /(de )?(faible|petite|minime|moyenne|grande) (abondance|quantit[ée])|abondant|en quantit[ée] (faible|minime|moyenne|grande)|\bminime\b|\bfaible\b/i, /(en )?pelvien(ne)?|(dans le |du )?(cul-de-sac de )?douglas/i);
+      return `Épanchement intra-péritonéal ${abondance}${lieu}${autres ? ' ' + autres : ''}`;
+    } },
+  ];
+  function rediger(t) {
+    const n = norm(t);
+    for (const R of RECETTES) if (R.re.test(n)) { const x = R.rediger(t); if (x) return x; }
+    return t;
+  }
+
+  /* Mise en forme d'une constatation : accents, abréviations, rédaction, unités, nombres, majuscule, point final */
   function phrase(brut) {
-    let t = String(brut ?? '').replace(/\s+/g, ' ').trim();
+    let t = accents(String(brut ?? '').replace(/\s+/g, ' ').trim());
     for (const [re, mot] of ABREV) t = t.replace(re, mot);
+    t = rediger(t);
     t = t.replace(/(\d)\.(\d)/g, '$1,$2')                              // 2.5 → 2,5
       .replace(/(\d)\s*(mm|cm|ml|mL|UH|HU)\b/g, '$1 $2')                // 8mm → 8 mm
       .replace(/(\d)\s*[x×*]\s*(\d)/g, '$1 x $2')                      // 2x3 → 2 x 3
@@ -121,7 +208,7 @@
       .replace(/([a-zà-ÿ]{3,}) (lobe (?:supérieur|inférieur|moyen))/gi, (m, a, b) => /^(du|de|le|au|dans|en|des|la|un|ce|et|ou|petit)$/i.test(a) ? m : `${a} du ${b}`)
       // « nodule 8 mm » → « nodule de 8 mm »
       .replace(/([a-zà-ÿ)]) (\d+(?:,\d+)?(?: x \d+(?:,\d+)?)* (?:mm|cm))/gi, (m, a, b, pos, tout) =>
-        /(?:^|[\s(])(de|à|a|mesurant|environ|fait|sur|par|puis|vs|et|ou|contre|jusqu'à)$/i.test(tout.slice(0, pos + 1)) ? m : `${a} de ${b}`);
+        /(?:^|[\s(])(de|à|a|mesurant|mesure|mesurent|environ|fait|font|sur|par|puis|vs|et|ou|contre|jusqu'à)$/i.test(tout.slice(0, pos + 1)) ? m : `${a} de ${b}`);
     if (!t) return '';
     return t.charAt(0).toUpperCase() + t.slice(1) + '.';
   }
@@ -131,6 +218,17 @@
     const n = norm(texte);
     return ORGANES.filter(([, , re, sauf]) => re.test(n) && !(sauf && sauf.test(n))).map(([id]) => id);
   }
+
+  /* Conclusion : la phrase sans les champs à choisir (déjà choisis dans les résultats) */
+  const sansOptions = p => p.replace(/\s*,?\s*\[[^\]]*\]/g, '').replace(/\s+([,.])/g, '$1').replace(/,\./g, '.').replace(/\s{2,}/g, ' ').trim();
+
+  /* Pathologie principale (aiguë, tumorale, traumatique…) et signes associés regroupés sous elle */
+  const PRINCIPALE = /appendicite|cholecystite|angiocholite|diverticulite|sigmoidite|colite|ileite|enterite|occlusion|volvulus|invagination|perforation|pneumoperitoine|abces|peritonite|pancreatite|pyelonephrite|nephrite|torsion|grossesse extra|\bgeu\b|hemorrag|hematome|embolie|dissection|rupture|ischemi|infarctus|\bavc\b|thrombose|fracture|tumeur|tumoral|masse|carcinome|neoplasi|cancer|suspecte? de malignite|metasta|lymphome|pneumopathie|pneumothorax|meningiome|gliome|hernie etranglee|ulcere perfore|fistule|hydrocephalie aigue/;
+  const REGION = {};
+  for (const id of ['vaisseaux-foie', 'voies-biliaires', 'vesicule', 'foie', 'pancreas', 'rate', 'surrenales', 'calculs-urinaires', 'cavites-urinaires', 'reins', 'vessie', 'prostate', 'pelvis', 'vaisseaux-abdo', 'tube-digestif', 'peritoine', 'paroi-abdo', 'masse-pelvienne', 'ganglions-abdo']) REGION[id] = 'abdo';
+  for (const id of ['embolie', 'pericarde', 'coeur-vaisseaux-thorax', 'trachee-bronches', 'plevre', 'poumon', 'paroi-thorax', 'ganglions-mediastin', 'ganglions-paroi']) REGION[id] = 'thorax';
+  const ASSOCIES = { abdo: ['peritoine', 'epanchement', 'ganglions-abdo'], thorax: ['plevre', 'epanchement', 'ganglions-mediastin'] };
+  const ASSOCIES_TOUS = new Set([...ASSOCIES.abdo, ...ASSOCIES.thorax]);
 
   /* Découpage du texte en vrac : lignes, puis « . » (pas entre deux chiffres) et « ; » */
   const PREFIXE = /^\s*(conclusion|au total|ccl|synthese|indication|rc|renseignements? cliniques?|contexte|motif|technique)\s*:\s*/;
@@ -184,42 +282,90 @@
       if (o.length) lignes.push({ i, organe: o[0], tous: o, etage });
     }
 
-    const remplace = new Map();   // indice de ligne → constatations
-    const ailleurs = [], bilan = [], conclusion = [];
     let indication = null;
-    const technique = [];
+    const technique = [], conclusion = [], E = [];
     for (const it of items) {
       const p = phrase(it.texte);
       if (!p) continue;
       if (it.type === 'indication') { indication = p; continue; }
       if (it.type === 'technique') { technique.push(p); continue; }
       if (it.type === 'conclusion') { conclusion.push(p); continue; }
-      const cand = organes(p), et = niveau(p);
+      const sansChamps = p.replace(/\[[^\]]*\]/g, ' ');   // les options proposées ne désignent pas l'organe
+      const cand = organes(sansChamps), et = niveau(sansChamps);
+      const principal = PRINCIPALE.test(norm(sansChamps)) && !!cand[0] && !ASSOCIES_TOUS.has(cand[0]);
       // étage cité (« hernie discale C5-C6 ») : lignes de cet étage d'abord
       const parmi = et && lignes.some(x => x.etage === et) ? [lignes.filter(x => x.etage === et), lignes] : [lignes];
       let cible = null, organe = null;
-      for (const o of cand) {
+      for (const o of principal ? cand.slice(0, 1) : cand) {   // pathologie principale : seulement son organe
         for (const ls of parmi) { cible = ls.find(x => x.organe === o) || ls.find(x => x.tous.includes(o)); if (cible) break; }
         if (cible) { organe = o; break; }
       }
-      if (cible) {
-        if (!remplace.has(cible.i)) remplace.set(cible.i, []);
-        remplace.get(cible.i).push(p);
-        let t = cible.i - 1; while (t >= 0 && !(L[t].trim() && TITRE(L[t]))) t--;
-        const rubrique = t >= 0 && t >= debut ? L[t].trim().replace(/^[*]/, '').replace(/\s*:\s*$/, '') : null;
-        bilan.push({ texte: p, organe, nom: NOM[organe], remplace: L[cible.i].replace(/^\s*•\s*/, ''), ligne: cible.i, rubrique });
-      } else {
-        ailleurs.push(p);
-        bilan.push({ texte: p, organe: cand[0] || null, nom: cand[0] ? NOM[cand[0]] : null, remplace: null });
+      organe = organe || cand[0] || null;
+      E.push({ p, organe, cible, principal, n: E.length });
+    }
+
+    // Pathologie principale : en tête (à sa ligne, sinon avant la première ligne de sa région) ;
+    // épanchement, ganglions… de la même région regroupés juste en dessous
+    const P0 = E.find(e => e.principal);
+    const region = P0 && REGION[P0.organe];
+    const bloc = [], supprime = new Set();
+    let ancre = null, ancreMode = null;
+    if (P0) {
+      if (P0.cible) { ancre = P0.cible.i; ancreMode = 'remplace'; }
+      else {
+        const l = lignes.find(x => REGION[x.organe] === region) || lignes[0];
+        if (l) { ancre = l.i; ancreMode = 'avant'; }
       }
+      if (ancre != null) {
+        for (const e of E) {
+          const assoc = !e.principal && region && (ASSOCIES[region] || []).includes(e.organe);
+          if ((e.principal && !e.cible) || e === P0 || assoc) {
+            e.role = e.principal ? 'principale' : 'associee';
+            if (e.cible && e.cible.i !== ancre) supprime.add(e.cible.i);
+            bloc.push(e);
+          }
+        }
+        bloc.sort((x, y) => (x.role === y.role ? x.n - y.n : x.role === 'principale' ? -1 : 1));
+      }
+    }
+
+    const remplace = new Map();   // indice de ligne → constatations
+    const ailleurs = [], bilan = [];
+    const rubriqueDe = i => { let t = i - 1; while (t >= 0 && !(L[t].trim() && TITRE(L[t]))) t--; return t >= 0 && t >= debut ? L[t].trim().replace(/^[*]/, '').replace(/\s*:\s*$/, '') : null; };
+    for (const e of E) {
+      if (bloc.includes(e)) continue;
+      if (e.cible) {
+        if (!remplace.has(e.cible.i)) remplace.set(e.cible.i, []);
+        remplace.get(e.cible.i).push(e.p);
+        supprime.delete(e.cible.i);
+      } else ailleurs.push(e.p);
+    }
+    // une ligne normale déjà remplacée par une autre constatation n'est pas supprimée
+    for (const i of [...supprime]) if (remplace.has(i)) supprime.delete(i);
+    for (const e of E) {
+      const ligne = bloc.includes(e) ? ancre : e.cible ? e.cible.i : null;
+      bilan.push({
+        texte: e.p, organe: e.organe, nom: e.organe ? NOM[e.organe] : null, role: e.role || null,
+        remplace: e.cible ? L[e.cible.i].replace(/^\s*•\s*/, '') : null, ligne, rubrique: ligne != null ? rubriqueDe(ligne) : null,
+        tete: bloc.includes(e) && !(e === P0 && ancreMode === 'remplace') && e.role === 'principale',
+      });
     }
 
     // Reconstruction
     const out = [];
     for (let i = 0; i < L.length; i++) {
       const l = L[i];
+      const puce = /^\s*•/.test(l) ? (l.match(/^\s*•\s*/) || ['• '])[0] : '• ';
+      if (i === ancre) {
+        if (ancreMode === 'remplace') {
+          for (const e of bloc) out.push(puce + e.p);
+          for (const p of remplace.get(i) || []) out.push(puce + p);
+          continue;
+        }
+        for (const e of bloc) out.push('• ' + e.p);
+      }
+      if (supprime.has(i)) continue;
       if (remplace.has(i)) {
-        const puce = /^\s*•/.test(l) ? (l.match(/^\s*•\s*/) || ['• '])[0] : '';
         for (const p of remplace.get(i)) out.push(puce + p);
         continue;
       }
@@ -250,7 +396,10 @@
       if (k >= 0) { let j = k + 1; while (j < T.length && T[j].trim()) j++; T.splice(j, 0, ...technique); }
     }
     // Conclusion : écrite par le radiologue, sinon les constatations pathologiques
-    const constats = bilan.map((b, n) => ({ b, n })).sort((x, y) => (x.b.ligne ?? 1e9) - (y.b.ligne ?? 1e9) || x.n - y.n).map(x => x.b.texte);
+    // ordre : pathologie principale, signes associés, puis le reste dans l'ordre du compte rendu
+    const lp = bilan.find(b => b.role === 'principale');
+    const rang = b => b.role === 'principale' ? 0 : b.role === 'associee' || (lp && b.ligne === lp.ligne) ? 1 : 2;
+    const constats = bilan.map((b, n) => ({ b, n })).sort((x, y) => rang(x.b) - rang(y.b) || (x.b.ligne ?? 1e9) - (y.b.ligne ?? 1e9) || x.n - y.n).map(x => sansOptions(x.b.texte));
     const ccl = conclusion.length ? conclusion : constats;
     let k = T.findIndex(CONCLUSION);
     if (ccl.length) {
