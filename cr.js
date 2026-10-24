@@ -808,6 +808,7 @@
       const c = caretCoords(pos);
       return { top: editor.offsetTop + c.top, bottom: editor.offsetTop + c.bottom, left: editor.offsetLeft + c.left, visible: c.bottom > 0 && c.top < editor.clientHeight };
     },
+    modeleCourant: () => currentTpl,
     modeles: () => allTemplates().map(t => ({ type: 'modele', id: t.id, titre: t.title, texte: t.text, mod: t.mod || '' })),
     phrases: () => phrases.filter(p => !p.tool).map(p => ({ type: 'phrase', id: p.id, titre: p.label, cles: [p.k, ...(p.alias || [])], texte: p.text, mod: p.mod || '' })),
     chargerModele: id => loadTemplate(id, false),
