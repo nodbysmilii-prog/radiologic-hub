@@ -286,3 +286,8 @@
 .cr-vrac-organe { display: inline-block; padding: 1px 7px; border-radius: 999px; background: color-mix(in srgb, var(--teal, #2a9d8f) 18%, #fff); font-size: .66rem; font-weight: 900; text-transform: uppercase; letter-spacing: .04em; }
 .cr-vrac-bilan li.is-ailleurs .cr-vrac-organe { background: rgba(168, 23, 45, .12); }
 .cr-vrac-bilan li.is-principale .cr-vrac-organe { background: #a8172d; color: #fff; }
+
+/* ---------- Classifications déclaratives (regles/classifications.js) ---------- */
+.tl-cases { display: grid; gap: 6px; margin: 0 0 12px; }
+.tl-cases .tf-check { align-items: flex-start; line-height: 1.35; }
+.tl-cases .tf-check input { flex: none; margin-top: 1px; }
