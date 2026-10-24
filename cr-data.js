@@ -542,7 +542,7 @@ RÉSULTATS :
 • L'arbre trachéo-bronchique est libre.
 
 Étude médiastinale :
-• [Absence d'adénomégalie médiastinale / Adénomégalie médiastinale / Adénomégalies médiastinales] : chaîne(s) [pré-vasculaire + rétro-trachéale + latéro-trachéale haute droite + latéro-trachéale haute gauche + latéro-trachéale basse droite + latéro-trachéale basse gauche + para-aortique + sous-aortique + sous-carinaire + para-œsophagienne + du ligament triangulaire + hilaire].
+• [Absence d'adénomégalie médiastinale / Adénomégalie médiastinale / Adénomégalies médiastinales] : chaîne(s) [pré-vasculaire (3a) + rétro-trachéale (3p) + latéro-trachéale haute droite (2R) + latéro-trachéale haute gauche (2L) + latéro-trachéale basse droite (4R) + latéro-trachéale basse gauche (4L) + para-aortique (6) + sous-aortique (5) + sous-carinaire (7) + para-œsophagienne (8) + du ligament triangulaire (9) + hilaire droite (10R) + hilaire gauche (10L)].
 • [Absence d'épanchement péricardique / Épanchement péricardique en lame / Épanchement péricardique de faible abondance / Épanchement péricardique de moyenne abondance / Épanchement péricardique de grande abondance].
 • [Perméabilité conservée des cavités cardiaques / Thrombus de l'oreillette droite / Thrombus du ventricule droit / Thrombus de l'oreillette gauche / Thrombus du ventricule gauche].
 
