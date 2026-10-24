@@ -1421,7 +1421,33 @@
     },
   };
 
-  const TOOLS = { ...(PR ? { pirads: PIRADS } : {}), ...(BR ? { birads: BIRADS } : {}), tirads: TIRADS, ...(FL ? { fleischner: FLEISCHNER } : {}), ...(MY && UT ? { figo: MYOMES } : {}), ...(CA && CO ? { cadrads: CADRADS } : {}), recist: RECIST, lugano: LUGANO, ...(OSTEOGAMME ? { osteogamme: OSTEOGAMME } : {}), ...(BOSNIAK ? { bosniak: BOSNIAK } : {}), ...(QANADLI ? { qanadli: QANADLI } : {}) };
+  /* =======================================================
+     Classifications et scores déclaratifs (regles/classifications.js) : O-RADS, LI-RADS, Fisher,
+     Fazekas, Scheltens, AO Spine, Kellgren-Lawrence, ARCO, hanche, Garden, Pauwels, Neer, Schatzker,
+     Salter-Harris, Balthazar / CTSI, Hinchey, Parks, St James's, AAST, iRECIST, wash-out surrénalien
+     ======================================================= */
+  const CL = window.RHRegles && window.RHRegles.classifications;
+  const NIVEAU = { ok: C.green, bas: C.amber, moyen: C.orange, haut: C.red, neutre: C.grey };
+  const lire = (o, path) => path.split('.').reduce((a, k) => (a == null ? a : a[k]), o);
+  const CLASSIF = {};
+  if (CL) for (const d of CL.DEFS) {
+    CLASSIF[d.id] = {
+      title: d.titre, chip: d.chip, sub: d.sub, keys: d.cles, suggest: d.suggere, hint: d.aide || '',
+      init: d.init,
+      form(st) {
+        // listes et mesures en ligne, cases à cocher en colonne (AAST : une lésion par ligne)
+        const ch = d.champs(st), ent = ch.filter(c => c.type !== 'chk'), cases = ch.filter(c => c.type === 'chk');
+        return `${ent.length ? `<div class="tf-row">${ent.map(c => c.type === 'sel'
+          ? sel(c.f, esc(c.label), c.options, lire(st, c.f) ?? '', { wide: c.large })
+          : inp(c.f, esc(c.label), lire(st, c.f) ?? '', { small: true })).join('')}</div>` : ''}${
+          cases.length ? `<div class="tl-cases">${cases.map(c => chk(c.f, esc(c.label), !!lire(st, c.f))).join('')}</div>` : ''}`;
+      },
+      result(st) { const r = d.calcul(st); return badge(r.badge, NIVEAU[r.niveau] || C.grey); },
+      text(st) { const r = d.calcul(st); return r.texte ? `${r.texte}${r.conclusion ? `\nConclusion proposée : ${r.conclusion}` : ''}` : ''; },
+    };
+  }
+
+  const TOOLS = { ...(PR ? { pirads: PIRADS } : {}), ...(BR ? { birads: BIRADS } : {}), tirads: TIRADS, ...(FL ? { fleischner: FLEISCHNER } : {}), ...(MY && UT ? { figo: MYOMES } : {}), ...(CA && CO ? { cadrads: CADRADS } : {}), recist: RECIST, lugano: LUGANO, ...(OSTEOGAMME ? { osteogamme: OSTEOGAMME } : {}), ...(BOSNIAK ? { bosniak: BOSNIAK } : {}), ...(QANADLI ? { qanadli: QANADLI } : {}), ...CLASSIF };
   const states = {};
   let cur = null;
   const titleEl = $('#tool-title', dlg), hintEl = $('#tool-hint', dlg), schemaEl = $('#tool-schema', dlg), formEl = $('#tool-form', dlg);
@@ -1606,11 +1632,14 @@
   /* ---------- Volet « Schémas et calculateurs » : outils classés par domaine ; ceux que le texte
      évoque sont repris à côté du bouton du volet, même volet fermé ---------- */
   const GROUPES = [
-    ['Oncologie', ['recist', 'lugano']],
+    ['Oncologie', ['recist', 'irecist', 'lugano']],
+    ['Neuro', ['fisher', 'fazekas', 'scheltens']],
     ['Thorax et cœur', ['qanadli', 'fleischner', 'cadrads']],
+    ['Abdomen et digestif', ['lirads', 'pancreatite', 'hinchey', 'aast', 'washout', 'parks', 'stjames']],
     ['Sein et thyroïde', ['birads', 'tirads']],
+    ['Gynécologie', ['orads-us', 'orads-irm']],
     ['Pelvis et rein', ['pirads', 'figo', 'bosniak']],
-    ['Os', ['osteogamme']],
+    ['Os et traumatologie', ['osteogamme', 'ao-rachis', 'garden', 'pauwels', 'neer', 'schatzker', 'salter', 'kellgren', 'arco', 'hanche-mesures']],
   ];
   const chip = (k, cls = '') => `<button type="button" class="cr-tool-chip${cls}" data-tool="${k}">${esc(TOOLS[k].chip)}<small>${esc(TOOLS[k].sub)}</small></button>`;
   const calculs = document.getElementById('cr-tools-calculs') || chipsBox;

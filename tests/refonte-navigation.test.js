@@ -109,7 +109,7 @@ test('comptes rendus : chaque élément utilisé par l\'éditeur existe, barre d
   // calculateurs : volet classé ; outils complets distincts (pages dédiées)
   assert.match(html, /data-depliant="cr-calculateurs" aria-controls="cr-tools-panneau"/);
   const tools = lire('cr-tools.js');
-  for (const g of ['Oncologie', 'Thorax et cœur', 'Sein et thyroïde', 'Pelvis et rein', 'Os']) assert.ok(tools.includes(`'${g}'`), g);
+  for (const g of ['Oncologie', 'Neuro', 'Thorax et cœur', 'Abdomen et digestif', 'Sein et thyroïde', 'Gynécologie', 'Pelvis et rein', 'Os et traumatologie']) assert.ok(tools.includes(`'${g}'`), g);
   const pages = html.slice(html.indexOf('cr-tools-pages'), html.indexOf('<div class="cr-editor-wrap">'));
   assert.deepEqual([...pages.matchAll(/href="([^"]+)"/g)].map(m => m[1]), ['suivi-oncologique.html', 'outils/osteogamme', 'outils/bosniak']);
   assert.match(html, /<link rel="stylesheet" href="finition\.css\?v=\d+">\s*<link rel="stylesheet" href="cr\.css\?v=\d+">/);
