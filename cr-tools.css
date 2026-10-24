@@ -269,3 +269,19 @@
 .qa-b.is-on { background: var(--c); color: #fff; }
 .qa-b:focus-visible { outline: 3px solid var(--cornflower); outline-offset: 1px; }
 @media (max-width: 760px) { .qa-poumons { grid-template-columns: 1fr; } }
+
+/* ---------- Écrire en vrac → compte rendu (cr-vrac.js, regles/vrac.js) ---------- */
+.cr-vrac .cr-tools-btn:hover, .cr-vrac .cr-tools-btn[aria-expanded="true"] { background: var(--teal, #2a9d8f); }
+.cr-vrac-panneau { border-color: color-mix(in srgb, var(--teal, #2a9d8f) 60%, transparent); }
+.cr-vrac-modele { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 0 0 8px; font-size: .74rem; font-weight: 800; }
+.cr-vrac-modele select { flex: 1 1 260px; min-width: 0; padding: 6px 10px; border: 2px solid rgba(0, 0, 0, .15); border-radius: 10px; font: inherit; font-weight: 600; background: #fff; }
+.cr-vrac-texte { display: block; width: 100%; min-height: 120px; padding: 10px 12px; border: 2px solid rgba(0, 0, 0, .15); border-radius: 12px; font: inherit; font-size: .9rem; line-height: 1.5; resize: vertical; box-sizing: border-box; }
+.cr-vrac-texte:focus, .cr-vrac-modele select:focus { outline: none; border-color: var(--teal, #2a9d8f); box-shadow: 0 0 0 3px rgba(42, 157, 143, .2); }
+.cr-vrac-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-top: 10px; }
+.cr-vrac-actions small { font-size: .68rem; color: var(--muted); }
+.cr-vrac-bilan { margin: 12px 0 0; padding-left: 1.3em; display: grid; gap: 6px; font-size: .8rem; }
+.cr-vrac-bilan[hidden] { display: none; }
+.cr-vrac-bilan small { display: block; color: var(--muted); }
+.cr-vrac-bilan li.is-ailleurs small { color: #a8172d; }
+.cr-vrac-organe { display: inline-block; padding: 1px 7px; border-radius: 999px; background: color-mix(in srgb, var(--teal, #2a9d8f) 18%, #fff); font-size: .66rem; font-weight: 900; text-transform: uppercase; letter-spacing: .04em; }
+.cr-vrac-bilan li.is-ailleurs .cr-vrac-organe { background: rgba(168, 23, 45, .12); }

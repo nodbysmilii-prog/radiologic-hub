@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="fiche.css?v=20261012150000">
   <link rel="stylesheet" href="finition.css?v=20261022310000">
   <link rel="stylesheet" href="cr.css?v=20261024130000">
-  <link rel="stylesheet" href="cr-tools.css?v=20261024120000">
+  <link rel="stylesheet" href="cr-tools.css?v=20261024150000">
   <link rel="stylesheet" href="dictee/dictee.css?v=20261023200000">
 </head>
 <body>
@@ -187,6 +187,26 @@
           <div class="dt-confirm" id="dt-confirm" hidden></div>
           <div class="dt-alerte" id="dt-alerte" role="alert" hidden></div>
           <div class="dt-sections" id="dt-sections" aria-label="Sections du compte rendu : cliquez pour y dicter" hidden></div>
+
+          <div class="cr-tools cr-vrac" id="cr-vrac" data-depliant-boite>
+            <div class="cr-tools-tete">
+              <button type="button" class="cr-tools-btn" data-depliant="cr-vrac" aria-controls="cr-vrac-panneau" aria-expanded="false">
+                Écrire en vrac <small>→ compte rendu rédigé</small><span class="cr-tools-fleche" aria-hidden="true"></span>
+              </button>
+            </div>
+            <div class="cr-tools-panneau cr-vrac-panneau" id="cr-vrac-panneau" hidden>
+              <p class="cr-tools-legende">Notez seulement le pathologique, en vrac (une constatation par ligne, ou séparées par des points). Chaque constatation remplace, à sa place, la phrase normale de l'organe dans le compte rendu type ; le reste reste normal. Tout se fait dans ce navigateur : rien n'est envoyé.</p>
+              <label class="cr-vrac-modele"><span>Compte rendu type</span><select id="vrac-modele"></select></label>
+              <label class="visually-hidden" for="vrac-texte">Constatations en vrac</label>
+              <textarea id="vrac-texte" class="cr-vrac-texte" rows="6" spellcheck="true" lang="fr" placeholder="indication : bilan d'extension&#10;nodule LID 8 mm&#10;stéatose hépatique&#10;kyste rénal gauche simple 2 cm ; lithiase vésiculaire&#10;conclusion : … (facultatif : sinon reprise des constatations)"></textarea>
+              <div class="cr-vrac-actions">
+                <button type="button" class="btn btn-ink btn-sm" id="vrac-generer">Générer le compte rendu</button>
+                <button type="button" class="btn btn-outline btn-sm" id="vrac-effacer">Effacer</button>
+                <small>Abréviations comprises : LID, LSG, ADP, VB, VBP, HSD, HSA, AAA, PNO… · « indication : », « conclusion : » en début de ligne</small>
+              </div>
+              <ol class="cr-vrac-bilan" id="vrac-bilan" aria-live="polite" hidden></ol>
+            </div>
+          </div>
 
           <div class="cr-tools" id="cr-tools" data-depliant-boite>
             <div class="cr-tools-tete">
@@ -410,7 +430,9 @@
   <script src="regles/bosniak-cr.js?v=20261013050000"></script>
   <script src="regles/qanadli.js?v=20261024120000"></script>
   <script src="cr-tools.js?v=20261024120000"></script>
-  <script src="cr.js?v=20261024130000"></script>
+  <script src="regles/vrac.js?v=20261024150000"></script>
+  <script src="cr.js?v=20261024150000"></script>
+  <script src="cr-vrac.js?v=20261024150000"></script>
   <script src="dictee/corrections.js?v=20261023235500"></script>
   <script src="dictee/lexique.js?v=20261023235500"></script>
   <script src="dictee/traitement.js?v=20261023235500"></script>
