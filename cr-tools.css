@@ -253,3 +253,19 @@
 .tl-pont-titre { display: flex; align-items: center; justify-content: space-between; margin: 0 0 6px; font-size: .78rem; }
 .tl-ponts > .tl-add { margin: 2px 0 10px; }
 .tl-ref small { font-weight: 600; color: var(--muted); }
+
+/* ---------- Embolie pulmonaire : artères à cliquer (outil Qanadli) ---------- */
+.qa-poumons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 12px; }
+.qa-lobe { margin: 0 0 8px; }
+.qa-lobe-nom { margin: 4px 0 2px; font-size: .7rem; font-weight: 900; text-transform: uppercase; letter-spacing: .06em; color: var(--ink); }
+.qa-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 3px 6px; border-radius: 8px; }
+.qa-row.is-atteint { background: rgba(168, 23, 45, .07); }
+.qa-nom { font-size: .78rem; font-weight: 700; min-width: 0; }
+.qa-pt { font-weight: 800; color: var(--muted); }
+.qa-bs { display: inline-flex; gap: 4px; flex: none; }
+.qa-b { --c: #f2ab2f; padding: 3px 8px; border: 2px solid var(--c); border-radius: 999px; background: #fff; color: var(--ink); font: inherit; font-size: .68rem; font-weight: 800; cursor: pointer; }
+.qa-b.is-t { --c: #a8172d; }
+.qa-b.is-s { --c: #3c67b8; }
+.qa-b.is-on { background: var(--c); color: #fff; }
+.qa-b:focus-visible { outline: 3px solid var(--cornflower); outline-offset: 1px; }
+@media (max-width: 760px) { .qa-poumons { grid-template-columns: 1fr; } }

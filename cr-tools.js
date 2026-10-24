@@ -1380,19 +1380,32 @@
      ======================================================= */
   const QA = window.RHRegles && window.RHRegles.qanadli;
   const QANADLI = QA && {
-    title: 'Embolie pulmonaire — index de Qanadli', chip: 'Qanadli', sub: 'embolie pulmonaire',
+    title: 'Embolie pulmonaire — défects et index de Qanadli', chip: 'Embolie pulmonaire', sub: 'défects + Qanadli',
     keys: ['qanadli', 'embolie'], suggest: /qanadli|embolie pulmonaire|embole/,
-    hint: 'Embole proximal (tronc, artère pulmonaire, lobaire) : il compte pour toutes les artères segmentaires d\'aval. Puis chaque artère segmentaire : partielle = 1, totale = 2, sous-segmentaire = 1. Total sur 40.',
+    hint: 'Cliquez les artères atteintes : partiel, total ou sous-segmentaire (un second clic annule). Un embole proximal ou lobaire compte pour toutes les artères d\'aval. « Insérer » rédige les défects poumon par poumon et lobe par lobe, l\'index de Qanadli et la conclusion, à leur place dans le compte rendu.',
+    preview: 'Texte rédigé',
     init: () => ({ proximaux: {}, segments: {} }),
     form(st) {
-      const OBS = [['', '—'], ['1', 'Partielle'], ['2', 'Totale']];
-      const SEG = [['', '—'], ['s', 'Sous-segmentaire (1)'], ['1', 'Partielle (1)'], ['2', 'Totale (2)']];
       const pts = QA.evaluer(st).points;
-      let h = `<fieldset class="tl-box"><legend>Embole proximal</legend><div class="tf-row">${
-        Object.entries(QA.PROXIMAUX).map(([k, p]) => sel(`proximaux.${k}`, p.nom.replace(/^./, m => m.toUpperCase()), OBS, st.proximaux[k] || '')).join('')}</div></fieldset>`;
-      h += QA.LOBES.map(l => `<fieldset class="tl-box"><legend>${l.cote === 'D' ? 'Poumon droit' : 'Poumon gauche'} — ${esc(l.nom)}</legend><div class="tf-row">${
-        l.segments.map(([id, nom]) => sel(`segments.${id}`, `${nom} · ${pts[id]} pt`, SEG, st.segments[id] || '')).join('')}</div></fieldset>`).join('');
-      return h;
+      const boutons = (k, v, choix) => choix.map(([val, t, cls]) =>
+        `<button type="button" class="qa-b ${cls}${String(v ?? '') === val ? ' is-on' : ''}" data-act="qa" data-k="${k}" data-v="${val}" aria-pressed="${String(v ?? '') === val}">${t}</button>`).join('');
+      const PT = [['1', 'Partiel', 'is-p'], ['2', 'Total', 'is-t']];
+      const SG = [...PT, ['s', 'Sous-seg.', 'is-s']];
+      const ligne = (nom, k, v, choix, note = '') =>
+        `<div class="qa-row${v ? ' is-atteint' : ''}"><span class="qa-nom">${nom}${note}</span><span class="qa-bs">${boutons(k, v, choix)}</span></div>`;
+      const note = n => n ? ` <small class="qa-pt">${n} pt${n > 1 ? 's' : ''}</small>` : '';
+      const prox = ['tronc', 'apd', 'apg'].map(k => ligne(esc(QA.PROXIMAUX[k].nom.replace(/^./, m => m.toUpperCase())), `proximaux.${k}`, st.proximaux[k], PT)).join('');
+      const poumon = cote => QA.LOBES.filter(l => l.cote === cote).map(l =>
+        `<div class="qa-lobe"><p class="qa-lobe-nom">${esc(l.nom)}</p>${ligne('Artère lobaire', `proximaux.${l.id}`, st.proximaux[l.id], PT)}${
+          l.segments.map(([id, nom]) => ligne(esc(nom), `segments.${id}`, st.segments[id], SG, note(pts[id]))).join('')}</div>`).join('');
+      return `<fieldset class="tl-box"><legend>Tronc et artères pulmonaires</legend>${prox}</fieldset>
+        <div class="qa-poumons"><fieldset class="tl-box"><legend>Poumon droit</legend>${poumon('D')}</fieldset><fieldset class="tl-box"><legend>Poumon gauche</legend>${poumon('G')}</fieldset></div>`;
+    },
+    action(st, d) {
+      if (d.act !== 'qa') return false;
+      const [g, k] = d.k.split('.');
+      st[g][k] = String(st[g][k] ?? '') === d.v ? '' : d.v;
+      return true;
     },
     result(st) {
       const r = QA.evaluer(st);
@@ -1400,7 +1413,11 @@
     },
     text(st) {
       const r = QA.evaluer(st);
-      return `${QA.texte(r)}\nConclusion proposée : ${QA.conclusion(r)}`;
+      return [...QA.description(st), `• ${QA.texte(r)}`, '', `Conclusion : ${QA.conclusion(r)}`].join('\n');
+    },
+    integrate(st, texteCR) {
+      const r = QA.integrer(texteCR, st);
+      return r && { text: r.texte, message: `Défects, index de Qanadli et conclusion rédigés dans le compte rendu${r.creee ? ' (rubrique CONCLUSION ajoutée)' : ''}.` };
     },
   };
 
