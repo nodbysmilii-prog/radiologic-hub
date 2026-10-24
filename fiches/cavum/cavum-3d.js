@@ -150,9 +150,13 @@ export async function creerVisionneuse(conteneur, { base, onProgression = () => 
 
   /* ---------- Étiquettes (HTML) ---------- */
   const etiquettes = [];
+  // priorité : en cas de chevauchement, l'étiquette d'un foramen passe devant celle de la tumeur, puis des espaces
+  const PRIORITE = { 'is-foramen': 3, 'is-tumeur': 2, 'is-espace': 1 };
   const ajouterEtiquette = (texte, pos, classe) => {
     const el = document.createElement('span'); el.className = 'c3d-etiquette ' + (classe || ''); el.textContent = texte;
-    calqueEtiquettes.appendChild(el); const e = { el, pos: new THREE.Vector3(...pos), visible: true }; etiquettes.push(e); return e;
+    calqueEtiquettes.appendChild(el);
+    const e = { el, pos: new THREE.Vector3(...pos), visible: true, priorite: PRIORITE[classe] || 0, l: 0, h: 0 };
+    etiquettes.push(e); etiquettes.sort((a, b) => b.priorite - a.priorite); return e;
   };
   const etiqForamens = {};
   for (const f of donnees.foramens) if (f.id.endsWith('-d')) etiqForamens[f.id] = ajouterEtiquette(f.nom.replace(' (droit)', ''), f.pos, 'is-foramen');
@@ -252,14 +256,26 @@ export async function creerVisionneuse(conteneur, { base, onProgression = () => 
     void dt;
   }
   const v = new THREE.Vector3();
+  // Étiquettes sans chevauchement : placées par priorité ; une étiquette qui en recouvre une autre déjà placée
+  // est décalée d'une ligne vers le bas ou le haut, et masquée si aucune place n'est libre.
+  const DECALAGES = [0, 1, -1, 2, -2];
   function placerEtiquettes() {
-    const w = largeur(), h = hauteur();
+    const w = largeur(), h = hauteur(), places = [];
     for (const e of etiquettes) {
       if (!e.visible) { e.el.hidden = true; continue; }
       v.copy(e.pos).project(camera);
-      const derriere = v.z > 1;
-      e.el.hidden = derriere;
-      e.el.style.transform = `translate(${(v.x * 0.5 + 0.5) * w}px, ${(-v.y * 0.5 + 0.5) * h}px)`;
+      if (v.z > 1) { e.el.hidden = true; continue; }
+      e.el.hidden = false;
+      if (!e.l) { e.l = e.el.offsetWidth; e.h = e.el.offsetHeight; }
+      const x = (v.x * 0.5 + 0.5) * w, y = (-v.y * 0.5 + 0.5) * h;
+      let pose = null;
+      for (const d of DECALAGES) {
+        const r = { g: x + 8, d: x + 8 + e.l, haut: y - e.h / 2 + d * (e.h + 2), bas: y + e.h / 2 + d * (e.h + 2) };
+        if (!places.some(p => r.g < p.d + 2 && r.d > p.g - 2 && r.haut < p.bas && r.bas > p.haut)) { pose = { r, d }; break; }
+      }
+      if (!pose) { e.el.hidden = true; continue; }
+      places.push(pose.r);
+      e.el.style.transform = `translate(${x}px, ${y + pose.d * (e.h + 2)}px)`;
     }
   }
   controles.addEventListener('change', demander);

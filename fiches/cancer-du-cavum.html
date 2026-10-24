@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css?v=20261022235000">
   <link rel="stylesheet" href="../fiche.css?v=20261012150000">
-  <link rel="stylesheet" href="../schemas/cavum.css?v=20261023235900">
+  <link rel="stylesheet" href="../schemas/cavum.css?v=20261024100000">
   <script type="importmap">{ "imports": { "three": "../vendor/three-0.170.0/three.module.min.js", "three/addons/": "../vendor/three-0.170.0/addons/" } }</script>
 </head>
 <body class="fiche-page">
@@ -125,7 +125,7 @@
           </ol>
           <div class="callout callout-warn">
             <p class="nodes-title">Réflexe majeur</p>
-            <p>Toute <mark class="k-grave">otite séreuse unilatérale de l'adulte</mark> impose une imagerie du cavum, même si l'endoscopie est normale.</p>
+            <p>Toute <mark class="k-grave">otite séromuqueuse récidivante de l'adulte</mark> impose une imagerie du cavum, même si l'endoscopie est normale.</p>
           </div>
         </section>
 
@@ -201,7 +201,10 @@
               <button type="button" class="c3d-voie" data-voie="superieure" aria-pressed="false" style="--c: var(--k-grave)">Supérieure</button>
             </div>
             <div class="c3d-cadre">
-              <div class="c3d-scene" id="c3d-scene"></div>
+              <div class="c3d-vue">
+                <div class="c3d-scene" id="c3d-scene"></div>
+                <a class="c3d-attrib" href="https://www.z-anatomy.com/" rel="noopener" target="_blank" title="Os, muscles, vaisseaux et nerfs : Z-Anatomy (CC BY-SA 4.0, dérivé de BodyParts3D). Espaces profonds : volumes schématiques. Fosse ptérygopalatine, foramen sphénopalatin, fissures orbitaires et canal ptérygoïdien : positions approchées.">© Z-Anatomy · CC BY-SA</a>
+              </div>
               <aside class="c3d-panneau" aria-label="Réglages de la vue 3D">
                 <p class="c3d-titre">Vues</p>
                 <div class="c3d-vues">
@@ -229,7 +232,6 @@
               <li style="--c: #8a5a9c" class="is-muscle">Muscles prévertébraux</li>
               <li style="--c: #f3c21b" class="is-muscle">Nerfs (V, V2, V3)</li>
             </ul>
-            <p class="c3d-credit">Modèle 3D : os, muscles, vaisseaux et nerfs issus de <a href="https://www.z-anatomy.com/" rel="noopener" target="_blank">Z-Anatomy</a> (CC BY-SA 4.0, dérivé de BodyParts3D). Espaces profonds : volumes <b>schématiques</b> construits sur les structures qui les bordent. Foramens : foramen rond, ovale, lacerum, canal carotidien, foramen jugulaire et canal de l'hypoglosse repérés là où le nerf ou le vaisseau qui les traverse est entouré d'os ; fosse ptérygopalatine, foramen sphénopalatin, fissures orbitaires et canal ptérygoïdien : positions approchées sur le trajet du V2.</p>
           </div>
 
           <div class="cav-dirs">
@@ -329,12 +331,12 @@
             </button>
             <button type="button" class="tnm-carte" data-t="T2" role="listitem" style="--c: #f18d25">
               <span class="tnm-code">T2</span>
-              <span class="tnm-quoi"><b>Espace parapharyngé</b> et/ou tissus mous adjacents : ptérygoïdiens médial / latéral, muscles prévertébraux.</span>
+              <span class="tnm-quoi"><b>Espace parapharyngé</b> et/ou tissus mous adjacents : muscles ptérygoïdiens médial / latéral, muscles prévertébraux.</span>
               <span class="tnm-3d">Voir en 3D</span>
             </button>
             <button type="button" class="tnm-carte" data-t="T3" role="listitem" style="--c: #d63f4c">
               <span class="tnm-code">T3</span>
-              <span class="tnm-quoi"><b>Os</b> : base du crâne, vertèbres cervicales, ptérygoïde ; et/ou cavités sinusiennes.</span>
+              <span class="tnm-quoi"><b>Os</b> : base du crâne, vertèbres cervicales, lames ptérygoïdiennes ; et/ou cavités sinusiennes.</span>
               <span class="tnm-3d">Voir en 3D</span>
             </button>
             <button type="button" class="tnm-carte" data-t="T4" role="listitem" style="--c: #8b0f24">
@@ -450,7 +452,7 @@
             <button class="flip" aria-pressed="false" style="--c: var(--k-grave)">
               <span class="flip-tab">1</span>
               <span class="flip-inner">
-                <span class="flip-face flip-front"><strong>Otite séreuse unilatérale chez l'adulte ?</strong><small>cliquez pour retourner</small></span>
+                <span class="flip-face flip-front"><strong>Otite séromuqueuse récidivante chez l'adulte ?</strong><small>cliquez pour retourner</small></span>
                 <span class="flip-face flip-back"><p><b>Imagerie du cavum</b>Même si l'endoscopie est normale.</p></span>
               </span>
             </button>
@@ -530,7 +532,7 @@
   <script src="../navigation.js?v=20261022235000"></script>
 
   <script src="../fiche.js?v=20261022235000"></script>
-  <script src="../regles/tnm-cavum.js?v=20261024001000"></script>
-  <script type="module" src="cavum/cavum-fiche.js?v=20261023235900"></script>
+  <script src="../regles/tnm-cavum.js?v=20261024100000"></script>
+  <script type="module" src="cavum/cavum-fiche.js?v=20261024100000"></script>
 </body>
 </html>

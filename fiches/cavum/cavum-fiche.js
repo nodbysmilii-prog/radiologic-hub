@@ -17,7 +17,7 @@ let api = null, enCours = null;
 function charger() {
   if (enCours) return enCours;
   scene.innerHTML = '<p class="c3d-attente" role="status">Chargement du moteur 3D…</p>';
-  enCours = import('./cavum-3d.js')
+  enCours = import('./cavum-3d.js?v=20261024100000')
     .then(({ creerVisionneuse }) => creerVisionneuse(scene, {
       base: bloc.dataset.modeles,
       onProgression: t => { const p = $('.c3d-attente', scene); if (p) p.textContent = t; },
