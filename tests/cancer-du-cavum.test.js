@@ -18,18 +18,21 @@ test('6 parties dans l\'ordre, sommaire, scripts et styles versionnés', () => {
   assert.deepEqual(titres, [...ids, 'testez-vous']);
   for (const id of ids) assert.match(HTML, new RegExp(`<li><a href="#${id}"`));
   for (const f of ['schemas/cavum.css', 'regles/tnm-cavum.js', 'cavum/cavum-fiche.js']) assert.match(HTML, new RegExp(f.replace('.', '\\.') + '\\?v=\\d+'), f);
+  assert.ok(!HTML.includes('c3d-credit'), 'crédit Z-Anatomy réduit à une mention dans la vue 3D');
+  assert.match(HTML, /class="c3d-attrib" href="https:\/\/www\.z-anatomy\.com\/"[^>]*>© Z-Anatomy · CC BY-SA</);
   assert.match(HTML, /"three": "\.\.\/vendor\/three-0\.170\.0\/three\.module\.min\.js"/);
 });
 
 test('chiffres et messages clés du cours', () => {
-  for (const t of ['90 %', '8 à 10 mois', 'otite séreuse unilatérale de l\'adulte', '352 × 256', 'perte de l\'hypersignal T1',
+  for (const t of ['90 %', '8 à 10 mois', 'otite séromuqueuse récidivante de l\'adulte', '352 × 256', 'perte de l\'hypersignal T1',
     'foramen sphénopalatin', 'fascia pharyngo-basilaire', '30 %', '≈ 90 %', '65 %', '> 8 mm', '> 1 cm', '5 à 41 %', '20 %', '13 %', '9 %',
     'Strictement médian', 'tumeur maligne pseudokystique', '2 à 3 mois', 'Tous les 4 mois', 'Tous les 6 mois', 'TEP-scanner'])
     assert.ok(texte.includes(t), t);
 });
 
 test('TNM : définitions de la fiche et regroupement en stades AJCC / UICC 8e édition', () => {
-  assert.match(R.T.T2, /parapharyngée/); assert.match(R.T.T4, /au-delà de la face latérale du muscle ptérygoïdien latéral/);
+  assert.match(R.T.T2, /parapharyngée/); assert.match(R.T.T2, /muscles ptérygoïdiens/); assert.match(R.T.T3, /lames ptérygoïdiennes/);
+  assert.ok(texte.includes('muscles ptérygoïdiens médial / latéral') && texte.includes('lames ptérygoïdiennes'), 'cartes T2 / T3'); assert.match(R.T.T4, /au-delà de la face latérale du muscle ptérygoïdien latéral/);
   assert.doesNotMatch(R.T.T4, /fosse infratemporale/, 'T4 : formulation de la 8e édition (demande de l\'auteur)');
   assert.match(R.N.N1, /rétropharyngés uni- ou bilatéraux, ≤ 6 cm/); assert.match(R.N.N2, /≤ 6 cm/); assert.match(R.N.N3, /> 6 cm/);
   assert.ok(texte.includes('> 8 mm'), 'seuil rétropharyngé de 8 mm gardé (choix de l\'auteur)');

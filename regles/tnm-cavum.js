@@ -3,7 +3,8 @@
    ---------------------------------------------------------
    Définitions T et N : fiche de l'auteur (partie V), reformulées au minimum ; T4 (tissus mous au-delà du
    ptérygoïdien latéral, à la place de « fosse infratemporale »), N1 (rétropharyngés uni- ou bilatéraux) et
-   « ≤ 6 cm » alignés sur la 8e édition, à la demande de l'auteur (23/10/2026).
+   « ≤ 6 cm » alignés sur la 8e édition, à la demande de l'auteur (23/10/2026) ; T2 « muscles ptérygoïdiens »
+   et T3 « lames ptérygoïdiennes » (24/10/2026).
    N0 et M0 / M1 : définitions usuelles (absentes de la fiche).
    Regroupement en stades : AJCC / UICC 8e édition (nasopharynx) :
      I    T1 N0 M0
@@ -22,8 +23,8 @@
 
   const T = {
     T1: 'Tumeur du nasopharynx ± oropharynx / fosse nasale, sans extension parapharyngée.',
-    T2: 'Extension parapharyngée et/ou aux tissus mous adjacents (ptérygoïdiens médial et latéral, muscles prévertébraux).',
-    T3: 'Extension osseuse (base du crâne, vertèbres cervicales, ptérygoïde) et/ou aux cavités sinusiennes.',
+    T2: 'Extension parapharyngée et/ou aux tissus mous adjacents (muscles ptérygoïdiens médial et latéral, muscles prévertébraux).',
+    T3: 'Extension osseuse (base du crâne, vertèbres cervicales, lames ptérygoïdiennes) et/ou aux cavités sinusiennes.',
     T4: 'Extension intracrânienne et/ou aux nerfs crâniens, hypopharynx, orbite, parotide, canal carotidien, foramen jugulaire, sinus caverneux, et/ou infiltration étendue des tissus mous au-delà de la face latérale du muscle ptérygoïdien latéral.',
   };
   const N = {

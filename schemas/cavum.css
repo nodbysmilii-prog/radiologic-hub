@@ -46,7 +46,9 @@
 .c3d-legende li { display: inline-flex; align-items: center; gap: 6px; }
 .c3d-legende li::before { content: ""; width: 14px; height: 14px; border-radius: 4px; background: color-mix(in srgb, var(--c) 55%, #fff); border: 2px solid var(--c); }
 .c3d-legende li.is-muscle::before { background: var(--c); }
-.c3d-credit { margin: 0; padding: 0 14px 12px; background: #fff; font-size: .7rem; color: var(--muted); }
+.c3d-vue { position: relative; min-width: 0; }
+.c3d-attrib { position: absolute; left: 8px; bottom: 6px; z-index: 2; padding: 1px 6px; border-radius: 6px; background: rgba(17, 17, 20, .55); color: rgba(255, 255, 255, .75); font-size: .6rem; font-weight: 700; text-decoration: none; }
+.c3d-attrib:hover, .c3d-attrib:focus-visible { color: #fff; text-decoration: underline; }
 
 /* ---------- Les 5 directions ---------- */
 .cav-dirs { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; margin: 0 0 30px; }
