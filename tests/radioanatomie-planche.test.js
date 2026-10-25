@@ -75,6 +75,11 @@ test('cliché de Wu et al. (CC BY 4.0) : présent, crédité ; rapport A/N avec 
   assert.match(an, /Rapport A\/N \(Fujioka\)/);
   assert.match(an, /<g class="pl-an-traces">/);
   assert.match(an, /A\/N ≈ 0,81/);
+  // retour de l'auteur (26/10/2026) : définitions de Fujioka, et A/N n'est pas un pourcentage d'obstruction
+  assert.match(an, /bord postéro-supérieur du palais osseux/);
+  assert.match(an, /n'est pas directement un pourcentage d'obstruction/);
+  assert.doesNotMatch(an, /plus le cavum est obstrué/);
+  assert.doesNotMatch(an, /#f18d25/, 'N en rouge');
 });
 
 test('planches thoraciques (face, profil) : disposition en colonnes, points dans le cliché, licence citée', () => {
