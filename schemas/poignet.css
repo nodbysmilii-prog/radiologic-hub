@@ -66,6 +66,22 @@
 .p3d-bulle[hidden] { display: none; }
 .c3d-etiquette.p3d-mesure { background: var(--c); color: #fff; font-size: .74rem; padding: 3px 9px; translate: -50% -50%; }
 
+/* ---------- Clichés (Kirchberg et al., West J Emerg Med 2026, CC BY 4.0) ---------- */
+.p-radios { margin: 10px 0 0; }
+.p-radios-paire { display: flex; gap: 4px; border-radius: 12px; overflow: hidden; background: #111114; }
+.p-radios-paire img { display: block; min-width: 0; width: 100%; height: auto; aspect-ratio: auto; object-fit: cover; }
+.p-radios figcaption { margin-top: 6px; font-size: .74rem; color: var(--muted); }
+.p-credit { font-size: .68rem; color: var(--muted); }
+.p-credit a { color: inherit; }
+.p-credit-ligne { margin: 8px 0 0; }
+.p-mesure-radios { margin-top: 24px; }
+.p-mesure-radios-tete { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+.p-mesure-radios-tete h3 { margin: 0; }
+.p-radio-mesure { margin: 0; border-radius: 14px; border: 3px solid var(--ink); background: #111114; overflow: hidden; }
+.p-radio-mesure svg { display: block; width: 100%; height: auto; }
+.p-radio-mesure figcaption { padding: 8px 12px 10px; background: #fff; font-size: .8rem; }
+.p-mesure-radios.is-sans-traces .p-traces { display: none; }
+
 @media (max-width: 900px) {
   .p-fractures, .p-mesure-cartes { grid-template-columns: 1fr; }
   .p-mesure-schemas { grid-template-columns: 1fr; }

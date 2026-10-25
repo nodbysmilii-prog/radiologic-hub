@@ -5,6 +5,7 @@
      arrive à l'écran sur ordinateur, au clic sur « Voir en 3D » sur téléphone ;
    • boutons des mesures et des repères (barre de la vue 3D et liens de la partie VII) ;
    • réglette de la bascule du fragment distal (schéma de profil, fiches/poignet/schemas.js) ;
+   • bouton « Masquer les tracés » des clichés de la partie IV ;
    • vérification des seuils de l'AAOS (regles/radius-distal.js).
    ========================================================= */
 const $ = (s, r = document) => r.querySelector(s);
@@ -77,6 +78,14 @@ if (reglette && window.RHPoignet) {
   };
   reglette.addEventListener('input', maj);
 }
+
+/* ---------- Clichés : afficher / masquer nos tracés ---------- */
+const boutonTraces = $('#p-traces');
+if (boutonTraces) boutonTraces.addEventListener('click', () => {
+  const sans = boutonTraces.closest('.p-mesure-radios').classList.toggle('is-sans-traces');
+  boutonTraces.setAttribute('aria-pressed', !sans);
+  boutonTraces.textContent = sans ? 'Afficher les tracés' : 'Masquer les tracés';
+});
 
 /* ---------- Seuils de l'AAOS ---------- */
 const calc = $('#p-calc');
