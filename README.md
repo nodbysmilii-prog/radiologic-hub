@@ -819,6 +819,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 26/10/2026 | Cavum de profil : **os nasal** plus visible — traits de l'auteur épaissis (contours de 7 px avec halo), point posé sur la partie basse de l'os pour ne pas masquer les traits, étiquette rangée à hauteur de l'os |
 | 26/10/2026 | Cavum de profil : **os nasal** replacé là où l'auteur l'a redessiné (bord antérieur du nez) et mis en valeur par ses deux traits (contours épais avec halo, `.pl-contour` dans `planche.css`) |
 | 26/10/2026 | Cavum de profil : points du **palais mou** (659, 598) et de la **tonsille palatine** (637, 634) recalés exactement sur les marques de l'auteur (seconde correction) |
 | 26/10/2026 | Cavum de profil : points du **palais mou** et de la **tonsille palatine** déplacés aux endroits indiqués par l'auteur (palais mou sur la bande du voile, tonsille palatine plus haut et en avant, d'après la planche de référence) |
