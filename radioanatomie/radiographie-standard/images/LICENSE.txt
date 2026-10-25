@@ -5,3 +5,10 @@ Licence : Creative Commons Attribution 4.0 International (CC BY 4.0)
 https://creativecommons.org/licenses/by/4.0/
 Modifications : cliché n° 9 (9_pa.png, 9_lat.png) recadré sur la zone utile, réduit à 1000 px de large,
 converti en JPEG. Les légendes sont un calque SVG séparé (RadiologicHub).
+
+cavum-profil.jpg
+Source : Wu et al., Frontiers in Oncology, 2025 (radiographie du crâne et du cou de profil d'un enfant).
+Licence : Creative Commons Attribution 4.0 International (CC BY 4.0)
+https://creativecommons.org/licenses/by/4.0/
+Modifications : annotations d'origine (ligne du basi-occiput, segments A et N, lettres) effacées,
+converti en niveaux de gris et en JPEG. Les légendes et les tracés A/N sont un calque SVG (RadiologicHub).
