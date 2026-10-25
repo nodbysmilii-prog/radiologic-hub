@@ -75,3 +75,18 @@ test('carte dans Fiches rapides › Traumato', () => {
   const index = fs.readFileSync(path.join(RACINE, 'fiches-rapides.html'), 'utf8');
   assert.match(index, /<a class="fiche-card" data-spe="trauma" href="fiches\/fractures-radius-distal\.html"/);
 });
+
+test('clichés (Kirchberg et al., CC BY 4.0) : présents, crédités, tracés en surimpression', () => {
+  const html = fs.readFileSync(path.join(RACINE, 'fiches', 'fractures-radius-distal.html'), 'utf8');
+  const dossier = path.join(RACINE, 'fiches', 'poignet', 'images');
+  const noms = ['colles', 'smith', 'barton'].flatMap(f => [`${f}-profil`, `${f}-face`]).concat(['mesures-face', 'mesures-profil']);
+  for (const n of noms) {
+    assert.ok(fs.existsSync(path.join(dossier, `${n}.jpg`)), n);
+    assert.ok(html.includes(`poignet/images/${n}.jpg`), `${n} dans la fiche`);
+  }
+  assert.match(fs.readFileSync(path.join(dossier, 'LICENSE.txt'), 'utf8'), /Kirchberg et al\., West J Emerg Med 2026[\s\S]*CC BY 4\.0/);
+  assert.equal((html.match(/Kirchberg et al\., <i>West J Emerg Med<\/i> 2026/g) || []).length, 4, 'crédit sous chaque fracture et sous les mesures');
+  assert.match(html, /annotations d'origine retirées et remplacées par nos tracés/);
+  assert.equal((html.match(/<g class="p-traces">/g) || []).length, 2);
+  assert.match(html, /id="p-traces"[^>]*aria-pressed="true"/);
+});

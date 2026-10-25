@@ -1,0 +1,8 @@
+Radiographies du poignet (fractures de Pouteau-Colles, Goyrand-Smith, Barton ;
+clichés des mesures) : Kirchberg et al., West J Emerg Med 2026.
+Licence : Creative Commons Attribution 4.0 International (CC BY 4.0)
+https://creativecommons.org/licenses/by/4.0/
+
+Modifications apportées par RadiologicHub : recadrage, passage en niveaux de gris,
+compression JPEG ; sur mesures-face.jpg et mesures-profil.jpg, annotations
+d'origine retirées (les tracés affichés dans la fiche sont dessinés par le site en SVG).
