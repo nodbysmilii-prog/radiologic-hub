@@ -1,0 +1,185 @@
+{
+ "source": "Z-Anatomy (CC BY-SA 4.0), commit 2b6cf98a8ca012571ecb252e5c077b42a21b3b61, dérivé de BodyParts3D (CC BY-SA 2.1 JP)",
+ "repere": "main droite, centré sur le capitatum, ×10, +Y haut (proximal), +Z avant (palmaire), −X côté radial (pouce)",
+ "os": [
+  {
+   "id": "radius",
+   "nom": "Radius (extrémité distale)",
+   "groupe": "avant-bras"
+  },
+  {
+   "id": "ulna",
+   "nom": "Ulna (extrémité distale)",
+   "groupe": "avant-bras"
+  },
+  {
+   "id": "scaphoide",
+   "nom": "Scaphoïde",
+   "groupe": "carpe-proximal"
+  },
+  {
+   "id": "lunatum",
+   "nom": "Lunatum (semi-lunaire)",
+   "groupe": "carpe-proximal"
+  },
+  {
+   "id": "triquetrum",
+   "nom": "Triquetrum (pyramidal)",
+   "groupe": "carpe-proximal"
+  },
+  {
+   "id": "pisiforme",
+   "nom": "Pisiforme",
+   "groupe": "carpe-proximal"
+  },
+  {
+   "id": "trapeze",
+   "nom": "Trapèze",
+   "groupe": "carpe-distal"
+  },
+  {
+   "id": "trapezoide",
+   "nom": "Trapézoïde",
+   "groupe": "carpe-distal"
+  },
+  {
+   "id": "capitatum",
+   "nom": "Capitatum (grand os)",
+   "groupe": "carpe-distal"
+  },
+  {
+   "id": "hamatum",
+   "nom": "Hamatum (os crochu)",
+   "groupe": "carpe-distal"
+  },
+  {
+   "id": "m1",
+   "nom": "1er métacarpien",
+   "groupe": "metacarpe"
+  },
+  {
+   "id": "m2",
+   "nom": "2e métacarpien",
+   "groupe": "metacarpe"
+  },
+  {
+   "id": "m3",
+   "nom": "3e métacarpien",
+   "groupe": "metacarpe"
+  },
+  {
+   "id": "m4",
+   "nom": "4e métacarpien",
+   "groupe": "metacarpe"
+  },
+  {
+   "id": "m5",
+   "nom": "5e métacarpien",
+   "groupe": "metacarpe"
+  },
+  {
+   "id": "p1-p",
+   "nom": "Phalange proximale du pouce",
+   "groupe": "phalanges"
+  },
+  {
+   "id": "p1-d",
+   "nom": "Phalange distale du pouce",
+   "groupe": "phalanges"
+  },
+  {
+   "id": "p2-p",
+   "nom": "Phalange proximale du index (II)",
+   "groupe": "phalanges"
+  },
+  {
+   "id": "p2-m",
+   "nom": "Phalange moyenne du index (II)",
+   "groupe": "phalanges"
+  },
+  {
+   "id": "p2-d",
+   "nom": "Phalange distale du index (II)",
+   "groupe": "phalanges"
+  },
+  {
+   "id": "p3-p",
+   "nom": "Phalange proximale du majeur (III)",
+   "groupe": "phalanges"
+  },
+  {
+   "id": "p3-m",
+   "nom": "Phalange moyenne du majeur (III)",
+   "groupe": "phalanges"
+  },
+  {
+   "id": "p3-d",
+   "nom": "Phalange distale du majeur (III)",
+   "groupe": "phalanges"
+  },
+  {
+   "id": "p4-p",
+   "nom": "Phalange proximale du annulaire (IV)",
+   "groupe": "phalanges"
+  },
+  {
+   "id": "p4-m",
+   "nom": "Phalange moyenne du annulaire (IV)",
+   "groupe": "phalanges"
+  },
+  {
+   "id": "p4-d",
+   "nom": "Phalange distale du annulaire (IV)",
+   "groupe": "phalanges"
+  },
+  {
+   "id": "p5-p",
+   "nom": "Phalange proximale du auriculaire (V)",
+   "groupe": "phalanges"
+  },
+  {
+   "id": "p5-m",
+   "nom": "Phalange moyenne du auriculaire (V)",
+   "groupe": "phalanges"
+  },
+  {
+   "id": "p5-d",
+   "nom": "Phalange distale du auriculaire (V)",
+   "groupe": "phalanges"
+  }
+ ],
+ "reperes": {
+  "styloide": [
+   -0.2097,
+   0.1271,
+   -0.0201
+  ],
+  "coin-ulnaire": [
+   0.0689,
+   0.1755,
+   -0.1004
+  ],
+  "rebord-palmaire": [
+   -0.055,
+   0.2043,
+   0.0176
+  ],
+  "rebord-dorsal": [
+   -0.0575,
+   0.1497,
+   -0.0993
+  ]
+ },
+ "axe_radius": [
+  0.1526,
+  0.9695,
+  -0.192
+ ],
+ "mesures_modele": {
+  "inclinaison_radiale_deg": 18.8,
+  "hauteur_radiale_mm": 10.5,
+  "inclinaison_palmaire_deg": 13.8
+ },
+ "empreinte": "f7feebd51913",
+ "octets": 396892
+}
