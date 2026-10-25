@@ -5,7 +5,8 @@
    ========================================================= */
 
 .pl { display: grid; grid-template-columns: minmax(0, 640px) minmax(0, 1fr); gap: 34px 46px; align-items: start; }
-.pl-col-vue { min-width: 0; }
+.pl-col-vue, .pl-col-texte { min-width: 0; }
+.pl-col-texte mark { overflow-wrap: anywhere; }
 .pl-barre, .pl-quiz-barre { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 12px; }
 .pl-quiz-barre[hidden] { display: none; }
 .pl-score { margin-right: auto; padding: .35em .9em; border-radius: 999px; background: var(--amber); color: var(--ink); font-weight: 900; font-size: .8rem; }
@@ -48,6 +49,9 @@
 /* ---------- Disposition « colonnes » ---------- */
 .pl.pl-large { grid-template-columns: minmax(0, 900px) minmax(0, 1fr); }
 .pl.pl-large .pl-col-vue { max-width: 900px; }
+.pl.pl-large .pl-liste { grid-template-columns: minmax(0, 1fr); }
+.pl-liste li { min-width: 0; }
+.pl-nom { min-width: 0; overflow-wrap: anywhere; }
 /* ---------- (suite) : noms de part et d'autre du cliché, trait de rappel ---------- */
 .pl-vue.pl-vue-colonnes .pl-img { position: absolute; top: 0; height: 100%; width: auto; }
 .pl-colonnes .pl-trait { stroke-width: 2.2; }
@@ -82,7 +86,8 @@
 .pl.is-quiz .pl-liste li:not(.is-vu) .pl-cache { display: inline; }
 
 @media (max-width: 1000px) {
-  .pl { grid-template-columns: minmax(0, 1fr); }
+  .pl, .pl.pl-large { grid-template-columns: minmax(0, 1fr); }
+  .pl.pl-large .pl-liste { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .pl-col-vue { max-width: 640px; }
 }
 @media (max-width: 520px) {
@@ -92,3 +97,12 @@
 @media print {
   .pl-barre, .pl-quiz-barre, .pl-bulle { display: none !important; }
 }
+
+/* ---------- Cavum : rapport A/N (cliché recadré + tracés) ---------- */
+.pl-an-grille { display: grid; grid-template-columns: minmax(0, 520px) minmax(0, 1fr); gap: 28px; align-items: start; }
+.pl-an-figure { margin: 0; border-radius: 16px; border: 3px solid var(--ink); background: #111114; overflow: hidden; }
+.pl-an-figure svg { display: block; width: 100%; height: auto; }
+.pl-an-figure figcaption { padding: 8px 12px 10px; background: #fff; font-size: .78rem; color: var(--muted); }
+.pl-an-texte .fl { margin: 10px 0 14px; }
+.pl-an-pastille { display: inline-grid; place-items: center; min-width: 1.6em; height: 1.6em; margin-right: 2px; border-radius: 999px; background: var(--c); color: #fff; font-size: .72rem; font-weight: 900; }
+@media (max-width: 900px) { .pl-an-grille { grid-template-columns: 1fr; } }
