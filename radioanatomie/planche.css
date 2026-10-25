@@ -57,7 +57,7 @@
 .pl-colonnes .pl-trait { stroke-width: 2.2; }
 .pl-colonnes .pl-halo { stroke-width: 4.5; stroke: rgba(0, 0, 0, .55); }
 .pl-colonnes .pl-crochet { fill: none; stroke: var(--c); stroke-width: 3; }
-.pl-colonnes .pl-contour { fill: none; stroke: var(--c); stroke-width: 2; opacity: .8; }
+.pl-colonnes .pl-contour { fill: none; stroke: var(--c); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 2px rgba(0, 0, 0, .9)); }
 .pl-colonnes .pl-point { fill: var(--c); stroke: #111114; stroke-width: 2.5; }
 .pl-colonnes .pl-etiq rect { display: none; }
 .pl-colonnes .pl-etiq text { fill: var(--c); font-weight: 600; letter-spacing: 0; }

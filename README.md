@@ -819,6 +819,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 26/10/2026 | Cavum de profil : **os nasal** replacé là où l'auteur l'a redessiné (bord antérieur du nez) et mis en valeur par ses deux traits (contours épais avec halo, `.pl-contour` dans `planche.css`) |
 | 26/10/2026 | Cavum de profil : points du **palais mou** (659, 598) et de la **tonsille palatine** (637, 634) recalés exactement sur les marques de l'auteur (seconde correction) |
 | 26/10/2026 | Cavum de profil : points du **palais mou** et de la **tonsille palatine** déplacés aux endroits indiqués par l'auteur (palais mou sur la bande du voile, tonsille palatine plus haut et en avant, d'après la planche de référence) |
 | 26/10/2026 | Cavum de profil, rapport A/N : définitions de Fujioka reprises d'après l'auteur (A = épaisseur des végétations, perpendiculaire à la ligne du basi-occiput ; N = profondeur du nasopharynx, du bord postéro-supérieur du palais osseux à la synchondrose sphéno-occipitale), « plus le cavum est obstrué » remplacé : A/N élevé = végétations volumineuses par rapport au cavum, **pas un pourcentage d'obstruction** (N est une dimension anatomique) ; N tracé en rouge ; test |
