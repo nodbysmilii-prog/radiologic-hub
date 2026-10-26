@@ -1,0 +1,62 @@
+/* =========================================================
+   RadiologicHub — fiche « Otospongiose » : schémas interactifs (Veillon, Fraysse,
+   canal facial, fenêtre ovale, audiogramme). Reprend les composants communs de
+   schemas/cholesteatome.css (chaîne, outils, onglets, compte rendu) et
+   schemas/eu-tirads.css (chiffres, volets, vignettes à découvrir, entraînement).
+   ========================================================= */
+.oto-svg { display: block; width: 100%; height: auto; }
+.oto-fig { margin: 0; border-radius: 14px; border: 3px solid var(--ink); background: #111114; overflow: hidden; }
+.oto-fig figcaption { padding: 8px 12px 10px; background: #fff; font-size: .8rem; }
+.oto-phase { border-top: 6px solid var(--c); }
+.oto-phase h3 { color: var(--c); }
+
+.oto-bascule { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
+.oto-bascule button { padding: 4px 12px; border: 2px solid var(--teal); border-radius: 999px; background: #fff; font: inherit; font-size: .74rem; font-weight: 800; cursor: pointer; }
+.oto-bascule button.is-on { background: var(--teal); color: #fff; }
+
+.oto-proto { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
+.oto-proto-c { padding: 12px; border-radius: 14px; background: color-mix(in srgb, var(--steel) 10%, #fff); border: 2px solid var(--steel); text-align: center; }
+.oto-big { display: block; font-family: 'Permanent Marker', cursive; font-size: 1.5rem; color: var(--steel); }
+.oto-proto-c p { margin: 4px 0 0; font-size: .78rem; }
+
+.oto-veillon { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 12px; align-items: start; margin-bottom: 14px; }
+.oto-types { display: grid; gap: 6px; }
+.oto-types button { padding: 9px 0; border: 3px solid var(--orange); border-radius: 12px; background: #fff; font: inherit; font-weight: 900; cursor: pointer; }
+.oto-types button[aria-selected="true"] { background: var(--orange); color: #fff; }
+.oto-endoste { grid-column: 2; font-size: .82rem; opacity: .45; transition: opacity .2s; }
+.oto-endoste.is-actif { opacity: 1; }
+.oto-table-veillon tr[data-type] { cursor: pointer; transition: background .2s; }
+.oto-table-veillon tr.is-on { background: color-mix(in srgb, var(--orange) 22%, #fff); }
+
+.oto-fraysse { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 18px; align-items: center; }
+.oto-fraysse input { width: 100%; accent-color: var(--amber); }
+.oto-grades { margin: 10px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.oto-grades li { padding: 8px 12px; border-radius: 10px; background: #f4f4f6; font-size: .86rem; transition: background .2s, transform .2s; }
+.oto-grades li.is-on { background: var(--amber); transform: translateX(6px); }
+
+.oto-check { margin-bottom: 14px; }
+.oto-check li { --c: var(--k-grave); }
+#oto-vii-range, #oto-fo-range { width: 100%; margin-top: 10px; accent-color: var(--k-grave); }
+.oto-mini { margin: 8px 0 0; font-size: .82rem; }
+.oto-cartes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+.oto-cartes .fcard { border-top: 6px solid var(--c); }
+.oto-cartes .fcard h3 { color: var(--c); font-size: .95rem; }
+
+.oto-qui { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important; }
+.oto-indice { display: block; padding: 14px 40px 12px 12px; min-height: 4.6em; font-size: .84rem; background: color-mix(in srgb, var(--c) 9%, #fff); }
+.oto-choix { grid-template-columns: repeat(6, 1fr) !important; }
+.oto-choix button { font-size: .78rem; }
+#oto-cas { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); margin-bottom: 18px; }
+#oto-cr .ch-cr-choix input[name="fenetre"] { width: 3.6em; padding: 2px 4px; border: 2px solid rgba(17, 17, 20, .2); border-radius: 6px; font: inherit; }
+
+@media (max-width: 900px) {
+  .oto-proto { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .oto-cartes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .oto-fraysse { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .oto-veillon { grid-template-columns: 1fr; }
+  .oto-types { grid-template-columns: repeat(6, 1fr); }
+  .oto-endoste { grid-column: 1; }
+  .oto-cartes { grid-template-columns: 1fr; }
+}
