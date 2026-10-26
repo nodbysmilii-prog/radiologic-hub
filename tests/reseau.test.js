@@ -101,3 +101,10 @@ test('Supabase : chaque jointure vers rs_membres précise sa clé (sinon « more
   assert.ok(jointures.length >= 5);
   jointures.forEach(j => assert.match(j, /^:rs_membres!/, j));
 });
+
+test('demande d\'avis : images facultatives, question obligatoire ; cas clinique : une image au moins', () => {
+  const base = { titre: 'Nodule hépatique', histoire: 'Découverte fortuite chez une patiente fictive.', specialite: 'digestif', modalites: ['echo'], attestation: true };
+  assert.deepEqual(R.validerCas({ ...base, type: 'avis', question: 'Surveillance ou IRM ?', images: [] }), []);
+  assert.ok(R.validerCas({ ...base, type: 'avis', question: '', images: [] }).some(e => /question/.test(e)));
+  assert.ok(R.validerCas({ ...base, images: [] }).some(e => /image/.test(e)));
+});

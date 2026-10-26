@@ -72,6 +72,24 @@ try {
     assert.equal(valeur(B, `update rs_cas set titre = 'Vandalisme' where id = '${id}' returning id`), '', 'aucune ligne modifiable');
     assert.equal(admin(`select titre from rs_cas where id = '${id}'`), 'Titre corrigé du cas');
   });
+  verifier('demande d\'avis : images facultatives mais question obligatoire ; cas clinique : une image au moins', () => {
+    const avis = valeur(A, "insert into rs_cas (type, titre, histoire, question, specialite, modalites, images, attestation) values ('avis', 'Nodule hépatique hyperéchogène', 'Découverte fortuite, patiente fictive de 40 ans.', 'Surveillance ou IRM ?', 'digestif', '{echo}', '[]', true) returning id").split('\n')[0];
+    assert.equal(admin(`select type from rs_cas where id = '${avis}'`), 'avis');
+    refuse(A, "insert into rs_cas (type, titre, histoire, question, specialite, modalites, images, attestation) values ('avis', 'Avis sans question', 'Histoire fictive assez longue.', '', 'neuro', '{irm}', '[]', true)", /check/);
+    refuse(A, "insert into rs_cas (titre, histoire, specialite, modalites, images, attestation) values ('Cas sans image', 'Histoire fictive assez longue.', 'neuro', '{irm}', '[]', true)", /check/);
+    refuse(A, "insert into rs_cas (type, titre, histoire, specialite, modalites, images, attestation) values ('sondage', 'Type inconnu', 'Histoire fictive assez longue.', 'neuro', '{irm}', '[{}]', true)", /check/);
+  });
+  verifier('remplacements dans le fil : missions ouvertes lisibles par les membres, sans nom, contact ni honoraires', () => {
+    const s = admin("insert into rp_structures (nom, type, adresse, ville, gouvernorat, contact_nom, telephone, email, etat) values ('Clinique secrète', 'clinique', '1 rue Test', 'Sousse', 'Sousse', 'Mme Test', '73000000', 'c@test.tn', 'valide') returning id").split('\n')[0];
+    service(`update rp_structures set etat = 'valide' where id = '${s}'`);
+    admin(`insert into rp_demandes (structure_id, dates, heure_debut, heure_fin, type, modalites, profil, honoraires, unite, publiee_le) values ('${s}', array[current_date + 3], '08:00', '16:00', 'journee', '{scanner}', 'specialiste', 500, 'jour', now())`);
+    admin(`insert into rp_demandes (structure_id, dates, heure_debut, heure_fin, type, modalites, profil, honoraires, unite, publiee_le) values ('${s}', array[current_date - 3], '08:00', '16:00', 'journee', '{scanner}', 'specialiste', 500, 'jour', now())`);
+    assert.equal(valeur(C, 'select count(*) from rs_missions_ouvertes()'), '1', 'seule la mission à venir');
+    const ligne = valeur(C, 'select row_to_json(m)::text from rs_missions_ouvertes() m');
+    assert.match(ligne, /"ville":"Sousse"/);
+    assert.doesNotMatch(ligne, /secr|honoraires|c@test|73000000/);
+    assert.match(psql('select * from rs_missions_ouvertes()', { role: 'anon' }).erreur, /permission denied/);
+  });
   verifier('cas réservés aux membres connectés', () => {
     assert.match(psql('select count(*) from rs_cas', { role: 'anon' }).erreur, /permission denied/);
     assert.ok(Number(valeur(C, 'select count(*) from rs_cas')) >= 2);

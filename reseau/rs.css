@@ -437,3 +437,56 @@
   .rs-onglets button, .rs-onglets a { min-height: 40px; }
   .rs-compte-actuel .rs-lien-btn { min-height: 40px; }
 }
+
+/* Menu du compte (en haut, ordinateur et téléphone) et boutons « Écrire » — 27/10/2026 */
+.rs-barre-actions { gap: 6px; }
+.rs-compte { position: relative; }
+.rs-compte > summary { display: flex; align-items: center; gap: 6px; padding: 4px 8px 4px 4px; border: 2px solid var(--ink); border-radius: 999px; background: #fff; cursor: pointer; list-style: none; font: 800 .8rem var(--font); min-height: 40px; }
+.rs-compte > summary::-webkit-details-marker { display: none; }
+.rs-compte > summary:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.rs-compte .rs-chevron { width: 18px; height: 18px; transition: transform .2s; }
+.rs-compte[open] .rs-chevron { transform: rotate(180deg); }
+.rs-compte-menu { position: absolute; right: 0; top: calc(100% + 8px); z-index: 120; width: min(280px, 100vw - 24px); padding: 8px; border: 3px solid var(--ink); border-radius: 18px; background: #fff; box-shadow: 6px 6px 0 color-mix(in srgb, var(--cornflower) 45%, transparent); }
+.rs-compte-qui { display: grid; gap: 2px; margin: 0 0 6px; padding: 6px 10px 10px; border-bottom: 2px solid rgba(17, 17, 20, .08); font-size: .86rem; }
+.rs-compte-qui span { font-size: .74rem; color: var(--muted); overflow-wrap: anywhere; }
+.rs-compte-item { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 44px; padding: 8px 10px; border: 0; border-radius: 12px; background: none; font: 700 .86rem var(--font); color: var(--ink); text-decoration: none; text-align: left; cursor: pointer; }
+.rs-compte-item:hover, .rs-compte-item:focus-visible { background: rgba(17, 17, 20, .06); outline: none; }
+.rs-compte-item .rs-ico { width: 22px; height: 22px; }
+.rs-compte-item.is-sortie { margin-top: 6px; border-top: 2px solid rgba(17, 17, 20, .08); border-radius: 0 0 12px 12px; color: var(--crimson, #c8102e); }
+.rs-nav-lien.is-sortie { margin-top: 6px; border-top: 2px solid rgba(17, 17, 20, .08); border-radius: 0; color: var(--crimson, #c8102e); }
+.rs-ligne-confrere { display: flex; align-items: center; gap: 8px; }
+.rs-ligne-confrere .rs-ligne-membre { flex: 1; min-width: 0; }
+.rs-ecrire { flex: 0 0 auto; }
+.rs-carte-cas .rs-auteur .rs-ecrire { margin-left: auto; }
+.rs-carte-cas .rs-auteur .rs-ecrire + .rs-icone-btn { margin-left: 0; }
+.rs-nouveau-msg { display: inline-flex; align-items: center; gap: 6px; }
+.rs-nouveau-msg .rs-ico { width: 18px; height: 18px; }
+@media (max-width: 520px) { .rs-compte-nom { display: none; } }
+@media (min-width: 900px) { .rs-barre-actions { display: flex; } }
+
+/* Fil d'actualité : zone « Publier », onglets défilants, demandes d'avis, remplacements — 27/10/2026 */
+.rs-composer { margin-bottom: 14px; padding: 14px 16px; }
+.rs-composer-ligne { display: flex; align-items: center; gap: 12px; }
+.rs-composer-champ { flex: 1; min-width: 0; padding: .85em 1.1em; border-radius: 999px; background: rgba(17, 17, 20, .06); color: var(--muted); font-size: .9rem; text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rs-composer-champ:hover { background: rgba(17, 17, 20, .1); }
+.rs-composer-actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 2px solid rgba(17, 17, 20, .08); }
+.rs-composer-btn { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 6px; border-radius: 12px; color: var(--ink); font-weight: 800; font-size: .82rem; text-decoration: none; }
+.rs-composer-btn:hover { background: rgba(17, 17, 20, .06); }
+.rs-composer-btn .rs-ico { width: 22px; height: 22px; color: var(--c); stroke-width: 2.4; }
+.rs-onglets.is-defilant { overflow-x: auto; scrollbar-width: none; border-radius: 16px; }
+.rs-onglets.is-defilant::-webkit-scrollbar { display: none; }
+.rs-onglets.is-defilant .rs-onglet { flex: 0 0 auto; white-space: nowrap; padding-inline: 1em; min-height: 40px; }
+.rs-type { display: inline-block; padding: .2em .65em; border-radius: 999px; font: 900 .62rem var(--font); letter-spacing: .06em; text-transform: uppercase; color: #fff; }
+.rs-type.is-avis { background: var(--amber); color: var(--ink); }
+.rs-type.is-mission { background: var(--plum); }
+.rs-carte-cas.is-avis { border-color: var(--amber); }
+.rs-carte-cas.is-avis .rs-cas-texte { padding-top: 4px; }
+.rs-carte-cas.is-avis .rs-question { font-size: 1rem; }
+.rs-action-texte { font-size: .8rem; font-weight: 800; }
+.rs-carte-mission { border-color: var(--plum); }
+.rs-carte-mission .rs-avatar .rs-ico { width: 22px; height: 22px; color: #fff; }
+.rs-carte-mission .rs-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 10px 14px 14px; }
+.rs-type-choix { margin-bottom: 14px; }
+.rs-type-choix .rs-onglet { display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; color: inherit; min-height: 40px; }
+.rs-type-choix .rs-ico { width: 18px; height: 18px; }
+@media (max-width: 420px) { .rs-composer-btn { flex-direction: column; gap: 2px; font-size: .7rem; } }

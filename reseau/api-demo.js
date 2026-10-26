@@ -33,7 +33,7 @@
 
   /* ---------- Données fictives ---------- */
   function semer() {
-    const e = { version: 1, moi: null, comptes: [], membres: [], cas: [], commentaires: [], jaime: [], enregistres: [], abonnements: [], conversations: [], participants: [], messages: [], blocages: [], signalements: [], notifications: [], fichiers: {} };
+    const e = { version: 2, moi: null, comptes: [], membres: [], cas: [], commentaires: [], jaime: [], enregistres: [], abonnements: [], conversations: [], participants: [], messages: [], blocages: [], signalements: [], notifications: [], fichiers: {} };
     const compte = (prenom, nom, email) => { const c = { id: id(), email, prenom, nom, telephone: '98' + String(100000 + e.comptes.length * 1111).padStart(6, '0'), consentement_le: il_y_a(500), cree_le: il_y_a(500) }; e.comptes.push(c); return c; };
     const membre = (c, champs) => { const m = { id: c.id, prenom: c.prenom, nom: c.nom, titre: '', statut: 'autre', annee: null, etablissement: '', ville: '', gouvernorat: '', bio: '', interets: [], photo: null, verifie: false, verifie_le: null, verification_demandee_le: null, justificatif: null, suspendu: false, emails_messages: true, remplacant: false, cree_le: il_y_a(400), ...champs }; e.membres.push(m); return m; };
     const amel = membre(compte('Amel', 'TEST', 'amel.test@demo.radiologichub.tn'), { titre: 'Dr', statut: 'specialiste', etablissement: 'CHU fictif de Tunis', ville: 'Tunis', gouvernorat: 'Tunis', bio: 'Radiologue, neuroradiologie et imagerie de la femme. Compte fictif de démonstration.', interets: ['neuro', 'femme'], verifie: true, verifie_le: il_y_a(300), remplacant: true });
@@ -65,6 +65,12 @@
       reponse: 'Sang (méthémoglobine d\'un hématome subaigu), calcifications (Fahr, troubles phosphocalciques), métaux (manganèse : nutrition parentérale, insuffisance hépatique) et striatopathie diabétique.',
       images: [{ chemin: 'assets/posts/hypersignal-t1.png', legende: 'Les quatre familles' }, { chemin: 'assets/posts/striatopathie.png', legende: 'Striatopathie diabétique' }],
     });
+    cas(sami, 1, {
+      type: 'avis', titre: 'Nodule hépatique hyperéchogène de 12 mm chez une patiente de 40 ans', specialite: 'digestif', modalites: ['echo'],
+      histoire: 'Découverte fortuite en échographie d\'un nodule hépatique du segment VI, hyperéchogène, homogène, bien limité, 12 mm, sans signal Doppler. Bilan hépatique normal, pas d\'antécédent néoplasique. (Cas fictif de démonstration.)',
+      question: 'Angiome typique : surveillance seule, ou faut-il compléter par une IRM ?',
+      images: [],
+    });
     const jaime = (c, m, h) => { e.jaime.push({ cas_id: c.id, membre_id: m.id, cree_le: il_y_a(h) }); c.nb_jaime++; };
     jaime(c1, sami, 28); jaime(c1, ines, 20); jaime(c1, karim, 12); jaime(c2, amel, 8); jaime(c2, ines, 6); jaime(c3, sami, 2);
     const com = (c, m, h, texte) => { e.commentaires.push({ id: id(), cas_id: c.id, auteur_id: m.id, texte, etat: 'visible', cree_le: il_y_a(h), modifie_le: null }); c.nb_commentaires++; };
@@ -84,7 +90,7 @@
 
   async function initialiser() {
     const s = lire();
-    etat = s && s.version === 1 ? s : semer();
+    etat = s && s.version === 2 ? s : semer();
     if (!s) sauver();
     window.addEventListener('storage', ev => { if (ev.key === CLE && ev.newValue) { etat = JSON.parse(ev.newValue); emettre('rafraichir'); } });
   }
@@ -238,10 +244,18 @@
       if (auteur) l = l.filter(c => c.auteur_id === auteur);
       if (onglet === 'abonnements') { const suivis = new Set(T().abonnements.filter(a => a.suiveur_id === moiId()).map(a => a.suivi_id)); l = l.filter(c => suivis.has(c.auteur_id)); }
       if (onglet === 'enregistres') { const s = new Set(T().enregistres.filter(x => x.membre_id === moiId()).map(x => x.cas_id)); l = l.filter(c => s.has(c.id)); }
+      if (onglet === 'cas' || onglet === 'avis') l = l.filter(c => (c.type || 'cas') === onglet);
       if (specialite) l = l.filter(c => c.specialite === specialite);
       if (q) l = l.filter(c => n(`${c.titre} ${c.histoire}`).includes(n(q)));
       if (avant) l = l.filter(c => c.cree_le < avant);
       return l.sort((a, b) => b.cree_le.localeCompare(a.cree_le)).slice(0, limite).map(enrichirCas);
+    },
+    async missions() {
+      const jour = n => new Date(Date.now() + n * 864e5).toISOString().slice(0, 10), avant = h => new Date(Date.now() - h * 36e5).toISOString();
+      return [
+        { id: 'mission-demo-1', dates: [jour(4), jour(5)], type: 'journee', heure_debut: '08:00', heure_fin: '16:00', profil: 'specialiste', annee_min: null, modalites: ['scanner', 'irm'], logement: false, transport: true, repas: true, ville: 'Sousse', gouvernorat: 'Sousse', structure_type: 'clinique', publiee_le: avant(5) },
+        { id: 'mission-demo-2', dates: [jour(9)], type: 'garde', heure_debut: '20:00', heure_fin: '08:00', profil: 'residents', annee_min: 4, modalites: ['scanner', 'echo'], logement: true, transport: false, repas: true, ville: 'Sfax', gouvernorat: 'Sfax', structure_type: 'clinique', publiee_le: avant(20) },
+      ];
     },
     async cas(cid) { const c = T().cas.find(x => x.id === cid); return casVisible(c) ? enrichirCas(c) : null; },
     urlsImages: async c => (c.images || []).map(i => url(i.chemin)),
@@ -252,7 +266,7 @@
       for (const i of images) chemins.push({ chemin: await stocker(`cas-images/${m.id}`, i.blob), legende: i.legende || '' });
       const e = RG.validerCas({ ...d, images: chemins });
       if (e.length) throw new Error(e.join(' '));
-      const c = { id: id(), auteur_id: m.id, titre: d.titre.trim(), histoire: d.histoire.trim(), question: d.question || '', reponse: d.reponse || '', specialite: d.specialite, modalites: d.modalites, images: chemins, attestation: true, etat: 'publie', masque_motif: null, nb_jaime: 0, nb_commentaires: 0, cree_le: iso(), modifie_le: null };
+      const c = { id: id(), type: d.type === 'avis' ? 'avis' : 'cas', auteur_id: m.id, titre: d.titre.trim(), histoire: d.histoire.trim(), question: d.question || '', reponse: d.reponse || '', specialite: d.specialite, modalites: d.modalites, images: chemins, attestation: true, etat: 'publie', masque_motif: null, nb_jaime: 0, nb_commentaires: 0, cree_le: iso(), modifie_le: null };
       T().cas.push(c);
       T().abonnements.filter(a => a.suivi_id === m.id).forEach(a => notifier(a.suiveur_id, 'nouveau_cas', m.id, c.id));
       return c.id;

@@ -113,6 +113,7 @@ rs_autre(conv uuid) · authenticated
 rs_bloque(a uuid, b uuid) · authenticated
 rs_est_membre_actif() · authenticated
 rs_mes_conversations() · authenticated
+rs_missions_ouvertes() · authenticated
 rs_ouvrir_conversation(autre uuid) · authenticated
 rs_participe(conv uuid) · authenticated
 rs_participe_dossier(dossier text) · authenticated

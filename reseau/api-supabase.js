@@ -165,11 +165,18 @@
       } else r = sb.from('rs_cas').select(`*, auteur:rs_membres!auteur_id(${MEMBRE})`);
       if (ids) r = r.in('auteur_id', ids);
       if (auteur) r = r.eq('auteur_id', auteur);
+      if (onglet === 'cas' || onglet === 'avis') r = r.eq('type', onglet);
       if (specialite) r = r.eq('specialite', specialite);
       const t = nettoyerRecherche(q);
       if (t) r = r.or(`titre.ilike.%${t}%,histoire.ilike.%${t}%`);
       if (avant) r = r.lt('cree_le', avant);
       return enrichir(ok(await r.order('cree_le', { ascending: false }).limit(limite)));
+    },
+    /* Missions ouvertes du module Remplacements, en lecture pour les membres (fonction rs_missions_ouvertes, migration du 27/10/2026) */
+    async missions() {
+      const r = await sb.rpc('rs_missions_ouvertes');
+      if (r.error) { console.warn('Remplacements dans le fil indisponibles :', r.error.message); return []; }
+      return r.data || [];
     },
     async cas(cid) {
       const c = ok(await sb.from('rs_cas').select(`*, auteur:rs_membres!auteur_id(${MEMBRE})`).eq('id', cid).maybeSingle());
@@ -181,7 +188,7 @@
       const chemins = [];
       try {
         for (const i of images) chemins.push({ chemin: await televerser('cas-images', `${id}/${nouvelId()}.jpg`, i.blob), legende: i.legende || '' });
-        const c = ok(await sb.from('rs_cas').insert({ titre: d.titre.trim(), histoire: d.histoire.trim(), question: d.question || '', reponse: d.reponse || '', specialite: d.specialite, modalites: d.modalites, images: chemins, attestation: !!d.attestation }).select('id').single());
+        const c = ok(await sb.from('rs_cas').insert({ ...(d.type === 'avis' ? { type: 'avis' } : {}), titre: d.titre.trim(), histoire: d.histoire.trim(), question: d.question || '', reponse: d.reponse || '', specialite: d.specialite, modalites: d.modalites, images: chemins, attestation: !!d.attestation }).select('id').single());
         return c.id;
       } catch (e) {
         if (chemins.length) await sb.storage.from('cas-images').remove(chemins.map(c => c.chemin));
