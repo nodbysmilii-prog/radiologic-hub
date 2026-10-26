@@ -1,0 +1,30 @@
+# RadiologicHub — déploie les fonctions serveur Supabase (rp-agent, rp-lien, rp-taches).
+# Lancement manuel uniquement : GitHub → Actions → « Déployer les fonctions Supabase » → Run workflow.
+# Prérequis : secret du dépôt SUPABASE_ACCESS_TOKEN (supabase.com → Account → Access Tokens).
+# Les secrets des fonctions (RP_SECRET, EMAIL_FOURNISSEUR…) se règlent dans Supabase, pas ici.
+name: Déployer les fonctions Supabase
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deployer:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      PROJET: wdbczcwnaxfnoioyukgr
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Préparer le noyau et les modèles (supabase/functions/_shared)
+        run: npm run backend:preparer
+      - name: Déployer
+        run: |
+          for f in rp-agent rp-lien rp-taches; do
+            npx --yes supabase@2.120.0 functions deploy "$f" --project-ref "$PROJET" --use-api
+          done

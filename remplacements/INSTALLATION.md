@@ -125,6 +125,8 @@ supabase functions deploy rp-taches
 
 `supabase/config.toml` règle déjà la vérification de connexion (`rp-lien` et `rp-taches` sont accessibles sans connexion : liens à usage unique et en-tête secret).
 
+**Sans Terminal, depuis GitHub** : créer un jeton sur supabase.com (*Account → Access Tokens → Generate new token*), l'ajouter au dépôt GitHub comme secret `SUPABASE_ACCESS_TOKEN` (*Settings → Secrets and variables → Actions → New repository secret*), puis *Actions → « Déployer les fonctions Supabase » → Run workflow* (`.github/workflows/deployer-fonctions.yml`, lancement manuel uniquement).
+
 À refaire après toute modification de `remplacements/noyau/`, de `supabase/functions/_shared/reseau.ts` ou des modèles d'e-mails / de contrat.
 
 La Communauté n'a pas de fonction serveur propre : tout passe par la base (droits d'accès par ligne, déclencheurs) ; seule la tâche planifiée `rp-taches` lui envoie les rappels de messages non lus.
