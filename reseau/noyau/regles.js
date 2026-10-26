@@ -100,7 +100,9 @@
     if (!SPECIALITES[c.specialite]) e.push('Choisissez une spécialité.');
     if (!(c.modalites || []).length || (c.modalites || []).some(m => !MODALITES[m])) e.push('Choisissez au moins une modalité.');
     const n = (c.images || []).length;
-    if (n < 1) e.push('Ajoutez au moins une image.');
+    const avis = c.type === 'avis';                                  // demande d'avis : images facultatives, question obligatoire
+    if (avis && propre(c.question).length < 5) e.push('Formulez votre question (5 caractères au moins).');
+    if (!avis && n < 1) e.push('Ajoutez au moins une image.');
     if (n > LIMITES.images) e.push(`${LIMITES.images} images au plus.`);
     if (!c.attestation) e.push('Attestez que les images et le texte sont anonymisés.');
     return e;

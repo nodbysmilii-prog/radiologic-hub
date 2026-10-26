@@ -51,19 +51,34 @@
       ${lien('#/', icone('fil'), 'Fil')}
       ${lien('#/recherche', icone('chercher'), 'Rechercher')}
       ${lien('#/publier', icone('publier'), 'Publier', '', ' is-publier')}
-      ${lien('#/messages', icone('messages'), 'Messages', pastille('messages'), ' is-bureau')}
+      ${lien('#/messages', icone('messages'), 'Messages', pastille('messages'))}
       ${lien('#/notifications', icone('cloche'), 'Notifications', pastille('notifications'), ' is-bureau')}
-      <a href="remplacements.html" class="rs-nav-lien">${icone('remplacements')}<span class="rs-nav-texte">Remplacements</span></a>
+      <a href="remplacements.html" class="rs-nav-lien is-bureau">${icone('remplacements')}<span class="rs-nav-texte">Remplacements</span></a>
       ${lien(`#/profil/${S.membre.id}`, avatar(S.membre, 26), 'Mon profil')}
       ${S.admin ? lien('#/admin', icone('admin'), 'Administration', '', ' is-bureau') : ''}
-      <button type="button" class="rs-nav-lien is-bureau" data-act="deconnexion">${icone('sortie')}<span class="rs-nav-texte">Déconnexion</span></button>`;
+      <button type="button" class="rs-nav-lien is-bureau is-sortie" data-act="deconnexion">${icone('sortie')}<span class="rs-nav-texte">Se déconnecter</span></button>`;
     barre.innerHTML = `<a href="#/" class="rs-barre-titre">Communauté</a>
       <span class="rs-barre-actions">
-        ${S.admin ? `<a href="#/admin" class="rs-icone-btn" aria-label="Administration">${icone('admin')}</a>` : ''}
-        <a href="#/notifications" class="rs-icone-btn" aria-label="Notifications">${icone('cloche')}${pastille('notifications')}</a>
-        <a href="#/messages" class="rs-icone-btn" aria-label="Messages">${icone('messages')}${pastille('messages')}</a>
+        <a href="#/notifications" class="rs-icone-btn rs-mobile" aria-label="Notifications">${icone('cloche')}${pastille('notifications')}</a>
+        ${menuCompte()}
       </span>`;
   }
+  /* Menu du compte (toujours visible en haut, ordinateur et téléphone) : profil, messages, remplacements, déconnexion */
+  const menuCompte = () => {
+    const m = S.membre;
+    const ligne = (h, ic, t) => `<a href="${h}" class="rs-compte-item" role="menuitem">${icone(ic)}<span>${t}</span></a>`;
+    return `<details class="rs-compte">
+      <summary aria-label="Mon compte : profil et déconnexion">${avatar(m, 32)}<span class="rs-compte-nom">${esc(m.prenom || 'Mon compte')}</span><svg class="rs-ico rs-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></summary>
+      <div class="rs-compte-menu" role="menu">
+        <p class="rs-compte-qui"><strong>${esc(RG.nomAffiche(m))}</strong><span>${esc(S.compte.email || '')}</span></p>
+        ${ligne(`#/profil/${esc(m.id)}`, 'profil', 'Mon profil')}
+        ${ligne('#/moi', 'modifier', 'Modifier mon profil')}
+        ${ligne('#/messages', 'messages', 'Mes messages')}
+        ${ligne('remplacements.html', 'remplacements', 'Remplacements')}
+        ${S.admin ? ligne('#/admin', 'admin', 'Administration') : ''}
+        <button type="button" class="rs-compte-item is-sortie" role="menuitem" data-act="deconnexion">${icone('sortie')}<span>Se déconnecter</span></button>
+      </div></details>`;
+  };
   const barreVisiteur = () => `<span class="rs-barre-titre">Communauté</span>${S ? '<span class="rs-barre-actions"><button type="button" class="btn btn-sm rs-lien-btn" data-act="deconnexion">Déconnexion</button></span>' : '<span class="rs-barre-actions"><a href="#/connexion" class="btn btn-ink btn-sm">Se connecter</a></span>'}`;
   async function majBadges() {
     if (!S || !S.membre) return;
@@ -78,7 +93,7 @@
     if (!cote) return;
     if (!S || !S.membre) { cote.innerHTML = ''; return; }
     const l = (await api.chercherMembres('').catch(() => [])).slice(0, 5);
-    cote.innerHTML = `<div class="rs-carte rs-suggestions"><h2 class="rs-h">Confrères</h2>${l.map(m => `<a class="rs-ligne-membre" href="#/profil/${esc(m.id)}">${avatar(m, 38)}<span><span class="rs-ligne-nom">${nom(m)}</span><span class="rs-ligne-sous">${esc(RG.statutAffiche(m))}${m.ville ? ` · ${esc(m.ville)}` : ''}</span></span></a>`).join('') || '<p class="rs-muted">Aucun membre pour l\'instant.</p>'}
+    cote.innerHTML = `<div class="rs-carte rs-suggestions"><h2 class="rs-h">Confrères</h2>${l.map(m => `<div class="rs-ligne-confrere"><a class="rs-ligne-membre" href="#/profil/${esc(m.id)}">${avatar(m, 38)}<span><span class="rs-ligne-nom">${nom(m)}</span><span class="rs-ligne-sous">${esc(RG.statutAffiche(m))}${m.ville ? ` · ${esc(m.ville)}` : ''}</span></span></a><a class="rs-icone-btn rs-ecrire" href="#/messages/nouveau/${esc(m.id)}" aria-label="Écrire à ${esc(RG.nomAffiche(m))}" title="Écrire">${icone('messages')}</a></div>`).join('') || '<p class="rs-muted">Aucun membre pour l\'instant.</p>'}
       <a href="#/recherche" class="rs-lien">Voir tous les membres</a></div>
       <div class="rs-carte rs-rappel"><p><strong>Rappel</strong> : aucune donnée permettant d'identifier un patient (nom, date de naissance, numéro de dossier, visage, texte incrusté) dans les cas ni dans les messages.</p></div>`;
   }
@@ -165,13 +180,14 @@
   function carteCas(c) {
     casCache.set(c.id, c);
     const n = (c.images || []).length;
-    return `<article class="rs-carte-cas" data-cas="${esc(c.id)}">
+    return `<article class="rs-carte-cas${c.type === 'avis' ? ' is-avis' : ''}" data-cas="${esc(c.id)}">
       <header class="rs-auteur"><a href="#/profil/${esc(c.auteur_id)}" class="rs-auteur-lien">${avatar(c.auteur, 40)}<span><span class="rs-ligne-nom">${nom(c.auteur)}</span><span class="rs-ligne-sous">${esc(RG.statutAffiche(c.auteur))} · ${esc(RG.depuis(c.cree_le))}</span></span></a>
+        ${c.auteur_id !== S.membre.id ? `<a class="rs-icone-btn rs-ecrire" href="#/messages/nouveau/${esc(c.auteur_id)}" aria-label="Écrire à ${esc(RG.nomAffiche(c.auteur))}" title="Écrire à l'auteur">${icone('messages')}</a>` : ''}
         <button type="button" class="rs-icone-btn" data-act="menu-cas" data-id="${esc(c.id)}" aria-label="Plus d'options">${icone('plus')}</button></header>
       ${c.etat === 'masque' ? `<p class="rs-bandeau is-alerte">Ce cas est masqué : ${esc(c.masque_motif || 'en attente de l\'administrateur')}. Vous seul le voyez.</p>` : ''}
       <a href="#/cas/${esc(c.id)}" class="rs-cas-lien">
-        <div class="rs-cas-image"><img data-cas-img="${esc(c.id)}" alt="">${n > 1 ? `<span class="rs-nb-images">${icone('image')} ${n}</span>` : ''}</div>
-        <div class="rs-cas-texte">${badgeSpe(c.specialite)} <span class="rs-moda">${modalites(c.modalites)}</span>
+        ${n ? `<div class="rs-cas-image"><img data-cas-img="${esc(c.id)}" alt="">${n > 1 ? `<span class="rs-nb-images">${icone('image')} ${n}</span>` : ''}</div>` : ''}
+        <div class="rs-cas-texte">${c.type === 'avis' ? '<span class="rs-type is-avis">Demande d\'avis</span> ' : ''}${badgeSpe(c.specialite)} <span class="rs-moda">${modalites(c.modalites)}</span>
           <h3>${esc(c.titre)}</h3><p class="rs-extrait">${esc(c.histoire)}</p>
           ${c.question ? `<p class="rs-question">${esc(c.question)}</p>` : ''}</div>
       </a>
@@ -180,7 +196,7 @@
   }
   const actionsCas = c => `<footer class="rs-actions">
       <button type="button" class="rs-action${c.jaime ? ' is-actif' : ''}" data-act="jaime" data-id="${esc(c.id)}" aria-pressed="${!!c.jaime}" aria-label="J'aime">${icone('coeur')}<span>${c.nb_jaime || 0}</span></button>
-      <a class="rs-action" href="#/cas/${esc(c.id)}#commentaires" aria-label="Commentaires">${icone('commentaire')}<span>${c.nb_commentaires || 0}</span></a>
+      <a class="rs-action" href="#/cas/${esc(c.id)}#commentaires" aria-label="${c.type === 'avis' ? 'Donner mon avis' : 'Commentaires'}">${icone('commentaire')}<span>${c.nb_commentaires || 0}</span>${c.type === 'avis' ? '<span class="rs-action-texte">Donner mon avis</span>' : ''}</a>
       <button type="button" class="rs-action" data-act="partager" data-id="${esc(c.id)}" aria-label="Partager le lien">${icone('partager')}</button>
       <button type="button" class="rs-action is-droite${c.enregistre ? ' is-actif' : ''}" data-act="enregistrer" data-id="${esc(c.id)}" aria-pressed="${!!c.enregistre}" aria-label="Enregistrer">${icone('signet')}</button>
     </footer>`;
@@ -195,20 +211,58 @@
     }
   }
 
+  /* Fil d'actualité : cas cliniques, demandes d'avis et remplacements ouverts, du plus récent au plus ancien */
+  const ONGLETS_FIL = [['tous', 'Tout'], ['cas', 'Cas cliniques'], ['avis', 'Demandes d\'avis'], ['remplacements', 'Remplacements'], ['abonnements', 'Abonnements'], ['enregistres', 'Enregistrés']];
+  const composer = () => `<section class="rs-carte rs-composer" aria-label="Publier">
+      <div class="rs-composer-ligne">${avatar(S.membre, 44)}<a class="rs-composer-champ" href="#/publier">Partagez un cas ou demandez un avis, ${esc(S.membre.prenom || '')}…</a></div>
+      <div class="rs-composer-actions">
+        <a class="rs-composer-btn" href="#/publier" style="--c:var(--teal)">${icone('image')}<span>Cas clinique</span></a>
+        <a class="rs-composer-btn" href="#/publier/avis" style="--c:var(--amber)">${icone('commentaire')}<span>Demander un avis</span></a>
+        <a class="rs-composer-btn" href="remplacements.html" style="--c:var(--plum)">${icone('remplacements')}<span>Remplacement</span></a>
+      </div></section>`;
   async function fil() {
     if (!S) return accueilVisiteur();
-    const onglets = [['tous', 'Tous les cas'], ['abonnements', 'Abonnements'], ['enregistres', 'Enregistrés']];
-    vue.liste = await api.fil({ onglet: vue.onglet, specialite: vue.specialite, q: vue.q, limite: 10 });
-    vue.fin = vue.liste.length < 10;
-    const nonVerifie = !peutPublier() ? `<div class="rs-bandeau">${icone('admin')}<span>Pour publier vos cas sous « ${esc(RG.nomAffiche({ ...S.membre, verifie: true, titre: S.membre.titre || 'Dr' }))} », ${S.membre.verification_demandee_le ? 'votre demande de vérification est en cours d\'examen.' : '<a href="#/moi#verification">faites vérifier votre compte</a>.'}</span></div>` : '';
-    return `${nonVerifie}
+    const onglet = vue.onglet;
+    const filtres = onglet !== 'remplacements';
+    const [liste, missions] = await Promise.all([
+      filtres ? api.fil({ onglet, specialite: vue.specialite, q: vue.q, limite: 10 }) : [],
+      (onglet === 'tous' || onglet === 'remplacements') && !vue.q && !vue.specialite ? api.missions().catch(() => []) : [],
+    ]);
+    vue.liste = liste;
+    vue.fin = !filtres || liste.length < 10;
+    // missions intercalées par date dans « Tout » (seulement celles plus récentes que le dernier cas chargé, le reste arrive avec « Voir plus »)
+    const limite = !vue.fin && liste.length ? liste[liste.length - 1].cree_le : '';
+    const elements = [...liste.map(c => ({ d: c.cree_le, h: carteCas(c) })), ...missions.filter(m => !limite || m.publiee_le >= limite).map(m => ({ d: m.publiee_le, h: carteMission(m) }))]
+      .sort((a, b) => String(b.d).localeCompare(String(a.d)));
+    const nonVerifie = !peutPublier() ? `<div class="rs-bandeau">${icone('admin')}<span>Pour publier sous « ${esc(RG.nomAffiche({ ...S.membre, verifie: true, titre: S.membre.titre || 'Dr' }))} », ${S.membre.verification_demandee_le ? 'votre demande de vérification est en cours d\'examen.' : '<a href="#/moi#verification">faites vérifier votre compte</a>.'}</span></div>` : '';
+    const videTexte = { abonnements: 'Abonnez-vous à des confrères pour voir leurs publications ici.', enregistres: 'Rien d\'enregistré : touchez l\'icône signet sous une publication.', avis: 'Aucune demande d\'avis pour l\'instant.', remplacements: 'Aucun remplacement ouvert en ce moment.' }[onglet]
+      || (vue.q || vue.specialite ? 'Aucune publication ne correspond.' : 'Aucune publication pour l\'instant.');
+    const videAction = onglet === 'remplacements' ? '<a class="btn btn-ink btn-sm" href="remplacements.html">Ouvrir les Remplacements</a>'
+      : onglet === 'avis' ? '<a class="btn btn-ink btn-sm" href="#/publier/avis">Demander un avis</a>' : peutPublier() ? '<a class="btn btn-ink btn-sm" href="#/publier">Publier un cas</a>' : '';
+    return `${nonVerifie}${composer()}
       <div class="rs-fil-tete">
-        <div class="rs-onglets" role="tablist">${onglets.map(([k, l]) => `<button type="button" role="tab" class="rs-onglet${vue.onglet === k ? ' is-actif' : ''}" aria-selected="${vue.onglet === k}" data-act="onglet" data-onglet="${k}">${l}</button>`).join('')}</div>
-        <form class="rs-recherche-fil" data-form="recherche-fil" role="search"><input name="q" type="search" value="${esc(vue.q)}" placeholder="Rechercher un cas (mot-clé)" aria-label="Rechercher un cas">${icone('chercher')}</form>
-        <div class="rs-specialites" role="group" aria-label="Spécialité"><button type="button" class="rs-chip${!vue.specialite ? ' is-actif' : ''}" data-act="specialite" data-spe="">Toutes</button>${Object.entries(RG.SPECIALITES).map(([k, s]) => `<button type="button" class="rs-chip${vue.specialite === k ? ' is-actif' : ''}" style="--c:${s.c}" data-act="specialite" data-spe="${k}">${esc(s.label)}</button>`).join('')}</div>
+        <div class="rs-onglets is-defilant" role="tablist">${ONGLETS_FIL.map(([k, l]) => `<button type="button" role="tab" class="rs-onglet${onglet === k ? ' is-actif' : ''}" aria-selected="${onglet === k}" data-act="onglet" data-onglet="${k}">${l}</button>`).join('')}</div>
+        ${filtres ? `<form class="rs-recherche-fil" data-form="recherche-fil" role="search"><input name="q" type="search" value="${esc(vue.q)}" placeholder="Rechercher (mot-clé)" aria-label="Rechercher dans le fil">${icone('chercher')}</form>
+        <div class="rs-specialites" role="group" aria-label="Spécialité"><button type="button" class="rs-chip${!vue.specialite ? ' is-actif' : ''}" data-act="specialite" data-spe="">Toutes</button>${Object.entries(RG.SPECIALITES).map(([k, sp]) => `<button type="button" class="rs-chip${vue.specialite === k ? ' is-actif' : ''}" style="--c:${sp.c}" data-act="specialite" data-spe="${k}">${esc(sp.label)}</button>`).join('')}</div>` : ''}
       </div>
-      <div class="rs-liste" id="rs-liste">${vue.liste.length ? vue.liste.map(carteCas).join('') : vide(vue.onglet === 'abonnements' ? 'Abonnez-vous à des confrères pour voir leurs cas ici.' : vue.onglet === 'enregistres' ? 'Aucun cas enregistré : touchez l\'icône signet sous un cas.' : vue.q || vue.specialite ? 'Aucun cas ne correspond.' : 'Aucun cas publié pour l\'instant.', peutPublier() ? '<a class="btn btn-ink btn-sm" href="#/publier">Publier un cas</a>' : '')}</div>
-      ${vue.fin ? '' : '<p class="rs-centre"><button type="button" class="btn btn-outline btn-sm" data-act="plus">Voir plus de cas</button></p>'}`;
+      <div class="rs-liste" id="rs-liste">${elements.length ? elements.map(x => x.h).join('') : vide(videTexte, videAction)}</div>
+      ${vue.fin ? '' : '<p class="rs-centre"><button type="button" class="btn btn-outline btn-sm" data-act="plus">Voir plus</button></p>'}`;
+  }
+
+  /* Carte « Remplacement » du fil : mission ouverte du module Remplacements (sans nom de structure ni honoraires) */
+  const TYPES_MISSION = { journee: 'Journée', demi_journee: 'Demi-journée', garde: 'Garde', week_end: 'Week-end' };
+  function carteMission(m) {
+    const dates = (m.dates || []).slice().sort();
+    const quand = dates.length ? `${RG.dateFr(dates[0])}${dates.length > 1 ? ` → ${RG.dateFr(dates[dates.length - 1])} (${dates.length} jours)` : ''}` : '';
+    const qui = m.profil === 'residents' ? `Résident${m.annee_min ? ` R${m.annee_min} et plus` : ''}` : 'Radiologue spécialiste';
+    const plus = [m.logement && 'logement', m.transport && 'transport', m.repas && 'repas'].filter(Boolean);
+    return `<article class="rs-carte-cas rs-carte-mission">
+      <header class="rs-auteur"><span class="rs-avatar is-initiales" style="--t:40px;--c:var(--plum)">${icone('remplacements')}</span><span><span class="rs-ligne-nom">Remplacement · ${esc(m.structure_type === 'cabinet' ? 'Cabinet' : 'Clinique')}</span><span class="rs-ligne-sous">${esc([m.ville, m.gouvernorat].filter((x, i, a) => x && a.indexOf(x) === i).join(', '))} · ${esc(RG.depuis(m.publiee_le))}</span></span></header>
+      <div class="rs-cas-texte"><span class="rs-type is-mission">Remplacement</span> <span class="rs-moda">${modalites(m.modalites)}</span>
+        <h3>${esc(TYPES_MISSION[m.type] || 'Mission')} · ${esc(quand)}</h3>
+        <p class="rs-extrait">${esc(qui)}${m.heure_debut ? ` · ${esc(m.heure_debut)}–${esc(m.heure_fin || '')}` : ''}${plus.length ? ` · ${esc(plus.join(', '))} pris en charge` : ''}</p></div>
+      <footer class="rs-actions"><a class="btn btn-ink btn-sm" href="remplacements.html">Je suis disponible</a><span class="rs-mini">Réponse et détails dans l'espace Remplacements.</span></footer>
+    </article>`;
   }
 
   /* =======================================================
@@ -225,13 +279,13 @@
     return `<p class="rs-retour"><a href="#/" data-act="retour">${icone('retour')} Retour</a></p>
       <article class="rs-carte rs-cas-detail" data-cas="${esc(c.id)}">
         <header class="rs-auteur"><a href="#/profil/${esc(c.auteur_id)}" class="rs-auteur-lien">${avatar(c.auteur, 46)}<span><span class="rs-ligne-nom">${nom(c.auteur)}</span><span class="rs-ligne-sous">${esc(RG.statutAffiche(c.auteur))}${c.auteur.etablissement ? ` · ${esc(c.auteur.etablissement)}` : ''}</span></span></a>
-          ${!moi && info ? `<button type="button" class="btn btn-sm ${info.suivi ? 'btn-outline' : 'btn-ink'}" data-act="suivre" data-id="${esc(c.auteur_id)}">${info.suivi ? 'Abonné' : 'Suivre'}</button>` : ''}
+          ${!moi && info ? `<button type="button" class="btn btn-sm ${info.suivi ? 'btn-outline' : 'btn-ink'}" data-act="suivre" data-id="${esc(c.auteur_id)}">${info.suivi ? 'Abonné' : 'Suivre'}</button><a class="btn btn-outline btn-sm" href="#/messages/nouveau/${esc(c.auteur_id)}">${icone('messages')} Message</a>` : ''}
           <button type="button" class="rs-icone-btn" data-act="menu-cas" data-id="${esc(c.id)}" aria-label="Plus d'options">${icone('plus')}</button></header>
         ${c.etat === 'masque' ? `<p class="rs-bandeau is-alerte">Ce cas est masqué : ${esc(c.masque_motif || '')}.</p>` : ''}
         <div class="rs-carrousel" tabindex="0" aria-label="Images du cas">${(c.images || []).map((im, i) => `<figure><button type="button" data-act="agrandir" data-i="${i}" aria-label="Agrandir l'image ${i + 1}"><img src="${esc(urls[i] || '')}" alt="${esc(im.legende || `Image ${i + 1}`)}"></button>${im.legende ? `<figcaption>${esc(im.legende)}</figcaption>` : ''}</figure>`).join('')}</div>
         ${(c.images || []).length > 1 ? `<p class="rs-points">${c.images.map((_, i) => `<span class="${i ? '' : 'is-actif'}"></span>`).join('')}</p>` : ''}
         <div class="rs-cas-corps">
-          <p>${badgeSpe(c.specialite)} <span class="rs-moda">${modalites(c.modalites)}</span> <span class="rs-ligne-sous">· ${esc(RG.depuis(c.cree_le))}${c.modifie_le ? ' · modifié' : ''}</span></p>
+          <p>${c.type === 'avis' ? '<span class="rs-type is-avis">Demande d\'avis</span> ' : ''}${badgeSpe(c.specialite)} <span class="rs-moda">${modalites(c.modalites)}</span> <span class="rs-ligne-sous">· ${esc(RG.depuis(c.cree_le))}${c.modifie_le ? ' · modifié' : ''}</span></p>
           <h1 class="rs-titre">${esc(c.titre)}</h1>
           <p class="rs-histoire">${lignes(c.histoire)}</p>
           ${c.question ? `<p class="rs-question">${esc(c.question)}</p>` : ''}
@@ -253,7 +307,7 @@
   /* =======================================================
      Publier un cas
      ======================================================= */
-  async function publier() {
+  async function publier(type) {
     if (!S) return accueilVisiteur();
     if (!peutPublier()) {
       return `<div class="rs-carte rs-etroit"><h1 class="rs-titre">Publier un cas</h1>
@@ -261,11 +315,15 @@
         ${S.membre.verification_demandee_le ? '<p class="rs-bandeau">Votre demande de vérification est en cours d\'examen : vous serez prévenu dès qu\'elle sera acceptée.</p>' : '<p><a class="btn btn-ink" href="#/moi#verification">Faire vérifier mon compte</a></p>'}
         <p class="rs-muted">En attendant, vous pouvez lire, commenter, enregistrer les cas et écrire à vos confrères.</p></div>`;
     }
-    const b = vue.brouillon = vue.brouillon || { images: [], titre: '', specialite: '', modalites: [], histoire: '', question: '', reponse: '', attestation: false };
-    return `<form class="rs-carte rs-formulaire rs-publier" data-form="publier" novalidate>
-      <h1 class="rs-titre">Publier un cas</h1>
+    const b = vue.brouillon = vue.brouillon || { type: 'cas', images: [], titre: '', specialite: '', modalites: [], histoire: '', question: '', reponse: '', attestation: false };
+    b.type = type === 'avis' ? 'avis' : 'cas';
+    const avis = b.type === 'avis';
+    return `<form class="rs-carte rs-formulaire rs-publier${avis ? ' is-avis' : ''}" data-form="publier" novalidate>
+      <div class="rs-onglets rs-type-choix" role="tablist" aria-label="Type de publication"><a role="tab" class="rs-onglet${avis ? '' : ' is-actif'}" aria-selected="${!avis}" href="#/publier">${icone('image')} Cas clinique</a><a role="tab" class="rs-onglet${avis ? ' is-actif' : ''}" aria-selected="${avis}" href="#/publier/avis">${icone('commentaire')} Demande d'avis</a></div>
+      <h1 class="rs-titre">${avis ? 'Demander un avis à vos confrères' : 'Publier un cas'}</h1>
+      ${avis ? '<p class="rs-muted">Un examen qui vous pose question ? Décrivez-le, ajoutez quelques images si besoin : vos confrères répondent en commentaire.</p>' : ''}
       <div class="rs-bandeau is-alerte">${icone('admin')}<span><strong>Anonymisation obligatoire.</strong> Aucun nom, date de naissance, numéro de dossier, visage ni texte incrusté permettant d'identifier le patient. Les métadonnées des images sont retirées automatiquement ; masquez les zones sensibles avec l'outil ${icone('masque')}.</span></div>
-      <fieldset><legend>Images (1 à ${RG.LIMITES.images})</legend>
+      <fieldset><legend>Images (${avis ? `facultatives, ${RG.LIMITES.images} au plus` : `1 à ${RG.LIMITES.images}`})</legend>
         <div class="rs-vignettes" id="rs-vignettes">${vignettes()}</div>
         <label class="btn btn-outline btn-sm rs-ajouter-images">${icone('image')} Ajouter des images<input type="file" accept="image/jpeg,image/png,image/webp" multiple hidden data-act-change="images"></label>
         <small class="rs-aide">JPEG ou PNG (exportez les images DICOM en JPEG). 8 Mo au plus par image ; elles sont réduites à 1600 px.</small>
@@ -274,12 +332,12 @@
       <div class="rs-ligne-champs"><div class="field"><label for="f-specialite">Spécialité</label><select id="f-specialite" name="specialite"><option value="">—</option>${Object.entries(RG.SPECIALITES).map(([k, s]) => `<option value="${k}"${b.specialite === k ? ' selected' : ''}>${esc(s.label)}</option>`).join('')}</select></div></div>
       <fieldset><legend>Modalités</legend><div class="rs-puces">${Object.entries(RG.MODALITES).map(([k, l]) => `<label class="rs-puce"><input type="checkbox" name="modalites" value="${k}"${b.modalites.includes(k) ? ' checked' : ''}><span>${esc(l)}</span></label>`).join('')}</div></fieldset>
       <div class="field"><label for="f-histoire">Histoire clinique</label><textarea id="f-histoire" name="histoire" rows="4" maxlength="3000" placeholder="Âge, contexte, symptômes, examen réalisé…">${esc(b.histoire)}</textarea></div>
-      <div class="field"><label for="f-question">Question posée aux confrères (facultatif)</label><input id="f-question" name="question" maxlength="300" value="${esc(b.question)}" placeholder="Ex. : Quel est votre diagnostic ?"></div>
-      <div class="field"><label for="f-reponse">Réponse et discussion (facultatif)</label><textarea id="f-reponse" name="reponse" rows="4" maxlength="3000" placeholder="Diagnostic, signes clés, pièges…">${esc(b.reponse)}</textarea><small class="rs-aide">Cachée derrière un bouton « Voir la réponse ».</small></div>
+      <div class="field"><label for="f-question">${avis ? 'Votre question' : 'Question posée aux confrères (facultatif)'}</label><input id="f-question" name="question" maxlength="300" value="${esc(b.question)}" placeholder="${avis ? 'Ex. : Lésion bénigne ou faut-il compléter par une IRM ?' : 'Ex. : Quel est votre diagnostic ?'}"></div>
+      ${avis ? '' : `<div class="field"><label for="f-reponse">Réponse et discussion (facultatif)</label><textarea id="f-reponse" name="reponse" rows="4" maxlength="3000" placeholder="Diagnostic, signes clés, pièges…">${esc(b.reponse)}</textarea><small class="rs-aide">Cachée derrière un bouton « Voir la réponse ».</small></div>`}
       <div class="rs-alerte-identite" id="rs-alerte-identite" aria-live="polite"></div>
       <label class="rs-consentement is-important"><input type="checkbox" name="attestation"${b.attestation ? ' checked' : ''}> J'atteste que les images et le texte sont <strong>anonymisés</strong> (aucune donnée permettant d'identifier le patient) et que je peux les partager à des fins d'enseignement.</label>
       <div class="rs-form-erreurs"></div>
-      <button class="btn btn-ink btn-block" type="submit">Publier le cas</button>
+      <button class="btn btn-ink btn-block" type="submit">${avis ? 'Publier la demande d\'avis' : 'Publier le cas'}</button>
       <p class="rs-mini rs-centre">Publié sous le nom « ${esc(RG.nomAffiche(S.membre))} », visible des seuls membres connectés.</p>
     </form>`;
   }
@@ -292,7 +350,7 @@
     </figure>`).join('') : '<p class="rs-muted">Aucune image pour l\'instant.</p>');
   function majBrouillon(f) {
     const fd = new FormData(f), b = vue.brouillon;
-    Object.assign(b, { titre: fd.get('titre') || '', specialite: fd.get('specialite') || '', modalites: fd.getAll('modalites'), histoire: fd.get('histoire') || '', question: fd.get('question') || '', reponse: fd.get('reponse') || '', attestation: !!fd.get('attestation') });
+    Object.assign(b, { titre: fd.get('titre') || '', specialite: fd.get('specialite') || '', modalites: fd.getAll('modalites'), histoire: fd.get('histoire') || '', question: fd.get('question') || '', reponse: b.type === 'avis' ? '' : fd.get('reponse') || '', attestation: !!fd.get('attestation') });
     $$('[data-legende]', f).forEach(i => { if (b.images[i.dataset.legende]) b.images[i.dataset.legende].legende = i.value; });
     const textes = [b.titre, b.histoire, b.question, b.reponse, ...b.images.map(i => i.legende)].join('\n');
     const alertes = C.identite(textes);
@@ -372,7 +430,7 @@
     const actuelle = convId && conv.find(c => c.conversation_id === convId);
     if (convId && !actuelle) return vide('Conversation introuvable.', '<a class="btn btn-outline btn-sm" href="#/messages">Mes messages</a>');
     const liste = `<aside class="rs-conv-liste">
-        <div class="rs-conv-tete"><h1 class="rs-titre">Messages</h1><button type="button" class="rs-icone-btn" data-act="nouveau-message" aria-label="Nouveau message" title="Nouveau message">${icone('modifier')}</button></div>
+        <div class="rs-conv-tete"><h1 class="rs-titre">Messages</h1><button type="button" class="btn btn-ink btn-sm rs-nouveau-msg" data-act="nouveau-message">${icone('modifier')} Nouveau message</button></div>
         <ul id="rs-conv-ul">${elementsConversations(conv, convId)}</ul>
       </aside>`;
     if (!actuelle) return `<div class="rs-messagerie">${liste}<section class="rs-conv-vide"><p>${icone('messages')}</p><p>Choisissez une conversation ou écrivez à un confrère.</p></section></div>`;
@@ -478,7 +536,7 @@
       return l.length ? `<div class="rs-liste">${l.map(carteCas).join('')}</div>` : vide('Aucun cas ne correspond.');
     }
     const l = await api.chercherMembres(vue.q);
-    return `<div class="rs-carte">${l.map(m => `<a class="rs-ligne-membre" href="#/profil/${esc(m.id)}">${avatar(m, 46)}<span><span class="rs-ligne-nom">${nom(m)}</span><span class="rs-ligne-sous">${esc(RG.statutAffiche(m))}${m.etablissement ? ` · ${esc(m.etablissement)}` : ''}${m.ville ? ` · ${esc(m.ville)}` : ''}</span></span></a>`).join('') || '<p class="rs-muted">Aucun membre ne correspond.</p>'}</div>`;
+    return `<div class="rs-carte">${l.map(m => `<div class="rs-ligne-confrere"><a class="rs-ligne-membre" href="#/profil/${esc(m.id)}">${avatar(m, 46)}<span><span class="rs-ligne-nom">${nom(m)}</span><span class="rs-ligne-sous">${esc(RG.statutAffiche(m))}${m.etablissement ? ` · ${esc(m.etablissement)}` : ''}${m.ville ? ` · ${esc(m.ville)}` : ''}</span></span></a><a class="btn btn-outline btn-sm rs-ecrire" href="#/messages/nouveau/${esc(m.id)}" aria-label="Écrire à ${esc(RG.nomAffiche(m))}">${icone('messages')} Écrire</a></div>`).join('') || '<p class="rs-muted">Aucun membre ne correspond.</p>'}</div>`;
   }
 
   /* =======================================================
@@ -513,7 +571,7 @@
      Routeur
      ======================================================= */
   const ROUTES = [
-    [/^#?\/?$/, fil], [/^#\/connexion$/, connexion], [/^#\/bienvenue$/, bienvenue], [/^#\/cas\/([\w-]+)(?:#.*)?$/, detailCas], [/^#\/publier$/, publier],
+    [/^#?\/?$/, fil], [/^#\/connexion$/, connexion], [/^#\/bienvenue$/, bienvenue], [/^#\/cas\/([\w-]+)(?:#.*)?$/, detailCas], [/^#\/publier(?:\/(avis))?$/, publier],
     [/^#\/profil\/([\w-]+)$/, profil], [/^#\/moi(?:#.*)?$/, moi], [/^#\/messages\/nouveau\/([\w-]+)$/, nouvelleConversation], [/^#\/messages(?:\/([\w-]+))?$/, messagerie],
     [/^#\/notifications$/, notifications], [/^#\/recherche$/, recherche], [/^#\/admin$/, admin],
   ];
@@ -554,7 +612,7 @@
     } else vue.conv = null;
     if (/#commentaires$/.test(complet)) { const c = $('#commentaires'); if (c) c.scrollIntoView({ block: 'start' }); }
     if (/#verification$/.test(complet)) { const c = $('#verification'); if (c) c.scrollIntoView({ block: 'start' }); }
-    if (route === '#/publier' && $('[data-form="publier"]')) majBrouillon($('[data-form="publier"]'));
+    if (route.startsWith('#/publier') && $('[data-form="publier"]')) majBrouillon($('[data-form="publier"]'));
     // carrousel : point actif
     const car = $('.rs-carrousel');
     if (car) car.addEventListener('scroll', () => { const i = Math.round(car.scrollLeft / car.clientWidth); $$('.rs-points span').forEach((p, k) => p.classList.toggle('is-actif', k === i)); }, { passive: true });
@@ -715,8 +773,9 @@
       if (e.length) return $('.rs-form-erreurs', f).scrollIntoView({ block: 'center' });
       if (alertes.length && !(await UI.confirmer(`Le texte contient peut-être des éléments d'identité (${alertes.map(a => `« ${esc(a.texte)} »`).join(', ')}). Publier quand même ?`, { oui: 'Publier quand même' }))) return;
       const bouton = $('button[type=submit]', f); bouton.disabled = true; bouton.textContent = 'Publication…';
-      const id = await essayer(() => api.publierCas(b, b.images.map(i => ({ blob: i.blob, legende: i.legende }))), 'Cas publié.');
-      bouton.disabled = false; bouton.textContent = 'Publier le cas';
+      const libelle = bouton.textContent;
+      const id = await essayer(() => api.publierCas(b, b.images.map(i => ({ blob: i.blob, legende: i.legende }))), b.type === 'avis' ? 'Demande d\'avis publiée.' : 'Cas publié.');
+      bouton.disabled = false; bouton.textContent = libelle;
       if (!id) return;
       b.images.forEach(i => URL.revokeObjectURL(i.url));
       vue.brouillon = null;
@@ -755,6 +814,8 @@
 
   /* ---------- Délégation des événements ---------- */
   document.addEventListener('click', e => {
+    const menu = document.querySelector('.rs-compte[open]');
+    if (menu && (!menu.contains(e.target) || e.target.closest('.rs-compte-item'))) menu.open = false;
     const b = e.target.closest('[data-act]');
     if (b && ACTIONS[b.dataset.act] && (app.contains(b) || nav.contains(b) || barre.contains(b))) { if (b.tagName !== 'A' || b.dataset.act !== 'retour') e.preventDefault(); ACTIONS[b.dataset.act](b, e); }
   });
@@ -787,6 +848,7 @@
       z.innerHTML = `<img src="${URL.createObjectURL(r.blob)}" alt="Image à envoyer"><button type="button" class="rs-icone-btn" data-act="retirer-image-message" aria-label="Retirer l'image">${icone('fermer')}</button>${r.retirees.length ? `<small>Métadonnées retirées</small>` : ''}`;
     }
   });
+  document.addEventListener('keydown', e => { const menu = document.querySelector('.rs-compte[open]'); if (e.key === 'Escape' && menu) { menu.open = false; menu.querySelector('summary').focus(); } });
   window.addEventListener('hashchange', () => { if (!/^#\/cas\/[\w-]+#/.test(location.hash)) window.scrollTo({ top: 0 }); afficher(); });
 
   /* ---------- Temps réel ---------- */

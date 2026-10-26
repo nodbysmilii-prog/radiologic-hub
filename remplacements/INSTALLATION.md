@@ -23,7 +23,7 @@ Pour passer en production (vrais comptes, vrais e-mails), suivre les étapes ci-
 
 Au choix :
 
-- **Éditeur SQL** (*SQL Editor → New query*) : coller tout le fichier `supabase/migrations/20261008120000_remplacements.sql` et l'exécuter, **puis** faire de même avec `supabase/migrations/20261009090000_reseau.sql` (Communauté), **puis** avec `supabase/migrations/20261012090000_droits_explicites.sql`, **puis** avec `supabase/migrations/20261012120000_bibliotheque.sql` (Bibliothèque), **puis** avec `supabase/migrations/20261012180000_cours.sql` (cours d'échoanatomie) — dans cet ordre (exécuter seulement celles qui ne l'ont pas encore été) ;
+- **Éditeur SQL** (*SQL Editor → New query*) : coller tout le fichier `supabase/migrations/20261008120000_remplacements.sql` et l'exécuter, **puis** faire de même avec `supabase/migrations/20261009090000_reseau.sql` (Communauté), **puis** avec `supabase/migrations/20261012090000_droits_explicites.sql`, **puis** avec `supabase/migrations/20261012120000_bibliotheque.sql` (Bibliothèque), **puis** avec `supabase/migrations/20261012180000_cours.sql` (cours d'échoanatomie), **puis** avec `supabase/migrations/20261027120000_communaute_fil.sql` (fil de la Communauté : demandes d'avis et remplacements dans le fil) — dans cet ordre (exécuter seulement celles qui ne l'ont pas encore été) ;
 - ou **en ligne de commande** (outil `supabase`, depuis la racine du dépôt) :
   ```
   supabase login
