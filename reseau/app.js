@@ -802,8 +802,17 @@
   /* ---------- Démarrage ---------- */
   async function rafraichir() { S = await api.session(); rendreNav(); }
   if (!app.querySelector('[data-attente]')) app.innerHTML = '<p class="rs-chargement" role="status">Chargement de la communauté…</p>';
-  try { await api.pret; await rafraichir(); }
-  catch (e) { app.innerHTML = vide(`Service indisponible : ${esc(e.message)}`); return; }
+  // Retour d'une connexion refusée (Google ou lien e-mail) : message lisible, puis adresse nettoyée.
+  const parametres = new URLSearchParams(location.search + '&' + location.hash.replace(/^#\/?/, ''));
+  const erreurConnexion = parametres.get('error_description') || parametres.get('error');
+  if (erreurConnexion) {
+    app.insertAdjacentHTML('beforebegin', `<p class="rs-alerte-connexion" role="alert"><b>La connexion n'a pas abouti.</b> ${esc(erreurConnexion)}. Réessayez, ou connectez-vous par lien e-mail.</p>`);
+    history.replaceState(null, '', location.pathname);
+  }
+  // Jamais d'attente sans fin : au-delà de 20 s, on affiche l'erreur et un lien pour réessayer.
+  const delai = (promesse, ms) => Promise.race([promesse, new Promise((_, refus) => setTimeout(() => refus(new Error('le service ne répond pas')), ms))]);
+  try { await delai(api.pret, 20000); await delai(rafraichir(), 20000); }
+  catch (e) { console.error(e); app.innerHTML = vide(`Service indisponible : ${esc(e.message)}.`, '<a class="btn btn-ink" href="communaute.html">Réessayer</a>'); return; }
   if (S && /access_token|type=magiclink|error_description/.test(location.hash)) location.replace(S.membre ? '#/' : '#/bienvenue');
   window.RHRs.rafraichir = async () => { await rafraichir(); demarrerEcoute(); vue.brouillon = null; afficher(); rendreCote(); majBadges(); };
   demarrerEcoute();
