@@ -7,10 +7,11 @@ positionnés dans les coordonnées du cliché d'origine (pixels, avant agrandiss
 Usage : python3 scripts/cholesteatome_figures.py
   réécrit, dans fiches/cholesteatome.html, le contenu entre <!-- FIG:id --> et <!-- /FIG:id -->.
 """
-import html, os, re, sys
+import html, json, os, re, sys
 
 RACINE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 PAGE = os.path.join(RACINE, 'fiches', 'cholesteatome.html')
+VERT = '#2f8a57'
 TEAL, ORANGE, BLUE, RED, AMBER, PURPLE, INK, ROSE = '#2a9d8f', '#f18d25', '#3c67b8', '#c8102e', '#f2ab2f', '#7b3fa8', '#111114', '#d63f4c'
 
 # taille des clichés (pixels d'origine)
@@ -25,6 +26,7 @@ TAILLES = {
     'recidive-perle-1': (222, 205), 'recidive-perle-2': (237, 164), 'greffe-cartilage': (274, 230), 'greffe-horizontale': (217, 178), 'granulome-tdm': (280, 161), 'granulome-irm': (168, 191),
     'recidive-t2': (165, 130), 'recidive-t1': (191, 157), 'recidive-t1-tardif': (190, 162), 'fibro-t2': (212, 180), 'fibro-t1': (219, 203), 'fibro-t1-tardif': (226, 199),
     'tegmen-tdm-1': (228, 197), 'tegmen-tdm-2': (208, 108), 'tegmen-irm-t2': (201, 179), 'tegmen-irm-plastie': (208, 174), 'tegmen-irm-gado': (187, 184), 'tegmen-irm-diffusion': (217, 179),
+    'bde-pre-lyse': (298, 227), 'bde-discontinuite': (213, 169),
     'fistule-csc-lateral': (215, 179), 'fistule-csc-posterieur': (216, 179), 'fistule-promontoire-1': (156, 125), 'fistule-promontoire-2': (191, 143),
 }
 
@@ -118,8 +120,14 @@ FIG = {
     'sigmoide-anterieur-2': ('Sinus sigmoïde antérieur et superficiel', [etoile((178, 129), BLUE, 9)]),
     'irm-preop': ('IRM : effacement du signal liquidien au contact (fistule)', [
         trace([(150, 92), (162, 100), (166, 114), (160, 126)], AMBER, dash='4 3', w=3), fleche((157, 110), (176, 126), '#fff'), pastille(112, 162, 'extinction du signal', AMBER)]),
-    'technique-fermee-1': ('Tympanoplastie en technique fermée', [etoile((170, 171), AMBER, 6), pastille(150, 210, 'caisse ré-aérée', AMBER)]),
-    'ossiculoplastie': ('Ossiculoplastie : prothèse entre tympan et étrier', [trace([(108, 47), (122, 50), (116, 66), (108, 82), (100, 79), (104, 62)], ORANGE, ferme=True, w=2.6), pastille(102, 104, 'prothèse', ORANGE)]),
+    'technique-fermee-1': ('Technique fermée : paroi postérieure du conduit conservée, abord mastoïdien postérieur (flèche et tracés de l\'auteur)', [
+        fleche((214, 157), (229, 173), AMBER), fleche((207, 190), (229, 208), ROSE),
+        pastille(52, 200, 'CAE : postérieur', AMBER), pastille(52, 214, 'abord : postérieur', ROSE)]),
+    'technique-fermee-2': ('Technique fermée, coronal : greffe tympanique, paroi supérieure conservée', [
+        fleche((271, 60), (297, 47), ROSE), fleche((254, 98), (292, 112), AMBER),
+        trace([(188, 141), (183, 128), (176, 115)], '#fff', w=1.4), fleche((168, 105), (176, 115), '#fff', w=1.4),
+        pastille(196, 150, 'greffe tympanique', AMBER), pastille(44, 12, 'CAE : supérieur', AMBER), pastille(44, 26, 'abord : supérieur', ROSE)]),
+    'ossiculoplastie': ('Technique ouverte : micro-caisse (orange) et cavité d\'évidement pétro-mastoïdienne (vert)', 'ossiculoplastie'),
     'recidive-perle-1': ('Récidive : opacité ronde à bords convexes (perle)', [fleche((152, 73), (192, 32), AMBER)]),
     'recidive-perle-2': ('Récidive : perle de cholestéatome', [fleche((139, 51), (178, 12), AMBER)]),
     'greffe-cartilage': ('Greffe tympanique cartilagineuse', [fleche((86, 88), (96, 52), AMBER)]),
@@ -131,9 +139,8 @@ FIG = {
     'fibro-t1-tardif': ('Tissu fibro-inflammatoire : prise de contraste tardive', [fleche((156, 92), (204, 118), AMBER), texte(6, 16, 'T1 gadolinium tardif')]),
     'tegmen-tdm-1': ('Extension labyrinthique (canal semi-circulaire latéral)', [trace([(64, 90), (72, 84), (80, 79), (87, 73)], ORANGE, w=3), pastille(116, 128, 'extension au CSC latéral', ORANGE)]),
     'tegmen-tdm-2': ('Lyse du tegmen', [trace([(55, 22), (66, 23), (78, 24)], BLUE, w=3), pastille(70, 8, 'tegmen lysé', BLUE)]),
-    'tegmen-irm-plastie': ('Après chirurgie : plastie du tegmen et lambeau graisseux', [
-        trace([(56, 34), (66, 36), (72, 38)], RED, w=3), pastille(70, 20, 'plastie du tegmen', RED),
-        trace([(32, 102), (38, 80), (46, 60), (62, 52), (76, 52), (80, 58), (70, 58), (56, 64), (50, 82), (40, 102)], TEAL, w=2.4), pastille(64, 116, 'lambeau graisseux', TEAL)]),
+    'tegmen-irm-plastie': ('Après chirurgie : plastie du tegmen et lambeau graisseux (tracés de l\'auteur)', [
+        pastille(84, 26, 'plastie du tegmen', RED), pastille(72, 138, 'lambeau graisseux', TEAL)]),
     'tegmen-irm-gado': ('T1 gadolinium semi-tardif : opacité non rehaussée', [cercle((74, 50), 14, PURPLE), pastille(74, 24, 'non rehaussée', PURPLE)]),
     'tegmen-irm-diffusion': ('Diffusion b1000 : hypersignal (cholestéatome)', [fleche((90, 88), (126, 118), AMBER)]),
     'fistule-csc-lateral': ('Fistule du canal semi-circulaire latéral', [fleche((111, 56), (134, 30), RED), pastille(160, 18, 'CSC latéral', RED)]),
@@ -141,6 +148,21 @@ FIG = {
     'fistule-promontoire-1': ('Fistule du promontoire (tour basal de la cochlée)', [fleche((61, 49), (89, 84), RED), pastille(100, 100, 'promontoire', RED)]),
     'fistule-promontoire-2': ('Fistule du promontoire, autre coupe', [fleche((87, 69), (112, 102), RED), pastille(130, 116, 'tour basal', RED)]),
 }
+
+# tracés de l'auteur relevés sur ses planches (positions inchangées, seulement lissés)
+TRACES_OUVERTE = json.load(open(os.path.join(RACINE, 'scripts', 'donnees', 'cholesteatome-traces-auteur.json'), encoding='utf-8'))
+def traces_ouverte(nom):
+    out = []
+    for t in TRACES_OUVERTE[nom]:
+        col = {'orange': ORANGE, 'bleu': BLUE}.get(t['c'], VERT)
+        if 'point' in t: out.append(f'<circle cx="{t["point"][0]}" cy="{t["point"][1]}" r="3" fill="{col}" stroke="#000" stroke-opacity=".5"/>')
+        else: out.append(trace([tuple(p) for p in t['pts']], col, ferme=t.get('ferme', False), w=3))
+    return out
+FIG['tegmen-tdm-1'] = ('Extension labyrinthique au canal semi-circulaire latéral (tracé de l\'auteur)', traces_ouverte('tegmen-tdm-1') + [pastille(114, 150, 'extension au CSC', ORANGE)])
+FIG['tegmen-tdm-2'] = ('Extension au tegmen (tracé de l\'auteur)', traces_ouverte('tegmen-tdm-2') + [pastille(108, 9, 'extension au tegmen', BLUE)])
+FIG['technique-ouverte-1'] = ('Technique ouverte : cavité d\'évidement pétro-mastoïdienne (vert)', traces_ouverte('technique-ouverte-1') + [pastille(60, 100, 'cavité d\'évidement', VERT)])
+FIG['ossiculoplastie'] = (FIG['ossiculoplastie'][0], traces_ouverte('ossiculoplastie') + [pastille(70, 100, 'micro-caisse', ORANGE), pastille(160, 14, 'cavité d\'évidement', VERT)])
+FIG['technique-ouverte-2'] = ('Technique ouverte, autre plan : micro-caisse (orange) et cavité d\'évidement (vert)', traces_ouverte('technique-ouverte-2') + [pastille(70, 50, 'micro-caisse', ORANGE), pastille(100, 162, 'cavité d\'évidement', VERT)])
 
 def figure(nom, legende, credit=True, classe=''):
     w, h = TAILLES[nom]
