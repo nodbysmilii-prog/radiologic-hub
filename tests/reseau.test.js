@@ -94,3 +94,10 @@ test('images PNG : textes retirés, morceaux d\'image conservés', () => {
   for (const morceau of ['IHDR', 'IDAT', 'IEND']) assert.ok(Buffer.from(apres).includes(morceau), morceau);
   assert.equal(C.nettoyer(new Uint8Array([1, 2, 3])), null, 'format inconnu');
 });
+
+test('Supabase : chaque jointure vers rs_membres précise sa clé (sinon « more than one relationship » en production)', () => {
+  const src = require('fs').readFileSync(require('path').join(__dirname, '..', 'reseau', 'api-supabase.js'), 'utf8');
+  const jointures = src.match(/:rs_membres[!(][^(]*\(/g) || [];
+  assert.ok(jointures.length >= 5);
+  jointures.forEach(j => assert.match(j, /^:rs_membres!/, j));
+});

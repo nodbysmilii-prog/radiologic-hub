@@ -161,8 +161,8 @@
       if (onglet === 'enregistres') {
         const e = ok(await sb.from('rs_enregistres').select('cas_id').eq('membre_id', me));
         if (!e.length) return [];
-        r = sb.from('rs_cas').select(`*, auteur:rs_membres(${MEMBRE})`).in('id', e.map(x => x.cas_id));
-      } else r = sb.from('rs_cas').select(`*, auteur:rs_membres(${MEMBRE})`);
+        r = sb.from('rs_cas').select(`*, auteur:rs_membres!auteur_id(${MEMBRE})`).in('id', e.map(x => x.cas_id));
+      } else r = sb.from('rs_cas').select(`*, auteur:rs_membres!auteur_id(${MEMBRE})`);
       if (ids) r = r.in('auteur_id', ids);
       if (auteur) r = r.eq('auteur_id', auteur);
       if (specialite) r = r.eq('specialite', specialite);
@@ -172,7 +172,7 @@
       return enrichir(ok(await r.order('cree_le', { ascending: false }).limit(limite)));
     },
     async cas(cid) {
-      const c = ok(await sb.from('rs_cas').select(`*, auteur:rs_membres(${MEMBRE})`).eq('id', cid).maybeSingle());
+      const c = ok(await sb.from('rs_cas').select(`*, auteur:rs_membres!auteur_id(${MEMBRE})`).eq('id', cid).maybeSingle());
       return c ? (await enrichir([c]))[0] : null;
     },
     urlsImages: c => signer('cas-images', (c.images || []).map(i => i.chemin)),
@@ -213,8 +213,8 @@
       ok(await sb.from('rs_enregistres').insert({ cas_id: cid, membre_id: me }));
       return true;
     },
-    async commentaires(cid) { return ok(await sb.from('rs_commentaires').select(`*, auteur:rs_membres(${MEMBRE})`).eq('cas_id', cid).order('cree_le')); },
-    async commenter(cid, texte) { return ok(await sb.from('rs_commentaires').insert({ cas_id: cid, texte: texte.trim() }).select(`*, auteur:rs_membres(${MEMBRE})`).single()); },
+    async commentaires(cid) { return ok(await sb.from('rs_commentaires').select(`*, auteur:rs_membres!auteur_id(${MEMBRE})`).eq('cas_id', cid).order('cree_le')); },
+    async commenter(cid, texte) { return ok(await sb.from('rs_commentaires').insert({ cas_id: cid, texte: texte.trim() }).select(`*, auteur:rs_membres!auteur_id(${MEMBRE})`).single()); },
     async supprimerCommentaire(xid) { ok(await sb.from('rs_commentaires').delete().eq('id', xid)); },
     async basculerAbonnement(mid) {
       const me = await uid();
