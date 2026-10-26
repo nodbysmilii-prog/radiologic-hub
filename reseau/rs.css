@@ -423,3 +423,17 @@
 .rs-alerte-connexion { margin: 0 0 14px; padding: 12px 16px; border-radius: 12px; border: 2px solid var(--k-grave, #c8102e); background: color-mix(in srgb, var(--k-grave, #c8102e) 8%, #fff); font-size: .9rem; }
 .rs-connexion-aide { margin: 0 0 10px; font-size: .9rem; }
 .rs-compte-actuel { margin: 0 0 12px; font-size: .88rem; text-align: center; }
+
+/* Recheck Playwright (27/10/2026) : vérification du compte, cibles tactiles, bandeau des spécialités */
+.rs-visuel-cache { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.rs-champ-titre { display: block; margin-bottom: 6px; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.rs-fichier { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.rs-fichier-nom { font-size: .85rem; color: var(--muted); overflow-wrap: anywhere; }
+.rs-fichier:focus-within label { outline: 3px solid var(--cornflower); outline-offset: 2px; }
+.rs-bandeau a.btn { display: inline-flex; margin-top: 8px; color: #fff; }
+.rs-specialites { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); }
+@media (max-width: 899px) {
+  .rs-boutons .rs-lien-btn, .rs-boutons .btn-sm { min-height: 40px; display: inline-flex; align-items: center; }
+  .rs-onglets button, .rs-onglets a { min-height: 40px; }
+  .rs-compte-actuel .rs-lien-btn { min-height: 40px; }
+}
