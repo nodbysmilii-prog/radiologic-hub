@@ -1,0 +1,136 @@
+/* =========================================================
+   RadiologicHub — fiche « Cholestéatome » : figures avec tracés, rocher en 3D,
+   chaîne de l'histoire naturelle, étages de la caisse, outils (OMC ou cholestéatome,
+   signal IRM, compte rendu guidé), onglets des compartiments
+   (complète schemas/cavum.css, qui porte les styles communs de la visionneuse .c3d).
+   ========================================================= */
+.ch-h3 { margin: 22px 0 10px; font-size: 1rem; }
+.ch-deux { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin: 16px 0; align-items: start; }
+.ch-deux-fig { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
+
+/* Histoire naturelle */
+.ch-chaine { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 0 0 18px; padding: 0; list-style: none; counter-reset: ch; }
+.ch-chaine li { position: relative; padding: 12px 22px 12px 14px; margin-right: 6px; background: color-mix(in srgb, var(--c) 14%, #fff); border-top: 4px solid var(--c); border-radius: 12px; font-size: .84rem; opacity: 0; transform: translateY(8px); transition: opacity .5s, transform .5s; }
+.ch-chaine.is-vu li { opacity: 1; transform: none; }
+.ch-chaine.is-vu li:nth-child(2) { transition-delay: .15s; } .ch-chaine.is-vu li:nth-child(3) { transition-delay: .3s; } .ch-chaine.is-vu li:nth-child(4) { transition-delay: .45s; }
+.ch-chaine li b { display: block; color: var(--c); }
+.ch-chaine li span { color: var(--text); }
+.ch-chaine li:not(:last-child)::after { content: "→"; position: absolute; right: -4px; top: 50%; translate: 0 -50%; font-weight: 900; color: var(--ink); z-index: 1; }
+
+/* Figures : cliché + tracés */
+.ch-figs { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; margin: 14px 0; }
+.ch-figs-1 { grid-template-columns: minmax(0, 420px); }
+.ch-figs-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ch-figs-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ch-figs-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.ch-fig { margin: 0; border-radius: 14px; border: 3px solid var(--ink); background: #111114; overflow: hidden; display: flex; flex-direction: column; }
+.ch-fig svg, .ch-fig img { display: block; width: 100%; height: auto; }
+.ch-fig[data-traces] { cursor: pointer; }
+.ch-fig[data-traces] svg { transition: filter .2s; }
+.ch-fig[data-traces]:hover svg { filter: brightness(1.08); }
+.ch-fig figcaption { flex: 1; padding: 7px 10px 9px; background: #fff; font-size: .74rem; line-height: 1.4; color: var(--text); }
+.ch-fig[data-traces] figcaption::before { content: "tracés"; float: right; margin: 0 0 2px 6px; padding: 0 6px; border-radius: 999px; background: var(--amber); color: var(--ink); font-size: .6rem; font-weight: 900; text-transform: uppercase; }
+.ch-fig.is-sans-traces .ch-traces { opacity: 0; }
+.ch-fig.is-sans-traces figcaption::before { background: #ddd; }
+.ch-traces { transition: opacity .25s; }
+
+/* 3D */
+.r3d .c3d-barre { align-items: center; }
+.r3d-barre-titre { font-size: .62rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.r3d-bulle { position: absolute; left: 0; top: 0; z-index: 3; padding: 3px 9px; border-radius: 8px; background: rgba(17, 17, 20, .86); color: #fff; font-size: .72rem; font-weight: 800; pointer-events: none; white-space: nowrap; }
+.r3d-bulle[hidden] { display: none; }
+.r3d-reglage { display: flex !important; align-items: center; gap: 6px; font-size: .68rem; color: var(--muted); }
+.r3d-reglage input[type="range"], #r3d-coupe { flex: 1; width: 100%; accent-color: var(--teal); }
+.r3d-info { margin: 0; font-size: .78rem; line-height: 1.45; }
+
+/* Étages */
+.ch-etages { display: grid; gap: 8px; margin: 6px 0 4px; }
+.ch-etage { display: grid; grid-template-columns: 190px 1fr; gap: 12px; padding: 10px 14px; border-left: 6px solid var(--c); border-radius: 10px; background: color-mix(in srgb, var(--c) 8%, #fff); font-size: .86rem; }
+.ch-etage b { color: var(--c); }
+
+/* Technique */
+.ch-proto-titre { margin: 0 0 6px; font-size: .7rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; color: var(--c); }
+.ch-chiffre { font-family: 'Permanent Marker', cursive; font-size: 1.1rem; color: var(--c); margin-bottom: 4px; }
+.ch-chiffre span { font-size: 2.4rem; line-height: 1; }
+.ch-indic { margin-top: 6px; }
+.ch-pastilles { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 0; padding: 0; list-style: none; }
+.ch-pastilles li { padding: 6px 12px; border-radius: 999px; border: 2px solid var(--c); background: #fff; font-size: .82rem; }
+
+/* Pneumatisation */
+.ch-pneu { margin-top: 16px; padding: 12px 14px; border-radius: 14px; background: color-mix(in srgb, var(--green) 10%, #fff); }
+.ch-pneu input { width: 100%; accent-color: var(--green); }
+.ch-pneu-val { margin: 6px 0 0; font-weight: 800; }
+.ch-pneu-fig img { transition: opacity .25s; }
+
+/* Critères */
+.ch-criteres { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 10px 0 6px; }
+.ch-critere { position: relative; padding: 14px 14px 10px; border-radius: 16px; border: 3px solid var(--c); background: color-mix(in srgb, var(--c) 7%, #fff); font-size: .84rem; }
+.ch-critere b { display: block; font-size: .95rem; color: var(--c); margin-bottom: 4px; }
+.ch-critere p { margin: 0; }
+.ch-num { position: absolute; right: 10px; top: 4px; font-family: 'Permanent Marker', cursive; font-size: 1.6rem; color: var(--c); opacity: .5; }
+
+/* Outils */
+.ch-outil { margin: 20px 0 8px; padding: 16px 18px; border-radius: 16px; border: 3px solid var(--ink); background: #fff; box-shadow: 6px 6px 0 color-mix(in srgb, var(--c, var(--amber)) 45%, transparent); }
+.ch-outil-titre { margin: 0 0 4px; font-size: .74rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+.ch-outil-aide { margin: 0 0 10px; font-size: .8rem; color: var(--muted); }
+.ch-cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 16px; }
+.ch-cases label, .ch-cr-choix label { display: flex; gap: 7px; align-items: flex-start; font-size: .84rem; cursor: pointer; }
+.ch-selects { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.ch-selects label { display: grid; gap: 4px; font-size: .72rem; font-weight: 800; }
+.ch-selects select { padding: 6px 8px; border: 2px solid rgba(17, 17, 20, .2); border-radius: 10px; font: inherit; font-size: .84rem; }
+.ch-verdict { margin-top: 12px; padding: 10px 14px; border-radius: 12px; background: #f4f4f6; font-size: .86rem; transition: background .25s; }
+.ch-verdict b { display: block; font-size: 1.05rem; }
+.ch-verdict b:empty { display: none; }
+.ch-verdict.k-grave { background: #fde2e4; } .ch-verdict.k-grave b { color: #a8172d; }
+.ch-verdict.k-sign { background: #ddf3ea; } .ch-verdict.k-sign b { color: #1f6d4c; }
+.ch-verdict.k-key { background: #fff1d6; } .ch-verdict.k-key b { color: #8a5a00; }
+.ch-verdict.k-ddx { background: #ece3f6; } .ch-verdict.k-ddx b { color: #5b2a86; }
+
+/* Onglets des compartiments */
+.ch-onglets { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 0; }
+.ch-onglets button { padding: 7px 14px; border: 3px solid var(--c); border-radius: 999px; background: #fff; font: inherit; font-size: .82rem; font-weight: 800; cursor: pointer; }
+.ch-onglets button[aria-selected="true"] { background: var(--c); color: #fff; }
+.ch-panneau { margin-top: 10px; padding: 14px 18px; border-radius: 14px; background: #fbfbfc; border: 2px solid rgba(17, 17, 20, .12); }
+.ch-panneau p { margin: 0 0 8px; }
+.ch-lien-3d { padding: 6px 12px 6px 34px; position: relative; border: 2px solid var(--teal); border-radius: 10px; background: #fff; font: inherit; font-size: .8rem; font-weight: 700; cursor: pointer; }
+.ch-lien-3d::before { content: "3D"; position: absolute; left: 7px; top: 50%; translate: 0 -50%; padding: 1px 4px; border-radius: 5px; background: var(--ink); color: #fff; font-size: .55rem; font-weight: 900; }
+
+/* Structures à risque */
+.ch-risque { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 18px; align-items: start; padding: 14px 0; border-bottom: 2px dashed rgba(17, 17, 20, .12); }
+.ch-risque:has(> :only-child) { grid-template-columns: 1fr; }
+.ch-risque h3 { margin: 0 0 6px; color: var(--c); }
+.ch-risque .ch-figs { margin: 0; }
+.ch-complic { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 18px; }
+.ch-complic-c { padding: 12px; border-radius: 14px; background: var(--c); color: #fff; font-size: .8rem; }
+.ch-complic-c b { display: block; font-size: .9rem; margin-bottom: 4px; }
+
+/* Variantes */
+.ch-variantes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.ch-variantes .ch-figs { margin-bottom: 0; }
+
+/* IRM */
+.ch-signaux tbody tr { transition: background .2s; }
+.ch-signaux tr.is-on { background: color-mix(in srgb, var(--amber) 30%, #fff); }
+
+/* Compte rendu */
+.ch-cr-choix { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px 16px; }
+.ch-cr-choix fieldset { margin: 0; padding: 8px 10px; border: 2px solid rgba(17, 17, 20, .12); border-radius: 12px; display: grid; gap: 3px; }
+.ch-cr-choix legend { padding: 0 4px; font-size: .68rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+.ch-cr-texte { margin: 14px 0 10px; }
+
+@media (max-width: 900px) {
+  .ch-deux, .ch-deux-fig, .ch-risque, .ch-variantes { grid-template-columns: 1fr; }
+  .ch-chaine { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 8px; }
+  .ch-chaine li:nth-child(2)::after { display: none; }
+  .ch-criteres, .ch-complic { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ch-figs-3, .ch-figs-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ch-selects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ch-etage { grid-template-columns: 1fr; gap: 2px; }
+}
+@media (max-width: 480px) {
+  .ch-chaine, .ch-criteres, .ch-complic, .ch-cases, .ch-selects { grid-template-columns: 1fr; }
+  .ch-chaine li::after { display: none; }
+  .ch-figs-2 { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { .ch-chaine li { opacity: 1; transform: none; transition: none; } }
+@media print { .ch-outil:not(.ch-cr), .ch-onglets, .ch-lien-3d, .r3d { display: none; } .ch-panneau[hidden] { display: block !important; } }

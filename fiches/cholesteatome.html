@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cholestéatome : l'imagerie — Fiche rapide RadiologicHub</title>
+  <meta name="description" content="Fiche rapide RadiologicHub : cholestéatome — TDM des rochers (0,5 mm), critères diagnostiques, cartographie d'extension, structures à risque, variantes, IRM de diffusion, post-opératoire, compte rendu guidé, rocher en 3D.">
+  <link rel="icon" type="image/svg+xml" href="../assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=20261022235000">
+  <link rel="stylesheet" href="../fiche.css?v=20261012150000">
+  <link rel="stylesheet" href="../schemas/cavum.css?v=20261024100000">
+  <link rel="stylesheet" href="../schemas/cholesteatome.css?v=20261026120000">
+  <script type="importmap">{ "imports": { "three": "../vendor/three-0.170.0/three.module.min.js", "three/addons/": "../vendor/three-0.170.0/addons/" } }</script>
+</head>
+<body class="fiche-page">
+
+  <div class="read-progress" aria-hidden="true"><span></span></div>
+
+  <header class="site-header is-scrolled" id="top">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="RadiologicHub — accueil">
+        <img src="../assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+        <a href="../comptes-rendus.html">Comptes rendus</a>
+        <a href="../fiches-rapides.html" class="is-current">Fiches rapides</a>
+        <a href="../radioanatomie/index.html">Radioanatomie</a>
+        <a href="../bibliotheque.html">Bibliothèque</a>
+        <a href="../communaute.html">Communauté</a>
+        <a href="../remplacements.html">Remplacements</a>
+        <a href="../index.html#masterclass" class="nav-masterclass">Masterclass</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main>
+    <!-- ============ EN-TÊTE DE FICHE ============ -->
+    <section class="fiche-hero sec-down">
+      <div class="container">
+        <nav class="crumbs" aria-label="Fil d'Ariane">
+          <a href="../fiches-rapides.html">Fiches rapides</a> › <a href="../fiches-rapides.html#orl">Tête et cou</a> › <span>Cholestéatome</span>
+        </nav>
+        <p class="marker-tag">Fiche rapide · Tête et cou · Rocher</p>
+        <h1>Cholestéatome : <span class="hl-navy">l'imagerie</span></h1>
+        <p class="fiche-sub">Le diagnostic est <span class="hl-red">otoscopique</span> ; la <b>TDM</b> confirme le caractère <span class="hl-red">agressif</span>, <b>cartographie l'extension</b> et prépare la chirurgie ; l'<b>IRM de diffusion</b> répond à une question précise. Avec le <b>rocher en 3D</b> : osselets, labyrinthe, nerf facial et vaisseaux.</p>
+
+        <div class="legend" role="group" aria-label="Code couleur — cliquez pour isoler une catégorie">
+          <span class="legend-label">Code couleur :</span>
+          <button class="chip k-tech" data-k="tech" aria-pressed="false">Technique</button>
+          <button class="chip k-sign" data-k="sign" aria-pressed="false">Signe / aspect</button>
+          <button class="chip k-key" data-k="key" aria-pressed="false">À décrire / seuil</button>
+          <button class="chip k-grave" data-k="grave" aria-pressed="false">Agressivité / complication</button>
+          <button class="chip k-ddx" data-k="ddx" aria-pressed="false">Piège / différentiel</button>
+        </div>
+        <p class="legend-hint">Astuce : cliquez sur une couleur pour n'afficher qu'elle ; cliquez sur un cliché pour masquer ou afficher nos tracés.</p>
+
+        <div class="fiche-actions">
+          <button class="btn btn-outline btn-sm" id="print-btn">Imprimer / PDF</button>
+          <a href="#rocher-3d-section" class="btn btn-outline btn-sm">Rocher en 3D</a>
+          <a href="#tdm-diagnostic" class="btn btn-outline btn-sm">OMC ou cholestéatome ?</a>
+          <a href="#compte-rendu" class="btn btn-outline btn-sm">Compte rendu guidé</a>
+          <a href="#testez-vous" class="btn btn-ink btn-sm">Testez-vous →</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="container fiche-layout">
+      <aside class="toc" aria-label="Sommaire">
+        <p class="toc-title">Sommaire</p>
+        <ol>
+          <li><a href="#essentiel" style="--c: var(--blue)"><b>I</b>L'essentiel</a></li>
+          <li><a href="#rocher-3d-section" style="--c: var(--teal)"><b>II</b>Le rocher en 3D</a></li>
+          <li><a href="#technique" style="--c: var(--steel)"><b>III</b>Technique</a></li>
+          <li><a href="#omc" style="--c: var(--green)"><b>IV</b>Stigmates d'OMC</a></li>
+          <li><a href="#tdm-diagnostic" style="--c: var(--k-grave)"><b>V</b>TDM : diagnostic positif</a></li>
+          <li><a href="#extension" style="--c: var(--orange)"><b>VI</b>Cartographie d'extension</a></li>
+          <li><a href="#risques" style="--c: var(--crimson)"><b>VII</b>Structures à risque</a></li>
+          <li><a href="#variantes" style="--c: var(--purple)"><b>VIII</b>Variantes à signaler</a></li>
+          <li><a href="#irm" style="--c: var(--royal)"><b>IX</b>IRM</a></li>
+          <li><a href="#post-op" style="--c: var(--plum)"><b>X</b>Après chirurgie</a></li>
+          <li><a href="#compte-rendu" style="--c: var(--slate)"><b>XI</b>Compte rendu</a></li>
+          <li><a href="#testez-vous" style="--c: var(--ink)"><b>?</b>Testez-vous</a></li>
+        </ol>
+      </aside>
+
+      <div class="fiche-body" id="fiche-body">
+
+        <!-- I -->
+        <section class="fsec" id="essentiel" style="--c: var(--blue)">
+          <h2 class="fsec-title"><span class="fnum">I</span>L'essentiel</h2>
+          <div class="callout">
+            <p class="nodes-title">Définition</p>
+            <p>Masse <b>épidermique kératinisante</b> de l'oreille moyenne, <mark class="k-grave">agressive et ostéolytique</mark>. C'est l'<b>otite moyenne chronique « dangereuse »</b> : rare, mais le traitement est <b>chirurgical</b> et l'imagerie est <b>systématique</b>.</p>
+          </div>
+
+          <h3 class="ch-h3">Comment naît un cholestéatome</h3>
+          <ol class="ch-chaine" aria-label="Histoire naturelle">
+            <li style="--c: var(--blue)"><b>Dysfonction tubaire</b><span>Échanges gazeux accrus</span></li>
+            <li style="--c: var(--steel)"><b>Dépression dans la caisse</b><span>Pression intratympanique basse</span></li>
+            <li style="--c: var(--orange)"><b>Rétraction du tympan</b><span>Pars flaccida surtout</span></li>
+            <li style="--c: var(--k-grave)"><b>Cholestéatome</b><span>Invagination et prolifération épidermique, <i>ou</i> perforation et migration de l'épiderme</span></li>
+          </ol>
+
+          <div class="ch-deux">
+            <div class="fcard">
+              <h3>Quand y penser ?</h3>
+              <ul class="fl">
+                <li><b>Otorrhée fétide</b> et surdité de transmission ou mixte.</li>
+                <li>Mots de l'ORL : <mark class="k-sign">poche de rétraction non contrôlable</mark>, <mark class="k-sign">perforation marginale</mark>, <mark class="k-sign">atticite</mark>, <mark class="k-sign">atticotomie spontanée</mark>, <mark class="k-sign">épidermose</mark>, <mark class="k-sign">polype sentinelle</mark>.</li>
+                <li><mark class="k-grave">Vertige</mark> ou <mark class="k-grave">paralysie faciale périphérique</mark> : complication jusqu'à preuve du contraire.</li>
+              </ul>
+            </div>
+            <div class="fcard">
+              <h3>Qui fait quoi ?</h3>
+              <ul class="fl">
+                <li><b>Otoscopie</b> : pose le diagnostic.</li>
+                <li><mark class="k-tech">TDM</mark> (systématique) : confirme l'<b>agressivité</b>, <b>cartographie</b> l'extension, signale <b>variantes</b> et <b>complications</b>.</li>
+                <li><mark class="k-tech">IRM</mark> (ciblée) : doute, extension labyrinthique ou intracrânienne, <b>résidu ou récidive</b> après chirurgie.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- II -->
+        <section class="fsec" id="rocher-3d-section" style="--c: var(--teal)">
+          <h2 class="fsec-title"><span class="fnum">II</span>Le rocher en 3D</h2>
+          <p class="fintro">Oreille droite. Rendez l'os transparent, suivez un parcours, ou faites descendre une <b>coupe axiale</b> comme sur la TDM. Cliquez une structure : ce qu'il faut regarder s'affiche.</p>
+          <div class="c3d r3d" id="rocher-3d" data-modeles="../public/models/rocher/">
+            <div class="c3d-barre" role="toolbar" aria-label="Parcours">
+              <span class="r3d-barre-titre">Parcours</span>
+              <button type="button" class="c3d-voie" data-parcours="osselets" aria-pressed="false" style="--c: var(--amber)">Osselets</button>
+              <button type="button" class="c3d-voie" data-parcours="oreille-interne" aria-pressed="false" style="--c: var(--teal)">Labyrinthe</button>
+              <button type="button" class="c3d-voie" data-parcours="facial" aria-pressed="false" style="--c: var(--gold)">Nerf facial</button>
+              <button type="button" class="c3d-voie" data-parcours="vaisseaux" aria-pressed="false" style="--c: var(--blue)">Vaisseaux</button>
+            </div>
+            <div class="c3d-cadre">
+              <div class="c3d-vue">
+                <div class="c3d-scene" id="r3d-scene"></div>
+                <a class="c3d-attrib" href="https://www.z-anatomy.com/" rel="noopener" target="_blank" title="Rocher droit : Z-Anatomy (CC BY-SA 4.0, dérivé de BodyParts3D) ; osselets et labyrinthe lissés ; nerfs et vaisseaux limités à leur trajet dans ou contre le rocher.">© Z-Anatomy · CC BY-SA</a>
+              </div>
+              <aside class="c3d-panneau" aria-label="Réglages de la vue 3D">
+                <p class="c3d-titre">Vues</p>
+                <div class="c3d-vues">
+                  <button type="button" data-vue="laterale">Par le conduit</button>
+                  <button type="button" data-vue="coronale">Coronale</button>
+                  <button type="button" data-vue="axiale">Axiale</button>
+                  <button type="button" data-vue="oblique">Oblique</button>
+                </div>
+                <p class="c3d-titre">Os temporal</p>
+                <label class="r3d-reglage"><span>opaque</span><input type="range" id="r3d-os" min="0" max="100" value="35" aria-label="Opacité de l'os temporal"><span>transparent</span></label>
+                <p class="c3d-titre">Coupe axiale</p>
+                <label class="r3d-reglage"><input type="checkbox" id="r3d-coupe-on"> trancher</label>
+                <input type="range" id="r3d-coupe" min="0" max="100" value="60" aria-label="Hauteur de la coupe axiale" disabled>
+                <p class="c3d-titre">Lecture</p>
+                <p class="r3d-info" id="r3d-info" aria-live="polite">Choisissez un parcours ou cliquez une structure.</p>
+              </aside>
+            </div>
+            <ul class="c3d-legende" aria-label="Légende des couleurs">
+              <li style="--c: #f2ab2f" class="is-muscle">Osselets</li>
+              <li style="--c: #f48fb1" class="is-muscle">Tympan</li>
+              <li style="--c: #2a9d8f" class="is-muscle">Cochlée, vestibule, canaux semi-circulaires</li>
+              <li style="--c: #ffd54f" class="is-muscle">Nerfs VII et VIII</li>
+              <li style="--c: #c8102e" class="is-muscle">Carotide interne</li>
+              <li style="--c: #3c67b8" class="is-muscle">Golfe jugulaire, sinus sigmoïde et latéral</li>
+            </ul>
+          </div>
+
+          <h3 class="ch-h3">Les étages de la caisse</h3>
+          <div class="ch-etages">
+            <div class="ch-etage" style="--c: var(--k-grave)"><b>Attique <small>(épitympan)</small></b><span>au-dessus du manche du marteau : <b>tête du marteau, corps de l'enclume</b> ; mur de la logette en dehors, tegmen au-dessus. <mark class="k-grave">Siège classique</mark>.</span></div>
+            <div class="ch-etage" style="--c: var(--orange)"><b>Mésotympan</b><span>en dedans du tympan tendu : manche du marteau, longue apophyse de l'enclume, étrier, fenêtres, promontoire, VII2.</span></div>
+            <div class="ch-etage" style="--c: var(--teal)"><b>Hypotympan</b><span>sous le promontoire, plancher de la caisse : rapports avec le <b>golfe jugulaire</b>.</span></div>
+            <div class="ch-etage" style="--c: var(--purple)"><b>Rétrotympanum</b><span>récessus du facial, éminence pyramidale, <mark class="k-ddx">sinus tympani</mark> (mal vu du chirurgien).</span></div>
+            <div class="ch-etage" style="--c: var(--blue)"><b>Aditus → antre → mastoïde</b><span>voie d'extension postérieure depuis l'attique.</span></div>
+          </div>
+          <div class="ch-figs ch-figs-1">
+            <!-- FIG:retrotympanum|Rétrotympanum (coupe axiale) : le sinus tympani, en dedans de l'éminence pyramidale, est le recoin où le cholestéatome résiduel se cache. --><figure class="ch-fig" data-traces><svg viewBox="0 0 301 269" role="img" aria-label="Rétrotympanum en coupe axiale : récessus du facial, éminence pyramidale, sinus tympani" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/retrotympanum.jpg" width="301" height="269"/><g class="ch-traces"><path d="M160.0 166.0 L156.0 185.0 L165.0 205.0 L178.0 210.0" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/><path d="M160.0 166.0 L156.0 185.0 L165.0 205.0 L178.0 210.0" fill="none" stroke="#3c67b8" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/><g><rect x="56.2" y="188.0" width="123.6" height="16.0" rx="8.0" fill="#3c67b8" stroke="#fff" stroke-width="1.2"/><text x="118" y="199.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">récessus du facial</text></g><path d="M178.0 176.0 L190.0 192.0 L188.0 212.0 L182.0 240.0" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/><path d="M178.0 176.0 L190.0 192.0 L188.0 212.0 L182.0 240.0" fill="none" stroke="#f2ab2f" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="4 3"/><g><rect x="73.1" y="228.0" width="129.8" height="16.0" rx="8.0" fill="#f2ab2f" stroke="#fff" stroke-width="1.2"/><text x="138" y="239.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">éminence pyramidale</text></g><path d="M196.0 214.0 L206.0 232.0 L228.0 238.0 L246.0 228.0" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/><path d="M196.0 214.0 L206.0 232.0 L228.0 238.0 L246.0 228.0" fill="none" stroke="#f18d25" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/><g><rect x="185.7" y="246.0" width="92.6" height="16.0" rx="8.0" fill="#f18d25" stroke="#fff" stroke-width="1.2"/><text x="232" y="257.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">sinus tympani</text></g><path d="M120.0 132.0 L146.6 155.3" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M120.0 132.0 L146.6 155.3" stroke="#c8102e" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M152.0 160.0 L143.3 157.6 L148.5 151.7Z" fill="#c8102e" stroke="#000" stroke-opacity=".55" stroke-width="1"/><g><rect x="22.4" y="118.0" width="111.2" height="16.0" rx="8.0" fill="#c8102e" stroke="#fff" stroke-width="1.2"/><text x="78" y="129.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">muscle stapédien</text></g></g></svg><figcaption>Rétrotympanum (coupe axiale) : le sinus tympani, en dedans de l'éminence pyramidale, est le recoin où le cholestéatome résiduel se cache.</figcaption></figure><!-- /FIG -->
+          </div>
+        </section>
+
+        <!-- III -->
+        <section class="fsec" id="technique" style="--c: var(--steel)">
+          <h2 class="fsec-title"><span class="fnum">III</span>Technique</h2>
+          <div class="ch-deux">
+            <div class="fcard ch-proto">
+              <p class="ch-proto-titre">TDM des rochers — 1<sup>re</sup> intention</p>
+              <div class="ch-chiffre"><span>0,5</span> mm</div>
+              <ul class="fl">
+                <li><mark class="k-tech">Volumique, bilatérale, sans injection</mark>.</li>
+                <li>Coupes de <mark class="k-key">0,5 mm</mark>, petit champ, matrice ≥ 512, filtre osseux.</li>
+                <li>Axial <b>parallèle au canal semi-circulaire latéral</b> ; reconstructions <b>coronales, sagittales</b> et obliques (chaîne ossiculaire, étrier, articulation incudo-malléaire).</li>
+              </ul>
+            </div>
+            <div class="fcard ch-proto">
+              <p class="ch-proto-titre">IRM — question ciblée</p>
+              <div class="ch-chiffre"><span>b 1000</span></div>
+              <ul class="fl">
+                <li><b>T1</b> axial sans injection.</li>
+                <li><mark class="k-tech">Diffusion non-EPI (TSE)</mark>, axiale + coronale, b 800–1000 (parfois 1300) : moins d'artéfacts de la base du crâne que l'EPI.</li>
+                <li><b>T2 haute résolution 3D</b> (CISS / FIESTA) ; <b>T1 FS gadolinium tardif</b> (≈ 30 min) ; FLAIR tardif et séquence veineuse si besoin.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="ch-indic">
+            <p class="nodes-title">IRM : quand la demander ?</p>
+            <ul class="ch-pastilles">
+              <li>Doute clinique ou TDM, comblement diffus (surtout chez l'<b>enfant</b>)</li>
+              <li>Suspicion d'atteinte <b>labyrinthique</b></li>
+              <li>Suspicion d'atteinte <b>cérébro-méningée</b>, thrombose, abcès</li>
+              <li>Recherche de <b>résidu ou récidive</b> après chirurgie</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- IV -->
+        <section class="fsec" id="omc" style="--c: var(--green)">
+          <h2 class="fsec-title"><span class="fnum">IV</span>Le terrain : stigmates d'otite moyenne chronique</h2>
+          <p class="fintro">Toute otite moyenne évoluant depuis plus de 3 mois. Ces signes sont <b>communs</b> à l'OMC simple et au cholestéatome : ils ne font pas le diagnostic.</p>
+          <div class="ch-deux ch-deux-fig">
+            <div>
+              <ul class="fl">
+                <li><mark class="k-sign">Sclérose</mark> ± <mark class="k-sign">hypopneumatisation</mark> mastoïdienne : l'inflammation du mucopérioste produit de l'os néoformé.</li>
+                <li><mark class="k-sign">Épaississement</mark> ± calcifications de la membrane tympanique (normalement quasi invisible).</li>
+                <li><mark class="k-sign">Opacités diffuses</mark> de l'oreille moyenne : déclives ou non, <b>bords non convexes</b>, <b>sans effet de masse</b>.</li>
+              </ul>
+              <div class="ch-pneu" id="ch-pneu">
+                <p class="nodes-title">Faites glisser : de la mastoïde normale à la sclérose</p>
+                <input type="range" min="0" max="2" step="1" value="0" id="ch-pneu-range" aria-label="Pneumatisation mastoïdienne">
+                <p class="ch-pneu-val" id="ch-pneu-val" aria-live="polite"></p>
+              </div>
+            </div>
+            <figure class="ch-fig ch-pneu-fig">
+              <img id="ch-pneu-img" src="cholesteatome/images/mastoide-normale.jpg" width="652" height="662" alt="Mastoïde normale bien pneumatisée">
+              <figcaption id="ch-pneu-cap">Mastoïde normale : la pneumatisation progresse d'avant en arrière jusqu'à la suture temporo-occipitale.</figcaption>
+            </figure>
+          </div>
+          <div class="ch-figs">
+            <!-- FIG:mastoide-hypopneumatisee|Sclérose et interruption de la pneumatisation. --><figure class="ch-fig" data-traces><svg viewBox="0 0 314 295" role="img" aria-label="Mastoïde scléreuse et hypopneumatisée" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/mastoide-hypopneumatisee.jpg" width="314" height="295"/><g class="ch-traces"><path d="M300.0 152.0 L249.2 152.0" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M300.0 152.0 L249.2 152.0" stroke="#f18d25" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M242.0 152.0 L250.1 148.1 L250.1 155.9Z" fill="#f18d25" stroke="#000" stroke-opacity=".55" stroke-width="1"/><g><rect x="241.2" y="132.0" width="61.6" height="16.0" rx="8.0" fill="#f18d25" stroke="#fff" stroke-width="1.2"/><text x="272" y="143.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">sclérose</text></g><path d="M310.0 231.0 L275.2 231.0" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M310.0 231.0 L275.2 231.0" stroke="#3c67b8" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M268.0 231.0 L276.1 227.1 L276.1 234.9Z" fill="#3c67b8" stroke="#000" stroke-opacity=".55" stroke-width="1"/><g><rect x="220.2" y="240.0" width="123.6" height="16.0" rx="8.0" fill="#3c67b8" stroke="#fff" stroke-width="1.2"/><text x="282" y="251.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">hypopneumatisation</text></g></g></svg><figcaption>Sclérose et interruption de la pneumatisation.</figcaption></figure><!-- /FIG -->
+            <!-- FIG:omc-opacites|Opacités « non spécifiques » : pas de lyse, pas d'effet de masse. --><figure class="ch-fig"><svg viewBox="0 0 196 206" role="img" aria-label="Opacités « non spécifiques » : pas de lyse, pas d&#x27;effet de masse." font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/omc-opacites.jpg" width="196" height="206"/></svg><figcaption>Opacités « non spécifiques » : pas de lyse, pas d'effet de masse.</figcaption></figure><!-- /FIG -->
+            <!-- FIG:omc-chaine-noyee|Chaîne ossiculaire « noyée » : même densité que l'épanchement ou la muqueuse épaissie. --><figure class="ch-fig"><svg viewBox="0 0 257 234" role="img" aria-label="Chaîne ossiculaire « noyée » : même densité que l&#x27;épanchement ou la muqueuse épaissie." font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/omc-chaine-noyee.jpg" width="257" height="234"/></svg><figcaption>Chaîne ossiculaire « noyée » : même densité que l'épanchement ou la muqueuse épaissie.</figcaption></figure><!-- /FIG -->
+            <!-- FIG:tympanosclerose|Tympanosclérose : plaques pseudo-cartilagineuses ± calcifiées, ankylose possible de la chaîne. --><figure class="ch-fig" data-traces><svg viewBox="0 0 317 326" role="img" aria-label="Tympanosclérose : plaques calcifiées sur la chaîne et les parois de la caisse" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/tympanosclerose.jpg" width="317" height="326"/><g class="ch-traces"><circle cx="106" cy="114" r="30" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="4.2"/><circle cx="106" cy="114" r="30" fill="none" stroke="#c8102e" stroke-width="2.2"/><circle cx="118" cy="157" r="21" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="4.2"/><circle cx="118" cy="157" r="21" fill="none" stroke="#f2ab2f" stroke-width="2.2"/><circle cx="178" cy="169" r="21" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="4.2"/><circle cx="178" cy="169" r="21" fill="none" stroke="#3c67b8" stroke-width="2.2"/><text x="150" y="312" font-size="13" font-weight="800" fill="#fff" stroke="#000" stroke-width="3" paint-order="stroke" text-anchor="middle">plaques calcifiées</text></g></svg><figcaption>Tympanosclérose : plaques pseudo-cartilagineuses ± calcifiées, ankylose possible de la chaîne.</figcaption></figure><!-- /FIG -->
+          </div>
+          <div class="callout callout-warn">
+            <p><mark class="k-ddx">La longue apophyse de l'enclume</mark> est la zone la plus fragile : elle peut être lysée <b>même dans une OMC non cholestéatomateuse</b>.</p>
+          </div>
+        </section>
+
+        <!-- V -->
+        <section class="fsec" id="tdm-diagnostic" style="--c: var(--k-grave)">
+          <h2 class="fsec-title"><span class="fnum">V</span>TDM : diagnostic positif</h2>
+          <p class="fintro">Quatre critères. Les deux qui comptent le plus : la <b>masse à bords convexes</b> et l'<b>ostéolyse</b>.</p>
+          <div class="ch-criteres">
+            <div class="ch-critere" style="--c: var(--k-grave)"><span class="ch-num">1</span><b>Masse</b><p>Opacité <mark class="k-sign">nodulaire ou polylobée</mark>, homogène, <b>non calcifiée</b>, à <mark class="k-key">bords convexes dans les 3 plans</mark>.</p></div>
+            <div class="ch-critere" style="--c: var(--orange)"><span class="ch-num">2</span><b>Siège</b><p>Typiquement <mark class="k-sign">attical supéro-latéral</mark> (attique externe), puis aditus et antre.</p></div>
+            <div class="ch-critere" style="--c: var(--purple)"><span class="ch-num">3</span><b>Effet de masse</b><p>Refoule le <mark class="k-sign">bloc incudo-malléaire vers le dedans</mark>.</p></div>
+            <div class="ch-critere" style="--c: var(--crimson)"><span class="ch-num">4</span><b>Ostéolyse</b><p><mark class="k-grave">À front lisse</mark> : mur de la logette, osselets, parois de la caisse, labyrinthe, tegmen.</p></div>
+          </div>
+          <div class="ch-figs">
+            <!-- FIG:diag-polylobe|Opacité polylobée à bords convexes, mur de la logette lysé, chaîne englobée ; petite extension probable par un polype sentinelle au fond du conduit. --><figure class="ch-fig" data-traces><svg viewBox="0 0 323 247" role="img" aria-label="Cholestéatome : opacité polylobée de l&#x27;oreille moyenne, lyse du mur de la logette" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/diag-polylobe.jpg" width="323" height="247"/><g class="ch-traces"><path d="M141.0 96.0 L150.0 80.0 L160.0 84.0 L168.0 98.0 L184.0 110.0 L192.0 122.0 L186.0 133.0 L170.0 128.0 L160.0 136.0 L148.0 138.0 L140.0 124.0 L146.0 110.0 Z" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/><path d="M141.0 96.0 L150.0 80.0 L160.0 84.0 L168.0 98.0 L184.0 110.0 L192.0 122.0 L186.0 133.0 L170.0 128.0 L160.0 136.0 L148.0 138.0 L140.0 124.0 L146.0 110.0 Z" fill="none" stroke="#f2ab2f" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/><g><rect x="106.3" y="58.0" width="117.4" height="16.0" rx="8.0" fill="#f2ab2f" stroke="#fff" stroke-width="1.2"/><text x="165" y="69.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">opacité nodulaire</text></g><path d="M108.0 113.0 L124.0 114.0 L124.0 96.0" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><path d="M108.0 113.0 L124.0 114.0 L124.0 96.0" fill="none" stroke="#2a9d8f" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><g><rect x="-2.2" y="92.0" width="148.4" height="16.0" rx="8.0" fill="#2a9d8f" stroke="#fff" stroke-width="1.2"/><text x="72" y="103.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">mur de la logette lysé</text></g><circle cx="130" cy="140" r="14" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="4.2"/><circle cx="130" cy="140" r="14" fill="none" stroke="#f18d25" stroke-width="2.2" stroke-dasharray="4 3"/><g><rect x="13.1" y="160.0" width="129.8" height="16.0" rx="8.0" fill="#f18d25" stroke="#fff" stroke-width="1.2"/><text x="78" y="171.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">polype sentinelle ?</text></g></g></svg><figcaption>Opacité polylobée à bords convexes, mur de la logette lysé, chaîne englobée ; petite extension probable par un polype sentinelle au fond du conduit.</figcaption></figure><!-- /FIG -->
+            <!-- FIG:fossa-incudis-1|Effet de masse — repère : l'enclume se projette normalement sur la bissectrice tracée depuis la fossa incudis. --><figure class="ch-fig" data-traces><svg viewBox="0 0 267 291" role="img" aria-label="Fossa incudis : enclume sur la bissectrice (normal)" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/fossa-incudis-1.jpg" width="267" height="291"/><g class="ch-traces"><path d="M66.0 0.0 L113.0 180.0 L268.0 34.0" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="3.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M66.0 0.0 L113.0 180.0 L268.0 34.0" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M113.0 180.0 L168.0 -12.0" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/><path d="M113.0 180.0 L168.0 -12.0" fill="none" stroke="#2a9d8f" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 4"/><g><rect x="159.9" y="14.0" width="80.2" height="16.0" rx="8.0" fill="#2a9d8f" stroke="#fff" stroke-width="1.2"/><text x="200" y="25.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">bissectrice</text></g></g></svg><figcaption>Effet de masse — repère : l'enclume se projette normalement sur la bissectrice tracée depuis la fossa incudis.</figcaption></figure><!-- /FIG -->
+            <!-- FIG:fossa-incudis-2|Effet de masse : l'enclume est refoulée hors de la bissectrice. --><figure class="ch-fig" data-traces><svg viewBox="0 0 284 289" role="img" aria-label="Fossa incudis : enclume refoulée hors de la bissectrice" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/fossa-incudis-2.jpg" width="284" height="289"/><g class="ch-traces"><path d="M135.0 0.0 L134.0 181.0 L285.0 37.0" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="3.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M135.0 0.0 L134.0 181.0 L285.0 37.0" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M134.0 181.0 L213.0 -3.0" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/><path d="M134.0 181.0 L213.0 -3.0" fill="none" stroke="#2a9d8f" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 4"/><path d="M134.0 175.0 L234.0 0.0" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/><path d="M134.0 175.0 L234.0 0.0" fill="none" stroke="#c8102e" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="5 3"/><g><rect x="182.4" y="10.0" width="111.2" height="16.0" rx="8.0" fill="#c8102e" stroke="#fff" stroke-width="1.2"/><text x="238" y="21.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">enclume refoulée</text></g></g></svg><figcaption>Effet de masse : l'enclume est refoulée hors de la bissectrice.</figcaption></figure><!-- /FIG -->
+            <!-- FIG:lyse-front-lisse|Ostéolyse à front lisse des parois osseuses. --><figure class="ch-fig" data-traces><svg viewBox="0 0 286 241" role="img" aria-label="Ostéolyse à front lisse" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/lyse-front-lisse.jpg" width="286" height="241"/><g class="ch-traces"><path d="M70.0 110.0 L69.0 135.0 L66.0 160.0 L62.0 185.0 L65.0 203.0 L76.0 213.0 L90.0 211.0 L100.0 203.0 L108.0 185.0 L115.0 163.0 L121.0 140.0 L127.0 113.0" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><path d="M70.0 110.0 L69.0 135.0 L66.0 160.0 L62.0 185.0 L65.0 203.0 L76.0 213.0 L90.0 211.0 L100.0 203.0 L108.0 185.0 L115.0 163.0 L121.0 140.0 L127.0 113.0" fill="none" stroke="#3c67b8" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><g><rect x="55.9" y="222.0" width="80.2" height="16.0" rx="8.0" fill="#3c67b8" stroke="#fff" stroke-width="1.2"/><text x="96" y="233.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">front lisse</text></g></g></svg><figcaption>Ostéolyse à front lisse des parois osseuses.</figcaption></figure><!-- /FIG -->
+          </div>
+          <div class="ch-deux">
+            <div class="fcard">
+              <h3>Forme « évacuée »</h3>
+              <p>Pas de masse visible. Le diagnostic repose sur l'otoscopie et les <mark class="k-ddx">séquelles d'agressivité</mark> : atticotomie spontanée, lyse du mur de la logette, érosion ossiculaire, cavité anormale.</p>
+            </div>
+            <div class="ch-figs ch-figs-2">
+              <!-- FIG:evacue-1|Atticotomie spontanée. --><figure class="ch-fig" data-traces><svg viewBox="0 0 238 214" role="img" aria-label="Cholestéatome évacué : atticotomie spontanée" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/evacue-1.jpg" width="238" height="214"/><g class="ch-traces"><path d="M158.0 150.0 L135.5 121.6" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M158.0 150.0 L135.5 121.6" stroke="#f2ab2f" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M131.0 116.0 L139.1 119.9 L133.0 124.8Z" fill="#f2ab2f" stroke="#000" stroke-opacity=".55" stroke-width="1"/></g></svg><figcaption>Atticotomie spontanée.</figcaption></figure><!-- /FIG -->
+              <!-- FIG:evacue-2|Cavité anormale de l'attique, sans masse. --><figure class="ch-fig" data-traces><svg viewBox="0 0 240 236" role="img" aria-label="Cholestéatome évacué : cavité anormale de l&#x27;attique" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/evacue-2.jpg" width="240" height="236"/><g class="ch-traces"><path d="M178.0 34.0 L150.4 85.7" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M178.0 34.0 L150.4 85.7" stroke="#f2ab2f" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M147.0 92.0 L147.4 83.0 L154.3 86.7Z" fill="#f2ab2f" stroke="#000" stroke-opacity=".55" stroke-width="1"/><path d="M182.0 144.0 L162.3 125.9" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M182.0 144.0 L162.3 125.9" stroke="#f18d25" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M157.0 121.0 L165.6 123.6 L160.3 129.4Z" fill="#f18d25" stroke="#000" stroke-opacity=".55" stroke-width="1"/></g></svg><figcaption>Cavité anormale de l'attique, sans masse.</figcaption></figure><!-- /FIG -->
+            </div>
+          </div>
+
+          <div class="ch-outil" id="ch-tri">
+            <p class="ch-outil-titre">Outil — Comblement de l'oreille moyenne : OMC ou cholestéatome ?</p>
+            <p class="ch-outil-aide">Cochez ce que vous voyez sur la TDM.</p>
+            <div class="ch-cases">
+              <label><input type="checkbox" name="convexe"> Opacité nodulaire, bords convexes dans les 3 plans</label>
+              <label><input type="checkbox" name="attical"> Siège attical supéro-latéral</label>
+              <label><input type="checkbox" name="effetMasse"> Chaîne refoulée en dedans</label>
+              <label><input type="checkbox" name="lyse"> Ostéolyse à front lisse (mur, osselets, parois)</label>
+              <label><input type="checkbox" name="diffus"> Comblement en plage, bords non convexes</label>
+              <label><input type="checkbox" name="contexte"> Otoscopie évocatrice</label>
+            </div>
+            <div class="ch-verdict" id="ch-tri-res" aria-live="polite"><b></b><span>Cochez ce que vous voyez.</span></div>
+          </div>
+        </section>
+
+        <!-- VI -->
+        <section class="fsec" id="extension" style="--c: var(--orange)">
+          <h2 class="fsec-title"><span class="fnum">VI</span>Cartographie d'extension</h2>
+          <p class="fintro">Le bilan préopératoire précise : <b>côté</b>, <b>siège d'origine</b>, <b>dimensions dans les 3 plans</b>, <b>trajet</b> de compartiment en compartiment, <b>structures détruites</b>, <b>variantes</b> qui changent l'abord. Cliquez un compartiment.</p>
+          <div class="ch-onglets" role="tablist" aria-label="Compartiments">
+            <button role="tab" aria-selected="true" data-onglet="attique" style="--c: var(--k-grave)">Attique</button>
+            <button role="tab" aria-selected="false" data-onglet="meso" style="--c: var(--orange)">Mésotympan</button>
+            <button role="tab" aria-selected="false" data-onglet="hypo" style="--c: var(--teal)">Hypotympan</button>
+            <button role="tab" aria-selected="false" data-onglet="retro" style="--c: var(--purple)">Rétrotympanum</button>
+            <button role="tab" aria-selected="false" data-onglet="mastoide" style="--c: var(--blue)">Aditus · antre · mastoïde</button>
+            <button role="tab" aria-selected="false" data-onglet="cae" style="--c: var(--steel)">Conduit</button>
+          </div>
+          <div class="ch-panneaux">
+            <div class="ch-panneau" data-panneau="attique" role="tabpanel"><p>Siège classique. Décrire la <mark class="k-grave">lyse du mur de la logette</mark>, le <b>refoulement en dedans ou l'érosion du bloc incudo-malléaire</b>, puis vérifier l'<b>ouverture de l'aditus</b>.</p><button type="button" class="ch-lien-3d" data-parcours="osselets">Voir les osselets en 3D</button></div>
+            <div class="ch-panneau" data-panneau="meso" role="tabpanel" hidden><p>Extension autour du <b>manche du marteau</b>, de la <b>longue apophyse de l'enclume</b> et de l'<b>étrier</b>. Analyser séparément <b>fenêtres ovale et ronde</b>, <b>promontoire</b> et <mark class="k-key">segment tympanique du VII</mark>.</p><button type="button" class="ch-lien-3d" data-parcours="facial">Voir le nerf facial en 3D</button></div>
+            <div class="ch-panneau" data-panneau="hypo" role="tabpanel" hidden><p>Extension sous le promontoire jusqu'au plancher de la caisse : préciser les rapports avec le <mark class="k-ddx">golfe jugulaire</mark>.</p><button type="button" class="ch-lien-3d" data-parcours="vaisseaux">Voir les vaisseaux en 3D</button></div>
+            <div class="ch-panneau" data-panneau="retro" role="tabpanel" hidden><p>Explorer le <b>récessus du facial</b> et surtout le <mark class="k-grave">sinus tympani</mark> : recoin difficile d'accès pour le chirurgien, <b>siège classique de résidu ou de récidive</b>.</p></div>
+            <div class="ch-panneau" data-panneau="mastoide" role="tabpanel" hidden><p>Suivre l'extension de l'attique par l'<b>aditus</b> vers l'<b>antre</b> puis les cellules ; préciser <b>pneumatisation ou sclérose</b>. <mark class="k-ddx">Mastoïde entièrement comblée</mark> : la TDM distingue mal matrice et muqueuse inflammatoire → IRM de diffusion.</p></div>
+            <div class="ch-panneau" data-panneau="cae" role="tabpanel" hidden><p>Décrire toute <b>ostéolyse des parois osseuses</b> du conduit auditif externe.</p></div>
+          </div>
+        </section>
+
+        <!-- VII -->
+        <section class="fsec" id="risques" style="--c: var(--crimson)">
+          <h2 class="fsec-title"><span class="fnum">VII</span>Structures à risque et complications</h2>
+          <p class="fintro">Une structure par ligne : ce qu'il faut chercher, sur quelle image.</p>
+          <div class="ch-risque">
+            <div class="ch-risque-txt"><h3>Chaîne ossiculaire</h3><p>La <mark class="k-key">longue apophyse de l'enclume</mark> est la plus fragile ; puis corps de l'enclume, tête du marteau, superstructure de l'étrier. Une <b>déminéralisation nette</b> a la même valeur qu'une lyse franche.</p></div>
+            <div class="ch-figs ch-figs-1"><!-- FIG:lyse-ossiculaire|Lyse ossiculaire. --><figure class="ch-fig" data-traces><svg viewBox="0 0 305 269" role="img" aria-label="Lyse ossiculaire" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/lyse-ossiculaire.jpg" width="305" height="269"/><g class="ch-traces"><path d="M106.0 78.0 L151.8 104.4" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M106.0 78.0 L151.8 104.4" stroke="#f2ab2f" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M158.0 108.0 L149.0 107.3 L152.9 100.6Z" fill="#f2ab2f" stroke="#000" stroke-opacity=".55" stroke-width="1"/></g></svg><figcaption>Lyse ossiculaire.</figcaption></figure><!-- /FIG --></div>
+          </div>
+          <div class="ch-risque">
+            <div class="ch-risque-txt"><h3>Mur de la logette</h3><p>Émoussement puis amputation de son bord inférieur : <mark class="k-grave">quasi spécifique</mark>. Mais un mur intact <mark class="k-ddx">n'exclut pas</mark> un cholestéatome, surtout chez l'enfant.</p></div>
+          </div>
+          <div class="ch-risque">
+            <div class="ch-risque-txt"><h3>Tegmen tympani et antri</h3><p>Une brèche doit être vue sur <b>plusieurs coupes contiguës</b>, <b>au contact</b> de la masse, et <b>comparée au côté opposé</b>. Vraie brèche : <mark class="k-grave">méningocèle</mark>, réaction méningée, complication intracrânienne.</p></div>
+            <div class="ch-figs ch-figs-1"><!-- FIG:tegmen-tdm-2|Lyse du tegmen. --><figure class="ch-fig" data-traces><svg viewBox="0 0 208 108" role="img" aria-label="Lyse du tegmen" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/tegmen-tdm-2.jpg" width="208" height="108"/><g class="ch-traces"><path d="M55.0 22.0 L66.0 23.0 L78.0 24.0" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><path d="M55.0 22.0 L66.0 23.0 L78.0 24.0" fill="none" stroke="#3c67b8" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><g><rect x="29.9" y="0.0" width="80.2" height="16.0" rx="8.0" fill="#3c67b8" stroke="#fff" stroke-width="1.2"/><text x="70" y="11.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">tegmen lysé</text></g></g></svg><figcaption>Lyse du tegmen.</figcaption></figure><!-- /FIG --></div>
+          </div>
+          <div class="ch-risque">
+            <div class="ch-risque-txt"><h3>Labyrinthe : fistule</h3><p>Disparition de la coque osseuse au contact du cholestéatome, surtout du <mark class="k-grave">canal semi-circulaire latéral</mark> (labyrinthe membraneux à nu). Préciser le canal et la longueur. IRM : amputation du signal liquidien en T2 ; <b>rehaussement</b> = labyrinthite. Un <b>vertige</b> justifie l'IRM même si la TDM est douteuse.</p></div>
+            <div class="ch-figs ch-figs-4">
+              <!-- FIG:fistule-csc-lateral|Canal semi-circulaire latéral. --><figure class="ch-fig" data-traces><svg viewBox="0 0 215 179" role="img" aria-label="Fistule du canal semi-circulaire latéral" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/fistule-csc-lateral.jpg" width="215" height="179"/><g class="ch-traces"><path d="M134.0 30.0 L115.8 50.6" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M134.0 30.0 L115.8 50.6" stroke="#c8102e" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M111.0 56.0 L113.4 47.3 L119.3 52.5Z" fill="#c8102e" stroke="#000" stroke-opacity=".55" stroke-width="1"/><g><rect x="119.9" y="10.0" width="80.2" height="16.0" rx="8.0" fill="#c8102e" stroke="#fff" stroke-width="1.2"/><text x="160" y="21.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">CSC latéral</text></g></g></svg><figcaption>Canal semi-circulaire latéral.</figcaption></figure><!-- /FIG -->
+              <!-- FIG:fistule-csc-posterieur|Canal semi-circulaire postérieur. --><figure class="ch-fig" data-traces><svg viewBox="0 0 216 179" role="img" aria-label="Fistule du canal semi-circulaire postérieur" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/fistule-csc-posterieur.jpg" width="216" height="179"/><g class="ch-traces"><path d="M130.0 152.0 L120.0 117.9" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M130.0 152.0 L120.0 117.9" stroke="#c8102e" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M118.0 111.0 L124.0 117.7 L116.5 119.9Z" fill="#c8102e" stroke="#000" stroke-opacity=".55" stroke-width="1"/><g><rect x="90.6" y="158.0" width="98.8" height="16.0" rx="8.0" fill="#c8102e" stroke="#fff" stroke-width="1.2"/><text x="140" y="169.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">CSC postérieur</text></g></g></svg><figcaption>Canal semi-circulaire postérieur.</figcaption></figure><!-- /FIG -->
+              <!-- FIG:fistule-promontoire-1|Promontoire (tour basal de la cochlée). --><figure class="ch-fig" data-traces><svg viewBox="0 0 156 125" role="img" aria-label="Fistule du promontoire (tour basal de la cochlée)" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/fistule-promontoire-1.jpg" width="156" height="125"/><g class="ch-traces"><path d="M89.0 84.0 L65.5 54.6" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M89.0 84.0 L65.5 54.6" stroke="#c8102e" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M61.0 49.0 L69.1 52.9 L63.0 57.8Z" fill="#c8102e" stroke="#000" stroke-opacity=".55" stroke-width="1"/><g><rect x="59.9" y="92.0" width="80.2" height="16.0" rx="8.0" fill="#c8102e" stroke="#fff" stroke-width="1.2"/><text x="100" y="103.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">promontoire</text></g></g></svg><figcaption>Promontoire (tour basal de la cochlée).</figcaption></figure><!-- /FIG -->
+              <!-- FIG:fistule-promontoire-2|Promontoire, autre plan. --><figure class="ch-fig" data-traces><svg viewBox="0 0 191 143" role="img" aria-label="Fistule du promontoire, autre coupe" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/fistule-promontoire-2.jpg" width="191" height="143"/><g class="ch-traces"><path d="M112.0 102.0 L91.3 74.7" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M112.0 102.0 L91.3 74.7" stroke="#c8102e" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M87.0 69.0 L95.0 73.1 L88.8 77.8Z" fill="#c8102e" stroke="#000" stroke-opacity=".55" stroke-width="1"/><g><rect x="93.0" y="108.0" width="74.0" height="16.0" rx="8.0" fill="#c8102e" stroke="#fff" stroke-width="1.2"/><text x="130" y="119.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">tour basal</text></g></g></svg><figcaption>Promontoire, autre plan.</figcaption></figure><!-- /FIG -->
+            </div>
+          </div>
+          <div class="ch-risque">
+            <div class="ch-risque-txt"><h3>Canal facial</h3><p>Dénudations surtout au <mark class="k-key">plancher du segment tympanique (VII2)</mark>, parfois VII3. Une bande osseuse absente est seulement <b>suspecte</b> : <mark class="k-ddx">ne pas affirmer l'envahissement du nerf en TDM</mark> (volume partiel), confirmer sur plusieurs plans.</p><button type="button" class="ch-lien-3d" data-parcours="facial">Trajet du VII en 3D</button></div>
+            <div class="ch-figs ch-figs-2">
+              <!-- FIG:vii-tympanique|VII2 (coronal). --><figure class="ch-fig" data-traces><svg viewBox="0 0 257 210" role="img" aria-label="Segment tympanique du nerf facial (VII2) : plancher du canal dénudé" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/vii-tympanique.jpg" width="257" height="210"/><g class="ch-traces"><path d="M104.0 140.0 L123.3 91.7" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M104.0 140.0 L123.3 91.7" stroke="#f2ab2f" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M126.0 85.0 L126.6 94.0 L119.4 91.1Z" fill="#f2ab2f" stroke="#000" stroke-opacity=".55" stroke-width="1"/><g><rect x="81.6" y="146.0" width="36.8" height="16.0" rx="8.0" fill="#f2ab2f" stroke="#fff" stroke-width="1.2"/><text x="100" y="157.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">VII2</text></g></g></svg><figcaption>VII2 (coronal).</figcaption></figure><!-- /FIG -->
+              <!-- FIG:vii-mastoidien|VII3 (axial). --><figure class="ch-fig" data-traces><svg viewBox="0 0 244 238" role="img" aria-label="Segment mastoïdien du nerf facial (VII3) au contact" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/vii-mastoidien.jpg" width="244" height="238"/><g class="ch-traces"><path d="M204.0 84.0 L172.0 105.0" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M204.0 84.0 L172.0 105.0" stroke="#f2ab2f" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M166.0 109.0 L170.6 101.3 L174.9 107.8Z" fill="#f2ab2f" stroke="#000" stroke-opacity=".55" stroke-width="1"/><g><rect x="199.6" y="64.0" width="36.8" height="16.0" rx="8.0" fill="#f2ab2f" stroke="#fff" stroke-width="1.2"/><text x="218" y="75.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">VII3</text></g></g></svg><figcaption>VII3 (axial).</figcaption></figure><!-- /FIG -->
+            </div>
+          </div>
+          <div class="ch-risque">
+            <div class="ch-risque-txt"><h3>Canaux vasculaires</h3><p>Continuité de la coque du <b>canal carotidien</b>, du <b>golfe jugulaire</b> et de la <b>plaque sigmoïdienne</b>. Toute anomalie du sinus sigmoïde ou latéral : chercher une <mark class="k-grave">thrombose</mark> (séquence veineuse).</p><button type="button" class="ch-lien-3d" data-parcours="vaisseaux">Vaisseaux en 3D</button></div>
+            <div class="ch-figs ch-figs-2">
+              <!-- FIG:canal-carotidien|Canal carotidien. --><figure class="ch-fig" data-traces><svg viewBox="0 0 246 170" role="img" aria-label="Coque du canal carotidien" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/canal-carotidien.jpg" width="246" height="170"/><g class="ch-traces"><path d="M111.0 95.0 L142.5 80.1" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M111.0 95.0 L142.5 80.1" stroke="#c8102e" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M149.0 77.0 L143.4 84.0 L140.0 76.9Z" fill="#c8102e" stroke="#000" stroke-opacity=".55" stroke-width="1"/><g><rect x="42.4" y="100.0" width="111.2" height="16.0" rx="8.0" fill="#c8102e" stroke="#fff" stroke-width="1.2"/><text x="98" y="111.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">canal carotidien</text></g></g></svg><figcaption>Canal carotidien.</figcaption></figure><!-- /FIG -->
+              <!-- FIG:sinus-sigmoide|Sinus sigmoïde. --><figure class="ch-fig" data-traces><svg viewBox="0 0 214 178" role="img" aria-label="Paroi du sinus sigmoïde" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/sinus-sigmoide.jpg" width="214" height="178"/><g class="ch-traces"><path d="M44.0 98.0 L62.1 126.0" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M44.0 98.0 L62.1 126.0" stroke="#3c67b8" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M66.0 132.0 L58.3 127.3 L64.9 123.1Z" fill="#3c67b8" stroke="#000" stroke-opacity=".55" stroke-width="1"/><g><rect x="-5.4" y="78.0" width="98.8" height="16.0" rx="8.0" fill="#3c67b8" stroke="#fff" stroke-width="1.2"/><text x="44" y="89.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">sinus sigmoïde</text></g></g></svg><figcaption>Sinus sigmoïde.</figcaption></figure><!-- /FIG -->
+            </div>
+          </div>
+          <div class="ch-complic">
+            <div class="ch-complic-c" style="--c: var(--orange)"><b>Fonctionnelles</b><span>lyse ossiculaire ; fistule (vertiges) ; labyrinthite (surdité de perception) ; dénudation du VII (paralysie faciale)</span></div>
+            <div class="ch-complic-c" style="--c: var(--k-grave)"><b>Cérébro-méningées</b><span>méningocèle, méningite, empyème extradural, abcès cérébral → <b>IRM cérébrale injectée avec diffusion</b></span></div>
+            <div class="ch-complic-c" style="--c: var(--blue)"><b>Vasculaires</b><span>thrombophlébite du sinus sigmoïde ou latéral</span></div>
+            <div class="ch-complic-c" style="--c: var(--purple)"><b>Infectieuses</b><span>cholestéatome surinfecté, mastoïdite extériorisée, abcès</span></div>
+          </div>
+        </section>
+
+        <!-- VIII -->
+        <section class="fsec" id="variantes" style="--c: var(--purple)">
+          <h2 class="fsec-title"><span class="fnum">VIII</span>Variantes à signaler au chirurgien</h2>
+          <div class="ch-variantes">
+            <div class="fcard"><h3>Mastoïde</h3><p>Pneumatisation, sclérose, <b>accès à l'antre</b> : une mastoïde éburnée change l'abord.</p><div class="ch-figs ch-figs-1"><!-- FIG:mastoide-eburnee|Mastoïde complètement scléreuse. --><figure class="ch-fig" data-traces><svg viewBox="0 0 256 235" role="img" aria-label="Mastoïde entièrement scléreuse (éburnée)" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/mastoide-eburnee.jpg" width="256" height="235"/><g class="ch-traces"><path d="M4.0 52.0 L28.7 75.1" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M4.0 52.0 L28.7 75.1" stroke="#f2ab2f" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M34.0 80.0 L25.4 77.3 L30.7 71.6Z" fill="#f2ab2f" stroke="#000" stroke-opacity=".55" stroke-width="1"/></g></svg><figcaption>Mastoïde complètement scléreuse.</figcaption></figure><!-- /FIG --></div></div>
+            <div class="fcard"><h3>Golfe jugulaire</h3><p><b>Procident</b> s'il monte haut dans l'hypotympan ; <mark class="k-grave">déhiscent</mark> si aucune coque ne le sépare de la caisse : risque de plaie vasculaire.</p><div class="ch-figs ch-figs-2"><!-- FIG:golfe-procident|Procident. --><figure class="ch-fig" data-traces><svg viewBox="0 0 201 200" role="img" aria-label="Golfe jugulaire procident" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/golfe-procident.jpg" width="201" height="200"/><g class="ch-traces"><path d="M123.0 82.0 L125.4 87.7 L131.6 88.2 L126.9 92.3 L128.3 98.3 L123.0 95.0 L117.7 98.3 L119.1 92.3 L114.4 88.2 L120.6 87.7Z" fill="#3c67b8" stroke="#000" stroke-opacity=".6" stroke-width="1"/><g><rect x="89.1" y="62.0" width="67.8" height="16.0" rx="8.0" fill="#3c67b8" stroke="#fff" stroke-width="1.2"/><text x="123" y="73.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">procident</text></g></g></svg><figcaption>Procident.</figcaption></figure><!-- /FIG --><!-- FIG:golfe-dehiscent|Déhiscent. --><figure class="ch-fig" data-traces><svg viewBox="0 0 234 194" role="img" aria-label="Golfe jugulaire déhiscent" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/golfe-dehiscent.jpg" width="234" height="194"/><g class="ch-traces"><g><rect x="138.1" y="12.0" width="67.8" height="16.0" rx="8.0" fill="#3c67b8" stroke="#fff" stroke-width="1.2"/><text x="172" y="23.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">déhiscent</text></g></g></svg><figcaption>Déhiscent.</figcaption></figure><!-- /FIG --></div></div>
+            <div class="fcard"><h3>Sinus sigmoïde antérieur et superficiel</h3><p>La mastoïde se sclérose, le sinus s'avance dans l'espace perdu. En axial : procidence si une tangente à son bord antérieur traverse l'oreille interne.</p><div class="ch-figs ch-figs-2"><!-- FIG:sigmoide-anterieur-1|Sinus sigmoïde antérieur. --><figure class="ch-fig" data-traces><svg viewBox="0 0 215 192" role="img" aria-label="Sinus sigmoïde antérieur" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/sigmoide-anterieur-1.jpg" width="215" height="192"/><g class="ch-traces"><path d="M89.0 107.0 L91.4 112.7 L97.6 113.2 L92.9 117.3 L94.3 123.3 L89.0 120.0 L83.7 123.3 L85.1 117.3 L80.4 113.2 L86.6 112.7Z" fill="#3c67b8" stroke="#000" stroke-opacity=".6" stroke-width="1"/></g></svg><figcaption>Sinus sigmoïde antérieur.</figcaption></figure><!-- /FIG --><!-- FIG:sigmoide-anterieur-2|Antérieur et superficiel. --><figure class="ch-fig" data-traces><svg viewBox="0 0 224 213" role="img" aria-label="Sinus sigmoïde antérieur et superficiel" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/sigmoide-anterieur-2.jpg" width="224" height="213"/><g class="ch-traces"><path d="M178.0 120.0 L180.4 125.7 L186.6 126.2 L181.9 130.3 L183.3 136.3 L178.0 133.1 L172.7 136.3 L174.1 130.3 L169.4 126.2 L175.6 125.7Z" fill="#3c67b8" stroke="#000" stroke-opacity=".6" stroke-width="1"/></g></svg><figcaption>Antérieur et superficiel.</figcaption></figure><!-- /FIG --></div></div>
+            <div class="fcard"><h3>Tegmen et canal facial</h3><p><b>Tegmen bas</b> ou très aminci : comparer au côté opposé avant de parler de lyse. <b>Canal facial</b> procident ou déhiscence préexistante. Préciser séparément les rapports avec le cholestéatome.</p></div>
+          </div>
+        </section>
+
+        <!-- IX -->
+        <section class="fsec" id="irm" style="--c: var(--royal)">
+          <h2 class="fsec-title"><span class="fnum">IX</span>IRM : caractériser le comblement</h2>
+          <div class="ftable-wrap">
+            <table class="ftable ch-signaux">
+              <thead><tr><th>Tissu</th><th>T1</th><th>T2</th><th>Diffusion b1000</th><th>Gadolinium</th></tr></thead>
+              <tbody>
+                <tr class="ch-l-chole"><td class="rh">Cholestéatome</td><td>hypo</td><td>hyper</td><td><mark class="k-grave">hyper</mark> (ADC bas)</td><td>pas de prise, même tardive<br><small>(liseré périphérique possible)</small></td></tr>
+                <tr class="ch-l-fibro"><td class="rh">Tissu fibro-inflammatoire</td><td>hypo</td><td>hyper</td><td>hypo</td><td><mark class="k-sign">prise tardive</mark> (≈ 30 min)</td></tr>
+                <tr class="ch-l-granulome"><td class="rh">Granulome à cholestérine</td><td><mark class="k-ddx">hyper spontané</mark></td><td>hyper</td><td>—</td><td>—</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="ch-outil" id="ch-irm">
+            <p class="ch-outil-titre">Outil — Quel est ce tissu ?</p>
+            <div class="ch-selects">
+              <label>T1 sans injection <select name="t1"><option value="">—</option><option value="hypo">hyposignal</option><option value="hyper">hypersignal spontané</option></select></label>
+              <label>T2 <select name="t2"><option value="">—</option><option value="hyper">hypersignal</option><option value="hypo">hyposignal</option></select></label>
+              <label>Diffusion b1000 <select name="diffusion"><option value="">—</option><option value="hyper">hypersignal</option><option value="hypo">hyposignal</option></select></label>
+              <label>Gadolinium tardif <select name="gado"><option value="">—</option><option value="aucune">pas de prise</option><option value="peripherique">liseré périphérique</option><option value="tardive">prise tardive du tissu</option></select></label>
+            </div>
+            <div class="ch-verdict" id="ch-irm-res" aria-live="polite"><b></b><span>Choisissez les signaux observés.</span></div>
+          </div>
+          <div class="ch-figs ch-figs-3">
+            <!-- FIG:tegmen-irm-gado|T1 gadolinium semi-tardif : opacité non rehaussée. --><figure class="ch-fig" data-traces><svg viewBox="0 0 187 184" role="img" aria-label="T1 gadolinium semi-tardif : opacité non rehaussée" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/tegmen-irm-gado.jpg" width="187" height="184"/><g class="ch-traces"><circle cx="74" cy="50" r="14" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="4.2"/><circle cx="74" cy="50" r="14" fill="none" stroke="#7b3fa8" stroke-width="2.2"/><g><rect x="27.7" y="16.0" width="92.6" height="16.0" rx="8.0" fill="#7b3fa8" stroke="#fff" stroke-width="1.2"/><text x="74" y="27.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">non rehaussée</text></g></g></svg><figcaption>T1 gadolinium semi-tardif : opacité non rehaussée.</figcaption></figure><!-- /FIG -->
+            <!-- FIG:tegmen-irm-diffusion|Même lésion en diffusion b1000 : hypersignal = cholestéatome. --><figure class="ch-fig" data-traces><svg viewBox="0 0 217 179" role="img" aria-label="Diffusion b1000 : hypersignal (cholestéatome)" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/tegmen-irm-diffusion.jpg" width="217" height="179"/><g class="ch-traces"><path d="M126.0 118.0 L95.5 92.6" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M126.0 118.0 L95.5 92.6" stroke="#f2ab2f" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M90.0 88.0 L98.7 90.2 L93.7 96.2Z" fill="#f2ab2f" stroke="#000" stroke-opacity=".55" stroke-width="1"/></g></svg><figcaption>Même lésion en diffusion b1000 : hypersignal = cholestéatome.</figcaption></figure><!-- /FIG -->
+            <!-- FIG:granulome-irm|Granulome à cholestérine : hypersignal T1 spontané. --><figure class="ch-fig" data-traces><svg viewBox="0 0 168 191" role="img" aria-label="Granulome à cholestérine : hypersignal T1 spontané" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/granulome-irm.jpg" width="168" height="191"/><g class="ch-traces"><path d="M44.0 30.0 L50.3 55.0" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M44.0 30.0 L50.3 55.0" stroke="#f2ab2f" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M52.0 62.0 L46.2 55.1 L53.8 53.2Z" fill="#f2ab2f" stroke="#000" stroke-opacity=".55" stroke-width="1"/></g></svg><figcaption>Granulome à cholestérine : hypersignal T1 spontané.</figcaption></figure><!-- /FIG -->
+          </div>
+          <div class="ch-deux">
+            <div class="callout callout-warn"><p><b>Pièges</b> : T1 gadolinium semi-tardif long, coupes de 2 mm, <mark class="k-ddx">petites opacités (&lt; 4 mm) mal analysées</mark>. Diffusion EPI : distorsions air/os, matrice faible, coupes épaisses (2,5 mm).</p></div>
+            <div class="callout"><p><b>Choisir</b> : <mark class="k-tech">diffusion TSE (non-EPI) haute résolution</mark>, single- ou multi-shot ; le plan <b>coronal</b> a moins d'artéfacts que l'axial.</p></div>
+          </div>
+          <div class="ch-figs ch-figs-3">
+            <!-- FIG:fibro-t2|Tissu fibro-inflammatoire : T2. --><figure class="ch-fig" data-traces><svg viewBox="0 0 212 180" role="img" aria-label="Tissu fibro-inflammatoire : hypersignal T2" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/fibro-t2.jpg" width="212" height="180"/><g class="ch-traces"><path d="M196.0 34.0 L168.2 61.0" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M196.0 34.0 L168.2 61.0" stroke="#f2ab2f" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M163.0 66.0 L166.1 57.5 L171.5 63.2Z" fill="#f2ab2f" stroke="#000" stroke-opacity=".55" stroke-width="1"/><text x="6" y="16" font-size="11" font-weight="800" fill="#fff" stroke="#000" stroke-width="3" paint-order="stroke" text-anchor="start">T2</text></g></svg><figcaption>Tissu fibro-inflammatoire : T2.</figcaption></figure><!-- /FIG -->
+            <!-- FIG:fibro-t1|T1 sans injection. --><figure class="ch-fig" data-traces><svg viewBox="0 0 219 203" role="img" aria-label="Tissu fibro-inflammatoire : hyposignal T1" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/fibro-t1.jpg" width="219" height="203"/><g class="ch-traces"><path d="M160.0 30.0 L157.8 50.8" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M160.0 30.0 L157.8 50.8" stroke="#f2ab2f" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M157.0 58.0 L154.0 49.5 L161.8 50.4Z" fill="#f2ab2f" stroke="#000" stroke-opacity=".55" stroke-width="1"/><path d="M208.0 118.0 L178.5 93.6" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M208.0 118.0 L178.5 93.6" stroke="#f2ab2f" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M173.0 89.0 L181.7 91.2 L176.7 97.2Z" fill="#f2ab2f" stroke="#000" stroke-opacity=".55" stroke-width="1"/><text x="6" y="16" font-size="11" font-weight="800" fill="#fff" stroke="#000" stroke-width="3" paint-order="stroke" text-anchor="start">T1 sans injection</text></g></svg><figcaption>T1 sans injection.</figcaption></figure><!-- /FIG -->
+            <!-- FIG:fibro-t1-tardif|T1 gadolinium tardif : le tissu se rehausse. --><figure class="ch-fig" data-traces><svg viewBox="0 0 226 199" role="img" aria-label="Tissu fibro-inflammatoire : prise de contraste tardive" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/fibro-t1-tardif.jpg" width="226" height="199"/><g class="ch-traces"><path d="M204.0 118.0 L162.3 95.4" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M204.0 118.0 L162.3 95.4" stroke="#f2ab2f" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M156.0 92.0 L165.0 92.4 L161.3 99.3Z" fill="#f2ab2f" stroke="#000" stroke-opacity=".55" stroke-width="1"/><text x="6" y="16" font-size="11" font-weight="800" fill="#fff" stroke="#000" stroke-width="3" paint-order="stroke" text-anchor="start">T1 gadolinium tardif</text></g></svg><figcaption>T1 gadolinium tardif : le tissu se rehausse.</figcaption></figure><!-- /FIG -->
+          </div>
+        </section>
+
+        <!-- X -->
+        <section class="fsec" id="post-op" style="--c: var(--plum)">
+          <h2 class="fsec-title"><span class="fnum">X</span>Après chirurgie</h2>
+          <div class="ch-deux">
+            <div class="fcard"><h3>Technique fermée</h3><p>Cholestéatome limité. Abord mastoïdien postérieur, <b>paroi postérieure et supérieure du conduit conservée</b>, greffe tympanique souvent cartilagineuse. Résidu possible : <b>surveillance</b>.</p><div class="ch-figs ch-figs-2"><!-- FIG:technique-fermee-1|Technique fermée. --><figure class="ch-fig" data-traces><svg viewBox="0 0 231 224" role="img" aria-label="Tympanoplastie en technique fermée" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/technique-fermee-1.jpg" width="231" height="224"/><g class="ch-traces"><path d="M170.0 165.0 L171.6 168.8 L175.7 169.1 L172.6 171.8 L173.5 175.9 L170.0 173.7 L166.5 175.9 L167.4 171.8 L164.3 169.1 L168.4 168.8Z" fill="#f2ab2f" stroke="#000" stroke-opacity=".6" stroke-width="1"/><g><rect x="97.5" y="202.0" width="105.0" height="16.0" rx="8.0" fill="#f2ab2f" stroke="#fff" stroke-width="1.2"/><text x="150" y="213.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">caisse ré-aérée</text></g></g></svg><figcaption>Technique fermée.</figcaption></figure><!-- /FIG --><!-- FIG:greffe-cartilage|Greffe cartilagineuse. --><figure class="ch-fig" data-traces><svg viewBox="0 0 274 230" role="img" aria-label="Greffe tympanique cartilagineuse" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/greffe-cartilage.jpg" width="274" height="230"/><g class="ch-traces"><path d="M96.0 52.0 L87.9 81.1" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M96.0 52.0 L87.9 81.1" stroke="#f2ab2f" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M86.0 88.0 L84.4 79.1 L91.9 81.2Z" fill="#f2ab2f" stroke="#000" stroke-opacity=".55" stroke-width="1"/></g></svg><figcaption>Greffe cartilagineuse.</figcaption></figure><!-- /FIG --></div></div>
+            <div class="fcard"><h3>Technique ouverte</h3><p>Cholestéatome étendu. <b>Cavité d'évidement pétro-mastoïdienne</b> (paroi du conduit enlevée), souvent avec micro-caisse.</p><div class="ch-figs ch-figs-2"><!-- FIG:technique-ouverte-1|Cavité d'évidement. --><figure class="ch-fig"><svg viewBox="0 0 229 217" role="img" aria-label="Cavité d&#x27;évidement." font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/technique-ouverte-1.jpg" width="229" height="217"/></svg><figcaption>Cavité d'évidement.</figcaption></figure><!-- /FIG --><!-- FIG:ossiculoplastie|Ossiculoplastie. --><figure class="ch-fig" data-traces><svg viewBox="0 0 227 123" role="img" aria-label="Ossiculoplastie : prothèse entre tympan et étrier" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/ossiculoplastie.jpg" width="227" height="123"/><g class="ch-traces"><path d="M108.0 47.0 L122.0 50.0 L116.0 66.0 L108.0 82.0 L100.0 79.0 L104.0 62.0 Z" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="4.6" stroke-linejoin="round" stroke-linecap="round"/><path d="M108.0 47.0 L122.0 50.0 L116.0 66.0 L108.0 82.0 L100.0 79.0 L104.0 62.0 Z" fill="none" stroke="#f18d25" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><g><rect x="71.2" y="96.0" width="61.6" height="16.0" rx="8.0" fill="#f18d25" stroke="#fff" stroke-width="1.2"/><text x="102" y="107.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">prothèse</text></g></g></svg><figcaption>Ossiculoplastie.</figcaption></figure><!-- /FIG --></div></div>
+          </div>
+          <div class="ch-deux">
+            <div class="fcard ch-proto"><p class="ch-proto-titre">TDM</p><ul class="fl"><li>Première imagerie après chirurgie si question d'<b>ossiculoplastie</b>, de <b>tegmen</b>, de complication osseuse.</li><li><mark class="k-grave">Récidive / résidu</mark> : opacité <b>ronde</b> (perle), <b>bords convexes dans tous les plans</b>.</li><li><mark class="k-sign">Pas de cholestéatome</mark> : aucune opacité, ou opacité en cadre / localisée à <b>bords concaves</b>.</li><li>Les <b>reconstructions</b> coronales et sagittales départagent.</li></ul></div>
+            <div class="fcard ch-proto"><p class="ch-proto-titre">IRM — surveillance</p><ul class="fl"><li><mark class="k-tech">Diffusion non-EPI</mark> + T1 sans injection ± T1 gadolinium tardif (30 min), T2 axial et coronal.</li><li>Premier bilan et <b>suivi à long terme</b> sans réintervention.</li><li>Corréler au <b>compte rendu opératoire</b>.</li></ul></div>
+          </div>
+          <div class="ch-figs ch-figs-4">
+            <!-- FIG:recidive-perle-1|Perle : bords convexes. --><figure class="ch-fig" data-traces><svg viewBox="0 0 222 205" role="img" aria-label="Récidive : opacité ronde à bords convexes (perle)" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/recidive-perle-1.jpg" width="222" height="205"/><g class="ch-traces"><path d="M192.0 32.0 L157.0 67.8" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M192.0 32.0 L157.0 67.8" stroke="#f2ab2f" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M152.0 73.0 L154.9 64.5 L160.5 69.9Z" fill="#f2ab2f" stroke="#000" stroke-opacity=".55" stroke-width="1"/></g></svg><figcaption>Perle : bords convexes.</figcaption></figure><!-- /FIG -->
+            <!-- FIG:recidive-perle-2|Perle, autre patient. --><figure class="ch-fig" data-traces><svg viewBox="0 0 237 164" role="img" aria-label="Récidive : perle de cholestéatome" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/recidive-perle-2.jpg" width="237" height="164"/><g class="ch-traces"><path d="M178.0 12.0 L144.1 45.9" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M178.0 12.0 L144.1 45.9" stroke="#f2ab2f" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M139.0 51.0 L142.0 42.5 L147.5 48.0Z" fill="#f2ab2f" stroke="#000" stroke-opacity=".55" stroke-width="1"/></g></svg><figcaption>Perle, autre patient.</figcaption></figure><!-- /FIG -->
+            <!-- FIG:greffe-horizontale|Piège : greffe tympanique horizontalisée. --><figure class="ch-fig" data-traces><svg viewBox="0 0 217 178" role="img" aria-label="Greffe tympanique horizontalisée" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/greffe-horizontale.jpg" width="217" height="178"/><g class="ch-traces"><path d="M0.0 96.5 L216.0 96.5" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><path d="M0.0 96.5 L216.0 96.5" fill="none" stroke="#f2ab2f" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 4"/></g></svg><figcaption>Piège : greffe tympanique horizontalisée.</figcaption></figure><!-- /FIG -->
+            <!-- FIG:recidive-t1-tardif|Récidive : aucune prise, même tardive. --><figure class="ch-fig" data-traces><svg viewBox="0 0 190 162" role="img" aria-label="Récidive : pas de prise de contraste, même tardive" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/recidive-t1-tardif.jpg" width="190" height="162"/><g class="ch-traces"><path d="M45.0 20.0 L45.0 53.8" stroke="#000" stroke-opacity=".55" stroke-width="4.6" stroke-linecap="round" fill="none"/><path d="M45.0 20.0 L45.0 53.8" stroke="#f2ab2f" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M45.0 61.0 L41.1 52.9 L48.9 52.9Z" fill="#f2ab2f" stroke="#000" stroke-opacity=".55" stroke-width="1"/></g></svg><figcaption>Récidive : aucune prise, même tardive.</figcaption></figure><!-- /FIG -->
+          </div>
+          <div class="ch-deux">
+            <div class="fcard"><h3>Cas : extension intrapétreuse</h3><p>Cholestéatome étendu au labyrinthe (CSC latéral) avec lyse du tegmen : chirurgie complexe, plastie du tegmen, lambeau graisseux. Au contrôle, opacité <b>non rehaussée</b> et en <b>hypersignal de diffusion</b> : récidive.</p></div>
+            <div class="ch-figs ch-figs-2">
+              <!-- FIG:tegmen-tdm-1|Extension au CSC latéral. --><figure class="ch-fig" data-traces><svg viewBox="0 0 228 197" role="img" aria-label="Extension labyrinthique (canal semi-circulaire latéral)" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/tegmen-tdm-1.jpg" width="228" height="197"/><g class="ch-traces"><path d="M64.0 90.0 L72.0 84.0 L80.0 79.0 L87.0 73.0" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><path d="M64.0 90.0 L72.0 84.0 L80.0 79.0 L87.0 73.0" fill="none" stroke="#f18d25" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><g><rect x="35.6" y="120.0" width="160.8" height="16.0" rx="8.0" fill="#f18d25" stroke="#fff" stroke-width="1.2"/><text x="116" y="131.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">extension au CSC latéral</text></g></g></svg><figcaption>Extension au CSC latéral.</figcaption></figure><!-- /FIG -->
+              <!-- FIG:tegmen-irm-plastie|Plastie du tegmen, lambeau graisseux. --><figure class="ch-fig" data-traces><svg viewBox="0 0 208 174" role="img" aria-label="Après chirurgie : plastie du tegmen et lambeau graisseux" font-family="Montserrat, Arial, sans-serif"><image href="cholesteatome/images/tegmen-irm-plastie.jpg" width="208" height="174"/><g class="ch-traces"><path d="M56.0 34.0 L66.0 36.0 L72.0 38.0" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/><path d="M56.0 34.0 L66.0 36.0 L72.0 38.0" fill="none" stroke="#c8102e" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><g><rect x="11.3" y="12.0" width="117.4" height="16.0" rx="8.0" fill="#c8102e" stroke="#fff" stroke-width="1.2"/><text x="70" y="23.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">plastie du tegmen</text></g><path d="M32.0 102.0 L38.0 80.0 L46.0 60.0 L62.0 52.0 L76.0 52.0 L80.0 58.0 L70.0 58.0 L56.0 64.0 L50.0 82.0 L40.0 102.0" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="4.4" stroke-linejoin="round" stroke-linecap="round"/><path d="M32.0 102.0 L38.0 80.0 L46.0 60.0 L62.0 52.0 L76.0 52.0 L80.0 58.0 L70.0 58.0 L56.0 64.0 L50.0 82.0 L40.0 102.0" fill="none" stroke="#2a9d8f" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/><g><rect x="5.3" y="108.0" width="117.4" height="16.0" rx="8.0" fill="#2a9d8f" stroke="#fff" stroke-width="1.2"/><text x="64" y="119.6" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">lambeau graisseux</text></g></g></svg><figcaption>Plastie du tegmen, lambeau graisseux.</figcaption></figure><!-- /FIG -->
+            </div>
+          </div>
+        </section>
+
+        <!-- XI -->
+        <section class="fsec" id="compte-rendu" style="--c: var(--slate)">
+          <h2 class="fsec-title"><span class="fnum">XI</span>Compte rendu guidé</h2>
+          <p class="fintro">Cochez ce que vous avez vu : le texte se construit.</p>
+          <div class="ch-outil ch-cr" id="ch-cr">
+            <div class="ch-cr-choix">
+              <fieldset><legend>Côté</legend><label><input type="radio" name="cote" value="droite" checked> droite</label><label><input type="radio" name="cote" value="gauche"> gauche</label></fieldset>
+              <fieldset><legend>Extension</legend>
+                <label><input type="checkbox" name="extension" value="attique" checked> attique</label><label><input type="checkbox" name="extension" value="mesotympan"> mésotympan</label><label><input type="checkbox" name="extension" value="hypotympan"> hypotympan</label><label><input type="checkbox" name="extension" value="retro"> sinus tympani</label><label><input type="checkbox" name="extension" value="aditus"> aditus</label><label><input type="checkbox" name="extension" value="antre"> antre</label><label><input type="checkbox" name="extension" value="mastoide"> mastoïde</label><label><input type="checkbox" name="extension" value="cae"> conduit</label></fieldset>
+              <fieldset><legend>Ostéolyse</legend>
+                <label><input type="checkbox" name="lyses" value="mur"> mur de la logette</label><label><input type="checkbox" name="lyses" value="marteau"> tête du marteau</label><label><input type="checkbox" name="lyses" value="enclume"> longue apophyse de l'enclume</label><label><input type="checkbox" name="lyses" value="etrier"> étrier</label></fieldset>
+              <fieldset><legend>Complications</legend>
+                <label><input type="checkbox" name="risques" value="tegmen"> tegmen</label><label><input type="checkbox" name="risques" value="fistule"> fistule du CSC latéral</label><label><input type="checkbox" name="risques" value="facial"> canal facial</label><label><input type="checkbox" name="risques" value="vasculaire"> canal vasculaire</label></fieldset>
+              <fieldset><legend>Variantes</legend>
+                <label><input type="checkbox" name="variantes" value="tegmen"> tegmen bas</label><label><input type="checkbox" name="variantes" value="golfe"> golfe procident</label><label><input type="checkbox" name="variantes" value="sigmoide"> sinus sigmoïde antérieur</label><label><input type="checkbox" name="variantes" value="facial"> canal facial procident</label></fieldset>
+            </div>
+            <div class="p-cr ch-cr-texte" id="ch-cr-texte" aria-live="polite"></div>
+            <button type="button" class="btn btn-ink btn-sm" id="ch-cr-copier">Copier le texte</button>
+          </div>
+        </section>
+
+        <!-- Testez-vous -->
+        <section class="fsec" id="testez-vous" style="--c: var(--ink)">
+          <h2 class="fsec-title"><span class="fnum">?</span>Testez-vous</h2>
+          <p class="fintro">Cliquez sur une carte pour voir la réponse.</p>
+          <div class="flash flash-3">
+            <button class="flip" aria-pressed="false" style="--c: var(--k-grave)"><span class="flip-tab">1</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Les deux signes TDM qui font le cholestéatome ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>Masse convexe + ostéolyse</b>À front lisse ; effet de masse en dedans.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--orange)"><span class="flip-tab">2</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Osselet le plus fragile ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>Longue apophyse de l'enclume</b>Lysée même dans une OMC simple.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--teal)"><span class="flip-tab">3</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Fistule labyrinthique : où d'abord ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>Canal semi-circulaire latéral</b>Coque osseuse disparue au contact.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--purple)"><span class="flip-tab">4</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Recoin où se cache le résidu ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>Sinus tympani</b>Rétrotympanum, mal vu du chirurgien.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--royal)"><span class="flip-tab">5</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Récidive après chirurgie : quelle séquence ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>Diffusion non-EPI b1000</b>Hypersignal, sans prise de contraste tardive.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--blue)"><span class="flip-tab">6</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Golfe jugulaire sans coque osseuse ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>Déhiscent</b>Risque de plaie vasculaire : à signaler.</p></span></span></button>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="../index.html" class="brand">
+          <img src="../assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+          <span class="brand-name">Radiologic<br>Hub</span>
+        </a>
+        <p class="footer-tagline">Outils, ressources et formation pour les radiologues et les résidents.</p>
+      </div>
+      <nav aria-label="Liens de pied de page">
+        <div class="footer-col">
+          <p class="footer-titre">Au quotidien</p>
+          <a href="../comptes-rendus.html">Comptes rendus</a>
+          <a href="../suivi-oncologique.html">Suivi oncologique</a>
+          <a href="../fiches-rapides.html">Fiches rapides</a>
+          <a href="../espace-dicom.html">Espace DICOM</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Apprendre</p>
+          <a href="../radioanatomie/index.html">Radioanatomie</a>
+          <a href="../cas/index.html">Cas cliniques</a>
+          <a href="../index.html#cas-du-jour">Cas du jour</a>
+          <a href="../bibliotheque.html">Bibliothèque</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Réseau</p>
+          <a href="../communaute.html">Communauté</a>
+          <a href="../remplacements.html">Remplacements</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Masterclass</p>
+          <a href="../index.html#masterclass">Programme</a>
+          <a href="../index.html#tarifs">Tarifs</a>
+          <a href="../index.html#inscription">S'inscrire à une masterclass</a>
+        </div>
+      </nav>
+      <p class="copyright"><span>© <span id="year"></span> RadiologicHub · Outils, ressources et formation en radiologie</span><span class="copyright-liens"><a href="../mentions-legales.html">Mentions légales</a><a href="../index.html#inscription">Contact</a></span></p>
+    </div>
+  </footer>
+
+  <script src="../navigation.js?v=20261022235000"></script>
+
+  <script src="../fiche.js?v=20261022235000"></script>
+  <script src="../regles/cholesteatome.js?v=20261026120000"></script>
+  <script type="module" src="cholesteatome/cholesteatome-fiche.js?v=20261026120000"></script>
+</body>
+</html>
