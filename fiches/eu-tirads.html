@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nodule thyroïdien : EU-TIRADS 2017 — Fiche rapide RadiologicHub</title>
+  <meta name="description" content="Fiche rapide RadiologicHub : nodule thyroïdien et EU-TIRADS 2017 — lexique, 4 signes de forte suspicion, catégories 2 à 5, ponctuations hyperéchogènes, compte rendu, seuils de cytoponction, surveillance, pièges, nodule interactif et entraînement.">
+  <link rel="icon" type="image/svg+xml" href="../assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=20261022235000">
+  <link rel="stylesheet" href="../fiche.css?v=20261012150000">
+    <link rel="stylesheet" href="../schemas/eu-tirads.css?v=20261026140000">
+</head>
+<body class="fiche-page">
+
+  <div class="read-progress" aria-hidden="true"><span></span></div>
+
+  <header class="site-header is-scrolled" id="top">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="RadiologicHub — accueil">
+        <img src="../assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+        <a href="../comptes-rendus.html">Comptes rendus</a>
+        <a href="../fiches-rapides.html" class="is-current">Fiches rapides</a>
+        <a href="../radioanatomie/index.html">Radioanatomie</a>
+        <a href="../bibliotheque.html">Bibliothèque</a>
+        <a href="../communaute.html">Communauté</a>
+        <a href="../remplacements.html">Remplacements</a>
+        <a href="../index.html#masterclass" class="nav-masterclass">Masterclass</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main>
+    <!-- ============ EN-TÊTE DE FICHE ============ -->
+    <section class="fiche-hero sec-down">
+      <div class="container">
+        <nav class="crumbs" aria-label="Fil d'Ariane">
+          <a href="../fiches-rapides.html">Fiches rapides</a> › <a href="../fiches-rapides.html#orl">Tête et cou</a> › <span>Nodule thyroïdien : EU-TIRADS</span>
+        </nav>
+        <p class="marker-tag">Fiche rapide · Tête et cou · Échographie</p>
+        <h1>Nodule thyroïdien : <span class="hl-navy">EU-TIRADS 2017</span></h1>
+        <p class="fiche-sub"><span class="hl-red">Décrire</span> avec le lexique, chercher les <span class="hl-red">4 signes forts</span>, classer de 2 à 5, mesurer, regarder les <b>ganglions</b>, appliquer le <b>seuil de cytoponction</b>. Avec un <b>nodule à construire vous-même</b>.</p>
+
+        <div class="legend" role="group" aria-label="Code couleur — cliquez pour isoler une catégorie">
+          <span class="legend-label">Code couleur :</span>
+          <button class="chip k-tech" data-k="tech" aria-pressed="false">Méthode</button>
+          <button class="chip k-sign" data-k="sign" aria-pressed="false">Bénin / faible risque</button>
+          <button class="chip k-key" data-k="key" aria-pressed="false">Seuil / intermédiaire</button>
+          <button class="chip k-grave" data-k="grave" aria-pressed="false">Forte suspicion</button>
+          <button class="chip k-ddx" data-k="ddx" aria-pressed="false">Piège</button>
+        </div>
+        <p class="legend-hint">Astuce : cliquez sur une couleur pour n'afficher qu'elle.</p>
+
+        <div class="fiche-actions">
+          <button class="btn btn-outline btn-sm" id="print-btn">Imprimer / PDF</button>
+          <a href="#atelier" class="btn btn-outline btn-sm">Construire un nodule</a>
+          <a href="#cytoponction" class="btn btn-outline btn-sm">Seuils de cytoponction</a>
+          <a href="#entrainement" class="btn btn-ink btn-sm">S'entraîner →</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="container fiche-layout">
+      <aside class="toc" aria-label="Sommaire">
+        <p class="toc-title">Sommaire</p>
+        <ol>
+          <li><a href="#reperes" style="--c: var(--blue)"><b>I</b>Repères</a></li>
+          <li><a href="#atelier" style="--c: var(--teal)"><b>II</b>Construire un nodule</a></li>
+          <li><a href="#categories" style="--c: var(--orange)"><b>III</b>Les 5 catégories</a></li>
+          <li><a href="#signes-forts" style="--c: var(--k-grave)"><b>IV</b>Les 4 signes forts</a></li>
+          <li><a href="#ponctuations" style="--c: var(--purple)"><b>V</b>Ponctuations brillantes</a></li>
+          <li><a href="#compte-rendu" style="--c: var(--steel)"><b>VI</b>Compte rendu</a></li>
+          <li><a href="#cytoponction" style="--c: var(--amber)"><b>VII</b>Cytoponction</a></li>
+          <li><a href="#suivi" style="--c: var(--green)"><b>VIII</b>Surveillance, chirurgie</a></li>
+          <li><a href="#pieges" style="--c: var(--rose)"><b>IX</b>Multinodulaire et pièges</a></li>
+          <li><a href="#entrainement" style="--c: var(--royal)"><b>X</b>Entraînement</a></li>
+          <li><a href="#testez-vous" style="--c: var(--ink)"><b>?</b>Testez-vous</a></li>
+        </ol>
+      </aside>
+
+      <div class="fiche-body" id="fiche-body">
+
+        <!-- I -->
+        <section class="fsec" id="reperes" style="--c: var(--blue)">
+          <h2 class="fsec-title"><span class="fnum">I</span>Repères</h2>
+          <div class="ti-chiffres">
+            <div class="ti-chiffre" style="--c: var(--blue)"><span>&lt; 5 mm</span><p>On n'en tient <b>pas compte</b>, sauf signe de forte suspicion.</p></div>
+            <div class="ti-chiffre" style="--c: var(--teal)"><span>10–30 %</span><p>grossissent ; 15–25 % diminuent.</p></div>
+            <div class="ti-chiffre" style="--c: var(--orange)"><span>≈ 1 mm/an</span><p>croissance habituelle de la portion solide ; <b>6 mm/an</b> = très rapide.</p></div>
+            <div class="ti-chiffre" style="--c: var(--k-grave)"><span>+2 mm · +50 %</span><p>variation significative : +2 mm dans <b>au moins 2 diamètres</b> et/ou +50 % de volume.</p></div>
+          </div>
+          <div class="callout callout-warn"><p><mark class="k-ddx">Grossir n'est pas un signe de malignité ; rester stable n'affirme pas la bénignité.</mark></p></div>
+          <div class="ti-outil" id="ti-croissance">
+            <p class="ti-outil-titre">Calcul — la croissance est-elle significative ?</p>
+            <div class="ti-croiss">
+              <fieldset><legend>Avant (mm)</legend><input inputmode="decimal" name="a1" value="12"><input inputmode="decimal" name="a2" value="10"><input inputmode="decimal" name="a3" value="8"></fieldset>
+              <fieldset><legend>Maintenant (mm)</legend><input inputmode="decimal" name="b1" value="14"><input inputmode="decimal" name="b2" value="11"><input inputmode="decimal" name="b3" value="9"></fieldset>
+            </div>
+            <p class="ti-verdict" id="ti-croissance-res" aria-live="polite"></p>
+          </div>
+          <div class="ch-deux ti-deux">
+            <div class="fcard"><h3>L'EU-TIRADS, c'est…</h3><ul class="fl"><li>un <b>lexique</b> standardisé ;</li><li>un <b>compte rendu</b> avec schéma ;</li><li>des <b>catégories</b> chiffrées en risque de cancer ;</li><li>des <b>recommandations</b> de prise en charge.</li></ul></div>
+            <div class="fcard"><h3>Et les ganglions ?</h3><p>Une adénopathie <b>ne change pas le score du nodule</b>, mais impose sa <mark class="k-grave">propre prise en charge</mark> (ponction avec thyroglobuline in situ).</p></div>
+          </div>
+        </section>
+
+        <!-- II -->
+        <section class="fsec" id="atelier" style="--c: var(--teal)">
+          <h2 class="fsec-title"><span class="fnum">II</span>Construire un nodule : le lexique en action</h2>
+          <p class="fintro">Changez chaque critère : le nodule se redessine et sa catégorie se recalcule. La bande sombre du haut est le <b>muscle</b> : la référence de l'hypoéchogénicité marquée.</p>
+          <div class="ti-atelier">
+            <form class="ti-lexique" id="ti-lexique" aria-label="Lexique EU-TIRADS">
+              <fieldset><legend>Composition</legend>
+                <label><input type="radio" name="composition" value="solide" checked> solide</label>
+                <label><input type="radio" name="composition" value="mixte-solide"> mixte, à prédominance solide</label>
+                <label><input type="radio" name="composition" value="mixte-kystique"> mixte, à prédominance kystique</label>
+                <label><input type="radio" name="composition" value="kyste"> kyste pur</label>
+                <label><input type="radio" name="composition" value="spongiforme"> spongiforme</label></fieldset>
+              <fieldset><legend>Échogénicité (portion solide)</legend>
+                <label><input type="radio" name="echo" value="hyper"> hyperéchogène</label>
+                <label><input type="radio" name="echo" value="iso" checked> isoéchogène</label>
+                <label><input type="radio" name="echo" value="hypo-moderee"> hypoéchogène modérée</label>
+                <label><input type="radio" name="echo" value="hypo-marquee"> hypoéchogène <b>marquée</b> (&lt; muscle)</label></fieldset>
+              <fieldset><legend>Forme</legend>
+                <label><input type="radio" name="forme" value="ovale" checked> ovale</label>
+                <label><input type="radio" name="forme" value="ronde"> ronde</label>
+                <label><input type="radio" name="forme" value="non-ovale"> <b>non ovale</b> (plus épais que large)</label></fieldset>
+              <fieldset><legend>Contours</legend>
+                <label><input type="radio" name="contours" value="reguliers" checked> réguliers</label>
+                <label><input type="radio" name="contours" value="flous"> flous (≠ irréguliers)</label>
+                <label><input type="radio" name="contours" value="irreguliers"> <b>irréguliers</b> (spiculés, microlobulés)</label></fieldset>
+              <fieldset><legend>Autres</legend>
+                <label><input type="checkbox" name="micro"> <b>microcalcifications</b></label>
+                <label><input type="checkbox" name="halo"> halo fin complet</label>
+                <label class="ti-taille">plus grand diamètre <input type="range" name="taille" min="3" max="45" value="14"> <output id="ti-taille-val">14 mm</output></label></fieldset>
+            </form>
+            <div class="ti-rendu">
+              <div class="ti-ecran" id="ti-ecran"></div>
+              <div class="ti-badge" id="ti-badge" aria-live="polite"><span class="ti-badge-cat"></span><span class="ti-badge-nom"></span><span class="ti-badge-risque"></span></div>
+              <div class="ti-jauge" aria-hidden="true"><span style="--c: var(--green)">2</span><span style="--c: var(--amber)">3</span><span style="--c: var(--orange)">4</span><span style="--c: var(--k-grave)">5</span><i id="ti-curseur"></i></div>
+              <p class="ti-raison" id="ti-raison"></p>
+              <p class="ti-conduite" id="ti-conduite"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- III -->
+        <section class="fsec" id="categories" style="--c: var(--orange)">
+          <h2 class="fsec-title"><span class="fnum">III</span>Les 5 catégories</h2>
+          <div class="callout"><p class="nodes-title">Algorithme</p><p><mark class="k-tech">Chercher d'abord au moins un signe de forte suspicion.</mark> S'il n'y en a aucun, classer selon l'<b>échogénicité</b> et les aspects spécifiques.</p></div>
+          <ol class="ti-algo" aria-label="Algorithme EU-TIRADS">
+            <li style="--c: var(--k-grave)"><b>≥ 1 signe fort ?</b><span>forme non ovale, contours irréguliers, microcalcifications, hypoéchogénicité marquée</span><em>oui → <strong>5</strong></em></li>
+            <li style="--c: var(--green)"><b>Kyste pur ou spongiforme ?</b><span>entièrement</span><em>oui → <strong>2</strong></em></li>
+            <li style="--c: var(--orange)"><b>Composante hypoéchogène modérée ?</b><span>même partielle</span><em>oui → <strong>4</strong></em></li>
+            <li style="--c: var(--amber)"><b>Sinon</b><span>ovale, réguliers, entièrement iso/hyperéchogène</span><em>→ <strong>3</strong></em></li>
+          </ol>
+          <div class="ti-cats">
+            <div class="ti-cat" style="--c: var(--green)"><span class="ti-cat-n">1</span><b>Normal</b><p>Examen normal.</p><small>—</small></div>
+            <div class="ti-cat" style="--c: var(--green)" data-nodule='{"composition":"spongiforme","echo":"iso"}'><span class="ti-cat-n">2</span><b>Bénin</b><p>Kyste simple ou nodule <b>entièrement spongiforme</b>.</p><small>≈ 0 %</small></div>
+            <div class="ti-cat" style="--c: var(--amber)" data-nodule='{"composition":"solide","echo":"hyper"}'><span class="ti-cat-n">3</span><b>Faible risque</b><p>Ovale, contours réguliers, <b>entièrement iso/hyperéchogène</b>.</p><small>2 – 4 %</small></div>
+            <div class="ti-cat" style="--c: var(--orange)" data-nodule='{"composition":"solide","echo":"hypo-moderee"}'><span class="ti-cat-n">4</span><b>Intermédiaire</b><p>Ovale, réguliers, <b>modérément hypoéchogène</b> (une composante partielle suffit).</p><small>6 – 17 %</small></div>
+            <div class="ti-cat" style="--c: var(--k-grave)" data-nodule='{"composition":"solide","echo":"hypo-marquee","forme":"non-ovale","contours":"irreguliers","micro":true}'><span class="ti-cat-n">5</span><b>Haut risque</b><p>Solide ou mixte avec <b>≥ 1 signe fort</b>.</p><small>26 – 87 %</small></div>
+          </div>
+          <div class="callout callout-warn"><p><b>Nodule hétérogène</b> : pour une composante solide hétérogène, <mark class="k-key">la composante la plus hypoéchogène l'emporte</mark>.</p></div>
+        </section>
+
+        <!-- IV -->
+        <section class="fsec" id="signes-forts" style="--c: var(--k-grave)">
+          <h2 class="fsec-title"><span class="fnum">IV</span>Les 4 signes de forte suspicion</h2>
+          <p class="fintro"><mark class="k-grave">Un seul suffit</mark> pour classer EU-TIRADS 5. Plus il y en a, plus le risque monte, sans changer de catégorie.</p>
+          <div class="ti-signes">
+            <div class="ti-signe" data-nodule='{"composition":"solide","echo":"hypo-moderee","forme":"non-ovale"}'><b>Forme non ovale</b><p>Plus <b>épais</b> que long et/ou large.</p></div>
+            <div class="ti-signe" data-nodule='{"composition":"solide","echo":"hypo-moderee","contours":"irreguliers"}'><b>Contours irréguliers</b><p>Spiculés ou lobulés, <b>au moins 3 lobulations</b>. Flou ≠ irrégulier.</p></div>
+            <div class="ti-signe" data-nodule='{"composition":"solide","echo":"iso","micro":true}'><b>Microcalcifications</b><p>Ponctuations <b>&lt; 1 mm</b>, sans ombre ni queue de comète ; compter les groupements (≥ 5).</p></div>
+            <div class="ti-signe" data-nodule='{"composition":"solide","echo":"hypo-marquee"}'><b>Hypoéchogénicité marquée</b><p>Nodule solide <b>plus sombre que les muscles</b> superficiels.</p></div>
+          </div>
+          <h3 class="ch-h3">Signes accessoires : ils modulent le risque, pas la catégorie</h3>
+          <div class="ftable-wrap"><table class="ftable"><thead><tr><th>Augmentent le risque</th><th>Diminuent le risque</th></tr></thead><tbody>
+            <tr><td><mark class="k-grave">Macrocalcifications périphériques discontinues</mark></td><td><mark class="k-sign">Halo fin complet</mark></td></tr>
+            <tr><td>Forme arrondie ; orientation oblique</td><td>Composante kystique ; granulations colloïdales</td></tr>
+            <tr><td>Extension extracapsulaire</td><td>Forme très aplatie (longueur &gt; 2,5 × épaisseur)</td></tr>
+          </tbody></table></div>
+        </section>
+
+        <!-- V -->
+        <section class="fsec" id="ponctuations" style="--c: var(--purple)">
+          <h2 class="fsec-title"><span class="fnum">V</span>Ponctuations hyperéchogènes : ne pas confondre</h2>
+          <p class="fintro">Cliquez sur une vignette pour voir de quoi il s'agit.</p>
+          <div class="ti-ponct">
+            <button type="button" class="ti-p" data-p="micro" style="--c: var(--k-grave)"><span class="ti-p-img"></span><span class="ti-p-q">?</span><span class="ti-p-r"><b>Microcalcifications</b>&lt; 1 mm, ni ombre ni queue de comète : <mark class="k-grave">signe fort</mark>.</span></button>
+            <button type="button" class="ti-p" data-p="colloide" style="--c: var(--green)"><span class="ti-p-img"></span><span class="ti-p-q">?</span><span class="ti-p-r"><b>Colloïde</b>0,5 à quelques mm, mobile, <b>queue de comète</b> : bénin.</span></button>
+            <button type="button" class="ti-p" data-p="microkystes" style="--c: var(--teal)"><span class="ti-p-img"></span><span class="ti-p-q">?</span><span class="ti-p-r"><b>Cavités microkystiques</b>Ponctuations linéaires <b>déclives</b> + renforcement postérieur.</span></button>
+            <button type="button" class="ti-p" data-p="macro" style="--c: var(--orange)"><span class="ti-p-img"></span><span class="ti-p-q">?</span><span class="ti-p-r"><b>Macrocalcification</b>&gt; 1 mm + <b>cône d'ombre</b> : non spécifique, à confronter au reste.</span></button>
+          </div>
+        </section>
+
+        <!-- VI -->
+        <section class="fsec" id="compte-rendu" style="--c: var(--steel)">
+          <h2 class="fsec-title"><span class="fnum">VI</span>Compte rendu standardisé</h2>
+          <div class="ftable-wrap"><table class="ftable"><thead><tr><th>Rubrique</th><th>Contenu indispensable</th></tr></thead><tbody>
+            <tr><td class="rh">Motif</td><td>Histoire clinique et biologique ; gêne et ancienneté ; examens et cytoponctions antérieurs ; <mark class="k-key">antécédent familial de cancer ou irradiation cervicale dans l'enfance</mark>.</td></tr>
+            <tr><td class="rh">Technique</td><td>Sonde, appareil ; difficultés liées au patient.</td></tr>
+            <tr><td class="rh">Glande</td><td>Volume, goitre ou goitre plongeant, retentissement trachéal ; échogénicité et vascularisation.</td></tr>
+            <tr><td class="rh">Nodules</td><td>Localisation ; <b>3 diamètres</b> ; caractéristiques ; <b>score EU-TIRADS</b> ; évolution ; <b>numérotation + cartographie</b>. <mark class="k-ddx">Ne jamais changer le numéro.</mark></td></tr>
+            <tr><td class="rh">Ganglions</td><td>Secteurs II, III, IV, VI et tractus thyréoglosse ; <b>au minimum III et VI</b>.</td></tr>
+            <tr><td class="rh">Conclusion</td><td>Synthèse glandulaire ; score et évolution ; cytoponction ou rythme de surveillance.</td></tr>
+          </tbody></table></div>
+          <div class="callout"><p class="nodes-title">Ganglions : toujours</p><p>Dès qu'il y a un nodule, chercher : <mark class="k-grave">logettes kystiques</mark>, <mark class="k-grave">tissu ressemblant à la thyroïde</mark>, <mark class="k-grave">microcalcifications</mark>, <mark class="k-grave">vascularisation anarchique</mark>.</p></div>
+          <p class="ti-lien-cr">Pour rédiger : outil <b>EU-TIRADS</b> de l'<a href="../comptes-rendus.html">éditeur des comptes rendus</a> (schéma des lobes, score et cytoponction par nodule).</p>
+        </section>
+
+        <!-- VII -->
+        <section class="fsec" id="cytoponction" style="--c: var(--amber)">
+          <h2 class="fsec-title"><span class="fnum">VII</span>Cytoponction : le seuil de taille</h2>
+          <p class="fintro">Faites varier la taille du nodule : les catégories à ponctionner s'allument.</p>
+          <div class="ti-outil">
+            <label class="ti-taille-grand">Plus grand diamètre <input type="range" id="ti-fna" min="3" max="45" value="12"> <output id="ti-fna-val">12 mm</output></label>
+            <div class="ti-fna">
+              <div class="ti-fna-c" data-cat="2" style="--c: var(--green)"><b>EU-TIRADS 2</b><span>jamais (kyste simple : seulement s'il est compressif)</span></div>
+              <div class="ti-fna-c" data-cat="3" style="--c: var(--amber)"><b>EU-TIRADS 3</b><span>&gt; 20 mm</span></div>
+              <div class="ti-fna-c" data-cat="4" style="--c: var(--orange)"><b>EU-TIRADS 4</b><span>&gt; 15 mm</span></div>
+              <div class="ti-fna-c" data-cat="5" style="--c: var(--k-grave)"><b>EU-TIRADS 5</b><span>&gt; 10 mm</span></div>
+            </div>
+            <p class="ti-verdict" id="ti-fna-res" aria-live="polite"></p>
+          </div>
+          <div class="callout callout-warn"><p><b>Adénopathie suspecte</b> : <mark class="k-grave">ponction ganglionnaire avec dosage de thyroglobuline in situ, systématique</mark>.</p></div>
+        </section>
+
+        <!-- VIII -->
+        <section class="fsec" id="suivi" style="--c: var(--green)">
+          <h2 class="fsec-title"><span class="fnum">VIII</span>Surveillance et chirurgie</h2>
+          <ol class="ti-frise" aria-label="Rythme de surveillance">
+            <li><b>1 an</b><span>premier contrôle</span></li>
+            <li><b>+2 ans</b><span>si stable</span></li>
+            <li><b>+3 ans</b></li>
+            <li><b>+5 ans</b></li>
+          </ol>
+          <ul class="fl">
+            <li>Ne pas trop espacer un <b>nodule complexe</b> : <mark class="k-key">2 à 3 ans</mark>.</li>
+            <li><mark class="k-sign">Arrêt possible</mark> si seuls des nodules <b>EU-TIRADS 3 ≤ 10 mm</b> ou <b>EU-TIRADS 4 ≤ 5 mm</b>.</li>
+          </ul>
+          <div class="fcard"><h3>Chirurgie ou alternatives</h3><ul class="fl">
+            <li>Toute cytoponction <mark class="k-grave">maligne ou suspecte</mark>.</li>
+            <li>Macronodule <b>&gt; 40 mm</b> ou signes compressifs : indication à discuter ; <b>thermo-ablation</b> possible.</li>
+            <li>Éventuellement quand la surveillance devient trop contraignante.</li></ul></div>
+        </section>
+
+        <!-- IX -->
+        <section class="fsec" id="pieges" style="--c: var(--rose)">
+          <h2 class="fsec-title"><span class="fnum">IX</span>Multinodulaire, pièges et limites</h2>
+          <h3 class="ch-h3">Thyroïde multinodulaire : dans quel ordre chercher ?</h3>
+          <ol class="ti-ordre">
+            <li style="--c: var(--k-grave)"><b>Les EU-TIRADS 5</b></li>
+            <li style="--c: var(--orange)"><b>Puis les EU-TIRADS 4</b><span>décrire si &gt; 5 mm</span></li>
+            <li style="--c: var(--amber)"><b>Puis les EU-TIRADS 3 volumineux</b> (&gt; 20 mm)<span>décrire si &gt; 10 mm</span></li>
+          </ol>
+          <p class="ti-rendement">Sans nodule à risque élevé ou intermédiaire, <b>96 % des cancers</b> sont éliminés.</p>
+          <div class="ti-pieges">
+            <details class="ti-piege" style="--c: var(--green)" open><summary><span>Faux positif</span>Kyste colloïde en involution</summary><p>Tuméfaction apparue vite, parfois sensible, puis qui régresse ; <b>avasculaire</b> ; diminue en quelques mois. Cytoponction ne ramenant que de la colloïde : prélèvement <mark class="k-sign">représentatif</mark>, pas « non significatif ».</p></details>
+            <details class="ti-piege" style="--c: var(--k-grave)"><summary><span>Faux négatif</span>Nodule majoritairement kystique</summary><p>1–3 % des carcinomes, <b>la moitié des faux négatifs</b>. Dans la partie solide, chercher hypoéchogénicité et microcalcifications : la portion solide devrait être iso/hyperéchogène, <mark class="k-grave">toute hypoéchogénicité, même modérée, est suspecte</mark>. Ponctionner la <b>portion solide</b>.</p></details>
+            <details class="ti-piege" style="--c: var(--k-grave)"><summary><span>Faux négatif</span>Nodule solide isoéchogène</summary><p>Sans signe fort : 1–3 % des carcinomes, <b>l'autre moitié des faux négatifs</b> ; surtout <b>carcinome papillaire, variante folliculaire</b>, plus rarement folliculaire.</p></details>
+            <details class="ti-piege" style="--c: var(--blue)"><summary><span>Doppler</span>Place limitée</summary><p>Non recommandé en routine pour le score. Dans un solide isoéchogène &gt; 20 mm : vascularisation <b>centrale</b> augmente un peu le risque, <b>périphérique</b> diminue celui de carcinome folliculaire. Utile pour distinguer colloïde épaisse et nodule solide, et guider les gestes.</p></details>
+            <details class="ti-piege" style="--c: var(--purple)"><summary><span>Limite</span>Thyroïde trop complexe</summary><p>Cartographie peu fiable, nodule suspect masqué : <mark class="k-ddx">le dire au clinicien</mark>.</p></details>
+          </div>
+        </section>
+
+        <!-- X -->
+        <section class="fsec" id="entrainement" style="--c: var(--royal)">
+          <h2 class="fsec-title"><span class="fnum">X</span>Entraînement : classez ces nodules</h2>
+          <p class="fintro">Regardez le nodule et sa description, choisissez la catégorie. <span id="ti-score" class="ti-score">0 / 6</span></p>
+          <div class="ti-cas" id="ti-cas"></div>
+          <button type="button" class="btn btn-outline btn-sm" id="ti-cas-reset">Recommencer</button>
+        </section>
+
+        <!-- Synthèse + Testez-vous -->
+        <section class="fsec" id="testez-vous" style="--c: var(--ink)">
+          <h2 class="fsec-title"><span class="fnum">?</span>Synthèse minute et testez-vous</h2>
+          <ol class="ti-synthese">
+            <li>Décrire avec le <b>lexique</b></li><li>Chercher les <b>4 signes forts</b></li><li>Classer <b>2 / 3 / 4 / 5</b></li><li><b>Mesurer</b> et cartographier</li><li>Examiner les <b>ganglions</b></li><li>Appliquer le <b>seuil de cytoponction</b></li>
+          </ol>
+          <div class="flash flash-3">
+            <button class="flip" aria-pressed="false" style="--c: var(--k-grave)"><span class="flip-tab">1</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Combien de signes forts pour EU-TIRADS 5 ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>Un seul</b>Non ovale, irrégulier, microcalcifications, hypoéchogénicité marquée.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--orange)"><span class="flip-tab">2</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Seuil de cytoponction d'un EU-TIRADS 4 ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>&gt; 15 mm</b>5 : &gt; 10 mm ; 3 : &gt; 20 mm.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--purple)"><span class="flip-tab">3</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Ponctuation brillante avec queue de comète ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>Colloïde</b>Bénin.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--steel)"><span class="flip-tab">4</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Secteurs ganglionnaires minimum ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>III et VI</b>Idéalement II, III, IV, VI et tractus thyréoglosse.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--k-grave)"><span class="flip-tab">5</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Nodule kystique avec portion solide modérément hypoéchogène ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>Suspect</b>Ponctionner la portion solide.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--green)"><span class="flip-tab">6</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Croissance significative ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>+2 mm dans ≥ 2 diamètres</b>et/ou +50 % de volume.</p></span></span></button>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="../index.html" class="brand">
+          <img src="../assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+          <span class="brand-name">Radiologic<br>Hub</span>
+        </a>
+        <p class="footer-tagline">Outils, ressources et formation pour les radiologues et les résidents.</p>
+      </div>
+      <nav aria-label="Liens de pied de page">
+        <div class="footer-col">
+          <p class="footer-titre">Au quotidien</p>
+          <a href="../comptes-rendus.html">Comptes rendus</a>
+          <a href="../suivi-oncologique.html">Suivi oncologique</a>
+          <a href="../fiches-rapides.html">Fiches rapides</a>
+          <a href="../espace-dicom.html">Espace DICOM</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Apprendre</p>
+          <a href="../radioanatomie/index.html">Radioanatomie</a>
+          <a href="../cas/index.html">Cas cliniques</a>
+          <a href="../index.html#cas-du-jour">Cas du jour</a>
+          <a href="../bibliotheque.html">Bibliothèque</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Réseau</p>
+          <a href="../communaute.html">Communauté</a>
+          <a href="../remplacements.html">Remplacements</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Masterclass</p>
+          <a href="../index.html#masterclass">Programme</a>
+          <a href="../index.html#tarifs">Tarifs</a>
+          <a href="../index.html#inscription">S'inscrire à une masterclass</a>
+        </div>
+      </nav>
+      <p class="copyright"><span>© <span id="year"></span> RadiologicHub · Outils, ressources et formation en radiologie</span><span class="copyright-liens"><a href="../mentions-legales.html">Mentions légales</a><a href="../index.html#inscription">Contact</a></span></p>
+    </div>
+  </footer>
+
+  <script src="../navigation.js?v=20261022235000"></script>
+
+  <script src="../fiche.js?v=20261022235000"></script>
+  <script src="../regles/eu-tirads.js?v=20261026140000"></script>
+  <script src="thyroide/nodule-svg.js?v=20261026140000"></script>
+  <script src="thyroide/eu-tirads-fiche.js?v=20261026140000"></script>
+</body>
+</html>
