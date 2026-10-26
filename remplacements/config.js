@@ -9,6 +9,6 @@
    elles restent dans les secrets des fonctions Supabase.
    ========================================================= */
 window.RH_REMPLACEMENTS_CONFIG = {
-  supabaseUrl: '',        // ex. 'https://abcdefghijkl.supabase.co'
-  supabaseAnonKey: '',    // clé publique « anon »
+  supabaseUrl: 'https://wdbczcwnaxfnoioyukgr.supabase.co',
+  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndkYmN6Y3duYXhmbm9pb3l1a2dyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE4MDA1NzQsImV4cCI6MjEwNzM3NjU3NH0.u2WgvpcPReDSHDQWggIxsTQvuGoZPUP91eWnUbQUNrY', // clé publique « anon »
 };

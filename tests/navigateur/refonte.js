@@ -63,6 +63,8 @@ const ok = (nom, cond, detail = '') => resultats.push({ nom, ok: !!cond, detail:
   const ouvrir = async (w, h, opts = {}) => {
     const ctx = await b.newContext({ viewport: { width: w, height: h }, isMobile: w <= 390, hasTouch: w <= 768, acceptDownloads: true, ...opts });
     await ctx.grantPermissions(['clipboard-read', 'clipboard-write'], { origin: BASE.slice(0, -1) });
+    // Les vérifications tournent en mode démonstration, même quand le site est branché sur Supabase.
+    await ctx.route('**/remplacements/config.js*', r => r.fulfill({ contentType: 'application/javascript', body: "window.RH_REMPLACEMENTS_CONFIG = { supabaseUrl: '', supabaseAnonKey: '' };" }));
     const p = await ctx.newPage();
     p.erreurs = [];
     p.on('pageerror', e => p.erreurs.push('erreur JS : ' + e.message));
