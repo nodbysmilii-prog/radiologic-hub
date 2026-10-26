@@ -833,6 +833,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 27/10/2026 | Communauté : page d'accueil plus claire pour les membres déjà inscrits (« Se connecter ou s'inscrire : le même bouton sert aux deux », bouton « Se connecter par e-mail ») |
 | 27/10/2026 | Communauté : plus d'attente sans fin au chargement (au-delà de 20 s : « Service indisponible » + bouton Réessayer) ; une connexion refusée (Google ou lien e-mail, `error_description` dans l'adresse) affiche « La connexion n'a pas abouti » avec la raison, puis l'adresse est nettoyée |
 | 27/10/2026 | **Supabase branché** : `remplacements/config.js` renseigné (projet `wdbczcwnaxfnoioyukgr`, Francfort, clé publique anon) ; les 5 migrations (remplacements, réseau, droits explicites, bibliothèque, cours) passées par l'auteur ; Communauté, Remplacements et Bibliothèque quittent le mode démonstration ; `?v=` de `config.js` changés ; les vérifications navigateur (`npm run test:navigateur`) restent en mode démonstration (configuration vide servie aux tests) |
 | 26/10/2026 | EU-TIRADS : **12 échographies** (Vassallo et al., *Eur Radiol* 2026, CC BY 4.0, crédit en petit sous chaque image) placées aux bons endroits, sans les commentaires de la planche : catégories 2, 3 et 4 (III), 4 signes forts (IV), colloïde et macrocalcification (V), nodule mixte dans le piège « majoritairement kystique » (IX) ; vignettes compactes, agrandissement au clic ; images dans `fiches/thyroide/images/`, planche commentée au dépôt privé ; test ajouté |

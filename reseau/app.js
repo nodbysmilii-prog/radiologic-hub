@@ -104,9 +104,10 @@
       <div class="rs-apercu" aria-hidden="true">${fausse('Masse surrénalienne de découverte fortuite', 'uro')}${fausse('Céphalée brutale : que voyez-vous ?', 'neuro')}<div class="rs-apercu-voile"><span>${icone('profil')} Réservé aux membres connectés</span></div></div>
     </section>`;
   }
-  const boutonsConnexion = () => `<div class="rs-connexion-btns">
+  const boutonsConnexion = () => `<p class="rs-connexion-aide"><strong>Se connecter ou s'inscrire</strong> : le même bouton sert aux deux. Déjà membre ? Votre compte est reconnu automatiquement.</p>
+    <div class="rs-connexion-btns">
       <button type="button" class="btn rs-btn-google" data-act="google">${UI.GOOGLE}<span>Continuer avec Google</span></button>
-      <a href="#/connexion" class="btn btn-outline">Recevoir un lien par e-mail</a>
+      <a href="#/connexion" class="btn btn-outline">Se connecter par e-mail</a>
     </div>
     <p class="rs-mini">En continuant, vous acceptez les <a href="mentions-legales.html#conditions">conditions d'utilisation</a> et la <a href="mentions-legales.html#donnees">politique de protection des données</a>.${api.demo ? ' <strong>Démonstration</strong> : la connexion Google est simulée.' : ''}</p>`;
 
@@ -114,6 +115,7 @@
     if (S) { location.hash = '#/'; return ''; }
     return `<form class="rs-carte rs-etroit" data-form="connexion" novalidate>
       <h1 class="rs-titre">Connexion</h1>
+      <p class="rs-mini">Membre ou nouveau venu : c'est la même porte d'entrée. Choisissez le compte Google (ou l'adresse e-mail) utilisé à l'inscription.</p>
       <button type="button" class="btn rs-btn-google btn-block" data-act="google">${UI.GOOGLE}<span>Continuer avec Google</span></button>
       <p class="rs-ou"><span>ou</span></p>
       <div class="field"><label for="f-email">Adresse e-mail</label><input id="f-email" name="email" type="email" autocomplete="email" placeholder="prenom.nom@gmail.com" required></div>
