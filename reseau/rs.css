@@ -418,3 +418,6 @@
   .rs-rappel p { margin: 0; }
 }
 .rs-shell.is-visiteur { grid-template-columns: minmax(0, 1fr); max-width: 1040px; }
+
+/* Retour d'une connexion refusée (paramètre error_description dans l'adresse) */
+.rs-alerte-connexion { margin: 0 0 14px; padding: 12px 16px; border-radius: 12px; border: 2px solid var(--k-grave, #c8102e); background: color-mix(in srgb, var(--k-grave, #c8102e) 8%, #fff); font-size: .9rem; }
