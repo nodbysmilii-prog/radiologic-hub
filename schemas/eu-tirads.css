@@ -1,0 +1,147 @@
+/* =========================================================
+   RadiologicHub — fiche « Nodule thyroïdien : EU-TIRADS 2017 » : atelier du nodule,
+   catégories, signes forts, ponctuations, seuils de cytoponction, frise de surveillance,
+   pièges, entraînement.
+   ========================================================= */
+.ch-h3 { margin: 22px 0 10px; font-size: 1rem; }
+.ch-deux { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin: 16px 0; align-items: start; }
+.nod-svg { display: block; width: 100%; height: auto; border-radius: 10px; }
+
+/* Repères */
+.ti-chiffres { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
+.ti-chiffre { padding: 14px; border-radius: 16px; border: 3px solid var(--c); background: color-mix(in srgb, var(--c) 8%, #fff); }
+.ti-chiffre span { display: block; font-family: 'Permanent Marker', cursive; font-size: 1.5rem; line-height: 1.1; color: var(--c); }
+.ti-chiffre p { margin: 6px 0 0; font-size: .8rem; }
+
+/* Outils */
+.ti-outil { margin: 16px 0; padding: 16px 18px; border-radius: 16px; border: 3px solid var(--ink); background: #fff; box-shadow: 6px 6px 0 color-mix(in srgb, var(--c, var(--amber)) 45%, transparent); }
+.ti-outil-titre { margin: 0 0 10px; font-size: .74rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+.ti-croiss { display: flex; flex-wrap: wrap; gap: 14px; }
+.ti-croiss fieldset { display: flex; gap: 6px; align-items: center; margin: 0; padding: 6px 10px; border: 2px solid rgba(17, 17, 20, .15); border-radius: 12px; }
+.ti-croiss legend { font-size: .68rem; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
+.ti-croiss input { width: 4.2em; padding: 6px 8px; border: 2px solid rgba(17, 17, 20, .2); border-radius: 8px; font: inherit; }
+.ti-verdict { margin: 12px 0 0; padding: 10px 14px; border-radius: 12px; background: #f4f4f6; font-size: .88rem; }
+.ti-verdict.k-key { background: #fff1d6; } .ti-verdict.k-sign { background: #ddf3ea; }
+.ti-verdict small { display: block; color: var(--muted); }
+
+/* Atelier */
+.ti-atelier { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 20px; align-items: start; }
+.ti-lexique { display: grid; gap: 8px; }
+.ti-lexique fieldset { margin: 0; padding: 8px 12px 10px; border: 2px solid rgba(17, 17, 20, .14); border-radius: 14px; display: flex; flex-wrap: wrap; gap: 4px 12px; transition: opacity .2s; }
+.ti-lexique fieldset:disabled { opacity: .4; }
+.ti-lexique legend { padding: 0 4px; font-size: .68rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); }
+.ti-lexique label { display: inline-flex; gap: 5px; align-items: center; font-size: .82rem; cursor: pointer; }
+.ti-taille { flex-basis: 100%; }
+.ti-taille input { flex: 1; accent-color: var(--teal); }
+.ti-rendu { position: sticky; top: 90px; }
+.ti-ecran { border: 4px solid var(--ink); border-radius: 16px; overflow: hidden; background: #000; }
+.ti-ecran .nod-svg { border-radius: 0; }
+.ti-badge { --c: var(--muted); display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-top: 12px; padding: 10px 16px; border-radius: 14px; background: var(--c); color: #fff; transition: background .3s; }
+.ti-badge-cat { font-family: 'Permanent Marker', cursive; font-size: 1.6rem; }
+.ti-badge-nom { font-weight: 900; }
+.ti-badge-risque { margin-left: auto; font-size: .8rem; font-weight: 700; }
+.ti-badge.is-pulse { animation: ti-pulse .35s ease-out; }
+@keyframes ti-pulse { from { transform: scale(1.04); } to { transform: none; } }
+.ti-jauge { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; margin-top: 10px; }
+.ti-jauge span { padding: 3px 0; border-radius: 6px; background: var(--c); color: #fff; font-weight: 900; text-align: center; font-size: .8rem; }
+.ti-jauge i { position: absolute; top: -8px; width: 0; height: 0; translate: -50% 0; border: 7px solid transparent; border-top-color: var(--ink); transition: left .35s; }
+.ti-raison { margin: 10px 0 4px; font-size: .86rem; }
+.ti-conduite { margin: 0; font-size: .84rem; }
+
+/* Algorithme et catégories */
+.ti-algo { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 0 0 18px; padding: 0; list-style: none; counter-reset: a; }
+.ti-algo li { position: relative; padding: 12px 12px 34px; border-radius: 14px; background: color-mix(in srgb, var(--c) 10%, #fff); border-top: 5px solid var(--c); font-size: .82rem; }
+.ti-algo li b { display: block; }
+.ti-algo li span { color: var(--muted); }
+.ti-algo li em { position: absolute; left: 12px; bottom: 8px; font-style: normal; font-weight: 800; }
+.ti-algo li em strong { display: inline-grid; place-items: center; width: 1.6em; height: 1.6em; border-radius: 50%; background: var(--c); color: #fff; }
+.ti-cats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+.ti-cat { position: relative; padding: 10px; border-radius: 14px; border: 3px solid var(--c); background: #fff; font-size: .78rem; }
+.ti-cat .ti-vignette { margin-bottom: 8px; }
+.ti-cat-n { position: absolute; top: 4px; right: 8px; font-family: 'Permanent Marker', cursive; font-size: 1.6rem; color: var(--c); text-shadow: 0 0 4px #fff; z-index: 1; }
+.ti-cat b { display: block; color: var(--c); font-size: .9rem; }
+.ti-cat p { margin: 4px 0; }
+.ti-cat small { display: inline-block; padding: 1px 8px; border-radius: 999px; background: var(--c); color: #fff; font-weight: 800; }
+
+/* Signes forts */
+.ti-signes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.ti-signe { padding: 10px; border-radius: 14px; border: 3px solid var(--k-grave, #c8102e); background: #fff; font-size: .8rem; }
+.ti-signe .ti-vignette { margin-bottom: 8px; }
+.ti-signe b { color: var(--k-grave, #c8102e); }
+.ti-signe p { margin: 4px 0 0; }
+
+/* Ponctuations */
+.ti-ponct { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.ti-p { position: relative; padding: 0; border: 3px solid var(--c); border-radius: 14px; background: #fff; text-align: left; font: inherit; cursor: pointer; overflow: hidden; }
+.ti-p-img { display: block; }
+.ti-p-q { position: absolute; top: 6px; right: 8px; width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; background: var(--c); color: #fff; font-weight: 900; }
+.ti-p-r { display: block; padding: 8px 10px; font-size: .78rem; min-height: 4.6em; }
+.ti-p-r b { display: block; color: var(--c); }
+.ti-p:not(.is-vu) .ti-p-r { color: transparent; background: repeating-linear-gradient(45deg, #f1f1f3 0 6px, #e8e8ec 6px 12px); }
+.ti-p:not(.is-vu) .ti-p-r b, .ti-p:not(.is-vu) .ti-p-r mark { color: transparent; background: none; }
+.ti-p.is-vu .ti-p-q { display: none; }
+
+.ti-lien-cr { font-size: .86rem; }
+
+/* Cytoponction */
+.ti-taille-grand { display: flex; align-items: center; gap: 10px; font-weight: 800; }
+.ti-taille-grand input { flex: 1; accent-color: var(--amber); }
+.ti-taille-grand output { min-width: 4em; padding: 2px 10px; border-radius: 999px; background: var(--ink); color: #fff; text-align: center; }
+.ti-fna { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+.ti-fna-c { padding: 10px; border-radius: 12px; border: 3px solid var(--c); background: #fff; font-size: .8rem; transition: background .25s, color .25s, transform .25s; }
+.ti-fna-c b { display: block; }
+.ti-fna-c.is-on { background: var(--c); color: #fff; transform: translateY(-3px); }
+
+/* Surveillance */
+.ti-frise { display: grid; grid-template-columns: repeat(4, 1fr); margin: 0 0 14px; padding: 0; list-style: none; position: relative; }
+.ti-frise::before { content: ""; position: absolute; left: 6%; right: 6%; top: 15px; height: 4px; background: var(--green); border-radius: 2px; }
+.ti-frise li { position: relative; padding-top: 34px; text-align: center; font-size: .8rem; }
+.ti-frise li::before { content: ""; position: absolute; left: 50%; top: 6px; width: 22px; height: 22px; translate: -50% 0; border-radius: 50%; background: #fff; border: 4px solid var(--green); }
+.ti-frise b { display: block; font-size: 1rem; }
+.ti-frise span { color: var(--muted); }
+
+/* Multinodulaire, pièges */
+.ti-ordre { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; counter-reset: o; }
+.ti-ordre li { counter-increment: o; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; padding: 10px 14px; border-radius: 12px; border-left: 6px solid var(--c); background: color-mix(in srgb, var(--c) 9%, #fff); }
+.ti-ordre li::before { content: counter(o); display: grid; place-items: center; width: 1.8em; height: 1.8em; border-radius: 50%; background: var(--c); color: #fff; font-weight: 900; }
+.ti-ordre li span { color: var(--muted); font-size: .84rem; }
+.ti-rendement { margin: 12px 0 16px; font-weight: 700; }
+.ti-pieges { display: grid; gap: 8px; }
+.ti-piege { border-radius: 14px; border: 2px solid var(--c); background: #fff; }
+.ti-piege summary { display: flex; align-items: center; gap: 10px; padding: 10px 14px; cursor: pointer; font-weight: 800; list-style: none; }
+.ti-piege summary::-webkit-details-marker { display: none; }
+.ti-piege summary::after { content: "+"; margin-left: auto; font-weight: 900; color: var(--c); }
+.ti-piege[open] summary::after { content: "–"; }
+.ti-piege summary span { padding: 2px 10px; border-radius: 999px; background: var(--c); color: #fff; font-size: .68rem; text-transform: uppercase; letter-spacing: .06em; }
+.ti-piege p { margin: 0; padding: 0 14px 12px; font-size: .86rem; }
+
+/* Entraînement */
+.ti-score { display: inline-block; margin-left: 8px; padding: 2px 12px; border-radius: 999px; background: var(--royal); color: #fff; font-weight: 900; }
+.ti-cas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-bottom: 12px; }
+.ti-cas-c { padding: 10px; border-radius: 14px; border: 3px solid var(--ink); background: #fff; font-size: .8rem; }
+.ti-cas-c p { margin: 8px 0; }
+.ti-cas-n { display: inline-grid; place-items: center; width: 1.6em; height: 1.6em; margin-right: 6px; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 900; font-size: .7rem; }
+.ti-cas-choix { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.ti-cas-choix button { padding: 6px 0; border: 3px solid var(--c); border-radius: 10px; background: #fff; font: inherit; font-weight: 900; cursor: pointer; }
+.ti-cas-c.is-fait .ti-cas-choix button { cursor: default; opacity: .45; }
+.ti-cas-choix button.is-ok { background: var(--c); color: #fff; opacity: 1 !important; }
+.ti-cas-choix button.is-faux { background: #111; color: #fff; opacity: 1 !important; text-decoration: line-through; }
+.ti-cas-rep:empty { display: none; }
+
+/* Synthèse */
+.ti-synthese { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; margin: 0 0 20px; padding: 0; list-style: none; counter-reset: s; }
+.ti-synthese li { counter-increment: s; padding: 10px 8px; border-radius: 12px; background: #f4f4f6; font-size: .78rem; text-align: center; }
+.ti-synthese li::before { content: counter(s); display: block; font-family: 'Permanent Marker', cursive; font-size: 1.3rem; color: var(--royal); }
+
+@media (max-width: 1000px) { .ti-atelier { grid-template-columns: 1fr; } .ti-rendu { position: static; } .ti-cats { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 900px) {
+  .ch-deux { grid-template-columns: 1fr; }
+  .ti-chiffres, .ti-algo, .ti-signes, .ti-ponct, .ti-fna { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ti-cas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ti-synthese { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 480px) {
+  .ti-chiffres, .ti-algo, .ti-cats, .ti-signes, .ti-ponct, .ti-cas { grid-template-columns: 1fr; }
+  .ti-synthese { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media print { .ti-outil, .ti-atelier, #entrainement { display: none; } .ti-p .ti-p-r { color: inherit !important; background: none !important; } }
