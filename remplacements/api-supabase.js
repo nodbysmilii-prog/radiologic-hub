@@ -83,7 +83,7 @@
       return { ok: true, lienEnvoye: true };
     },
     async connexionGoogle() {
-      ok(await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: retour() } }));
+      ok(await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: retour(), queryParams: { prompt: 'select_account' } } }));
       return { ok: true, redirection: true };
     },
     async deconnexion() { await sb.auth.signOut(); },
