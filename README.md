@@ -833,6 +833,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 27/10/2026 | Communauté (production) : correction de l'erreur « Could not embed because more than one relationship was found for 'rs_cas' and 'rs_membres' » (profil, fil, cas, commentaires) — jointures vers l'auteur précisées (`rs_membres!auteur_id`) ; test ajouté dans `tests/reseau.test.js` |
 | 27/10/2026 | Remplacements : fonctions serveur déployées sur Supabase (premier lancement réussi du workflow « Déployer les fonctions Supabase »), e-mails en mode journal en attendant Brevo |
 | 27/10/2026 | Remplacements : déploiement des fonctions serveur (`rp-agent`, `rp-lien`, `rp-taches`) **depuis GitHub, sans Terminal** — workflow manuel `.github/workflows/deployer-fonctions.yml` (secret `SUPABASE_ACCESS_TOKEN`) ; marche à suivre ajoutée à `remplacements/INSTALLATION.md` (étape 6) |
 | 27/10/2026 | Communauté : sur l'écran « Bienvenue » (profil à compléter), rappel du compte connecté et lien **Se déconnecter** (le bouton était masqué sur ordinateur) ; connexion Google (Communauté et Remplacements) : Google propose toujours le **choix du compte** (`prompt=select_account`) |
