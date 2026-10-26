@@ -72,11 +72,16 @@ FIG = {
     'mastoide-hypopneumatisee': ('Mastoïde scléreuse et hypopneumatisée', [
         fleche((242, 152), (300, 152), ORANGE), pastille(272, 140, 'sclérose', ORANGE),
         fleche((268, 231), (310, 231), BLUE), pastille(282, 248, 'hypopneumatisation', BLUE)]),
-    'retrotympanum': ('Rétrotympanum en coupe axiale : récessus du facial, éminence pyramidale, sinus tympani', [
-        trace([(160, 166), (156, 185), (165, 205), (178, 210)], BLUE), pastille(118, 196, 'récessus du facial', BLUE),
-        trace([(178, 176), (190, 192), (188, 212), (182, 240)], AMBER, dash='4 3'), pastille(138, 236, 'éminence pyramidale', AMBER),
-        trace([(196, 214), (206, 232), (228, 238), (246, 228)], ORANGE), pastille(232, 254, 'sinus tympani', ORANGE),
-        fleche((152, 160), (120, 132), RED), pastille(78, 126, 'muscle stapédien', RED)]),
+    'retrotympanum': ('Rétrotympanum en coupe axiale : récessus du facial, éminence pyramidale et muscle stapédien, sinus tympani', [
+        # tracés relevés sur la planche de l'auteur (mêmes contours), redessinés aux couleurs du site
+        trace([(86.3, 168.8), (82.6, 177), (81.3, 187.5), (85, 196.5), (92.5, 203.8), (104, 202.5), (120, 195.5)], BLUE, w=3.2),
+        pastille(52, 222, 'récessus du facial', BLUE),
+        trace([(105, 205.5), (113, 194), (121.3, 182.5), (128, 177), (135, 175), (141, 176), (146.3, 178.8), (150.5, 189), (152.5, 200), (151.5, 214), (148.5, 228), (142.5, 242.5)], AMBER, w=3.2),
+        pastille(70, 260, 'éminence pyramidale', AMBER),
+        '<ellipse cx="151.5" cy="169.5" rx="3.6" ry="9.5" transform="rotate(28 151.5 169.5)" fill="#c8102e" stroke="#fff" stroke-width="1"/>',
+        trace([(151.5, 169.5), (186, 140)], RED, w=1.6), pastille(206, 132, 'muscle stapédien', RED),
+        trace([(146, 222.5), (138, 232), (131, 246), (142.5, 252.5), (162, 251), (180, 247.5)], ORANGE, w=3.2),
+        fleche((176, 204), (212, 214), ORANGE), pastille(236, 228, 'sinus tympani', ORANGE)]),
     'tympanosclerose': ('Tympanosclérose : plaques calcifiées sur la chaîne et les parois de la caisse', [
         cercle((106, 114), 30, RED), cercle((118, 157), 21, AMBER), cercle((178, 169), 21, BLUE), texte(150, 312, 'plaques calcifiées', '#fff', 'middle', 13)]),
     'diag-polylobe': ('Cholestéatome : opacité polylobée de l\'oreille moyenne, lyse du mur de la logette', [
