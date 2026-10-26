@@ -833,6 +833,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 27/10/2026 | Communauté : sur l'écran « Bienvenue » (profil à compléter), rappel du compte connecté et lien **Se déconnecter** (le bouton était masqué sur ordinateur) ; connexion Google (Communauté et Remplacements) : Google propose toujours le **choix du compte** (`prompt=select_account`) |
 | 27/10/2026 | Communauté : page d'accueil plus claire pour les membres déjà inscrits (« Se connecter ou s'inscrire : le même bouton sert aux deux », bouton « Se connecter par e-mail ») |
 | 27/10/2026 | Communauté : plus d'attente sans fin au chargement (au-delà de 20 s : « Service indisponible » + bouton Réessayer) ; une connexion refusée (Google ou lien e-mail, `error_description` dans l'adresse) affiche « La connexion n'a pas abouti » avec la raison, puis l'adresse est nettoyée |
 | 27/10/2026 | **Supabase branché** : `remplacements/config.js` renseigné (projet `wdbczcwnaxfnoioyukgr`, Francfort, clé publique anon) ; les 5 migrations (remplacements, réseau, droits explicites, bibliothèque, cours) passées par l'auteur ; Communauté, Remplacements et Bibliothèque quittent le mode démonstration ; `?v=` de `config.js` changés ; les vérifications navigateur (`npm run test:navigateur`) restent en mode démonstration (configuration vide servie aux tests) |

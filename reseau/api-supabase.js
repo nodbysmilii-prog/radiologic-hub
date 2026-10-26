@@ -77,7 +77,7 @@
       return { compte: { ...(ok(c) || { id: u.id, email: u.email }), photoGoogle: meta.avatar_url || meta.picture || null }, membre: ok(m), admin: !!adm.data, remplacantValide: !!rv.data };
     },
     async connexionGoogle() {
-      ok(await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: retour() } }));
+      ok(await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: retour(), queryParams: { prompt: 'select_account' } } }));
       return { ok: true, redirection: true };
     },
     async connexionEmail(email) {

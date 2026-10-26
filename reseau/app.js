@@ -149,7 +149,7 @@
       <button class="btn btn-ink${creation ? ' btn-block' : ''}" type="submit">${creation ? 'Rejoindre la Communauté' : 'Enregistrer'}</button>
     </form>`;
   }
-  const bienvenue = () => (!S ? (location.hash = '#/connexion', '') : S.membre ? (location.hash = '#/', '') : `<div class="rs-etroit">${formProfil(null, { creation: true })}</div>`);
+  const bienvenue = () => (!S ? (location.hash = '#/connexion', '') : S.membre ? (location.hash = '#/', '') : `<div class="rs-etroit"><p class="rs-compte-actuel">Connecté avec <strong>${esc(S.compte.email || '')}</strong>. Pas le bon compte ? <button type="button" class="rs-lien-btn" data-act="deconnexion">Se déconnecter</button></p>${formProfil(null, { creation: true })}</div>`);
   function lireProfil(f) {
     const fd = new FormData(f), d = Object.fromEntries(fd.entries());
     d.interets = fd.getAll('interets');
