@@ -333,7 +333,7 @@
         ${m.bio ? `<p class="rs-profil-bio">${lignes(m.bio)}</p>` : ''}
         ${(m.interets || []).length ? `<p class="rs-interets">${m.interets.map(badgeSpe).join(' ')}</p>` : ''}
         <ul class="rs-stats"><li><strong>${info.stats.cas}</strong> cas</li><li><strong>${info.stats.abonnes}</strong> abonnés</li><li><strong>${info.stats.abonnements}</strong> abonnements</li></ul>
-        ${moi && !m.verifie ? `<p class="rs-bandeau">${icone('admin')}<span>${m.verification_demandee_le ? 'Vérification en cours d\'examen.' : 'Compte non vérifié : <a href="#/moi#verification">demander la vérification</a> pour publier sous « Dr ».'}</span></p>` : ''}
+        ${moi && !m.verifie ? `<p class="rs-bandeau">${icone('admin')}<span>${m.verification_demandee_le ? 'Vérification en cours d\'examen.' : 'Compte non vérifié : faites-le vérifier pour publier sous « Dr ». <a class="btn btn-ink btn-sm" href="#/moi#verification">Faire vérifier mon compte</a>'}</span></p>` : ''}
       </section>
       <h2 class="rs-h">Cas publiés</h2>
       ${liste.length ? `<div class="rs-grille">${liste.map(c => `<a class="rs-grille-cas" href="#/cas/${esc(c.id)}"><img data-cas-img="${esc(c.id)}" alt=""><span>${esc(c.titre)}</span></a>`).join('')}</div>` : vide(moi ? 'Vous n\'avez pas encore publié de cas.' : 'Aucun cas publié.', moi && peutPublier() ? '<a class="btn btn-ink btn-sm" href="#/publier">Publier un cas</a>' : '')}`;
@@ -342,19 +342,21 @@
   async function moi() {
     if (!S) return accueilVisiteur();
     const m = S.membre;
-    return `<p class="rs-retour"><a href="#/profil/${esc(m.id)}">${icone('retour')} Mon profil</a></p>
-      <section class="rs-carte rs-photo-edit"><h2 class="rs-h">Photo de profil</h2>
-        <div class="rs-photo-ligne">${avatar(m, 88)}<div><label class="btn btn-outline btn-sm">${icone('image')} Changer la photo<input type="file" accept="image/jpeg,image/png,image/webp" hidden data-act-change="photo"></label>
-        <p class="rs-aide">Recadrée en carré ; métadonnées retirées.</p></div></div></section>
-      ${formProfil(m)}
-      <section class="rs-carte" id="verification"><h2 class="rs-h">Vérification du compte</h2>
+    const verification = `<section class="rs-carte" id="verification"><h2 class="rs-h">Vérification du compte</h2>
         ${m.verifie ? `<p class="rs-bandeau is-ok">${icone('admin')}<span>Compte vérifié${m.verifie_le ? ` le ${esc(RG.dateFr(m.verifie_le))}` : ''} : votre titre s'affiche et vous pouvez publier des cas.</span></p>`
           : S.remplacantValide ? '<p class="rs-bandeau is-ok">Remplaçant validé : vous pouvez publier des cas. Le titre « Dr » s\'affichera après vérification de votre compte.</p>' : ''}
         ${!m.verifie ? (m.verification_demandee_le ? `<p class="rs-bandeau">Demande envoyée le ${esc(RG.dateFr(m.verification_demandee_le))} : en cours d'examen par l'équipe RadiologicHub.</p>`
           : `<form data-form="verification" novalidate><p>Envoyez un justificatif (carte professionnelle, attestation d'inscription à l'Ordre, de résidanat ou de fonction). Il n'est visible que de l'administrateur.</p>
-            <div class="field"><label for="f-justificatif">Justificatif (PDF ou image, 5 Mo au plus)</label><input id="f-justificatif" name="justificatif" type="file" accept=".pdf,.jpg,.jpeg,.png"></div>
+            <div class="field"><span class="rs-champ-titre">Justificatif (PDF ou image, 5 Mo au plus)</span><span class="rs-fichier"><label class="btn btn-outline btn-sm" for="f-justificatif">${icone('image')} Choisir le fichier</label><input id="f-justificatif" name="justificatif" type="file" accept=".pdf,.jpg,.jpeg,.png" class="rs-visuel-cache"><span class="rs-fichier-nom" aria-live="polite">Aucun fichier choisi</span></span></div>
             <button class="btn btn-ink btn-sm" type="submit">Demander la vérification</button></form>`) : ''}
-      </section>
+      </section>`;
+    return `<p class="rs-retour"><a href="#/profil/${esc(m.id)}">${icone('retour')} Mon profil</a></p>
+      ${m.verifie ? '' : verification}
+      <section class="rs-carte rs-photo-edit"><h2 class="rs-h">Photo de profil</h2>
+        <div class="rs-photo-ligne">${avatar(m, 88)}<div><label class="btn btn-outline btn-sm">${icone('image')} Changer la photo<input type="file" accept="image/jpeg,image/png,image/webp" hidden data-act-change="photo"></label>
+        <p class="rs-aide">Recadrée en carré ; métadonnées retirées.</p></div></div></section>
+      ${formProfil(m)}
+      ${m.verifie ? verification : ''}
       <section class="rs-carte rs-danger-zone"><h2 class="rs-h">Supprimer mon compte</h2>
         <p>Supprime définitivement votre profil, vos cas, vos commentaires, vos messages et, le cas échéant, votre inscription aux Remplacements.</p>
         <button type="button" class="btn btn-outline btn-sm rs-danger" data-act="supprimer-compte">Supprimer mon compte</button></section>`;
@@ -768,6 +770,7 @@
   });
   app.addEventListener('change', async e => {
     const t = e.target;
+    if (t.matches('[name="justificatif"]')) { const n = t.closest('.rs-fichier').querySelector('.rs-fichier-nom'); n.textContent = t.files[0] ? t.files[0].name : 'Aucun fichier choisi'; }
     if (t.matches('[name="statut"]')) { const z = $('.rs-si-resident', t.form); if (z) z.hidden = t.value !== 'resident'; }
     if (t.matches('[data-act-change="images"]')) { await ajouterImages([...t.files]); t.value = ''; majBrouillon(t.form); }
     if (t.matches('[data-act-change="photo"]') && t.files[0]) {

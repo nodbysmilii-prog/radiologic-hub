@@ -833,6 +833,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 27/10/2026 | Communauté : recheck complet dans Chromium (ordinateur 1366 px et téléphone 390 px, 13 écrans, aucune erreur JS) et retouches — « Modifier mon profil » : la **vérification du compte passe en tête** tant que le compte n'est pas vérifié, champ du justificatif en français (« Choisir le fichier » + nom du fichier choisi, au lieu de « Choose File ») ; profil : bouton **Faire vérifier mon compte** ; téléphone : boutons de l'administration, onglets de recherche et « Se déconnecter » agrandis (40 px) ; bandeau des spécialités du fil estompé à droite pour montrer qu'il défile |
 | 27/10/2026 | Communauté (production) : correction de l'erreur « Could not embed because more than one relationship was found for 'rs_cas' and 'rs_membres' » (profil, fil, cas, commentaires) — jointures vers l'auteur précisées (`rs_membres!auteur_id`) ; test ajouté dans `tests/reseau.test.js` |
 | 27/10/2026 | Remplacements : fonctions serveur déployées sur Supabase (premier lancement réussi du workflow « Déployer les fonctions Supabase »), e-mails en mode journal en attendant Brevo |
 | 27/10/2026 | Remplacements : déploiement des fonctions serveur (`rp-agent`, `rp-lien`, `rp-taches`) **depuis GitHub, sans Terminal** — workflow manuel `.github/workflows/deployer-fonctions.yml` (secret `SUPABASE_ACCESS_TOKEN`) ; marche à suivre ajoutée à `remplacements/INSTALLATION.md` (étape 6) |
