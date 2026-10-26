@@ -57,3 +57,16 @@ test('fiche : sections, scripts, carte Tête et cou', () => {
   const index = fs.readFileSync(path.join(RACINE, 'fiches-rapides.html'), 'utf8');
   assert.match(index, /<a class="fiche-card" data-spe="orl" href="fiches\/eu-tirads\.html"/);
 });
+
+test('échographies Vassallo et al. : 12 images présentes, chacune créditée, sans commentaire', () => {
+  const figs = HTML.match(/<figure class="ex-fig ti-echo"[\s\S]*?<\/figure>/g) || [];
+  assert.equal(figs.length, 12);
+  for (const f of figs) {
+    const src = f.match(/src="(thyroide\/images\/[^"]+)"/)[1];
+    assert.ok(fs.existsSync(path.join(RACINE, 'fiches', src)), src);
+    assert.match(f, /Vassallo et al\./);
+    assert.match(f, /CC BY 4\.0/);
+    assert.match(f, /<figcaption><strong>[^<]+<\/strong><span class="ti-credit">/);
+  }
+  assert.match(HTML, /id="lightbox"/);
+});
