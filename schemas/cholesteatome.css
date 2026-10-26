@@ -134,3 +134,6 @@
 }
 @media (prefers-reduced-motion: reduce) { .ch-chaine li { opacity: 1; transform: none; transition: none; } }
 @media print { .ch-outil:not(.ch-cr), .ch-onglets, .ch-lien-3d, .r3d { display: none; } .ch-panneau[hidden] { display: block !important; } }
+.ch-bde { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 16px; align-items: center; }
+.ch-bde .callout { margin: 0; }
+@media (max-width: 900px) { .ch-bde { grid-template-columns: 1fr; } }
