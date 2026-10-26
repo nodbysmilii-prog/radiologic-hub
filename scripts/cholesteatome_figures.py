@@ -50,6 +50,14 @@ def trace(pts, col=AMBER, ferme=False, dash=None, w=2.4):
     return (f'<path d="{d}" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="{w + 2}" stroke-linejoin="round" stroke-linecap="round"/>'
             f'<path d="{d}" fill="none" stroke="{col}" stroke-width="{w}" stroke-linejoin="round" stroke-linecap="round"{da}/>')
 
+def chaine(segments, w=3.2):
+    """Tracé continu en plusieurs couleurs : chaque segment commence où finit le précédent ;
+    tous les halos d'abord, puis les couleurs, pour que les jonctions restent nettes."""
+    d = lambda pts: 'M' + ' L'.join(f'{x:.1f} {y:.1f}' for x, y in pts)
+    halo = ''.join(f'<path d="{d(p)}" fill="none" stroke="#000" stroke-opacity=".5" stroke-width="{w + 2}" stroke-linejoin="round" stroke-linecap="round"/>' for p, _ in segments)
+    coul = ''.join(f'<path d="{d(p)}" fill="none" stroke="{c}" stroke-width="{w}" stroke-linejoin="round" stroke-linecap="round"/>' for p, c in segments)
+    return halo + coul
+
 def etoile(c, col=AMBER, r=7):
     import math
     pts = []
@@ -74,13 +82,12 @@ FIG = {
         fleche((268, 231), (310, 231), BLUE), pastille(282, 248, 'hypopneumatisation', BLUE)]),
     'retrotympanum': ('Rétrotympanum en coupe axiale : récessus du facial, éminence pyramidale et muscle stapédien, sinus tympani', [
         # tracés relevés sur la planche de l'auteur (mêmes contours), redessinés aux couleurs du site
-        trace([(86.3, 168.8), (82.6, 177), (81.3, 187.5), (85, 196.5), (92.5, 203.8), (104, 202.5), (120, 195.5)], BLUE, w=3.2),
-        pastille(52, 222, 'récessus du facial', BLUE),
-        trace([(105, 205.5), (113, 194), (121.3, 182.5), (128, 177), (135, 175), (141, 176), (146.3, 178.8), (150.5, 189), (152.5, 200), (151.5, 214), (148.5, 228), (142.5, 242.5)], AMBER, w=3.2),
-        pastille(70, 260, 'éminence pyramidale', AMBER),
+        chaine([([(86.3, 168.8), (82.6, 177), (81.3, 187.5), (85, 196.5), (92.5, 203.8), (104, 201), (113, 194)], BLUE),
+                ([(113, 194), (121.3, 182.5), (128, 177), (135, 175), (141, 176), (146.3, 178.8), (150.5, 189), (152.5, 200), (151.5, 214)], AMBER),
+                ([(151.5, 214), (146, 222.5), (138, 232), (131, 246), (142.5, 252.5), (162, 251), (180, 247.5)], ORANGE)]),
+        pastille(52, 222, 'récessus du facial', BLUE), pastille(70, 260, 'éminence pyramidale', AMBER),
         '<ellipse cx="151.5" cy="169.5" rx="3.6" ry="9.5" transform="rotate(28 151.5 169.5)" fill="#c8102e" stroke="#fff" stroke-width="1"/>',
         trace([(151.5, 169.5), (186, 140)], RED, w=1.6), pastille(206, 132, 'muscle stapédien', RED),
-        trace([(146, 222.5), (138, 232), (131, 246), (142.5, 252.5), (162, 251), (180, 247.5)], ORANGE, w=3.2),
         fleche((176, 204), (212, 214), ORANGE), pastille(236, 228, 'sinus tympani', ORANGE)]),
     'tympanosclerose': ('Tympanosclérose : plaques calcifiées sur la chaîne et les parois de la caisse', [
         cercle((106, 114), 30, RED), cercle((118, 157), 21, AMBER), cercle((178, 169), 21, BLUE), texte(150, 312, 'plaques calcifiées', '#fff', 'middle', 13)]),
