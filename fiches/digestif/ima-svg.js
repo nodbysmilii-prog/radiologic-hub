@@ -9,7 +9,9 @@
                      normale, épaissie en cible, amincie, hyperdense sans
                      injection, défaut de rehaussement, pneumatose en
                      bulles ou linéaire, dilatée, feces sign ;
-   • air(type)     : aéroportie, aéromésentérie, pneumopéritoine ;
+   • air(type)     : aéroportie (coupe axiale du foie : air dans les branches portes
+                     périphériques), aéromésentérie (air dans la VMS et les veines
+                     du mésentère), pneumopéritoine ;
    • mesentere(t)  : signe du peigne, infiltration de la graisse, ascite ;
    • veine()       : thrombus veineux spontanément hyperdense ;
    • colon()       : zones de faiblesse de l'ischémie non occlusive ;
@@ -146,23 +148,73 @@
   /* ---------- Air anormal ---------- */
   function air(type = 'aeroportie') {
     let s;
-    if (type === 'aeroportie') {
-      s = `<rect width="${W}" height="${H}" fill="${C.fond}"/><path d="M10 40C70 10 200 14 230 60C238 120 200 190 120 214C60 220 14 170 10 40Z" fill="#8f8b84"/>`;
-      // air dans les branches portes jusqu'à la périphérie du foie
-      const br = (x, y, a, L, w, n) => { const x2 = x + Math.cos(a) * L, y2 = y + Math.sin(a) * L; let t = `<line x1="${f1(x)}" y1="${f1(y)}" x2="${f1(x2)}" y2="${f1(y2)}" stroke="#000" stroke-width="${w}" stroke-linecap="round"/>`; if (n) { t += br(x2, y2, a - 0.45, L * 0.7, w * 0.7, n - 1) + br(x2, y2, a + 0.4, L * 0.7, w * 0.7, n - 1); } return t; };
-      s += br(160, 150, -2.2, 34, 3, 3) + br(150, 160, -1.2, 32, 3, 3) + br(140, 160, 2.8, 30, 3, 3);
-      s += etiquette(120, 232, 'aéroportie : air jusqu’en périphérie du foie', { size: 9, fill: C.rouge });
-    } else if (type === 'aeromesenterie') {
-      s = fondAbdo(8);
-      s += `<circle cx="70" cy="80" r="26" fill="${C.liquide}"/>${anneau(70, 80, 26, 4, C.tissu)}`;
-      for (const [x1, y1, x2, y2] of [[90, 96, 150, 150], [110, 120, 170, 120], [150, 150, 200, 200], [130, 136, 120, 200]]) s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#000" stroke-width="3" stroke-linecap="round"/>`;
-      s += etiquette(150, 228, 'aéromésentérie : air dans les veines du mésentère', { size: 9, fill: C.rouge });
-    } else {
+    if (type === 'aeroportie') s = aeroportie();
+    else if (type === 'aeromesenterie') s = aeromesenterie();
+    else {
       s = `<rect width="${W}" height="${H}" fill="${C.fond}"/><path d="M0 70C60 50 180 50 240 70V240H0Z" fill="${C.graisse}"/><path d="M20 70C80 52 160 52 220 70C160 84 80 84 20 70Z" fill="#000"/>`;
       s += `<path d="M0 66C60 46 180 46 240 66" fill="none" stroke="${C.muscle}" stroke-width="10"/>`;
       s += etiquette(120, 110, 'pneumopéritoine', { fill: C.rouge }) + etiquette(120, 126, 'air extradigestif : perforation', { size: 9 });
     }
     return cadre(s, type);
+  }
+
+  /* Coupe axiale abdominale commune (antérieur en haut, droite du patient à gauche de l'image) */
+  function tronc() {
+    let s = `<rect width="${W}" height="${H}" fill="${C.fond}"/>`;
+    s += `<ellipse cx="120" cy="126" rx="114" ry="94" fill="${C.graisse}" stroke="#8d8a85" stroke-width="2"/>`;
+    // paroi musculaire antérieure et latérale
+    s += `<path d="M22 132C24 70 70 44 120 42C170 44 216 70 218 132" fill="none" stroke="${C.muscle}" stroke-width="7"/>`;
+    // rachis, psoas
+    s += `<path d="M104 190a16 15 0 1 1 32 0a16 15 0 1 1 -32 0Z" fill="${C.os}"/><path d="M112 204h16l6 14h-28Z" fill="${C.os}"/>`;
+    s += `<ellipse cx="88" cy="196" rx="13" ry="11" fill="${C.muscle}"/><ellipse cx="152" cy="196" rx="13" ry="11" fill="${C.muscle}"/>`;
+    return s;
+  }
+  // Vaisseau « aéré » : paroi/contraste en clair, air noir dans la lumière
+  const tube = (d, ext = 6, int = 3) => `<path d="${d}" fill="none" stroke="#cfcac0" stroke-width="${ext}" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="#000" stroke-width="${int}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  const opacifie = (d, ext = 6) => `<path d="${d}" fill="none" stroke="${C.contraste}" stroke-width="${ext}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  const fleche = (x1, y1, x2, y2, c) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="1.8"/><circle cx="${x2}" cy="${y2}" r="2.6" fill="${c}"/>`;
+
+  /* Aéroportie : coupe axiale du foie au temps portal ; tronc porte opacifié au hile,
+     air (noir) dans la lumière des branches portes périphériques, jusque sous la capsule */
+  function aeroportie() {
+    let s = tronc();
+    // foie (à gauche de l'image), rate, estomac avec niveau hydro-aérique
+    s += `<path d="M18 124C16 76 46 50 96 48C130 48 150 58 150 80C150 104 136 122 124 140C112 160 82 176 54 170C30 164 19 148 18 124Z" fill="#9c988f"/>`;
+    s += `<ellipse cx="204" cy="148" rx="18" ry="30" fill="#8c8881" transform="rotate(-20 204 148)"/>`;
+    s += `<path d="M156 70C176 62 202 72 206 96C208 116 188 124 170 118C156 112 150 90 156 70Z" fill="${C.liquide}"/><path d="M158 76C176 66 200 74 204 88H156Z" fill="#000"/>`;
+    // aorte, veine cave inférieure
+    s += `<circle cx="132" cy="168" r="9" fill="#e3dfd6"/><ellipse cx="104" cy="160" rx="10" ry="8" fill="#cfcac0"/>`;
+    // tronc porte et grosses branches opacifiées
+    s += opacifie('M128 132L110 120L86 110', 9) + opacifie('M110 120L118 98', 6);
+    // branches périphériques : air dans la lumière
+    s += tube('M86 110L64 96L44 84') + tube('M64 96L58 72') + tube('M86 110L70 126L46 134') + tube('M70 126L64 148');
+    s += tube('M118 98L114 76L104 60') + tube('M114 76L132 64') + tube('M44 84L32 92', 4, 2) + tube('M58 72L50 58', 4, 2) + tube('M104 60L92 56', 4, 2);
+    s += fleche(150, 32, 106, 58, C.rouge) + etiquette(160, 26, 'air dans les branches portes', { size: 9, fill: C.rouge });
+    s += fleche(30, 204, 44, 136, C.rouge) + etiquette(8, 218, 'jusqu’en périphérie du foie', { size: 9, fill: C.rouge, anchor: 'start' });
+    s += fleche(200, 196, 126, 132, C.mesure) + etiquette(234, 208, 'tronc porte opacifié', { size: 9, fill: C.mesure, anchor: 'end' });
+    s += etiquette(46, 160, 'foie', { size: 9, fill: '#111', halo: '#cfcac0' });
+    return s;
+  }
+
+  /* Aéromésentérie : coupe axiale sous le pancréas ; VMS avec air dans sa lumière (niveau
+     air-liquide, air en avant), à droite de l'AMS ; air dans les veines du mésentère */
+  function aeromesenterie() {
+    let s = tronc();
+    // reins
+    s += `<ellipse cx="62" cy="174" rx="15" ry="22" fill="#a7a39a" transform="rotate(25 62 174)"/><ellipse cx="178" cy="174" rx="15" ry="22" fill="#a7a39a" transform="rotate(-25 178 174)"/>`;
+    // aorte, veine cave
+    s += `<circle cx="128" cy="166" r="9" fill="#ece9e0"/><ellipse cx="104" cy="164" rx="10" ry="8" fill="#cfcac0"/>`;
+    // anses grêles dans le mésentère
+    for (const [x, y, r] of [[172, 92, 18], [196, 122, 15], [150, 66, 14], [78, 76, 17], [52, 116, 15]]) s += `<circle cx="${x}" cy="${y}" r="${r}" fill="${C.liquide}"/>${anneau(x, y, r, 3, C.muqueuse)}`;
+    // veines mésentériques aérées vers la VMS
+    s += tube('M108 128L128 112L150 96L162 92') + tube('M128 112L140 82L148 74') + tube('M150 96L182 116') + tube('M108 128L92 104L82 92', 5, 2.5);
+    // AMS (opacifiée) et VMS (niveau : air en avant, sang opacifié en arrière)
+    s += `<circle cx="124" cy="138" r="5" fill="#ffffff"/>`;
+    s += `<circle cx="102" cy="138" r="12" fill="#d8d4ca" stroke="#ece9e0" stroke-width="1.5"/><path d="M90 139a12 12 0 0 1 24 0Z" fill="#000"/>`;
+    s += fleche(30, 212, 96, 134, C.rouge) + etiquette(10, 224, 'VMS : air dans la lumière (niveau)', { size: 9, fill: C.rouge, anchor: 'start' });
+    s += fleche(206, 34, 144, 86, C.rouge) + etiquette(236, 24, 'air dans les veines du mésentère', { size: 9, fill: C.rouge, anchor: 'end' });
+    s += fleche(200, 206, 128, 140, C.mesure) + etiquette(206, 218, 'AMS', { size: 9, fill: C.mesure });
+    return s;
   }
 
   /* ---------- Mésentère ---------- */
