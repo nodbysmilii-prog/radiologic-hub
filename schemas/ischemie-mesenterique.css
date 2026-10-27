@@ -1,0 +1,98 @@
+/* =========================================================
+   RadiologicHub — fiche « Ischémie mésentérique : sémiologie et diagnostic » :
+   frise des acquisitions, dose de contraste, barre des 3 formes, schéma de
+   l'AMS, atelier de la paroi, grille de gravité, équation diagnostique.
+   Complète mediastin.css (.md-*), nodule-pulmonaire.css (.np-fig…), eu-tirads.css (.ti-*).
+   ========================================================= */
+.im-clair svg { background: #fbfaf7; }
+.im-origines { margin-bottom: 12px; }
+.im-chaine { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* Objectifs de l'angioscanner */
+.im-objectifs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
+.im-objectifs div { padding: 12px; border-radius: 14px; border: 3px solid var(--c); background: color-mix(in srgb, var(--c) 7%, #fff); font-size: .8rem; font-weight: 600; }
+.im-objectifs b { display: block; font-family: 'Permanent Marker', cursive; font-size: 1.3rem; color: var(--c); }
+
+/* Frise des acquisitions */
+.im-frise { position: relative; height: 96px; margin: 0 40px 18px 20px; }
+.im-frise-axe { position: absolute; left: 0; right: 0; top: 18px; height: 6px; border-radius: 999px; background: linear-gradient(90deg, var(--steel), var(--k-grave) 36%, var(--blue)); }
+.im-temps { position: absolute; left: var(--x); top: 6px; width: 170px; translate: -50% 0; text-align: center; font-size: .78rem; }
+.im-frise .im-temps:nth-child(2) { translate: 0 0; text-align: left; }
+.im-frise .im-temps:nth-child(2) .im-point { margin-left: -13px; }
+.im-frise .im-temps:nth-child(4) { translate: -100% 0; text-align: right; }
+.im-frise .im-temps:nth-child(4) .im-point { margin-right: -13px; }
+.im-point { display: block; width: 26px; height: 26px; margin: 2px auto 8px; border-radius: 50%; background: var(--c); border: 4px solid #fff; box-shadow: 0 0 0 3px var(--c); }
+.im-dose { --c: var(--blue); margin-bottom: 18px; }
+.im-dose p { margin: 0 0 8px; }
+
+/* Reconstructions */
+.im-recons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.im-recons div { padding: 12px; border-radius: 14px; border-left: 6px solid var(--c); background: #fff; font-size: .82rem; }
+.im-recons b { display: block; color: var(--c); font-size: .95rem; }
+
+/* Barre des 3 formes */
+.im-barre { display: flex; border-radius: 16px; overflow: hidden; border: 4px solid var(--ink); margin: 6px 0 4px; }
+.im-barre button { flex: 0 0 var(--p); min-width: 0; padding: 14px 10px; border: 0; border-right: 3px solid var(--ink); background: color-mix(in srgb, var(--c) 22%, #fff); font: inherit; text-align: left; cursor: pointer; transition: background .2s; }
+.im-barre button:last-child { border-right: 0; }
+.im-barre button:hover, .im-barre button.is-on { background: var(--c); color: #fff; }
+.im-barre b { display: block; font-size: .9rem; }
+.im-barre span { font-family: 'Permanent Marker', cursive; font-size: 1.2rem; }
+.im-forme { margin-top: 14px; padding: 6px 16px 12px; border-radius: 18px; border: 3px solid transparent; transition: border-color .3s, box-shadow .3s; }
+.im-forme.is-on { border-color: var(--c); box-shadow: 8px 8px 0 color-mix(in srgb, var(--c) 35%, transparent); }
+
+/* Schéma de l'AMS */
+.im-ams { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 20px; align-items: start; margin: 10px 0 20px; padding: 16px; border-radius: 20px; border: 4px solid var(--ink); background: #fff; box-shadow: 10px 10px 0 color-mix(in srgb, var(--teal) 40%, transparent); scroll-margin-top: 90px; }
+.im-ams-outil .np-taille input { accent-color: var(--teal); }
+.im-ams-regles { margin-top: 12px; font-size: .84rem; }
+.im-paire { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+/* Atelier de la paroi */
+.im-atelier { margin: 6px 0 14px; padding: 16px; border-radius: 20px; border: 4px solid var(--ink); background: #fff; box-shadow: 10px 10px 0 color-mix(in srgb, var(--amber) 45%, transparent); scroll-margin-top: 90px; }
+.im-onglets { --c: var(--amber); margin-bottom: 14px; }
+.im-onglets button { font-size: .76rem; padding: 6px 12px; }
+.im-atelier-corps { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 20px; align-items: center; }
+.im-atelier-corps h4 { margin: 0 0 8px; font-size: 1.1rem; }
+.im-prono { display: inline-block; margin: 6px 0 0; padding: 6px 12px; border-radius: 10px; font-weight: 800; font-size: .86rem; }
+.im-prono:empty { display: none; }
+.im-prono.is-bon { background: #ddf3ea; color: #1f6d4c; }
+.im-prono.is-mauvais { background: #fde2e4; color: #a8172d; }
+.im-paroi-liste { font-size: .86rem; margin-bottom: 14px; }
+.im-deux-fig { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+/* Gravité */
+.im-gravite .fcard h3 { color: var(--k-grave); }
+.im-jauge { display: flex; gap: 14px; align-items: center; margin: 4px 0 8px; }
+.im-jauge-barre { flex: 1; height: 16px; border-radius: 999px; background: #ececf0; overflow: hidden; border: 2px solid var(--ink); }
+.im-jauge-barre i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--amber), var(--k-grave)); transition: width .3s; }
+.im-jauge p { margin: 0; font-weight: 800; min-width: 15em; }
+
+/* Conclusion */
+.im-gros { font-size: 1.25rem; font-weight: 800; }
+.im-equation { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 6px 0 16px; }
+.im-equation span { padding: 10px 16px; border-radius: 14px; border: 3px solid var(--c); background: color-mix(in srgb, var(--c) 10%, #fff); font-weight: 800; }
+.im-equation b { font-family: 'Permanent Marker', cursive; font-size: 1.6rem; }
+
+/* Entraînement */
+.im-cas .ti-cas-choix { grid-template-columns: repeat(2, 1fr); }
+.im-cas .ti-cas-choix button { font-size: .72rem; padding: 6px 4px; }
+@media (min-width: 1001px) { .im-cas { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+@media (max-width: 1000px) {
+  .im-objectifs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .im-ams, .im-atelier-corps { grid-template-columns: 1fr; }
+  .im-ams > .np-fig, .im-atelier-corps > .np-fig { max-width: 320px; }
+}
+@media (max-width: 700px) {
+  .im-chaine { grid-template-columns: 1fr 1fr; }
+  .im-recons, .im-deux-fig { grid-template-columns: 1fr; }
+  .im-deux-fig .np-fig { max-width: 320px; }
+  .im-frise { height: auto; margin: 0 0 18px; display: grid; gap: 8px; border-left: 6px solid var(--blue); padding-left: 4px; }
+  .im-frise-axe { display: none; }
+  .im-frise .im-temps { position: static; display: flex; align-items: center; gap: 10px; width: auto; translate: 0 0 !important; text-align: left !important; font-size: .8rem; }
+  .im-frise .im-temps .im-point { flex: none; margin: 0 !important; }
+  .im-barre { flex-direction: column; }
+  .im-barre button { flex: none; border-right: 0; border-bottom: 3px solid var(--ink); background: linear-gradient(90deg, color-mix(in srgb, var(--c) 40%, #fff) var(--p), #fff var(--p)); }
+  .im-barre button:last-child { border-bottom: 0; }
+  .im-jauge { flex-direction: column; align-items: stretch; }
+}
+@media print { .im-dose, .im-ams-outil, .im-onglets, #im-cas, #im-cas-reset { display: none !important; } }
