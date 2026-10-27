@@ -87,6 +87,13 @@
     return s;
   }
   const anneau = (cx, cy, r, ep, couleur) => `<circle cx="${cx}" cy="${cy}" r="${f1(r - ep / 2)}" fill="none" stroke="${couleur}" stroke-width="${f1(ep)}"/>`;
+  // Mesure de l'épaisseur pariétale : trait radial de la lumière (r1) à la séreuse (r2), petits taquets aux extrémités
+  function epaisseur(cx, cy, r1, r2, a) {
+    const c = Math.cos(a), sn = Math.sin(a), px = -sn * 5, py = c * 5;
+    const [x1, y1, x2, y2] = [cx + c * r1, cy + sn * r1, cx + c * r2, cy + sn * r2].map(f1);
+    return `<g stroke="${C.trait}" stroke-width="2.4" stroke-linecap="round"><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`
+      + `<line x1="${f1(x1 - px)}" y1="${f1(y1 - py)}" x2="${f1(x1 + px)}" y2="${f1(y1 + py)}"/><line x1="${f1(x2 - px)}" y1="${f1(y2 - py)}" x2="${f1(x2 + px)}" y2="${f1(y2 + py)}"/></g>`;
+  }
   function anse(type = 'normale', o = {}) {
     let s = fondAbdo(o.graine || 5);
     const cx = 120, cy = 116;
@@ -96,7 +103,7 @@
       case 'epaissie':
         // cible : muqueuse rehaussée, sous-muqueuse œdémateuse hypodense, musculeuse/séreuse
         s += `<circle cx="${cx}" cy="${cy}" r="62" fill="${C.tissu}"/><circle cx="${cx}" cy="${cy}" r="54" fill="${C.oedeme}"/><circle cx="${cx}" cy="${cy}" r="30" fill="${C.muqueuse}"/><circle cx="${cx}" cy="${cy}" r="22" fill="${C.liquide}"/>`;
-        if (legende) s += `<line x1="${cx + 30}" y1="${cy - 58}" x2="${cx + 62}" y2="${cy - 58}" stroke="${C.trait}" stroke-width="2"/>` + etiquette(cx, 30, 'épaississement > 3 mm, cible', { fill: C.trait }) + etiquette(cx, 226, 'œdème sous-muqueux : absence de nécrose', { size: 9, fill: C.mesure });
+        if (legende) s += epaisseur(cx, cy, 22, 62, -0.95) + etiquette(cx, 30, 'épaississement > 3 mm, cible', { fill: C.trait }) + etiquette(cx, 226, 'œdème sous-muqueux : absence de nécrose', { size: 9, fill: C.mesure });
         break;
       case 'amincie':
         s += `<circle cx="${cx}" cy="${cy}" r="56" fill="${C.liquide}"/>${anneau(cx, cy, 56, 1.2, '#7d7a75')}` + voisine(true);
