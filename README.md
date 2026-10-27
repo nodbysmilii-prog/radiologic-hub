@@ -851,6 +851,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 27/10/2026 | Fiche « Ischémie mésentérique » : mesure de l'**épaississement > 3 mm** corrigée à la demande de l'auteur — trait radial à travers la paroi, de la lumière à la séreuse, avec taquets (au lieu d'un trait horizontal hors de l'anse) |
 | 27/10/2026 | Fiche « Ischémie mésentérique » : dessins du mésentère (signe du peigne, infiltration de la graisse, ascite) retirés à la demande de l'auteur, texte gardé en liste |
 | 27/10/2026 | Fiche « Ischémie mésentérique » : dessins de l'**aéroportie** et de l'**aéromésentérie** refaits en coupes TDM axiales, à la demande de l'auteur (« pas vraiment parlants ») — foie avec tronc porte opacifié et **air dans la lumière des branches portes** jusqu'en périphérie ; **VMS avec air dans sa lumière (niveau)** à côté de l'AMS et air dans les veines du mésentère (`fiches/digestif/ima-svg.js`) |
 | 27/10/2026 | Fiches rapides › Digestif : nouvelle fiche **« Ischémie mésentérique : sémiologie et diagnostic »** d'après la fiche de l'auteur (source au dépôt privé), lexique inchangé, 5 surlignages de l'auteur repris : illustrations dessinées (AMS, anses, air, mésentère, côlon), frise des acquisitions et dose de contraste, barre des 3 formes, **« Où est l'occlusion ? »** le long de l'AMS, **atelier de la paroi**, grille de gravité, entraînement (8 cas) ; `fiches/digestif/`, `regles/ischemie-mesenterique.js`, `tests/ischemie-mesenterique.test.js` (5 tests) ; vérifié dans Chromium (1366 et 390 px) |
