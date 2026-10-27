@@ -1,0 +1,200 @@
+/* =========================================================
+   RadiologicHub — fiche « Imagerie des masses médiastinales » : chaîne des étapes,
+   compartiments de Felson (barres), médiastin en 3D (Heitzman / Felson), médiastin
+   para-orificiel, indices, orientation tissulaire, goitre (types et grades), CSR,
+   pile du thymus myasthénique, résécabilité, marqueurs germinaux, entraînement.
+   Complète schemas/cavum.css (.c3d), cholesteatome.css (.r3d, .ch-*) et eu-tirads.css (.ti-*).
+   ========================================================= */
+.md-deux { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 14px 0; align-items: start; }
+.md-trois { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 14px 0; }
+.md-trois-cartes .fcard { border-top: 6px solid var(--c); }
+.md-puces { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; }
+.md-sous { margin: 16px 0 8px; font-weight: 800; }
+.md-aide { margin: 6px 0 0; font-size: .78rem; color: var(--muted); }
+.md-source { margin-top: 18px; font-size: .72rem; color: var(--muted); }
+.md-regle { margin: 10px 0 0; }
+
+/* Chaîne des étapes */
+.md-chaine { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; margin: 8px 0 18px; padding: 0; list-style: none; counter-reset: md; }
+.md-chaine-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.md-chaine li { position: relative; counter-increment: md; padding: 30px 10px 12px; border-radius: 14px; border: 3px solid var(--c); background: color-mix(in srgb, var(--c) 8%, #fff); font-size: .8rem; font-weight: 700; }
+.md-chaine li::before { content: counter(md); position: absolute; top: 6px; left: 10px; font-family: 'Permanent Marker', cursive; font-size: 1.1rem; color: var(--c); }
+.md-chaine li:not(:last-child)::after { content: "›"; position: absolute; right: -11px; top: 50%; translate: 0 -50%; z-index: 1; font-size: 1.3rem; font-weight: 900; color: var(--ink); }
+.md-chaine li > span, .md-chaine li > b + span { display: block; margin-top: 4px; font-weight: 500; font-size: .74rem; color: var(--muted); }
+.md-chaine li > b { display: block; font-size: .92rem; }
+
+/* Repères chiffrés : variantes de colonnes */
+.md-chiffres-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.md-chiffres-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.md-chiffres-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.md-chiffres-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.md-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+.md-badge { padding: 6px 14px; border-radius: 999px; border: 2px solid var(--c); background: #fff; font-size: .82rem; }
+
+/* Moyens d'exploration */
+.md-modalites { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 16px; }
+.md-modalites span { padding: 6px 12px; border-radius: 10px; border: 2px solid rgba(17, 17, 20, .18); background: #fff; font-size: .82rem; font-weight: 600; }
+.md-modalites .is-star { border: 3px solid var(--ink); box-shadow: 4px 4px 0 var(--amber); font-weight: 800; }
+.md-etapes { margin: 0; padding-left: 1.3em; display: grid; gap: 8px; }
+
+/* Lien vers la 3D */
+.md-lien-3d { display: inline-flex; align-items: center; gap: 6px; margin: 4px 0; padding: 4px 10px 4px 6px; border: 2px solid var(--teal); border-radius: 10px; background: #fff; font: inherit; font-size: .76rem; font-weight: 700; cursor: pointer; vertical-align: middle; }
+.md-lien-3d::before { content: "3D"; padding: 1px 4px; border-radius: 5px; background: var(--ink); color: #fff; font-size: .55rem; font-weight: 900; }
+.md-lien-3d:hover { background: color-mix(in srgb, var(--teal) 14%, #fff); }
+
+/* Felson : barres de fréquence */
+.md-felson { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.md-felson-c { display: grid; gap: 6px; padding: 14px; border-radius: 16px; border: 3px solid var(--c); background: #fff; font: inherit; text-align: left; cursor: pointer; transition: transform .15s, box-shadow .15s; }
+.md-felson-c:hover { transform: translateY(-2px); }
+.md-felson-c.is-on { box-shadow: 6px 6px 0 var(--c); background: color-mix(in srgb, var(--c) 10%, #fff); }
+.md-felson-c b { font-size: 1.05rem; }
+.md-felson-c small { font-size: .74rem; color: var(--muted); }
+.md-pct { font-family: 'Permanent Marker', cursive; font-size: 1.6rem; line-height: 1; }
+.md-barre { display: block; height: 10px; border-radius: 999px; background: #eee; overflow: hidden; }
+.md-barre i { display: block; height: 100%; width: 0; background: var(--c); border-radius: inherit; transition: width .9s cubic-bezier(.2, .8, .2, 1); }
+.md-felson.is-vu .md-barre i { width: var(--p); }
+
+/* Visionneuse 3D */
+.md3d { margin-top: 10px; }
+.md3d .c3d-voie[aria-pressed="true"] { background: var(--c); color: #fff; }
+.md3d-liste { display: grid; gap: 4px; margin-top: 10px; }
+.md3d-liste button { display: flex; align-items: center; gap: 8px; padding: 5px 8px; border: 2px solid transparent; border-radius: 10px; background: none; font: inherit; font-size: .74rem; font-weight: 700; text-align: left; cursor: pointer; }
+.md3d-liste button::before { content: ""; flex: none; width: 12px; height: 12px; border-radius: 4px; background: var(--c); }
+.md3d-liste button:hover { background: color-mix(in srgb, var(--c) 12%, #fff); }
+.md3d-liste button.is-on { border-color: var(--c); background: color-mix(in srgb, var(--c) 18%, #fff); }
+.md3d-liste small { color: var(--muted); font-weight: 600; }
+.md3d-info { padding: 14px 16px; background: #fff; border-top: 4px solid var(--ink); }
+.md3d-info h4 { margin: 0 0 6px; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+.md3d-info h4::before { content: ""; width: 14px; height: 14px; border-radius: 4px; background: var(--c); }
+.md3d-info p { margin: 4px 0; }
+.md3d-info ul { margin: 4px 0; padding-left: 1.1em; }
+.md-vers { display: inline-block; padding: 2px 10px; border-radius: 999px; background: var(--ink); color: #fff; font-size: .74rem; font-weight: 800; }
+
+/* Médiastin para-orificiel */
+.md-para { margin: 6px 0 22px; padding: 14px; border-radius: 16px; border: 3px dashed var(--teal); background: color-mix(in srgb, var(--teal) 6%, #fff); }
+.md-para-titre { margin: 0 0 10px; font-weight: 800; }
+.md-para-l { display: flex; flex-wrap: wrap; gap: 8px; }
+.md-para-l span { padding: 6px 12px; border-radius: 12px; border-left: 6px solid var(--c); background: #fff; font-size: .84rem; font-weight: 600; }
+
+/* Démarche : indices */
+.md-indices { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin: 8px 0 14px; }
+.md-indice { position: relative; min-height: 84px; padding: 10px; border: 3px solid var(--ink); border-radius: 14px; background: #fff; font: inherit; font-size: .84rem; font-weight: 700; cursor: pointer; transition: background .2s; }
+.md-indice::after { content: "→ ?"; display: block; margin-top: 6px; font-family: 'Permanent Marker', cursive; color: var(--purple); }
+.md-indice.is-vu { background: color-mix(in srgb, var(--purple) 10%, #fff); }
+.md-indice.is-vu::after { content: "→ " attr(data-piste); font-family: inherit; font-weight: 900; }
+.md-axe { display: flex; gap: 10px; align-items: center; padding: 12px; border-radius: 14px; border: 3px solid var(--c); background: #fff; font-size: .84rem; font-weight: 700; }
+.md-axe b { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--c); color: #fff; font-family: 'Permanent Marker', cursive; }
+
+/* Orientation tissulaire */
+.md-orient { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.md-orient-cartes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.md-oc { padding: 12px; border-radius: 14px; border: 3px solid var(--c); background: #fff; transition: transform .2s, box-shadow .2s, opacity .2s; }
+.md-oc b { color: var(--c); font-size: 1rem; }
+.md-oc p { margin: 4px 0 0; font-size: .82rem; }
+.md-oc:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.md-orient.is-actif .md-oc { opacity: .45; }
+.md-orient.is-actif .md-oc.is-on { opacity: 1; transform: scale(1.03); box-shadow: 6px 6px 0 var(--c); }
+.md-outil { margin: 0; padding: 16px 18px; border-radius: 16px; border: 3px solid var(--ink); background: #fff; box-shadow: 6px 6px 0 color-mix(in srgb, var(--c, var(--purple)) 45%, transparent); }
+.md-outil label { display: block; font-size: .84rem; font-weight: 600; }
+.md-outil input[type="range"] { display: block; width: 100%; margin: 6px 0 10px; accent-color: var(--purple); }
+.md-choix { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 6px 0; }
+.md-choix label, .md-coche { display: inline-flex; gap: 6px; align-items: center; cursor: pointer; }
+
+/* Tissus par compartiment */
+.md-tissus { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 14px; }
+.md-tissu { padding: 12px; border-radius: 14px; border-top: 6px solid var(--c); background: color-mix(in srgb, var(--c) 7%, #fff); }
+.md-tissu b { color: var(--c); }
+.md-tissu p { margin: 4px 0 0; font-size: .82rem; }
+.md-onglets { margin-top: 14px; }
+
+/* Goitre */
+.md-goitre { display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: 16px; align-items: center; margin: 14px 0; padding: 14px; border-radius: 16px; border: 3px solid var(--ink); background: #fff; }
+.md-seg { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 6px 0; }
+.md-seg > span { min-width: 3.4em; font-size: .74rem; font-weight: 900; text-transform: uppercase; letter-spacing: .06em; }
+.md-seg label { position: relative; cursor: pointer; }
+.md-seg input { position: absolute; opacity: 0; pointer-events: none; }
+.md-seg label { padding: 5px 12px; border: 2px solid var(--ink); border-radius: 999px; font-size: .8rem; font-weight: 800; }
+.md-seg label:has(input:checked) { background: var(--ink); color: #fff; }
+.md-seg label:has(input:focus-visible) { outline: 3px solid var(--amber); outline-offset: 2px; }
+.md-goitre-svg svg { display: block; width: 100%; height: auto; }
+
+/* Listes à cocher */
+.md-check { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.md-check li { padding: 6px 10px 6px 30px; position: relative; border-radius: 10px; background: #f6f6f8; font-size: .84rem; }
+.md-check li::before { content: "✓"; position: absolute; left: 10px; font-weight: 900; color: var(--teal); }
+.md-check-actif li::before { content: none; }
+.md-check-actif li { padding-left: 10px; }
+.md-check-actif label { display: flex; gap: 8px; align-items: flex-start; cursor: pointer; }
+.md-check-actif input { margin-top: 3px; accent-color: var(--k-grave, #c8102e); }
+.md-check-actif li:has(input:checked) { background: color-mix(in srgb, var(--teal) 14%, #fff); }
+
+/* Thymus des myasthéniques */
+.md-pile { display: flex; margin: 6px 0 12px; border-radius: 12px; overflow: hidden; border: 3px solid var(--ink); }
+.md-pile span { flex: 0 0 var(--p); min-width: 0; padding: 10px 8px; background: color-mix(in srgb, var(--c) 22%, #fff); border-right: 2px solid var(--ink); font-size: .78rem; font-weight: 700; }
+.md-pile span:last-child { border-right: 0; }
+
+/* CSR */
+.md-csr { margin-top: 14px; --c: var(--teal); }
+.md-formule { margin: 0 0 10px; padding: 8px 12px; border-radius: 10px; background: #f4f4f6; font-family: ui-monospace, monospace; font-size: .84rem; }
+.md-csr-champs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.md-csr-champs input { display: block; width: 100%; margin-top: 4px; padding: 6px 8px; border: 2px solid var(--ink); border-radius: 8px; font: inherit; }
+.md-csr-regle { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 14px; }
+.md-csr-regle > span { padding: 6px 8px; border-radius: 8px; font-size: .74rem; text-align: center; }
+.md-csr-regle .is-h { background: color-mix(in srgb, var(--teal) 30%, #fff); }
+.md-csr-regle .is-t { background: color-mix(in srgb, var(--k-grave, #c8102e) 30%, #fff); }
+.md-csr-piste { grid-column: 1 / -1; position: relative; height: 16px; margin-top: 18px; border-radius: 999px; background: #ececf0; }
+.md-csr-piste b { position: absolute; top: 0; bottom: 0; border-radius: 999px; }
+.md-csr-piste i { position: absolute; top: -6px; width: 4px; height: 28px; background: var(--ink); border-radius: 2px; translate: -50% 0; transition: left .3s; }
+.md-csr-piste i::before { content: attr(data-v); position: absolute; top: -17px; left: 50%; translate: -50% 0; font-size: .66rem; font-weight: 900; white-space: nowrap; }
+.md-csr-piste i[hidden] { display: none; }
+
+/* Thymome : comparaison */
+.md-compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 8px 0 14px; }
+.md-cote-a { padding: 12px 14px; border-radius: 14px; border: 3px solid var(--c); background: color-mix(in srgb, var(--c) 6%, #fff); }
+.md-cote-titre { margin: 0 0 8px; font-weight: 900; color: var(--c); }
+.md-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.md-tags span { padding: 3px 10px; border-radius: 999px; border: 2px dashed var(--muted); font-size: .74rem; font-weight: 700; color: var(--muted); }
+
+/* Germinales */
+.md-germ-table td:nth-child(3), .md-germ-table td:nth-child(4) { white-space: nowrap; }
+.md-germ-table tr.is-on td { background: color-mix(in srgb, var(--teal) 14%, #fff); }
+#md-germ { margin-top: 14px; --c: var(--teal); }
+.md-germ-res { margin: 10px 0 0; padding-left: 1.1em; display: grid; gap: 4px; font-size: .86rem; font-weight: 700; }
+.md-germ-res:empty::before { content: "Choisissez au moins un marqueur."; margin-left: -1.1em; font-weight: 500; color: var(--muted); }
+
+/* Postérieur */
+.md-pieges { margin-top: 12px; }
+
+/* Entraînement */
+@media (min-width: 901px) { #testez-vous .flash-3 { grid-template-columns: repeat(3, 1fr); } }
+.md-cas .ti-cas-choix { grid-template-columns: repeat(3, 1fr); }
+.md-cas .ti-cas-choix button { padding: 6px 4px; font-size: .72rem; line-height: 1.2; }
+.md-cas .ti-cas-rep { margin: 8px 0 0; }
+
+@media (max-width: 1000px) {
+  .md-chaine { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .md-chaine li:nth-child(3n)::after { display: none; }
+  .md-indices { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .md-orient { grid-template-columns: 1fr; }
+  .md-chiffres-5 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+  .md-deux, .md-trois, .md-felson, .md-tissus, .md-compare, .md-goitre { grid-template-columns: 1fr; }
+  .md-chaine, .md-chaine-3 { grid-template-columns: 1fr 1fr; }
+  .md-chaine li::after { display: none; }
+  .md-indices { grid-template-columns: 1fr 1fr; }
+  .md-csr-champs { grid-template-columns: 1fr 1fr; }
+  .md-chiffres-3, .md-chiffres-4, .md-chiffres-5 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .md-goitre-svg { max-width: 260px; margin: 0 auto; }
+  .md-pile { flex-direction: column; }
+  .md-pile span { flex: none; border-right: 0; border-bottom: 2px solid var(--ink); background: linear-gradient(90deg, color-mix(in srgb, var(--c) 35%, #fff) var(--p), #fff var(--p)); }
+}
+@media (max-width: 420px) {
+  .md-orient-cartes { grid-template-columns: 1fr; }
+  .md-chiffres-2 { grid-template-columns: 1fr; }
+}
+@media print {
+  .md3d, .md-lien-3d, .md-outil, .md-onglets, #md-cas, #md-cas-reset, .md-goitre-svg { display: none !important; }
+  .md-barre i { width: var(--p); }
+  .md-indice.is-vu::after, .md-indice::after { content: "→ " attr(data-piste); }
+}
