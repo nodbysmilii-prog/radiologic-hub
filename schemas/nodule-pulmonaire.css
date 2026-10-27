@@ -1,0 +1,132 @@
+/* =========================================================
+   RadiologicHub — fiche « Conduite à tenir devant un nodule pulmonaire » :
+   illustrations façon TDM, atelier du nodule, temps de doublement,
+   Fleischner 2017 (frise), synthèse, entraînement.
+   Complète mediastin.css (.md-*), eu-tirads.css (.ti-*), cholesteatome.css (.ch-verdict).
+   ========================================================= */
+.np-fig { margin: 0; }
+.np-fig svg { display: block; width: 100%; height: auto; border-radius: 14px; border: 3px solid var(--ink); background: #141418; }
+.np-fig figcaption { margin-top: 6px; font-size: .78rem; line-height: 1.4; }
+.np-grand svg { border-width: 4px; box-shadow: 8px 8px 0 color-mix(in srgb, var(--purple) 45%, transparent); }
+
+/* I. Définition */
+.np-def { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 18px; align-items: center; margin-bottom: 14px; }
+.np-def > p { grid-column: 1 / -1; margin: 0; }
+.np-regle { display: grid; gap: 6px; }
+.np-regle-barre { position: relative; height: 12px; border-radius: 999px; background: linear-gradient(90deg, var(--teal), var(--amber)); }
+.np-regle-barre i { position: absolute; top: -6px; left: var(--x); width: 4px; height: 24px; translate: -50% 0; background: var(--ink); border-radius: 2px; }
+.np-regle-l { display: flex; justify-content: space-between; font-size: .8rem; font-weight: 700; }
+.np-regle-l span { color: var(--muted); }
+.np-trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; text-align: center; }
+.np-trio figcaption { font-weight: 800; }
+.np-decouverte { margin-bottom: 14px; }
+.np-facteurs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+.np-facteurs span { padding: 6px 12px; border-radius: 10px; border: 2px solid var(--ink); background: #fff; font-size: .82rem; font-weight: 600; }
+.np-facteurs-p span { font-size: .76rem; padding: 4px 10px; }
+.np-poumon-lobe { display: flex; gap: 12px; align-items: center; }
+.np-lobe-svg { flex: none; width: 70px; }
+.np-lobe-svg svg { display: block; width: 100%; height: auto; }
+
+/* Mise en page image + texte */
+.np-cote { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 20px; align-items: start; margin: 10px 0 16px; }
+.np-cote-inv { grid-template-columns: minmax(0, 1fr) 260px; }
+.np-cote .ch-h3:first-child { margin-top: 0; }
+
+/* III. Caractérisation */
+.np-grille5 { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-bottom: 18px; }
+.np-item { padding: 12px; border-radius: 14px; border-top: 6px solid var(--c); background: color-mix(in srgb, var(--c) 7%, #fff); }
+.np-item b { color: var(--c); }
+.np-item p { margin: 4px 0 0; font-size: .8rem; }
+.np-atelier { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 20px; align-items: start; margin: 8px 0 24px; padding: 18px; border-radius: 22px; border: 4px solid var(--ink); background: #fff; box-shadow: 10px 10px 0 color-mix(in srgb, var(--purple) 40%, transparent); scroll-margin-top: 90px; }
+.np-atelier-vue { position: sticky; top: 90px; }
+.np-at-classe { margin: 12px 0 0; padding: 10px 14px; border-radius: 12px; font-weight: 800; font-size: .9rem; background: #f4f4f6; }
+.np-at-classe.is-benin { background: #ddf3ea; color: #1f6d4c; }
+.np-at-classe.is-suspect { background: #fde2e4; color: #a8172d; }
+.np-at-classe.is-indetermine { background: #fff1d6; color: #8a5a00; }
+.np-atelier-reglages .md-seg > span { min-width: 4.6em; }
+.np-coches { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 8px 0; font-size: .84rem; }
+.np-taille { display: block; margin: 8px 0; font-size: .84rem; font-weight: 600; }
+.np-taille input { display: block; width: 100%; margin-top: 4px; accent-color: var(--purple); }
+.np-args { margin: 10px 0 6px; padding: 0; list-style: none; display: grid; gap: 6px; }
+.np-args li { padding: 8px 10px 8px 34px; position: relative; border-radius: 10px; font-size: .82rem; background: #f4f4f6; }
+.np-args li::before { position: absolute; left: 10px; top: 7px; font-weight: 900; }
+.np-args li.is-benin { background: #ddf3ea; } .np-args li.is-benin::before { content: "✓"; color: #1f6d4c; }
+.np-args li.is-malin { background: #fde2e4; } .np-args li.is-malin::before { content: "!"; color: #a8172d; }
+.np-args li.is-neutre::before { content: "•"; color: var(--muted); }
+.np-atel { margin-top: 12px; }
+.np-123 { margin: 0; padding-left: 1.3em; display: grid; gap: 4px; }
+.np-classement .fcard h3 { color: var(--c); }
+
+/* IV / V : cartes illustrées */
+.np-cartes2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 14px; }
+.np-carte { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px; border-radius: 18px; border: 3px solid var(--ink); background: #fff; }
+.np-carte h3 { margin: 0 0 6px; font-size: 1rem; }
+.np-carte p { margin: 0 0 6px; font-size: .86rem; }
+.np-calcifs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 8px 0 16px; }
+.np-trois { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.np-stabilite { display: flex; gap: 16px; align-items: center; padding: 14px 18px; border-radius: 18px; border: 3px solid var(--green); background: color-mix(in srgb, var(--green) 8%, #fff); }
+.np-stabilite p { margin: 0; }
+.np-gros { font-family: 'Permanent Marker', cursive; font-size: 2.2rem; line-height: 1; color: var(--green); white-space: nowrap; }
+
+/* VI */
+.np-spectre li { font-size: .82rem; }
+.np-types { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
+.np-type { padding: 12px; border-radius: 16px; border: 3px solid var(--c); background: color-mix(in srgb, var(--c) 6%, #fff); }
+.np-type b { display: block; margin: 8px 0 4px; color: var(--c); }
+.np-type p { margin: 0; font-size: .82rem; }
+.np-td { --c: var(--purple); margin-top: 6px; }
+.np-td .md-csr-champs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.np-echelle { position: relative; height: 22px; margin: 14px 0 4px; border-radius: 999px; background: #ececf0; }
+.np-echelle span { position: absolute; top: 0; bottom: 0; }
+/* échelle logarithmique de 10 à 2500 jours (voir nodule-fiche.js) */
+.np-z-malin { left: var(--a, 19.9%); width: var(--l, 48.6%); background: color-mix(in srgb, #c8102e 30%, #fff); border-radius: 999px 0 0 999px; }
+.np-z-typ { left: 41.8%; width: 25.1%; background: color-mix(in srgb, #c8102e 55%, #fff); }
+.np-z-stable { left: 76.4%; right: 0; background: color-mix(in srgb, var(--green) 30%, #fff); border-radius: 0 999px 999px 0; }
+.np-z-ns { left: 85.1%; width: 9.3%; top: 50% !important; background: color-mix(in srgb, var(--blue) 55%, #fff); }
+.np-echelle i { position: absolute; top: -7px; width: 4px; height: 36px; translate: -50% 0; background: var(--ink); border-radius: 2px; transition: left .3s; }
+.np-echelle i::before { content: attr(data-v); position: absolute; top: -17px; left: 50%; translate: -50% 0; font-size: .68rem; font-weight: 900; white-space: nowrap; }
+.np-echelle i[hidden] { display: none; }
+.np-echelle-l { position: relative; height: 16px; font-size: .64rem; font-weight: 700; color: var(--muted); }
+.np-echelle-l span { position: absolute; translate: -50% 0; }
+.np-echelle-leg { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: .78rem; }
+.np-echelle-leg li { padding-left: 18px; position: relative; }
+.np-echelle-leg li::before { content: ""; position: absolute; left: 0; top: .35em; width: 11px; height: 11px; border-radius: 3px; background: color-mix(in srgb, var(--c) 45%, #fff); }
+
+/* VIII : Fleischner */
+.np-fl { --c: var(--amber); margin-bottom: 16px; }
+.np-fl .md-seg > span { min-width: 4.6em; }
+.np-frise svg { display: block; width: 100%; height: auto; margin-top: 10px; }
+.np-tables .ftable-wrap { margin-bottom: 16px; }
+.np-tables tr { transition: background .25s; }
+.np-tables tr.is-on td { background: color-mix(in srgb, var(--amber) 28%, #fff); box-shadow: inset 6px 0 0 var(--amber); }
+
+/* IX */
+.np-synthese { display: flex; flex-wrap: wrap; gap: 10px; }
+.np-synthese span { padding: 10px 16px; border-radius: 14px; border: 3px solid var(--c); background: #fff; font-weight: 800; font-size: .9rem; }
+
+/* Entraînement */
+.np-cas .ti-cas-choix { grid-template-columns: repeat(2, 1fr); }
+.np-cas .np-fig svg { border-width: 2px; }
+.np-cas .ti-cas-rep { margin: 8px 0 0; font-size: .78rem; }
+@media (min-width: 1001px) { .np-cas { grid-template-columns: repeat(4, minmax(0, 1fr)); } #testez-vous .flash-3 { grid-template-columns: repeat(3, 1fr); } }
+
+@media (max-width: 1000px) {
+  .np-grille5 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .np-atelier { grid-template-columns: 1fr; }
+  .np-atelier-vue { position: static; max-width: 360px; margin: 0 auto; width: 100%; }
+  .np-cartes2 { grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) {
+  .np-def, .np-cote, .np-cote-inv, .np-types { grid-template-columns: 1fr; }
+  .np-cote > .np-fig, .np-cote-inv > .np-fig { max-width: 300px; }
+  .np-grille5 { grid-template-columns: 1fr 1fr; }
+  .np-calcifs { grid-template-columns: 1fr 1fr; }
+  .np-trois { grid-template-columns: 1fr; }
+  .np-trois .np-fig { max-width: 320px; }
+  .np-carte { grid-template-columns: 120px minmax(0, 1fr); }
+  .np-td .md-csr-champs { grid-template-columns: 1fr; }
+  .np-stabilite { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 700px) { .np-cas { grid-template-columns: 1fr 1fr !important; gap: 10px; } .np-cas .ti-cas-c { padding: 8px; } }
+@media (max-width: 420px) { .np-carte { grid-template-columns: 1fr; } .np-carte .np-fig { max-width: 220px; } }
+@media print { .np-atelier, .np-td, .np-fl, #np-cas, #np-cas-reset { display: none !important; } .np-fig svg { box-shadow: none; } }
