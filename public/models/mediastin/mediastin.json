@@ -1,0 +1,417 @@
+{
+ "source": "Z-Anatomy (CC BY-SA 4.0), commit 2b6cf98a8ca012571ecb252e5c077b42a21b3b61, dérivé de BodyParts3D (CC BY-SA 2.1 JP)",
+ "repere": "centré sur la carène, ×10 (1 unité = 10 cm), +Y haut, +Z avant du patient, +X gauche du patient",
+ "niveaux": {
+  "carene": 0.0,
+  "crosse": 0.422,
+  "manubrium": 0.487,
+  "coeur_bas": -1.185,
+  "coeur_haut": -0.104
+ },
+ "structures": [
+  {
+   "id": "sternum",
+   "nom": "Sternum (manubrium et corps)",
+   "cat": "os",
+   "centre": [
+    0.0,
+    -0.302,
+    0.874
+   ]
+  },
+  {
+   "id": "rachis",
+   "nom": "Rachis thoracique (T1 à T12)",
+   "cat": "os",
+   "centre": [
+    -0.0,
+    -0.637,
+    -0.517
+   ]
+  },
+  {
+   "id": "cotes",
+   "nom": "Côtes (1 à 8)",
+   "cat": "cote",
+   "centre": [
+    -0.0,
+    -0.368,
+    -0.145
+   ]
+  },
+  {
+   "id": "oreillette-droite",
+   "nom": "Oreillette droite",
+   "cat": "coeur",
+   "centre": [
+    -0.144,
+    -0.578,
+    0.32
+   ]
+  },
+  {
+   "id": "ventricule-droit",
+   "nom": "Ventricule droit",
+   "cat": "coeur",
+   "centre": [
+    0.208,
+    -0.7,
+    0.592
+   ]
+  },
+  {
+   "id": "oreillette-gauche",
+   "nom": "Oreillette gauche",
+   "cat": "coeur",
+   "centre": [
+    0.217,
+    -0.468,
+    0.057
+   ]
+  },
+  {
+   "id": "ventricule-gauche",
+   "nom": "Ventricule gauche",
+   "cat": "coeur",
+   "centre": [
+    0.457,
+    -0.767,
+    0.324
+   ]
+  },
+  {
+   "id": "tronc-pulmonaire",
+   "nom": "Tronc pulmonaire",
+   "cat": "artere-pulm",
+   "centre": [
+    0.291,
+    -0.179,
+    0.484
+   ]
+  },
+  {
+   "id": "trachee",
+   "nom": "Trachée",
+   "cat": "air",
+   "centre": [
+    -0.002,
+    0.553,
+    0.088
+   ]
+  },
+  {
+   "id": "thymus",
+   "nom": "Thymus",
+   "cat": "thymus",
+   "centre": [
+    0.142,
+    -0.17,
+    0.6
+   ]
+  },
+  {
+   "id": "thyroide",
+   "nom": "Thyroïde",
+   "cat": "thyroide",
+   "centre": [
+    0.0,
+    1.15,
+    0.199
+   ]
+  },
+  {
+   "id": "diaphragme",
+   "nom": "Diaphragme",
+   "cat": "diaphragme",
+   "centre": [
+    -0.027,
+    -1.79,
+    0.162
+   ]
+  },
+  {
+   "id": "aorte-ascendante",
+   "nom": "Aorte ascendante",
+   "cat": "artere",
+   "centre": [
+    0.096,
+    -0.21,
+    0.339
+   ]
+  },
+  {
+   "id": "crosse",
+   "nom": "Crosse de l'aorte",
+   "cat": "artere",
+   "centre": [
+    0.151,
+    0.188,
+    0.069
+   ]
+  },
+  {
+   "id": "aorte-descendante",
+   "nom": "Aorte thoracique descendante",
+   "cat": "artere",
+   "centre": [
+    0.158,
+    -0.711,
+    -0.185
+   ]
+  },
+  {
+   "id": "tronc-brachiocephalique",
+   "nom": "Tronc artériel brachiocéphalique",
+   "cat": "artere",
+   "centre": [
+    0.025,
+    0.422,
+    0.233
+   ]
+  },
+  {
+   "id": "carotide-gauche",
+   "nom": "Carotide commune gauche",
+   "cat": "artere",
+   "centre": [
+    0.196,
+    0.787,
+    0.116
+   ]
+  },
+  {
+   "id": "sous-claviere-gauche",
+   "nom": "Artère subclavière gauche",
+   "cat": "artere",
+   "centre": [
+    0.439,
+    0.583,
+    0.063
+   ]
+  },
+  {
+   "id": "vcs",
+   "nom": "Veine cave supérieure",
+   "cat": "veine",
+   "centre": [
+    -0.155,
+    0.019,
+    0.28
+   ]
+  },
+  {
+   "id": "vci",
+   "nom": "Veine cave inférieure",
+   "cat": "veine",
+   "centre": [
+    -0.124,
+    -1.281,
+    0.22
+   ]
+  },
+  {
+   "id": "tvi-gauche",
+   "nom": "Tronc veineux innominé gauche",
+   "cat": "veine",
+   "centre": [
+    0.076,
+    0.402,
+    0.326
+   ]
+  },
+  {
+   "id": "tvi-droit",
+   "nom": "Tronc veineux brachiocéphalique droit",
+   "cat": "veine",
+   "centre": [
+    -0.194,
+    0.372,
+    0.285
+   ]
+  },
+  {
+   "id": "azygos",
+   "nom": "Veine azygos",
+   "cat": "veine",
+   "centre": [
+    -0.115,
+    -0.936,
+    -0.131
+   ]
+  },
+  {
+   "id": "hemi-azygos",
+   "nom": "Veine hémi-azygos",
+   "cat": "veine",
+   "centre": [
+    0.137,
+    -1.433,
+    -0.238
+   ]
+  },
+  {
+   "id": "artere-pulm-droite",
+   "nom": "Artère pulmonaire droite",
+   "cat": "artere-pulm",
+   "centre": [
+    -0.12,
+    -0.182,
+    0.051
+   ]
+  },
+  {
+   "id": "artere-pulm-gauche",
+   "nom": "Artère pulmonaire gauche",
+   "cat": "artere-pulm",
+   "centre": [
+    0.565,
+    -0.31,
+    -0.18
+   ]
+  },
+  {
+   "id": "bronche-droite",
+   "nom": "Bronche souche droite",
+   "cat": "air",
+   "centre": [
+    -0.074,
+    0.041,
+    -0.063
+   ]
+  },
+  {
+   "id": "bronche-gauche",
+   "nom": "Bronche souche gauche",
+   "cat": "air",
+   "centre": [
+    0.237,
+    -0.143,
+    -0.093
+   ]
+  },
+  {
+   "id": "oesophage",
+   "nom": "Œsophage",
+   "cat": "oesophage",
+   "centre": [
+    0.02,
+    -0.273,
+    -0.032
+   ]
+  }
+ ],
+ "compartiments": [
+  {
+   "id": "h-ocm",
+   "nom": "Orifice cervico-médiastinal",
+   "abr": "OCM",
+   "systeme": "heitzman",
+   "centre": [
+    0.0,
+    0.785,
+    0.192
+   ]
+  },
+  {
+   "id": "h-retrosternal",
+   "nom": "Espace rétro-sternal pré-aortico-cave",
+   "abr": "",
+   "systeme": "heitzman",
+   "centre": [
+    0.05,
+    0.142,
+    0.494
+   ]
+  },
+  {
+   "id": "h-acp",
+   "nom": "Angles cardio-phréniques",
+   "abr": "ACPA, ACPP",
+   "systeme": "heitzman",
+   "centre": [
+    0.192,
+    -1.056,
+    0.283
+   ]
+  },
+  {
+   "id": "h-epto",
+   "nom": "Espace paratrachéo-œsophagien",
+   "abr": "EPTO",
+   "systeme": "heitzman",
+   "centre": [
+    0.01,
+    0.254,
+    0.044
+   ]
+  },
+  {
+   "id": "h-carinaire",
+   "nom": "Espace rétro- et sous-carinaire",
+   "abr": "",
+   "systeme": "heitzman",
+   "centre": [
+    0.05,
+    -0.22,
+    -0.044
+   ]
+  },
+  {
+   "id": "h-gcv",
+   "nom": "Gouttières costo-vertébrales",
+   "abr": "GCV",
+   "systeme": "heitzman",
+   "centre": [
+    0.0,
+    -0.645,
+    -0.488
+   ]
+  },
+  {
+   "id": "h-eimp",
+   "nom": "Espace inframédiastinal postérieur",
+   "abr": "EIMP",
+   "systeme": "heitzman",
+   "centre": [
+    0.03,
+    -0.992,
+    -0.128
+   ]
+  },
+  {
+   "id": "f-anterieur",
+   "nom": "Antérieur",
+   "abr": "",
+   "systeme": "felson",
+   "centre": [
+    0.147,
+    -0.115,
+    0.381
+   ]
+  },
+  {
+   "id": "f-moyen",
+   "nom": "Moyen",
+   "abr": "",
+   "systeme": "felson",
+   "centre": [
+    0.01,
+    -0.097,
+    -0.081
+   ]
+  },
+  {
+   "id": "f-posterieur",
+   "nom": "Postérieur",
+   "abr": "",
+   "systeme": "felson",
+   "centre": [
+    0.0,
+    -0.655,
+    -0.638
+   ]
+  }
+ ],
+ "empreinte": "cfb855aee427",
+ "octets": 487820
+}

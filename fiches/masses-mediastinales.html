@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Imagerie des masses médiastinales — Fiche rapide RadiologicHub</title>
+  <meta name="description" content="Fiche rapide RadiologicHub : imagerie des masses médiastinales — approche diagnostique, compartiments de Felson et de Heitzman en 3D, orientation tissulaire TDM / IRM, médiastin antérieur, moyen et postérieur, étiologies.">
+  <link rel="icon" type="image/svg+xml" href="../assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=20261022235000">
+  <link rel="stylesheet" href="../fiche.css?v=20261012150000">
+  <link rel="stylesheet" href="../schemas/cavum.css?v=20261024100000">
+  <link rel="stylesheet" href="../schemas/cholesteatome.css?v=20261026200000">
+  <link rel="stylesheet" href="../schemas/eu-tirads.css?v=20261026230000">
+  <link rel="stylesheet" href="../schemas/mediastin.css?v=20261027100000">
+  <script type="importmap">{ "imports": { "three": "../vendor/three-0.170.0/three.module.min.js", "three/addons/": "../vendor/three-0.170.0/addons/" } }</script>
+</head>
+<body class="fiche-page">
+
+  <div class="read-progress" aria-hidden="true"><span></span></div>
+
+  <header class="site-header is-scrolled" id="top">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="RadiologicHub — accueil">
+        <img src="../assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+        <a href="../comptes-rendus.html">Comptes rendus</a>
+        <a href="../fiches-rapides.html" class="is-current">Fiches rapides</a>
+        <a href="../radioanatomie/index.html">Radioanatomie</a>
+        <a href="../bibliotheque.html">Bibliothèque</a>
+        <a href="../communaute.html">Communauté</a>
+        <a href="../remplacements.html">Remplacements</a>
+        <a href="../index.html#masterclass" class="nav-masterclass">Masterclass</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main>
+    <!-- ============ EN-TÊTE DE FICHE ============ -->
+    <section class="fiche-hero sec-down">
+      <div class="container">
+        <nav class="crumbs" aria-label="Fil d'Ariane">
+          <a href="../fiches-rapides.html">Fiches rapides</a> › <a href="../fiches-rapides.html#thorax">Thorax</a> › <span>Masses médiastinales</span>
+        </nav>
+        <p class="marker-tag">Fiche rapide · Thorax · Médiastin</p>
+        <h1>Imagerie des <span class="hl-navy">masses médiastinales</span></h1>
+        <p class="fiche-sub">Approche diagnostique • compartiments • orientation tissulaire • étiologies. Trois questions guident la lecture : <b>où</b> siège la masse (compartiment), <b>de quoi</b> est-elle faite (orientation tissulaire TDM / IRM), <b>chez qui</b> (âge, sexe, fréquence). Le médiastin et les compartiments de Heitzman sont <b>en 3D</b>.</p>
+
+        <div class="legend" role="group" aria-label="Code couleur — cliquez pour isoler une catégorie">
+          <span class="legend-label">Code couleur :</span>
+          <button class="chip k-grave" data-k="grave" aria-pressed="false">Rouge = gravité / malignité / signe à ne pas manquer</button>
+          <button class="chip k-tech" data-k="tech" aria-pressed="false">Bleu = signe d'imagerie clé / localisation</button>
+          <button class="chip k-key" data-k="key" aria-pressed="false">Jaune = chiffre / fréquence / piège à retenir</button>
+        </div>
+        <p class="legend-hint">Astuce : cliquez sur une couleur pour n'afficher qu'elle.</p>
+
+        <div class="fiche-actions">
+          <button class="btn btn-outline btn-sm" id="print-btn">Imprimer / PDF</button>
+          <a href="#compartiments" class="btn btn-outline btn-sm">Compartiments en 3D</a>
+          <a href="#orientation" class="btn btn-outline btn-sm">Orientation tissulaire</a>
+          <a href="#testez-vous" class="btn btn-ink btn-sm">Testez-vous →</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="container fiche-layout">
+      <aside class="toc" aria-label="Sommaire">
+        <p class="toc-title">Sommaire</p>
+        <ol>
+          <li><a href="#introduction" style="--c: var(--blue)"><b>I</b>Introduction – généralités</a></li>
+          <li><a href="#exploration" style="--c: var(--steel)"><b>II</b>Moyens d'exploration et protocoles</a></li>
+          <li><a href="#compartiments" style="--c: var(--teal)"><b>III</b>Anatomie radiologique et démarche</a></li>
+          <li><a href="#orientation" style="--c: var(--purple)"><b>·</b>Orientation tissulaire</a></li>
+          <li><a href="#anterieur" style="--c: var(--amber)"><b>IV</b>Médiastin antérieur</a></li>
+          <li><a href="#moyen" style="--c: var(--blue)"><b>V</b>Médiastin moyen</a></li>
+          <li><a href="#posterieur" style="--c: var(--green)"><b>VI</b>Médiastin postérieur</a></li>
+          <li><a href="#conclusion" style="--c: var(--k-grave)"><b>VII</b>Conclusion / certitude</a></li>
+          <li><a href="#testez-vous" style="--c: var(--ink)"><b>?</b>Testez-vous</a></li>
+        </ol>
+      </aside>
+
+      <div class="fiche-body" id="fiche-body">
+
+        <!-- I -->
+        <section class="fsec" id="introduction" style="--c: var(--blue)">
+          <h2 class="fsec-title"><span class="fnum">I</span>Introduction – généralités</h2>
+          <div class="md-deux">
+            <div class="fcard"><h3>1. Définition</h3>
+              <p><b>Médiastin</b> : espace central du thorax, région complexe, zone de transit, organes nobles, limites, communications ; apparaît très tôt dans l'embryogénèse.</p>
+              <p><b>Masse médiastinale</b> : processus expansif développé dans le médiastin et responsable d'un <mark class="k-tech">syndrome médiastinal clinique et/ou radiologique</mark>.</p>
+            </div>
+            <div class="fcard"><h3>Englobe / exclues</h3>
+              <ul class="md-puces">
+                <li><b>Englobe</b> : tumeurs, ADP, pseudo-tumeurs vasculaires, liquidiennes/méningocèles, graisseuses/hernies, infectieuses/collections.</li>
+                <li><b>Exclues</b> : <mark class="k-key">masses médiastinales de l'enfant,</mark> anévrysmes, collections.</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3 class="ch-h3">2. L'imagerie intervient à toutes les étapes</h3>
+          <ol class="md-chaine" aria-label="Étapes où intervient l'imagerie">
+            <li style="--c: var(--blue)"><mark class="k-tech">Diagnostic positif</mark></li>
+            <li style="--c: var(--teal)"><mark class="k-tech">diagnostic topographique</mark></li>
+            <li style="--c: var(--purple)"><mark class="k-tech">diagnostic de nature (étiologique)</mark></li>
+            <li style="--c: var(--orange)"><mark class="k-tech">bilan d'extension</mark></li>
+            <li style="--c: var(--k-grave)">diagnostic de certitude <span>en guidant la ponction-biopsie transpariétale sous contrôle échographique ou TDM</span></li>
+            <li style="--c: var(--green)">suivi post-opératoire</li>
+          </ol>
+
+          <h3 class="ch-h3">3. Présentation clinique</h3>
+          <div class="ti-chiffres md-chiffres-2">
+            <div class="ti-chiffre" style="--c: var(--amber)"><span>50 %</span><p><mark class="k-key">Découverte systématique : 50 %</mark></p></div>
+            <div class="ti-chiffre" style="--c: var(--blue)"><span>Emprunt</span><p>Symptomatologie d'emprunt : compression médiastinale ; signes respiratoires, digestifs, neurologiques, vasculaires.</p></div>
+          </div>
+          <div class="md-badges" aria-label="Sécrétions et syndromes associés">
+            <span class="md-badge" style="--c: var(--purple)">Sécrétion de peptides → <b>carcinoïde</b></span>
+            <span class="md-badge" style="--c: var(--blue)">Anticorps antiacétylcholine → <mark class="k-tech">myasthénie</mark></span>
+            <span class="md-badge" style="--c: var(--amber)"><b>Hypercalcémie</b></span>
+          </div>
+        </section>
+
+        <!-- II -->
+        <section class="fsec" id="exploration" style="--c: var(--steel)">
+          <h2 class="fsec-title"><span class="fnum">II</span>Moyens d'exploration et protocoles</h2>
+          <h3 class="ch-h3">1. Moyens d'exploration</h3>
+          <div class="md-modalites">
+            <span>Radiographie du thorax (face + profil)</span>
+            <span class="is-star"><mark class="k-key">TDM hélicoïdale ++++</mark></span>
+            <span>Échographie thoracique +/-</span><span>IRM</span><span>Transit œsophagien</span><span>Ponction-biopsie</span>
+            <span>Scintigraphie : iode marqué, MIBG, MIBI, octréotide</span><span>PET scan</span><span>ETO</span>
+          </div>
+
+          <div class="ch-onglets" role="tablist" aria-label="Protocoles">
+            <button type="button" role="tab" data-onglet="tdm" aria-selected="true">2. Protocole TDM</button>
+            <button type="button" role="tab" data-onglet="irm" aria-selected="false">3. Protocole IRM</button>
+          </div>
+          <div class="ch-panneau" data-panneau="tdm">
+            <ol class="md-etapes">
+              <li><b>Volume</b> thoracique complet étendu aux frontières ; SPC basse dose.</li>
+              <li><b>Injection</b> : <mark class="k-tech">bras gauche, débit variable (+/- thyroïde), pour opacifier le tronc veineux innominé gauche : étudier sa perméabilité et baliser le médiastin de gauche vers la droite, séparant la chaîne médiastinale antérieure du plan artériel en arrière</mark>.
+                <button type="button" class="md-lien-3d" data-voir="tvi">Voir le tronc veineux innominé gauche en 3D</button></li>
+              <li><b>Acquisition</b> au temps précoce +/- temps tardif : <mark class="k-key">syndrome cave, 80 s, 2 cc/s</mark> ; <mark class="k-key">masse kystique, 2 min.</mark> Reconstructions.</li>
+              <li><b>Avantages</b> : <mark class="k-tech">résolution spatiale</mark> ; accessibilité (urgences).</li>
+            </ol>
+          </div>
+          <div class="ch-panneau" data-panneau="irm" hidden>
+            <ul class="md-puces">
+              <li>T1 ; T2 ; injection de gadolinium avec saturation de graisse ; IP/OP ; +/- angio-IRM ; diffusion.</li>
+              <li>Non irradiante ; produit de contraste peu néphrotoxique et peu allergisant ; <b>pas d'étude du parenchyme</b>.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- III -->
+        <section class="fsec" id="compartiments" style="--c: var(--teal)">
+          <h2 class="fsec-title"><span class="fnum">III</span>Anatomie radiologique et démarche diagnostique</h2>
+
+          <h3 class="ch-h3">1. Compartiments de Felson</h3>
+          <div class="md-felson" role="group" aria-label="Compartiments de Felson">
+            <button type="button" class="md-felson-c" data-felson="f-anterieur" style="--c: var(--amber); --p: 54%"><span class="md-pct"><mark class="k-key">54 %</mark></span><b>Antérieur</b><span class="md-barre"><i></i></span><small>TDM · « 4 T »</small></button>
+            <button type="button" class="md-felson-c" data-felson="f-moyen" style="--c: var(--blue); --p: 26%"><span class="md-pct"><mark class="k-key">26 %</mark></span><b>Moyen</b><span class="md-barre"><i></i></span><small>TDM/TOGD · ADP, kyste bronchogénique</small></button>
+            <button type="button" class="md-felson-c" data-felson="f-posterieur" style="--c: var(--green); --p: 20%"><span class="md-pct"><mark class="k-key">20 %</mark></span><b>Postérieur</b><span class="md-barre"><i></i></span><small>IRM · tumeur neurogène, os</small></button>
+          </div>
+          <p class="md-aide">Cliquez un compartiment : il s'allume dans la vue 3D.</p>
+
+          <h3 class="ch-h3">2. Compartiments de Heitzman — en 3D</h3>
+          <div class="c3d r3d md3d" id="mediastin-3d" data-modeles="../public/models/mediastin/">
+            <div class="c3d-barre" role="toolbar" aria-label="Découpage">
+              <span class="r3d-barre-titre">Découpage</span>
+              <button type="button" class="c3d-voie" data-systeme="heitzman" aria-pressed="true" style="--c: var(--teal)">Heitzman (7)</button>
+              <button type="button" class="c3d-voie" data-systeme="felson" aria-pressed="false" style="--c: var(--amber)">Felson (3)</button>
+            </div>
+            <div class="c3d-cadre">
+              <div class="c3d-vue">
+                <div class="c3d-scene" id="md3d-scene"></div>
+                <a class="c3d-attrib" href="https://www.z-anatomy.com/" rel="noopener" target="_blank" title="Anatomie : Z-Anatomy (CC BY-SA 4.0, dérivé de BodyParts3D). Compartiments : volumes schématiques construits à partir des repères du modèle (sternum, rachis, carène, crosse, cœur, diaphragme), limites approchées.">© Z-Anatomy · CC BY-SA</a>
+              </div>
+              <aside class="c3d-panneau" aria-label="Réglages de la vue 3D">
+                <p class="c3d-titre">Vues</p>
+                <div class="c3d-vues">
+                  <button type="button" data-vue="face">De face</button>
+                  <button type="button" data-vue="profil">De profil</button>
+                  <button type="button" data-vue="dessus">Du dessus</button>
+                  <button type="button" data-vue="oblique">Oblique</button>
+                </div>
+                <p class="c3d-titre">Compartiments</p>
+                <label class="r3d-reglage"><span>pâles</span><input type="range" id="md3d-opacite" min="10" max="80" value="45" aria-label="Opacité des compartiments"><span>marqués</span></label>
+                <label class="r3d-reglage"><input type="checkbox" id="md3d-estomper"> estomper les organes</label>
+                <label class="r3d-reglage"><input type="checkbox" id="md3d-cotes" checked> côtes</label>
+                <div class="md3d-liste" id="md3d-liste" role="group" aria-label="Choisir un compartiment"></div>
+              </aside>
+            </div>
+            <div class="r3d-info md3d-info" id="md3d-info" aria-live="polite"><p class="md-aide">Touchez un compartiment (dans la vue ou dans la liste) : son contenu s'affiche ici.</p></div>
+          </div>
+
+          <div class="md-para" aria-label="Médiastin para-orificiel">
+            <p class="md-para-titre">Médiastin para-orificiel : les compartiments qui communiquent</p>
+            <div class="md-para-l">
+              <span style="--c: var(--teal)"><mark class="k-tech">OCM</mark> → cou</span>
+              <span style="--c: var(--rose)"><mark class="k-tech">ACPA, ACPP, EIMP</mark> → étage supérieur de l'abdomen</span>
+              <span style="--c: var(--blue)"><mark class="k-tech">EPTO</mark> → hiles</span>
+              <span style="--c: var(--green)"><mark class="k-tech">GCV</mark> → canal rachidien</span>
+            </div>
+          </div>
+
+          <h3 class="ch-h3">3. Radiographie du thorax</h3>
+          <div class="md-deux">
+            <div class="fcard"><h3>Diagnostic positif</h3><p>Opacité ; anomalie des contours du médiastin ; lignes déplacées ; bandes élargies ; contours déformés.</p>
+              <p class="callout md-regle"><mark class="k-key">Radiographie normale + symptômes cliniques = TDM.</mark></p></div>
+            <div class="fcard"><h3>Diagnostic topographique</h3><p>Une fois repérée, <mark class="k-tech">l'opacité médiastinale doit être localisée</mark> ; la topographie représente l'une des bases de la discussion diagnostique ; signe de la silhouette et signes dérivés ; si l'opacité est volumineuse, son siège devient difficile à préciser.</p></div>
+          </div>
+          <p class="md-sous">Diagnostic différentiel — retournez les cartes :</p>
+          <div class="flash flash-4">
+            <button class="flip" aria-pressed="false" style="--c: var(--purple)"><span class="flip-tab">1</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Masse parenchymateuse</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>Masse parenchymateuse</b>à distinguer d'une masse médiastinale.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--blue)"><span class="flip-tab">2</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Grosse artère pulmonaire</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b><mark class="k-tech">Signe de la convergence du hile</mark></b></p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--k-grave)"><span class="flip-tab">3</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Cardiomégalie ou épanchement péricardique</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b><mark class="k-tech">Signe du recouvrement du hile</mark></b></p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--teal)"><span class="flip-tab">4</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Épanchement de la plèvre médiastinale</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>Épanchement de la plèvre médiastinale</b>à distinguer d'une masse.</p></span></span></button>
+          </div>
+
+          <h3 class="ch-h3">4. Démarche étiologique</h3>
+          <p class="fintro">Biologie/clinique <b>occasionnellement contributives</b>. Associez chaque indice à sa piste :</p>
+          <div class="md-indices" id="md-indices">
+            <button type="button" class="md-indice" data-piste="tumeur embryonnaire"><mark class="k-key">αFP et βHCG</mark></button>
+            <button type="button" class="md-indice" data-piste="lymphome"><mark class="k-key">Éosinophilie et prurit</mark></button>
+            <button type="button" class="md-indice" data-piste="thymome"><mark class="k-key">Myasthénie</mark></button>
+            <button type="button" class="md-indice" data-piste="(tumeur carcinoïde)">Syndrome carcinoïde</button>
+            <button type="button" class="md-indice" data-piste="adénome parathyroïdien"><mark class="k-key">Hypercalcémie</mark></button>
+          </div>
+          <div class="md-trois">
+            <div class="md-axe" style="--c: var(--teal)"><b>1</b><span>Compartiment où siège la masse</span></div>
+            <div class="md-axe" style="--c: var(--purple)"><b>2</b><span>Comportement de la masse en TDM et en IRM → orientation tissulaire</span></div>
+            <div class="md-axe" style="--c: var(--amber)"><b>3</b><span>Âge, sexe, fréquence</span></div>
+          </div>
+        </section>
+
+        <!-- Orientation tissulaire -->
+        <section class="fsec" id="orientation" style="--c: var(--purple)">
+          <h2 class="fsec-title"><span class="fnum">5</span>Orientation tissulaire TDM / IRM</h2>
+          <div class="md-orient">
+            <div class="md-orient-cartes">
+              <div class="md-oc" data-cle="hydrique" style="--c: var(--blue)"><b>Hydrique</b><p><mark class="k-key">autour de 0 UH</mark> ; non rehaussée ; hypo T1, hyper T2.</p></div>
+              <div class="md-oc" data-cle="tissulaire" style="--c: var(--k-grave)"><b>Tissulaire</b><p><mark class="k-key">15 à 50 UH</mark> ; iso T1 ; rehaussée.</p></div>
+              <div class="md-oc" data-cle="graisseuse" style="--c: var(--amber)"><b>Graisseuse</b><p><mark class="k-key">&lt; -40 UH</mark> ; hyper T1 et T2.</p></div>
+              <div class="md-oc" data-cle="vasculaire" style="--c: var(--purple)"><b>Vasculaire</b><p>Rehaussement de type vasculaire.</p></div>
+              <div class="md-oc" data-cle="composite" style="--c: var(--steel)"><b>Composite</b><p>Densités mixtes.</p></div>
+            </div>
+            <form class="md-outil" id="md-orient" onsubmit="return false">
+              <p class="ti-outil-titre">Votre masse</p>
+              <label>Densité spontanée : <output id="md-uh-val">0</output> UH<input type="range" id="md-uh" min="-120" max="100" value="0"></label>
+              <div class="md-choix" role="radiogroup" aria-label="Rehaussement">
+                <label><input type="radio" name="rehausse" value="non" checked> non rehaussée</label>
+                <label><input type="radio" name="rehausse" value="oui"> rehaussée</label>
+                <label><input type="radio" name="rehausse" value="vasculaire"> type vasculaire</label>
+              </div>
+              <label class="md-coche"><input type="checkbox" name="mixte"> densités mixtes</label>
+              <p class="ch-verdict" id="md-orient-res" aria-live="polite"><b></b><span></span></p>
+            </form>
+          </div>
+        </section>
+
+        <!-- IV -->
+        <section class="fsec" id="anterieur" style="--c: var(--amber)">
+          <h2 class="fsec-title"><span class="fnum">IV</span>Médiastin antérieur</h2>
+          <div class="md-tissus">
+            <div class="md-tissu" style="--c: var(--k-grave)"><b>Tissulaire</b><p>goitres thyroïdiens ; lymphomes ; thymomes ; tératomes ; adénome parathyroïdien.</p></div>
+            <div class="md-tissu" style="--c: var(--blue)"><b>Kystique/kystisée</b><p>kyste pleuropéricardique ; thymome kystique ; kyste thymique ; lymphangiome kystique ; kyste hydatique ; tératome kystique.</p></div>
+            <div class="md-tissu" style="--c: var(--amber)"><b>Graisseuse</b><p>hernie de Larrey/Morgagni ; tératome ; thymolipome ; lipome/liposarcome.</p></div>
+          </div>
+          <p class="callout"><mark class="k-key">Réfléchir en fonction de la fréquence.</mark></p>
+
+          <div class="ch-onglets md-onglets" role="tablist" aria-label="Médiastin antérieur">
+            <button type="button" role="tab" data-onglet="goitre" aria-selected="true">Goitre</button>
+            <button type="button" role="tab" data-onglet="parathyroide" aria-selected="false">Parathyroïde</button>
+            <button type="button" role="tab" data-onglet="lymphome" aria-selected="false">Lymphomes</button>
+            <button type="button" role="tab" data-onglet="thymus" aria-selected="false">Thymus</button>
+            <button type="button" role="tab" data-onglet="thymome" aria-selected="false">Tumeurs thymiques</button>
+            <button type="button" role="tab" data-onglet="germinale" aria-selected="false">Tumeurs germinales</button>
+            <button type="button" role="tab" data-onglet="kystes" aria-selected="false">Kystes</button>
+            <button type="button" role="tab" data-onglet="autres" aria-selected="false">Autres</button>
+          </div>
+
+          <div class="ch-panneau" data-panneau="goitre">
+            <h3 class="ch-h3">2. Goitre endothoracique</h3>
+            <div class="ti-chiffres md-chiffres-3">
+              <div class="ti-chiffre" style="--c: var(--amber)"><span>13 %</span><p><mark class="k-key">13 % des tumeurs du médiastin antérieur.</mark></p></div>
+              <div class="ti-chiffre" style="--c: var(--amber)"><span>80 %</span><p><mark class="k-key">Migration antérieure classique : 80 %.</mark></p></div>
+              <div class="ti-chiffre" style="--c: var(--k-grave)"><span>Rare</span><p>Goitre hétérotopique ; <mark class="k-grave">goitre ectopique exceptionnel.</mark></p></div>
+            </div>
+            <p><mark class="k-tech">Densité spontanée élevée</mark> ; calcifications ; <mark class="k-tech">rehaussement immédiat, intense et prolongé.</mark></p>
+            <p class="callout callout-warn"><b>SPC</b> si traitement par iode marqué ou TSH basse - ou goitre malin, cancer papillaire ou folliculaire différencié - pour ne pas saturer les sites iodophiles.</p>
+            <div class="md-goitre">
+              <div class="md-goitre-choix">
+                <p class="ti-outil-titre">Types et grades du goitre</p>
+                <div class="md-seg" role="radiogroup" aria-label="Type"><span>Type</span>
+                  <label><input type="radio" name="gtype" value="A" checked> A</label><label><input type="radio" name="gtype" value="B"> B</label><label><input type="radio" name="gtype" value="C"> C</label></div>
+                <div class="md-seg" role="radiogroup" aria-label="Grade"><span>Grade</span>
+                  <label><input type="radio" name="ggrade" value="1" checked> 1</label><label><input type="radio" name="ggrade" value="2"> 2</label><label><input type="radio" name="ggrade" value="3"> 3</label></div>
+                <p class="ch-verdict k-key" id="md-goitre-res" aria-live="polite"><b></b><span></span></p>
+              </div>
+              <div class="md-goitre-svg" id="md-goitre-svg" aria-hidden="true"></div>
+            </div>
+            <p class="md-sous">TDM, préciser :</p>
+            <ul class="md-check">
+              <li>extension pré- ou rétrovasculaire</li><li>prolongement rétrotrachéal</li><li>rapports avec trachée et œsophage</li>
+              <li>recherche d'une lusoria (nerf laryngé non récurrent)</li><li><mark class="k-grave">recherche de signes de malignité</mark></li>
+            </ul>
+          </div>
+
+          <div class="ch-panneau" data-panneau="parathyroide" hidden>
+            <h3 class="ch-h3">3. Adénome parathyroïdien ectopique</h3>
+            <p>Contexte d'hyperparathyroïdie ; <mark class="k-key">20 % des adénomes ectopiques.</mark></p>
+            <p>Diagnostic : échographie / scintigraphie MIBI. TDM : <mark class="k-tech">lésion hypervasculaire &lt; 1 cm,</mark> +/- lésions osseuses.</p>
+          </div>
+
+          <div class="ch-panneau" data-panneau="lymphome" hidden>
+            <h3 class="ch-h3">4. Lymphomes</h3>
+            <div class="ti-chiffres md-chiffres-2">
+              <div class="ti-chiffre" style="--c: var(--amber)"><span>20 %</span><p><mark class="k-key">20 % des masses médiastinales de l'adulte</mark></p></div>
+              <div class="ti-chiffre" style="--c: var(--amber)"><span>50 %</span><p><mark class="k-key">50 % chez l'enfant.</mark></p></div>
+            </div>
+            <div class="md-deux">
+              <div class="fcard"><h3>Lymphome de Hodgkin</h3><p><mark class="k-tech">Atteinte ganglionnaire +++</mark></p></div>
+              <div class="fcard"><h3>Lymphome non hodgkinien</h3><p><mark class="k-tech">Atteinte viscérale.</mark></p></div>
+            </div>
+            <p>Lymphome primitif du médiastin : hodgkinien ou non hodgkinien ; atteinte médiastinale secondaire d'un lymphome non hodgkinien.</p>
+            <p><mark class="k-tech">Atteinte ganglionnaire caractéristique :</mark> médiastinale supérieure, avec prédilection pour les chaînes médiastinales antérieures et paratrachéales ; atteinte thymique fréquente ; bilan par PET scan.</p>
+            <div class="ftable-wrap"><table class="ftable"><thead><tr><th colspan="2">Pathologie ganglionnaire</th></tr></thead><tbody>
+              <tr><td>Lymphome</td><td>—</td></tr>
+              <tr><td>Tuberculose</td><td>nécrose</td></tr>
+              <tr><td>Sarcoïdose</td><td>symétriques</td></tr>
+              <tr><td>Métastases ganglionnaires</td><td>poumon, sein, mésothéliome, œsophage, rein</td></tr>
+            </tbody></table></div>
+          </div>
+
+          <div class="ch-panneau" data-panneau="thymus" hidden>
+            <h3 class="ch-h3">5. Myasthénie et thymus</h3>
+            <p class="md-sous">Thymus des myasthéniques :</p>
+            <div class="md-pile" role="img" aria-label="65 % hyperplasie lymphoïde bénigne, 15 % thymome, 20 % thymus normal">
+              <span style="--p: 65%; --c: var(--teal)"><mark class="k-key">65 %</mark> hyperplasie lymphoïde bénigne</span>
+              <span style="--p: 15%; --c: var(--k-grave)"><mark class="k-key">15 %</mark> thymome</span>
+              <span style="--p: 20%; --c: var(--steel)"><mark class="k-key">20 %</mark> thymus normal</span>
+            </div>
+            <ul class="md-puces">
+              <li><mark class="k-grave">Thymome souvent associé à la myasthénie,</mark> synchrone ou asynchrone.</li>
+              <li><mark class="k-key">25 % des patients sont améliorés par thymectomie totale.</mark></li>
+            </ul>
+            <div class="md-deux">
+              <div class="fcard"><h3>6. Thymus normal en TDM</h3>
+                <ul class="md-puces">
+                  <li>Reliquat glandulaire visible en TDM jusqu'à l'âge de <b>40-45 ans</b>.</li>
+                  <li>Involution graisseuse ; aspect bilobé ; forme triangulaire ; limites latérales concaves ou rectilignes ; bords convexes ; densité tissulaire après 50 ans.</li>
+                  <li>IRM : T1 &gt; signal du muscle ; T2 ≅ signal du muscle.</li>
+                </ul></div>
+              <div class="fcard"><h3>7. Hyperplasies thymiques</h3>
+                <ul class="md-puces">
+                  <li><b>Hyperplasie vraie</b> : <mark class="k-tech">histologie normale.</mark> Rebond thymique après atrophie - immunodépression. TDM : croissance glandulaire diffuse, respect de la forme, aspect bilobé et infiltration graisseuse.</li>
+                  <li><b>Hyperplasie lymphoïde folliculaire</b> : association fréquente à la <mark class="k-tech">myasthénie</mark> ; imagerie : <mark class="k-key">masse, hypertrophie, ou peut être normale.</mark></li>
+                  <li>Diagnostic différentiel avec les tumeurs : <mark class="k-tech">IRM en phase et opposition de phase.</mark></li>
+                </ul></div>
+            </div>
+            <form class="md-outil md-csr" id="md-csr" onsubmit="return false">
+              <p class="ti-outil-titre">Chemical Shift Ratio (CSR)</p>
+              <p class="md-formule">CSR = (Thy OP / muscle OP) / (Thy IP / muscle IP)</p>
+              <div class="md-csr-champs">
+                <label>Thy OP<input inputmode="decimal" name="thyOP" placeholder="ex. 180"></label>
+                <label>muscle OP<input inputmode="decimal" name="muscleOP" placeholder="ex. 300"></label>
+                <label>Thy IP<input inputmode="decimal" name="thyIP" placeholder="ex. 320"></label>
+                <label>muscle IP<input inputmode="decimal" name="muscleIP" placeholder="ex. 310"></label>
+              </div>
+              <div class="md-csr-regle" id="md-csr-regle"><div class="md-csr-piste" aria-hidden="true"><b class="is-h"></b><b class="is-t"></b><i id="md-csr-curseur" hidden></i></div><span class="is-h"><mark class="k-key">Hyperplasie : 0,614 +/- 0,13</mark></span><span class="is-t"><mark class="k-key">Tumeurs thymiques : 1,026 +/- 0,039.</mark></span></div>
+              <p class="ch-verdict" id="md-csr-res" aria-live="polite"><b></b><span></span></p>
+            </form>
+          </div>
+
+          <div class="ch-panneau" data-panneau="thymome" hidden>
+            <h3 class="ch-h3">8. Tumeurs thymiques</h3>
+            <div class="ti-chiffres md-chiffres-4">
+              <div class="ti-chiffre" style="--c: var(--amber)"><span>20 %</span><p><mark class="k-key">20 % des tumeurs du médiastin</mark></p></div>
+              <div class="ti-chiffre" style="--c: var(--amber)"><span>50 %</span><p><mark class="k-key">50 % des tumeurs du médiastin antérieur</mark></p></div>
+              <div class="ti-chiffre" style="--c: var(--amber)"><span>1/4</span><p>calcifications dans 1/4 des cas</p></div>
+              <div class="ti-chiffre" style="--c: var(--amber)"><span>30 %</span><p><mark class="k-key">Radiographie du thorax normale dans 30 % des thymomes.</mark></p></div>
+            </div>
+            <p>Tumeurs épithéliales thymiques : <b>thymome (40-50 ans)</b> et <b>carcinome thymique (60 ans)</b>. <mark class="k-key">En l'absence de maladie auto-immune : 65 % de découverte fortuite.</mark></p>
+            <div class="md-trois md-trois-cartes">
+              <div class="fcard" style="--c: var(--amber)"><h3>Thymome</h3><p>Développement local et loco-régional ; <mark class="k-grave">extension pleurale et péricardique.</mark></p></div>
+              <div class="fcard" style="--c: var(--k-grave)"><h3>Carcinome thymique</h3><p>Malpighien, neuro-endocrine ; <mark class="k-grave">potentiel métastatique.</mark></p></div>
+              <div class="fcard" style="--c: var(--purple)"><h3>Carcinome neuro-endocrine du thymus</h3><p>Rare ; contexte d'endocrinopathie dans 50 % ; <mark class="k-grave">agressivité locale ++</mark> ; nécrose ; <mark class="k-grave">20 % de métastases au moment du diagnostic</mark>.</p></div>
+            </div>
+            <p>Tumeur neuro-endocrine bien différenciée : carcinoïde.</p>
+            <p class="md-sous">Aspects en radiographie et TDM :</p>
+            <div class="md-compare">
+              <div class="md-cote-a" style="--c: var(--teal)"><p class="md-cote-titre">Thymome non invasif</p>
+                <ul class="md-puces">
+                  <li><b>Petite taille</b> : cliché de face parfois normal ; sur le profil, opacité de l'espace clair rétrosternal.</li>
+                  <li><b>Grande taille</b> : masse médiastinale antérieure, généralement des étages supérieur et moyen ; <mark class="k-key">calcifications dans environ 25 % des cas.</mark></li>
+                  <li><b>TDM</b> : masse tissulaire bien limitée, de contours réguliers, pouvant contenir des calcifications et se rehaussant de façon homogène.</li>
+                </ul></div>
+              <div class="md-cote-a" style="--c: var(--k-grave)"><p class="md-cote-titre">Thymome invasif</p>
+                <ul class="md-puces">
+                  <li><mark class="k-grave">Caractère invasif suggéré par des contours externes irréguliers ou un épanchement pleural associé.</mark></li>
+                  <li><b>TDM</b> : <mark class="k-grave">contours lobulés ou irréguliers, densification de la graisse médiastinale, signes d'envahissement vasculaire et rehaussement hétérogène avec plages de nécrose</mark>.</li>
+                </ul></div>
+            </div>
+            <p class="callout callout-warn">Devant une masse invasive, l'imagerie ne permet pas de distinguer un thymome de haut grade avec extension locale d'un carcinome thymique : tumeur épithéliale thymique « agressive ».</p>
+            <p class="md-tags"><span>Classification histologique de l'OMS</span><span>Masaoka-Koga</span></p>
+            <p class="md-sous">Évaluation prethérapeutique / résécabilité — cochez ce que vous avez vérifié :</p>
+            <ul class="md-check md-check-actif" id="md-resec">
+              <li><label><input type="checkbox"> <mark class="k-grave">Extension trans-capsulaire</mark> ; contours irréguliers ; graisse envahie ; capsule hypo T1 ; remaniements nécrotiques.</label></li>
+              <li><label><input type="checkbox"> <mark class="k-grave">Adénomégalies</mark> ; métastases ganglionnaires cervicales et extrathoraciques ; <mark class="k-grave">extension vasculaire : VCS.</mark></label></li>
+              <li><label><input type="checkbox"> <mark class="k-grave">Extension pleurale et pulmonaire</mark> ; implants pleuraux à distance ; métastases pulmonaires ou autres ; <mark class="k-grave">extension péricardique</mark> ; implants à distance.</label></li>
+              <li><label><input type="checkbox"> <mark class="k-key">Extension transdiaphragmatique : 30 %.</mark></label></li>
+            </ul>
+            <p class="md-aide" id="md-resec-n" aria-live="polite">0 / 4 points vérifiés</p>
+          </div>
+
+          <div class="ch-panneau" data-panneau="germinale" hidden>
+            <h3 class="ch-h3">9. Tumeurs germinales</h3>
+            <p><mark class="k-key">10 à 15 % des tumeurs du médiastin</mark> ; médiastin antéro-supérieur ; moyenne d'âge 30 ans ; homme ++ ; souvent plusieurs contingents.</p>
+            <div class="ftable-wrap"><table class="ftable md-germ-table"><thead><tr><th>Tumeur</th><th>Points clés</th><th>αFP</th><th>βHCG</th></tr></thead><tbody>
+              <tr><td><b>Tératome mature</b></td><td>homme = femme ; âge indifférent ; densités composites ; ouverture possible dans bronches ou plèvre avec niveau liquide-graisse</td><td>—</td><td>—</td></tr>
+              <tr><td><b>Tératome immature</b></td><td>tissu embryonnaire immature ; <mark class="k-grave">risque de malignité.</mark></td><td>—</td><td>—</td></tr>
+              <tr><td><b>Tératocarcinome</b></td><td>homme &gt; femme ; <mark class="k-grave">métastases foie, poumons, os</mark></td><td colspan="2"><mark class="k-key">αFP et βHCG élevées.</mark></td></tr>
+              <tr><td><b>Séminome</b></td><td>homme de 30-40 ans ; asymptomatique dans 1/3 des cas ; <mark class="k-key">plus fréquente des tumeurs germinales malignes.</mark> Masse tissulaire homogène, bien limitée ; calcifications rares. <b>Chercher une tumeur testiculaire.</b></td><td><mark class="k-tech">αFP toujours normale ;</mark></td><td><mark class="k-tech">βHCG normale ou élevée.</mark></td></tr>
+              <tr><td><b>Carcinome embryonnaire</b></td><td>masse invasive ; <mark class="k-grave">métastases pulmonaires.</mark></td><td><mark class="k-tech">αFP +/- ;</mark></td><td><mark class="k-tech">βHCG +/- ;</mark></td></tr>
+              <tr><td><b>Choriocarcinome</b></td><td><mark class="k-grave">métastases ++.</mark></td><td>—</td><td><mark class="k-tech">βHCG ++ ;</mark></td></tr>
+              <tr><td><b>Tumeur vitelline maligne</b></td><td></td><td><mark class="k-tech">αFP constante.</mark></td><td>—</td></tr>
+            </tbody></table></div>
+            <form class="md-outil" id="md-germ" onsubmit="return false">
+              <p class="ti-outil-titre">Marqueurs : quelles tumeurs germinales sont compatibles ?</p>
+              <div class="md-seg" role="radiogroup" aria-label="αFP"><span>αFP</span>
+                <label><input type="radio" name="afp" value="" checked> ?</label><label><input type="radio" name="afp" value="normal"> normale</label><label><input type="radio" name="afp" value="eleve"> élevée</label></div>
+              <div class="md-seg" role="radiogroup" aria-label="βHCG"><span>βHCG</span>
+                <label><input type="radio" name="bhcg" value="" checked> ?</label><label><input type="radio" name="bhcg" value="normal"> normale</label><label><input type="radio" name="bhcg" value="eleve"> élevée</label></div>
+              <ul class="md-germ-res" id="md-germ-res" aria-live="polite"></ul>
+            </form>
+          </div>
+
+          <div class="ch-panneau" data-panneau="kystes" hidden>
+            <div class="md-deux">
+              <div class="fcard"><h3>10. Kyste thymique</h3>
+                <ul class="md-puces">
+                  <li>Masse kystique de l'<b>espace rétrosternal pré-aortico-cave</b> <button type="button" class="md-lien-3d" data-voir="h-retrosternal">voir en 3D</button> ; 3 % des tumeurs médiastinales antérieures ; le plus souvent asymptomatique, sauf hémorragie.</li>
+                  <li>Congénital, issu du canal thymopharyngien, ou acquis après radiothérapie pour Hodgkin.</li>
+                  <li>Paroi fine non rehaussée ; pas de végétations ; uni- ou multiloculé.</li>
+                </ul>
+                <p class="callout callout-warn"><b>Kyste thymique ≠ thymome kystique</b> : <mark class="k-tech">acquisition tardive +++ ; rehaussement d'une composante tissulaire.</mark></p></div>
+              <div class="fcard"><h3>11. Kyste pleuro-péricardique</h3>
+                <ul class="md-puces">
+                  <li><mark class="k-key">5 à 7 % des masses médiastinales et 20 à 30 % des kystes</mark> ; anomalie de fermeture de la cavité péricardique cœlomique, parfois communicante avec le péricarde.</li>
+                  <li><b>Radiographie</b> : opacité médiastinale antérieure comblant l'angle cardio-phrénique et effaçant le contour du cœur à son contact.</li>
+                  <li><b>TDM</b> : <mark class="k-tech">lésion ronde, ovale ou triangulaire, bien limitée, purement liquidienne, uniloculaire - rarement multiloculaire -, non rehaussée, sans paroi perceptible, au contact du péricarde</mark> ; forme variable avec la position.</li>
+                  <li><mark class="k-key">Surtout ACPA droit ++,</mark> ACPP ; rarement siège ectopique. <button type="button" class="md-lien-3d" data-voir="h-acp">voir en 3D</button></li>
+                </ul></div>
+            </div>
+          </div>
+
+          <div class="ch-panneau" data-panneau="autres" hidden>
+            <h3 class="ch-h3">12. Autres masses antérieures</h3>
+            <div class="md-trois md-trois-cartes">
+              <div class="fcard" style="--c: var(--blue)"><h3>Lymphangiome kystique</h3>
+                <ul class="md-puces"><li>Isolé ou en continuité avec une lésion cervicale ; <mark class="k-key">&lt; 1 % des masses médiastinales</mark> ; <mark class="k-key">médiastin antérieur dans 90 %</mark> ; découverte tardive, souvent volumineuse.</li>
+                  <li>TDM : densité hydrique, paroi fine ; cloisons rarement visibles - échographie ++ ; respect des structures avoisinantes.</li>
+                  <li><mark class="k-grave">Exérèse chirurgicale en raison du risque de dégénérescence.</mark></li></ul></div>
+              <div class="fcard" style="--c: var(--amber)"><h3>Thymolipome</h3>
+                <ul class="md-puces"><li><mark class="k-key">Tumeur thymique bénigne rare : 2 à 9 %</mark> ; adulte jeune &lt; 40 ans ; le plus souvent asymptomatique ; souvent volumineuse, molle, de croissance lente et débordant de part et d'autre du médiastin antérieur.</li>
+                  <li>TDM : <mark class="k-tech">masse encapsulée de densité graisseuse contenant des îlots de densité tissulaire et des vaisseaux</mark> ; diagnostic différentiel : liposarcome.</li></ul></div>
+              <div class="fcard" style="--c: var(--steel)"><h3>Hernie de Morgagni / fente de Larrey</h3>
+                <p>Passage de contenu abdominal, le plus souvent épiploïque graisseux.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- V -->
+        <section class="fsec" id="moyen" style="--c: var(--blue)">
+          <h2 class="fsec-title"><span class="fnum">V</span>Médiastin moyen</h2>
+          <div class="md-tissus">
+            <div class="md-tissu" style="--c: var(--k-grave)"><b>Masses tissulaires</b><p>ADP ; tumeurs œsophagiennes ; tumeurs trachéales ; tumeurs neurogènes.</p></div>
+            <div class="md-tissu" style="--c: var(--blue)"><b>Masses kystiques/kystisées</b><p>kyste bronchogénique ; kyste entérogène/duplication digestive ; ADP nécrosées ; lymphangiome ; goitre kystisé ; tératome kystique ; kyste hydatique.</p></div>
+            <div class="md-tissu" style="--c: var(--amber)"><b>Masses graisseuses</b><p>hernie ; lipome ; liposarcome.</p></div>
+          </div>
+          <div class="md-deux">
+            <div class="fcard"><h3>Kyste bronchogénique</h3>
+              <ul class="md-puces">
+                <li><mark class="k-tech">Dérivé kystique de l'intestin primitif antérieur</mark> ; <mark class="k-key">10 % des masses médiastinales et 60 % des kystes congénitaux.</mark></li>
+                <li><b>EPTO</b> ; espace sous- et rétro-carinaire ; siège ubiquitaire, parfois diaphragmatique. <button type="button" class="md-lien-3d" data-voir="h-epto">EPTO en 3D</button> <button type="button" class="md-lien-3d" data-voir="h-carinaire">sous-carinaire en 3D</button></li>
+                <li>Le plus souvent asymptomatique ; complications : hémorragie, surinfection.</li>
+                <li>TDM : masse liquidienne à paroi fine ; <mark class="k-tech">densité variable 0 à 100 UH</mark> ; mucus protéique, hémorragie, calcifications possibles.</li>
+                <li>IRM : signal variable ; hyper T2 ; T1 variable. Traitement : chirurgie - complications, dégénérescence.</li>
+              </ul></div>
+            <div class="fcard"><h3>Maladie de Castleman</h3>
+              <ul class="md-puces">
+                <li>Désordre lymphoprolifératif ; forme hyaline vasculaire localisée, PDC ++ ; forme plasmocytaire multicentrique ; tous les compartiments peuvent être atteints.</li>
+                <li><b>TDM - forme unicentrique</b> : <mark class="k-tech">masse ganglionnaire unique, bien limitée, de densité tissulaire, homogène si petite ; rehaussement intense et précoce, parfois proche de celui des structures vasculaires ; possibles vaisseaux nourriciers hypertrophiés péri- ou intralésionnels</mark>.</li>
+                <li>Les grosses masses peuvent devenir hétérogènes par fibrose, nécrose ou calcifications.</li>
+                <li><b>Forme multicentrique</b> : adénopathies multiples dans plusieurs territoires, souvent associées à une splénomégalie ; <mark class="k-grave">peut simuler un lymphome.</mark></li>
+              </ul></div>
+          </div>
+          <details class="ti-piege" style="--c: var(--blue)"><summary><span>Autres</span>Autres masses du médiastin moyen</summary>
+            <ul class="md-puces">
+              <li>Léiomyome œsophagien ; goitre plongeant type C ; tumeur trachéale.</li>
+              <li><b>Goitre endothoracique plongeant de type C</b> : migration à droite plus facile ; à gauche, migration gênée par la crosse aortique : en arrière de l'axe trachéo-œsophagien ou entre trachée et œsophage.</li>
+              <li><b>Liposarcome</b> : <mark class="k-key">6 %</mark> ; homme &gt; 40 ans ; symptomatique ; <mark class="k-key">lipome myxoïde de bas grade/intermédiaire dans 50 %,</mark> médiastin antérieur +++ ; autres : lipome, kyste dermoïde ; DD lipomatose ou hernie graisseuse.</li>
+            </ul></details>
+        </section>
+
+        <!-- VI -->
+        <section class="fsec" id="posterieur" style="--c: var(--green)">
+          <h2 class="fsec-title"><span class="fnum">VI</span>Médiastin postérieur</h2>
+          <div class="md-tissus">
+            <div class="md-tissu" style="--c: var(--k-grave)"><b>Tissulaire</b><p>tumeurs neurogènes ; hématopoïèse extramédullaire ; lymphome ; tumeurs osseuses.</p></div>
+            <div class="md-tissu" style="--c: var(--blue)"><b>Kystique</b><p>spondylodiscite ; méningocèle ; kyste hydatique.</p></div>
+            <div class="md-tissu" style="--c: var(--amber)"><b>Graisseuse</b><p>lipome/liposarcome ; hernie de Bochdalek.</p></div>
+          </div>
+          <h3 class="ch-h3">Tumeurs neurogènes</h3>
+          <div class="ti-chiffres md-chiffres-5">
+            <div class="ti-chiffre" style="--c: var(--amber)"><span>20 %</span><p>des tumeurs médiastinales de l'adulte</p></div>
+            <div class="ti-chiffre" style="--c: var(--amber)"><span>90 %</span><p>dans le médiastin postérieur</p></div>
+            <div class="ti-chiffre" style="--c: var(--amber)"><span>75 %</span><p>des tumeurs du médiastin postérieur</p></div>
+            <div class="ti-chiffre" style="--c: var(--green)"><span>95 %</span><p>bénignes chez l'adulte</p></div>
+            <div class="ti-chiffre" style="--c: var(--k-grave)"><span>40 %</span><p>souvent malignes chez l'enfant</p></div>
+          </div>
+          <p class="callout"><b>Arguments</b> : <mark class="k-tech">masse bien limitée de la gouttière costo-vertébrale, ronde, ovalaire ou en sablier</mark> ; <mark class="k-tech">prolongement le long d'un trajet nerveux</mark> ; <mark class="k-tech">élargissement foraminal</mark>. <button type="button" class="md-lien-3d" data-voir="h-gcv">Gouttières costo-vertébrales en 3D</button></p>
+          <p>TDM : densité tissulaire avec rehaussement ; recherche de <mark class="k-key">calcifications, kystisation ou nécrose</mark> ; étude des foramens, du canal rachidien et des structures osseuses.</p>
+          <div class="ti-pieges md-pieges">
+            <details class="ti-piege" style="--c: var(--teal)" open><summary><span>Bénin</span>Schwannome kystique, tumeur des gaines nerveuses</summary><p><mark class="k-key">Bénin, adulte 20-50 ans</mark> ; IRM +++ : <mark class="k-tech">SE T1 intermédiaire +/- zone centrale d'hyposignal ; SE T2 hypersignal diffus non homogène +/- zone centrale en hypersignal</mark> ; kystisation, calcification.</p></details>
+            <details class="ti-piege" style="--c: var(--blue)"><summary><span>Signe</span>Neurofibrome</summary><p><mark class="k-tech">Aspect en cible.</mark></p></details>
+            <details class="ti-piege" style="--c: var(--amber)"><summary><span>Adolescent</span>Ganglioneurome</summary><p>Tumeur bénigne de l'adolescent ou de l'adulte jeune ; ganglions sympathiques ou exceptionnellement ganglions des racines médullaires ; <mark class="k-key">rare sécrétion de VIP</mark>.</p></details>
+            <details class="ti-piege" style="--c: var(--purple)"><summary><span>« Poivre et sel »</span>Paragangliome</summary><p>Sécrétant ou non ; bénin ou malin ; médiastin moyen - aorte, OG - ou postérieur <mark class="k-key">80 %</mark> ; IRM : <mark class="k-tech">hyper T2, prise de contraste intense avec hyposignaux de flux, « poivre et sel »</mark>.</p></details>
+            <details class="ti-piege" style="--c: var(--k-grave)"><summary><span>Hémopathie</span>Hématopoïèse extramédullaire</summary><p>Hémopathie avec remplacement médullaire ou anémie hémolytique ; <mark class="k-tech">masses tissulaires des GCV, uni-/bilatérales, rehaussées, parfois graisseuses</mark> ; scintigraphie aux colloïdes marqués au 99mTc.</p></details>
+            <details class="ti-piege" style="--c: var(--steel)"><summary><span>Os</span>Chondrosarcome</summary><p><mark class="k-tech">Masse tissulaire de la GCV avec calcifications lobulées et ostéolyse de l'arc postérieur costal</mark> ; IRM T1 hétérogène, hyper T2 intense, contours lobulés, <mark class="k-grave">compression trachée/VCS</mark>.</p></details>
+            <details class="ti-piege" style="--c: var(--green)"><summary><span>Ubiquitaire</span>Kyste hydatique</summary><p><mark class="k-tech">Masse liquidienne multivésiculaire</mark> ; <mark class="k-key">0,1-0,5 % des localisations et 4 % des masses médiastinales</mark> ; siège ubiquitaire, médiastin postérieur +++.</p></details>
+          </div>
+        </section>
+
+        <!-- VII -->
+        <section class="fsec" id="conclusion" style="--c: var(--k-grave)">
+          <h2 class="fsec-title"><span class="fnum">VII</span>Conclusion / certitude étiologique</h2>
+          <ol class="md-chaine md-chaine-3">
+            <li style="--c: var(--steel)"><b>Point de départ</b><span>radiographie du thorax</span></li>
+            <li style="--c: var(--teal)"><b>TDM/IRM</b><span>compartiment, comportement et bilan d'extension</span></li>
+            <li style="--c: var(--k-grave)"><b>Certitude</b><span><mark class="k-tech">imagerie, prélèvement ou chirurgie.</mark></span></li>
+          </ol>
+          <div class="fcard"><h3>Techniques invasives</h3>
+            <p>Ponction transbronchique, sous écho-endoscopie ou sous médiastinoscopie ; ponctions percutanées : interposition possible de vaisseaux, cœur, arbre trachéobronchique et poumon ; abords particuliers, artifices techniques.</p></div>
+        </section>
+
+        <!-- ? -->
+        <section class="fsec" id="testez-vous" style="--c: var(--ink)">
+          <h2 class="fsec-title"><span class="fnum">?</span>Testez-vous</h2>
+          <p class="fintro">Dans quel compartiment ? <span class="ti-score" id="md-score">0 / 8</span></p>
+          <div class="ti-cas md-cas" id="md-cas"></div>
+          <button type="button" class="btn btn-outline btn-sm" id="md-cas-reset">Recommencer</button>
+          <div class="flash flash-3">
+            <button class="flip" aria-pressed="false" style="--c: var(--amber)"><span class="flip-tab">1</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Compartiment le plus fréquent (Felson) ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>Antérieur : 54 %</b>TDM · « 4 T »</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--blue)"><span class="flip-tab">2</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Pourquoi injecter au bras gauche ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>Tronc veineux innominé gauche</b>étudier sa perméabilité et baliser le médiastin de gauche vers la droite.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--purple)"><span class="flip-tab">3</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Masse graisseuse : densité ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>&lt; -40 UH</b>hyper T1 et T2.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--k-grave)"><span class="flip-tab">4</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Thymus des myasthéniques : thymome ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>15 %</b>65 % hyperplasie lymphoïde bénigne ; 20 % thymus normal.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--teal)"><span class="flip-tab">5</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Séminome : αFP ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>Toujours normale</b>βHCG normale ou élevée. Chercher une tumeur testiculaire.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--green)"><span class="flip-tab">6</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Tumeurs neurogènes de l'adulte : bénignes ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>95 %</b>souvent malignes chez l'enfant (40 %).</p></span></span></button>
+          </div>
+          <p class="md-source">D'après la fiche condensée de l'auteur « Imagerie des masses médiastinales ». Anatomie 3D : Z-Anatomy (CC BY-SA 4.0) ; compartiments : volumes schématiques, limites approchées.</p>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="../index.html" class="brand">
+          <img src="../assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+          <span class="brand-name">Radiologic<br>Hub</span>
+        </a>
+        <p class="footer-tagline">Outils, ressources et formation pour les radiologues et les résidents.</p>
+      </div>
+      <nav aria-label="Liens de pied de page">
+        <div class="footer-col">
+          <p class="footer-titre">Au quotidien</p>
+          <a href="../comptes-rendus.html">Comptes rendus</a>
+          <a href="../suivi-oncologique.html">Suivi oncologique</a>
+          <a href="../fiches-rapides.html">Fiches rapides</a>
+          <a href="../espace-dicom.html">Espace DICOM</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Apprendre</p>
+          <a href="../radioanatomie/index.html">Radioanatomie</a>
+          <a href="../cas/index.html">Cas cliniques</a>
+          <a href="../index.html#cas-du-jour">Cas du jour</a>
+          <a href="../bibliotheque.html">Bibliothèque</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Réseau</p>
+          <a href="../communaute.html">Communauté</a>
+          <a href="../remplacements.html">Remplacements</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Masterclass</p>
+          <a href="../index.html#masterclass">Programme</a>
+          <a href="../index.html#tarifs">Tarifs</a>
+          <a href="../index.html#inscription">S'inscrire à une masterclass</a>
+        </div>
+      </nav>
+      <p class="copyright"><span>© <span id="year"></span> RadiologicHub · Outils, ressources et formation en radiologie</span><span class="copyright-liens"><a href="../mentions-legales.html">Mentions légales</a><a href="../index.html#inscription">Contact</a></span></p>
+    </div>
+  </footer>
+
+  <script src="../navigation.js?v=20261022235000"></script>
+
+  <script src="../fiche.js?v=20261022235000"></script>
+  <script src="../regles/mediastin.js?v=20261027100000"></script>
+  <script type="module" src="mediastin/mediastin-fiche.js?v=20261027100000"></script>
+</body>
+</html>
