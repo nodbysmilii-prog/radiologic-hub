@@ -41,7 +41,7 @@ test('organe reconnu, avec les pièges', () => {
   assert.equal(V.niveau('hernie discale l5 s1'), 'L5-S1');
 });
 
-test('sans constatation : le modèle est inchangé (les 42 comptes rendus types)', () => {
+test('sans constatation : le modèle est inchangé (les 43 comptes rendus types)', () => {
   assert.ok(IDS.length >= 40);
   for (const id of IDS) {
     const t = modele(id);

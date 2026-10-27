@@ -1158,6 +1158,85 @@ AU TOTAL :
 Échographie rénale et vésico-prostatique sans anomalie décelable, notamment absence d'hypertrophie prostatique.`,
   },
   {
+    id: 'irm-prostate-multiparametrique', spe: 'uro', mod: 'IRM',
+    title: 'IRM prostatique multiparamétrique (PI-RADS v2.1)',
+    text: `IRM PROSTATIQUE MULTIPARAMÉTRIQUE
+
+INDICATION :
+
+Élévation du PSA à [X] ng/mL. [Suspicion clinique de cancer prostatique / bilan préthérapeutique / surveillance active].
+
+TECHNIQUE :
+
+Acquisition de séquences T2 haute résolution dans les trois plans, T1 axiale, diffusion avec valeurs de b élevées et cartographie ADC, complétées par des séquences dynamiques T1 avec saturation de graisse après injection intraveineuse de gadolinium.
+
+Qualité de l’examen : PI-QUAL [X/5].
+
+RÉSULTATS :
+
+1. Volume et morphologie prostatique
+
+• Prostate mesurant [X × X × X] mm, soit un volume estimé à [X] cm³.
+• Densité du PSA estimée à [X] ng/mL/cm³.
+• [Absence d’hypertrophie prostatique / Hypertrophie de la zone transitionnelle, d’aspect nodulaire et hétérogène, en rapport avec une hyperplasie bénigne].
+• [Absence de protrusion intravésicale du lobe médian / Protrusion intravésicale du lobe médian mesurée à X mm].
+
+2. Analyse zonale
+
+Zone périphérique (ZP) :
+
+• Signal de fond [homogène en hypersignal T2 / discrètement hétérogène avec quelques plages linéaires en hyposignal T2 / hétérogène avec multiples plages en hyposignal T2].
+• [Absence de foyer individualisable présentant une restriction focale suspecte de la diffusion ou un rehaussement focal précoce].
+
+Zone transitionnelle (ZT) :
+
+• [Aspect homogène / Présence de multiples nodules d’hyperplasie, bien limités, plus ou moins encapsulés, de signal T2 variable].
+• [Absence de lésion lenticulaire, mal limitée, en hyposignal T2 homogène ou présentant une restriction focale suspecte de la diffusion].
+
+Stroma fibromusculaire antérieur :
+
+• Aspect homogène en hyposignal T2, sans restriction de diffusion ni rehaussement anormal.
+
+Lobe médian et région périurétrale :
+
+• [Absence d’anomalie focale suspecte / Hypertrophie nodulaire périurétrale sans caractère suspect].
+
+3. Lésion cible prostatique
+
+Lésion cible n° 1 :
+
+• Localisation : zone [périphérique / transitionnelle], secteur [X], [droit / gauche], à l’étage [basal / moyen / apical].
+• Dimensions : [X × X] mm, grand axe de [X] mm.
+• Morphologie : lésion [nodulaire / lenticulaire / irrégulière], aux contours [nets / flous / infiltrants].
+• Signal T2 : [hyposignal homogène / signal intermédiaire / signal hétérogène].
+• Diffusion : [restriction modérée / marquée], avec hypersignal sur les séquences à b élevé et diminution correspondante du coefficient ADC.
+• Perfusion : [absence de rehaussement focal précoce / rehaussement focal précoce concordant avec l’anomalie].
+• Rapports capsulaires : [sans contact / contact sur X mm / bombement / irrégularité / brèche avec extension extraprostatique mesurable à X mm].
+• Classification : PI-RADS v2.1 [X/5].
+
+[Reprendre le même descriptif pour toute autre lésion cible significative.]
+
+4. Bilan d’extension locorégionale
+
+• Limites prostatiques : contours [réguliers / irréguliers], sans signe d’extension extraprostatique [ou préciser les signes et leur localisation].
+• Score EPE : [0 / 1 / 2 / 3].
+• Bandelettes neurovasculaires : libres, sans infiltration ni asymétrie suspecte.
+• Vésicules séminales : symétriques, de morphologie et de signal conservés, sans anomalie focale suspecte ni signe d’envahissement.
+• Canaux éjaculateurs : sans anomalie décelable.
+• Col vésical et sphincter urétral externe : sans signe d’infiltration.
+• Rectum, muscles releveurs de l’anus et parois pelviennes : sans signe d’extension tumorale.
+• Ganglions : absence d’adénomégalie pelvienne de morphologie suspecte dans les limites du champ exploré.
+• Structures osseuses : absence de lésion osseuse focale suspecte sur les structures visualisées.
+
+CONCLUSION :
+
+• Prostate de volume estimé à [X] cm³, avec une densité du PSA à [X] ng/mL/cm³.
+• [Hypertrophie bénigne de la zone transitionnelle, associée ou non à une protrusion intravésicale du lobe médian].
+• [Absence de lésion prostatique suspecte / Lésion cible prostatique de X mm, située au niveau de X, classée PI-RADS v2.1 X/5].
+• [Absence de signe d’extension extraprostatique / Signes d’extension extraprostatique au niveau X, score EPE X].
+• Absence d’argument IRM pour un envahissement des vésicules séminales ou une atteinte ganglionnaire pelvienne suspecte.`,
+  },
+  {
     id: 'echo-cervicale', spe: 'orl', mod: 'Écho',
     title: 'Échographie cervicale (thyroïde, glandes salivaires) — normale',
     text: `ÉCHOGRAPHIE CERVICALE
