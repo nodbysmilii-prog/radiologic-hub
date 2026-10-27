@@ -121,7 +121,8 @@
   const PIRADS = {
     title: 'PI-RADS v2.1 — IRM prostatique', chip: 'PI-RADS', sub: 'prostate',
     keys: ['pirads', 'pirad'], suggest: /prostat|pi-?rads/,
-    hint: 'Cliquez sur les secteurs des coupes axiales pour localiser la lésion active (un second clic retire le secteur) ; les vues sagittale et coronale se placent automatiquement.',
+    preview: 'Aperçu de l\'outil. Avec le compte rendu type « IRM prostatique multiparamétrique », « Insérer » écrit chaque donnée à sa ligne (PSA, volume et densité, zones, lésion cible) puis dans la conclusion ; avec un autre texte, il est inséré au curseur :',
+    hint: 'Cliquez sur les secteurs des coupes axiales pour localiser la lésion active (un second clic retire le secteur) ; les vues sagittale et coronale se placent automatiquement. Avec le compte rendu type « IRM prostatique multiparamétrique », « Insérer » écrit chaque donnée à sa ligne (PSA, volume, zones, lésion cible) puis dans la conclusion.',
     init: () => ({ l: '', w: '', h: '', psa: '', lesions: [newPiLesion()], active: 0 }),
     newItem: () => newPiLesion(), max: 4,
     svg(st, live) {
@@ -209,7 +210,35 @@
       }
       return out.join('\n');
     },
+    // Compte rendu type « IRM prostatique multiparamétrique » : chaque donnée à sa ligne, puis la conclusion (regles/pirads-cr.js)
+    integrate(st, texteCR) {
+      const PRCR = window.RHRegles && window.RHRegles.piradsCR;
+      const r = PRCR && PRCR.integrer(texteCR, piResume(st));
+      const n = st.lesions.length;
+      return r && { text: r.texte, message: `${n ? `${n > 1 ? `${n} lésions cibles décrites` : 'Lésion cible décrite'}` : 'Aucune lésion'} ; volume, zones et conclusion du compte rendu complétés.` };
+    },
   };
+  // Résumé de l'outil pour le compte rendu type (nombres arrondis, localisation en clair)
+  const PI_ETAGE = { B: 'basal', M: 'moyen', A: 'apical' };
+  function piResume(st) {
+    const L = num(st.l), W = num(st.w), H = num(st.h), psa = num(st.psa);
+    const dim = L && W && H ? [L, W, H] : null;
+    const volume = dim ? Math.round(L * W * H * 0.52 / 1000) : null;
+    return {
+      psa, dim, volume,
+      densite: psa != null && volume ? Math.round(psa / (L * W * H * 0.52 / 1000) * 100) / 100 : null,
+      lesions: st.lesions.map((l, i) => {
+        const p = l.sectors.map(piParse);
+        const cotes = [...new Set(p.map(x => x.side).filter(Boolean))];
+        return {
+          n: i + 1, categorie: piCat(l), zone: piAlgo(l) === 'tz' ? 'transitionnelle' : 'périphérique',
+          secteurs: l.sectors.length ? piDescribe(l.sectors) : '', codes: [...new Set(p.map(x => x.zone))].filter(z => z !== 'SV' && z !== 'US'), cote: cotes.length === 1 ? (cotes[0] === 'R' ? 'droit' : 'gauche') : '',
+          etages: ['B', 'M', 'A'].filter(lv => p.some(x => x.lv === lv)).map(lv => PI_ETAGE[lv]),
+          taille: num(l.size) ? fr(num(l.size), 0) : '', dwi: +l.dwi || 0, dce: l.dce, epe: l.epe,
+        };
+      }),
+    };
+  }
 
   /* =======================================================
      BI-RADS — sein
