@@ -66,12 +66,29 @@ test('coupes dessinées : segments et espaces', () => {
 
 test('images du cours : présentes, citées dans la fiche, plus de scanner dessiné', () => {
   const imgs = [...HTML.matchAll(/src="pancreas\/images\/([a-zA-Z0-9-]+\.jpg)\?v=/g)].map(m => m[1]);
-  assert.ok(imgs.length >= 45, String(imgs.length));
+  assert.ok(imgs.length >= 40, String(imgs.length));
   for (const f of imgs) assert.ok(fs.existsSync(path.join(RACINE, 'fiches', 'pancreas', 'images', f)), f);
   for (const k of Object.keys(P.COLLECTIONS)) assert.ok(fs.existsSync(path.join(RACINE, 'fiches', 'pancreas', 'images', `col-${k}.jpg`)), k);
   assert.ok(!HTML.includes('data-pa=') && !HTML.includes('id="pa-gaz"') && !HTML.includes('id="pa-col-svg"'));
   assert.ok(HTML.includes('id="lightbox"'));
-  assert.equal(P.necrose, undefined); assert.equal(P.coupe({ collection: 'can', gaz: true }).includes('fill="#000"'), false);
+  assert.equal(P.coupe({ collection: 'can', gaz: true }).includes('fill="#000"'), false);
+});
+
+test('schémas redessinés d\'après le cours : présents dans la fiche, SVG valides', () => {
+  const schemas = [...HTML.matchAll(/data-schema="([a-zA-Z]+)"(?: data-type="([a-z]+)")?/g)].map(m => [m[1], m[2]]);
+  assert.deepEqual(schemas.map(s => s[0]).sort(), ['annulaireCoupe', 'courbes', 'ductPenetrating', 'embryologie', 'necrose', 'necrose', 'necrose']);
+  for (const [f, t] of schemas) assert.match(P[f](t), /^<svg[\s\S]*<\/svg>$/, f);
+  for (const t of Object.keys(P.NECROSE_TYPES)) assert.ok(P.necrose(t).includes(P.NECROSE_TYPES[t]), t);
+  // nécrose intra : dans la glande seulement ; péri : autour seulement ; mixte : les deux
+  assert.ok(P.necrose('intra').includes('dans la glande') && !P.necrose('intra').includes('autour de la glande'));
+  assert.ok(P.necrose('extra').includes('autour de la glande') && !P.necrose('extra').includes('dans la glande'));
+  assert.ok(P.necrose('mixte').includes('autour de la glande') && P.necrose('mixte').includes('dans la glande'));
+  // mots du cours conservés
+  assert.ok(P.embryologie().includes('Anatomie normale pancréatique') && P.embryologie('haut').includes('Développement pancréas annulaire'));
+  for (const m of ['D2', 'tête', 'VMS', 'Crochet']) assert.ok(P.annulaireCoupe().includes(m), m);
+  for (const m of ['Rehaussement', 'normal du pancréas', 'PAI focale', 'Adénocarcinome', 'IV+', '40-45\'', '80-90\'']) assert.ok(P.courbes().includes(m), m);
+  for (const m of ['Sténose des voies biliaires', 'Longues et effilées', 'STENOSE SANS DILATATION']) assert.ok(P.biliaireAnnot().includes(m), m);
+  assert.ok(HTML.includes('data-annot="biliaireAnnot"'));
 });
 
 test('modèle 3D : fichiers, licence, structures', () => {
