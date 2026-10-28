@@ -125,12 +125,13 @@ if (P) {
   const etroit = matchMedia('(max-width: 700px)').matches;
   $$('[data-schema]').forEach(b => {
     let type = b.dataset.type;
-    if (b.dataset.schema === 'embryologie' && etroit) {
-      // téléphone : version verticale du schéma (580 × 806)
+    const vertical = { embryologie: [580, 806], formesPai: [330, 1000] }[b.dataset.schema];
+    if (vertical && etroit) {
+      // téléphone : version verticale du schéma
+      const [w, h] = vertical, img = $('img', b);
       type = 'haut';
-      const img = $('img', b);
-      img.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 580 806'/%3E";
-      img.width = 580; img.height = 806; img.style.aspectRatio = '580 / 806';
+      img.src = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${w} ${h}'/%3E`;
+      img.width = w; img.height = h; img.style.aspectRatio = `${w} / ${h}`;
     }
     b.insertAdjacentHTML('beforeend', P[b.dataset.schema](type));
     const svg = b.lastElementChild; svg.classList.add('annot'); svg.setAttribute('aria-hidden', 'true');
