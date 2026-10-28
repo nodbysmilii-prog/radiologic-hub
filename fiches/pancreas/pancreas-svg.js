@@ -187,5 +187,156 @@
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Coupe axiale schématique du pancréas (niveau ${niveau})" font-family="Montserrat, Arial, sans-serif">${s}</svg>`;
   }
 
-  return { coupe, SEGMENTS, ESPACES, COLLECTIONS, FASCIAS: ['Péritoine pariétal postérieur', ...FASCIAS.map(f => f[0])], ESP, PAN, espacesDuNiveau: n => Object.keys({ ...ESP[n === 'bas' ? 'bas' : 'haut'], ...ESP.commun }) };
+
+  /* ---------- Schémas pédagogiques redessinés d'après les figures du cours ---------- */
+  const svgDe = (w, h, titre, corpsSvg, vb) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vb || `0 0 ${w} ${h}`}" role="img" aria-label="${titre}" font-family="Montserrat, Arial, sans-serif">${corpsSvg}</svg>`;
+  const boite = (x, y, w, h, fond, t, o = {}) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${o.rx ?? 10}" fill="${fond}"${o.trait ? ` stroke="${o.trait}" stroke-width="2"` : ''}/>`
+    + [].concat(t).map((l, i, a) => txt(x + w / 2, y + h / 2 + (i - (a.length - 1) / 2) * (o.size || 13) * 1.25 + (o.size || 13) * 0.36, l, { size: o.size || 13, fill: o.fill || '#fff', halo: 'none', weight: o.weight || 700 })).join('');
+  const fleche = (id, c) => `<marker id="${id}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="${c}"/></marker>`;
+
+  /* Nécrose de la PA nécrosante : 'intra' (intra-pancréatique isolée), 'extra' (péri-pancréatique isolée), 'mixte' */
+  const NECROSE_TYPES = {
+    intra: 'nécrose intra-pancréatique isolée',
+    extra: 'nécrose péri-pancréatique isolée',
+    mixte: 'nécrose mixte intra et extra parenchymateuse',
+  };
+  function necrose(type) {
+    const id = 'pn-' + type;
+    const glande = Object.values(PAN.haut).join(' ');
+    const motif = `<pattern id="${id}-m" width="16" height="16" patternUnits="userSpaceOnUse"><rect width="16" height="16" fill="#4b4a52"/><circle cx="4" cy="5" r="2.2" fill="#36353c"/><circle cx="12" cy="12" r="2.6" fill="#5d5c66"/><circle cx="12" cy="3" r="1.4" fill="#2d2c33"/></pattern>`;
+    let s = `<defs>${motif}<clipPath id="${id}-c"><path d="${glande}"/></clipPath></defs>` + corps() + organes('haut');
+    const extra = type === 'extra' || type === 'mixte', intra = type === 'intra' || type === 'mixte';
+    // nécrose péri-pancréatique : dans la graisse autour de la glande (sous la glande, qui reste visible)
+    if (extra) s += `<path d="M228 214C262 206 300 206 330 204C380 196 430 186 476 188C520 190 552 200 566 218C576 236 570 254 552 260C540 262 530 258 522 258C534 272 548 290 548 306C536 312 522 298 512 282C500 262 486 252 462 248C420 250 380 260 340 266C300 272 262 280 232 276C210 270 200 252 206 236C210 224 218 218 228 214Z" fill="url(#${id}-m)" stroke="#2d2c33" stroke-width="1.5"/>`;
+    // glande pancréatique (parenchyme rehaussé) avec lobulations
+    s += `<path d="${glande}" fill="#f6d36b" stroke="#c99a2e" stroke-width="1.8"/>`;
+    s += `<g clip-path="url(#${id}-c)" fill="none" stroke="#d9a93a" stroke-width="1.2">${[230, 262, 294, 330, 366, 402, 438, 474, 510, 540].map(x => `<path d="M${x} 196C${x - 8} 214 ${x + 8} 236 ${x} 270"/>`).join('')}</g>`;
+    // nécrose intra-pancréatique : plages non rehaussées dans le parenchyme (corps)
+    if (intra) s += `<g clip-path="url(#${id}-c)"><path d="M322 196C360 194 420 188 470 190L476 248C430 246 370 254 322 262Z" fill="url(#${id}-m)"/></g><path d="${glande}" fill="none" stroke="#c99a2e" stroke-width="1.8"/>`;
+    // vaisseaux
+    s += `<path d="M306 256C350 256 420 240 470 238C510 238 540 246 560 254" fill="none" stroke="${C.porte}" stroke-width="6" stroke-linecap="round"/><circle cx="306" cy="262" r="9" fill="${C.porte}"/><circle cx="332" cy="282" r="6" fill="${C.artere}"/>`;
+    // étiquettes
+    s += txt(150, 150, 'foie', { size: 15, fill: '#fff', halo: 'none' }) + txt(420, 134, 'estomac', { size: 15 }) + txt(584, 272, 'rate', { size: 13, fill: '#fff', halo: 'none' })
+      + txt(186, 251, 'D2', { size: 12 }) + txt(190, 378, 'rein D', { size: 14 }) + txt(450, 378, 'rein G', { size: 14 }) + txt(342, 335, 'Ao', { size: 10, fill: '#fff', halo: 'none' });
+    // légende
+    s += `<rect x="126" y="400" width="490" height="30" rx="8" fill="#fff" opacity=".9"/><rect x="134" y="408" width="18" height="14" rx="3" fill="#f6d36b" stroke="#c99a2e"/>` + txt(158, 420, 'parenchyme rehaussé', { anchor: 'start', size: 14, weight: 700 })
+      + `<rect x="380" y="408" width="18" height="14" rx="3" fill="url(#${id}-m)"/>` + txt(404, 420, 'nécrose (non rehaussée)', { anchor: 'start', size: 14, weight: 700 });
+    // flèches de repère
+    const rep = (x1, y1, x2, y2, t, c = '#a8172d') => `<path d="M${x1} ${y1}L${x2} ${y2}" stroke="${c}" stroke-width="2.6" marker-end="url(#${id}-f)"/>` + txt(x1, y1 + (y1 > y2 ? 16 : -7), t, { size: 15, fill: c });
+    s += `<defs>${fleche(id + '-f', '#a8172d')}</defs>`;
+    if (intra) s += rep(400, 296, 400, 236, 'dans la glande');
+    if (extra) s += rep(520, 166, 500, 196, 'autour de la glande');
+    return svgDe(W, H, 'Coupe axiale schématique : ' + NECROSE_TYPES[type], s, '120 120 500 312');
+  }
+
+  /* Pancréas annulaire : coupe axiale (D2 entouré par la tête, VMS, crochet) */
+  function annulaireCoupe() {
+    let s = `<rect width="520" height="280" fill="#fff"/>`;
+    s += `<path d="M70 120C64 72 110 50 170 56C236 62 300 50 350 56C392 60 410 88 400 112C392 126 376 128 372 140C368 152 384 164 410 166C440 168 470 166 482 174C470 194 430 206 380 214C320 224 250 230 190 236C120 242 76 216 70 170Z" fill="#f9d7b8" stroke="#a65a2a" stroke-width="5" stroke-linejoin="round"/>`;
+    s += `<path d="M106 112C114 88 150 80 178 88C206 98 212 132 200 156C186 182 146 186 122 172C102 160 98 134 106 112Z" fill="#e9b4b6" stroke="#9c3a46" stroke-width="5"/>`;
+    s += `<circle cx="154" cy="134" r="78" fill="none" stroke="#f18d25" stroke-width="3" stroke-dasharray="8 6"/>`;
+    s += `<path d="M378 120C392 100 432 96 452 110C470 124 466 152 446 160C420 168 386 160 376 146C370 136 372 128 378 120Z" fill="#9eb6e0" stroke="#2f5597" stroke-width="5"/>`;
+    s += txt(154, 150, 'D2', { size: 40, weight: 600, halo: 'none' }) + txt(282, 112, 'tête', { size: 26, halo: 'none' }) + txt(422, 140, 'VMS', { size: 17, halo: 'none' }) + txt(372, 204, 'Crochet', { size: 26, halo: 'none' });
+    return svgDe(520, 280, 'Pancréas annulaire : D2 entouré de parenchyme pancréatique', s);
+  }
+
+  /* Origine embryologique du pancréas annulaire (d'après Etienne D et al. Annals of Anatomy 2012) */
+  function embryologie(disposition) {
+    const id = 'emb';
+    const duo = { f: '#f6cdc6', t: '#c26a66' }, vb = '#f6c879', dors = '#f2ab2f', vert = '#9cc77a', vertT = '#4f7f35';
+    const lob = (d, c) => `<path d="${d}" fill="${c}" stroke="#b37a16" stroke-width="2" stroke-linejoin="round"/>`;
+    const cadre = (cx, cy, k = 1) => { // duodénum en C (vue de face), ouvert vers la droite de l'image
+      const p = `M${cx + 46 * k} ${cy - 70 * k}C${cx - 22 * k} ${cy - 80 * k} ${cx - 70 * k} ${cy - 46 * k} ${cx - 68 * k} ${cy}C${cx - 66 * k} ${cy + 50 * k} ${cx - 22 * k} ${cy + 76 * k} ${cx + 58 * k} ${cy + 68 * k}`;
+      return `<path d="${p}" fill="none" stroke="${duo.t}" stroke-width="${30 * k}" stroke-linecap="round"/><path d="${p}" fill="none" stroke="${duo.f}" stroke-width="${24 * k}" stroke-linecap="round"/>`;
+    };
+    const anneau = (cx, cy, r = 30) => `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#fff" stroke="${duo.t}" stroke-width="15"/><circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${duo.f}" stroke-width="10"/>`;
+    const voie = (pts) => `<path d="${pts}" fill="none" stroke="${vertT}" stroke-width="5" stroke-linecap="round"/><path d="${pts}" fill="none" stroke="${vert}" stroke-width="2.6" stroke-linecap="round"/>`;
+    const vesicule = (x, y, k = 1) => `<ellipse cx="${x}" cy="${y}" rx="${22 * k}" ry="${15 * k}" transform="rotate(-30 ${x} ${y})" fill="${vert}" stroke="${vertT}" stroke-width="2"/>`;
+    let s = `<defs>${fleche(id + '-f', '#111114')}${fleche(id + '-p', '#55545f')}</defs><rect width="900" height="440" fill="#fff"/>`;
+    let pa = '', pr1 = '', pr2 = '';
+    // A — stade des deux bourgeons (vue de face)
+    pa += txt(130, 34, 'Deux bourgeons', { size: 17 });
+    pa += cadre(140, 230);
+    pa += lob('M152 196C180 176 230 170 262 176C276 182 270 198 252 202C222 208 190 214 166 222C150 222 142 206 152 196Z', dors); // bourgeon dorsal
+    pa += voie('M60 96C70 140 78 190 84 236') + vesicule(54, 96);
+    pa += lob('M78 250C70 238 76 226 92 226C108 228 112 244 102 254C94 262 82 260 78 250Z', vb); // bourgeon ventral
+    pa += txt(214, 160, 'bourgeon dorsal', { size: 14, fill: '#8a5a00' }) + txt(62, 290, 'bourgeon', { size: 14, fill: '#8a5a00' }) + txt(62, 304, 'ventral', { size: 14, fill: '#8a5a00' }) + txt(148, 236, 'D2', { size: 15 });
+    pa += txt(46, 72, 'vésicule', { size: 13, fill: vertT }) + txt(108, 118, 'cholédoque', { size: 13, fill: vertT, anchor: 'start' });
+    // B1 / C1 — anatomie normale
+    pr1 += boite(340, 18, 540, 36, '#2a9d8f', 'Anatomie normale pancréatique', { size: 17 });
+    pr1 += anneau(420, 130) + voie('M378 72C392 92 404 108 412 124') + vesicule(370, 70, .8);
+    pr1 += lob('M384 134C376 124 382 112 396 114C406 116 408 128 400 136C394 142 388 140 384 134Z', vb);
+    pr1 += lob('M448 136C480 128 520 124 552 128C562 134 556 146 540 148C510 152 478 152 452 152C440 150 440 140 448 136Z', dors);
+    pr1 += `<path d="M392 150C396 182 440 186 456 160" fill="none" stroke="#55545f" stroke-width="2.6" stroke-dasharray="5 5" marker-end="url(#${id}-p)"/>`;
+    pr1 += txt(420, 202, 'rotation du bourgeon ventral', { size: 13, fill: '#55545f' });
+    pr1 += `<path d="M570 130L640 130" stroke="#111114" stroke-width="2.5" marker-end="url(#${id}-f)"/>`;
+    pr1 += cadre(726, 140, .72) + voie('M688 74C692 96 700 116 708 136') + vesicule(684, 70, .8);
+    pr1 += lob('M700 150C716 136 742 132 770 128C810 120 846 112 872 116C882 124 876 136 858 140C820 148 786 156 760 166C742 178 720 182 706 174C698 166 696 158 700 150Z', dors);
+    pr1 += lob('M704 156C716 150 730 152 740 160C744 174 730 184 716 182C704 178 700 166 704 156Z', vb);
+    // B2 / C2 — pancréas annulaire
+    pr2 += boite(340, 236, 540, 36, '#a8172d', 'Développement pancréas annulaire', { size: 17 });
+    pr2 += anneau(420, 348) + voie('M378 290C392 310 404 326 412 342') + vesicule(370, 288, .8);
+    pr2 += lob('M380 356C372 344 380 332 394 334C404 338 404 350 396 358C390 362 384 362 380 356Z', vb);
+    pr2 += lob('M448 354C480 346 520 342 552 346C562 352 556 364 540 366C510 370 478 370 452 370C440 368 440 358 448 354Z', dors);
+    pr2 += `<path d="M386 330C392 300 444 298 456 330" fill="none" stroke="#55545f" stroke-width="2.6" stroke-dasharray="5 5" marker-end="url(#${id}-p)"/><path d="M392 372C400 400 444 400 456 372" fill="none" stroke="#55545f" stroke-width="2.6" stroke-dasharray="5 5" marker-end="url(#${id}-p)"/>`;
+    pr2 += txt(420, 418, 'le bourgeon ventral entoure D2', { size: 13, fill: '#55545f' });
+    pr2 += `<path d="M570 348L640 348" stroke="#111114" stroke-width="2.5" marker-end="url(#${id}-f)"/>`;
+    pr2 += `<circle cx="712" cy="350" r="44" fill="${vb}" stroke="#b37a16" stroke-width="2"/>` + anneau(712, 350, 26);
+    pr2 += lob('M748 336C780 326 830 322 868 326C880 334 872 348 854 350C820 354 786 358 754 362C744 356 742 344 748 336Z', dors);
+    pr2 += voie('M676 280C686 300 694 316 700 326') + vesicule(672, 276, .8);
+    pr2 += txt(712, 354, 'D2', { size: 12 }) + txt(712, 414, 'anneau pancréatique autour de D2', { size: 13, fill: '#8a5a00' });
+    if (disposition === 'haut') {
+      // téléphone : bourgeons en haut, puis les deux évolutions l'une sous l'autre
+      s += `<g transform="translate(160 0)">${pa}</g><path d="M290 318L290 344" stroke="#111114" stroke-width="2.5" marker-end="url(#${id}-f)"/>`;
+      s += `<g transform="translate(-306 350)">${pr1}</g><g transform="translate(-306 360)">${pr2}</g>`;
+      return svgDe(580, 806, 'Origine embryologique du pancréas annulaire', s.replace('<rect width="900" height="440" fill="#fff"/>', '<rect width="580" height="806" fill="#fff"/>'));
+    }
+    s += pa + `<path d="M262 230L304 230M304 230L330 128M304 230L330 334" fill="none" stroke="#111114" stroke-width="2.5"/>` + pr1 + pr2;
+    return svgDe(900, 440, 'Origine embryologique du pancréas annulaire', s);
+  }
+
+  /* « duct penetrating sign » (PAI) */
+  function ductPenetrating() {
+    let s = `<rect width="620" height="400" fill="#fff"/>`;
+    s += `<path d="M180 98C150 96 120 104 92 132C64 164 56 214 72 258C92 312 150 348 222 368C270 380 320 370 372 346C400 334 420 318 432 306L432 196C380 176 320 152 268 134C240 120 210 104 180 98Z" fill="#f8d6b8"/>`;
+    s += `<path d="M268 134C238 118 210 102 180 98C150 96 120 104 92 132C64 164 56 214 72 258C92 312 150 348 222 368C270 380 320 370 372 346C400 334 420 318 432 306" fill="none" stroke="#111114" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>`;
+    s += `<path d="M432 212L346 226L432 238" fill="#fff" stroke="#111114" stroke-width="4" stroke-linejoin="round"/>`;
+    s += `<path d="M126 0L214 0L244 124C250 152 250 176 238 202C224 230 196 248 158 262C186 240 210 222 222 196C232 172 228 150 218 128Z" fill="#7d9a44" stroke="#5b7330" stroke-width="2"/>`;
+    s += `<circle cx="214" cy="200" r="86" fill="none" stroke="#e02424" stroke-width="6"/>`;
+    s += `<rect x="432" y="0" width="188" height="400" fill="#fff"/>`;
+    s += txt(526, 60, '« duct penetrating', { size: 15 }) + txt(526, 80, 'sign »', { size: 15 });
+    s += `<path d="M300 200L446 168" stroke="#e02424" stroke-width="2"/>` + txt(452, 140, 'canal toujours', { size: 12, anchor: 'start', weight: 700 }) + txt(452, 156, 'visualisé au sein', { size: 12, anchor: 'start', weight: 700 }) + txt(452, 172, 'de la sténose', { size: 12, anchor: 'start', weight: 700 });
+    s += `<path d="M170 252L446 280" stroke="#5b7330" stroke-width="2"/>` + txt(452, 276, 'aspect effilé +++', { size: 12, anchor: 'start', weight: 700, fill: '#5b7330' });
+    s += txt(452, 330, 'plutôt en faveur', { size: 11, anchor: 'start', fill: '#55545f' }) + txt(452, 345, 'de la bénignité', { size: 11, anchor: 'start', fill: '#55545f' });
+    return svgDe(620, 400, '« duct penetrating sign » : canal visible au sein de la sténose, aspect effilé', s);
+  }
+
+  /* Courbes de rehaussement : pancréas normal, PAI focale, adénocarcinome */
+  function courbes() {
+    const id = 'cr';
+    const x0 = 80, y0 = 330, tx = { iv: 110, art: 250, tard: 420 };
+    let s = `<defs>${fleche(id + '-a', '#111114')}</defs><rect width="660" height="430" fill="#fff"/>`;
+    s += `<path d="M${x0} ${y0}L630 ${y0}M${x0} ${y0}L${x0} 30" stroke="#111114" stroke-width="2.5" marker-end="url(#${id}-a)"/>` + txt(x0 - 20, 46, 'UH', { size: 17, weight: 800 }) + txt(632, y0 + 22, 'temps', { size: 13, anchor: 'end', fill: '#55545f' });
+    for (const [k, x] of Object.entries(tx)) s += `<path d="M${x} ${y0}L${x} 60" stroke="#cfcfd6" stroke-width="1.5" stroke-dasharray="4 5"/><path d="M${x} ${y0 + 34}L${x} ${y0 + 6}" stroke="#111114" stroke-width="2" marker-end="url(#${id}-a)"/>` + boite(x - 34, y0 + 36, 68, 26, '#111114', { iv: 'IV+', art: '40-45\'', tard: '80-90\'' }[k], { rx: 4, size: 14 });
+    s += `<path d="M${tx.iv} ${y0}L208 92C260 140 340 180 420 204C480 222 520 230 560 236" fill="none" stroke="#8c2f2f" stroke-width="4" stroke-linejoin="round"/>`;
+    s += `<path d="M${tx.iv} ${y0}C170 250 250 196 330 172C420 146 500 130 580 116" fill="none" stroke="#9fcf7f" stroke-width="6" stroke-linecap="round"/>`;
+    s += `<path d="M${tx.iv} ${y0}C180 280 260 240 340 224C420 212 480 210 560 210" fill="none" stroke="#1f3864" stroke-width="4"/>`;
+    s += `<circle cx="208" cy="92" r="5" fill="#8c2f2f"/>`;
+    s += boite(214, 30, 236, 52, '#8c2f2f', ['Rehaussement', 'normal du pancréas'], { size: 16 });
+    s += boite(470, 70, 176, 40, '#6e9a3e', 'PAI focale', { size: 16 });
+    s += boite(430, 244, 216, 52, '#1f3864', ['Adénocarcinome', 'pancréatique'], { size: 16 });
+    s += txt(20, 418, 'PAI focale : hypovasculaire au temps artériel, plus rehaussée au temps tardif (fibrose +++)', { size: 12.5, fill: '#55545f', anchor: 'start', weight: 600 });
+    return svgDe(660, 430, 'Courbes de rehaussement du pancréas normal, de la PAI focale et de l\'adénocarcinome', s);
+  }
+
+  /* Bili-IRM (PAI de type I) : nos annotations sur l'image du cours (coordonnées de l'image 778 × 563) */
+  function biliaireAnnot() {
+    let s = `<ellipse cx="262" cy="230" rx="122" ry="90" fill="none" stroke="#e85d75" stroke-width="4"/>`;
+    s += `<path d="M360 176L420 112" stroke="#e85d75" stroke-width="3"/>` + boite(400, 22, 360, 92, '#a8172d', ['Sténose des voies biliaires', 'intra-hépatiques', 'Longues et effilées'], { size: 18 });
+    s += `<path d="M473 440C490 420 510 408 531 398L564 369M531 398L566 470" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>`;
+    s += boite(390, 470, 380, 70, '#2a6f97', ['STENOSE SANS DILATATION', 'D\'AMONT +++'], { size: 19, weight: 800 });
+    return s;
+  }
+
+  return { coupe, SEGMENTS, ESPACES, COLLECTIONS, FASCIAS: ['Péritoine pariétal postérieur', ...FASCIAS.map(f => f[0])], ESP, PAN, NECROSE_TYPES, necrose, annulaireCoupe, embryologie, ductPenetrating, courbes, biliaireAnnot, espacesDuNiveau: n => Object.keys({ ...ESP[n === 'bas' ? 'bas' : 'haut'], ...ESP.commun }) };
 });

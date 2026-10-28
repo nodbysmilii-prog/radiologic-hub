@@ -6,7 +6,8 @@
    • coupes axiales (pancreas-svg.js, RHPancreas) : segment choisi synchronisé avec la 3D,
      espaces cliquables, deux niveaux ; collections d'Atlanta avec l'image TDM du cours ;
    • outils (regles/pancreatite.js) : moment du scanner, dose de contraste, Atlanta
-     (diagnostic, sévérité), CTSI ;
+     (diagnostic, sévérité), CTSI ; schémas redessinés (nécrose, annulaire, embryologie,
+     duct penetrating sign, courbes de rehaussement) et annotations de la Bili-IRM ;
    • onglets des étiologies, entraînement « Quelle collection ? ».
    ========================================================= */
 const $ = (s, r = document) => r.querySelector(s);
@@ -118,6 +119,24 @@ $$('[data-voir-seg]').forEach(b => b.addEventListener('click', () => {
   bloc.scrollIntoView({ behavior: doux(), block: 'start' });
   choisirSegment(b.dataset.voirSeg);
 }));
+
+/* ---------- Schémas redessinés d'après le cours (pancreas-svg.js) : calque .annot, repris par l'agrandissement ---------- */
+if (P) {
+  const etroit = matchMedia('(max-width: 700px)').matches;
+  $$('[data-schema]').forEach(b => {
+    let type = b.dataset.type;
+    if (b.dataset.schema === 'embryologie' && etroit) {
+      // téléphone : version verticale du schéma (580 × 806)
+      type = 'haut';
+      const img = $('img', b);
+      img.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 580 806'/%3E";
+      img.width = 580; img.height = 806; img.style.aspectRatio = '580 / 806';
+    }
+    b.insertAdjacentHTML('beforeend', P[b.dataset.schema](type));
+    const svg = b.lastElementChild; svg.classList.add('annot'); svg.setAttribute('aria-hidden', 'true');
+  });
+  $$('[data-annot]').forEach(b => { $('svg.annot', b).innerHTML = P[b.dataset.annot](); });
+}
 
 /* ---------- Collections d'Atlanta ---------- */
 const grille = $('.pa-grille');
