@@ -94,6 +94,18 @@ test('schémas redessinés d\'après le cours : présents dans la fiche, SVG val
   assert.match(P.courbes(), /<circle cx="250" cy="92"/);
 });
 
+test('figures CC BY 4.0 : crédits et flèches redessinées (calques.js)', () => {
+  const ctx = {}; new Function('self', fs.readFileSync(path.join(RACINE, 'fiches', 'pancreas', 'calques.js'), 'utf8'))(ctx);
+  const C = ctx.RHPancreasCalques;
+  for (const n of ['tdm-oedemateuse', 'col-can', 'col-nop', 'weber-2', 'weber-3', 'annulaire-tdm', 'dkpa-2']) {
+    assert.match(C[n], /^<svg class="annot" viewBox="0 0 \d+ \d+"/, n);
+    assert.ok(fs.existsSync(path.join(RACINE, 'fiches', 'pancreas', 'images', n + '.jpg')), n);
+  }
+  assert.ok(HTML.includes('<script src="pancreas/calques.js?v='));
+  assert.ok((HTML.match(/flèches et lettres redessinées/g) || []).length >= 12);
+  for (const doi of ['10.1007/s11547-021-01359-3', '10.5334/jbsr.3331', '10.1002/acm2.13487', '10.1259/bjrcr.20150316', '10.1007/s10396-021-01145-8']) assert.ok(HTML.includes(doi), doi);
+});
+
 test('modèle 3D : fichiers, licence, structures', () => {
   for (const f of ['pancreas.glb', 'pancreas.json', 'LICENSE-Z-Anatomy.txt']) assert.ok(fs.existsSync(path.join(RACINE, 'public', 'models', 'pancreas', f)), f);
   for (const id of ['duodenum', 'rate', 'vms', 'ams', 'veine-splenique', 'wirsung', 'vbp', 'aorte']) assert.ok(MODELE.structures.some(s => s.id === id), id);
