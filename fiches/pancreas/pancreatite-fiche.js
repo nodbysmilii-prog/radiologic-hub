@@ -139,17 +139,34 @@ if (P) {
   $$('[data-annot]').forEach(b => { $('svg.annot', b).innerHTML = P[b.dataset.annot](); });
 }
 
+/* ---------- Flèches et lettres redessinées sur les figures CC BY (calques.js) ---------- */
+const CALQUES = window.RHPancreasCalques || {};
+const nomImage = img => (img.getAttribute('src').match(/images\/([a-z0-9-]+)\.jpg/i) || [])[1];
+function poserCalque(btn) {
+  const ancien = $('svg.annot[data-calque]', btn); if (ancien) ancien.remove();
+  const n = nomImage($('img', btn));
+  if (n && CALQUES[n]) { btn.insertAdjacentHTML('beforeend', CALQUES[n]); btn.lastElementChild.dataset.calque = n; }
+}
+$$('.ex-img').forEach(b => { if ($('img', b) && !b.dataset.schema && !b.dataset.annot) poserCalque(b); });
+const CREDITS_COL = {
+  clap: ['Sureka B et al., <i>Gastroenterology Report</i> 2016, fig. 3', '10.1093/gastro/gov036'],
+  can: ['Brizi MG et al., <i>La radiologia medica</i> 2021, fig. 7', '10.1007/s11547-021-01359-3'],
+  pk: ['Feregrino Rocha LF et al., <i>Innoscience Journal</i> 2024, fig. 1A–B', '10.68179/innoj.v2i1.2'],
+  nop: ['Sureka B et al., <i>Gastroenterology Report</i> 2016, fig. 6', '10.1093/gastro/gov036'],
+};
+
 /* ---------- Collections d'Atlanta ---------- */
 const grille = $('.pa-grille');
 if (grille && P) {
   const montrer = cle => {
     $$('[data-col]', grille).forEach(b => b.classList.toggle('is-on', b.dataset.col === cle));
     const c = P.COLLECTIONS[cle];
-    // image TDM du cours (Thoeni, Radiology 2012 ; Banks, Gut 2013)
-    const img = $('#pa-col-img');
+    // image TDM (CC BY 4.0) et ses flèches redessinées
+    const img = $('#pa-col-img'), [cr, doi] = CREDITS_COL[cle];
     img.src = img.src.replace(/col-[a-z]+\.jpg/, `col-${cle}.jpg`); img.alt = `TDM : ${c.nom}`;
     img.style.aspectRatio = ''; img.removeAttribute('width'); img.removeAttribute('height');
-    $('#pa-col-cap').innerHTML = `<strong>${c.abr}</strong>${echapper(c.siege)}<span class="pa-credit">Thoeni, Radiology 2012 ; Banks, Gut 2013</span>`;
+    poserCalque(img.parentElement);
+    $('#pa-col-cap').innerHTML = `<strong>${c.abr}</strong>${echapper(c.siege)}<span class="pa-credit">${cr} · <a href="https://doi.org/${doi}" rel="noopener" target="_blank">source</a> · <a href="https://creativecommons.org/licenses/by/4.0/deed.fr" rel="noopener license" target="_blank">CC BY 4.0</a> · flèches et lettres redessinées</span>`;
     $('#pa-col-texte').innerHTML = `<p class="ti-outil-titre">${c.abr} · ${echapper(c.nom)}</p><p><b>${c.delai}</b> · ${c.forme === 'POI' ? 'Pancréatite Oedémato-Interstitielle (POI)' : 'Pancréatite Nécrosante (PN)'}</p><ul class="pa-col-items">${c.items.map(i => `<li>${echapper(i)}</li>`).join('')}</ul><p>${echapper(c.siege)}</p>`;
   };
   $$('[data-col]', grille).forEach(b => b.addEventListener('click', () => montrer(b.dataset.col)));
