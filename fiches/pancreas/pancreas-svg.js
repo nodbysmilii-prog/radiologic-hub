@@ -318,15 +318,90 @@
     let s = `<defs>${fleche(id + '-a', '#111114')}</defs><rect width="660" height="430" fill="#fff"/>`;
     s += `<path d="M${x0} ${y0}L630 ${y0}M${x0} ${y0}L${x0} 30" stroke="#111114" stroke-width="2.5" marker-end="url(#${id}-a)"/>` + txt(x0 - 20, 46, 'UH', { size: 17, weight: 800 }) + txt(632, y0 + 22, 'temps', { size: 13, anchor: 'end', fill: '#55545f' });
     for (const [k, x] of Object.entries(tx)) s += `<path d="M${x} ${y0}L${x} 60" stroke="#cfcfd6" stroke-width="1.5" stroke-dasharray="4 5"/><path d="M${x} ${y0 + 34}L${x} ${y0 + 6}" stroke="#111114" stroke-width="2" marker-end="url(#${id}-a)"/>` + boite(x - 34, y0 + 36, 68, 26, '#111114', { iv: 'IV+', art: '40-45\'', tard: '80-90\'' }[k], { rx: 4, size: 14 });
-    s += `<path d="M${tx.iv} ${y0}L208 92C260 140 340 180 420 204C480 222 520 230 560 236" fill="none" stroke="#8c2f2f" stroke-width="4" stroke-linejoin="round"/>`;
-    s += `<path d="M${tx.iv} ${y0}C170 250 250 196 330 172C420 146 500 130 580 116" fill="none" stroke="#9fcf7f" stroke-width="6" stroke-linecap="round"/>`;
+    s += `<path d="M${tx.iv} ${y0}L${tx.art} 92C300 130 360 176 420 198C480 220 520 230 560 236" fill="none" stroke="#8c2f2f" stroke-width="4" stroke-linejoin="round"/>`;
+    s += `<path d="M${tx.iv} ${y0}C170 250 250 196 330 172C420 146 490 132 552 122" fill="none" stroke="#9fcf7f" stroke-width="6" stroke-linecap="round"/>`;
     s += `<path d="M${tx.iv} ${y0}C180 280 260 240 340 224C420 212 480 210 560 210" fill="none" stroke="#1f3864" stroke-width="4"/>`;
-    s += `<circle cx="208" cy="92" r="5" fill="#8c2f2f"/>`;
-    s += boite(214, 30, 236, 52, '#8c2f2f', ['Rehaussement', 'normal du pancréas'], { size: 16 });
-    s += boite(470, 70, 176, 40, '#6e9a3e', 'PAI focale', { size: 16 });
+    s += `<circle cx="${tx.art}" cy="92" r="5" fill="#8c2f2f"/>`;
+    s += boite(270, 30, 236, 52, '#8c2f2f', ['Rehaussement', 'normal du pancréas'], { size: 16 });
+    s += boite(560, 100, 96, 40, '#6e9a3e', ['PAI', 'focale'], { size: 14 });
     s += boite(430, 244, 216, 52, '#1f3864', ['Adénocarcinome', 'pancréatique'], { size: 16 });
     s += txt(20, 418, 'PAI focale : hypovasculaire au temps artériel, plus rehaussée au temps tardif (fibrose +++)', { size: 12.5, fill: '#55545f', anchor: 'start', weight: 600 });
     return svgDe(660, 430, 'Courbes de rehaussement du pancréas normal, de la PAI focale et de l\'adénocarcinome', s);
+  }
+
+  /* PAI : 3 formes radiologiques (diffuse, focale, multifocale), pancréas dessiné de face
+     (tête à gauche dans le cadre duodénal, queue en haut à droite) — d'après Vlachou, Radiographics 2011 */
+  function glandePoints(diffuse) {
+    // ligne médiane tête → queue (Catmull-Rom) et demi-épaisseur ; lobulations sur le contour sauf forme diffuse
+    const C = [[66, 162], [86, 140], [122, 122], [168, 102], [214, 80], [258, 60], [280, 52]];
+    const R = diffuse ? [44, 40, 28, 28, 26, 22, 16] : [40, 34, 20, 21, 19, 15, 10];
+    const pts = [], rad = [];
+    for (let i = 0; i < C.length - 1; i++) {
+      const p0 = C[Math.max(i - 1, 0)], p1 = C[i], p2 = C[i + 1], p3 = C[Math.min(i + 2, C.length - 1)];
+      for (let k = 0; k < 10; k++) {
+        const t = k / 10, t2 = t * t, t3 = t2 * t;
+        const f = (a, b, c, d) => 0.5 * (2 * b + (-a + c) * t + (2 * a - 5 * b + 4 * c - d) * t2 + (-a + 3 * b - 3 * c + d) * t3);
+        pts.push([f(p0[0], p1[0], p2[0], p3[0]), f(p0[1], p1[1], p2[1], p3[1])]); rad.push(R[i] + (R[i + 1] - R[i]) * t);
+      }
+    }
+    pts.push(C[C.length - 1]); rad.push(R[R.length - 1]);
+    const g = [], d = [];
+    pts.forEach((p, i) => {
+      const a = pts[Math.max(i - 1, 0)], b = pts[Math.min(i + 1, pts.length - 1)];
+      const dx = b[0] - a[0], dy = b[1] - a[1], n = Math.hypot(dx, dy) || 1;
+      const lob = diffuse ? 1 : 1 + 0.08 * Math.sin(i * 1.25);
+      const r = rad[i] * lob;
+      g.push([p[0] - dy / n * r, p[1] + dx / n * r]); d.push([p[0] + dy / n * r, p[1] - dx / n * r]);
+    });
+    return { pts, g, d, rad };
+  }
+  const chemin = l => l.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join('');
+  function formePai(type, x0) {
+    const diffuse = type === 'diffuse';
+    const { pts, g, d } = glandePoints(diffuse);
+    const fin = pts[pts.length - 1];
+    const contour = chemin(g) + `A12 12 0 0 0 ${d[d.length - 1][0].toFixed(1)} ${d[d.length - 1][1].toFixed(1)}` + chemin(d.slice().reverse()).replace(/^M/, 'L') + `A40 40 0 0 0 ${g[0][0].toFixed(1)} ${g[0][1].toFixed(1)}Z`;
+    let s = `<g transform="translate(${x0} 0)">`;
+    // cadre duodénal (D2) autour de la tête
+    s += `<path d="M96 64C40 60 6 110 12 168C16 214 62 236 120 226" fill="none" stroke="#c26a66" stroke-width="22" stroke-linecap="round"/><path d="M96 64C40 60 6 110 12 168C16 214 62 236 120 226" fill="none" stroke="#f6cdc6" stroke-width="16" stroke-linecap="round"/>`;
+    // pseudo-capsule (halo) de la forme diffuse
+    if (diffuse) s += `<path d="${contour}" fill="none" stroke="#b9c3cf" stroke-width="14" stroke-linejoin="round"/>`;
+    s += `<path d="${contour}" fill="${diffuse ? '#e9b48e' : '#f8d6b8'}" stroke="${diffuse ? '#7c8796' : '#a65a2a'}" stroke-width="${diffuse ? 3 : 2.5}" stroke-linejoin="round"/>`;
+    // masses focales (hypodenses, entourées d'un halo)
+    const masse = (cx, cy, rx, ry) => `<ellipse cx="${cx}" cy="${cy}" rx="${rx + 5}" ry="${ry + 5}" fill="#b9c3cf"/><ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="#d29a74" stroke="#7c8796" stroke-width="2.5"/>`;
+    if (type !== 'diffuse') s += masse(76, 152, 40, 38);
+    if (type === 'multifocale') s += masse(fin[0] - 22, fin[1] + 6, 24, 18);
+    // canal pancréatique principal (CPP) : de l'ampoule à la queue ; rétréci (effilé) dans les zones atteintes, sans dilatation d'amont
+    const amp = [58, 188];
+    const cpp = [amp, ...pts.filter((p, i) => i % 3 === 0 && i > 0), [fin[0] - 6, fin[1] + 2]];
+    const atteint = p => diffuse || Math.hypot(p[0] - 76, p[1] - 152) < 40 || (type === 'multifocale' && Math.hypot(p[0] - (fin[0] - 22), p[1] - (fin[1] + 6)) < 24);
+    for (let i = 0; i < cpp.length - 1; i++) {
+      const a = cpp[i], b = cpp[i + 1], m = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+      const etroit = atteint(m);
+      s += `<path d="M${a[0].toFixed(1)} ${a[1].toFixed(1)}L${b[0].toFixed(1)} ${b[1].toFixed(1)}" stroke="#2a2a30" stroke-width="${etroit ? 2 : 5}" stroke-linecap="round"${etroit && !diffuse ? '' : ''}/>`;
+    }
+    if (diffuse) s += `<path d="${chemin(cpp)}" fill="none" stroke="#2a2a30" stroke-width="2.2" stroke-dasharray="7 3"/>`;
+    // cholédoque (vert) jusqu'à l'ampoule, effilé dans la tête atteinte
+    s += `<path d="M70 0L70 96" stroke="#4f7f35" stroke-width="9" stroke-linecap="round"/><path d="M70 96C68 130 64 160 ${amp[0]} ${amp[1]}" fill="none" stroke="#4f7f35" stroke-width="${type === 'diffuse' ? 5 : 3}" stroke-linecap="round"/>`;
+    s += `<circle cx="${amp[0]}" cy="${amp[1]}" r="4" fill="#fff" stroke="#111114" stroke-width="2"/>`;
+    s += '</g>';
+    return s;
+  }
+  function formesPai(disposition) {
+    const T = [['diffuse', 'Forme diffuse', 'perte des lobulations'], ['focale', 'Forme focale', 'Diagnostic différentiel avec l\'ADK pancréatique +++'], ['multifocale', 'Forme multifocale', 'CPP rétréci sans dilatation d\'amont']];
+    const haut = disposition === 'haut';
+    let s = `<rect width="${haut ? 330 : 960}" height="${haut ? 1000 : 330}" fill="#fff"/>`;
+    T.forEach(([type, titre, note], i) => {
+      const x = haut ? 16 : 10 + i * 320, y = haut ? i * 334 : 0;
+      s += `<g transform="translate(0 ${y})">` + formePai(type, x);
+      if (type === 'focale') s += `<rect x="${x - 12}" y="6" width="314" height="248" rx="10" fill="none" stroke="#e57c2a" stroke-width="4"/>`;
+      const c = type === 'focale' ? '#c25e14' : '#111114';
+      s += txt(x + 150, 280, titre, { size: 17, fill: c }) + txt(x + 150, 306, note, { size: type === 'focale' ? (haut ? 11 : 13) : 12.5, fill: type === 'focale' ? c : '#55545f' });
+      if (type === 'diffuse') s += `<path d="${x + 196} 156L${x + 222} 196" stroke="#55545f" stroke-width="1.5"/>`.replace('d="', 'd="M') + txt(x + 300, 214, 'pseudo-capsule (halo)', { size: 12, anchor: 'end', fill: '#55545f' })
+        + txt(x + 86, 16, 'cholédoque', { size: 12, anchor: 'start', fill: '#4f7f35' }) + txt(x + 16, 250, 'D2', { size: 12, fill: '#9c3a46' });
+      s += '</g>';
+    });
+    return svgDe(haut ? 330 : 960, haut ? 1000 : 330, '3 formes radiologiques de pancréatite auto-immune : diffuse, focale, multifocale', s);
   }
 
   /* Bili-IRM (PAI de type I) : nos annotations sur l'image du cours (coordonnées de l'image 778 × 563) */
@@ -338,5 +413,5 @@
     return s;
   }
 
-  return { coupe, SEGMENTS, ESPACES, COLLECTIONS, FASCIAS: ['Péritoine pariétal postérieur', ...FASCIAS.map(f => f[0])], ESP, PAN, NECROSE_TYPES, necrose, annulaireCoupe, embryologie, ductPenetrating, courbes, biliaireAnnot, espacesDuNiveau: n => Object.keys({ ...ESP[n === 'bas' ? 'bas' : 'haut'], ...ESP.commun }) };
+  return { coupe, SEGMENTS, ESPACES, COLLECTIONS, FASCIAS: ['Péritoine pariétal postérieur', ...FASCIAS.map(f => f[0])], ESP, PAN, NECROSE_TYPES, necrose, annulaireCoupe, embryologie, ductPenetrating, courbes, formesPai, biliaireAnnot, espacesDuNiveau: n => Object.keys({ ...ESP[n === 'bas' ? 'bas' : 'haut'], ...ESP.commun }) };
 });

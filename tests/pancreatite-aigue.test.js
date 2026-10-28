@@ -76,7 +76,7 @@ test('images du cours : présentes, citées dans la fiche, plus de scanner dessi
 
 test('schémas redessinés d\'après le cours : présents dans la fiche, SVG valides', () => {
   const schemas = [...HTML.matchAll(/data-schema="([a-zA-Z]+)"(?: data-type="([a-z]+)")?/g)].map(m => [m[1], m[2]]);
-  assert.deepEqual(schemas.map(s => s[0]).sort(), ['annulaireCoupe', 'courbes', 'ductPenetrating', 'embryologie', 'necrose', 'necrose', 'necrose']);
+  assert.deepEqual(schemas.map(s => s[0]).sort(), ['annulaireCoupe', 'courbes', 'ductPenetrating', 'embryologie', 'formesPai', 'necrose', 'necrose', 'necrose']);
   for (const [f, t] of schemas) assert.match(P[f](t), /^<svg[\s\S]*<\/svg>$/, f);
   for (const t of Object.keys(P.NECROSE_TYPES)) assert.ok(P.necrose(t).includes(P.NECROSE_TYPES[t]), t);
   // nécrose intra : dans la glande seulement ; péri : autour seulement ; mixte : les deux
@@ -89,6 +89,9 @@ test('schémas redessinés d\'après le cours : présents dans la fiche, SVG val
   for (const m of ['Rehaussement', 'normal du pancréas', 'PAI focale', 'Adénocarcinome', 'IV+', '40-45\'', '80-90\'']) assert.ok(P.courbes().includes(m), m);
   for (const m of ['Sténose des voies biliaires', 'Longues et effilées', 'STENOSE SANS DILATATION']) assert.ok(P.biliaireAnnot().includes(m), m);
   assert.ok(HTML.includes('data-annot="biliaireAnnot"'));
+  for (const d of [undefined, 'haut']) for (const m of ['Forme diffuse', 'Forme focale', 'Forme multifocale', 'pseudo-capsule (halo)']) assert.ok(P.formesPai(d).includes(m), m);
+  // rehaussement normal : pic au temps 40-45'
+  assert.match(P.courbes(), /<circle cx="250" cy="92"/);
 });
 
 test('modèle 3D : fichiers, licence, structures', () => {
