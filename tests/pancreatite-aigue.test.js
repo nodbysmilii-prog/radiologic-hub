@@ -49,7 +49,7 @@ test('collections, moment du scanner, contraste', () => {
   for (const k of Object.keys(R.COLLECTIONS)) assert.equal(R.CAS.filter(c => c.rep === k).length, 2, k);
 });
 
-test('coupes dessinées : segments, espaces, collections, schémas', () => {
+test('coupes dessinées : segments et espaces', () => {
   for (const niveau of ['haut', 'bas']) {
     const s = P.coupe({ niveau, espaces: true, interactif: true });
     assert.match(s, /^<svg[\s\S]*<\/svg>$/);
@@ -62,11 +62,16 @@ test('coupes dessinées : segments, espaces, collections, schémas', () => {
   const segs = new Set([...Object.keys(P.PAN.haut), ...Object.keys(P.PAN.bas)]);
   assert.deepEqual([...segs].sort(), Object.keys(P.SEGMENTS).sort());
   for (const k of Object.keys(P.SEGMENTS)) assert.ok(MODELE.structures.some(s => s.id === 'pancreas-' + k && s.segment === k), k);
-  for (const k of Object.keys(P.COLLECTIONS)) assert.ok(P.coupe({ collection: k }).includes(P.COLLECTIONS[k].abr), k);
-  assert.ok(P.coupe({ collection: 'can', gaz: true }).split('fill="#000"').length > 10, 'bulles de gaz');
-  for (const t of ['intra', 'mixte', 'extra']) assert.match(P.necrose(t), /<svg/);
-  for (const t of ['modale', 'I', 'II', 'III']) assert.match(P.divisum(t), /<svg/);
-  assert.match(P.deconnexion(), /canal déconnecté/); assert.match(P.annulaire(), /D2/);
+});
+
+test('images du cours : présentes, citées dans la fiche, plus de scanner dessiné', () => {
+  const imgs = [...HTML.matchAll(/src="pancreas\/images\/([a-zA-Z0-9-]+\.jpg)\?v=/g)].map(m => m[1]);
+  assert.ok(imgs.length >= 45, String(imgs.length));
+  for (const f of imgs) assert.ok(fs.existsSync(path.join(RACINE, 'fiches', 'pancreas', 'images', f)), f);
+  for (const k of Object.keys(P.COLLECTIONS)) assert.ok(fs.existsSync(path.join(RACINE, 'fiches', 'pancreas', 'images', `col-${k}.jpg`)), k);
+  assert.ok(!HTML.includes('data-pa=') && !HTML.includes('id="pa-gaz"') && !HTML.includes('id="pa-col-svg"'));
+  assert.ok(HTML.includes('id="lightbox"'));
+  assert.equal(P.necrose, undefined); assert.equal(P.coupe({ collection: 'can', gaz: true }).includes('fill="#000"'), false);
 });
 
 test('modèle 3D : fichiers, licence, structures', () => {

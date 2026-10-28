@@ -9,8 +9,9 @@
      - espaces délimités par leurs fascias, cliquables (data-espace) : espace pararénal
        antérieur, arrière-cavité des épiploons, espaces périrénaux, espaces pararénaux
        postérieurs, gouttières pariéto-coliques, mésocôlon transverse, racine du mésentère ;
-     - collection d'Atlanta dessinée dans son siège typique (CLAP, CAN, PK, NOP).
-   • ESPACES, SEGMENTS, COLLECTIONS : noms et textes affichés par la fiche.
+   • ESPACES, SEGMENTS, COLLECTIONS : noms et textes affichés par la fiche (les collections,
+     la nécrose, le pancréas déconnecté, divisum et annulaire sont illustrés par les images
+     du cours de l'auteur, fiches/pancreas/images/).
    Module sans dépendance au navigateur (tests/pancreatite-aigue.test.js).
    ========================================================= */
 (function (root, factory) {
@@ -54,12 +55,7 @@
     nop: { abr: 'NOP', nom: 'Nécrose Organisée Pancréatique', delai: '> 4 semaines', forme: 'PN', items: ['Hétérogène', 'Nécrose et liquide', 'Paroi propre'], siege: 'siège intra et/ou extra pancréatique' },
   };
 
-  const f1 = n => Math.round(n * 10) / 10;
   const txt = (x, y, t, o = {}) => `<text x="${x}" y="${y}" font-size="${o.size || 10}" font-weight="${o.weight || 800}" fill="${o.fill || C.texte}" text-anchor="${o.anchor || 'middle'}" paint-order="stroke" stroke="${o.halo || '#fff'}" stroke-width="${o.halo === 'none' ? 0 : 3}" stroke-linejoin="round" pointer-events="none">${t}</text>`;
-  function alea(graine) {
-    let a = graine >>> 0;
-    return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
-  }
 
   /* ---------- Géométrie commune (coordonnées de l'image 640 × 470) ---------- */
   // Espaces (tracés fermés) : délimités par le péritoine pariétal postérieur, les fascias rénaux,
@@ -159,32 +155,8 @@
     return s;
   }
 
-  /* ---------- Collections (siège typique, aspect de la fiche) ---------- */
-  function collection(type, niveau) {
-    const rnd = alea(7);
-    const pat = id => `<pattern id="${id}" width="14" height="14" patternUnits="userSpaceOnUse"><rect width="14" height="14" fill="#6f8fb8"/><circle cx="4" cy="4" r="3" fill="#8a7a62"/><circle cx="10" cy="11" r="2.4" fill="#5c5040"/></pattern>`;
-    let s = '';
-    if (type === 'clap') {
-      // liquide homogène, sans paroi, moulé dans l'espace pararénal antérieur gauche, au contact du pancréas
-      s += `<path d="M454 232C490 236 528 248 548 262C548 286 544 300 520 300C500 282 470 270 440 262C430 252 438 238 454 232Z" fill="#7fb3e8" opacity=".85"/>`;
-      if (niveau === 'haut') s += `<path d="M330 214C380 208 450 198 520 196C520 202 470 206 420 212C380 216 350 220 330 220Z" fill="#7fb3e8" opacity=".85"/>`;
-    } else if (type === 'can') {
-      // nécrose + liquide, hétérogène, sans paroi, intra et péri-pancréatique
-      s += `<defs>${pat('np-can')}</defs><path d="M330 226C380 218 430 212 470 214C510 220 548 244 552 270C548 296 520 302 496 292C460 274 420 262 380 256C350 252 330 240 330 226Z" fill="url(#np-can)" opacity=".92"/>`;
-    } else if (type === 'pk') {
-      // liquide homogène, paroi propre, arrière-cavité
-      s += `<ellipse cx="420" cy="${niveau === 'haut' ? 186 : 230}" rx="58" ry="${niveau === 'haut' ? 20 : 26}" fill="#7fb3e8" stroke="#1f4e8c" stroke-width="4"/>`;
-    } else if (type === 'nop') {
-      // nécrose organisée : hétérogène, paroi propre, intra et extra pancréatique
-      s += `<defs>${pat('np-nop')}</defs><path d="M326 220C372 206 440 200 488 210C530 222 548 252 532 278C510 300 470 294 430 278C390 264 340 252 326 236Z" fill="url(#np-nop)" stroke="#1f4e8c" stroke-width="4"/>`;
-    }
-    for (let i = 0; i < 0; i++) rnd();
-    return s;
-  }
-
   /*
-   * o : { niveau: 'haut' | 'bas', segment: id | null, espace: id | null, collection: 'clap' | 'can' | 'pk' | 'nop' | null,
-   *       gaz: bool (bulles dans la collection), espaces: bool (tous les espaces en couleur), etiquettes: bool, interactif: bool }
+   * o : { niveau: 'haut' | 'bas', segment: id | null, espace: id | null, espaces: bool (tous les espaces en couleur), etiquettes: bool, interactif: bool }
    */
   function coupe(o = {}) {
     const niveau = o.niveau === 'bas' ? 'bas' : 'haut';
@@ -202,12 +174,6 @@
       s += `<path d="${d}" data-segment="${id}" fill="${seg.couleur}" stroke="${choisi ? C.texte : '#fff'}" stroke-width="${choisi ? 3 : 1.5}" opacity="${o.segment && !choisi ? 0.45 : 1}"${o.interactif ? ' style="cursor:pointer"' : ''}><title>${seg.nom}</title></path>`;
     }
     s += vaisseaux(niveau);
-    if (o.collection) s += collection(o.collection, niveau);
-    if (o.gaz) {
-      // bulles de gaz dans la collection (surinfection)
-      const rnd = alea(23);
-      for (let i = 0; i < 18; i++) s += `<circle cx="${f1(380 + rnd() * 150)}" cy="${f1(232 + rnd() * 50 - (rnd() * 10))}" r="${f1(1.6 + rnd() * 3.2)}" fill="#000"/>`;
-    }
     // fascias par-dessus (péritoine pariétal postérieur propre à chaque niveau)
     s += `<path d="${PERI[niveau]}" fill="none" stroke="${C.peritoine}" stroke-width="2.6" pointer-events="none"><title>Péritoine pariétal postérieur</title></path>`;
     for (const [nom, d, c, tirets] of FASCIAS) s += `<path d="${d}" fill="none" stroke="${c}" stroke-width="${c === C.peritoine ? 2.6 : 2}"${tirets ? ` stroke-dasharray="${tirets}"` : ''} pointer-events="none"><title>${nom}</title></path>`;
@@ -217,63 +183,9 @@
       s += txt(190, 376, 'rein D', { size: 9 }) + txt(450, 376, 'rein G', { size: 9 }) + txt(120, 296, 'CA', { size: 8 }) + txt(520, 296, 'CD', { size: 8 });
       if (niveau === 'haut') s += txt(420, 128, 'estomac', { size: 10 }) + txt(586, 270, 'rate', { size: 9, fill: '#fff', halo: 'none' }) + txt(420, 82, 'côlon transverse', { size: 9 }) + txt(500, 252, 'v. splénique', { size: 8, fill: C.porte });
       else s += txt(360, 128, 'côlon transverse', { size: 9 }) + txt(306, 300, 'D3', { size: 8 }) + txt(306, 267, 'VMS', { size: 6, fill: '#fff', halo: 'none' }) + txt(352, 262, 'AMS', { size: 7, fill: C.artere });
-      if (o.collection) {
-        const c = COLLECTIONS[o.collection];
-        s += `<rect x="452" y="18" width="172" height="44" rx="10" fill="#fff" stroke="${C.texte}" stroke-width="2"/>` + txt(538, 36, c.abr, { size: 13 }) + txt(538, 52, c.delai, { size: 9, fill: '#55545f' });
-      }
     }
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Coupe axiale schématique du pancréas (niveau ${niveau})" font-family="Montserrat, Arial, sans-serif">${s}</svg>`;
   }
 
-  /* ---------- Petits schémas de face (droite du patient à gauche) ---------- */
-  const MW = 260, MH = 130;
-  const mini = (corps, titre) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${MW} ${MH}" role="img" aria-label="${titre}" font-family="Montserrat, Arial, sans-serif"><rect width="${MW}" height="${MH}" fill="${C.fond}"/>${corps}</svg>`;
-  const GLANDE = 'M58 92C40 92 30 74 36 58C42 42 60 38 76 44C100 40 140 34 180 28C206 24 230 26 238 38C244 50 234 62 214 64C180 68 140 74 108 82C96 90 80 94 58 92Z';
-  const CADRE = 'M44 30C24 30 14 50 16 72C18 98 34 112 58 112C80 112 96 104 104 96';
-  const glande = (couleur = '#f6c879') => `<path d="${CADRE}" fill="none" stroke="${C.duodenum}" stroke-width="12" stroke-linecap="round"/><path d="${GLANDE}" fill="${couleur}" stroke="#c98f2a" stroke-width="1.5"/>`;
-  const hachure = id => `<pattern id="${id}" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="#8a7a62"/><line x1="0" y1="0" x2="0" y2="8" stroke="#3a3328" stroke-width="3"/></pattern>`;
-
-  /* Nécrose : 'intra' (isolée, intra-pancréatique), 'mixte', 'extra' (péri-pancréatique isolée) */
-  function necrose(type) {
-    const id = 'hn-' + type;
-    let s = `<defs>${hachure(id)}</defs>` + glande();
-    const intra = `<path d="M120 76C140 70 168 64 196 60L198 40C170 44 140 48 116 54Z" fill="url(#${id})"/>`;
-    const extra = `<path d="M110 92C140 98 190 90 226 74C238 84 232 100 206 106C170 114 130 112 104 104Z" fill="url(#${id})" opacity=".9"/><path d="M150 20C180 12 214 10 236 20C224 26 200 26 176 30Z" fill="url(#${id})" opacity=".9"/>`;
-    s += type === 'intra' ? intra : type === 'extra' ? extra : intra + extra;
-    return mini(s, 'nécrose ' + type);
-  }
-
-  /* Pancréas déconnecté : nécrose isthmique, canal corporéo-caudal déconnecté, queue normale */
-  function deconnexion() {
-    let s = `<defs>${hachure('hn-dec')}</defs>` + glande();
-    s += `<path d="M86 46C96 44 104 42 112 41L116 84C106 86 98 88 88 90Z" fill="url(#hn-dec)"/>`;
-    s += `<path d="M44 74C60 70 72 66 84 64" fill="none" stroke="#fff" stroke-width="3"/><path d="M120 60C150 54 190 48 226 44" fill="none" stroke="#fff" stroke-width="3"/>`;
-    s += txt(100, 20, 'nécrose isthmique > 2 cm', { size: 9, fill: '#a8172d' }) + txt(186, 82, 'canal déconnecté', { size: 9 }) + txt(170, 122, 'pancréas normal en distalité', { size: 9, fill: '#1f6d4c' });
-    return mini(s, 'pancréas déconnecté');
-  }
-
-  /* Pancréas divisum : 'modale', 'I' (complet), 'II' (canal dorsal isolé), 'III' (incomplet) */
-  function divisum(type) {
-    let s = glande('#f7dcae');
-    const ventral = 'M46 92C52 84 58 76 66 70', dorsal = 'M70 60C110 52 170 44 228 40';
-    const papMaj = [30, 84], papMin = [32, 60];
-    const cercle = ([x, y], t) => `<circle cx="${x}" cy="${y}" r="4.5" fill="#fff" stroke="#111" stroke-width="2"/>` + txt(x - 12, y + 3, t, { size: 8, anchor: 'end' });
-    if (type === 'modale') s += `<path d="M34 84C50 80 62 72 72 64C110 54 170 46 228 40" fill="none" stroke="#111" stroke-width="3"/><path d="M36 60C46 60 56 62 72 64" fill="none" stroke="#111" stroke-width="1.6" stroke-dasharray="3 2"/>`;
-    if (type === 'I') s += `<path d="M34 84C40 82 44 80 48 78" fill="none" stroke="#111" stroke-width="2"/><path d="M36 60C50 60 60 60 70 60${dorsal.slice(6)}" fill="none" stroke="#111" stroke-width="3"/>`;
-    if (type === 'II') s += `<path d="M36 60C50 60 60 60 70 60${dorsal.slice(6)}" fill="none" stroke="#111" stroke-width="3"/>`;
-    if (type === 'III') s += `<path d="M34 84C42 80 50 74 58 70" fill="none" stroke="#111" stroke-width="2"/><path d="M58 70C62 66 66 63 70 62" fill="none" stroke="#111" stroke-width="1" stroke-dasharray="2 2"/><path d="M36 60C50 60 60 60 70 60${dorsal.slice(6)}" fill="none" stroke="#111" stroke-width="3"/>`;
-    s += cercle(papMaj, 'papille majeure') + cercle(papMin, 'papille mineure');
-    return mini(`<g transform="translate(70 8) scale(.72)">${s}</g>`, 'pancréas divisum ' + type);
-  }
-
-  /* Pancréas annulaire : anneau de parenchyme autour de D2 (coupe axiale schématique) */
-  function annulaire() {
-    let s = `<ellipse cx="150" cy="66" rx="70" ry="30" fill="#f7dcae" stroke="#c98f2a" stroke-width="1.5"/>`;
-    s += `<circle cx="70" cy="66" r="30" fill="#f6c879" stroke="#c98f2a" stroke-width="2"/><circle cx="70" cy="66" r="17" fill="${C.duodenum}" stroke="#c98f62" stroke-width="2"/>`;
-    s += txt(70, 70, 'D2', { size: 10 }) + txt(150, 56, 'tête', { size: 10 }) + `<circle cx="196" cy="74" r="8" fill="${C.porte}"/>` + txt(196, 77, 'VMS', { size: 5, fill: '#fff', halo: 'none' });
-    s += txt(130, 116, 'anneau pancréatique autour de D2', { size: 9, fill: '#8a5a00' });
-    return mini(s, 'pancréas annulaire');
-  }
-
-  return { coupe, SEGMENTS, ESPACES, COLLECTIONS, FASCIAS: ['Péritoine pariétal postérieur', ...FASCIAS.map(f => f[0])], ESP, PAN, necrose, deconnexion, divisum, annulaire, espacesDuNiveau: n => Object.keys({ ...ESP[n === 'bas' ? 'bas' : 'haut'], ...ESP.commun }) };
+  return { coupe, SEGMENTS, ESPACES, COLLECTIONS, FASCIAS: ['Péritoine pariétal postérieur', ...FASCIAS.map(f => f[0])], ESP, PAN, espacesDuNiveau: n => Object.keys({ ...ESP[n === 'bas' ? 'bas' : 'haut'], ...ESP.commun }) };
 });

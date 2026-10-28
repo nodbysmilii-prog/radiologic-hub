@@ -36,9 +36,19 @@
 .pa-fascias i.is-points { border-top-style: dotted; }
 
 /* Nécrose, schémas */
-.pa-mini { margin: 0; }
-.pa-mini svg { display: block; width: 100%; height: auto; border-radius: 12px; border: 2px solid rgba(17, 17, 20, .12); }
-.pa-mini figcaption { margin-top: 6px; font-size: .8rem; }
+.pa-imgs { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 14px 0; align-items: start; }
+.pa-imgs-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.pa-fig { margin: 0; box-shadow: 6px 6px 0 color-mix(in srgb, var(--c) 35%, transparent); }
+.pa-fig .ex-img { background: #fff; }
+.pa-fig .ex-img img { aspect-ratio: auto; height: auto; object-fit: contain; }
+.pa-fig figcaption { padding: 10px 12px 12px; font-size: .8rem; line-height: 1.45; }
+.pa-fig figcaption strong { margin-bottom: 4px; font-size: .74rem; }
+.pa-credit { display: block; margin-top: 4px; font-size: .68rem; font-style: italic; color: var(--muted); }
+.pa-leg { display: block; }
+.pa-leg b { display: inline-block; width: 1.4em; }
+.pa-col-fig { max-width: 440px; }
+.pa-imgs:has(> .pa-fig:only-child) { grid-template-columns: minmax(0, 520px); }
+.pa-imgs:has(> .pa-fig:nth-child(2):last-child) { grid-template-columns: repeat(2, minmax(0, 360px)); }
 .pa-necroses { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 10px 0 14px; }
 .pa-divisum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
 .pa-deconnexion { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 18px; align-items: start; margin: 14px 0; }
@@ -91,7 +101,6 @@
 .pa-phase { padding: 14px; background: color-mix(in srgb, var(--c) 12%, #fff); border-top: 8px solid var(--c); }
 .pa-phase + .pa-phase { border-left: 3px solid var(--ink); }
 .pa-phase p { margin: 6px 0 0; font-size: .84rem; }
-.pa-petite svg { max-width: 420px; }
 .pa-vasc .fcard h3 { color: var(--c); }
 .pa-onglets { --c: var(--green); }
 
@@ -107,7 +116,8 @@
   .pa-causes, .pa-deconnexion, .pa-phases { grid-template-columns: 1fr; }
   .pa-phase + .pa-phase { border-left: 0; border-top: 8px solid var(--c); }
   .pa-necroses { grid-template-columns: 1fr; }
-  .pa-necroses .pa-mini { max-width: 320px; }
+  .pa-necroses .pa-fig { max-width: 320px; }
+  .pa-imgs-4, .pa-imgs:has(> .pa-fig:nth-child(2):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .pa-grille { grid-template-columns: 1fr 1fr; }
   .pa-grille > span:first-child { display: none; }
   .pa-f { grid-column: 1 / -1; }
