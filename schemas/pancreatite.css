@@ -1,0 +1,117 @@
+/* =========================================================
+   RadiologicHub — fiche « Imagerie de la pancréatite aiguë » : pancréas en 3D,
+   coupes axiales (segments, espaces, collections), outils (moment du scanner,
+   Atlanta, sévérité, CTSI), schémas (nécrose, déconnexion, divisum, annulaire).
+   Complète cavum.css / cholesteatome.css (.c3d, .r3d), mediastin.css (.md-*),
+   nodule-pulmonaire.css (.np-*), ischemie-mesenterique.css (.im-*).
+   ========================================================= */
+.pa-causes { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 14px; align-items: start; margin: 12px 0; }
+.pa-causes .fcard { margin: 0; }
+
+/* 3D */
+.pa3d .c3d-voie.is-on, .pa3d .c3d-voie[aria-pressed="true"] { background: var(--c); color: #fff; }
+.pa3d-legende { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: .72rem; }
+.pa3d-legende li { display: flex; gap: 6px; align-items: center; }
+.pa3d-legende li::before { content: ""; width: 12px; height: 12px; border-radius: 3px; background: var(--c); }
+.pa3d .md3d-info h4 { margin: 0 0 6px; font-size: 1rem; display: flex; gap: 8px; align-items: center; }
+.pa3d .md3d-info h4::before { content: ""; width: 14px; height: 14px; border-radius: 4px; background: var(--c, #888); }
+
+/* Coupes */
+.pa-coupe { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 18px; align-items: start; margin: 10px 0 18px; padding: 16px; border-radius: 20px; border: 4px solid var(--ink); background: #fff; box-shadow: 10px 10px 0 color-mix(in srgb, var(--amber) 40%, transparent); scroll-margin-top: 90px; }
+.pa-coupe-barre { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+.pa-coupe-barre .md-seg > span { min-width: 3.6em; }
+.pa-coupe-svg { margin: 0; }
+.pa-coupe-svg svg { display: block; width: 100%; height: auto; border-radius: 14px; border: 2px solid rgba(17, 17, 20, .15); }
+.pa-espaces { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.pa-espaces button { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border: 2px solid var(--c); border-radius: 999px; background: #fff; font: inherit; font-size: .74rem; font-weight: 700; cursor: pointer; }
+.pa-espaces button::before { content: ""; width: 10px; height: 10px; border-radius: 3px; background: var(--c); }
+.pa-espaces button.is-on { background: color-mix(in srgb, var(--c) 22%, #fff); }
+.pa-espace-texte { padding: 10px 12px; border-radius: 12px; background: #f6f6f8; font-size: .84rem; min-height: 4em; }
+.pa-espace-texte h4 { margin: 0 0 4px; font-size: .95rem; color: var(--c); }
+.pa-espace-texte p { margin: 0; }
+.pa-fascias { margin: 10px 0 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: .74rem; }
+.pa-fascias li { display: flex; gap: 8px; align-items: center; }
+.pa-fascias i { width: 26px; height: 0; border-top: 3px solid var(--c); }
+.pa-fascias i.is-tirets { border-top-style: dashed; }
+.pa-fascias i.is-points { border-top-style: dotted; }
+
+/* Nécrose, schémas */
+.pa-mini { margin: 0; }
+.pa-mini svg { display: block; width: 100%; height: auto; border-radius: 12px; border: 2px solid rgba(17, 17, 20, .12); }
+.pa-mini figcaption { margin-top: 6px; font-size: .8rem; }
+.pa-necroses { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 10px 0 14px; }
+.pa-divisum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
+.pa-deconnexion { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 18px; align-items: start; margin: 14px 0; }
+
+/* Moment du scanner */
+.pa-moment { --c: var(--blue); margin: 14px 0; }
+.pa-jours { position: relative; height: 26px; margin: 8px 0; border-radius: 10px; overflow: hidden; border: 2px solid var(--ink); }
+.pa-jours span { position: absolute; top: 0; bottom: 0; left: var(--a); width: calc(var(--b) - var(--a)); background: var(--c); font-size: .66rem; font-weight: 800; display: grid; place-items: center; border-right: 1px solid rgba(17, 17, 20, .2); }
+.pa-jours i { position: absolute; top: -2px; bottom: -2px; width: 4px; background: var(--ink); translate: -50% 0; transition: left .2s; }
+.pa-pourquoi { font-size: .8rem; margin-top: 10px; }
+.pa-frise { margin-top: 4px; }
+.pa-frise .im-temps { width: 220px; }
+
+/* Collections */
+.pa-grille { display: grid; grid-template-columns: 170px repeat(2, minmax(0, 1fr)); gap: 8px; margin: 10px 0 14px; }
+.pa-t { text-align: center; padding: 6px; border-radius: 10px; background: color-mix(in srgb, var(--blue) 18%, #fff); font-size: .82rem; }
+.pa-f { display: grid; place-items: center; padding: 8px; border-radius: 12px; background: color-mix(in srgb, var(--c) 16%, #fff); border-left: 6px solid var(--c); font-size: .78rem; text-align: center; }
+.pa-grille button { display: grid; gap: 2px; padding: 10px 12px; border: 3px solid var(--c); border-radius: 14px; background: color-mix(in srgb, var(--c) 12%, #fff); font: inherit; text-align: left; cursor: pointer; transition: transform .15s, box-shadow .15s; }
+.pa-grille button:hover { transform: translateY(-2px); }
+.pa-grille button.is-on { box-shadow: 6px 6px 0 var(--c); background: color-mix(in srgb, var(--c) 30%, #fff); }
+.pa-grille button b { font-family: 'Permanent Marker', cursive; font-size: 1.3rem; }
+.pa-grille button small { font-size: .74rem; font-weight: 700; }
+.pa-grille button span { font-size: .74rem; color: var(--muted); }
+.pa-coupe-col { box-shadow: 10px 10px 0 color-mix(in srgb, var(--orange) 40%, transparent); }
+.pa-col-items { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; padding: 0; list-style: none; }
+.pa-col-items li { padding: 4px 10px; border-radius: 999px; border: 2px solid var(--ink); background: #fff; font-size: .76rem; font-weight: 700; }
+
+/* Sévérité, CTSI */
+.pa-sev { --c: var(--k-grave); margin: 12px 0 18px; }
+.pa-sev-l { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 10px 0 0; }
+.pa-sev-l span { padding: 8px; border-radius: 10px; border: 2px solid rgba(17, 17, 20, .15); text-align: center; font-weight: 800; font-size: .82rem; opacity: .45; transition: opacity .2s, background .2s; }
+.pa-sev-l span.is-on { opacity: 1; }
+.pa-sev-l [data-sev="peu"].is-on { background: #ddf3ea; border-color: #1f6d4c; }
+.pa-sev-l [data-sev="moderee"].is-on { background: #fff1d6; border-color: #8a5a00; }
+.pa-sev-l [data-sev="grave"].is-on { background: #fde2e4; border-color: #a8172d; }
+.pa-ctsi { --c: var(--k-grave); display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr) minmax(0, 1.2fr); gap: 16px; align-items: start; }
+.pa-radios { display: grid; gap: 4px; }
+.pa-radios label { display: flex; gap: 8px; align-items: flex-start; padding: 6px 8px; border-radius: 10px; font-size: .8rem; cursor: pointer; }
+.pa-radios label:has(input:checked) { background: color-mix(in srgb, var(--k-grave) 12%, #fff); font-weight: 700; }
+.pa-radios b { flex: none; min-width: 2.6em; color: var(--k-grave); }
+.pa-index { display: flex; align-items: baseline; gap: 6px; justify-content: center; padding: 10px; border-radius: 16px; border: 3px solid var(--ink); background: #fff; margin-bottom: 10px; }
+.pa-index span { font-weight: 900; font-size: .8rem; letter-spacing: .1em; }
+.pa-index b { font-family: 'Permanent Marker', cursive; font-size: 2.4rem; line-height: 1; color: var(--k-grave); }
+.pa-prono tr.is-on td { background: color-mix(in srgb, var(--k-grave) 18%, #fff); font-weight: 800; }
+.pa-ctsi-res .ftable-wrap { margin-bottom: 6px; box-shadow: 5px 5px 0 rgba(17, 17, 20, .85); }
+.pa-prono th, .pa-prono td { padding: 6px 8px; font-size: .78rem; }
+
+/* Évolution */
+.pa-phases { display: grid; grid-template-columns: 1fr 2fr; gap: 0; margin: 8px 0 14px; border-radius: 16px; overflow: hidden; border: 3px solid var(--ink); }
+.pa-phase { padding: 14px; background: color-mix(in srgb, var(--c) 12%, #fff); border-top: 8px solid var(--c); }
+.pa-phase + .pa-phase { border-left: 3px solid var(--ink); }
+.pa-phase p { margin: 6px 0 0; font-size: .84rem; }
+.pa-petite svg { max-width: 420px; }
+.pa-vasc .fcard h3 { color: var(--c); }
+.pa-onglets { --c: var(--green); }
+
+/* Entraînement */
+.pa-cas .ti-cas-choix { grid-template-columns: repeat(4, 1fr); }
+@media (min-width: 1001px) { .pa-cas { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+@media (max-width: 1000px) {
+  .pa-coupe, .pa-ctsi { grid-template-columns: 1fr; }
+  .pa-divisum { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+  .pa-causes, .pa-deconnexion, .pa-phases { grid-template-columns: 1fr; }
+  .pa-phase + .pa-phase { border-left: 0; border-top: 8px solid var(--c); }
+  .pa-necroses { grid-template-columns: 1fr; }
+  .pa-necroses .pa-mini { max-width: 320px; }
+  .pa-grille { grid-template-columns: 1fr 1fr; }
+  .pa-grille > span:first-child { display: none; }
+  .pa-f { grid-column: 1 / -1; }
+  .pa-cas .ti-cas-choix { grid-template-columns: repeat(2, 1fr); }
+  .pa-frise .im-temps { width: auto; }
+}
+@media print { .pa3d, .pa-moment, .im-dose, .pa-atlanta, .pa-sev, .pa-ctsi, #pa-cas, #pa-cas-reset { display: none !important; } .ch-panneau[hidden] { display: block !important; } }
