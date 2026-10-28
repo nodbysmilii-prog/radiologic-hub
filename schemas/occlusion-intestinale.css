@@ -1,0 +1,116 @@
+/* =========================================================
+   RadiologicHub — fiche « Imagerie de l'occlusion intestinale aiguë » :
+   5 questions, causes fonctionnelles, cascade du grêle, valvule de Bauhin,
+   clinique selon le siège, protocole TDM, règle de dilatation, démarche,
+   épaississement court/long, gravité.
+   Complète mediastin.css (.md-*), eu-tirads.css (.ti-*), cholesteatome.css (.ch-*),
+   ischemie-mesenterique.css (.im-jauge).
+   ========================================================= */
+.oi-chiffres { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 12px 0 16px; }
+.oi-seuils { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 10px 0 14px; }
+.oi-lien { font-weight: 800; color: var(--purple); white-space: nowrap; }
+
+/* Les 5 questions */
+.oi-questions { list-style: none; counter-reset: q; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; padding: 0; margin: 8px 0 6px; }
+.oi-questions li { counter-increment: q; }
+.oi-questions a { position: relative; display: block; height: 100%; padding: 34px 12px 12px; border-radius: 16px; border: 3px solid var(--c); background: color-mix(in srgb, var(--c) 8%, #fff); color: var(--ink); text-decoration: none; font-weight: 700; font-size: .82rem; line-height: 1.35; transition: transform .15s, box-shadow .15s; }
+.oi-questions a::before { content: counter(q); position: absolute; top: 4px; left: 12px; font-family: 'Permanent Marker', cursive; font-size: 1.5rem; color: var(--c); }
+.oi-questions a:hover, .oi-questions a:focus-visible { transform: translateY(-3px); box-shadow: 6px 6px 0 color-mix(in srgb, var(--c) 45%, transparent); }
+.oi-questions small { display: block; margin-top: 6px; font-weight: 600; color: var(--muted); font-size: .72rem; }
+.fsec.oi-flash { animation: oi-flash 1.2s ease-out; }
+@keyframes oi-flash { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--c) 60%, transparent); } 100% { box-shadow: 0 0 0 18px transparent; } }
+
+/* Causes fonctionnelles */
+.oi-causes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 8px; }
+.oi-causes span { padding: 8px 10px; border-radius: 12px; border-left: 5px solid var(--c); background: #fff; font-size: .8rem; }
+.oi-causes b { display: block; color: var(--c); }
+
+/* Onglets + panneaux */
+.oi-onglets { margin: 4px 0 12px; }
+.oi-panneau { padding: 4px 2px 8px; }
+
+/* Cascade du grêle */
+.oi-cascade { list-style: none; counter-reset: c; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; padding: 0; margin: 8px 0; }
+.oi-cascade li { position: relative; counter-increment: c; padding: 28px 10px 10px; border-radius: 14px; border: 3px solid var(--c); background: color-mix(in srgb, var(--c) 9%, #fff); font-size: .8rem; font-weight: 600; opacity: 0; transform: translateY(8px); animation: oi-monte .45s ease-out forwards; animation-delay: calc(var(--i, 0) * 90ms); }
+.oi-cascade li::before { content: counter(c); position: absolute; top: 4px; left: 10px; font-family: 'Permanent Marker', cursive; color: var(--c); font-size: 1.1rem; }
+.oi-cascade li:not(:nth-child(5n)):not(:last-child)::after { content: "›"; position: absolute; right: -10px; top: 50%; translate: 0 -50%; font-weight: 900; color: var(--ink); }
+@keyframes oi-monte { to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .oi-cascade li { animation: none; opacity: 1; transform: none; } }
+.oi-chaine-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* Valvule de Bauhin */
+.oi-bauhin { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 18px; align-items: center; padding: 14px; border-radius: 20px; border: 4px solid var(--ink); background: #fff; box-shadow: 10px 10px 0 color-mix(in srgb, var(--green) 40%, transparent); }
+.oi-schema { margin: 0; }
+.oi-schema svg { display: block; width: 100%; height: auto; border-radius: 14px; background: #fbfaf7; }
+.oi-bauhin [data-bauhin][aria-pressed="true"] { background: var(--c); color: #fff; }
+.oi-bauhin .ch-onglets button, .oi-mesure .ch-onglets button { cursor: pointer; }
+.oi-mesure [data-seg][aria-pressed="true"] { background: var(--c); color: #fff; }
+
+/* Clinique selon le siège */
+.oi-4signes { margin-bottom: 12px; }
+.oi-sieges { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 8px 0 14px; }
+.oi-siege { padding: 12px 14px; border-radius: 16px; border: 3px solid var(--c); background: color-mix(in srgb, var(--c) 6%, #fff); }
+.oi-siege h3 { margin: 0 0 8px; color: var(--c); font-size: 1rem; }
+.oi-siege p { margin: 6px 0; font-size: .84rem; font-weight: 600; }
+.oi-tag { display: inline-block; margin-right: 6px; padding: 2px 8px; border-radius: 999px; font-size: .72rem; font-weight: 800; }
+.oi-tag.is-tot { background: #fde2e4; color: #a8172d; }
+.oi-tag.is-tard { background: #e4ecf7; color: #1f4e8c; }
+.oi-tag.is-fort { background: #ffe7cc; color: #8a4500; }
+.oi-tag.is-faible { background: #ececf0; color: #55545f; }
+
+/* Exploration */
+.oi-moyens { display: grid; grid-template-columns: 1.4fr 1fr; gap: 12px; margin-bottom: 12px; }
+.oi-moyens .fcard { border-top: 5px solid var(--c); }
+.oi-protocole { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 8px 0 14px; }
+.oi-protocole div { padding: 12px; border-radius: 14px; border: 3px solid var(--c); background: color-mix(in srgb, var(--c) 7%, #fff); font-size: .82rem; font-weight: 600; }
+.oi-protocole b { display: block; font-family: 'Permanent Marker', cursive; font-size: 1.3rem; color: var(--c); }
+.oi-dose { --c: var(--blue); }
+.oi-dose p { margin: 0 0 8px; }
+
+/* Règle de dilatation */
+.oi-mesure { --c: var(--teal); }
+.oi-mesure input[type=range], .oi-dose input[type=range] { accent-color: var(--c); }
+.oi-regle { position: relative; height: 26px; margin: 10px 0 4px; border-radius: 999px; background: linear-gradient(90deg, #ddf3ea var(--s), #fde2e4 var(--s)); border: 2px solid var(--ink); }
+.oi-regle i { position: absolute; top: -6px; bottom: -6px; left: var(--s); width: 3px; background: var(--ink); }
+.oi-regle b { position: absolute; top: 50%; left: var(--v); width: 16px; height: 16px; translate: -50% -50%; border-radius: 50%; background: var(--teal); border: 3px solid #fff; box-shadow: 0 0 0 2px var(--ink); transition: left .15s; }
+
+.oi-meca { --c: var(--teal); }
+.oi-meca .md-coche { display: block; margin: 4px 0; }
+
+/* Étiologies du grêle */
+.oi-trois { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 10px 0 14px; }
+.oi-trois .fcard { border-top: 5px solid var(--c); }
+.oi-trois .fcard h3 { color: var(--c); }
+.oi-demarche { list-style: none; counter-reset: d; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; padding: 0; margin: 6px 0 16px; }
+.oi-demarche li { counter-increment: d; position: relative; padding: 30px 10px 10px; border-radius: 14px; border: 3px dashed var(--c); background: #fff; font-size: .82rem; }
+.oi-demarche li::before { content: "Étape " counter(d); position: absolute; top: 6px; left: 10px; font-size: .7rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--c); }
+.oi-anse { --c: var(--k-grave); margin: 12px 0; }
+
+/* Épaississement court / long */
+.oi-epaisseur { display: grid; gap: 10px; }
+.oi-epaisseur div { display: grid; gap: 2px; font-size: .84rem; }
+.oi-epaisseur i { display: block; height: 14px; width: var(--w); border-radius: 999px; background: repeating-linear-gradient(90deg, var(--c) 0 10px, color-mix(in srgb, var(--c) 70%, #fff) 10px 14px); }
+.oi-epaisseur b { color: var(--c); }
+
+/* Gravité */
+.oi-gravite { --c: var(--k-grave); }
+.oi-gros { font-size: 1.2rem; text-align: center; }
+.oi-ttt { padding-left: 20px; margin: 0; }
+.oi-ttt li { margin-bottom: 8px; }
+.oi-ttt span { display: block; font-size: .84rem; }
+.oi-cas .ti-cas-choix { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.oi-cas .ti-cas-choix button { font-size: .72rem; padding: 6px 4px; }
+
+@media (max-width: 1000px) {
+  .oi-questions { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .oi-cascade { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .oi-cascade li::after { display: none; }
+  .oi-demarche { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+  .oi-chiffres, .oi-sieges, .oi-moyens, .oi-protocole, .oi-trois, .oi-causes, .oi-chaine-4 { grid-template-columns: 1fr; }
+  .oi-questions, .oi-cascade { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .oi-bauhin { grid-template-columns: 1fr; }
+  .oi-demarche { grid-template-columns: 1fr; }
+}
+@media print { .oi-mesure, .oi-meca, .oi-dose, #oi-cas, #oi-cas-reset { display: none !important; } .oi-panneau[hidden] { display: block !important; } }
