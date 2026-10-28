@@ -4,9 +4,9 @@
    • pancréas en 3D (pancreas-3d.js) : chargé à l'arrivée à l'écran sur ordinateur,
      au clic sur « Voir en 3D » sur téléphone ; segments, vues, écartement, voisins ;
    • coupes axiales (pancreas-svg.js, RHPancreas) : segment choisi synchronisé avec la 3D,
-     espaces cliquables, deux niveaux ; collections d'Atlanta dans leur siège typique ;
+     espaces cliquables, deux niveaux ; collections d'Atlanta avec l'image TDM du cours ;
    • outils (regles/pancreatite.js) : moment du scanner, dose de contraste, Atlanta
-     (diagnostic, sévérité), CTSI ; schémas (nécrose, déconnexion, divisum, annulaire) ;
+     (diagnostic, sévérité), CTSI ;
    • onglets des étiologies, entraînement « Quelle collection ? ».
    ========================================================= */
 const $ = (s, r = document) => r.querySelector(s);
@@ -119,18 +119,17 @@ $$('[data-voir-seg]').forEach(b => b.addEventListener('click', () => {
   choisirSegment(b.dataset.voirSeg);
 }));
 
-/* ---------- Schémas ---------- */
-if (P) $$('figure[data-pa]').forEach(f => f.insertAdjacentHTML('afterbegin', P[f.dataset.pa](f.dataset.type)));
-const gaz = $('#pa-gaz');
-if (gaz && P) gaz.innerHTML = P.coupe({ niveau: 'haut', collection: 'can', gaz: true }) + '<figcaption class="md-aide">Bulles de gaz dans une collection nécrotique : surinfection (schéma).</figcaption>';
-
 /* ---------- Collections d'Atlanta ---------- */
 const grille = $('.pa-grille');
 if (grille && P) {
   const montrer = cle => {
     $$('[data-col]', grille).forEach(b => b.classList.toggle('is-on', b.dataset.col === cle));
     const c = P.COLLECTIONS[cle];
-    $('#pa-col-svg').innerHTML = P.coupe({ niveau: 'haut', collection: cle });
+    // image TDM du cours (Thoeni, Radiology 2012 ; Banks, Gut 2013)
+    const img = $('#pa-col-img');
+    img.src = img.src.replace(/col-[a-z]+\.jpg/, `col-${cle}.jpg`); img.alt = `TDM : ${c.nom}`;
+    img.style.aspectRatio = ''; img.removeAttribute('width'); img.removeAttribute('height');
+    $('#pa-col-cap').innerHTML = `<strong>${c.abr}</strong>${echapper(c.siege)}<span class="pa-credit">Thoeni, Radiology 2012 ; Banks, Gut 2013</span>`;
     $('#pa-col-texte').innerHTML = `<p class="ti-outil-titre">${c.abr} · ${echapper(c.nom)}</p><p><b>${c.delai}</b> · ${c.forme === 'POI' ? 'Pancréatite Oedémato-Interstitielle (POI)' : 'Pancréatite Nécrosante (PN)'}</p><ul class="pa-col-items">${c.items.map(i => `<li>${echapper(i)}</li>`).join('')}</ul><p>${echapper(c.siege)}</p>`;
   };
   $$('[data-col]', grille).forEach(b => b.addEventListener('click', () => montrer(b.dataset.col)));
