@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Imagerie de la pancréatite aiguë — Fiche rapide RadiologicHub</title>
+  <meta name="description" content="Fiche rapide RadiologicHub : imagerie de la pancréatite aiguë — pancréas en 3D et segmentation, coupes axiales des espaces (pararénal antérieur, arrière-cavité…), collections d'Atlanta (CLAP, CAN, PK, NOP), CTSI, complications, étiologies.">
+  <link rel="icon" type="image/svg+xml" href="../assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=20261022235000">
+  <link rel="stylesheet" href="../fiche.css?v=20261012150000">
+  <link rel="stylesheet" href="../schemas/cavum.css?v=20261024100000">
+  <link rel="stylesheet" href="../schemas/cholesteatome.css?v=20261026200000">
+  <link rel="stylesheet" href="../schemas/eu-tirads.css?v=20261026230000">
+  <link rel="stylesheet" href="../schemas/mediastin.css?v=20261027100000">
+  <link rel="stylesheet" href="../schemas/nodule-pulmonaire.css?v=20261027150000">
+  <link rel="stylesheet" href="../schemas/ischemie-mesenterique.css?v=20261027170000">
+  <link rel="stylesheet" href="../schemas/pancreatite.css?v=20261028100000">
+  <script type="importmap">{ "imports": { "three": "../vendor/three-0.170.0/three.module.min.js", "three/addons/": "../vendor/three-0.170.0/addons/" } }</script>
+</head>
+<body class="fiche-page">
+
+  <div class="read-progress" aria-hidden="true"><span></span></div>
+
+  <header class="site-header is-scrolled" id="top">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="RadiologicHub — accueil">
+        <img src="../assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+        <a href="../comptes-rendus.html">Comptes rendus</a>
+        <a href="../fiches-rapides.html" class="is-current">Fiches rapides</a>
+        <a href="../radioanatomie/index.html">Radioanatomie</a>
+        <a href="../bibliotheque.html">Bibliothèque</a>
+        <a href="../communaute.html">Communauté</a>
+        <a href="../remplacements.html">Remplacements</a>
+        <a href="../index.html#masterclass" class="nav-masterclass">Masterclass</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main>
+    <!-- ============ EN-TÊTE DE FICHE ============ -->
+    <section class="fiche-hero sec-down">
+      <div class="container">
+        <nav class="crumbs" aria-label="Fil d'Ariane">
+          <a href="../fiches-rapides.html">Fiches rapides</a> › <a href="../fiches-rapides.html#digestif">Digestif</a> › <span>Pancréatite aiguë</span>
+        </nav>
+        <p class="marker-tag">Fiche rapide · Digestif · Urgences</p>
+        <h1>Imagerie de la <span class="hl-navy">pancréatite aiguë</span></h1>
+        <p class="fiche-sub">Le <b>pancréas en 3D</b> et ses segments, des <b>coupes axiales dessinées</b> où chaque espace (pararénal antérieur, arrière-cavité, périrénaux…) est délimité et où l'on place les <b>collections d'Atlanta</b>, puis les scores (Atlanta, <b>CTSI</b>), les complications et les étiologies.</p>
+
+        <div class="legend" role="group" aria-label="Code couleur — cliquez pour isoler une catégorie">
+          <span class="legend-label">Code couleur :</span>
+          <button class="chip k-key" data-k="key" aria-pressed="false">Jaune = à retenir</button>
+          <button class="chip k-grave" data-k="grave" aria-pressed="false">Rouge = gravité / point clé</button>
+          <button class="chip k-tech" data-k="tech" aria-pressed="false">Bleu = technique / indication</button>
+          <button class="chip k-sign" data-k="sign" aria-pressed="false">Vert = protocole / signe</button>
+        </div>
+        <p class="legend-hint">Astuce : cliquez sur une couleur pour n'afficher qu'elle.</p>
+
+        <div class="fiche-actions">
+          <button class="btn btn-outline btn-sm" id="print-btn">Imprimer / PDF</button>
+          <a href="#anatomie" class="btn btn-outline btn-sm">Pancréas en 3D</a>
+          <a href="#espaces" class="btn btn-outline btn-sm">Espaces et collections</a>
+          <a href="#severite" class="btn btn-outline btn-sm">CTSI</a>
+          <a href="#testez-vous" class="btn btn-ink btn-sm">Testez-vous →</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="container fiche-layout">
+      <aside class="toc" aria-label="Sommaire">
+        <p class="toc-title">Sommaire</p>
+        <ol>
+          <li><a href="#introduction" style="--c: var(--k-grave)"><b>I</b>Introduction</a></li>
+          <li><a href="#anatomie" style="--c: var(--amber)"><b>·</b>Anatomie : 3D et coupes</a></li>
+          <li><a href="#anapath" style="--c: var(--purple)"><b>II</b>Anatomo-pathologie</a></li>
+          <li><a href="#exploration" style="--c: var(--blue)"><b>III</b>Moyens d'exploration</a></li>
+          <li><a href="#diagnostic" style="--c: var(--teal)"><b>IV</b>Diagnostic positif</a></li>
+          <li><a href="#espaces" style="--c: var(--orange)"><b>·</b>Collections et espaces</a></li>
+          <li><a href="#severite" style="--c: var(--k-grave)"><b>V</b>Évaluation de la sévérité</a></li>
+          <li><a href="#evolution" style="--c: var(--steel)"><b>VI</b>Évolution</a></li>
+          <li><a href="#complications" style="--c: var(--k-grave)"><b>VII</b>Complications</a></li>
+          <li><a href="#etiologie" style="--c: var(--green)"><b>VIII</b>Diagnostic étiologique</a></li>
+          <li><a href="#testez-vous" style="--c: var(--ink)"><b>?</b>Testez-vous</a></li>
+        </ol>
+      </aside>
+
+      <div class="fiche-body" id="fiche-body">
+
+        <!-- I -->
+        <section class="fsec" id="introduction" style="--c: var(--k-grave)">
+          <h2 class="fsec-title"><span class="fnum">I</span>Introduction</h2>
+          <p><mark class="k-key">Inflammation aigue de la glande pancréatique en rapport avec son autodigestion par ses propres enzymes.</mark></p>
+          <div class="md-compare">
+            <div class="md-cote-a" style="--c: var(--blue)"><p class="md-cote-titre">La PA œdémateuse</p><p><mark class="k-tech">œdémateuse généralement bénigne</mark></p></div>
+            <div class="md-cote-a" style="--c: var(--k-grave)"><p class="md-cote-titre">La PA nécrosante</p><p><mark class="k-grave">nécrosante,</mark> potentiellement grave en fonction de l'étendue de la nécrose et de la survenue ou non de complications.</p></div>
+          </div>
+          <p class="callout callout-warn"><mark class="k-key">URG médico-chirurgicale pouvant mettre en jeu le pronostic vital ou être à l'origine de séquelles</mark></p>
+          <div class="pa-causes">
+            <div class="ti-chiffre" style="--c: var(--amber)"><span>80 %</span><p><mark class="k-key">La lithiase biliaire (migration d'un calcul biliaire) et l'alcoolisme chronique = les deux principales causes (80% des causes), la première étant la 1ère cause en Tunisie.</mark></p></div>
+            <div class="fcard"><p>Le dg (+) peut être porté sur des arguments <mark class="k-key">cliniques et biologiques.</mark></p>
+              <p>L'imagerie, principalement la TDM, joue un rôle dans :</p>
+              <ol class="md-chaine md-chaine-3">
+                <li style="--c: var(--k-grave)"><b><mark class="k-key">L'évaluation de la gravité de l'atteinte pancréatique</mark></b></li>
+                <li style="--c: var(--amber)"><b><mark class="k-key">Recherche des complications + surveillance</mark></b></li>
+                <li style="--c: var(--teal)"><b><mark class="k-key">Dg (+) si tableau douteux</mark></b></li>
+              </ol></div>
+          </div>
+          <p><mark class="k-key">L'échographie et l'IRM ont des indications précises</mark> (recherche de <mark class="k-key">calculs</mark>, <mark class="k-key">caractérisation des collections</mark>).</p>
+          <p><mark class="k-key">Les collections constituent la principale complication. Elles sont classées selon leur délai d'apparition par rapport à la PA et la présence ou non de nécrose.</mark></p>
+        </section>
+
+        <!-- Anatomie -->
+        <section class="fsec" id="anatomie" style="--c: var(--amber)">
+          <h2 class="fsec-title"><span class="fnum">·</span>Rappel anatomique : le pancréas en 3D et en coupes</h2>
+          <p class="fintro">Rappel ajouté à la fiche : segmentation du pancréas et espaces où diffusent les collections. Touchez un segment (en 3D ou sur la coupe) : il s'allume des deux côtés.</p>
+          <div class="c3d r3d pa3d" id="pancreas-3d" data-modeles="../public/models/pancreas/">
+            <div class="c3d-barre" role="toolbar" aria-label="Segments du pancréas">
+              <span class="r3d-barre-titre">Segments</span>
+              <button type="button" class="c3d-voie" data-seg="tete" style="--c: #f2ab2f">Tête</button>
+              <button type="button" class="c3d-voie" data-seg="crochet" style="--c: #e85d75">Crochet</button>
+              <button type="button" class="c3d-voie" data-seg="isthme" style="--c: #2a9d8f">Isthme</button>
+              <button type="button" class="c3d-voie" data-seg="corps" style="--c: #3c67b8">Corps</button>
+              <button type="button" class="c3d-voie" data-seg="queue" style="--c: #7b5ea7">Queue</button>
+            </div>
+            <div class="c3d-cadre">
+              <div class="c3d-vue">
+                <div class="c3d-scene" id="pa3d-scene"></div>
+                <a class="c3d-attrib" href="https://www.z-anatomy.com/" rel="noopener" target="_blank" title="Anatomie : Z-Anatomy (CC BY-SA 4.0, dérivé de BodyParts3D). Segments : découpe par plans aux repères du modèle (VMS, aorte), limites approchées.">© Z-Anatomy · CC BY-SA</a>
+              </div>
+              <aside class="c3d-panneau" aria-label="Réglages de la vue 3D">
+                <p class="c3d-titre">Vues</p>
+                <div class="c3d-vues">
+                  <button type="button" data-vue="face">De face</button>
+                  <button type="button" data-vue="scanner">Comme au scanner</button>
+                  <button type="button" data-vue="dessus">Du dessus</button>
+                  <button type="button" data-vue="profil">De profil</button>
+                  <button type="button" data-vue="oblique">Oblique</button>
+                </div>
+                <p class="c3d-titre">Afficher</p>
+                <label class="r3d-reglage"><span>collés</span><input type="range" id="pa3d-ecart" min="0" max="100" value="0" aria-label="Écarter les segments"><span>écartés</span></label>
+                <label class="r3d-reglage"><input type="checkbox" id="pa3d-voisins" checked> duodénum, rate, reins, rachis</label>
+                <label class="r3d-reglage"><input type="checkbox" id="pa3d-canaux" checked> canaux (Wirsung, Santorini, cholédoque)</label>
+                <label class="r3d-reglage"><input type="checkbox" id="pa3d-digestif"> estomac et côlon transverse</label>
+                <ul class="pa3d-legende">
+                  <li style="--c: #c8102e">artères (aorte, AMS, splénique)</li>
+                  <li style="--c: #5b2a86">système porte (VMS, porte, splénique)</li>
+                  <li style="--c: #3c67b8">veine cave inférieure</li>
+                  <li style="--c: #3f9b4a">voie biliaire, vésicule</li>
+                </ul>
+              </aside>
+            </div>
+            <div class="r3d-info md3d-info" id="pa3d-info" aria-live="polite"><p class="md-aide">Touchez un segment : ses limites et ses rapports s'affichent ici.</p></div>
+          </div>
+
+          <h3 class="ch-h3" id="espaces-anat">Coupes axiales : segments et espaces</h3>
+          <div class="pa-coupe" id="pa-coupe-anat">
+            <div class="pa-coupe-barre">
+              <div class="md-seg" role="radiogroup" aria-label="Niveau de coupe"><span>Niveau</span>
+                <label><input type="radio" name="niveau" value="haut" checked> haut (isthme, corps, queue)</label><label><input type="radio" name="niveau" value="bas"> bas (tête, crochet, D3)</label></div>
+              <label class="md-coche"><input type="checkbox" name="tous"> colorer tous les espaces</label>
+            </div>
+            <figure class="pa-coupe-svg" id="pa-coupe-svg"></figure>
+            <div class="pa-coupe-info" aria-live="polite">
+              <p class="ti-outil-titre">Espaces (cliquez sur la coupe ou ici)</p>
+              <div class="pa-espaces" id="pa-espaces"></div>
+              <div class="pa-espace-texte" id="pa-espace-texte"><p class="md-aide">Choisissez un espace : il se colore et ses limites s'affichent.</p></div>
+              <ul class="pa-fascias"><li><i style="--c: #2a6f97"></i>péritoine pariétal postérieur</li><li><i style="--c: #111114"></i>fascia rénal antérieur</li><li><i class="is-tirets" style="--c: #111114"></i>fascia rénal postérieur</li><li><i class="is-points" style="--c: #111114"></i>fascia latéro-conal</li></ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- II -->
+        <section class="fsec" id="anapath" style="--c: var(--purple)">
+          <h2 class="fsec-title"><span class="fnum">II</span>Anatomo-pathologie</h2>
+          <p>On distingue deux formes de PA de pronostic différent :</p>
+          <div class="md-compare">
+            <div class="md-cote-a" style="--c: var(--blue)"><p class="md-cote-titre"><mark class="k-key">La PA œdémateuse (interstitielle):</mark></p>
+              <ul class="md-puces"><li><mark class="k-key">Œdème glandulaire sans hémorragie ni nécrose</mark></li><li><mark class="k-key">Évolution vers la guérison</mark></li></ul></div>
+            <div class="md-cote-a" style="--c: var(--k-grave)"><p class="md-cote-titre"><mark class="k-key">La PA nécrotico-hémorragique/ nécrosante :</mark></p>
+              <p>En plus de l'œdème : <mark class="k-key">lésions hémorragiques</mark> et <mark class="k-key">nécrotiques</mark> intra et extra-pancréatiques. Divisée en 3 sous-types :</p></div>
+          </div>
+          <div class="pa-necroses">
+            <figure class="pa-mini" data-pa="necrose" data-type="mixte"><figcaption><b><mark class="k-grave">La nécrose mixte intra et extra parenchymateuse:</mark></b> ++(75-80%)</figcaption></figure>
+            <figure class="pa-mini" data-pa="necrose" data-type="extra"><figcaption><b><mark class="k-grave">La nécrose péri-pancréatique isolée</mark></b> (20%)</figcaption></figure>
+            <figure class="pa-mini" data-pa="necrose" data-type="intra"><figcaption><b><mark class="k-grave">La nécrose intra-pancréatique isolé</mark></b> (5%) : rare.</figcaption></figure>
+          </div>
+          <p class="callout"><mark class="k-key">L'évolution est imprévisible (résolution complète, surinfection secondaire, fistulisation, persistance d'une collection).</mark></p>
+        </section>
+
+        <!-- III -->
+        <section class="fsec" id="exploration" style="--c: var(--blue)">
+          <h2 class="fsec-title"><span class="fnum">III</span>Moyens d'exploration radiologiques</h2>
+          <div class="md-deux">
+            <div class="fcard"><h3>1. ASP</h3><p><b>Non recommandé</b> : irradiant, peu sensible et peu spécifique.</p><p>Examen peut être normal ou montrer : un aspect d'anse sentinelle ; l'absence de pneumopéritoine.</p></div>
+            <div class="fcard"><h3>2. Échographie</h3><ul class="md-puces"><li>Examen souvent gêné par <mark class="k-key">un iléus réflexe</mark>, rendant l'exploration du pancréas difficile.</li><li>Elle a plus d'utilité dans un <mark class="k-key">but étiologique</mark> (<mark class="k-key">recherche de lithiase biliaire</mark>).</li></ul></div>
+          </div>
+          <h3 class="ch-h3">3. TDM : examen clé</h3>
+          <div class="md-trois">
+            <div class="md-axe" style="--c: var(--k-grave)"><b>1</b><span><mark class="k-key">Recherche de complications</mark></span></div>
+            <div class="md-axe" style="--c: var(--green)"><b>2</b><span><mark class="k-key">Chercher une éventuelle cause biliaire</mark></span></div>
+            <div class="md-axe" style="--c: var(--purple)"><b>3</b><span><mark class="k-key">Orienter le diagnostic quand le tableau est atypique</mark></span></div>
+          </div>
+          <form class="md-outil pa-moment" id="pa-moment" onsubmit="return false">
+            <p class="ti-outil-titre">Indications : quand faire le scanner ?</p>
+            <div class="np-coches"><label class="md-coche"><input type="checkbox" name="doute"> <mark class="k-sign">Persistance d'un doute diagnostique</mark></label><label class="md-coche"><input type="checkbox" name="grave"> <mark class="k-sign">Tableau clinique et biologique grave d'emblée</mark></label></div>
+            <label class="np-taille">Délai depuis le début : <output id="pa-h">24</output> h<input type="range" name="heures" min="0" max="240" step="6" value="24"></label>
+            <div class="pa-jours" aria-hidden="true"><span style="--a: 0%; --b: 20%; --c: #fde2e4">&lt; 48 h</span><span style="--a: 20%; --b: 30%; --c: #fff1d6">48-72 h</span><span style="--a: 30%; --b: 50%; --c: #ddf3ea">≥ 72 h</span><span style="--a: 50%; --b: 70%; --c: #b6e3c9">5-7 j</span><span style="--a: 70%; --b: 100%; --c: #ececf0">&gt; 7 j</span><i id="pa-h-curseur"></i></div>
+            <p class="ch-verdict" id="pa-moment-res" aria-live="polite"><b></b><span></span></p>
+            <ul class="md-puces pa-pourquoi"><li><mark class="k-key">Meilleure évaluation de la nécrose après ce délai.</mark></li><li><mark class="k-key">Pas de corrélation entre les anomalies morphologiques / gravité clinique à la phase précoce.</mark></li><li><mark class="k-key">Le TTT d'éventuelles collections ne se fera pas durant les 48-72 premières heures.</mark></li></ul>
+          </form>
+          <p class="md-sous">Protocole :</p>
+          <div class="im-frise pa-frise" aria-label="Protocole TDM">
+            <div class="im-frise-axe"><i></i></div>
+            <div class="im-temps" style="--x: 0%; --c: var(--steel)"><span class="im-point"></span><b><mark class="k-sign">SPC (foie et pancréas)</mark></b> : lithiase et de remaniements ou composantes hémorragiques</div>
+            <div class="im-temps" style="--x: 45%; --c: var(--k-grave)"><span class="im-point"></span><b><mark class="k-sign">Temps pancréatique (45s')</mark></b> : acquisition <mark class="k-key">abdominale</mark></div>
+            <div class="im-temps" style="--x: 100%; --c: var(--blue)"><span class="im-point"></span><b><mark class="k-sign">Temps portal (70s)</mark></b> : acquisition <mark class="k-key">abdomino-pelvienne</mark> ; <mark class="k-sign">+/- temps tardif</mark></div>
+          </div>
+          <form class="md-outil im-dose" id="pa-dose" onsubmit="return false">
+            <p class="ti-outil-titre">Injection PDC</p>
+            <p><mark class="k-sign">Injection PDC (1.5-2cc/kg) Débit (3-4cc/s)</mark></p>
+            <label class="np-taille">Poids : <output id="pa-poids">70</output> kg<input type="range" name="poids" min="30" max="130" value="70"></label>
+            <p class="ch-verdict k-key" id="pa-dose-res" aria-live="polite"><b></b><span></span></p>
+          </form>
+          <h3 class="ch-h3">4. IRM</h3>
+          <p><mark class="k-key">Plus performante que la TDM pour la recherche des calculs cholédociens et pour la caractérisation des collections (liquidiennes ou nécrosées)</mark></p>
+          <div class="md-deux">
+            <div class="fcard"><h3>Indications</h3><ul class="md-puces"><li><mark class="k-sign">Recherche de LVBP</mark></li><li><mark class="k-sign">Bilan étiologique négatif</mark> <span class="k-tech">(éliminer une tm isodense)</span></li><li><mark class="k-sign">Bilan d'une rupture canalaire</mark></li><li><mark class="k-sign">Analyse des collections</mark></li><li><mark class="k-sign">CI au PDC</mark> <span class="k-tech">(grossesse, insuffisance rénale)</span></li></ul></div>
+            <div class="fcard"><h3>Protocole</h3><div class="md-modalites"><span><mark class="k-tech">T2</mark></span><span><mark class="k-tech">T2 FS</mark></span><span><mark class="k-tech">T1 EG + FS</mark></span><span><mark class="k-tech">3D dynamique pré et post Gado</mark></span><span><mark class="k-tech">Wirsungo-IRM 2D – 3D</mark></span></div></div>
+          </div>
+        </section>
+
+        <!-- IV -->
+        <section class="fsec" id="diagnostic" style="--c: var(--teal)">
+          <h2 class="fsec-title"><span class="fnum">IV</span>Diagnostic positif de PA</h2>
+          <h3 class="ch-h3">1. Critères diagnostiques : conférence d'Atlanta 2012</h3>
+          <form class="md-outil pa-atlanta" id="pa-atlanta" onsubmit="return false">
+            <p>Selon la conférence <mark class="k-key">d'Atlanta 2012</mark>, le dg est retenu en présence <b>d'au - <mark class="k-key">2 des 3 critères suivants:</mark></b></p>
+            <ul class="md-check md-check-actif">
+              <li><label><input type="checkbox" name="douleur"> <mark class="k-grave">Douleurs abdominales typiques</mark> (épigastralgies, irradiation au dos)</label></li>
+              <li><label><input type="checkbox" name="enzymes"> <mark class="k-grave">Élévation des enzymes pancréatiques</mark> (amylasémie ou lipasémie) ≥ 3xN</label></li>
+              <li><label><input type="checkbox" name="imagerie"> <mark class="k-grave">Aspect caractéristique en imagerie</mark> (scanner principalement, IRM, échographie)</label></li>
+            </ul>
+            <p class="ch-verdict" id="pa-atlanta-res" aria-live="polite"><b></b><span></span></p>
+          </form>
+          <h3 class="ch-h3">2. Aspect en imagerie</h3>
+          <div class="fcard"><h3>2.1. Échographie</h3><p>Peu sensible. Elle peut montrer :</p>
+            <ul class="md-puces"><li><mark class="k-key">Augmentation de la taille du pancréas</mark> avec un aspect hypoéchogène ou hétérogène</li><li><mark class="k-key">Des collections péri-pancréatiques</mark> à contenu plus ou moins hétérogène</li><li><mark class="k-key">Un épanchement intra-abdominal</mark></li><li><mark class="k-key">Calculs vésiculaires / lithiase des voies biliaires</mark> témoignant de l'étiologie lithiasique</li></ul>
+            <p class="callout callout-warn"><mark class="k-grave">→ Une échographie normale n'écarte pas le diagnostic.</mark></p></div>
+          <h3 class="ch-h3">2.2. TDM : permet de distinguer deux formes de PA</h3>
+          <div class="md-compare">
+            <div class="md-cote-a" style="--c: var(--amber)"><p class="md-cote-titre">PA œdémateuse</p>
+              <ul class="md-puces"><li><mark class="k-key">Examen normal (30%)</mark></li><li>Pancréas <mark class="k-key">augmenté de taille (hypertrophie focale ou diffuse) avec perte de l'aspect lobulé</mark></li><li><mark class="k-grave">Rehaussement homogène de la glande pancréatique</mark></li><li>Discrète <mark class="k-grave">densification de la graisse péri- pancréatique</mark></li></ul></div>
+            <div class="md-cote-a" style="--c: var(--k-grave)"><p class="md-cote-titre">PA nécrosante</p>
+              <ul class="md-puces"><li>Pancréas <mark class="k-key">augmenté de taille (hypertrophie focale ou diffuse) avec perte de l'aspect lobulé</mark></li><li><mark class="k-grave">Plages hypodenses non rehaussées</mark> : nécrose &lt;30UH)</li><li>3 types : <b>nécrose intra-pancréatique isolée</b> (&lt;5%) — risque de déconnexion pancréatique ; <b>nécrose péri-pancréatique isolée</b> (15%) — meilleur pronostic ; <b>nécrose mixte</b> (75%). Ces 3 types peuvent être stérile ou surinfecté.</li></ul></div>
+          </div>
+          <h3 class="ch-h3">2.3. IRM</h3>
+          <ul class="md-puces">
+            <li><mark class="k-grave">Hypertrophie focale ou diffuse</mark> de la glande : en <mark class="k-grave">hyposignal T1 ±hétérogène et hyperT2.</mark></li>
+            <li><mark class="k-grave">Le rehaussement présente la même sémiologie qu'à la TDM.</mark></li>
+            <li>Le signal du pancréas peut être normal mais il <mark class="k-grave">est souvent en hypoT1 et hyperT2.</mark></li>
+            <li><mark class="k-grave">Les zones de nécroses ne sont pas rehaussées.</mark></li>
+            <li>Les épanchements liquidiens sont en <mark class="k-key">hyperT2</mark> et les <mark class="k-key">zones hémorragiques sont bien étudiées sur les séquences T1 EG. Elles sont en hypersignal T1.</mark></li>
+          </ul>
+        </section>
+
+        <!-- Collections et espaces -->
+        <section class="fsec" id="espaces" style="--c: var(--orange)">
+          <h2 class="fsec-title"><span class="fnum">·</span>Collections pancréatiques et péri-pancréatiques</h2>
+          <p class="fintro"><mark class="k-key">Les collections constituent la principale complication.</mark> Choisissez la forme et le délai : la collection d'Atlanta s'affiche et se dessine dans son siège typique, sur la coupe.</p>
+          <div class="pa-grille" role="group" aria-label="Classification des collections">
+            <span></span><b class="pa-t">&lt; 4 semaines</b><b class="pa-t">&gt; 4 semaines</b>
+            <b class="pa-f" style="--c: var(--amber)">Pancréatite Oedémato-Interstitielle (POI)</b>
+            <button type="button" data-col="clap" style="--c: #f5b27a"><b>CLAP</b><small>Collection Liquidienne Aiguë Péri-pancréatique</small><span>Homogène · Liquide (&lt;15UH) · Péri-pancréas · Pas de paroi</span></button>
+            <button type="button" data-col="pk" style="--c: #e57c2a"><b>PK</b><small>Pseudo-Kyste</small><span>Homogène · Liquide (&lt;15UH) · <mark class="k-key">Paroi propre</mark></span></button>
+            <b class="pa-f" style="--c: var(--k-grave)">Pancréatite Nécrosante (PN)</b>
+            <button type="button" data-col="can" style="--c: #d98c8c"><b>CAN</b><small>Collection Aiguë Nécrotique</small><span>Hétérogène · Nécrose et liquide · Pas de paroi</span></button>
+            <button type="button" data-col="nop" style="--c: #a33b3b"><b>NOP</b><small>Nécrose Organisée Pancréatique</small><span>Hétérogène · Nécrose et liquide · <mark class="k-key">Paroi propre</mark></span></button>
+          </div>
+          <div class="pa-coupe pa-coupe-col" id="pa-coupe-col">
+            <figure class="pa-coupe-svg" id="pa-col-svg"></figure>
+            <div class="pa-coupe-info">
+              <div id="pa-col-texte" aria-live="polite"><p class="md-aide">Cliquez une case du tableau.</p></div>
+              <p class="md-aide">Siège : CLAP adjacente au pancréas ; CAN intra et/ou péri-pancréatique ; PK adjacent ou distant (ici dans l'arrière-cavité) ; NOP intra et/ou extra pancréatique. Thoeni, Radiology 2012 ; Banks, Gut 2013.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- V -->
+        <section class="fsec" id="severite" style="--c: var(--k-grave)">
+          <h2 class="fsec-title"><span class="fnum">V</span>Évaluation de la sévérité</h2>
+          <h3 class="ch-h3">1. Définition des degrés de sévérité de la PA : conférence d'Atlanta 2012</h3>
+          <p>La sévérité de la PA est évaluée sur <mark class="k-grave">la présence ou non de défaillances viscérales</mark> et <mark class="k-grave">la présence ou non de complications locales.</mark></p>
+          <ul class="md-puces"><li>L'évaluation de la défaillance viscérale est basée sur des critères <mark class="k-key">cliniques et biologiques.</mark> Plusieurs classifications sont utilisées dont la <mark class="k-key">classification de Ranson.</mark></li><li><mark class="k-key">Les complications locales sont détectées par l'imagerie, principalement la TDM.</mark></li></ul>
+          <form class="md-outil pa-sev" id="pa-sev" onsubmit="return false">
+            <p class="ti-outil-titre">Degré de sévérité (Atlanta)</p>
+            <div class="md-seg" role="radiogroup" aria-label="Défaillance viscérale"><span>Défaillance</span>
+              <label><input type="radio" name="defaillance" value="aucune" checked> aucune</label><label><input type="radio" name="defaillance" value="transitoire"> transitoire (&lt; 48h)</label><label><input type="radio" name="defaillance" value="persistante"> persistante (&gt;48h)</label></div>
+            <div class="np-coches"><label class="md-coche"><input type="checkbox" name="locales"> complications locales</label><label class="md-coche"><input type="checkbox" name="systemiques"> complication systémique</label></div>
+            <div class="pa-sev-l"><span data-sev="peu">Peu grave</span><span data-sev="moderee">Modérément grave</span><span data-sev="grave">Grave</span></div>
+            <p class="ch-verdict" id="pa-sev-res" aria-live="polite"><b></b><span></span></p>
+          </form>
+          <h3 class="ch-h3">2. Critères de sévérité radiologiques : CTSI (CT Severity Index)</h3>
+          <ul class="md-puces"><li>Se base sur la <mark class="k-key">TDM faite 48 à 72H après le début de la symptomatologie</mark></li><li>Associe la <mark class="k-grave">classification de Balthazar (0-4 points)</mark> + <mark class="k-grave">l'étendue de la nécrose pancréatique</mark> (0-6 points) avec un score final entre 0 et 10</li></ul>
+          <form class="md-outil pa-ctsi" id="pa-ctsi" onsubmit="return false">
+            <div class="pa-ctsi-col"><p class="ti-outil-titre">Classification de Balthazar</p><div class="pa-radios" data-groupe="balthazar"></div></div>
+            <div class="pa-ctsi-col"><p class="ti-outil-titre">Nécrose pancréatique</p><div class="pa-radios" data-groupe="necrose"></div></div>
+            <div class="pa-ctsi-res"><div class="pa-index" id="pa-index"><span>CTSI</span><b>0</b><small>/ 10</small></div>
+              <div class="ftable-wrap"><table class="ftable pa-prono"><thead><tr><th>Index de sévérité</th><th>Morbidité %</th><th>Mortalité %</th></tr></thead><tbody></tbody></table></div>
+              <p class="md-aide">Corrélation entre le score scanographique et le pronostique de la PA sur le plan morbidité et mortalité.</p></div>
+          </form>
+        </section>
+
+        <!-- VI -->
+        <section class="fsec" id="evolution" style="--c: var(--steel)">
+          <h2 class="fsec-title"><span class="fnum">VI</span>Évolution : 2 phases</h2>
+          <div class="pa-phases">
+            <div class="pa-phase" style="--c: var(--amber)"><b><mark class="k-key">Une phase précoce (1ère semaine)</mark></b><p>caractérisée par des anomalies <mark class="k-key">systémiques</mark> pouvant aboutir à une défaillance viscérale. Durant cette phase, <b>pas de corrélation entre les anomalies morphologiques constatées à l'imagerie et la gravité de la pathologie</b> (défaillance viscérale). → <b>Seuls les critères clinico-biologiques sont importants pour la décision thérapeutique</b></p></div>
+            <div class="pa-phase" style="--c: var(--k-grave)"><b><mark class="k-key">Une phase tardive (&gt;1ère semaine, pouvant durer plusieurs semaines voire plusieurs mois)</mark></b><p>caractérisée par la présence <mark class="k-key">de complications locales</mark> (<mark class="k-key">critères morphologiques déterminés par l'imagerie</mark>) ou la <mark class="k-key">persistance de défaillance viscérale.</mark></p></div>
+          </div>
+          <p class="callout"><b>→ PEC dépend à la fois des constatations de l'imagerie et des critères clinico-biologiques</b></p>
+        </section>
+
+        <!-- VII -->
+        <section class="fsec" id="complications" style="--c: var(--k-grave)">
+          <h2 class="fsec-title"><span class="fnum">VII</span>Complications</h2>
+          <h3 class="ch-h3">1. Surinfection des collections pancréatiques et péri-pancréatiques</h3>
+          <div class="md-deux">
+            <div><ul class="md-puces"><li><mark class="k-key">Infection des collections et de la nécrose surtout</mark></li><li>Clinique : <mark class="k-key">fièvre/ choc septique</mark></li><li>Imagerie : <mark class="k-grave">bulles de gaz dans les collections +++</mark></li><li><mark class="k-key">→ faux positif : fistule digestive / après drainage ou ponction</mark></li><li><mark class="k-key">Si pas de bulles de gaz → ponction à l'aiguille (dg +)</mark></li><li><mark class="k-key">Pas de chirurgie avant 1 mois</mark></li><li>→ Si collection infectée : commencer par <mark class="k-key">drainage</mark> PC (voie postérieure &gt;&gt; voie antérieure)</li><li><mark class="k-key">Apport de l'IRM : caractérisation du contenu des collections</mark></li></ul>
+              <p class="callout"><b>NB :</b> <mark class="k-key">Les 4 types de collections peuvent se surinfecter : très rare pour les CLAP et les pseudokystes</mark> <mark class="k-grave">et plus fréquent pour les collections contenant de la nécrose (CAN et NOP).</mark></p></div>
+            <figure class="pa-coupe-svg pa-petite" id="pa-gaz"></figure>
+          </div>
+          <details class="ti-piege" style="--c: var(--k-grave)" open><summary><span>Rappel</span>Pancréatite aigue emphysémateuse</summary>
+            <ul class="md-puces"><li>= Pancréatite aigue (+/- nécrosante) avec <mark class="k-key">gaz péri-intra-pancréatique d'origine infectieuse</mark> : germes <mark class="k-key">BGN</mark> (Escherichia coli, Pseudomonas aeruginosa, Klebsiella pneumoniae) ou <mark class="k-key">BG+</mark> (Clostridium perfringens).</li>
+              <li>Plusieurs mécanismes : par <mark class="k-key">voie indirecte</mark> : hématogène / lymphatique / reflux bilio-pancréatique ; par <mark class="k-key">voie directe</mark> : fistule entérique (duodénum, colon +++).</li>
+              <li>Augmentation du risque chez les <mark class="k-key">diabétiques</mark> : diminution de la réponse immunitaire due aux altérations microvasculaires + augmentation de la glycémie donc de la dégradation du glucose en CO2.</li>
+              <li>CTSI 4 : coulées liquidiennes péri-pancréatiques avec air au sein des coulées ; CTSI 6 : nécrose parenchymateuse &gt; 50 % → pancréatite aigue nécrosante emphysémateuse, <b>CTSI 10</b>.</li>
+              <li><b>A niveau de gravité égal, la mortalité d'un patient avec pancréatite aigue emphysémateuse est la même que celle d'un patient avec pancréatite aigue surinfectée</b> : PA grave +++, pas grave parce que emphysémateuse mais grave parce que <mark class="k-key">infectée</mark> +++ ; taux de mortalité égal avec les PA nécrosantes.</li>
+              <li><b>Faux positifs de PA emphysémateuse</b> : fistule-perforation digestive ; air post ponction-biopsie ; chirurgie ; ampoule de Vater béante (post sphinctérotomie +++).</li></ul></details>
+          <div class="md-deux pa-vasc">
+            <div class="fcard" style="--c: var(--k-grave)"><h3>Complications artérielles</h3><ul class="md-puces"><li><mark class="k-key">Pseudo-anévrysme +++</mark></li><li><mark class="k-grave">A. splénique +++ &gt; A. pancréatico-duodénale &gt; A. gastroduodénal</mark></li><li><mark class="k-key">TDM &gt; artériographie (MIP+++)</mark></li><li><mark class="k-key">TTT : * faux anévrysme stable → coil</mark></li><li><mark class="k-key">Hémorragie aigue</mark> → embolisation &gt;&gt; chir</li></ul></div>
+            <div class="fcard" style="--c: var(--blue)"><h3>Complications veineuses</h3><ul class="md-puces"><li><mark class="k-key">Thrombose veineuse / pseudo-anévrysme veineux (rare)</mark></li><li><mark class="k-key">Veine splénique → HTP segmentaire</mark></li></ul></div>
+          </div>
+          <details class="ti-piege" style="--c: var(--green)"><summary><span>Rappel</span>Syndrome de Weber-Christian</summary>
+            <ul class="md-puces"><li>Complication <mark class="k-key">rare</mark> des pancréatites.</li><li>Physiopathologie : <b>fistule pancréatico-porte ou pancréatico-mésentérique</b> = <mark class="k-key">libération d'enzymes pancréatiques dans la circulation systémique</mark>.</li><li><b>Nécrose adipocytaire</b> avec <b>panniculite lobulaire</b> et infiltrat inflammatoire sous-cutanés.</li><li>Clinique : <b>nodules hypodermiques des membres inférieurs</b>, arthralgies-myalgies, fièvre.</li><li><mark class="k-key">Augmentation Amylase sérique +++</mark></li><li><mark class="k-key">Imagerie : Communication d'une collection avec le système porte</mark></li></ul></details>
+          <h3 class="ch-h3">2. Complications digestives</h3>
+          <ul class="md-puces"><li><b>Inflammation</b> : <mark class="k-key">colite/ duodénite/ jéjunite/gastrite</mark></li><li><b>Fistule digestive</b> : <mark class="k-key">Air +++</mark> ; <mark class="k-key">Scanner avec opacification digestive aux hydrosolubles (dilution 10%)</mark></li><li><mark class="k-key">Rupture rate</mark> (rare)</li><li><mark class="k-key">Rupture CPP</mark> : à suspecter si <mark class="k-key">Nécrose ≥ 2cm, centro-pancréatique</mark> ; <mark class="k-key">CPP discontinu sur Bili-IRM (examen de référence)</mark></li></ul>
+          <div class="pa-deconnexion">
+            <figure class="pa-mini pa-mini-grand" data-pa="deconnexion"></figure>
+            <div><h3 class="ch-h3"><mark class="k-key">Disconnected duct syndrome – Pancréas déconnecté</mark></h3>
+              <ul class="md-puces"><li><mark class="k-key">Séquelle fréquente des pancréatites aigues nécrosantes</mark> : 16-23% (plus rarement de traumatisme pancréatique) = déconnection complète du canal pancréatique dans sa portion corporéale ou caudale qui ne s'écoule alors plus dans le tube digestif.</li><li>Le <b>pancréas déconnecté reste fonctionnel</b> =&gt; écoulement permanent <mark class="k-key">de liquide pancréatique dans l'abdomen</mark>.</li><li>Traitement : redirection du liquide pancréatique <b>dans le tube digestif</b>.</li></ul>
+              <p class="md-sous">Diagnostic (Nikhil et al. Pancreas 2015) :</p>
+              <ul class="md-check"><li><mark class="k-key">Nécrose pancréatique &gt; 2 cm lors de l'épisode de PA</mark></li><li><mark class="k-key">Visualisation de pancréas normal en distalité (queue +++)</mark></li><li><mark class="k-key">Pseudo-kystes intarrisables sur le site de déconnection</mark></li><li><mark class="k-key">Fistule pancréatique persistante</mark></li></ul>
+              <p class="callout">Le pancréas corporéo-caudal ne communique plus avec le pancréas céphalique : le suc pancréatique du canal pancréatique corporéo-caudal ne s'écoule plus par la papille. <b>C'est un diagnostic important car le traitement est chirurgical +++</b> (pancréatectomie médiane + anastomose pancréatico-gastrique).</p></div>
+          </div>
+          <h3 class="ch-h3">3. Complications liées aux pseudokystes</h3>
+          <div class="md-badges"><span class="md-badge" style="--c: var(--amber)"><mark class="k-key">Compression</mark></span><span class="md-badge" style="--c: var(--k-grave)"><mark class="k-key">Fistulisation artérielle</mark></span><span class="md-badge" style="--c: var(--purple)"><mark class="k-key">Rupture</mark></span></div>
+        </section>
+
+        <!-- VIII -->
+        <section class="fsec" id="etiologie" style="--c: var(--green)">
+          <h2 class="fsec-title"><span class="fnum">VIII</span>Diagnostic étiologique</h2>
+          <div class="ch-onglets pa-onglets" role="tablist" aria-label="Étiologies">
+            <button type="button" role="tab" data-onglet="biliaire" aria-selected="true">1. Biliaire</button>
+            <button type="button" role="tab" data-onglet="alcool" aria-selected="false">2. Alcoolisme</button>
+            <button type="button" role="tab" data-onglet="tumorale" aria-selected="false">3. Tumorale</button>
+            <button type="button" role="tab" data-onglet="malformative" aria-selected="false">4. Malformative</button>
+            <button type="button" role="tab" data-onglet="pai" aria-selected="false">5. Auto-immune</button>
+            <button type="button" role="tab" data-onglet="dkpa" aria-selected="false">6. Pancréas aberrant</button>
+            <button type="button" role="tab" data-onglet="ischemique" aria-selected="false">7. Ischémique</button>
+          </div>
+          <div class="ch-panneau" data-panneau="biliaire">
+            <ul class="md-puces"><li><mark class="k-key">Calculs cholestéroliques</mark></li><li><mark class="k-key">Migration et enclavement dans les papilles (calculs de petite taille+++)</mark></li><li>En faveur du dg : <mark class="k-grave">* Lithiase vésiculaire</mark></li></ul>
+            <p class="callout"><mark class="k-grave">*Cytolyse (ALAT &gt; 3NL) → évocateur de l'origine biliaire (&gt;95%)</mark></p>
+            <ul class="md-puces"><li><mark class="k-key">Écho-endoscopie</mark> : <mark class="k-key">importante intérêt pour le dg les petits calculs du bas cholédoque</mark></li><li><mark class="k-key">TDM : Se 20% pour la lithiase biliaire</mark> → signes en faveur : <mark class="k-grave">* Dilatation des VB</mark> / <mark class="k-grave">Cholédocite (PDC+)</mark> / <mark class="k-grave">Cholécystite aigue associée</mark> ; <mark class="k-grave">* Calculs vésiculaires (sauf si cirrhose)</mark></li><li><mark class="k-key">Sphinctérotomie endoscopique (SE)</mark> : risque accrue de mortalité par défaillance multiviscérale → l'indication de SE en URG : AA+ PA</li></ul>
+          </div>
+          <div class="ch-panneau" data-panneau="alcool" hidden><p>En faveur du dg : <mark class="k-key">dysmorhie hépatique / stéatose alccolique</mark></p></div>
+          <div class="ch-panneau" data-panneau="tumorale" hidden><ul class="md-puces"><li>Dg difficile → <mark class="k-key">refaire un scanner à distance si la cause n'est pas identifiée</mark></li><li>Intérêt de l'<mark class="k-key">écho-endoscopie +++</mark></li><li>En faveur du Dg : <mark class="k-key">dilatation canalaire/ zone hypodense/ engainement vasculaire/ AEG, ictère/ métastases</mark></li></ul></div>
+          <div class="ch-panneau" data-panneau="malformative" hidden>
+            <div class="pa-deconnexion"><figure class="pa-mini" data-pa="annulaire"></figure>
+              <div><h3 class="ch-h3">Pancréas annulaire</h3><p>Bande de pancréas encerclant complètement le deuxième duodénum (D2) =&gt; anneau de parenchyme pancréatique sain autour du D2.</p><p class="md-aide">Origine embryologique : multiples théories ; théorie de Lecco (1910) = anomalie de rotation du <b>bourgeon pancréatique ventral</b>. Asymptomatique chez l'adulte ; peut être symptomatique chez l'enfant (épigastralgies, reflux, etc.). Etienne D et al. Annals of Anatomy 2012.</p></div></div>
+            <h3 class="ch-h3">Pancréas divisum</h3>
+            <ul class="md-puces"><li><mark class="k-key">5-10% dans la population générale</mark> ; <mark class="k-key">défaut de fusion entre les canaux pancréatiques dorsal et ventral</mark></li><li>Pancréas divisum = <mark class="k-key">drainage principal du pancréas par la papille mineure</mark> = <mark class="k-key">Canal pancréatique dorsal dominant</mark></li><li>Fréquence dans la population générale = fréquence dans les pancréatites chroniques idiopathiques : <mark class="k-key">le pancréas divisum n'est pas une cause de pancréatite chronique</mark> ; fréquence augmentée chez les mutés CFTR (Bertin C et al. Am J Gastroenterol 2012).</li></ul>
+            <div class="pa-divisum">
+              <figure class="pa-mini" data-pa="divisum" data-type="modale"><figcaption><b>Anatomie modale</b> : le canal de Santorini peut communiquer avec le CPP mais doit être de taille plus petite +++</figcaption></figure>
+              <figure class="pa-mini" data-pa="divisum" data-type="I"><figcaption><b>Type I</b> : pancréas divisum complet (70%)</figcaption></figure>
+              <figure class="pa-mini" data-pa="divisum" data-type="II"><figcaption><b>Type II</b> : canal dorsal isolé (cas clinique) (20-25%)</figcaption></figure>
+              <figure class="pa-mini" data-pa="divisum" data-type="III"><figcaption><b>Type III</b> : pancréas divisum incomplet (5%)</figcaption></figure>
+            </div>
+          </div>
+          <div class="ch-panneau" data-panneau="pai" hidden>
+            <h3 class="ch-h3">Pancréatite auto-immune (poussée aiguë)</h3>
+            <ul class="md-puces"><li><mark class="k-key">Défaut de rehaussement diffus</mark></li><li><mark class="k-key">Pseudo-cpasule périphérique (Halo), PDC tardive</mark></li><li><mark class="k-key">Cholangite auto-immune associée</mark></li><li><mark class="k-key">Sténose globale du canal pancréatique principal (CPP) (dans la forme diffuse du PAI)</mark></li></ul>
+            <p><b>2 types de PAI pour un seul aspect en imagerie</b> : ce qui différencie les deux types de PAI est surtout <mark class="k-key">le terrain et les maladies associées +++</mark></p>
+            <div class="md-compare">
+              <div class="md-cote-a" style="--c: var(--blue)"><p class="md-cote-titre"><mark class="k-key">Type I</mark> : <mark class="k-key">association à IgG4 +++</mark></p><ul class="md-puces"><li>= « IgG4 related disease » ; <mark class="k-key">association avec atteinte d'autres organes → voies biliaires +++</mark></li><li>Epidémiologie : <mark class="k-key">Homme de plus de 60 ans</mark></li><li>Mode le plus fréquent de découverte : <mark class="k-key">Ictère</mark></li><li><mark class="k-key">Atteinte diffuse plus fréquente</mark></li></ul></div>
+              <div class="md-cote-a" style="--c: var(--purple)"><p class="md-cote-titre"><mark class="k-key">Type II</mark> : « <mark class="k-key">Pancréatite chronique idiopathique ductulaire</mark> »</p><ul class="md-puces"><li><mark class="k-key">Pas d'association avec les IgG4</mark></li><li>Association avec <mark class="k-key">les MICI</mark> ; <mark class="k-key">ratio H/F 1:1</mark></li><li><mark class="k-key">Plus jeune : 40 ans en moyenne</mark></li><li><mark class="k-key">Atteinte focale plus fréquente</mark></li></ul></div>
+            </div>
+            <p class="callout"><b>Retenir : Type I = Forme diffuse + cholangite ; Type II : forme focale + MICI</b></p>
+            <div class="md-deux">
+              <div class="fcard"><h3>Critères diagnostiques « HISORt »</h3><ul class="md-puces"><li><b>H</b>istology : infiltrat lymphoplasmocytaire</li><li><b>I</b>maging : imagerie compatible</li><li><b>S</b>erology : augmentation des IgG4</li><li><b>O</b>ther organ involved : atteinte d'autres organes</li><li><b>R</b>esponse therapeutic : critère diagnostic</li></ul></div>
+              <div class="fcard"><h3>Imagerie</h3><p><b>Signes canalaires</b> : <mark class="k-key">Sténoses sans dilatation(&lt;5mm)</mark> ; <mark class="k-key">« Duct penetrating sign »</mark> (traduit le fait de toujours visualiser le canal au sein d'une sténose ; vaut pour les voies biliaires et le CPP ; aspect effilé +++ ; signe plutôt en faveur de la bénignité).</p><p><b>Signes morphologiques</b> : <mark class="k-key">pseudo-capsule péri-pancréatique</mark> ; <mark class="k-key">délobulation pancréatique</mark> ; <mark class="k-key">prise de contraste tardive +++ (remaniements fibreux créés par l'inflammation chronique)</mark>.</p></div>
+            </div>
+            <div class="md-compare">
+              <div class="md-cote-a" style="--c: var(--teal)"><p class="md-cote-titre">PAI diffuse : aspect très évocateur</p><ul class="md-puces"><li><mark class="k-key">« duct penetrating sign »</mark></li><li><mark class="k-key">Pseudo-capsule péri-pancréatique</mark> hypodense sur les temps artériel et tardif</li><li><mark class="k-key">Perte des lobulations pancréatiques</mark></li><li><mark class="k-key">Atteinte diffuse</mark> ; visibilité du CPP dans l'isthme</li><li>Signes négatifs : <mark class="k-key">pas d'infiltration péri-vasculaire rétropéritonéale</mark> ; <mark class="k-key">pas de dilatation obstructive du CPP corporéo-caudal</mark></li></ul></div>
+              <div class="md-cote-a" style="--c: var(--orange)"><p class="md-cote-titre">PAI focale</p><ul class="md-puces"><li>Anomalie focale du pancréas : <mark class="k-key">hypertrophie de la queue</mark> ; <mark class="k-key">hypovasculaire au temps artériel par rapport au pancréas sain</mark> ; <mark class="k-key">plus rehaussée que le pancréas au temps tardif = fibrose +++</mark> ; <mark class="k-key">bien limitée</mark> ; perte des lobulations pancréatiques</li><li><mark class="k-key">Sténose du CPP corporéo-caudal sans dilatation d'amont</mark> ; <mark class="k-key">pas d'anomalie de l'arbre biliaire</mark> ; <mark class="k-key">pas d'anomalie du CPP d'aval</mark></li></ul></div>
+            </div>
+            <div class="ftable-wrap"><table class="ftable"><thead><tr><th>Diagnostic différentiel avec l'ADK pancréatique +++</th><th>PAI focale</th><th>Adénocarcinome</th></tr></thead><tbody>
+              <tr><td><mark class="k-key">Terrain</mark></td><td><mark class="k-key">MICI, plus jeune</mark></td><td><mark class="k-key">Patient plus âgé</mark></td></tr>
+              <tr><td><mark class="k-key">Pancréas d'amont</mark></td><td><mark class="k-key">Normal</mark></td><td><mark class="k-key">Atrophie</mark></td></tr>
+              <tr><td><mark class="k-key">Espace péripancréatique</mark></td><td><mark class="k-key">Pseudocapsule ; pas de sténose artérielle</mark></td><td><mark class="k-key">Lésion infiltrante +/- sténose artérielle</mark></td></tr>
+              <tr><td><mark class="k-key">Anomalie canalaire</mark></td><td><mark class="k-key">Disparition effilée et étendue (duct penetrating sign) sans dilatation d'amont</mark></td><td><mark class="k-key">Sténose brutale courte (stop canalaire) avec dilatation tortueuse d'amont</mark></td></tr>
+              <tr><td><mark class="k-key">Temps artériel / portal</mark></td><td><mark class="k-key">Hypo / hyper</mark></td><td><mark class="k-key">Hypo / hypo</mark></td></tr>
+              <tr><td><mark class="k-key">ADC</mark></td><td><mark class="k-key">Peu abaissé</mark></td><td><mark class="k-key">Abaissé</mark></td></tr>
+              <tr><td><mark class="k-key">Corticothérapie</mark></td><td><mark class="k-key">Réponse</mark></td><td><mark class="k-key">Pas de réponse</mark></td></tr>
+            </tbody></table></div>
+            <p class="callout callout-warn">Plusieurs éléments peuvent aider : rehaussement tardif intense +++ ; contours bien limités ; sténose sans dilatation +++. <b>Attention avec le terrain : ne pas être rassuré par l'âge, les ADK se voient à tout âge +++</b> (Vlachou, Radiographics 2011).</p>
+          </div>
+          <div class="ch-panneau" data-panneau="dkpa" hidden>
+            <h3 class="ch-h3">6. Dystrophie kystique du pancréas aberrant (DKPA)</h3>
+            <ul class="md-puces"><li><mark class="k-key">Inclusion aberrante du pancréas dans le duodénum</mark></li><li><mark class="k-key">Epaississement de la paroi duodénale : fibrose et kystes +++</mark></li><li><mark class="k-key">Sténose duodénale</mark></li><li><mark class="k-key">Infiltration graisseuse du sillon duodéno-pancréatique</mark></li></ul>
+            <p>Maladie symptomatique +++ (perte de poids, douleurs épigastriques) ; homme 5<sup>ème</sup> décennie ; consommation excessive d'alcool ; cause de pancréatite chronique ; pancréas dans la paroi duodénale, D2 +++. Poussées de pancréatite localisées dans la paroi de D2 → inflammation répétée → fibrose → <mark class="k-key">sténose duodénale</mark> et <mark class="k-key">pancréatite chronique obstructive d'amont</mark>.</p>
+            <p class="callout"><mark class="k-key">Association de microkystes de la paroi duodénale + infiltration du sillon duodéno-pancréatique = DKPA</mark> (anomalie localisée dans <mark class="k-key">le sillon pancrético-duodénal</mark> : <mark class="k-key">infiltration de la graisse péri-duodénale</mark>, <mark class="k-key">calcifications dans le sillon duodéno-pancréatique</mark>, <mark class="k-key">microkystes de la paroi duodénale</mark>, multiples et de petites tailles).</p>
+            <p class="callout callout-warn"><b>Attention aux termes « Pancréatite du sillon » et « pancréatite para-duodénale »</b> : appellations de la DKPA avant qu'on ne la découvre ; pancréatite para-duodénale = DKPA +++ ; il est préférable de ne plus utiliser le terme de pancréatite du sillon et de préférer pancréatite para-duodénale ou DKPA +++.</p>
+          </div>
+          <div class="ch-panneau" data-panneau="ischemique" hidden>
+            <h3 class="ch-h3">7. Pancréatite aigue ischémique</h3>
+            <ul class="md-puces"><li>Cause rare de pancréatite aigue.</li><li>Ischémie – reperfusion =&gt; création de radicaux libres =&gt; atteinte de la microvascularisation =&gt; dysfonction endothéliale.</li><li><mark class="k-key">1ère cause : arrêt cardiaque / chirurgie cardiaque</mark></li><li>Traitement : étiologique (correction du bas débit si persistant) et symptomatique (même traitement qu'une pancréatite aigue quelque soit l'étiologie).</li><li>Nécroses péri-pancréatiques isolées ; <b>rôle pronostic du volume de l'épanchement péri-pancréatique +++</b> : corrélation à la morbi-mortalité ; volume épanchement péripancréatique &gt; 100 mL fortement corrélé à la défaillance d'organe ou à l'infection (Meyrignac O et al. Radiology 2015).</li></ul>
+            <div class="fcard"><h3>Rappel - Vascularisation artérielle du pancréas</h3><ol class="md-puces"><li><b>Vascularisation céphalique</b> : 2 arcades pancréatico-duodénales ant et post, jonction des art. pancréatico-duodénales (APD) antéro-supérieure et postéro-supérieure (issues de l'artère gastroduodénale) et des APD antéro-inférieure et postéro-inférieure (issues de l'AMS).</li><li><b>Vascularisation corporéo-caudale</b> : art. pancréatique dorsale qui donne l'art. pancréatique inférieure et artères pancréatiques transverses (issues de l'artère splénique). Elles s'anastomosent entre elles (pancreatica magna) et avec l'artère mésentérique supérieure.</li></ul>
+              <p class="callout"><b>Isthme = zone de faiblesse +++</b> <button type="button" class="md-lien-3d" data-voir-seg="isthme">voir l'isthme en 3D</button></p></div>
+            <p class="md-sous">Aspect scannographique de pancréatite aigue avec épanchement péri-pancréatique évocateur de collection aigue nécrotique +++ :</p>
+            <ul class="md-puces"><li>Infiltration hétérogène de la graisse péri-pancréatique ; épanchement en avant des fascia para-rénaux antérieurs droit et gauche ; prise de contraste intense des feuillets péritonéaux ; rehaussement homogène normal de l'ensemble du pancréas.</li><li>Forme rare de pancréatite aigue nécrosante : nécrose péri-pancréatique isolée (15% des pancréatites aigues nécrosantes), <b>sans nécrose parenchymateuse</b>. Il peut être très difficile de différencier les premières semaines coulée liquidienne inflammatoire de collection aigue nécrotique.</li></ul>
+          </div>
+        </section>
+
+        <!-- ? -->
+        <section class="fsec" id="testez-vous" style="--c: var(--ink)">
+          <h2 class="fsec-title"><span class="fnum">?</span>Testez-vous</h2>
+          <p class="fintro">Quelle collection ? <span class="ti-score" id="pa-score">0 / 8</span></p>
+          <div class="ti-cas pa-cas" id="pa-cas"></div>
+          <button type="button" class="btn btn-outline btn-sm" id="pa-cas-reset">Recommencer</button>
+          <div class="flash flash-3">
+            <button class="flip" aria-pressed="false" style="--c: var(--teal)"><span class="flip-tab">1</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Atlanta 2012 : diagnostic ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>2 des 3 critères</b>douleur typique, enzymes ≥ 3xN, imagerie.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--blue)"><span class="flip-tab">2</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Quand faire la TDM ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>48-72 h</b>mieux à partir de 72h, l'idéal = entre 5-7j (sauf doute ou gravité d'emblée).</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--k-grave)"><span class="flip-tab">3</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>CTSI : composantes ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>Balthazar (0-4) + nécrose (0-6)</b>score final entre 0 et 10.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--amber)"><span class="flip-tab">4</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Surinfection : signe d'imagerie ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>Bulles de gaz +++</b>faux positif : fistule digestive, drainage ou ponction.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--purple)"><span class="flip-tab">5</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Pseudo-anévrysme : artère ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>Splénique +++</b>&gt; pancréatico-duodénale &gt; gastroduodénale.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--green)"><span class="flip-tab">6</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Origine biliaire : biologie ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>ALAT &gt; 3N</b>évocateur de l'origine biliaire (&gt;95%).</p></span></span></button>
+          </div>
+          <p class="md-source">D'après le cours de l'auteur « Imagerie de la pancréatite aiguë ». Anatomie 3D : Z-Anatomy (CC BY-SA 4.0) ; coupes et schémas : dessins pédagogiques réalisés pour le site (pas d'images de patients). Rappel anatomique (segments, espaces) ajouté à la fiche.</p>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="../index.html" class="brand">
+          <img src="../assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+          <span class="brand-name">Radiologic<br>Hub</span>
+        </a>
+        <p class="footer-tagline">Outils, ressources et formation pour les radiologues et les résidents.</p>
+      </div>
+      <nav aria-label="Liens de pied de page">
+        <div class="footer-col">
+          <p class="footer-titre">Au quotidien</p>
+          <a href="../comptes-rendus.html">Comptes rendus</a>
+          <a href="../suivi-oncologique.html">Suivi oncologique</a>
+          <a href="../fiches-rapides.html">Fiches rapides</a>
+          <a href="../espace-dicom.html">Espace DICOM</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Apprendre</p>
+          <a href="../radioanatomie/index.html">Radioanatomie</a>
+          <a href="../cas/index.html">Cas cliniques</a>
+          <a href="../index.html#cas-du-jour">Cas du jour</a>
+          <a href="../bibliotheque.html">Bibliothèque</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Réseau</p>
+          <a href="../communaute.html">Communauté</a>
+          <a href="../remplacements.html">Remplacements</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Masterclass</p>
+          <a href="../index.html#masterclass">Programme</a>
+          <a href="../index.html#tarifs">Tarifs</a>
+          <a href="../index.html#inscription">S'inscrire à une masterclass</a>
+        </div>
+      </nav>
+      <p class="copyright"><span>© <span id="year"></span> RadiologicHub · Outils, ressources et formation en radiologie</span><span class="copyright-liens"><a href="../mentions-legales.html">Mentions légales</a><a href="../index.html#inscription">Contact</a></span></p>
+    </div>
+  </footer>
+
+  <script src="../navigation.js?v=20261022235000"></script>
+
+  <script src="../fiche.js?v=20261022235000"></script>
+  <script src="../regles/pancreatite.js?v=20261028100000"></script>
+  <script src="pancreas/pancreas-svg.js?v=20261028100000"></script>
+  <script type="module" src="pancreas/pancreatite-fiche.js?v=20261028100000"></script>
+</body>
+</html>

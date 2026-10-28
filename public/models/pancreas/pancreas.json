@@ -1,0 +1,292 @@
+{
+ "source": "Z-Anatomy (CC BY-SA 4.0), commit 2b6cf98a8ca012571ecb252e5c077b42a21b3b61, dérivé de BodyParts3D (CC BY-SA 2.1 JP)",
+ "repere": "centré sur l'isthme du pancréas, ×10 (1 unité = 10 cm), +Y haut, +Z avant du patient, +X gauche du patient",
+ "limites": "tête : à droite du bord droit de la VMS ; isthme : en avant de la VMS ; corps et queue : séparés au milieu de la distance entre le bord gauche de la VMS et l'extrémité de la queue (Japan Pancreas Society) ; crochet : partie inférieure de la tête passant sous la VMS (schéma)",
+ "reperes_mm": {
+  "vms": [
+   0,
+   -30,
+   1124
+  ],
+  "aorte": [
+   8,
+   -20,
+   1117
+  ],
+  "x_vms_d": -6,
+  "x_vms_g": 6,
+  "x_aorte_g": 18,
+  "x_corps_queue": 39,
+  "z_crochet": 1101.0,
+  "x_crochet": -13
+ },
+ "structures": [
+  {
+   "id": "pancreas-tete",
+   "nom": "Tête du pancréas",
+   "cat": "pancreas",
+   "segment": "tete",
+   "centre": [
+    -0.246,
+    -0.079,
+    0.103
+   ]
+  },
+  {
+   "id": "pancreas-crochet",
+   "nom": "Crochet (processus unciné)",
+   "cat": "pancreas",
+   "segment": "crochet",
+   "centre": [
+    -0.1,
+    -0.252,
+    0.155
+   ]
+  },
+  {
+   "id": "pancreas-isthme",
+   "nom": "Isthme (col)",
+   "cat": "pancreas",
+   "segment": "isthme",
+   "centre": [
+    0.006,
+    0.088,
+    0.148
+   ]
+  },
+  {
+   "id": "pancreas-corps",
+   "nom": "Corps du pancréas",
+   "cat": "pancreas",
+   "segment": "corps",
+   "centre": [
+    0.224,
+    0.14,
+    0.024
+   ]
+  },
+  {
+   "id": "pancreas-queue",
+   "nom": "Queue du pancréas",
+   "cat": "pancreas",
+   "segment": "queue",
+   "centre": [
+    0.519,
+    0.244,
+    -0.156
+   ]
+  },
+  {
+   "id": "duodenum",
+   "nom": "Duodénum",
+   "cat": "tube",
+   "centre": [
+    -0.214,
+    -0.259,
+    0.1
+   ]
+  },
+  {
+   "id": "rate",
+   "nom": "Rate",
+   "cat": "rate",
+   "centre": [
+    0.867,
+    0.421,
+    -0.283
+   ]
+  },
+  {
+   "id": "rein-gauche",
+   "nom": "Rein gauche",
+   "cat": "rein",
+   "centre": [
+    0.582,
+    -0.049,
+    -0.387
+   ]
+  },
+  {
+   "id": "rein-droit",
+   "nom": "Rein droit",
+   "cat": "rein",
+   "centre": [
+    -0.532,
+    -0.213,
+    -0.281
+   ]
+  },
+  {
+   "id": "estomac",
+   "nom": "Estomac",
+   "cat": "estomac",
+   "centre": [
+    0.435,
+    0.494,
+    0.195
+   ]
+  },
+  {
+   "id": "colon-transverse",
+   "nom": "Côlon transverse",
+   "cat": "colon",
+   "centre": [
+    0.05,
+    -0.215,
+    0.274
+   ]
+  },
+  {
+   "id": "vesicule",
+   "nom": "Vésicule biliaire",
+   "cat": "bile",
+   "centre": [
+    -0.48,
+    0.182,
+    0.343
+   ]
+  },
+  {
+   "id": "rachis",
+   "nom": "Rachis (T12 à L2)",
+   "cat": "os",
+   "centre": [
+    0.004,
+    -0.081,
+    -0.576
+   ]
+  },
+  {
+   "id": "aorte",
+   "nom": "Aorte abdominale",
+   "cat": "artere",
+   "centre": [
+    0.083,
+    -0.015,
+    -0.039
+   ]
+  },
+  {
+   "id": "tronc-coeliaque",
+   "nom": "Tronc cœliaque",
+   "cat": "artere",
+   "centre": [
+    0.092,
+    0.315,
+    0.031
+   ]
+  },
+  {
+   "id": "ams",
+   "nom": "Artère mésentérique supérieure (AMS)",
+   "cat": "artere",
+   "centre": [
+    0.023,
+    -0.538,
+    0.161
+   ]
+  },
+  {
+   "id": "artere-splenique",
+   "nom": "Artère splénique",
+   "cat": "artere",
+   "centre": [
+    0.715,
+    0.418,
+    -0.215
+   ]
+  },
+  {
+   "id": "gastroduodenale",
+   "nom": "Artère gastroduodénale",
+   "cat": "artere",
+   "centre": [
+    -0.295,
+    0.213,
+    0.562
+   ]
+  },
+  {
+   "id": "vci",
+   "nom": "Veine cave inférieure",
+   "cat": "veine",
+   "centre": [
+    -0.091,
+    -0.146,
+    0.008
+   ]
+  },
+  {
+   "id": "vms",
+   "nom": "Veine mésentérique supérieure (VMS)",
+   "cat": "porte",
+   "centre": [
+    -0.303,
+    -0.816,
+    0.082
+   ]
+  },
+  {
+   "id": "veine-porte",
+   "nom": "Veine porte",
+   "cat": "porte",
+   "centre": [
+    -0.057,
+    0.556,
+    0.087
+   ]
+  },
+  {
+   "id": "veine-splenique",
+   "nom": "Veine splénique",
+   "cat": "porte",
+   "centre": [
+    0.711,
+    0.422,
+    -0.126
+   ]
+  },
+  {
+   "id": "vmi",
+   "nom": "Veine mésentérique inférieure",
+   "cat": "porte",
+   "centre": [
+    0.193,
+    -0.701,
+    0.042
+   ]
+  },
+  {
+   "id": "wirsung",
+   "nom": "Canal pancréatique principal (Wirsung)",
+   "cat": "canal",
+   "centre": [
+    0.037,
+    0.033,
+    0.041
+   ]
+  },
+  {
+   "id": "santorini",
+   "nom": "Canal pancréatique accessoire (Santorini)",
+   "cat": "canal",
+   "centre": [
+    -0.294,
+    -0.073,
+    0.125
+   ]
+  },
+  {
+   "id": "vbp",
+   "nom": "Voie biliaire principale (cholédoque)",
+   "cat": "bile",
+   "centre": [
+    -0.31,
+    0.093,
+    0.158
+   ]
+  }
+ ],
+ "empreinte": "42941357eb34",
+ "octets": 474428
+}
