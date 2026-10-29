@@ -1,29 +1,89 @@
 # RadiologicHub — déploie les fonctions serveur Supabase (rp-agent, rp-lien, rp-taches).
-# Lancement manuel uniquement : GitHub → Actions → « Déployer les fonctions Supabase » → Run workflow.
-# Prérequis : secret du dépôt SUPABASE_ACCESS_TOKEN (supabase.com → Account → Access Tokens).
+# Lancement manuel uniquement : GitHub → Actions → « Déployer les fonctions Supabase » → Run workflow
+# (branche principale, propriétaire du dépôt, après approbation dans l'environnement protégé
+# « supabase-production » ; mêmes règles que le workflow « Exploitation Supabase »).
+# Prérequis : secret SUPABASE_ACCESS_TOKEN (supabase.com → Account → Access Tokens), de préférence
+# dans l'environnement « supabase-production ».
 # Les secrets des fonctions (RP_SECRET, EMAIL_FOURNISSEUR…) se règlent dans Supabase, pas ici.
 name: Déployer les fonctions Supabase
 
 on:
   workflow_dispatch:
 
-permissions:
-  contents: read
+permissions: {}
+
+# Jamais en même temps qu'une autre opération Supabase.
+concurrency:
+  group: exploitation-supabase
+  cancel-in-progress: false
 
 jobs:
+  controle:
+    name: Contrôle (branche, auteur, environnement protégé)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    permissions:
+      actions: read      # lire les règles de protection de l'environnement
+    steps:
+      - name: Refuser toute exécution non autorisée
+        env:
+          REF: ${{ github.ref }}
+          ACTEUR: ${{ github.actor }}
+          DECLENCHEUR: ${{ github.triggering_actor }}
+          PROPRIETAIRE: ${{ github.repository_owner }}
+          DEPOT: ${{ github.repository }}
+          GH_TOKEN: ${{ github.token }}
+          BRANCHE: claude/radiologichub-website-ss89g9
+          ENVIRONNEMENT: supabase-production
+        run: |
+          set -eu
+          refus() { echo "::error::$1"; exit 1; }
+          [ "$REF" = "refs/heads/$BRANCHE" ] || refus "Déploiement refusé : seule la branche principale est autorisée."
+          { [ "$ACTEUR" = "$PROPRIETAIRE" ] && [ "$DECLENCHEUR" = "$PROPRIETAIRE" ]; } || refus "Déploiement refusé : réservé au propriétaire du dépôt."
+          api() { curl -sS -o "$2" -w '%{http_code}' --max-time 20 -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" "https://api.github.com/repos/$DEPOT/environments/$ENVIRONNEMENT$1" || echo 000; }
+          code=$(api "" env.json)
+          [ "$code" = "200" ] || refus "Environnement « $ENVIRONNEMENT » absent ou illisible (code $code) : le créer et le protéger (Settings → Environments)."
+          relecteurs=$(jq '[.protection_rules[]? | select(.type == "required_reviewers") | .reviewers[]?] | length' env.json)
+          contournement=$(jq 'if has("can_admins_bypass") then .can_admins_bypass else true end' env.json)
+          restreint=$(jq '.deployment_branch_policy.custom_branch_policies == true' env.json)
+          rm -f env.json
+          [ "$relecteurs" -ge 1 ] || refus "Environnement « $ENVIRONNEMENT » : aucun relecteur obligatoire (Required reviewers)."
+          [ "$contournement" = "false" ] || refus "Environnement « $ENVIRONNEMENT » : décocher « Allow administrators to bypass configured protection rules »."
+          [ "$restreint" = "true" ] || refus "Environnement « $ENVIRONNEMENT » : limiter les déploiements aux branches choisies (Selected branches)."
+          code=$(api "/deployment-branch-policies" branches.json)
+          [ "$code" = "200" ] || refus "Règles de branche de « $ENVIRONNEMENT » illisibles (code $code)."
+          branches=$(jq -r '[.branch_policies[]? | .name] | sort | join(",")' branches.json)
+          rm -f branches.json
+          [ "$branches" = "$BRANCHE" ] || refus "Environnement « $ENVIRONNEMENT » : seule la branche principale doit être autorisée."
+          echo "Contrôle réussi : branche principale, propriétaire, environnement protégé."
+
   deployer:
-    runs-on: ubuntu-latest
+    name: Déployer rp-agent, rp-lien, rp-taches
+    needs: controle
+    if: >-
+      github.ref == 'refs/heads/claude/radiologichub-website-ss89g9'
+      && github.actor == github.repository_owner
+      && github.triggering_actor == github.repository_owner
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: supabase-production
+    permissions:
+      contents: read
     env:
-      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
       PROJET: wdbczcwnaxfnoioyukgr
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
       - name: Préparer le noyau et les modèles (supabase/functions/_shared)
         run: npm run backend:preparer
+      # Le secret n'est donné qu'à cette étape ; CLI Supabase à version figée.
       - name: Déployer
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
         run: |
           for f in rp-agent rp-lien rp-taches; do
             npx --yes supabase@2.120.0 functions deploy "$f" --project-ref "$PROJET" --use-api

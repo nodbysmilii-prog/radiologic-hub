@@ -3,8 +3,8 @@
 -- Utilisé par le workflow « Exploitation Supabase » (action diagnostic,
 -- scripts/exploitation-supabase.js), envoyé en mode lecture seule ; peut
 -- aussi être collé tel quel dans l'éditeur SQL de Supabase.
--- UNE seule requête SELECT. Ne renvoie que des oui / non, des versions, des
--- comptes et des noms techniques : aucune donnée personnelle, aucune valeur
+-- UNE seule requête SELECT. Ne renvoie que des oui / non, des versions et des
+-- noms techniques : aucune donnée sur les utilisateurs (ni comptes, ni données), aucune valeur
 -- de secret, aucune commande de tâche Cron (une ancienne commande pourrait
 -- contenir un mot de passe en clair). Les objets absents donnent null au lieu
 -- d'une erreur (requêtes dynamiques par query_to_xml, sans écriture).
@@ -49,23 +49,5 @@ select jsonb_build_object(
   'cron_dernieres_executions', case when to_regclass('cron.job_run_details') is null or to_regclass('cron.job') is null then null
     else (xpath('/row/j/text()', query_to_xml('select coalesce(jsonb_agg(status order by start_time desc), ''[]'')::text as j from (select d.status, d.start_time from cron.job_run_details d join cron.job c on c.jobid = d.jobid where c.jobname = ''rp-taches'' order by d.start_time desc limit 5) t', false, true, '')))[1]::text::jsonb end,
   'pg_net_derniers_codes', case when to_regclass('net._http_response') is null then null
-    else (xpath('/row/j/text()', query_to_xml('select coalesce(jsonb_agg(status_code order by created desc), ''[]'')::text as j from (select status_code, created from net._http_response order by created desc limit 5) t', false, true, '')))[1]::text::jsonb end,
-  'donnees', jsonb_build_object(
-    'administrateurs', case when to_regclass('public.rp_admins') is null then null
-      else (xpath('/row/n/text()', query_to_xml('select count(*) as n from public.rp_admins', false, true, '')))[1]::text::int end,
-    'remplacants_par_etat', case when to_regclass('public.rp_remplacants') is null then null
-      else (xpath('/row/j/text()', query_to_xml('select coalesce(jsonb_object_agg(etat, n), ''{}'')::text as j from (select etat, count(*) as n from public.rp_remplacants group by etat) t', false, true, '')))[1]::text::jsonb end,
-    'structures_par_etat', case when to_regclass('public.rp_structures') is null then null
-      else (xpath('/row/j/text()', query_to_xml('select coalesce(jsonb_object_agg(etat, n), ''{}'')::text as j from (select etat, count(*) as n from public.rp_structures group by etat) t', false, true, '')))[1]::text::jsonb end,
-    'demandes_par_etat', case when to_regclass('public.rp_demandes') is null then null
-      else (xpath('/row/j/text()', query_to_xml('select coalesce(jsonb_object_agg(etat, n), ''{}'')::text as j from (select etat, count(*) as n from public.rp_demandes group by etat) t', false, true, '')))[1]::text::jsonb end,
-    'propositions_par_etat', case when to_regclass('public.rp_propositions') is null then null
-      else (xpath('/row/j/text()', query_to_xml('select coalesce(jsonb_object_agg(etat, n), ''{}'')::text as j from (select etat, count(*) as n from public.rp_propositions group by etat) t', false, true, '')))[1]::text::jsonb end,
-    'disponibilites', case when to_regclass('public.rp_disponibilites') is null then null
-      else (xpath('/row/n/text()', query_to_xml('select count(*) as n from public.rp_disponibilites', false, true, '')))[1]::text::int end,
-    'disponibilites_a_venir', case when to_regclass('public.rp_disponibilites') is null then null
-      else (xpath('/row/n/text()', query_to_xml('select count(*) as n from public.rp_disponibilites where date >= current_date', false, true, '')))[1]::text::int end,
-    'emails_par_statut', case when to_regclass('public.rp_emails') is null then null
-      else (xpath('/row/j/text()', query_to_xml('select coalesce(jsonb_object_agg(statut, n), ''{}'')::text as j from (select statut, count(*) as n from public.rp_emails group by statut) t', false, true, '')))[1]::text::jsonb end
-  )
+    else (xpath('/row/j/text()', query_to_xml('select coalesce(jsonb_agg(status_code order by created desc), ''[]'')::text as j from (select status_code, created from net._http_response order by created desc limit 5) t', false, true, '')))[1]::text::jsonb end
 ) as diagnostic;

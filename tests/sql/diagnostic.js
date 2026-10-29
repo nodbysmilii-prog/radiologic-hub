@@ -3,7 +3,8 @@
    Diagnostic de production (supabase/sql/diagnostic.sql) sur une base locale :
    • s'exécute dans une transaction READ ONLY (preuve qu'il n'écrit rien) ;
    • tolère les objets absents (pg_cron, Vault, historique des migrations) ;
-   • ne renvoie ni données personnelles, ni valeurs de secret, ni commandes Cron.
+   • ne renvoie aucune information sur les utilisateurs (ni comptes, ni données),
+     ni valeur de secret, ni commande Cron.
    ========================================================= */
 const fs = require('node:fs');
 const path = require('node:path');
@@ -37,7 +38,7 @@ try {
   verifier('tâches Cron : noms, fréquences, passage par Vault ; secret en clair signalé sans le montrer', d.cron.length === 2 && d.cron[0].via_vault === true && d.cron[1].secret_en_clair === true && d.cron[1].via_vault === false);
   verifier('dernières exécutions de rp-taches (statuts seulement)', JSON.stringify(d.cron_dernieres_executions) === '["succeeded","failed"]');
   verifier('historique des migrations absent : null, sans erreur', d.historique_migrations === null);
-  verifier('comptes seulement pour les données', d.donnees.administrateurs === 1 && typeof d.donnees.disponibilites === 'number');
+  verifier('aucune information sur les utilisateurs (ni comptes, ni données)', JSON.stringify(Object.keys(d).sort()) === JSON.stringify(['cron', 'cron_dernieres_executions', 'droits', 'extensions', 'historique_migrations', 'migrations', 'pg_net_derniers_codes', 'vault']), Object.keys(d).join(', '));
   const texte = JSON.stringify(d);
   verifier('aucune donnée personnelle ni secret dans le résultat', !/personne\.fictive|MOT-DE-PASSE|@|select |x-rp-secret/i.test(texte), texte.slice(0, 300));
 
