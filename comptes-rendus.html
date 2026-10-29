@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="fiche.css?v=20261012150000">
   <link rel="stylesheet" href="finition.css?v=20261022310000">
   <link rel="stylesheet" href="cr.css?v=20261024130000">
+  <link rel="stylesheet" href="assistant/panneau.css?v=20261029120000">
   <link rel="stylesheet" href="cr-tools.css?v=20261024220000">
   <link rel="stylesheet" href="dictee/dictee.css?v=20261023200000">
 </head>
@@ -230,6 +231,7 @@
             </div>
           </div>
 
+          <div class="ad-zone">
           <div class="cr-editor-wrap">
             <label for="cr-editor" class="visually-hidden">Compte rendu</label>
             <textarea id="cr-editor" class="cr-editor" spellcheck="true" lang="fr"
@@ -242,6 +244,30 @@
               <ul role="listbox" id="cr-sug-list" aria-label="Phrases proposées"></ul>
               <p class="cr-pop-help"><kbd>Tab</kbd> insérer · <kbd>↑</kbd><kbd>↓</kbd> choisir · <kbd>Échap</kbd> fermer</p>
             </div>
+          </div>
+            <!-- Assistant documentaire : fiche rapide liée au texte (analyse locale, lecture seule) -->
+            <aside class="ad-panneau" id="ad-panneau" data-etat="replie" data-index="20261029120000" aria-label="Assistant documentaire : fiches rapides liées">
+              <div class="ad-rail">
+                <button type="button" class="ad-rail-btn" aria-controls="ad-corps" aria-expanded="false" title="Afficher les fiches liées au compte rendu">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5zM4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>
+                  <span class="ad-rail-txt">Fiches</span>
+                  <span class="ad-rail-nb" hidden></span>
+                </button>
+              </div>
+              <div class="ad-corps" id="ad-corps">
+                <div class="ad-tete">
+                  <p class="ad-titre">Fiches liées</p>
+                  <button type="button" class="ad-icone" id="ad-epingle" aria-pressed="false" title="Épingler : garder le panneau ouvert"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6l-1 6 4 4H6l4-4zM12 13v8"/></svg><span class="visually-hidden">Épingler le panneau</span></button>
+                  <button type="button" class="ad-icone" id="ad-replier" title="Replier le panneau"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg><span class="visually-hidden">Replier le panneau</span></button>
+                </div>
+                <div class="ad-contenu"><p class="ad-vide">Écrivez votre compte rendu : la fiche rapide correspondante (Bosniak, pancréatite, PI-RADS…) s'affiche ici.</p></div>
+                <div class="ad-pied">
+                  <label class="ad-interrupteur"><input type="checkbox" id="ad-actif" checked> Assistant actif</label>
+                  <small>Analyse sur votre appareil : le texte n'est ni envoyé ni conservé.</small>
+                </div>
+              </div>
+            </aside>
+            <button type="button" class="ad-mobile" id="ad-mobile" aria-controls="ad-panneau" aria-expanded="false" hidden>Fiche liée <span class="ad-mobile-nb"></span></button>
           </div>
 
           <div class="cr-status">
@@ -442,5 +468,8 @@
   <script src="dictee/traitement.js?v=20261023235500"></script>
   <script src="dictee/moteurs.js?v=20261023210000"></script>
   <script src="dictee/dictee.js?v=20261024220000"></script>
+  <script src="assistant/synonymes.js?v=20261029120000"></script>
+  <script src="assistant/moteur.js?v=20261029120000"></script>
+  <script src="assistant/panneau.js?v=20261029120000"></script>
 </body>
 </html>
