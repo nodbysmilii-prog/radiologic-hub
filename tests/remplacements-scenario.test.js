@@ -116,21 +116,25 @@ test('scénario complet : sélection, réponses, choix, annulation, remise en li
   assert.match(confS1.html, /r2@exemple\.tn/, 'coordonnées du remplaçant');
   assert.ok(w.dernier(w.nom('R1'), 'poste-pourvu'), 'poste pourvu');
 
-  /* 6. R2 annule : e-mail immédiat à la structure, demande remise en ligne, R1 recontacté (pas R2) */
-  assert.equal((await agent.utiliserJeton(jeton(confR2, 'Annuler ce remplacement'))).remise, true);
+  /* 6. R2 annule : e-mail immédiat à la structure, demande remise en ligne ; R1, déjà volontaire, le reste
+        (sans nouvelle proposition à laquelle répondre) ; R2 n'est pas recontacté */
+  const propositionsR1 = w.recus(w.nom('R1')).filter(m => m.modele === 'proposition').length;
+  const annule = await agent.utiliserJeton(jeton(confR2, 'Annuler ce remplacement'));
+  assert.equal(annule.remise, true);
+  assert.equal(annule.volontaires, 1);
   const annulation = w.dernier('contact@orangers-fictive.tn', 'annulation');
   assert.match(annulation.html, /annulé par le remplaçant/);
   assert.match(annulation.html, /remise en ligne automatiquement/);
+  assert.match(annulation.html, /1 remplaçant\(s\) déjà déclaré\(s\) disponible\(s\)/);
   dA = await depot.demandes.get(A.demande.id);
   assert.equal(dA.etat, 'publiee');
   assert.deepEqual(dA.exclus, [ids.R2]);
-  const remise = w.dernier(w.nom('R1'), 'proposition');
-  assert.match(remise.objet, /^De nouveau disponible/);
+  assert.equal((await depot.propositions.parDemande(A.demande.id)).find(p => p.remplacant_id === ids.R1).etat, 'interesse');
+  assert.equal(w.recus(w.nom('R1')).filter(m => m.modele === 'proposition').length, propositionsR1, 'R1 ne doit pas répondre une seconde fois');
   assert.equal(w.recus(w.nom('R2')).filter(m => m.modele === 'proposition' && /15\/10/.test(m.objet)).length, 1, "R2 n'est pas recontacté");
 
-  /* 7. R1 de nouveau disponible ; la structure le choisit depuis son espace */
-  await agent.utiliserJeton(jeton(remise, 'Je suis disponible'));
-  assert.equal((await agent.choisir(A.demande.id, ids.R1, w.acteurS1)).ok, true);
+  /* 7. La structure choisit R1 aussitôt, depuis le bouton de l'e-mail d'annulation */
+  assert.equal((await agent.utiliserJeton(jeton(annulation, 'Choisir Dr Test R1'))).ok, true);
   assert.equal((await depot.demandes.get(A.demande.id)).remplacant_id, ids.R1);
   assert.equal((await agent.choisir(A.demande.id, ids.R2, w.acteurS1)).raison, 'pourvu');
 
