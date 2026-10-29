@@ -1,0 +1,88 @@
+/* =========================================================
+   RadiologicHub — assistant documentaire (comptes-rendus.html) :
+   panneau des fiches liées à droite de l'éditeur.
+   • large : colonne de 300 px (repliée : rail de 52 px) ;
+   • zone étroite (tablette) : le panneau ouvert passe par-dessus l'éditeur ;
+   • téléphone : bouton « Fiche liée » en bas d'écran, panneau compact en bas.
+   ========================================================= */
+.ad-zone { container: adzone / inline-size; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; align-items: start; position: relative; }
+.ad-zone > .cr-editor-wrap { min-width: 0; }
+
+.ad-panneau { position: sticky; top: 84px; display: flex; max-height: calc(100vh - 100px); font-size: .84rem; }
+.ad-panneau svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Rail (panneau replié) */
+.ad-rail { display: none; }
+.ad-panneau[data-etat="replie"] .ad-rail { display: block; }
+.ad-panneau[data-etat="replie"] .ad-corps { display: none; }
+.ad-rail-btn { position: relative; display: grid; justify-items: center; gap: 8px; width: 52px; padding: 12px 0; border: 2px solid var(--ink); border-radius: 16px; background: #fff; color: var(--ink); font: 800 .62rem var(--font); letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
+.ad-rail-btn:hover { background: var(--card, #f6f3ee); }
+.ad-rail-txt { writing-mode: vertical-rl; transform: rotate(180deg); }
+.ad-rail-nb, .ad-mobile-nb { min-width: 20px; padding: 2px 6px; border-radius: 999px; background: var(--purple); color: #fff; font-size: .68rem; letter-spacing: 0; }
+.ad-mobile-nb:empty { display: none; }
+.ad-panneau[data-off="true"] .ad-rail-btn { opacity: .55; }
+
+/* Corps */
+.ad-corps { display: flex; flex-direction: column; width: 300px; max-height: inherit; border: 2px solid var(--ink); border-radius: 18px; background: #fff; box-shadow: 5px 5px 0 rgba(17, 17, 20, .15); overflow: hidden; }
+.ad-tete { display: flex; align-items: center; gap: 4px; padding: 10px 10px 10px 14px; border-bottom: 2px solid var(--ink); background: var(--card, #f6f3ee); }
+.ad-titre { margin: 0 auto 0 0; font-family: var(--font-marker); font-size: 1.05rem; letter-spacing: .03em; }
+.ad-icone { display: grid; place-items: center; width: 32px; height: 32px; border: 0; border-radius: 9px; background: none; color: var(--ink); cursor: pointer; }
+.ad-icone:hover { background: #fff; }
+.ad-icone[aria-pressed="true"] { background: var(--ink); color: #fff; }
+.ad-contenu { flex: 1 1 auto; overflow: auto; padding: 12px 14px; }
+.ad-vide { margin: 0; color: var(--muted); font-weight: 600; }
+.ad-detecte { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin: 0 0 6px; }
+.ad-detecte span { font-size: .64rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-right: 2px; }
+.ad-detecte mark { font-size: .74rem; }
+.ad-fiche { margin: 0 0 10px; font-size: 1rem; line-height: 1.3; }
+
+/* Carrousel des sections */
+.ad-carrousel { border: 2px solid var(--ink); border-radius: 14px; overflow: hidden; }
+.ad-nav { display: flex; align-items: center; justify-content: space-between; padding: 4px; background: var(--ink); color: #fff; }
+.ad-nav button { width: 30px; height: 28px; border: 0; border-radius: 8px; background: none; color: #fff; font: 900 1.2rem/1 var(--font); cursor: pointer; }
+.ad-nav button:hover:not(:disabled) { background: rgba(255, 255, 255, .15); }
+.ad-nav button:disabled { opacity: .3; cursor: default; }
+.ad-pos { font-size: .7rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.ad-diapo { padding: 10px 12px; }
+.ad-diapo h4 { margin: 0 0 4px; font-size: .9rem; line-height: 1.3; }
+.ad-diapo.is-pertinente h4::before { content: "★ "; color: var(--purple); }
+.ad-rub { margin: 0 0 6px; font-weight: 800; font-size: .78rem; color: var(--purple); }
+.ad-extrait { margin: 0 0 6px; padding-left: 8px; border-left: 3px solid color-mix(in srgb, var(--purple) 35%, transparent); line-height: 1.45; }
+.ad-lien { display: inline-block; margin-top: 2px; font-weight: 800; font-size: .76rem; color: var(--purple); }
+.ad-points { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; padding: 0 8px 10px; }
+.ad-points button { width: 9px; height: 9px; padding: 0; border: 2px solid var(--ink); border-radius: 50%; background: #fff; cursor: pointer; }
+.ad-points button.is-pertinente { border-color: var(--purple); }
+.ad-points button[aria-current="true"] { background: var(--ink); }
+.ad-points button.is-pertinente[aria-current="true"] { background: var(--purple); }
+.ad-complete { display: block; margin: 12px 0 0; text-align: center; }
+.ad-autres-t { margin: 14px 0 6px; font-size: .64rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.ad-autres { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.ad-autres button { display: grid; gap: 1px; width: 100%; padding: 7px 10px; border: 2px solid rgba(17, 17, 20, .18); border-radius: 10px; background: #fff; font: inherit; text-align: left; color: var(--ink); cursor: pointer; }
+.ad-autres button:hover { border-color: var(--purple); }
+.ad-autres small { color: var(--muted); font-size: .72rem; }
+.ad-pied { display: grid; gap: 2px; padding: 8px 14px 10px; border-top: 1px solid rgba(17, 17, 20, .15); }
+.ad-interrupteur { display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: .76rem; cursor: pointer; }
+.ad-interrupteur input { accent-color: var(--purple); }
+.ad-pied small { color: var(--muted); font-size: .68rem; }
+.ad-mobile { display: none; }
+
+/* Zone étroite (tablette, fenêtre réduite) : panneau ouvert par-dessus l'éditeur */
+@container adzone (max-width: 760px) {
+  .ad-panneau[data-etat="ouvert"] { position: absolute; top: 0; right: 0; z-index: 25; }
+  .ad-panneau[data-etat="ouvert"] .ad-corps { width: min(320px, 86cqi); box-shadow: 8px 8px 0 rgba(17, 17, 20, .22); }
+  .ad-zone:has(.ad-panneau[data-etat="ouvert"]) { grid-template-columns: minmax(0, 1fr) 52px; }
+}
+
+/* Téléphone : bouton en bas d'écran, panneau compact à la demande */
+@media (max-width: 640px) {
+  .ad-zone { grid-template-columns: minmax(0, 1fr); }
+  .ad-zone:has(.ad-panneau[data-etat="ouvert"]) { grid-template-columns: minmax(0, 1fr); }
+  .ad-panneau[data-etat="replie"] { display: none; }
+  .ad-panneau[data-etat="ouvert"] { position: fixed; top: auto; left: 8px; right: 8px; bottom: 8px; z-index: 60; max-height: 70vh; }
+  .ad-panneau[data-etat="ouvert"] .ad-corps { width: 100%; }
+  .ad-mobile { position: fixed; right: 14px; bottom: 14px; z-index: 55; display: inline-flex; align-items: center; gap: 6px; padding: 10px 14px; border: 2px solid var(--ink); border-radius: 999px; background: #fff; box-shadow: 3px 3px 0 var(--ink); font: 800 .8rem var(--font); color: var(--ink); cursor: pointer; }
+  .ad-mobile[hidden] { display: none; }
+}
+@media print { .ad-panneau, .ad-mobile { display: none !important; } .ad-zone { display: block; } }
+@media (prefers-reduced-motion: no-preference) { .ad-corps { animation: ad-entree .16s ease-out; } }
+@keyframes ad-entree { from { opacity: 0; transform: translateX(8px); } }
