@@ -406,6 +406,8 @@ Annuaire d'articles d'imagerie **en accès libre**. **Le site n'héberge pas les
 
 **Ajouter une sous-spécialité, un thème, un organe, une classification ou une requête de veille** : **uniquement** dans `bibliotheque/config.js` (aucun code à modifier ; la base ne vérifie que le format des identifiants). Un thème passe en ligne avec `actif: true`. Le test `tests/bibliotheque.test.js` vérifie la configuration (identifiants uniques, tags connus, requêtes valides).
 
+**Charte** : `docs/organisation/CHARTE_BIBLIOTHEQUE.md` (à lire avant toute modification importante).
+
 **Fichiers** : `bibliotheque.html`, `bibliotheque-admin.html` ; `bibliotheque/config.js` (configuration), `bibliotheque/noyau/` (`identifiants.js`, `sources.js`, `reseau.js`, `import.js`, `catalogue.js` — partagés par le site, les futures fonctions serveur et les tests), `bibliotheque/api-supabase.js` / `api-demo.js` / `api.js`, `bibliotheque/app.js` (page publique), `bibliotheque/admin.js` (administration), `bibliotheque/demo.js`, `bibliotheque/bib.css`.
 
 ---
@@ -872,6 +874,7 @@ Les tests n'utilisent que des **cas fictifs** (identifiants `TEST-0001`…) : au
 
 | Date | Modification |
 |---|---|
+| 29/10/2026 | Bibliothèque : ajout de la **charte documentaire** `docs/organisation/CHARTE_BIBLIOTHEQUE.md` (organisation spécialité → thème → article, règles de référencement, accès gratuit / libre / licence ouverte, vérification des licences, résumés originaux, conventions de présentation et de recherche, composants à réutiliser, présent vs prévu, validation des références et des liens) ; instruction ajoutée dans `CLAUDE.md` et suivi mis à jour dans `AUTRES_MODULES.md`. Documentation seulement : aucun article, code ni contenu scientifique modifié. |
 | 29/10/2026 | Radioanatomie : ajout de la **charte de conception** `docs/organisation/CHARTE_RADIOANATOMIE.md` (trois moteurs existants — atlas de coupes, planches de radiographie, visionneuse de volumes —, formats des données, conventions, règles de précision et de validation anatomique, distinction image / annotation / modèle 3D, navigation, performance, limites constatées, feuille de route en 15 petites tâches) et consigne de lecture dans `CLAUDE.md`. Aucun atlas ni contenu anatomique modifié. |
 | 29/10/2026 | Calculateurs et classifications : ajout de la **charte de conception** `docs/organisation/CHARTE_CALCULATEURS.md` (modules de règles, classifications déclaratives, interface, intégration au compte rendu, sources, tests, points à vérifier) et consigne de lecture dans `CLAUDE.md`. Aucun calculateur ni règle médicale modifié. |
 | 29/10/2026 | Comptes rendus : ajout de la **charte de conception** `docs/organisation/CHARTE_COMPTES_RENDUS.md` (architecture réelle du module, conventions des modèles, phrases, scores, « en vrac », dictée, export, distinction présent / prévu) et consigne de lecture dans `CLAUDE.md`. Aucun changement du site. |
