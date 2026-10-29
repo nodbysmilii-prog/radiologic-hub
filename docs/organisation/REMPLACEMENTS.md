@@ -12,6 +12,8 @@ Fichiers : `remplacements.html`, `remplacements-reponse.html`, `remplacements/` 
 
 - Test complet en démonstration (phase A, 29/10/2026, 390 px) : publication → proposition → acceptation → choix → espaces → documents → annulation : tout fonctionne. Trois défauts corrigés le même jour (branche `claude/awesome-hopper-507hp8`, non fusionnée) : volontaires conservés après annulation (avec revérification des dates et conflits, choix concurrents protégés, propositions chevauchantes closes), e-mails en double vers une même adresse supprimés, jours de mission affichés « occupés » dans le calendrier. Tests : `tests/remplacements-annulation.test.js`.
 
+- Agenda du remplaçant et Planning de la clinique (29/10/2026, branche `claude/awesome-hopper-507hp8`, non fusionnée) : écrans d'arrivée, barre compacte après connexion (page publique inchangée), 4 onglets par profil, navigation du bas sur téléphone, missions multi-jours groupées, honoraires confirmés / potentiels, export .ics du mois, actions par le moteur existant ; aucune table nouvelle. Tests : `tests/remplacements-agenda.test.js`, `npm run test:agenda`.
+
 ## À vérifier
 - Après fusion : redéployer les fonctions (moteur, modèle d'e-mail `annulation`, `depot-supabase.ts` : nouvelle lecture `propositions.parRemplacant`).
 - Planification : appliquer la migration Vault, lancer `verification-planification.sql` (colonnes `_oui` = true, `_non` = false), redéployer les fonctions, exécuter `planification.sql`, contrôler les journaux de `rp-taches` (pas de 403), puis supprimer le secret `RP_TACHES_SECRET`.
@@ -21,8 +23,8 @@ Fichiers : `remplacements.html`, `remplacements-reponse.html`, `remplacements/` 
 - Juridique : `mentions-legales.html` (crochets), INPDP + transfert hors Tunisie, validation de `modeles/contrat.md`.
 
 ## Prochaine tâche importante
-Relire et fusionner les trois corrections, puis redéployer les fonctions. Ensuite : mettre en service la planification (étape 7 réécrite de `remplacements/INSTALLATION.md`), puis Brevo et passage à `brevo` (étapes 3 et 4).
+Relire puis fusionner l'agenda et le planning (vérifier sur téléphone réel). Ensuite : mettre en service la planification (étape 7 de `remplacements/INSTALLATION.md`), puis Brevo et passage à `brevo` (étapes 3 et 4).
 
-Améliorations ergonomiques relevées par la phase A (non faites) : vue « Mon agenda » pour le remplaçant et « Planning » pour la clinique, en-tête allégé et onglets visibles sur mobile, calendrier de demande ouvert sur le premier mois utile, liens plus grands.
+Améliorations restantes : calendrier de demande ouvert sur le premier mois utile, liens plus grands dans les anciennes fiches, harmoniser les anciennes cartes (bordures épaisses) avec le nouveau style léger.
 
 Plus tard : WhatsApp/SMS, export comptable, notation des remplacements.

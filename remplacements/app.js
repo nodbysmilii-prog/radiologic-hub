@@ -9,7 +9,7 @@
 (async function () {
   'use strict';
   const RH = window.RHRemplacements, REF = RH.referentiel, REG = RH.regles, RECAP = RH.recap;
-  const CAL = window.RHRp.calendrier, api = window.RHRp.api;
+  const CAL = window.RHRp.calendrier, AG = window.RHRp.agenda, api = window.RHRp.api;
   const app = document.getElementById('rp-app');
   if (!app || !api) return;
 
@@ -22,7 +22,7 @@
   const mem = { lire: (k, d) => { try { return JSON.parse(localStorage.getItem(`rh-rp-${k}`)) ?? d; } catch (e) { return d; } }, ecrire: (k, v) => { try { localStorage.setItem(`rh-rp-${k}`, JSON.stringify(v)); } catch (e) { /* rien */ } } };
 
   let S = null;                                               // session : { profil, remplacant, structures, admin }
-  const vue = { role: mem.lire('role', null), mois: null, pinceau: 'journee', brouillon: null, moisDemande: null };
+  const vue = { role: mem.lire('role', null), mois: null, pinceau: 'journee', brouillon: null, moisDemande: null, moisAgenda: null, jourAgenda: null, vueAgenda: mem.lire('vue-agenda', 'mois'), masquees: new Set() };
 
   /* ---------- Petits composants ---------- */
   const CLASSES_ETAT = {
@@ -86,9 +86,12 @@
     const donnees = RH.contrat.donneesContrat({ demande: d, structure: s, remplacant: r, profil: r.profil, maintenant: maintenant() });
     telecharger(RH.contrat.pdfContrat(await api.modeleContrat(), donnees), `contrat-${donnees.mission.reference}.pdf`, 'application/pdf');
   }
-  function agendaIcs(d, s, r) {
+  const evenementIcs = (d, s, r) => {
     const rc = RECAP.demande(d, s);
-    telecharger(RH.ics.calendrier({ uid: d.id, titre: `Remplacement en radiologie — ${s.nom}`, lieu: rc.adresse, dates: d.dates, heure_debut: d.heure_debut, heure_fin: d.heure_fin, description: `${rc.type} — ${rc.modalites}\nRemplaçant : Dr ${r.profil.prenom} ${r.profil.nom}\nHonoraires : ${rc.honoraires} ${rc.unite}` }), `remplacement-${rc.reference}.ics`, 'text/calendar');
+    return { uid: d.id, titre: `Remplacement en radiologie — ${s.nom}`, lieu: rc.adresse, dates: d.dates, heure_debut: d.heure_debut, heure_fin: d.heure_fin, description: `${rc.type} — ${rc.modalites}\nRemplaçant : Dr ${r.profil.prenom} ${r.profil.nom}\nHonoraires : ${rc.honoraires} ${rc.unite}` };
+  };
+  function agendaIcs(d, s, r) {
+    telecharger(RH.ics.calendrier(evenementIcs(d, s, r)), `remplacement-${RECAP.reference(d)}.ics`, 'text/calendar');
   }
 
   /* Récapitulatif d'une demande (carte) */
@@ -114,9 +117,10 @@
   function barre() {
     const z = $('#rp-barre');
     if (!z) return;
+    document.body.classList.toggle('rp-connecte', !!S);                 // connecté : grand bandeau remplacé par cette barre compacte
     if (!S) { z.innerHTML = `<a href="#/connexion" class="btn btn-ink btn-sm">Se connecter</a>`; return; }
     const nom = [S.profil.prenom, S.profil.nom].filter(Boolean).join(' ') || S.profil.email;
-    z.innerHTML = `<span class="rp-moi">${esc(nom)}</span><a href="#/espace" class="btn btn-outline btn-sm">Mon espace</a>${S.admin ? '<a href="#/admin" class="btn btn-outline btn-sm">Administration</a>' : ''}<button type="button" class="btn btn-sm rp-lien-btn" data-act="deconnexion">Déconnexion</button>`;
+    z.innerHTML = `<nav class="rp-fil" aria-label="Fil d'Ariane"><a href="index.html">RadiologicHub</a><span aria-hidden="true">›</span><a href="#/espace">Remplacements</a></nav><span class="rp-moi">${esc(nom)}</span>${S.admin ? '<a href="#/admin" class="btn btn-outline btn-sm">Administration</a>' : ''}<button type="button" class="btn btn-sm rp-lien-btn" data-act="deconnexion">Déconnexion</button>`;
   }
   async function rafraichir() { S = await api.session(); barre(); }
 
@@ -237,10 +241,21 @@
     S.structures.forEach(s => r.push({ cle: `structure:${s.id}`, libelle: s.nom }));
     return r;
   };
+  /* Quatre onglets au plus par profil ; le premier est l'écran d'arrivée. Les anciennes adresses restent valables. */
   const ONGLETS = {
-    remplacant: [['propositions', 'Propositions'], ['missions', 'Missions'], ['disponibilites', 'Disponibilités'], ['honoraires', 'Honoraires'], ['profil', 'Profil']],
-    structure: [['demandes', 'En cours'], ['nouvelle', '+ Demande'], ['pourvues', 'Pourvues'], ['historique', 'Historique'], ['favoris', 'Favoris'], ['equipe', 'Équipe & réglages']],
+    remplacant: [['agenda', 'Agenda'], ['propositions', 'Propositions'], ['disponibilites', 'Disponibilités'], ['profil', 'Profil']],
+    structure: [['planning', 'Planning'], ['demandes', 'Demandes'], ['nouvelle', 'Demander'], ['equipe', 'Équipe']],
   };
+  const ALIAS = { missions: 'agenda', honoraires: 'agenda', pourvues: 'demandes', historique: 'demandes', favoris: 'demandes' };
+  const ICONES = {
+    agenda: '<path d="M4 6h16v14H4zM4 10h16M9 3v4M15 3v4"/>', planning: '<path d="M4 6h16v14H4zM4 10h16M9 3v4M15 3v4M8 14h3v3H8z"/>',
+    propositions: '<path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/>', disponibilites: '<circle cx="12" cy="12" r="8"/><path d="m8.5 12 2.5 2.5 4.5-5"/>',
+    profil: '<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>', demandes: '<path d="M6 3h12v18H6zM9 8h6M9 12h6M9 16h3"/>',
+    nouvelle: '<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>', equipe: '<circle cx="9" cy="9" r="3.5"/><path d="M3 20c.8-3 3.2-5 6-5s5.2 2 6 5"/><circle cx="17" cy="10" r="2.5"/><path d="M15.5 15.6c2.4.2 4.1 1.7 4.7 4.4"/>',
+  };
+  /* Navigation fixe en bas de l'écran (téléphone) */
+  const navBas = (type, actif, badges = {}) => `<nav class="rp-nav-bas" aria-label="Sections de mon espace">${ONGLETS[type].map(([k, l]) => `<a href="#/espace/${k}" class="${k === 'nouvelle' ? 'is-creer' : ''}"${k === actif ? ' aria-current="page"' : ''}><svg viewBox="0 0 24 24" aria-hidden="true">${ICONES[k]}</svg><span>${esc(l)}</span>${badges[k] ? `<span class="rp-nav-n">${badges[k]}</span>` : ''}</a>`).join('')}</nav>`;
+  const typeRole = () => (vue.role || '').split(':')[0];
 
   async function espace(onglet) {
     if (!S) { location.hash = '#/connexion'; return ''; }
@@ -250,18 +265,25 @@
         <p class="rp-actions"><a class="btn btn-ink" href="#/inscription/remplacant">M'inscrire comme remplaçant</a><a class="btn btn-outline" href="#/inscription/structure">Inscrire une structure</a></p>
         ${S.admin ? '<p><a href="#/admin">Accéder à l\'administration</a></p>' : ''}</div>`;
     }
-    const rolePourOnglet = Object.entries(ONGLETS).find(([, l]) => l.some(([k]) => k === onglet));
+    let actif = ALIAS[onglet] || onglet;
+    const rolePourOnglet = Object.entries(ONGLETS).find(([, l]) => l.some(([k]) => k === actif));
     if (rolePourOnglet && !(vue.role || '').startsWith(rolePourOnglet[0])) vue.role = rs.find(r => r.cle.startsWith(rolePourOnglet[0]))?.cle || vue.role;
     if (!rs.some(r => r.cle === vue.role)) vue.role = rs[0].cle;
     mem.ecrire('role', vue.role);
     const [type, sid] = vue.role.split(':');
     const onglets = ONGLETS[type];
-    if (!onglets.some(([k]) => k === onglet)) onglet = onglets[0][0];
+    if (!onglets.some(([k]) => k === actif)) onglet = actif = onglets[0][0];
+    const s = type === 'structure' ? S.structures.find(x => x.id === sid) : null;
+    const props = type === 'remplacant' ? await api.mesPropositions() : null;
+    const liste = s ? await demandesDe(s.id) : null;
+    const badges = type === 'remplacant'
+      ? { propositions: props.filter(x => x.proposition.etat === 'envoyee' && x.demande.etat === 'publiee').length }
+      : { demandes: liste.filter(x => x.demande.etat === 'publiee').reduce((t, x) => t + (x.compteurs.disponibles || 0), 0) };
     let h = '';
     if (rs.length > 1) h += `<div class="rp-roles" role="tablist" aria-label="Rôle">${rs.map(r => `<button type="button" class="rp-role${r.cle === vue.role ? ' is-actif' : ''}" data-act="role" data-role="${esc(r.cle)}">${esc(r.libelle)}</button>`).join('')}</div>`;
-    h += `<nav class="rp-onglets" aria-label="Sections">${onglets.map(([k, l]) => `<a href="#/espace/${k}" class="rp-onglet${k === onglet ? ' is-actif' : ''}"${k === onglet ? ' aria-current="page"' : ''}>${esc(l)}</a>`).join('')}</nav>`;
-    h += type === 'remplacant' ? await espaceRemplacant(onglet) : await espaceStructure(S.structures.find(s => s.id === sid), onglet);
-    return h;
+    h += `<nav class="rp-onglets" aria-label="Sections">${onglets.map(([k, l]) => `<a href="#/espace/${k}" class="rp-onglet${k === actif ? ' is-actif' : ''}"${k === actif ? ' aria-current="page"' : ''}>${esc(l)}${badges[k] ? `<span class="rp-onglet-n">${badges[k]}</span>` : ''}</a>`).join('')}</nav>`;
+    h += type === 'remplacant' ? await espaceRemplacant(onglet, props) : await espaceStructure(s, onglet, liste);
+    return h + navBas(type, actif, badges);
   }
 
   /* ---------- Remplaçant ---------- */
@@ -271,11 +293,11 @@
     return `<div class="rp-bandeau is-${etat}">${t}</div>`;
   }
 
-  async function espaceRemplacant(onglet) {
+  async function espaceRemplacant(onglet, props) {
     const r = S.remplacant;
     let h = bandeauEtat(r.etat, r.motif_refus, 'de remplaçant');
     if (S.profil.desinscrit) h += '<div class="rp-bandeau is-en_attente">Vous ne recevez plus de propositions par e-mail. <button type="button" class="rp-lien-btn" data-act="reabonner">Les recevoir de nouveau</button></div>';
-    const props = await api.mesPropositions();
+    if (onglet === 'agenda') return h + await vueAgenda(props);
     if (onglet === 'propositions') {
       const att = props.filter(x => x.proposition.etat === 'envoyee' && x.demande.etat === 'publiee');
       const dispo = props.filter(x => x.proposition.etat === 'interesse' && x.demande.etat === 'publiee');
@@ -295,12 +317,12 @@
       const avenir = missions.filter(x => x.demande.dates.some(d => d >= auj()) && x.demande.etat === 'pourvue');
       const passees = missions.filter(x => !avenir.includes(x));
       const carte = x => `<article class="rp-item"><a class="rp-item-lien" href="#/mission/${x.demande.id}">${ligneDemande(x.demande, x.structure, `<span class="rp-ligne-prix">${esc(REF.montant(REG.totalHonoraires(x.demande)))}</span>`)}</a><div class="rp-item-pied">${etatDemande(x.demande)}</div></article>`;
-      h += `<h3 class="rp-h">À venir (${avenir.length})</h3>${avenir.length ? avenir.map(carte).join('') : vide('Aucune mission confirmée à venir.')}`;
+      h += `<p class="rp-retour"><a href="#/espace/agenda">‹ Mon agenda</a></p><h3 class="rp-h">À venir (${avenir.length})</h3>${avenir.length ? avenir.map(carte).join('') : vide('Aucune mission confirmée à venir.')}`;
       if (passees.length) h += `<h3 class="rp-h">Passées</h3>${passees.reverse().map(carte).join('')}`;
       return h;
     }
     if (onglet === 'disponibilites') return h + await vueDisponibilites(props);
-    if (onglet === 'honoraires') return h + vueHonoraires(props);
+    if (onglet === 'honoraires') return h + '<p class="rp-retour"><a href="#/espace/agenda">‹ Mon agenda</a></p>' + vueHonoraires(props);
     return h + vueProfil();
   }
 
@@ -391,16 +413,197 @@
     </form>`;
   }
 
+  /* =======================================================
+     Agenda du remplaçant et planning de la structure
+     (calculs : remplacements/agenda.js ; actions : moteur existant)
+     ======================================================= */
+  let cacheAgenda = null;                                     // { type, props, dispos } ou { type, s, liste }
+  const majAgenda = () => { const z = $('#rp-agenda'); if (z) z.innerHTML = rendreAgenda(); };
+  async function vueAgenda(props) {
+    cacheAgenda = { type: 'remplacant', props, dispos: await api.disponibilites() };
+    vue.moisAgenda = vue.moisAgenda || auj().slice(0, 7);
+    return `<div id="rp-agenda" class="rp-ag">${rendreAgenda()}</div>`;
+  }
+  function vuePlanning(s, liste) {
+    cacheAgenda = { type: 'structure', s, liste };
+    vue.moisAgenda = vue.moisAgenda || auj().slice(0, 7);
+    return `<div id="rp-agenda" class="rp-ag">${rendreAgenda()}</div>`;
+  }
+  const statut = (cle, extra = '') => { const st = AG.STATUTS[cle]; return `<p class="rp-ag-statut is-${cle}"><b aria-hidden="true">${st.symbole}</b> ${esc(st.libelle)}${extra}</p>`; };
+  const ev = (cle, couleur, texte, rang, total) => `<span class="rp-ev is-${cle}${couleur ? ` rp-c-${couleur}` : ''}"><b aria-hidden="true">${AG.STATUTS[cle].symbole}</b><span class="rp-ev-t">${esc(texte)}</span>${total > 1 ? `<span class="rp-ev-n">${rang}/${total}</span>` : ''}</span>`;
+  const elementsDuJour = (A, d, remplacant) => (remplacant ? [...((A.jours[d] || {}).missions || []), ...((A.jours[d] || {}).propositions || [])] : (A.jours[d] || []));
+  function premierJour(A, mois, remplacant) {
+    if (AG.dansMois(auj(), mois)) return auj();
+    const dates = Object.keys(A.jours).filter(d => AG.dansMois(d, mois) && elementsDuJour(A, d, remplacant).length).sort();
+    return dates[0] || `${mois}-01`;
+  }
+  /* Dates d'une mission (une seule mission, même sur plusieurs jours) ; chaque date ouvre son jour */
+  const datesMission = (e, d) => `<p class="rp-ag-dates">${e.dates.length > 1 ? `<span>${e.dates.length} jours :</span> ` : ''}${e.dates.map(x => `<button type="button" class="rp-ag-date${x === d ? ' is-actif' : ''}" data-agjour="${x}">${esc(REF.jourFr(x))}</button>`).join('')}</p>`;
+  const zoneAnnulation = (id, titre, texte, boutons) => `<details class="rp-ag-annuler"><summary>${titre}</summary><p class="rp-muted">${texte}</p>${champ('Motif (facultatif)', `<input id="f-motif-${id}" maxlength="300">`, { pour: `f-motif-${id}` })}<p class="rp-ag-actions">${boutons}</p></details>`;
+
+  function rendreAgenda() {
+    const c = cacheAgenda;
+    if (!c) return '';
+    const mois = vue.moisAgenda, remplacant = c.type === 'remplacant';
+    const A = remplacant ? AG.agendaRemplacant({ propositions: c.props, disponibilites: c.dispos, mois, masquees: vue.masquees }) : AG.planningStructure({ demandes: c.liste, mois });
+    if (!vue.jourAgenda || !AG.dansMois(vue.jourAgenda, mois)) vue.jourAgenda = premierJour(A, mois, remplacant);
+    const sel = vue.jourAgenda, lies = new Set(elementsDuJour(A, sel, remplacant).flatMap(x => x.element.dates));
+    const r = A.resume;
+    let h = `<div class="rp-ag-tete">
+        <div class="rp-ag-mois"><button type="button" class="rp-ag-rond" data-agmois="-1" aria-label="Mois précédent">‹</button><h2>${esc(cap(REF.moisFr(mois)))}</h2><button type="button" class="rp-ag-rond" data-agmois="1" aria-label="Mois suivant">›</button></div>
+        <div class="rp-ag-segment" role="group" aria-label="Affichage"><button type="button" data-agvue="mois" aria-pressed="${vue.vueAgenda === 'mois'}">Mois</button><button type="button" data-agvue="liste" aria-pressed="${vue.vueAgenda === 'liste'}">Liste</button></div>
+      </div>`;
+    h += remplacant
+      ? `<p class="rp-ag-resume"><span><strong>${r.missions}</strong> mission${r.missions > 1 ? 's' : ''} · <strong>${r.jours}</strong> jour${r.jours > 1 ? 's' : ''}${r.structures > 1 ? ` · ${r.structures} structures` : ''}</span><span>Confirmés <strong>${esc(REF.montant(r.confirmes))}</strong></span><span title="Propositions en cours : non garanties">Potentiels <strong>${esc(REF.montant(r.potentiels))}</strong></span>${r.propositions ? `<a href="#/espace/propositions">${r.propositions} à répondre</a>` : ''}</p>`
+      : `<p class="rp-ag-resume"><span><strong>${r.joursConfirmes}</strong> jour${r.joursConfirmes > 1 ? 's' : ''} confirmé${r.joursConfirmes > 1 ? 's' : ''}</span><span><strong>${r.joursAPourvoir}</strong> à pourvoir${r.volontaires ? ` · <strong>${r.volontaires}</strong> volontaire${r.volontaires > 1 ? 's' : ''} à choisir` : ''}</span><span>Budget confirmé <strong>${esc(REF.montant(r.budgetConfirme))}</strong></span><span title="Demandes en recherche : non pourvues">Potentiel <strong>${esc(REF.montant(r.budgetPotentiel))}</strong></span></p>`;
+    const filtres = remplacant && A.structures.length > 1 ? `<div class="rp-ag-filtres" role="group" aria-label="Structures affichées">${A.structures.map(x => `<button type="button" class="rp-ag-filtre rp-c-${x.couleur}" data-agfiltre="${esc(x.id)}" aria-pressed="${!vue.masquees.has(x.id)}"><span class="rp-ag-point"></span>${esc(x.nom)}</button>`).join('')}</div>` : '';
+    h += `<div class="rp-ag-outils">${filtres}<span class="rp-ag-liens"><button type="button" class="rp-ag-btn" data-act="ics-mois">Exporter le mois (.ics)</button>${remplacant ? '<a class="rp-ag-btn" href="#/espace/honoraires">Honoraires par mois</a>' : ''}</span></div>`;
+    if (vue.vueAgenda === 'liste') return h + listeAgenda(A, remplacant, mois);
+    const jours = {};
+    const toutes = new Set([...Object.keys(A.jours), sel]);
+    toutes.forEach(d => {
+      if (!AG.dansMois(d, mois)) return;
+      const classes = [];
+      if (d < auj()) classes.push('is-ag-passe');
+      if (d === auj()) classes.push('is-ag-auj');
+      if (d === sel) classes.push('is-ag-sel');
+      else if (lies.has(d)) classes.push('is-ag-lie');
+      let contenu = '', titres = [];
+      if (remplacant) {
+        const j = A.jours[d] || { missions: [], propositions: [], creneaux: [] };
+        const evs = [...j.missions.map(x => ev(x.element.statut, x.element.couleur, x.element.structure.nom, x.rang, x.total)), ...j.propositions.map(x => ev(x.element.statut, x.element.couleur, x.element.structure.nom, x.rang, x.total))];
+        titres = [...j.missions, ...j.propositions].map(x => `${AG.STATUTS[x.element.statut].libelle} — ${x.element.structure.nom}`);
+        if (!j.missions.length && j.creneaux.length) { evs.push(ev('disponible', null, 'Disponible')); titres.push('disponible'); }
+        if (j.missions.length) classes.push('is-ag-occupe');
+        contenu = evs.slice(0, 2).join('') + (evs.length > 2 ? `<span class="rp-ev-plus">+${evs.length - 2}</span>` : '');
+      } else {
+        const l = A.jours[d] || [];
+        contenu = l.slice(0, 2).map(x => ev(x.element.statut, null, x.element.statut === 'confirmee' || x.element.statut === 'realisee' ? (x.element.retenu ? RECAP.remplacant(x.element.retenu, x.element.retenu.profil).nom_complet : 'Confirmé') : x.element.statut === 'volontaires' ? `${x.element.volontaires.length} à choisir` : 'En recherche', x.rang, x.total)).join('') + (l.length > 2 ? `<span class="rp-ev-plus">+${l.length - 2}</span>` : '');
+        titres = l.map(x => AG.STATUTS[x.element.statut].libelle);
+      }
+      jours[d] = { classes, contenu: `<span class="rp-evs">${contenu}</span>`, titre: titres.join(', ') };
+    });
+    h += `<div class="rp-ag-corps"><div class="rp-ag-cal" id="rp-cal-agenda">${CAL.grille({ mois, jours, nav: false })}</div>
+      <aside class="rp-ag-panneau" id="rp-ag-panneau" aria-live="polite">${remplacant ? panneauRemplacant(A, sel) : panneauStructure(A, sel, c.s)}</aside></div>`;
+    h += remplacant
+      ? `<p class="rp-ag-legende">${A.structures.map(x => `<span class="rp-c-${x.couleur}"><span class="rp-ag-point"></span>${esc(x.nom)}</span>`).join('')}<span><b class="rp-leg is-mission">✓</b>mission confirmée</span><span><b class="rp-leg is-a_repondre">?</b>proposition à répondre</span><span><b class="rp-leg is-en_attente">…</b>en attente du choix</span><span><b class="rp-leg is-disponible">●</b>disponible</span><span>sans symbole : non disponible</span></p>`
+      : `<p class="rp-ag-legende"><span><b class="rp-leg is-confirmee">✓</b>remplaçant confirmé</span><span><b class="rp-leg is-volontaires">★</b>volontaires à choisir</span><span><b class="rp-leg is-recherche">…</b>en recherche</span><span>jour sans symbole : aucune demande publiée</span></p>`;
+    return h;
+  }
+
+  function panneauRemplacant(A, d) {
+    const j = A.jours[d] || { missions: [], propositions: [], creneaux: [] };
+    let h = `<h3 class="rp-ag-jour">${esc(cap(REF.jourFr(d)))}</h3>`;
+    j.missions.forEach(({ element: e, rang, total }) => {
+      const rc = RECAP.demande(e.demande, e.structure), rs = RECAP.structure(e.structure);
+      const futur = e.statut === 'mission' && REG.debut(e.demande) > maintenant();
+      h += `<article class="rp-ag-evt rp-c-${e.couleur}">${statut(e.statut, total > 1 ? ` · jour ${rang} sur ${total}` : '')}
+        <h4>${esc(rs.nom)}</h4>${datesMission(e, d)}
+        <p>${esc(rc.type)} · ${esc(rc.horaires)} · ${esc(rc.modalites)}</p>
+        <p class="rp-muted">${esc(rs.adresse)}, ${esc(rs.ville)} · ${esc(rs.contact)}</p>
+        <p>Honoraires confirmés : <strong>${esc(rc.honoraires)} ${esc(rc.unite)}</strong> <span class="rp-muted rp-insecable">— ${esc(rc.total)}</span></p>
+        <p class="rp-ag-actions"><a class="rp-ag-btn" href="tel:${esc(rs.telephone)}">Appeler</a><button type="button" class="rp-ag-btn" data-act="contrat" data-did="${e.id}">Contrat PDF</button><button type="button" class="rp-ag-btn" data-act="ics" data-did="${e.id}">Agenda (.ics)</button><a class="rp-ag-btn" href="#/mission/${e.id}">Détails</a></p>
+        ${futur ? zoneAnnulation(e.id, 'Je ne peux plus assurer cette mission', 'La structure est prévenue immédiatement et la demande est remise en ligne.', `<button type="button" class="btn btn-outline btn-sm rp-danger" data-act="annuler" data-did="${e.id}">Annuler cette mission</button>`) : ''}
+      </article>`;
+    });
+    j.propositions.forEach(({ element: e, rang, total }) => {
+      const rc = RECAP.demande(e.demande, e.structure);
+      h += `<article class="rp-ag-evt is-proposition rp-c-${e.couleur}">${statut(e.statut, total > 1 ? ` · jour ${rang} sur ${total}` : '')}
+        <h4>${esc(e.structure.nom)}</h4>${datesMission(e, d)}
+        <p>${esc(rc.type)} · ${esc(rc.horaires)} · ${esc(rc.modalites)}</p>
+        <p>Honoraires potentiels : <strong>${esc(rc.honoraires)} ${esc(rc.unite)}</strong> <span class="rp-muted rp-insecable">— ${esc(rc.total)}, non garantis</span></p>
+        ${e.statut === 'a_repondre' ? `<p class="rp-ag-actions"><button type="button" class="btn btn-sm rp-oui" data-act="repondre" data-id="${e.proposition.id}" data-reponse="disponible">Je suis disponible</button><button type="button" class="btn btn-outline btn-sm" data-act="repondre" data-id="${e.proposition.id}" data-reponse="indisponible">Pas disponible</button></p>` : '<p class="rp-muted">Vous vous êtes déclaré disponible : la structure choisit son remplaçant.</p>'}
+        <p class="rp-ag-actions"><a class="rp-ag-btn" href="#/mission/${e.id}">Détails</a></p>
+      </article>`;
+    });
+    if (!j.missions.length && !j.propositions.length) {
+      h += j.creneaux.length
+        ? `<p class="rp-ag-info"><b class="rp-leg is-disponible">●</b> Disponible (${esc(REF.listeFr(REF.libelles(j.creneaux, REF.CRENEAUX)))}) : aucune mission ni proposition ce jour.</p>`
+        : '<p class="rp-ag-info">Aucune disponibilité cochée : vous êtes indisponible ce jour et ne recevez pas de proposition.</p>';
+      if (d >= auj()) h += '<p class="rp-ag-actions"><a class="rp-ag-btn" href="#/espace/disponibilites">Modifier mes disponibilités</a></p>';
+    }
+    return h;
+  }
+
+  function panneauStructure(A, d, s) {
+    const l = A.jours[d] || [];
+    let h = `<h3 class="rp-ag-jour">${esc(cap(REF.jourFr(d)))}</h3>`;
+    if (!l.length) {
+      h += '<p class="rp-ag-info">Aucune demande publiée pour ce jour.</p>';
+      if (d >= auj() && s.etat === 'valide') h += `<p class="rp-ag-actions"><button type="button" class="btn btn-ink btn-sm" data-act="demande-jour" data-date="${d}">Publier une demande pour ce jour</button></p>`;
+      return h;
+    }
+    l.forEach(({ element: e, rang, total }) => {
+      const rc = RECAP.demande(e.demande, s), dem = e.demande;
+      const futur = dem.etat === 'pourvue' && REG.debut(dem) > maintenant();
+      h += `<article class="rp-ag-evt is-${e.statut}">${statut(e.statut, total > 1 ? ` · jour ${rang} sur ${total}` : '')}
+        <h4>Demande ${esc(RECAP.reference(dem))}</h4>${datesMission(e, d)}
+        <p>${esc(rc.type)} · ${esc(rc.horaires)} · ${esc(rc.modalites)}</p>
+        <p>${['confirmee', 'realisee'].includes(e.statut) ? 'Budget confirmé' : 'Budget potentiel'} : <strong>${esc(rc.honoraires)} ${esc(rc.unite)}</strong> <span class="rp-muted rp-insecable">— ${esc(rc.total)}</span></p>`;
+      if (e.retenu) {
+        const rr = RECAP.remplacant(e.retenu, e.retenu.profil);
+        h += `<p><strong>${esc(rr.nom_complet)}</strong> <span class="rp-statut">${esc(rr.statut_court)}</span><br><span class="rp-muted">${esc(rr.telephone)} · ${esc(rr.email)}</span></p>
+          <p class="rp-ag-actions"><a class="rp-ag-btn" href="tel:${esc(rr.telephone)}">Appeler</a><button type="button" class="rp-ag-btn" data-act="contrat" data-did="${e.id}">Contrat PDF</button><button type="button" class="rp-ag-btn" data-act="ics" data-did="${e.id}">Agenda (.ics)</button><a class="rp-ag-btn" href="#/demande/${e.id}">Détails</a></p>
+          ${futur ? zoneAnnulation(e.id, 'Annuler ce remplacement', 'Le remplaçant est prévenu immédiatement par e-mail.', `<button type="button" class="btn btn-outline btn-sm" data-act="annuler" data-did="${e.id}">Annuler et remettre en ligne</button><button type="button" class="btn btn-outline btn-sm rp-danger" data-act="annuler" data-did="${e.id}" data-definitif="1">Annuler définitivement</button>`) : ''}`;
+      } else if (e.statut === 'volontaires') {
+        h += `<ul class="rp-ag-volontaires">${e.volontaires.sort((a, b) => Number(b.favori) - Number(a.favori)).map(i => { const rr = RECAP.remplacant(i.remplacant, i.remplacant.profil); return `<li><span><strong>${i.favori ? '★ ' : ''}${esc(rr.nom_complet)}</strong> <span class="rp-statut">${esc(rr.statut_court)}</span><br><span class="rp-muted">${esc(rr.competences)}</span></span><button type="button" class="btn btn-sm rp-oui" data-act="choisir" data-did="${e.id}" data-rid="${i.remplacant.id}">Choisir</button></li>`; }).join('')}</ul>
+          <p class="rp-ag-actions"><a class="rp-ag-btn" href="#/demande/${e.id}">Détails</a></p>`;
+      } else {
+        h += `<p class="rp-muted">${e.compteurs.contactes || 0} remplaçant(s) compatible(s) contacté(s) ; aucun ne s'est encore déclaré disponible.</p><p class="rp-ag-actions"><a class="rp-ag-btn" href="#/demande/${e.id}">Détails</a></p>`;
+      }
+      h += '</article>';
+    });
+    return h;
+  }
+
+  /* Vue liste : une ligne par mission (plusieurs jours = une seule ligne), groupées par semaine */
+  function listeAgenda(A, remplacant, mois) {
+    const els = (remplacant ? [...A.missions, ...A.propositions] : A.elements).filter(e => e.dates.some(x => AG.dansMois(x, mois)));
+    const premiere = e => e.dates.find(x => AG.dansMois(x, mois));
+    els.sort((a, b) => premiere(a).localeCompare(premiere(b)));
+    if (!els.length) return vide(remplacant ? 'Aucune mission ni proposition ce mois-ci.' : 'Aucune demande publiée ce mois-ci.');
+    let h = '', semaine = '';
+    els.forEach(e => {
+      const p = premiere(e), lun = AG.lundi(p);
+      if (lun !== semaine) { semaine = lun; h += `<h3 class="rp-h">Semaine du ${esc(REF.jourFr(lun))}</h3>`; }
+      const titre = remplacant ? e.structure.nom : e.retenu ? RECAP.remplacant(e.retenu, e.retenu.profil).nom_complet : e.statut === 'volontaires' ? `${e.volontaires.length} volontaire(s) à choisir` : 'En recherche';
+      const rc = RECAP.demande(e.demande, remplacant ? e.structure : cacheAgenda.s);
+      h += `<button type="button" class="rp-ag-ligne is-${e.statut}${remplacant ? ` rp-c-${e.couleur}` : ''}" data-agjour="${p}" data-agvue="mois">
+        <span class="rp-ag-ligne-d"><small>${esc(REF.jourFr(p).split(' ')[0])}</small><strong>${p.slice(8)}</strong></span>
+        <span class="rp-ag-ligne-t">${statut(e.statut, e.dates.length > 1 ? ` · ${e.dates.length} jours` : '')}<strong>${esc(titre)}</strong><span>${esc(REF.listeFr(e.dates.map(REF.dateFr)))} · ${esc(rc.horaires)} · ${esc(rc.modalites)}</span></span>
+        <span class="rp-ag-ligne-m">${esc(rc.total)}</span></button>`;
+    });
+    return h;
+  }
+
+  /* Export .ics du mois : missions confirmées (toutes structures pour le remplaçant) */
+  function icsDuMois() {
+    const c = cacheAgenda, mois = vue.moisAgenda;
+    if (!c) return;
+    let evts = [];
+    if (c.type === 'remplacant') {
+      evts = AG.agendaRemplacant({ propositions: c.props, mois }).missions.filter(e => e.statut === 'mission' && e.dates.some(x => AG.dansMois(x, mois))).map(e => evenementIcs(e.demande, e.structure, S.remplacant));
+    } else {
+      evts = AG.planningStructure({ demandes: c.liste, mois }).elements.filter(e => e.statut === 'confirmee' && e.retenu && e.dates.some(x => AG.dansMois(x, mois))).map(e => evenementIcs(e.demande, c.s, e.retenu));
+    }
+    if (!evts.length) { toast('Aucune mission confirmée ce mois-ci.', 'ko'); return; }
+    telecharger(AG.icsMois(evts, maintenant()), `remplacements-${mois}.ics`, 'text/calendar');
+    toast(`${evts.length} mission${evts.length > 1 ? 's' : ''} exportée${evts.length > 1 ? 's' : ''} dans le fichier d'agenda.`);
+  }
+
   /* ---------- Structure ---------- */
   let cacheDemandes = { sid: null, liste: [] };
   async function demandesDe(sid) { cacheDemandes = { sid, liste: await api.demandesStructure(sid) }; return cacheDemandes.liste; }
 
-  async function espaceStructure(s, onglet) {
+  async function espaceStructure(s, onglet, liste) {
     if (!s) return '';
     let h = bandeauEtat(s.etat, s.motif_refus, `de ${esc(s.nom)}`);
     if (onglet === 'nouvelle') return h + (s.etat === 'valide' ? formulaireDemande(s) : vide('Vous pourrez publier une demande dès que la structure sera validée.'));
     if (onglet === 'equipe') return h + await vueEquipe(s);
-    const liste = await demandesDe(s.id);
+    if (onglet === 'planning') return h + vuePlanning(s, liste);
+    // « Demandes » : en cours, confirmées, historique et favoris
+    const SOUS = [['demandes', 'En cours'], ['pourvues', 'Confirmées'], ['historique', 'Historique'], ['favoris', 'Favoris']];
+    h += `<nav class="rp-sous-onglets" aria-label="Demandes">${SOUS.map(([k, l]) => `<a href="#/espace/${k}"${k === onglet ? ' aria-current="page"' : ''}>${l}</a>`).join('')}</nav>`;
     const carte = x => {
       const d = x.demande, c = x.compteurs;
       const info = d.etat === 'publiee' ? `<span class="rp-compteurs"><strong>${c.disponibles}</strong> disponible${c.disponibles > 1 ? 's' : ''} · ${c.contactes} contacté${c.contactes > 1 ? 's' : ''}</span>`
@@ -540,7 +743,7 @@
         <p class="rp-actions"><button type="button" class="btn btn-outline btn-sm" data-act="annuler" data-did="${d.id}">Annuler et remettre la demande en ligne</button><button type="button" class="btn btn-outline btn-sm rp-danger" data-act="annuler" data-did="${d.id}" data-definitif="1">Annuler définitivement</button></p></details>`;
       if (fini && d.realisation_structure == null && d.etat !== 'non_realisee') h += `<div class="rp-carte"><p><strong>Le remplacement a-t-il eu lieu ?</strong></p><p class="rp-actions"><button type="button" class="btn btn-sm rp-oui" data-act="realisation" data-did="${d.id}" data-oui="1">Oui</button><button type="button" class="btn btn-outline btn-sm" data-act="realisation" data-did="${d.id}">Non</button></p></div>`;
     }
-    return h;
+    return h + navBas('structure', 'planning');
   }
   function carteRemplacant(i, s, action, coordonnees) {
     const rr = RECAP.remplacant(i.remplacant, i.remplacant.profil);
@@ -573,7 +776,7 @@
       if (d.etat === 'pourvue' && REG.debut(d) > maintenant()) h += `<details class="rp-plus rp-danger-zone"><summary>Je ne peux plus assurer ce remplacement</summary><p>La structure est prévenue immédiatement et la demande est remise en ligne.</p>${champ('Motif (facultatif)', '<input id="f-motif" maxlength="300">', { pour: 'f-motif' })}<button type="button" class="btn btn-outline btn-sm rp-danger" data-act="annuler" data-did="${d.id}">Annuler ce remplacement</button></details>`;
       if (fini && d.realisation_remplacant == null && d.etat !== 'non_realisee') h += `<div class="rp-carte"><p><strong>Le remplacement a-t-il eu lieu ?</strong></p><p class="rp-actions"><button type="button" class="btn btn-sm rp-oui" data-act="realisation" data-did="${d.id}" data-oui="1">Oui</button><button type="button" class="btn btn-outline btn-sm" data-act="realisation" data-did="${d.id}">Non</button></p></div>`;
     }
-    return h;
+    return h + navBas('remplacant', 'agenda');
   }
 
   /* =======================================================
@@ -727,7 +930,7 @@
   }
 
   /* ---------- Actions (boutons) ---------- */
-  const motif = () => ($('#f-motif') || {}).value || '';
+  const motif = did => (($(`#f-motif-${did}`) || $('#f-motif') || {}).value || '');
   const ACTIONS = {
     async deconnexion() { await api.deconnexion(); S = null; barre(); location.hash = '#/'; },
     async google() { await essayer(() => api.connexionGoogle()); },
@@ -769,7 +972,7 @@
     },
     async annuler(b) {
       if (!confirm('Confirmer l\'annulation ? L\'autre partie est prévenue immédiatement.')) return;
-      const r = await essayer(() => api.annuler(b.dataset.did, { definitif: !!b.dataset.definitif, motif: motif() }));
+      const r = await essayer(() => api.annuler(b.dataset.did, { definitif: !!b.dataset.definitif, motif: motif(b.dataset.did) }));
       if (r) toast(r.ok ? (r.remise ? 'Remplacement annulé : la demande est remise en ligne.' : 'Remplacement annulé.') : 'Annulation impossible.', r.ok ? 'ok' : 'ko');
       cacheDemandes.sid = null; await rafraichir(); afficher();
     },
@@ -779,6 +982,8 @@
       if (r && r.ok) toast('Demande retirée.');
       cacheDemandes.sid = null; location.hash = '#/espace/historique';
     },
+    'ics-mois'() { icsDuMois(); },
+    'demande-jour'(b) { brouillon().dates = [b.dataset.date]; vue.moisDemande = b.dataset.date.slice(0, 7); location.hash = '#/espace/nouvelle'; },
     async realisation(b) {
       const r = await essayer(() => api.realisation(b.dataset.did, !!b.dataset.oui));
       if (r) toast(r.ok ? 'Merci, réponse enregistrée.' : 'Réponse déjà enregistrée.', r.ok ? 'ok' : 'ko');
@@ -836,6 +1041,8 @@
     toast('Mission introuvable.', 'ko');
     return {};
   }
+  /* Téléphone : le détail du jour touché vient sous le calendrier */
+  const montrerPanneau = () => { const p = $('#rp-ag-panneau'); if (p && matchMedia('(max-width: 760px)').matches) p.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
   function majCalendrierDemande() {
     const z = $('#rp-cal-demande');
     if (!z) return;
@@ -851,7 +1058,18 @@
       else { vue.moisDemande = nav.dataset.cal; majCalendrierDemande(); }
       return;
     }
+    const ag = e.target.closest('[data-agmois],[data-agvue],[data-agjour],[data-agfiltre]');
+    if (ag && ag.closest('#rp-agenda')) {
+      if (ag.dataset.agmois) { vue.moisAgenda = CAL.decaler(vue.moisAgenda, Number(ag.dataset.agmois)); vue.jourAgenda = null; }
+      if (ag.dataset.agvue) { vue.vueAgenda = ag.dataset.agvue; mem.ecrire('vue-agenda', vue.vueAgenda); }
+      if (ag.dataset.agjour) { vue.jourAgenda = ag.dataset.agjour; vue.moisAgenda = ag.dataset.agjour.slice(0, 7); }
+      if (ag.dataset.agfiltre) { const id = ag.dataset.agfiltre; if (vue.masquees.has(id)) vue.masquees.delete(id); else vue.masquees.add(id); }
+      majAgenda();
+      if (ag.dataset.agjour) montrerPanneau();
+      return;
+    }
     const jour = e.target.closest('.rp-cal-jour');
+    if (jour && jour.closest('#rp-cal-agenda')) { vue.jourAgenda = jour.dataset.date; majAgenda(); montrerPanneau(); return; }
     if (jour && !jour.disabled) {
       const date = jour.dataset.date;
       if (jour.closest('#rp-cal-dispo')) {
