@@ -26,3 +26,23 @@ Relire et fusionner les trois corrections, puis redéployer les fonctions. Ensui
 Améliorations ergonomiques relevées par la phase A (non faites) : vue « Mon agenda » pour le remplaçant et « Planning » pour la clinique, en-tête allégé et onglets visibles sur mobile, calendrier de demande ouvert sur le premier mois utile, liens plus grands.
 
 Plus tard : WhatsApp/SMS, export comptable, notation des remplacements.
+
+## Mise en service réelle — état au 29/10/2026
+- **Domaine officiel** https://radiologichub.com (adresse historique `nodbysmilii-prog.github.io/radiologic-hub/`, redirigée). Supabase Auth : Site URL et adresses de retour à jour (nouveau domaine + historique), connexions testées. Code compatible sans modification (liens relatifs, retour vers la page ouverte, `RP_URL_SITE` pour les e-mails).
+- **Fonctions Supabase** : un seul déploiement, le 26/10/2026 (commit `c6a4cbf`, historique GitHub Actions). **Pas encore en ligne** : planification Vault (`063be10`) et PR #95 (`7d9964b`).
+- **Base** : mot de passe PostgreSQL renouvelé ; sauvegarde `pg_dump` locale (catalogue lisible, tables `rp_*` présentes), **jamais restaurée** ; administrateur opérationnel ; une inscription validée en réel ; persistance d'une nouvelle disponibilité **à confirmer**.
+- **Planification** : pg_cron et pg_net activés ; migration Vault **non confirmée** ; aucune tâche Cron connue ; `RP_TACHES_SECRET` conservé jusqu'à vérification.
+- **Brevo** : compte gratuit créé, vérification SMS bloquée (assistance contactée) ; rester en `EMAIL_FOURNISSEUR=journal`.
+- **Workflow « Exploitation Supabase »** (branche `claude/exploitation-supabase`, à fusionner) : `diagnostic` en lecture seule ; autres actions désactivées.
+
+### Étapes restantes (chacune avec autorisation explicite)
+1. Fusionner le workflow ; protéger l'environnement `supabase-production` (relecteur, branche principale).
+2. Lancer `diagnostic` et relire le rapport.
+3. Sauvegarde `pg_dump` récente (idéalement : essai de restauration en local).
+4. Migration Vault puis `verification-planification.sql` (colonnes `_oui` à vrai, `_non` à faux).
+5. `RP_URL_SITE = https://radiologichub.com` ; vérifier que `RP_ORIGINE` est absent.
+6. Redéployer les trois fonctions (workflow existant) ; contrôler par un nouveau diagnostic.
+7. Créer la tâche Cron (`planification.sql`) ; contrôler exécutions et codes HTTP.
+8. Test de bout en bout réel (deux comptes, e-mails en `journal`).
+9. Après 24 à 48 h sans erreur : supprimer `RP_TACHES_SECRET`.
+10. Brevo débloqué : domaine authentifié chez Spaceship (SPF, DKIM, DMARC), puis `EMAIL_FOURNISSEUR=brevo`.

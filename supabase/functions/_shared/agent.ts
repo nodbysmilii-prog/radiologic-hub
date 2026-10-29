@@ -3,7 +3,7 @@
 // Assemble le noyau partagé (copié par scripts/preparer-backend.js), le
 // dépôt Supabase et le transport d'e-mails ; outils HTTP communs.
 // Variables d'environnement (« supabase secrets set ») :
-//   RP_URL_SITE            adresse du site (ex. https://nodbysmilii-prog.github.io/radiologic-hub)
+//   RP_URL_SITE            adresse officielle du site, sans / final (https://radiologichub.com)
 //   RP_SECRET              secret des liens de désinscription (long, aléatoire)
 //   RP_ADMIN_EMAILS        e-mails des administrateurs, séparés par des virgules
 //   (le secret de la tâche planifiée rp-taches est dans le Vault, pas ici)

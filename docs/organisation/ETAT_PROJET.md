@@ -18,7 +18,7 @@
 | Radioanatomie, bibliothèque, masterclass, structure | `AUTRES_MODULES.md` | `radioanatomie/`, `espace-dicom*`, `bibliotheque*`, `cours/`, `index.html` |
 
 ## Priorités actuelles (d'après le README)
-1. **Mise en service Remplacements + Communauté** (Supabase déjà créé, fonctions déployées le 27/10/2026) : planification, Brevo, administrateur, Google OAuth, temps réel, migration du fil.
+1. **Mise en service Remplacements + Communauté** (Supabase en production ; fonctions déployées une seule fois, le 26/10/2026, sans la planification Vault ni la PR #95) : diagnostic en lecture seule (workflow « Exploitation Supabase »), migration Vault, `RP_URL_SITE`, redéploiement, planification, Brevo (bloqué : vérification SMS, assistance contactée), test de bout en bout.
 2. **Démarches juridiques** : mentions légales, conditions de la Communauté, INPDP, contrat.
 3. **Validation par l'auteur** de la refonte ergonomique (branche `claude/refonte-ergonomie`, pas en ligne) et de `finition.css`.
 4. **Relectures médicales en attente** (classifications du 24/10, comptes rendus du 08/10, fiches récentes).
@@ -32,4 +32,5 @@
 
 ## Points à vérifier (transversal)
 - Branches non encore en ligne : `claude/refonte-ergonomie`, `feature/espace-dicom`, `apercu/espace-dicom`.
-- Le nom de domaine `www.radiologichub.com` n'est pas acheté.
+- Domaine officiel **https://radiologichub.com** (acheté chez Spaceship, DNS GitHub Pages, HTTPS imposé) ; adresse historique `nodbysmilii-prog.github.io/radiologic-hub/` redirigée. Supabase : Site URL et adresses de retour à jour, connexions testées sur le nouveau domaine dans Remplacements et Communauté.
+- Sauvegarde `pg_dump` locale faite (catalogue lisible, tables `rp_*` présentes) : **aucune restauration testée**.
