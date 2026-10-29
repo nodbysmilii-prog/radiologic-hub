@@ -1,0 +1,96 @@
+/* =========================================================
+   RadiologicHub — fiche « Colites » : visionneuses 3D (cadre colique, paroi en couches),
+   calibres, échographie en 5 couches, temps TDM, jauge d'épaisseur, Crohn / RCH,
+   3 formes de l'ischémie, éléments d'orientation, causes médicamenteuses.
+   Complète cavum.css / cholesteatome.css (.c3d, .r3d), mediastin.css (.md-*),
+   eu-tirads.css (.ti-*), occlusion-intestinale.css (.oi-trois).
+   ========================================================= */
+.cl3d .c3d-voie[aria-pressed="true"], .cl3d .c3d-voie.is-on { background: var(--c); color: #fff; }
+.cl3d .md3d-info h4 { margin: 0 0 6px; font-size: 1rem; display: flex; gap: 8px; align-items: center; }
+.cl3d .md3d-info h4::before { content: ""; width: 14px; height: 14px; border-radius: 4px; background: var(--c, #888); }
+.cl3d .md3d-info .cl-segs { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 0; padding: 0; list-style: none; }
+.cl3d .md3d-info .cl-segs li { padding: 2px 10px; border-radius: 999px; background: color-mix(in srgb, var(--c) 18%, #fff); font-size: .76rem; font-weight: 700; }
+.cl-legende, .cl-couches { margin: 6px 0 12px; padding: 0; list-style: none; display: grid; gap: 4px; font-size: .74rem; }
+.cl-legende li { display: flex; gap: 6px; align-items: center; }
+.cl-legende li::before { content: ""; width: 12px; height: 12px; border-radius: 3px; background: var(--c); }
+.cl-couches button { display: flex; width: 100%; gap: 8px; align-items: center; padding: 4px 6px; border: 2px solid transparent; border-radius: 8px; background: none; font: inherit; font-size: .76rem; font-weight: 600; text-align: left; cursor: pointer; }
+.cl-couches button::before { content: ""; flex: 0 0 14px; height: 14px; border-radius: 4px; background: var(--c); border: 1px solid rgba(0, 0, 0, .25); }
+.cl-couches button[aria-pressed="true"] { border-color: var(--ink); background: #fff; }
+.cl-couches small { margin-left: auto; font-size: .66rem; color: var(--muted); font-weight: 800; text-transform: uppercase; }
+.cl-atteintes { display: flex; flex-wrap: wrap; gap: 4px; }
+.cl-atteintes button { padding: 4px 9px; border: 2px solid var(--purple); border-radius: 999px; background: #fff; font: inherit; font-size: .7rem; font-weight: 700; cursor: pointer; }
+.cl-atteintes button[aria-pressed="true"] { background: var(--purple); color: #fff; }
+.cl-trois { margin-bottom: 12px; }
+
+/* Calibre caecum → sigmoïde */
+.cl-calibres { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 12px; align-items: center; margin-top: 16px; }
+.cl-fleche { display: grid; gap: 4px; text-align: center; font-size: .78rem; font-weight: 700; color: var(--muted); }
+.cl-fleche i { display: block; height: 18px; clip-path: polygon(0 0, 100% 35%, 100% 65%, 0 100%); background: linear-gradient(90deg, #e85d75, #f2ab2f, #3c67b8); }
+
+/* Onglets */
+.cl-onglets { margin: 4px 0 12px; }
+.cl-panneau { padding: 2px 0 8px; }
+
+/* Échographie : 5 couches */
+.cl-echo { list-style: none; padding: 0; margin: 10px 0; display: grid; gap: 0; border-radius: 14px; overflow: hidden; border: 3px solid var(--ink); }
+.cl-echo li { display: grid; grid-template-columns: 48px 1fr; align-items: center; gap: 10px; padding: 8px 12px; font-size: .84rem; font-weight: 600; }
+.cl-echo li.is-hyper { background: #f4f4f4; color: #111114; }
+.cl-echo li.is-hypo { background: #2b2b30; color: #fff; }
+.cl-echo li b { font-family: 'Permanent Marker', cursive; font-size: 1.1rem; }
+.cl-echo li.is-hyper b { color: #8a5a00; }
+.cl-echo li.is-hypo b { color: #f2ab2f; }
+.cl-echo li span::before { content: attr(data-sens); display: block; font-size: .66rem; text-transform: uppercase; letter-spacing: .08em; opacity: .7; }
+
+/* Temps TDM */
+.cl-temps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 10px 0 14px; }
+.cl-temps div { padding: 12px; border-radius: 14px; border-top: 6px solid var(--c); background: #fff; font-size: .82rem; box-shadow: 0 2px 0 rgba(0, 0, 0, .06); }
+.cl-temps b { display: block; color: var(--c); margin-bottom: 4px; }
+.cl-dose { --c: var(--blue); margin-bottom: 14px; }
+.cl-dose p { margin: 0 0 8px; }
+
+/* Sémiologie normale */
+.cl-normal { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 14px; }
+.cl-normal .fcard { border-top: 5px solid var(--c); }
+.cl-mesure { --c: var(--teal); }
+.cl-mesure input[type=range], .cl-dose input[type=range] { accent-color: var(--c); }
+.cl-jauge { position: relative; height: 24px; margin: 10px 0 4px; border-radius: 999px; border: 2px solid var(--ink); background: #fde2e4; overflow: hidden; }
+.cl-jauge i { position: absolute; top: 0; bottom: 0; left: 0; }
+.cl-zone-4 { width: calc(4 / 20 * 100%); background: #fff1d6; }
+.cl-zone-n { width: var(--n, 20%); background: #ddf3ea; z-index: 1; }
+.cl-jauge b { position: absolute; top: 50%; left: var(--v, 15%); z-index: 2; width: 16px; height: 16px; translate: -50% -50%; border-radius: 50%; background: var(--teal); border: 3px solid #fff; box-shadow: 0 0 0 2px var(--ink); transition: left .15s; }
+.cl-gravite .md-check { margin: 0; }
+
+/* Crohn / RCH */
+.cl-duel { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.cl-dl { display: grid; grid-template-columns: 96px 1fr; gap: 6px 10px; margin: 6px 0 0; font-size: .84rem; }
+.cl-dl dt { font-weight: 900; font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: var(--c); padding-top: 3px; }
+.cl-dl dd { margin: 0; }
+.cl-duel .md-lien-3d { margin-left: 6px; font-size: .7rem; }
+
+/* 3 formes de l'ischémie */
+.cl-formes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 8px 0 16px; }
+.cl-forme { display: grid; gap: 6px; align-content: start; padding: 12px; border-radius: 16px; border: 3px solid var(--c); background: color-mix(in srgb, var(--c) 8%, #fff); font: inherit; font-size: .82rem; text-align: left; cursor: pointer; transition: transform .15s, box-shadow .15s; }
+.cl-forme:hover, .cl-forme.is-on { transform: translateY(-2px); box-shadow: 6px 6px 0 color-mix(in srgb, var(--c) 45%, transparent); }
+.cl-forme b { color: var(--c); font-size: .9rem; }
+.cl-evol { font-weight: 800; font-size: .76rem; }
+.cl-cles { margin-top: 12px; }
+
+/* Infectieuses */
+.cl-orient { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 8px 0 14px; }
+.cl-orient button { display: grid; gap: 4px; padding: 12px; border: 3px solid var(--c); border-radius: 16px; background: #fff; font: inherit; font-size: .8rem; text-align: left; cursor: pointer; }
+.cl-orient button b { color: var(--c); font-size: 1rem; }
+.cl-orient button.is-on, .cl-orient button:hover { background: color-mix(in srgb, var(--c) 14%, #fff); }
+
+/* Médicamenteuses */
+.cl-medic { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+.cl-medic div { padding: 12px; border-radius: 14px; border-left: 6px solid var(--c); background: #fff; font-size: .82rem; }
+.cl-medic b { display: block; color: var(--c); }
+.cl-cas .ti-cas-choix { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cl-cas .ti-cas-choix button { font-size: .7rem; padding: 6px 2px; }
+
+@media (max-width: 700px) {
+  .cl-calibres, .cl-temps, .cl-normal, .cl-duel, .cl-formes, .cl-orient { grid-template-columns: 1fr; }
+  .cl-fleche i { transform: rotate(90deg); width: 40px; margin: 8px auto; }
+  .cl-dl { grid-template-columns: 80px 1fr; }
+}
+@media print { .cl3d, .cl-dose, .cl-mesure, #cl-cas, #cl-cas-reset { display: none !important; } .cl-panneau[hidden] { display: block !important; } }

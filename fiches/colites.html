@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Imagerie des colites — Fiche rapide RadiologicHub</title>
+  <meta name="description" content="Fiche rapide RadiologicHub : imagerie des colites — côlon en 3D (siège des colites), paroi colique en 3D (couches, échographie, cible), TDM, sémiologie normale, gravité, Crohn et RCH, ischémie, infections, pseudomembraneuse, typhlite.">
+  <link rel="icon" type="image/svg+xml" href="../assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=20261022235000">
+  <link rel="stylesheet" href="../fiche.css?v=20261012150000">
+  <link rel="stylesheet" href="../schemas/cavum.css?v=20261024100000">
+  <link rel="stylesheet" href="../schemas/cholesteatome.css?v=20261026200000">
+  <link rel="stylesheet" href="../schemas/eu-tirads.css?v=20261026230000">
+  <link rel="stylesheet" href="../schemas/mediastin.css?v=20261027100000">
+  <link rel="stylesheet" href="../schemas/nodule-pulmonaire.css?v=20261027150000">
+  <link rel="stylesheet" href="../schemas/ischemie-mesenterique.css?v=20261027170000">
+  <link rel="stylesheet" href="../schemas/occlusion-intestinale.css?v=20261028220000">
+  <link rel="stylesheet" href="../schemas/colites.css?v=20261028230000">
+  <script type="importmap">{ "imports": { "three": "../vendor/three-0.170.0/three.module.min.js", "three/addons/": "../vendor/three-0.170.0/addons/" } }</script>
+</head>
+<body class="fiche-page">
+
+  <div class="read-progress" aria-hidden="true"><span></span></div>
+
+  <header class="site-header is-scrolled" id="top">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand" aria-label="RadiologicHub — accueil">
+        <img src="../assets/emblem.svg" alt="" class="brand-mark" width="48" height="43">
+        <span class="brand-name">Radiologic<br>Hub</span>
+      </a>
+      <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
+        <a href="../comptes-rendus.html">Comptes rendus</a>
+        <a href="../fiches-rapides.html" class="is-current">Fiches rapides</a>
+        <a href="../radioanatomie/index.html">Radioanatomie</a>
+        <a href="../bibliotheque.html">Bibliothèque</a>
+        <a href="../communaute.html">Communauté</a>
+        <a href="../remplacements.html">Remplacements</a>
+        <a href="../index.html#masterclass" class="nav-masterclass">Masterclass</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+
+  <main>
+    <!-- ============ EN-TÊTE DE FICHE ============ -->
+    <section class="fiche-hero sec-down">
+      <div class="container">
+        <nav class="crumbs" aria-label="Fil d'Ariane">
+          <a href="../fiches-rapides.html">Fiches rapides</a> › <a href="../fiches-rapides.html#digestif">Digestif</a> › <span>Colites</span>
+        </nav>
+        <p class="marker-tag">Fiche rapide · Digestif</p>
+        <h1>Imagerie des <span class="hl-navy">colites</span></h1>
+        <p class="fiche-sub">Fiche condensée — examen de fin de spécialité en radiologie. Le <b>cadre colique en 3D</b> s'allume selon la colite choisie (Crohn, RCH, ischémie, infections…) et la <b>paroi colique en 3D</b> montre ses couches, leur aspect en échographie et les couches touchées par chaque atteinte.</p>
+
+        <div class="legend" role="group" aria-label="Code couleur — cliquez pour isoler une catégorie">
+          <span class="legend-label">Code couleur :</span>
+          <button class="chip k-tech" data-k="tech" aria-pressed="false">Technique</button>
+          <button class="chip k-sign" data-k="sign" aria-pressed="false">Signe discriminant / typique</button>
+          <button class="chip k-grave" data-k="grave" aria-pressed="false">Gravité / urgence</button>
+          <button class="chip k-ddx" data-k="ddx" aria-pressed="false">Piège / diagnostic différentiel</button>
+          <button class="chip k-key" data-k="key" aria-pressed="false">Signe TDM / chiffre à retenir</button>
+        </div>
+        <p class="legend-hint">Astuce : cliquez sur une couleur pour n'afficher qu'elle.</p>
+
+        <div class="fiche-actions">
+          <button class="btn btn-outline btn-sm" id="print-btn">Imprimer / PDF</button>
+          <a href="#cadre" class="btn btn-outline btn-sm">Le côlon en 3D</a>
+          <a href="#paroi" class="btn btn-outline btn-sm">La paroi en 3D</a>
+          <a href="#testez-vous" class="btn btn-ink btn-sm">Testez-vous →</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="container fiche-layout">
+      <aside class="toc" aria-label="Sommaire">
+        <p class="toc-title">Sommaire</p>
+        <ol>
+          <li><a href="#introduction" style="--c: var(--k-grave)"><b>I</b>Introduction</a></li>
+          <li><a href="#cadre" style="--c: var(--amber)"><b>·</b>Le côlon en 3D</a></li>
+          <li><a href="#clinique" style="--c: var(--orange)"><b>II</b>Clinico-biologie</a></li>
+          <li><a href="#imagerie" style="--c: var(--blue)"><b>III</b>Moyens d'imagerie</a></li>
+          <li><a href="#paroi" style="--c: var(--purple)"><b>·</b>La paroi en 3D</a></li>
+          <li><a href="#normal" style="--c: var(--teal)"><b>IV</b>Sémiologie normale</a></li>
+          <li><a href="#positif" style="--c: var(--teal)"><b>V–VI</b>Positif et gravité</a></li>
+          <li><a href="#etiologie" style="--c: var(--green)"><b>VII</b>Étiologies</a></li>
+          <li><a href="#testez-vous" style="--c: var(--ink)"><b>?</b>Testez-vous</a></li>
+        </ol>
+      </aside>
+
+      <div class="fiche-body" id="fiche-body">
+
+        <!-- I -->
+        <section class="fsec" id="introduction" style="--c: var(--k-grave)">
+          <h2 class="fsec-title"><span class="fnum">I</span>Introduction</h2>
+          <p><b>Les colites</b> sont des atteintes <mark class="k-key">inflammatoires, ischémiques ou infectieuses</mark> du colon qui peuvent toucher <b>la muqueuse</b> ou s'étendre dans les différentes structures de <b>la paroi</b> colique, voire <b>son environnement</b> <button type="button" class="md-lien-3d" data-voir-paroi="normal">voir les couches en 3D</button></p>
+          <div class="md-badges cl-trois">
+            <span class="md-badge" style="--c: var(--purple)">inflammatoires</span>
+            <span class="md-badge" style="--c: var(--k-grave)">ischémiques</span>
+            <span class="md-badge" style="--c: var(--green)">infectieuses</span>
+          </div>
+          <p>Les causes de colites sont nombreuses et leur degré de gravité variable.</p>
+          <ol class="md-chaine md-chaine-3">
+            <li style="--c: var(--blue)"><b>Diagnostic (+)</b><span>l'imagerie et principalement la TDM</span></li>
+            <li style="--c: var(--k-grave)"><b>Signes de gravité</b><span>les chercher</span></li>
+            <li style="--c: var(--green)"><b>Orienter le diagnostic étiologique</b></li>
+          </ol>
+          <p class="callout"><mark class="k-key">Le diagnostic de certitude repose le plus souvent sur l'endoscopie associée à la biopsie.</mark></p>
+        </section>
+
+        <!-- 3D cadre -->
+        <section class="fsec" id="cadre" style="--c: var(--amber)">
+          <h2 class="fsec-title"><span class="fnum">·</span>Le côlon en 3D : où siège la colite ?</h2>
+          <p class="fintro">Rappel ajouté à la fiche. Choisissez une colite : les segments qu'elle touche le plus souvent s'allument.</p>
+          <div class="c3d r3d cl3d" id="colon-3d" data-modeles="../public/models/colon/">
+            <div class="c3d-barre" role="toolbar" aria-label="Colites">
+              <span class="r3d-barre-titre">Atteinte</span>
+              <button type="button" class="c3d-voie" data-atteinte="crohn" style="--c: var(--purple)">Crohn</button>
+              <button type="button" class="c3d-voie" data-atteinte="rch" style="--c: var(--blue)">RCH</button>
+              <button type="button" class="c3d-voie" data-atteinte="ischemique" style="--c: var(--k-grave)">Ischémique</button>
+              <button type="button" class="c3d-voie" data-atteinte="pancolite" style="--c: var(--green)">Pancolite</button>
+              <button type="button" class="c3d-voie" data-atteinte="droite" style="--c: var(--orange)">Colite droite</button>
+              <button type="button" class="c3d-voie" data-atteinte="gauche" style="--c: var(--teal)">Colite gauche</button>
+              <button type="button" class="c3d-voie" data-atteinte="typhlite" style="--c: var(--amber)">Typhlite</button>
+              <button type="button" class="c3d-voie" data-atteinte="megacolon" style="--c: var(--ink)">Mégacôlon toxique</button>
+            </div>
+            <div class="c3d-cadre">
+              <div class="c3d-vue">
+                <div class="c3d-scene" id="cl3d-scene"></div>
+                <a class="c3d-attrib" href="https://www.z-anatomy.com/" rel="noopener" target="_blank" title="Anatomie : Z-Anatomy (CC BY-SA 4.0, dérivé de BodyParts3D). Le rectum n'est pas modélisé dans ce pack.">© Z-Anatomy · CC BY-SA</a>
+              </div>
+              <aside class="c3d-panneau" aria-label="Réglages de la vue 3D">
+                <p class="c3d-titre">Vues</p>
+                <div class="c3d-vues">
+                  <button type="button" data-vue="face">De face</button>
+                  <button type="button" data-vue="oblique">Oblique</button>
+                  <button type="button" data-vue="profil">De profil</button>
+                </div>
+                <p class="c3d-titre">Segments</p>
+                <ul class="cl-legende">
+                  <li style="--c: #e85d75">Caecum</li>
+                  <li style="--c: #f18d25">Côlon ascendant</li>
+                  <li style="--c: #f2ab2f">Côlon transverse</li>
+                  <li style="--c: #2a9d8f">Côlon descendant</li>
+                  <li style="--c: #3c67b8">Côlon sigmoïde</li>
+                  <li style="--c: #d9a27a">Iléon terminal</li>
+                  <li style="--c: #e8b48c">Intestin grêle</li>
+                </ul>
+                <label class="r3d-reglage"><input type="checkbox" id="cl3d-grele" checked> intestin grêle</label>
+                <button type="button" class="btn btn-outline btn-sm" id="cl3d-tout">Tout afficher</button>
+              </aside>
+            </div>
+            <div class="r3d-info md3d-info" id="cl3d-info" aria-live="polite"><p class="md-aide">Choisissez une atteinte, ou touchez un segment.</p></div>
+          </div>
+          <div class="cl-calibres">
+            <div class="ti-chiffre" style="--c: #e85d75"><span>6 à 8 cm</span><p>Calibre du <b>caecum</b></p></div>
+            <div class="cl-fleche" aria-hidden="true"><i></i><span>diminue progressivement</span></div>
+            <div class="ti-chiffre" style="--c: #3c67b8"><span>3 à 5 cm</span><p>pour le <b>sigmoïde</b></p></div>
+          </div>
+        </section>
+
+        <!-- II -->
+        <section class="fsec" id="clinique" style="--c: var(--orange)">
+          <h2 class="fsec-title"><span class="fnum">II</span>Aspects clinico-biologiques</h2>
+          <div class="md-deux">
+            <div class="fcard" style="--c: var(--orange)"><h3>1. Clinique</h3>
+              <p>La présentation clinique est variable :</p>
+              <div class="md-badges">
+                <span class="md-badge" style="--c: var(--orange)">Des douleurs abdominales aiguës</span>
+                <span class="md-badge" style="--c: var(--amber)">Une fièvre</span>
+                <span class="md-badge" style="--c: var(--purple)">Des troubles du transit (diarrhée liquidienne, glairo-sanglante)</span>
+                <span class="md-badge" style="--c: var(--k-grave)">Occlusion digestive</span>
+                <span class="md-badge" style="--c: var(--k-grave)">Etat de choc</span>
+              </div>
+              <p>La symptomatologie peut être d'installation <b>brutale ou progressive</b> selon la cause sous-jacente.</p>
+              <p class="callout"><mark class="k-key">La douleur abdominale et la diarrhée sont les symptômes les plus fréquents</mark></p></div>
+            <div class="fcard" style="--c: var(--teal)"><h3>2. Biologie</h3>
+              <p>Hyperleucocytose à PNN, SIB (VS et CRP élevées), des troubles ioniques…</p>
+              <p><mark class="k-key">Coproculture/ hémoculture/ sérologie → dg étiologique</mark></p></div>
+          </div>
+        </section>
+
+        <!-- III -->
+        <section class="fsec" id="imagerie" style="--c: var(--blue)">
+          <h2 class="fsec-title"><span class="fnum">III</span>Moyens d'imagerie</h2>
+          <div class="ch-onglets cl-onglets" role="tablist" aria-label="Moyens d'imagerie" data-groupe="img" style="--c: var(--blue)">
+            <button type="button" role="tab" data-onglet="asp" aria-selected="false">1. ASP</button>
+            <button type="button" role="tab" data-onglet="opac" aria-selected="false">2. Opacification</button>
+            <button type="button" role="tab" data-onglet="echo" aria-selected="false">3. Échographie</button>
+            <button type="button" role="tab" data-onglet="tdm" aria-selected="true">4. TDM</button>
+            <button type="button" role="tab" data-onglet="irm" aria-selected="false">5. IRM</button>
+            <button type="button" role="tab" data-onglet="endo" aria-selected="false">6. Endoscopie</button>
+          </div>
+          <div class="cl-panneau" data-panneau="asp" data-groupe="img" hidden>
+            <p><mark class="k-ddx">Apport limité.</mark> Il peut mettre en évidence :</p>
+            <ul class="md-puces"><li><mark class="k-grave">Pneumopéritoine signant la perforation digestive</mark> (hyperclarté en croissant sous-diaphragmatique)</li><li>Pneumatose pariétale</li>
+              <li>Distension colique. Une augmentation anormale du calibre colique peut orienter vers une <mark class="k-grave">colectasie</mark></li><li>Epaississement des haustrations coliques</li><li>NHA</li></ul>
+          </div>
+          <div class="cl-panneau" data-panneau="opac" data-groupe="img" hidden><p>Opacification digestive : <mark class="k-ddx">délaissé</mark></p></div>
+          <div class="cl-panneau" data-panneau="echo" data-groupe="img" hidden>
+            <ul class="md-puces"><li>Examen anodin, non irradiant et peu coûteux</li><li><mark class="k-key">De 1ère intention devant des douleurs abdominales</mark></li><li><mark class="k-tech">Sonde de haute fréquence+++ pour l'étude de la paroi digestive</mark></li></ul>
+            <p>La paroi digestive normale apparait sous forme de <mark class="k-sign">5 couches alternativement hyper et hypoéchogènes</mark> : de la lumière à la périphérie :</p>
+            <ol class="cl-echo" id="cl-echo"></ol>
+            <p><button type="button" class="md-lien-3d" data-voir-echo="1">voir les 5 couches en 3D (mode échographie)</button></p>
+          </div>
+          <div class="cl-panneau" data-panneau="tdm" data-groupe="img">
+            <p class="callout"><mark class="k-key">Imagerie de référence</mark></p>
+            <div class="cl-temps">
+              <div style="--c: var(--steel)"><b>Sans injection</b><span><mark class="k-tech">Passage sans injection → Recherche de gaz extra digestif</mark></span></div>
+              <div style="--c: var(--k-grave)"><b>Temps artériel (25-30s)</b><span><mark class="k-ddx">n'est pas systématique</mark> ; si suspicion d'ischémie mésentérique</span></div>
+              <div style="--c: var(--blue)"><b>Temps portal (70s)</b><span><mark class="k-key">passage capital, meilleur temps pour explorer le rehaussement pariétal digestif</mark></span></div>
+            </div>
+            <form class="md-outil cl-dose" id="cl-dose" onsubmit="return false">
+              <p class="ti-outil-titre">Injection</p>
+              <p><mark class="k-tech">Acquisition avec injection à 2-3ml/s de 1.5cc/kg IV</mark></p>
+              <label class="np-taille">Poids : <output id="cl-poids-val">70</output> kg<input type="range" name="poids" min="30" max="130" value="70"></label>
+              <p class="ch-verdict k-key" id="cl-dose-res" aria-live="polite"><b></b><span></span></p>
+            </form>
+            <div class="fcard"><h3>Opacification digestive (coloscan)</h3>
+              <ul class="md-puces"><li><mark class="k-ddx">En dehors du contexte d'URG</mark></li><li>Préparation digestive préalable (régime sans résidus et lavement évacuateur)</li><li>Lavement à l'eau ou aux produits de contraste hydrosolubles</li><li><mark class="k-sign">Facilite la recherche fistules</mark></li></ul></div>
+          </div>
+          <div class="cl-panneau" data-panneau="irm" data-groupe="img" hidden>
+            <ul class="md-puces"><li><mark class="k-ddx">Pas de place dans un contexte d'urgence</mark></li><li><mark class="k-key">Intérêt dans les colites chroniques notamment les MICI</mark></li></ul>
+            <div class="md-deux">
+              <div class="fcard"><h3>Technique</h3><p><mark class="k-tech">Réplétion colique le plus souvent à l'eau, injection d'antipéristaltique (glucagon), décubitus dorsal</mark></p></div>
+              <div class="fcard"><h3>Protocole</h3><div class="md-modalites"><span><mark class="k-tech">axial et coronal (± sagittal)</mark></span><span><mark class="k-tech">T2 rapides (TSE ou single shot)</mark></span><span><mark class="k-tech">T1</mark></span><span><mark class="k-tech">IP/OP</mark></span><span><mark class="k-tech">T1 EG sans et après gado (30, 60 et 90s)</mark></span></div></div>
+            </div>
+          </div>
+          <div class="cl-panneau" data-panneau="endo" data-groupe="img" hidden>
+            <ul class="md-puces"><li><mark class="k-key">Fondamentale pour le diagnostic de certitude</mark></li><li>Il permet d'analyser la muqueuse et de réaliser des prélèvements biopsiques</li></ul>
+          </div>
+        </section>
+
+        <!-- 3D paroi -->
+        <section class="fsec" id="paroi" style="--c: var(--purple)">
+          <h2 class="fsec-title"><span class="fnum">·</span>La paroi colique en 3D : les couches</h2>
+          <p class="fintro">Segment de paroi ouvert et emboîté (dessin 3D du site, proportions schématiques). Touchez une couche ; changez de mode pour voir l'aspect en échographie, ou les couches touchées par une atteinte.</p>
+          <div class="c3d r3d cl3d" id="paroi-3d">
+            <div class="c3d-barre" role="toolbar" aria-label="Mode">
+              <span class="r3d-barre-titre">Mode</span>
+              <button type="button" class="c3d-voie" data-mode="anatomie" aria-pressed="true" style="--c: var(--purple)">Anatomie</button>
+              <button type="button" class="c3d-voie" data-mode="echo" aria-pressed="false" style="--c: var(--ink)">Échographie</button>
+            </div>
+            <div class="c3d-cadre">
+              <div class="c3d-vue"><div class="c3d-scene" id="paroi-scene"></div></div>
+              <aside class="c3d-panneau" aria-label="Couches et atteintes">
+                <p class="c3d-titre">Couches (de la lumière vers la périphérie)</p>
+                <ul class="cl-couches" id="cl-couches"></ul>
+                <p class="c3d-titre">Atteinte</p>
+                <div class="cl-atteintes" id="cl-atteintes">
+                  <button type="button" data-paroi="normal" aria-pressed="true">Paroi normale</button>
+                  <button type="button" data-paroi="muqueuse">Muqueuse et sous-muqueuse</button>
+                  <button type="button" data-paroi="transmurale">Transmurale</button>
+                  <button type="button" data-paroi="cible">Cible</button>
+                  <button type="button" data-paroi="double-cible">Double cible</button>
+                  <button type="button" data-paroi="seche">Forme sèche</button>
+                  <button type="button" data-paroi="pneumatose">Pneumatose pariétale</button>
+                </div>
+              </aside>
+            </div>
+            <div class="r3d-info md3d-info" id="paroi-info" aria-live="polite"><p class="md-aide">Touchez une couche ou choisissez une atteinte.</p></div>
+          </div>
+        </section>
+
+        <!-- IV -->
+        <section class="fsec" id="normal" style="--c: var(--teal)">
+          <h2 class="fsec-title"><span class="fnum">IV</span>Sémiologie radiologique normale</h2>
+          <div class="cl-normal">
+            <div class="fcard" style="--c: var(--teal)"><h3>Épaisseur pariétale</h3><ul class="md-puces"><li><mark class="k-key">3-4mm si côlon collabé</mark></li><li><mark class="k-key">1-2mm si côlon distendu</mark></li></ul></div>
+            <div class="fcard" style="--c: var(--blue)"><h3>Rehaussement</h3><p><mark class="k-sign">Paroi rehaussée de manière homogène après injection</mark></p></div>
+            <div class="fcard" style="--c: var(--amber)"><h3>Calibre</h3><ul class="md-puces"><li><mark class="k-key">6 à 8cm pour le caecum</mark></li><li>Diminue progressivement jusqu'à <mark class="k-key">3 à 5 cm pour le sigmoïde</mark></li></ul></div>
+          </div>
+          <form class="md-outil cl-mesure" id="cl-mesure" onsubmit="return false">
+            <p class="ti-outil-titre">Mesurer la paroi</p>
+            <label class="md-coche"><input type="checkbox" name="distendu"> côlon distendu</label>
+            <label class="np-taille">Épaisseur : <output id="cl-mm">3</output> mm<input type="range" name="mm" min="1" max="20" step="0.5" value="3"></label>
+            <div class="cl-jauge" aria-hidden="true"><i class="cl-zone-n"></i><i class="cl-zone-4"></i><b id="cl-curseur"></b></div>
+            <p class="ch-verdict" id="cl-mesure-res" aria-live="polite"><b></b><span></span></p>
+          </form>
+        </section>
+
+        <!-- V - VI -->
+        <section class="fsec" id="positif" style="--c: var(--teal)">
+          <h2 class="fsec-title"><span class="fnum">V–VI</span>Diagnostic positif et diagnostic de gravité</h2>
+          <div class="md-compare">
+            <div class="md-cote-a" style="--c: var(--teal)"><p class="md-cote-titre">V. Diagnostic positif (colite simple)</p>
+              <ul class="md-check"><li><mark class="k-key">Épaississement pariétal &gt; 4mm</mark></li><li><mark class="k-sign">Infiltration de la graisse péricolique</mark></li><li><mark class="k-sign">Anomalie de densité de la paroi</mark></li></ul>
+              <p class="md-sous">Signes associés</p>
+              <div class="md-badges"><span class="md-badge" style="--c: var(--teal)">Ascite</span><span class="md-badge" style="--c: var(--teal)">Atteinte du grêle ou du rectum</span><span class="md-badge" style="--c: var(--teal)">Adénopathies</span><span class="md-badge" style="--c: var(--teal)">Atteinte des organes digestifs pleins</span><span class="md-badge" style="--c: var(--teal)">Collections</span><span class="md-badge" style="--c: var(--teal)">Thrombose des Vx mésentériques</span></div></div>
+            <div class="md-cote-a" style="--c: var(--k-grave)"><p class="md-cote-titre">VI. Diagnostic de gravité (colite compliquée)</p>
+              <form class="cl-gravite" id="cl-gravite" onsubmit="return false">
+                <ul class="md-check md-check-actif">
+                  <li><label><input type="checkbox"> <mark class="k-grave">Occlusion, mégacôlon toxique</mark></label></li>
+                  <li><label><input type="checkbox"> <mark class="k-grave">Nécrose colique</mark></label></li>
+                  <li><label><input type="checkbox"> <mark class="k-grave">Pneumatose pariétale</mark> <mark class="k-ddx">(pas tjrs synonyme d'ischémie)</mark></label></li>
+                  <li><label><input type="checkbox"> <mark class="k-grave">Aéroportie</mark></label></li>
+                  <li><label><input type="checkbox"> <mark class="k-grave">Péritonite, Abcès</mark></label></li>
+                  <li><label><input type="checkbox"> <mark class="k-grave">Pyléphlébite</mark></label></li>
+                </ul>
+                <p class="ch-verdict" id="cl-grav-res" aria-live="polite"><b></b><span></span></p>
+              </form></div>
+          </div>
+        </section>
+
+        <!-- VII -->
+        <section class="fsec" id="etiologie" style="--c: var(--green)">
+          <h2 class="fsec-title"><span class="fnum">VII</span>Diagnostic étiologique</h2>
+          <div class="ch-onglets cl-onglets" role="tablist" aria-label="Étiologies" data-groupe="etio" style="--c: var(--green)">
+            <button type="button" role="tab" data-onglet="inflammatoire" aria-selected="true">1. Inflammatoire</button>
+            <button type="button" role="tab" data-onglet="ischemique" aria-selected="false">2. Ischémique</button>
+            <button type="button" role="tab" data-onglet="infectieuse" aria-selected="false">3. Infectieuse</button>
+            <button type="button" role="tab" data-onglet="pseudo" aria-selected="false">4. Pseudomembraneuse</button>
+            <button type="button" role="tab" data-onglet="typhlite" aria-selected="false">5. Typhlite</button>
+            <button type="button" role="tab" data-onglet="medic" aria-selected="false">6. Médicamenteuse</button>
+            <button type="button" role="tab" data-onglet="rares" aria-selected="false">7. Causes rares</button>
+          </div>
+
+          <div class="cl-panneau" data-panneau="inflammatoire" data-groupe="etio">
+            <ul class="md-puces"><li><mark class="k-key">MICI : Crohn et RCH</mark> — maladies chroniques évoluant par poussées</li>
+              <li>Leur diagnostic repose sur un faisceau d'arguments cliniques, radiologiques, endoscopiques, histologiques et évolutifs : <mark class="k-sign">Adultes jeunes (20-30 ans) / diarrhée glairo-sanglante récidivante / syndrome rectal (ténesmes, épreintes et faux besoins) surtout en cas de RCH</mark></li>
+              <li><mark class="k-grave">Les MICI peuvent se compliquer de mégacôlon toxique</mark> : <mark class="k-grave">distension importante principalement du côlon transverse qui est &gt; 6 cm avec perte des haustrations et présence de pseudopolypes</mark> <button type="button" class="md-lien-3d" data-voir-atteinte="megacolon">voir en 3D</button></li></ul>
+            <div class="cl-duel">
+              <div class="md-cote-a" style="--c: var(--purple)"><p class="md-cote-titre">Crohn <button type="button" class="md-lien-3d" data-voir-atteinte="crohn" data-voir-paroi="transmurale">siège et paroi en 3D</button></p>
+                <dl class="cl-dl">
+                  <dt>Siège</dt><dd>Touche n'importe quel segment mais prédomine au niveau de : <mark class="k-sign">Iléon terminal et colon droit +++</mark></dd>
+                  <dt>Épaisseur</dt><dd><mark class="k-key">Important (≈10mm)</mark></dd>
+                  <dt>Symétrie</dt><dd>Asymétrique</dd>
+                  <dt>Extension</dt><dd><mark class="k-sign">Discontinu</mark></dd>
+                  <dt>Profondeur</dt><dd><mark class="k-sign">Atteinte transmurale</mark></dd>
+                  <dt>Autour</dt><dd>Aspect peigné du mésentère ; Adénopathies ; <b>Ascite</b> et infiltration péri-colique</dd>
+                  <dt>Complications</dt><dd><mark class="k-grave">Fistules+++</mark> ; <mark class="k-grave">Masses inflammatoires</mark></dd>
+                  <dt>Signes</dt><dd><mark class="k-sign">« comb sign »</mark> ; <mark class="k-sign">Sclérolipomatose</mark></dd>
+                </dl></div>
+              <div class="md-cote-a" style="--c: var(--blue)"><p class="md-cote-titre">RCH <button type="button" class="md-lien-3d" data-voir-atteinte="rch" data-voir-paroi="muqueuse">siège et paroi en 3D</button></p>
+                <dl class="cl-dl">
+                  <dt>Siège</dt><dd><mark class="k-sign">Côlon gauche++</mark> ; <mark class="k-ddx">Pas d'atteinte de la dernière anse</mark></dd>
+                  <dt>Épaisseur</dt><dd><mark class="k-key">Moins important (8mm en moyenne)</mark></dd>
+                  <dt>Symétrie</dt><dd>Symétrique en halo</dd>
+                  <dt>Extension</dt><dd><mark class="k-sign">Continu, siège initial rectal puis progression rétrograde</mark></dd>
+                  <dt>Profondeur</dt><dd><mark class="k-sign">Atteinte non transmurale (muqueuse et sous muqueuse)</mark></dd>
+                  <dt>Autour</dt><dd>Ascite et infiltration péricolique</dd>
+                  <dt>Complications</dt><dd><mark class="k-ddx">Jamais de fistule ou d'abcès</mark></dd>
+                  <dt>Signes</dt><dd>—</dd>
+                </dl></div>
+            </div>
+          </div>
+
+          <div class="cl-panneau" data-panneau="ischemique" data-groupe="etio" hidden>
+            <div class="md-deux">
+              <div class="fcard" style="--c: var(--k-grave)"><h3>Causes</h3><ul class="md-puces"><li>Occlusives <mark class="k-key">artérielle &gt; veineuse</mark> (athéromateuse ou embolique)</li><li><mark class="k-key">Non occlusives +++</mark> : médicamenteuse, bas débit, traumatique, occlusion colique sur obstacle ou cancer avec colite ischémique d'amont</li></ul></div>
+              <div class="fcard" style="--c: var(--orange)"><h3>Clinique</h3><ul class="md-puces"><li><mark class="k-sign">Sujet âgé avec FDR CVx+++</mark></li><li>Rectorragies, douleurs abdominales, diarrhée, fièvre, choc, défense abdominale</li><li><b>Endoscopie</b> : dg +</li></ul></div>
+            </div>
+            <div class="md-compare">
+              <div class="md-cote-a" style="--c: var(--k-grave)"><p class="md-cote-titre">Forme grave avec gangrène</p><p><mark class="k-grave">ischémie transmurale, mortalité élevée → traitement chirurgical</mark></p></div>
+              <div class="md-cote-a" style="--c: var(--green)"><p class="md-cote-titre">Forme réversible</p><p>avec <mark class="k-sign">atteinte muqueuse et sous muqueuse → traitement médical</mark></p></div>
+            </div>
+            <p class="md-sous">Sémiologie radiologique — atteinte artérielle : 3 formes (cliquez : la paroi 3D se met à jour)</p>
+            <div class="cl-formes">
+              <button type="button" class="cl-forme" data-voir-paroi="cible" style="--c: var(--amber)"><b>1. Forme humide (wet appearence)</b><span class="cl-evol">→ Précoce et réversible</span>
+                <span>Epaississement pariétal irrégulier ; rehaussement en <mark class="k-sign">cible</mark> (PDC muqueuse + sous muqueuse hypodense) ou en <mark class="k-sign">double cible</mark> (rehaussement muqueuse + musculeuse) ; densification +/- importante de la graisse péri-colique</span></button>
+              <button type="button" class="cl-forme" data-voir-paroi="seche" style="--c: var(--orange)"><b>2. La forme sèche (« Dry appearance »)</b><span class="cl-evol">→ tardive, irréversible</span>
+                <span>Epaississement circonférentiel et symétrique ; <mark class="k-grave">la paroi apparait hypodense homogène faiblement voire non rehaussée</mark> ; sans ou avec peu d'infiltration péri-colique</span></button>
+              <button type="button" class="cl-forme" data-voir-paroi="pneumatose" style="--c: var(--k-grave)"><b>3. Infarctus transmural</b><span class="cl-evol">→ Dernière phase</span>
+                <span><mark class="k-grave">Pneumatose pariétale</mark> ; <mark class="k-grave">Défaut de rehaussement pariétal</mark></span></button>
+            </div>
+            <p class="md-sous">Cause veineuse</p>
+            <ol class="md-chaine md-chaine-3">
+              <li style="--c: var(--amber)"><b>A la phase précoce</b><span>Épaississement pariétal ; <mark class="k-sign">Hyperdensité spontanée de la muqueuse (hémorragie)</mark> ; Infiltration de la graisse péritonéale</span></li>
+              <li style="--c: var(--orange)"><b>A la phase tardive</b><span>Hypodensité sous muqueuse due à l'œdème ; Épanchement péritonéal</span></li>
+              <li style="--c: var(--k-grave)"><b>Infarctus transmural</b><span>Épaississement homogène, diminution du rehaussement ; <mark class="k-grave">Pneumatose pariétale</mark> ; Épanchement péritonéal</span></li>
+            </ol>
+            <div class="fcard cl-cles" style="--c: var(--k-grave)"><h3>Ischémique : points clés <button type="button" class="md-lien-3d" data-voir-atteinte="ischemique">voir en 3D</button></h3>
+              <ul class="md-puces"><li><mark class="k-sign">Atteinte segmentaire</mark></li><li><mark class="k-ddx">Pas de corrélation entre le segment atteint et l'artère ou la veine mésentérique touchées</mark></li><li><mark class="k-key">Côlon gauche et sigmoïde les plus touchés</mark></li>
+                <li>Atteinte gauche : patients âgés, hypoperfusion</li><li>Atteinte droite : patients jeunes, traumatisme</li><li><mark class="k-ddx">Atteinte rectale rare</mark></li></ul>
+              <p class="md-aide"><a href="ischemie-mesenterique.html">→ fiche Ischémie mésentérique</a></p></div>
+          </div>
+
+          <div class="cl-panneau" data-panneau="infectieuse" data-groupe="etio" hidden>
+            <ul class="md-puces"><li>Tableau de douleurs abdominales et de diarrhée</li><li><b>Dg +</b> repose sur la <mark class="k-key">coproculture</mark> qui permet d'identifier le germe ou sur la <mark class="k-key">coloscopie avec biopsies</mark>.</li></ul>
+            <p class="md-sous">Éléments d'orientation (cliquez : le côlon 3D s'allume)</p>
+            <div class="cl-orient">
+              <button type="button" data-voir-atteinte="pancolite" style="--c: var(--green)"><b>Pancolite</b><span>CMV, E.coli, Claustridium difficile</span></button>
+              <button type="button" data-voir-atteinte="droite" style="--c: var(--orange)"><b>Colite droite</b><span>Salmonellose, yersiniose, campilobacter, Tuberculose, amibiase</span></button>
+              <button type="button" data-voir-atteinte="gauche" style="--c: var(--teal)"><b>Colite gauche</b><span>Schistosomiase, shigellose, herpes, gonoccoccie</span></button>
+            </div>
+            <div class="oi-trois cl-trois-cartes">
+              <div class="fcard" style="--c: var(--purple)"><h3>CMV</h3><p><mark class="k-sign">terrain d'immunodépression, pancolite, épaississement pariétal+++</mark></p></div>
+              <div class="fcard" style="--c: var(--orange)"><h3>Amibiase <button type="button" class="md-lien-3d" data-voir-atteinte="amibiase">3D</button></h3><ul class="md-puces"><li>Notion de séjour en zone tropicale d'endémie</li><li>Ulcérations diffuses et biopsie montrant le parasite</li><li><mark class="k-key">Abcès hépatique associé dans 1/3 des cas</mark></li><li><mark class="k-grave">Colite fulminante</mark></li><li><mark class="k-sign">Caecum en premier puis pancolique</mark></li></ul></div>
+              <div class="fcard" style="--c: var(--k-grave)"><h3>Tuberculose <button type="button" class="md-lien-3d" data-voir-atteinte="tuberculose">3D</button></h3><p><mark class="k-ddx">diagnostic différentiel : Crohn +++</mark></p><p>Contexte / Granulomes avec nécrose caséeuse à la biopsie / <mark class="k-sign">Iléocæcale</mark> / Atteinte transmurale / <mark class="k-sign">Adénopathies à centre hypodense</mark> / Ascite / Fistule/abcès</p></div>
+            </div>
+          </div>
+
+          <div class="cl-panneau" data-panneau="pseudo" data-groupe="etio" hidden>
+            <div class="md-deux">
+              <div><ul class="md-puces"><li><mark class="k-key">Contexte de prise d'antibiothérapie à large spectre</mark></li><li>Due à l'infection par <b>clostridium difficile</b></li><li><b>Clinique</b> : douleurs abdominales, diarrhée et fièvre ; <mark class="k-grave">parfois un sepsis grave</mark></li>
+                <li><b>Dg+</b> : présence de toxines ou du germe dans les selles ou sur l'aspect de fausses membranes à l'endoscopie</li></ul></div>
+              <div class="fcard" style="--c: var(--green)"><h3>Imagerie <button type="button" class="md-lien-3d" data-voir-atteinte="pancolite">3D</button></h3><ul class="md-check"><li><mark class="k-sign">Pancolite+++</mark></li><li><mark class="k-key">Important épaississement pariétal (&gt; 11mm)</mark></li><li><mark class="k-sign">Aspect en « accordéon »/ épaississement nodulaire/polypoïde</mark></li><li>Densification de la graisse péri-colique</li><li>Ascite.</li></ul></div>
+            </div>
+          </div>
+
+          <div class="cl-panneau" data-panneau="typhlite" data-groupe="etio" hidden>
+            <h3 class="ch-h3">Neutropénique = typhlite <button type="button" class="md-lien-3d" data-voir-atteinte="typhlite">voir en 3D</button></h3>
+            <div class="md-deux">
+              <ul class="md-puces"><li><mark class="k-key">Terrain immunodéprimé</mark></li><li>Germes : CMV, clostridium, candida</li><li><mark class="k-sign">Atteinte iléo-caecale, et du côlon droit.</mark></li></ul>
+              <ul class="md-puces"><li><mark class="k-key">Épaississement pariétal important (jusqu'à 3 cm pour le caecum, 4mm pour l'iléon)</mark></li><li>Atteinte circonférentielle</li><li>Paroi hypodense (oedème sous muqueux)</li><li><mark class="k-grave">Pneumatose pariétale possible (mauvais pronostic)</mark></li><li>Infiltration péricolique</li><li><mark class="k-grave">Sepsis, abcès, nécrose intestinale, hémorragie…</mark></li></ul>
+            </div>
+          </div>
+
+          <div class="cl-panneau" data-panneau="medic" data-groupe="etio" hidden>
+            <div class="cl-medic">
+              <div style="--c: var(--purple)"><b>Chimiothérapie</b><span>ulcères muqueux, inflammation</span></div>
+              <div style="--c: var(--green)"><b>Antibiotiques</b><span>clostridium difficile</span></div>
+              <div style="--c: var(--k-grave)"><b>Vasoconstricteurs, HTA, contraceptifs oraux</b><span>ischémie, inflammation</span></div>
+              <div style="--c: var(--amber)"><b>AINS</b><span></span></div>
+              <div style="--c: var(--orange)"><b>Amoxiciline, Erythromycine</b><span>colite hémorragique du colon droit, régressant à l'arrêt</span></div>
+            </div>
+          </div>
+
+          <div class="cl-panneau" data-panneau="rares" data-groupe="etio" hidden>
+            <div class="oi-trois">
+              <div class="fcard" style="--c: var(--amber)"><h3>Colite radique</h3><p>Atteinte colique segmentaire</p></div>
+              <div class="fcard" style="--c: var(--purple)"><h3>Colite du rejet de l'hôte</h3><p>Atteinte auto-immune ; atteinte du grêle + côlon ; <mark class="k-ddx">Indifférenciable d'une atteinte infectieuse</mark></p></div>
+              <div class="fcard" style="--c: var(--teal)"><h3>Colite à éosinophiles</h3><p>Biologique ; contexte allergique ; atteinte estomac, côlon droit et intestin grêle</p></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ? -->
+        <section class="fsec" id="testez-vous" style="--c: var(--ink)">
+          <h2 class="fsec-title"><span class="fnum">?</span>Testez-vous</h2>
+          <p class="fintro">Quelle colite ? <span class="ti-score" id="cl-score">0 / 8</span></p>
+          <div class="ti-cas cl-cas" id="cl-cas"></div>
+          <button type="button" class="btn btn-outline btn-sm" id="cl-cas-reset">Recommencer</button>
+          <div class="flash flash-3">
+            <button class="flip" aria-pressed="false" style="--c: var(--teal)"><span class="flip-tab">1</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Épaississement pathologique ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>&gt; 4 mm</b>normale : 3-4 mm collabé, 1-2 mm distendu.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--blue)"><span class="flip-tab">2</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Meilleur temps pour la paroi ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>Temps portal (70 s)</b>passage capital.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--purple)"><span class="flip-tab">3</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Crohn ou RCH : fistules ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>Crohn : fistules+++</b>RCH : jamais de fistule ou d'abcès.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--k-grave)"><span class="flip-tab">4</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Mégacôlon toxique ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>Transverse &gt; 6 cm</b>perte des haustrations, pseudopolypes.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--amber)"><span class="flip-tab">5</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Cible / double cible ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>Cible</b>muqueuse + sous-muqueuse hypodense ; double cible : muqueuse + musculeuse.</p></span></span></button>
+            <button class="flip" aria-pressed="false" style="--c: var(--green)"><span class="flip-tab">6</span><span class="flip-inner">
+              <span class="flip-face flip-front"><strong>Pseudomembraneuse : épaisseur ?</strong><small>cliquez pour retourner</small></span>
+              <span class="flip-face flip-back"><p><b>&gt; 11 mm</b>pancolite, accordéon.</p></span></span></button>
+          </div>
+          <p class="md-source">D'après le cours de l'auteur « Colites ». Côlon en 3D : Z-Anatomy (CC BY-SA 4.0) ; paroi en 3D : dessin du site (proportions schématiques).</p>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Image agrandie">
+    <button class="modal-close" aria-label="Fermer">&times;</button>
+    <div class="lb-wrap"><img src="" alt=""></div>
+    <p class="lightbox-cap"></p>
+  </dialog>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="../index.html" class="brand">
+          <img src="../assets/emblem-light.svg" alt="" class="brand-mark" width="44" height="40">
+          <span class="brand-name">Radiologic<br>Hub</span>
+        </a>
+        <p class="footer-tagline">Outils, ressources et formation pour les radiologues et les résidents.</p>
+      </div>
+      <nav aria-label="Liens de pied de page">
+        <div class="footer-col">
+          <p class="footer-titre">Au quotidien</p>
+          <a href="../comptes-rendus.html">Comptes rendus</a>
+          <a href="../suivi-oncologique.html">Suivi oncologique</a>
+          <a href="../fiches-rapides.html">Fiches rapides</a>
+          <a href="../espace-dicom.html">Espace DICOM</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Apprendre</p>
+          <a href="../radioanatomie/index.html">Radioanatomie</a>
+          <a href="../cas/index.html">Cas cliniques</a>
+          <a href="../index.html#cas-du-jour">Cas du jour</a>
+          <a href="../bibliotheque.html">Bibliothèque</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Réseau</p>
+          <a href="../communaute.html">Communauté</a>
+          <a href="../remplacements.html">Remplacements</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-titre">Masterclass</p>
+          <a href="../index.html#masterclass">Programme</a>
+          <a href="../index.html#tarifs">Tarifs</a>
+          <a href="../index.html#inscription">S'inscrire à une masterclass</a>
+        </div>
+      </nav>
+      <p class="copyright"><span>© <span id="year"></span> RadiologicHub · Outils, ressources et formation en radiologie</span><span class="copyright-liens"><a href="../mentions-legales.html">Mentions légales</a><a href="../index.html#inscription">Contact</a></span></p>
+    </div>
+  </footer>
+
+  <script src="../navigation.js?v=20261022235000"></script>
+
+  <script src="../fiche.js?v=20261022235000"></script>
+  <script src="../regles/colites.js?v=20261028230000"></script>
+  <script type="module" src="digestif/colites-fiche.js?v=20261028230000"></script>
+</body>
+</html>
