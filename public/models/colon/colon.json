@@ -1,0 +1,104 @@
+{
+ "source": "Z-Anatomy (CC BY-SA 4.0), commit 2b6cf98a8ca012571ecb252e5c077b42a21b3b61, dérivé de BodyParts3D (CC BY-SA 2.1 JP)",
+ "repere": "centré sur le cadre colique, ×10 (1 unité = 10 cm), +Y haut, +Z avant du patient, +X gauche du patient",
+ "limites": "segments du pack ; caecum séparé du côlon ascendant à la hauteur de l'abouchement de l'iléon ; le rectum n'est pas modélisé dans le pack",
+ "taille_mm": [
+  228,
+  331,
+  153
+ ],
+ "structures": [
+  {
+   "id": "caecum",
+   "nom": "Caecum",
+   "cat": "colon",
+   "centre": [
+    -0.853,
+    -0.213,
+    0.103
+   ]
+  },
+  {
+   "id": "ascendant",
+   "nom": "Côlon ascendant",
+   "cat": "colon",
+   "centre": [
+    -0.849,
+    0.634,
+    0.092
+   ]
+  },
+  {
+   "id": "transverse",
+   "nom": "Côlon transverse",
+   "cat": "colon",
+   "centre": [
+    0.03,
+    1.245,
+    0.442
+   ]
+  },
+  {
+   "id": "descendant",
+   "nom": "Côlon descendant",
+   "cat": "colon",
+   "centre": [
+    0.655,
+    0.104,
+    -0.018
+   ]
+  },
+  {
+   "id": "sigmoide",
+   "nom": "Côlon sigmoïde",
+   "cat": "colon",
+   "centre": [
+    0.002,
+    -0.982,
+    -0.542
+   ]
+  },
+  {
+   "id": "appendice",
+   "nom": "Appendice",
+   "cat": "appendice",
+   "centre": [
+    -0.539,
+    -0.207,
+    0.011
+   ]
+  },
+  {
+   "id": "tenias",
+   "nom": "Bandelettes (ténias) du côlon",
+   "cat": "tenia",
+   "centre": [
+    0.016,
+    0.476,
+    0.137
+   ]
+  },
+  {
+   "id": "ileon",
+   "nom": "Iléon terminal",
+   "cat": "grele",
+   "centre": [
+    -0.414,
+    -0.037,
+    0.427
+   ]
+  },
+  {
+   "id": "grele",
+   "nom": "Intestin grêle",
+   "cat": "grele",
+   "centre": [
+    0.303,
+    0.319,
+    0.498
+   ]
+  }
+ ],
+ "empreinte": "0854797b91c5",
+ "octets": 508384
+}
