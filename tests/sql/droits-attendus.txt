@@ -2,6 +2,10 @@
 # Sans GRANT, un rôle n'a aucun accès ; les règles RLS filtrent ensuite les lignes.
 
 ## Tables
+ab_abonnements · authenticated : DELETE, INSERT, SELECT, UPDATE
+ab_abonnements · service_role : tous les droits
+ab_contenus · authenticated : DELETE, INSERT, SELECT, UPDATE
+ab_contenus · service_role : tous les droits
 bib_article_themes · anon : SELECT
 bib_article_themes · authenticated : DELETE, INSERT, SELECT, UPDATE
 bib_article_themes · service_role : tous les droits
@@ -90,6 +94,7 @@ rs_signalements · authenticated : INSERT (cible_id, cible_type, details, motif)
 rs_signalements · authenticated : UPDATE (decision, traite_le, traite_par)
 
 ## Fonctions (EXECUTE)
+ab_est_abonne() · authenticated, service_role
 dc_droits(eid uuid) · authenticated
 dc_droits_de(pid uuid, eid uuid) · service_role
 dc_droits_etude(uid text) · authenticated

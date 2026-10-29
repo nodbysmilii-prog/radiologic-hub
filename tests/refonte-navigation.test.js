@@ -15,7 +15,7 @@ const pages = [];
 (function parcourir(d) {
   for (const f of fs.readdirSync(path.join(R, d), { withFileTypes: true })) {
     const rel = path.join(d, f.name);
-    if (f.isDirectory()) { if (!['node_modules', 'vendor', '.git', 'assets-sources', 'public'].includes(f.name)) parcourir(rel); }
+    if (f.isDirectory()) { if (!['node_modules', 'vendor', '.git', 'assets-sources', 'public', 'dist'].includes(f.name)) parcourir(rel); }
     else if (f.name.endsWith('.html') && lire(rel).includes('id="main-nav"')) pages.push(rel.replace(/\\/g, '/').replace(/^\.\//, ''));
   }
 })('.');
