@@ -1,7 +1,7 @@
 # Charte de conception des fiches rapides
 
 > Méthode pédagogique et interactive de RadiologicHub. À consulter **avant toute création ou modification importante de fiche**.
-> Établie à partir de quatre fiches représentatives : **Colites** (3D, quiz, règles), **IRM des myocardites** (calculateur, mnémotechnique), **Myome utérin** (arbre décisionnel, planche FIGO), **Spondylodiscite** (tableau comparatif, quiz). Les exemples ci-dessous viennent du code existant ; les fichiers cités sont à ouvrir au besoin, pas à relire en entier.
+> Établie à partir de sept fiches représentatives : **Colites** (3D, quiz, règles), **IRM des myocardites** (calculateur, mnémotechnique), **Myome utérin** (arbre décisionnel, planche FIGO), **Spondylodiscite** (tableau comparatif, quiz), **Occlusion intestinale aiguë** (questions-guides, panneaux, seuils), **Ischémie mésentérique** (signes dessinés, curseur, atelier) et **Fractures de l'extrémité distale du radius** (3D des mesures, réglette, vérification de seuils). Les exemples ci-dessous viennent du code existant ; les fichiers cités sont à ouvrir au besoin, pas à relire en entier.
 
 ## 0. Principe directeur
 
@@ -62,6 +62,15 @@ Tous sont câblés par `fiche.js` **par classe ou attribut `data-*`** : on réut
 11. **Animations utiles seulement** : barres « siège » qui se remplissent à l'apparition (`.bar` + `IntersectionObserver`), retournement des cartes, mise en avant d'une colonne. Aucune animation décorative. Respecter `prefers-reduced-motion` (JS des visionneuses : `doux()` dans `colites-fiche.js`) et prévoir l'impression (`@media print` dans `fiche.css`).
 12. **Mnémotechniques maison** assumés quand ils aident (myocardite : « Trempé / Touché », « les 2 P » ; « festin de pâtes » pour Wanibuchi). Le trait d'humour ne doit jamais remplacer le terme médical exact, qui figure à côté.
 
+13. **Questions-guides qui ouvrent les parties** (occlusion : « les 5 questions du radiologue ») : une liste `ol#oi-questions` générée depuis `R.QUESTIONS` (`regles/occlusion-intestinale.js`), chaque question est un lien coloré vers sa section (défilement doux, flash `.oi-flash` sur la cible, URL mise à jour). Modèle pour toute fiche qui suit un raisonnement du radiologue (positif → mécanisme → topographie → gravité → étiologie) ; le plan de la fiche reprend alors ces questions.
+14. **Panneaux groupés** `.oi-panneau[data-panneau][data-groupe]` + boutons de groupe : un seul panneau visible par groupe (conséquences, obstructions intraluminales, formes du volvulus). Réutilisable à la place d'un long texte quand plusieurs entités se comparent au même niveau.
+15. **Curseur qui fait varier le schéma et la conclusion** : `input[type=range]` + `output` (ischémie : distance à l'ostium de l'AMS → `R.orientationOcclusion(cm)` ; occlusion : poids → dose de contraste ; poignet : réglette de bascule du fragment distal). Le dessin SVG est régénéré, un verdict coloré `.ch-verdict` (fonction `verdict(el, titre, niveau, texte)`, niveau = classe `k-*`) donne l'interprétation. Le calcul vient toujours de `regles/`, jamais écrit dans le JS d'affichage.
+16. **Atelier « un signe → dessin + texte + valeur pronostique »** (ischémie, `[data-paroi]`) : boutons-onglets (`aria-selected`) qui affichent le schéma du signe de paroi, le texte de la fiche et un badge de pronostic `.im-prono.is-*`. Pour toute sémiologie où chaque signe doit être **vu**, pas seulement lu. Les signes sont des `figure.np-fig[data-ima]` dessinés par `ima-svg.js` (SVG propres au site), et les comparaisons « sans / avec injection » s'affichent en paire `.im-paire`.
+17. **Vérifier un cas** (`form.p-calc`, poignet ; grilles à cocher de l'occlusion pour l'anse fermée et la gravité) : l'utilisateur saisit des mesures, la fiche répond critère par critère (`is-ok` / `is-depasse`, seuil entre parenthèses, `aria-live="polite"`) puis donne une conclusion. Les champs peuvent rester vides (« facultatif ») sans erreur.
+18. **Mesures et repères sur 3D + clichés** (poignet) : barre de boutons `data-mesure` (`aria-pressed`) qui allume mesure ou repère sur la vue 3D, mêmes boutons repris sous forme de liens dans le texte ; sur les clichés, bouton **« Masquer / Afficher les tracés »** pour comparer l'image brute et l'image annotée (le tracé reste une surcouche). Bon modèle pour toute fiche de mesures.
+19. **Tableau de seuils + note de contexte** (`table.ftable`, colonnes Mesure / Normale / Seuil, seuil en `mark.k-key`) suivi d'une note `.p-note` qui donne la source et le contexte d'application (ex. seuils AAOS, patient < 65 ans). Toute valeur seuil porte sa source.
+20. **Numérotation des sections** : sections numérotées en chiffres romains pour les parties du raisonnement, `·` pour les rappels ajoutés (introduction, physiopathologie, 3D de rappel), `?` pour « Testez-vous » (occlusion, ischémie, poignet).
+
 ## 4. Architecture du code d'une fiche
 
 Séparer **règles**, **présentation** et **câblage** :
@@ -69,7 +78,8 @@ Séparer **règles**, **présentation** et **câblage** :
 - `regles/<fiche>.js` : données et calculs médicaux (seuils, classifications, atteintes, cas du quiz). Module UMD **sans dépendance au navigateur**, exposé en `window.RHRegles.<fiche>`. C'est là que vit le fond médical, relisible d'un coup (ex. `regles/colites.js` commente ses seuils : paroi > 4 mm, caecum 6-8 cm…).
 - `tests/<fiche>.test.js` (`node:test`) : une règle = un test (`colites`, `myocardite`, `myome`…). Toute modification de seuil ou de classification s'accompagne de son test.
 - `schemas/<fiche>.css` (+ `schemas/*.js` pour des dessins SVG) : styles propres à la fiche, **préfixés** (`cl-`, `ti-`, `md-`, `myo-`) pour ne pas entrer en conflit.
-- `fiches/<spécialité>/<fiche>-fiche.js` (module ES) : interactions propres à la fiche (3D, quiz généré). L'en-tête du fichier liste ce qu'il fait, comme dans `colites-fiche.js`.
+- `fiches/<spécialité>/<fiche>-fiche.js` : interactions propres à la fiche (3D, quiz généré). Module ES si la fiche charge de la 3D (`colites-fiche.js`, `poignet-fiche.js`), IIFE sinon (`oia-fiche.js`, `ima-fiche.js`), qui s'arrête proprement si `window.RHRegles.<fiche>` est absent. L'en-tête du fichier liste ce qu'il fait, bloc par bloc (`/* ---------- Titre ---------- */`).
+- Dessins SVG spécifiques : `fiches/<spécialité>/*-svg.js` ou `schemas.js` (`ima-svg.js` → `RHIschemie`, `poignet/schemas.js` → `RHPoignet`), appelés depuis le JS de la fiche avec les paramètres issus de `regles/`.
 - `fiche.css` / `fiche.js` : seulement ce qui sert à **plusieurs** fiches. Une particularité d'une seule fiche ne va pas dans le commun.
 - Images : `assets/fiches/<fiche>/` ou `fiches/<fiche>/images/`.
 
@@ -77,7 +87,7 @@ Séparer **règles**, **présentation** et **câblage** :
 
 **Réutilisable (à appliquer par défaut)** : squelette §1, code `k-*`, `.flip`, onglets, tableau comparatif, quiz « Testez-vous », « Take home message », checklist du compte rendu, galerie avec lightbox, séparation règles/tests, `?v=`, mobile (`@media` 1000/760/520 px) et impression.
 
-**Particulier à une fiche (ne pas généraliser)** : feu tricolore de résécabilité (cavum/pancréas), arbre dessiné du myome, planche FIGO, calculateur Lake Louise, vues 3D (nécessitent un modèle sous licence compatible, voir README / `assets-sources/`), « festin de pâtes » (Wanibuchi). On les imite en esprit quand le sujet s'y prête (un algorithme → arbre ; des critères cumulatifs → calculateur), on ne les plaque pas.
+**Particulier à une fiche (ne pas généraliser)** : valvule de Bauhin continente / non continente (occlusion), axe de l'AMS et atelier de la paroi (ischémie), bascule du fragment distal et seuils AAOS (radius), feu tricolore de résécabilité (cavum/pancréas), arbre dessiné du myome, planche FIGO, calculateur Lake Louise, vues 3D (nécessitent un modèle sous licence compatible, voir README / `assets-sources/`), « festin de pâtes » (Wanibuchi). On les imite en esprit quand le sujet s'y prête (un algorithme → arbre ; des critères cumulatifs → calculateur), on ne les plaque pas.
 
 ## 6. Rigueur médicale (non négociable)
 
