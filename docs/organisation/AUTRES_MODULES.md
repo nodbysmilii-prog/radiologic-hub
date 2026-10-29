@@ -9,7 +9,8 @@
 
 ## Bibliothèque (`bibliotheque.html`, `bibliotheque/`, `bibliotheque-admin.html`)
 - Réalisé : annuaire d'articles libres (liens + résumé français), thèmes, recherche, filtres.
-- À vérifier : tags, niveaux, Essentiels d'exemple ; objectif 50 à 100 articles dont 10 Essentiels.
+- Réalisé (29/10/2026) : charte `CHARTE_BIBLIOTHEQUE.md` (classement spécialité → thème → article, références, accès/licences, résumés originaux, recherche, composants, validation, présent vs prévu). Aucun article ni code modifié.
+- À vérifier : tags, niveaux, Essentiels d'exemple ; objectif 50 à 100 articles dont 10 Essentiels ; relecture de la charte par l'auteur (§ 12 : licences acceptées, preprints, format des résumés, procédure de retrait).
 - Prochaine tâche : étapes 3 à 6 (file « À valider », veille hebdomadaire, liens croisés, liens morts).
 
 ## Masterclass / cours (`index.html`, `cours/`, `cours-admin.html`)
