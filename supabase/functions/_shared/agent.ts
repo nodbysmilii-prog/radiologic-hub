@@ -6,7 +6,7 @@
 //   RP_URL_SITE            adresse du site (ex. https://nodbysmilii-prog.github.io/radiologic-hub)
 //   RP_SECRET              secret des liens de désinscription (long, aléatoire)
 //   RP_ADMIN_EMAILS        e-mails des administrateurs, séparés par des virgules
-//   RP_TACHES_SECRET       secret de la tâche planifiée (rp-taches)
+//   (le secret de la tâche planifiée rp-taches est dans le Vault, pas ici)
 //   EMAIL_FOURNISSEUR      brevo | resend | journal
 //   BREVO_API_KEY / RESEND_API_KEY
 //   EMAIL_EXPEDITEUR, EMAIL_EXPEDITEUR_NOM

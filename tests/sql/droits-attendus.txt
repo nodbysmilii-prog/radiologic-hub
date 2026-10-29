@@ -108,6 +108,7 @@ rp_est_membre(sid uuid) · authenticated
 rp_est_responsable(sid uuid) · authenticated
 rp_membre_meme_structure(pid uuid) · authenticated
 rp_statistiques() · authenticated
+rp_taches_secret_valide(candidat text) · service_role
 rp_voit_remplacant(rid uuid) · authenticated
 rs_autre(conv uuid) · authenticated
 rs_bloque(a uuid, b uuid) · authenticated

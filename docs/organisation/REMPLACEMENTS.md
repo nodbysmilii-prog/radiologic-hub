@@ -7,14 +7,17 @@ Fichiers : `remplacements.html`, `remplacements-reponse.html`, `remplacements/` 
 - Mode démonstration (données fictives) et mode production Supabase (lien magique, stockage privé, fonctions `rp-agent`, `rp-lien`, `rp-taches`).
 - 17 modèles d'e-mails, contrat type, tests du moteur.
 - Supabase créé, `config.js` renseigné, secrets réglés (`EMAIL_FOURNISSEUR=journal`), fonctions déployées le 27/10/2026.
+- pg_cron et pg_net activés, aucune tâche Cron encore créée (constaté le 29/10/2026).
+- Planification sécurisée par le Vault **préparée** (29/10/2026, non déployée) : migration `20261029120000_planification_vault.sql` (secret aléatoire dans le Vault, `rp_taches_secret_valide` réservée à `service_role`, `rp_prive.appeler_taches`), `rp-taches` vérifie via la base (`_shared/acces-taches.mjs`), `planification.sql` sans secret, `verification-planification.sql` ; tests `tests/sql/planification.js` et `tests/remplacements-taches.test.js`.
 
 ## À vérifier
-- Planification toutes les 15 min (`supabase/sql/planification.sql`, `RP_TACHES_SECRET`).
+- Planification : appliquer la migration Vault, lancer `verification-planification.sql` (colonnes `_oui` = true, `_non` = false), redéployer les fonctions, exécuter `planification.sql`, contrôler les journaux de `rp-taches` (pas de 403), puis supprimer le secret `RP_TACHES_SECRET`.
+- Sur le vrai projet : confirmer que `anon` / `authenticated` n'ont aucun accès aux schémas `vault`, `net` et `rp_prive` (le script de vérification le montre).
 - Domaine + compte Brevo + SMTP personnalisé, puis `EMAIL_FOURNISSEUR=brevo`.
 - Administrateur déclaré (`rp_admins`) ; essai de bout en bout à plusieurs comptes.
 - Juridique : `mentions-legales.html` (crochets), INPDP + transfert hors Tunisie, validation de `modeles/contrat.md`.
 
 ## Prochaine tâche importante
-Terminer la mise en service selon `remplacements/INSTALLATION.md` (étapes 3, 4 et 7) : planification, Brevo, passage à `brevo`.
+Après relecture de la branche : mettre en service la planification (étape 7 réécrite de `remplacements/INSTALLATION.md`), puis Brevo et passage à `brevo` (étapes 3 et 4).
 
 Plus tard : WhatsApp/SMS, export comptable, notation des remplacements.

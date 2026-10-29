@@ -23,7 +23,7 @@ Pour passer en production (vrais comptes, vrais e-mails), suivre les étapes ci-
 
 Au choix :
 
-- **Éditeur SQL** (*SQL Editor → New query*) : coller tout le fichier `supabase/migrations/20261008120000_remplacements.sql` et l'exécuter, **puis** faire de même avec `supabase/migrations/20261009090000_reseau.sql` (Communauté), **puis** avec `supabase/migrations/20261012090000_droits_explicites.sql`, **puis** avec `supabase/migrations/20261012120000_bibliotheque.sql` (Bibliothèque), **puis** avec `supabase/migrations/20261012180000_cours.sql` (cours d'échoanatomie), **puis** avec `supabase/migrations/20261027120000_communaute_fil.sql` (fil de la Communauté : demandes d'avis et remplacements dans le fil) — dans cet ordre (exécuter seulement celles qui ne l'ont pas encore été) ;
+- **Éditeur SQL** (*SQL Editor → New query*) : coller tout le fichier `supabase/migrations/20261008120000_remplacements.sql` et l'exécuter, **puis** faire de même avec `supabase/migrations/20261009090000_reseau.sql` (Communauté), **puis** avec `supabase/migrations/20261012090000_droits_explicites.sql`, **puis** avec `supabase/migrations/20261012120000_bibliotheque.sql` (Bibliothèque), **puis** avec `supabase/migrations/20261012180000_cours.sql` (cours d'échoanatomie), **puis** avec `supabase/migrations/20261027120000_communaute_fil.sql` (fil de la Communauté : demandes d'avis et remplacements dans le fil), **puis** avec `supabase/migrations/20261029120000_planification_vault.sql` (mot de passe de la tâche planifiée, rangé dans le coffre-fort Vault : voir l'étape 7) — dans cet ordre (exécuter seulement celles qui ne l'ont pas encore été) ;
 - ou **en ligne de commande** (outil `supabase`, depuis la racine du dépôt) :
   ```
   supabase login
@@ -92,7 +92,6 @@ Dans Supabase, *Authentication → Sign In / Providers → Google* : activer, co
 supabase secrets set \
   RP_URL_SITE=https://nodbysmilii-prog.github.io/radiologic-hub \
   RP_SECRET=<longue-chaîne-aléatoire> \
-  RP_TACHES_SECRET=<autre-longue-chaîne-aléatoire> \
   RP_ADMIN_EMAILS=adresse.admin@exemple.com \
   EMAIL_FOURNISSEUR=brevo \
   BREVO_API_KEY=<clé-API-Brevo> \
@@ -104,13 +103,14 @@ supabase secrets set \
 |---|---|
 | `RP_URL_SITE` | Adresse du site, **sans** `/` final : sert à construire les liens des e-mails |
 | `RP_SECRET` | Signe les liens de désinscription (ex. `openssl rand -hex 32`) ; ne plus le changer ensuite |
-| `RP_TACHES_SECRET` | Protège la tâche planifiée `rp-taches` |
 | `RP_ADMIN_EMAILS` | Adresses qui reçoivent les nouvelles inscriptions à valider (séparées par des virgules) |
 | `EMAIL_FOURNISSEUR` | `brevo`, `resend`, ou `journal` (n'envoie rien, écrit dans les journaux — pour les essais) |
 | `BREVO_API_KEY` / `RESEND_API_KEY` | Clé du fournisseur choisi |
 | `EMAIL_EXPEDITEUR`, `EMAIL_EXPEDITEUR_NOM` | Expéditeur des e-mails (adresse du domaine authentifié) |
 
 `SUPABASE_URL`, `SUPABASE_ANON_KEY` et `SUPABASE_SERVICE_ROLE_KEY` sont fournies automatiquement aux fonctions.
+
+Le mot de passe de la tâche planifiée `rp-taches` n'est **pas** un secret de fonction : il est rangé dans le coffre-fort Vault de la base (étape 7). L'ancien secret `RP_TACHES_SECRET` n'est plus utilisé et peut être supprimé une fois l'étape 7 vérifiée.
 
 ## 6. Déployer les fonctions serveur
 
@@ -133,7 +133,16 @@ La Communauté n'a pas de fonction serveur propre : tout passe par la base (droi
 
 ## 7. Planifier l'agent (toutes les 15 minutes)
 
-*Database → Extensions* : activer **pg_cron** et **pg_net**. Puis, dans l'éditeur SQL, exécuter `supabase/sql/planification.sql` après y avoir remplacé `<PROJET>` (identifiant du projet) et `<SECRET>` (valeur de `RP_TACHES_SECRET`).
+La fonction `rp-taches` n'accepte que les appels portant un mot de passe (en-tête `x-rp-secret`). Ce mot de passe est **tiré au hasard par la base** et rangé dans le **coffre-fort Vault** (secret `rp_taches_secret`) : personne ne le voit, il n'est écrit dans aucun fichier ni dans la tâche planifiée. La tâche le lit dans le Vault à chaque passage ; `rp-taches` demande à la base s'il est juste (fonction `rp_taches_secret_valide`, réservée à la clé `service_role`, qui répond seulement oui / non).
+
+1. **Migration** `supabase/migrations/20261029120000_planification_vault.sql` (éditeur SQL ou `supabase db push`, voir l'étape 2) : crée le mot de passe dans le Vault et les deux fonctions. La relancer ne change pas le mot de passe.
+2. **Contrôle** : exécuter `supabase/sql/verification-planification.sql` ; chaque colonne finissant par `_oui` doit valoir `true`, chaque colonne finissant par `_non` doit valoir `false`. Rien n'affiche le mot de passe.
+3. **Déployer** les fonctions (étape 6) : la nouvelle version de `rp-taches` vérifie le mot de passe auprès de la base.
+4. *Database → Extensions* : activer **pg_cron** et **pg_net**, puis exécuter `supabase/sql/planification.sql` (rien à remplacer).
+5. **Vérifier** 15 à 20 minutes plus tard : *Edge Functions → rp-taches → Logs* (un appel toutes les 15 minutes, sans « Accès refusé ») ; les requêtes de suivi sont en commentaire dans `planification.sql`.
+6. *Edge Functions → Secrets* : supprimer `RP_TACHES_SECRET`, devenu inutile.
+
+Pour changer le mot de passe sans l'afficher, ou arrêter la tâche : voir les commentaires de `planification.sql`.
 
 L'agent envoie alors les propositions en attente, les relances (délai réglable par chaque structure), les rappels de la veille (18 h, heure de Tunis), les demandes de confirmation de réalisation et le récapitulatif mensuel. Pour la Communauté, il envoie aussi un e-mail aux membres qui ont un message non lu depuis plus d'une heure (une seule fois par message, sans en recopier le contenu, avec lien de désinscription ; désactivable depuis le profil).
 
