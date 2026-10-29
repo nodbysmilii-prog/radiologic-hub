@@ -291,7 +291,7 @@ a.rp-item-lien:hover .rp-ligne-titre { color: var(--royal); }
 .rp-cal-jour.is-we { background: #f6f3f8; }
 .rp-cal-jour.is-passe { opacity: .38; cursor: default; }
 .rp-cal-jour.is-dispo { border-color: var(--teal); background: color-mix(in srgb, var(--teal) 12%, #fff); }
-.rp-cal-jour.is-mission { border-color: var(--amber); box-shadow: inset 0 0 0 2px var(--amber); }
+.rp-cal-jour.is-mission { border-color: var(--amber); box-shadow: inset 0 0 0 2px var(--amber); background: color-mix(in srgb, var(--amber) 22%, #fff); cursor: not-allowed; }
 .rp-cal-jour.is-choisi { border-color: var(--ink); background: var(--teal); color: #fff; }
 .rp-cal-num { font-size: .8rem; font-weight: 800; }
 .rp-coche { font-weight: 900; font-size: .9rem; }

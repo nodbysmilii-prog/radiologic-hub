@@ -319,13 +319,14 @@
       <div class="rp-pinceaux" role="radiogroup" aria-label="Créneau">${PINCEAUX.map(([k, l]) => `<button type="button" class="rp-pinceau is-${k}${vue.pinceau === k ? ' is-actif' : ''}" data-act="pinceau" data-pinceau="${k}" role="radio" aria-checked="${vue.pinceau === k}">${l}</button>`).join('')}</div>
       <div id="rp-cal-dispo">${calendrierDispos()}</div>
       <p class="rp-raccourcis"><button type="button" class="rp-lien-btn" data-act="remplir-mois">Appliquer le créneau aux jours ouvrés du mois</button> · <button type="button" class="rp-lien-btn" data-act="vider-mois">Vider le mois</button></p>
-      <p class="rp-legende"><span class="rp-pastille is-journee">J</span> journée <span class="rp-pastille is-matin">M</span> matin <span class="rp-pastille is-apres_midi">AM</span> après-midi <span class="rp-pastille is-garde">G</span> garde <span class="rp-pastille is-mission">★</span> mission confirmée</p>
+      <p class="rp-legende"><span class="rp-pastille is-journee">J</span> journée <span class="rp-pastille is-matin">M</span> matin <span class="rp-pastille is-apres_midi">AM</span> après-midi <span class="rp-pastille is-garde">G</span> garde <span class="rp-pastille is-mission">★</span> occupé (mission confirmée)</p>
     </div>`;
   }
   function calendrierDispos() {
     const jours = {};
     Object.entries(dispos).forEach(([d, cr]) => { if (cr.length) jours[d] = { classes: ['is-dispo'], contenu: `<span class="rp-pastilles">${cr.map(c => `<span class="rp-pastille is-${c}">${ABREV[c]}</span>`).join('')}</span>`, titre: REF.listeFr(REF.libelles(cr, REF.CRENEAUX)) }; });
-    Object.entries(missionsDates).forEach(([d, nom]) => { jours[d] = { classes: [...((jours[d] || {}).classes || []), 'is-mission'], contenu: `${(jours[d] || {}).contenu || ''}<span class="rp-pastille is-mission" title="${esc(nom)}">★</span>`, titre: `mission : ${nom}` }; });
+    // jour de mission confirmée : affiché « occupé » à la place des disponibilités (conservées, elles reviennent si la mission est annulée)
+    Object.entries(missionsDates).forEach(([d, nom]) => { jours[d] = { classes: ['is-mission'], contenu: `<span class="rp-pastille is-mission" title="${esc(nom)}">★</span>`, titre: `occupé : mission confirmée (${nom})` }; });
     return CAL.grille({ mois: vue.mois, min: auj(), jours });
   }
   function appliquerPinceau(date) {
@@ -763,7 +764,7 @@
     async choisir(b) {
       if (!confirm('Retenir ce remplaçant ? Il reçoit aussitôt la confirmation, les autres sont prévenus.')) return;
       const r = await essayer(() => api.choisir(b.dataset.did, b.dataset.rid));
-      if (r) toast(r.ok ? 'Remplaçant retenu : confirmations envoyées.' : 'Ce remplacement vient d\'être pourvu.', r.ok ? 'ok' : 'ko');
+      if (r) toast(r.ok ? 'Remplaçant retenu : confirmations envoyées.' : r.raison === 'non_disponible' ? 'Ce remplaçant n\'est plus disponible à ces dates (autre mission ou disponibilités retirées).' : 'Ce remplacement vient d\'être pourvu.', r.ok ? 'ok' : 'ko');
       cacheDemandes.sid = null; afficher();
     },
     async annuler(b) {
@@ -853,7 +854,10 @@
     const jour = e.target.closest('.rp-cal-jour');
     if (jour && !jour.disabled) {
       const date = jour.dataset.date;
-      if (jour.closest('#rp-cal-dispo')) definirDispo(date, appliquerPinceau(date));
+      if (jour.closest('#rp-cal-dispo')) {
+        if (missionsDates[date]) toast(`Jour occupé : mission confirmée (${missionsDates[date]}).`, 'ko');
+        else definirDispo(date, appliquerPinceau(date));
+      }
       else if (jour.closest('#rp-cal-demande')) {
         const b = brouillon(), i = b.dates.indexOf(date);
         if (i >= 0) b.dates.splice(i, 1); else if (b.dates.length < 31) b.dates.push(date);
