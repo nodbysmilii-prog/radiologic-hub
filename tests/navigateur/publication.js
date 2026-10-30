@@ -142,9 +142,13 @@ const existeDansDepot = p => { try { return fs.statSync(path.join(RACINE, decode
   const publies = lister(DIST);
   const pages = publies.filter(f => f.endsWith('.html') && !f.startsWith('dicom/ohif/') && f !== '404.html').sort();
 
-  const srv = (await emulateurCloudflare(8790 + Math.floor(Math.random() * 100))) || (await serveurSimple());
+  // RH_URL_CIBLE=https://radiologic-hub.pages.dev : teste le site réellement déployé (lecture seule, aucune donnée créée).
+  const cible = (process.env.RH_URL_CIBLE || '').replace(/\/$/, '');
+  const srv = cible ? { base: cible, cloudflare: true, distant: true, proc: { kill: () => {} } }
+    : (await emulateurCloudflare(8790 + Math.floor(Math.random() * 100))) || (await serveurSimple());
   const BASE = srv.base;
-  console.log(`Site publié servi par ${srv.cloudflare ? 'l\'émulateur Cloudflare Pages (wrangler)' : 'le serveur local de secours'} : ${BASE}`);
+  if (srv.distant) console.log(`Site DÉPLOYÉ testé : ${BASE} (référence : ${process.env.RH_URL_REFERENCE || 'dépôt local'})`);
+  else console.log(`Site publié servi par ${srv.cloudflare ? 'l\'émulateur Cloudflare Pages (wrangler)' : 'le serveur local de secours'} : ${BASE}`);
   const b = await chromium.launch();
   const externesBloques = new Set(), toleres = new Set(), appelsSupabase = [];
 
@@ -155,7 +159,8 @@ const existeDansDepot = p => { try { return fs.statSync(path.join(RACINE, decode
   };
   async function ouvrir(appareil, { connecte = false, base = BASE } = {}) {
     const ctx = await b.newContext({ ...APPAREILS[appareil], acceptDownloads: true });
-    const simule = await simulerSupabase(ctx, connecte, appelsSupabase);
+    // Site déployé, visiteur : vrai Supabase en lecture seule (aucune connexion, aucune écriture) ; compte de test : simulé.
+    const simule = srv.distant && !connecte ? true : await simulerSupabase(ctx, connecte, appelsSupabase);
     const p = await ctx.newPage();
     p.erreurs = [];
     p.on('pageerror', e => p.erreurs.push(`erreur JS : ${e.message}`));
@@ -181,7 +186,8 @@ const existeDansDepot = p => { try { return fs.statSync(path.join(RACINE, decode
   /* ---------- 1. Toutes les pages publiées, ordinateur et téléphone, comparées au dépôt actuel ---------- */
   // Même balayage sur le dépôt tel quel (comme GitHub Pages aujourd'hui) : un défaut présent des deux côtés
   // est préexistant ; un défaut propre à la publication est une RÉGRESSION.
-  const reference = await serveurSimple(RACINE, false);
+  // Référence : RH_URL_REFERENCE (ex. https://radiologichub.com, GitHub Pages) ou le dépôt local.
+  const reference = process.env.RH_URL_REFERENCE ? { base: process.env.RH_URL_REFERENCE.replace(/\/$/, ''), proc: { kill: () => {} } } : await serveurSimple(RACINE, false);
   async function balayer(base, appareil, captures) {
     const { ctx, p } = await ouvrir(appareil, { base });
     const defauts = new Map();
@@ -298,13 +304,13 @@ const existeDansDepot = p => { try { return fs.statSync(path.join(RACINE, decode
 
       await charger(p, '/remplacements-reponse.html?j=jeton-de-test');
       const rep = await p.evaluate(() => ({ url: location.pathname + location.search, texte: document.querySelector('main').innerText.slice(0, 200) }));
-      ok(`${appareil} ${qui} : page de réponse aux e-mails (paramètres conservés, erreur affichée proprement)`, rep.url === '/remplacements-reponse?j=jeton-de-test' && /fonction simulée|Erreur/.test(rep.texte), JSON.stringify(rep));
+      ok(`${appareil} ${qui} : page de réponse aux e-mails (paramètres conservés, erreur affichée proprement)`, rep.url === '/remplacements-reponse?j=jeton-de-test' && (srv.distant && !connecte ? /Lien inactif|n'est pas reconnu/i : /fonction simulée|Erreur/).test(rep.texte), JSON.stringify(rep));
 
       ok(`${appareil} ${qui} : modules Supabase sans erreur JS ni ressource manquante`, !p.erreurs.length, p.erreurs.join(' ; '));
       await ctx.close();
     }
   }
-  ok('Supabase : seules des requêtes simulées ont été faites (aucune vers le vrai projet)', appelsSupabase.length > 0, `${appelsSupabase.length} requêtes interceptées`);
+  ok('Supabase : compte de test uniquement simulé (aucune connexion au vrai projet)', appelsSupabase.length > 0, `${appelsSupabase.length} requêtes interceptées`);
 
   /* ---------- 4. Fichiers non publiés : 404 par adresse directe ---------- */
   const publiesSet = new Set(publies);
@@ -333,8 +339,8 @@ const existeDansDepot = p => { try { return fs.statSync(path.join(RACINE, decode
     ok('en-têtes de sécurité (nosniff, cadre interdit, HSTS, permissions)', e.get('x-content-type-options') === 'nosniff' && /frame-ancestors 'self'/.test(e.get('content-security-policy') || '')
       && e.get('x-frame-options') === 'SAMEORIGIN' && /max-age=/.test(e.get('strict-transport-security') || '') && /microphone=\(self\)/.test(e.get('permissions-policy') || ''), [...e].map(x => x.join(': ')).join(' | '));
     const r = (await tete('/remplacements-reponse?j=abc')).headers;
-    ok('page de réponse : jeton jamais transmis (Referrer-Policy no-referrer) ni indexé', r.get('referrer-policy') === 'no-referrer' && r.get('x-robots-tag') === 'noindex', `${r.get('referrer-policy')} / ${r.get('x-robots-tag')}`);
-    ok('administration de la bibliothèque non indexée', (await tete('/bibliotheque-admin')).headers.get('x-robots-tag') === 'noindex');
+    ok('page de réponse : jeton jamais transmis (Referrer-Policy no-referrer) ni indexé', r.get('referrer-policy') === 'no-referrer' && /noindex/.test(r.get('x-robots-tag') || ''), `${r.get('referrer-policy')} / ${r.get('x-robots-tag')}`);
+    ok('administration de la bibliothèque non indexée', /noindex/.test((await tete('/bibliotheque-admin')).headers.get('x-robots-tag') || ''));
   } else ok('en-têtes et _redirects : non vérifiés (émulateur Cloudflare indisponible)', true);
 
   await b.close();
