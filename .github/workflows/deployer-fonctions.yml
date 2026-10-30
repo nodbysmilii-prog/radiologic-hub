@@ -1,30 +1,84 @@
 # RadiologicHub — déploie les fonctions serveur Supabase (rp-agent, rp-lien, rp-taches).
-# Lancement manuel uniquement : GitHub → Actions → « Déployer les fonctions Supabase » → Run workflow.
-# Prérequis : secret du dépôt SUPABASE_ACCESS_TOKEN (supabase.com → Account → Access Tokens).
-# Les secrets des fonctions (RP_SECRET, EMAIL_FOURNISSEUR…) se règlent dans Supabase, pas ici.
+# Lancement MANUEL uniquement, avec VALIDATION ÉCRITE : GitHub → Actions → « Déployer les fonctions
+# Supabase » → Run workflow (branche principale) → taper DEPLOYER dans « confirmation ».
+# Compatible avec un dépôt PRIVÉ en offre GitHub gratuite (sans « environnement » protégé, indisponible
+# dans ce cas) : la tâche de contrôle, sans secret ni code du dépôt, refuse toute exécution qui n'est
+# pas lancée à la main par le propriétaire, sur la branche principale, avec la confirmation exacte.
+# Rien ne se déploie automatiquement (ni à la fusion d'une Pull Request, ni par une autre branche).
+# Secret utilisé : SUPABASE_ACCESS_TOKEN (secret du dépôt, jeton Supabase limité au projet).
+# Les secrets des fonctions (RP_SECRET, EMAIL_FOURNISSEUR, BREVO_API_KEY…) se règlent dans Supabase, pas ici.
 name: Déployer les fonctions Supabase
 
 on:
   workflow_dispatch:
+    inputs:
+      confirmation:
+        description: "Validation manuelle : taper DEPLOYER pour déployer en production"
+        type: string
+        required: true
 
-permissions:
-  contents: read
+permissions: {}
+
+# Jamais en même temps qu'une autre opération Supabase.
+concurrency:
+  group: exploitation-supabase
+  cancel-in-progress: false
 
 jobs:
+  controle:
+    name: Contrôle (validation, branche, propriétaire)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    permissions: {}      # aucun secret, aucun code du dépôt, aucun appel à l'API
+    steps:
+      - name: Refuser toute exécution non autorisée
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+          REF: ${{ github.ref }}
+          EVENEMENT: ${{ github.event_name }}
+          ACTEUR: ${{ github.actor }}
+          DECLENCHEUR: ${{ github.triggering_actor }}
+          PROPRIETAIRE: ${{ github.repository_owner }}
+          BRANCHE: claude/radiologichub-website-ss89g9
+        run: |
+          set -eu
+          refus() { echo "::error::$1"; exit 1; }
+          [ "$EVENEMENT" = "workflow_dispatch" ] || refus "Déploiement refusé : lancement manuel uniquement."
+          [ "$CONFIRMATION" = "DEPLOYER" ] || refus "Déploiement refusé : validation manuelle absente (taper DEPLOYER)."
+          [ "$REF" = "refs/heads/$BRANCHE" ] || refus "Déploiement refusé : seule la branche principale est autorisée."
+          { [ "$ACTEUR" = "$PROPRIETAIRE" ] && [ "$DECLENCHEUR" = "$PROPRIETAIRE" ]; } || refus "Déploiement refusé : réservé au propriétaire du dépôt."
+          echo "Contrôle réussi : validation écrite, branche principale, lancé par le propriétaire."
+
   deployer:
-    runs-on: ubuntu-latest
+    name: Déployer rp-agent, rp-lien, rp-taches
+    needs: controle
+    if: >-
+      github.event_name == 'workflow_dispatch'
+      && inputs.confirmation == 'DEPLOYER'
+      && github.ref == 'refs/heads/claude/radiologichub-website-ss89g9'
+      && github.actor == github.repository_owner
+      && github.triggering_actor == github.repository_owner
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
     env:
-      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
       PROJET: wdbczcwnaxfnoioyukgr
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
       - name: Préparer le noyau et les modèles (supabase/functions/_shared)
         run: npm run backend:preparer
+      # Le secret n'est donné qu'à cette étape ; CLI Supabase à version figée ; aucune trace des commandes.
       - name: Déployer
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
         run: |
+          set -eu +x
           for f in rp-agent rp-lien rp-taches; do
             npx --yes supabase@2.120.0 functions deploy "$f" --project-ref "$PROJET" --use-api
           done

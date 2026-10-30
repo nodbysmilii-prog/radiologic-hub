@@ -55,8 +55,9 @@ Dans *Authentication* :
 
 1. *Sign In / Providers → Email* : activé ; *Confirm email* activé.
 2. *URL Configuration* :
-   - **Site URL** : `https://nodbysmilii-prog.github.io/radiologic-hub/remplacements.html` (ou l'adresse définitive du site) ;
-   - **Redirect URLs** : ajouter la même adresse **et** `https://nodbysmilii-prog.github.io/radiologic-hub/communaute.html` (puis les équivalents en `https://www.radiologichub.com/…` quand le domaine sera en place).
+   - **Site URL** : `https://radiologichub.com` (domaine officiel) ;
+   - **Redirect URLs** : `https://radiologichub.com/remplacements.html` et `https://radiologichub.com/communaute.html`, plus, pendant la transition, les adresses historiques `https://nodbysmilii-prog.github.io/radiologic-hub/remplacements.html` et `…/communaute.html`. Le site demande toujours le retour vers la page ouverte : il n'y a rien à changer dans le code.
+   - *État au 29/10/2026 : fait, connexions testées sur le nouveau domaine.*
 3. *Emails → Templates → Magic Link* : objet « Votre lien de connexion — RadiologicHub Remplacements », corps = contenu de `remplacements/modeles/supabase/lien-magique.html`. Faire de même pour le modèle *Confirm signup*.
 4. *Emails → SMTP Settings* : **Enable custom SMTP** avec les identifiants SMTP de Brevo (hôte `smtp-relay.brevo.com`, port 587) et l'adresse d'expédition authentifiée. Sans SMTP personnalisé, Supabase limite fortement le nombre de liens envoyés.
 
@@ -70,13 +71,13 @@ Dans la [console Google Cloud](https://console.cloud.google.com) :
 2. *APIs & Services → OAuth consent screen* (ou *Google Auth Platform → Branding*) :
    - type d'audience **External** ;
    - nom de l'application « RadiologicHub », adresse e-mail d'assistance, logo (facultatif) ;
-   - liens : page d'accueil `https://nodbysmilii-prog.github.io/radiologic-hub/`, règles de confidentialité et conditions `…/mentions-legales.html#donnees` et `…/mentions-legales.html#conditions` ;
-   - **domaines autorisés** : `<identifiant-du-projet>.supabase.co` et `nodbysmilii-prog.github.io` (puis `radiologichub.com`) ;
+   - liens : page d'accueil `https://radiologichub.com/`, règles de confidentialité et conditions `https://radiologichub.com/mentions-legales.html#donnees` et `…/mentions-legales.html#conditions` ;
+   - **domaines autorisés** : `<identifiant-du-projet>.supabase.co` et `radiologichub.com` (garder `nodbysmilii-prog.github.io` pendant la transition) ;
    - portées : `openid`, `…/auth/userinfo.email`, `…/auth/userinfo.profile` ;
    - **publier l'application** (*Publishing status → In production*), sinon seuls les comptes « testeurs » peuvent se connecter.
 3. *Credentials → Create credentials → OAuth client ID* (ou *Clients → Create client*) :
    - type **Web application** ;
-   - origines JavaScript autorisées : `https://nodbysmilii-prog.github.io` ;
+   - origines JavaScript autorisées : `https://radiologichub.com` (et `https://nodbysmilii-prog.github.io` pendant la transition) ;
    - **URI de redirection autorisé** : `https://<identifiant-du-projet>.supabase.co/auth/v1/callback` ;
    - noter l'**ID client** et le **secret client**.
 
@@ -90,7 +91,7 @@ Dans Supabase, *Authentication → Sign In / Providers → Google* : activer, co
 
 ```
 supabase secrets set \
-  RP_URL_SITE=https://nodbysmilii-prog.github.io/radiologic-hub \
+  RP_URL_SITE=https://radiologichub.com \
   RP_SECRET=<longue-chaîne-aléatoire> \
   RP_ADMIN_EMAILS=adresse.admin@exemple.com \
   EMAIL_FOURNISSEUR=brevo \
@@ -101,7 +102,8 @@ supabase secrets set \
 
 | Secret | Rôle |
 |---|---|
-| `RP_URL_SITE` | Adresse du site, **sans** `/` final : sert à construire les liens des e-mails |
+| `RP_URL_SITE` | Adresse officielle du site, **sans** `/` final (`https://radiologichub.com`) : seule source des liens des e-mails (réponse en un clic, espace, désinscription, mentions, rappels de la Communauté) |
+| `RP_ORIGINE` | Facultatif, **à laisser absent** : sinon seul ce site peut appeler les fonctions |
 | `RP_SECRET` | Signe les liens de désinscription (ex. `openssl rand -hex 32`) ; ne plus le changer ensuite |
 | `RP_ADMIN_EMAILS` | Adresses qui reçoivent les nouvelles inscriptions à valider (séparées par des virgules) |
 | `EMAIL_FOURNISSEUR` | `brevo`, `resend`, ou `journal` (n'envoie rien, écrit dans les journaux — pour les essais) |
@@ -130,6 +132,27 @@ supabase functions deploy rp-taches
 À refaire après toute modification de `remplacements/noyau/`, de `supabase/functions/_shared/reseau.ts` ou des modèles d'e-mails / de contrat.
 
 La Communauté n'a pas de fonction serveur propre : tout passe par la base (droits d'accès par ligne, déclencheurs) ; seule la tâche planifiée `rp-taches` lui envoie les rappels de messages non lus.
+
+## 6 bis. Exploitation depuis GitHub (diagnostic en lecture seule)
+
+*Actions → « Exploitation Supabase » → Run workflow* (branche principale) → `diagnostic` (`.github/workflows/exploitation-supabase.yml`, script `scripts/exploitation-supabase.js`). Le rapport s'affiche dans le **résumé de l'exécution**. **Le dépôt étant public, ce résumé et les journaux sont publics** : le rapport ne contient que des oui / non, des versions et des dates, **aucune information sur les utilisateurs** (ni comptes, ni données), aucun secret, aucune réponse brute.
+
+- projet actif ; **fonctions déployées** (état, version, date, vérification de connexion) et fichiers modifiés depuis le dernier déploiement réussi de « Déployer les fonctions Supabase » (donc à redéployer) ;
+- **secrets** : présence de `RP_URL_SITE`, `RP_SECRET`, `RP_ADMIN_EMAILS`, `EMAIL_FOURNISSEUR`, `RP_TACHES_SECRET`, `RP_ORIGINE`, `BREVO_API_KEY`… sans aucune valeur ; `RP_URL_SITE = https://radiologichub.com` et `EMAIL_FOURNISSEUR = journal` vérifiés par comparaison d'empreintes ;
+- **authentification** : Site URL et adresses de retour du domaine officiel et de l'adresse historique ;
+- **base** (requête fixe `supabase/sql/diagnostic.sql`, envoyée en lecture seule) : migrations appliquées, extensions `pg_cron`, `pg_net`, `supabase_vault`, objets et droits de la planification Vault, tâches Cron (nom, fréquence, passage par Vault ; secret en clair signalé sans être montré), statuts des dernières exécutions ;
+- **extérieur** : `radiologichub.com` en ligne, redirection de l'ancienne adresse en conservant les liens de réponse, CORS des trois fonctions.
+
+**Fonctionne avec un dépôt privé en offre GitHub gratuite.** Les « environnements » protégés de GitHub (relecteur obligatoire) n'existent pas pour un dépôt privé gratuit ; les deux workflows n'en dépendent donc pas :
+1. **Secret** : `SUPABASE_ACCESS_TOKEN` dans *Settings → Secrets and variables → Actions → Repository secrets* (jeton Supabase limité, voir ci-dessous). Il n'est donné qu'à l'étape qui l'utilise et n'est jamais affiché.
+2. **Validation manuelle** : les deux workflows ne se lancent qu'à la main (*Run workflow*) ; aucun déclenchement automatique (fusion, push, planning). Le déploiement des fonctions exige en plus de **taper `DEPLOYER`** dans le champ « confirmation ».
+3. **Contrôle préalable** (tâche sans secret, sans code du dépôt, sans droit) : refus si le lancement n'est pas manuel, pas sur la branche principale `claude/radiologichub-website-ss89g9`, pas par le propriétaire du dépôt, ou sans la confirmation exacte.
+
+Limite connue (offre gratuite) : une personne ayant le droit d'écrire dans le dépôt pourrait modifier un workflow sur une autre branche pour lire le secret. Garder ce droit au seul propriétaire (et à Claude), et un jeton Supabase à droits limités et à expiration courte. Si un environnement `supabase-production` avait été créé quand le dépôt était public, il peut rester : il n'est plus utilisé.
+
+**Jeton Supabase à droits limités (recommandé)** : les jetons personnels de Supabase peuvent être limités à une organisation, à un projet et à des droits précis (lecture ou lecture-écriture par ressource), avec une date d'expiration (un an au plus). Les anciens jetons à accès complet portent la mention « Legacy » : si `SUPABASE_ACCESS_TOKEN` en est un, il donne tous les droits sur **tout le compte** (tous les projets, secrets, bases, suppression de projet) — c'est le risque principal en cas de fuite. À faire : créer un jeton depuis le préréglage **No access**, limité au projet `wdbczcwnaxfnoioyukgr`, avec seulement : projet (lecture), Edge Functions (lecture-écriture, pour le déploiement), secrets des Edge Functions (lecture : noms et empreintes), configuration d'authentification (lecture), base de données (lecture) ; expiration courte (90 jours par exemple) ; puis révoquer l'ancien. Ne pas partir du préréglage *Read-only*, qui inclut les secrets comme les clés d'API. Les noms exacts des droits sont à vérifier dans le tableau de bord ; si l'exécution d'une requête SQL exige plus que la lecture, le diagnostic l'indiquera (« droits insuffisants ») sans rien modifier. À terme : un jeton par usage (diagnostic en lecture seule, déploiement des fonctions).
+
+L'opération `diagnostic` est la **seule** proposée. Les opérations prévues (`migration-vault`, `verification`, `url-site`, `planifier`, `deplanifier`) ne figurent pas dans le formulaire, le contrôle et le script les refusent, et aucun code ne les exécute : chacune ne sera ajoutée qu'avec une autorisation explicite, par une modification revue du dépôt, avec une vérification après exécution.
 
 ## 7. Planifier l'agent (toutes les 15 minutes)
 
