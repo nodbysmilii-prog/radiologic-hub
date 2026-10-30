@@ -56,11 +56,11 @@ Ordre impératif : rien n'est basculé tant que l'étape précédente n'est pas 
 
 1. **Fusionner la Pull Request** de cette branche (sans effet sur le site en ligne : GitHub Pages continue de servir la branche principale ; `404.html` et `.node-version` y sont simplement ajoutés).
 2. **Créer le projet Cloudflare Pages** (≈ 10 min, compte Cloudflare gratuit) : *Workers & Pages → Create → Pages → Connect to Git* → GitHub : autoriser l'application Cloudflare **sur ce seul dépôt** (*Only select repositories → radiologic-hub*) → réglages :
-   - Project name : `radiologichub` (adresse technique `https://radiologichub.pages.dev`) ;
+   - Project name : `radiologic-hub` (créé le 30/10/2026) (adresse technique `https://radiologic-hub.pages.dev`) ;
    - Production branch : `claude/radiologichub-website-ss89g9` ;
    - Framework preset : *None* ; Build command : `npm run publication` ; Build output directory : `dist` ; Root directory : vide ; aucune variable (Node 22 lu dans `.node-version`) ;
    - après la création : *Settings → Builds → Branch control* → **Preview branches : None** (évite de publier les branches de travail sur des adresses `*.pages.dev` et d'épuiser les 500 constructions mensuelles gratuites).
-3. **Vérifier l'adresse `*.pages.dev`** : pour que Claude la teste automatiquement (Playwright, mêmes contrôles que `npm run test:publication`), autoriser le domaine `radiologichub.pages.dev` dans les réglages réseau de l'environnement Claude Code. Connexion de test : ajouter **temporairement** `https://radiologichub.pages.dev/**` aux *Redirect URLs* de Supabase (*Authentication → URL Configuration*). Si la variable `RP_ORIGINE` des fonctions limite les origines, les boutons qui appellent les fonctions ne marcheront qu'une fois le vrai domaine basculé (normal).
+3. **Vérifier l'adresse `*.pages.dev`** : pour que Claude la teste automatiquement (Playwright, mêmes contrôles que `npm run test:publication`), autoriser le domaine `radiologic-hub.pages.dev` dans les réglages réseau de l'environnement Claude Code. Connexion de test : ajouter **temporairement** `https://radiologic-hub.pages.dev/**` aux *Redirect URLs* de Supabase (*Authentication → URL Configuration*). Si la variable `RP_ORIGINE` des fonctions limite les origines, les boutons qui appellent les fonctions ne marcheront qu'une fois le vrai domaine basculé (normal).
 4. **Bascule du domaine** (modification DNS, autorisation explicite) :
    1. Cloudflare → *Add a domain* → `radiologichub.com` → offre *Free* → **contrôler les enregistrements importés** avec ceux affichés chez Spaceship (garder tout : A/AAAA de GitHub Pages, CNAME `www`, MX, TXT ; les futurs enregistrements **Brevo** — SPF, DKIM, DMARC — s'ajouteront ici en mode *DNS only*, nuage gris). Laisser les enregistrements du site en *DNS only* pour l'instant : le site reste servi par GitHub Pages.
    2. Spaceship → domaine → *Nameservers* → remplacer par les **deux serveurs indiqués par Cloudflare** ; attendre « Active » (quelques minutes à 24 h, sans coupure : les mêmes enregistrements sont servis).
@@ -68,6 +68,27 @@ Ordre impératif : rien n'est basculé tant que l'étape précédente n'est pas 
    4. Projet Pages → *Custom domains* → ajouter `radiologichub.com` puis `www.radiologichub.com` (Cloudflare remplace lui-même les enregistrements). **C'est la bascule.** Puis *Rules → Redirect Rules* → modèle « Redirect from WWW to root » (`www` → `https://radiologichub.com`, 301, chemin et paramètres conservés).
 5. **Supabase** (*Authentication → URL Configuration*) : *Site URL* `https://radiologichub.com` ; *Redirect URLs* : `https://radiologichub.com/**` (indispensable : Cloudflare sert les pages sans `.html`, par ex. `/bibliotheque`) ; retirer l'adresse `*.pages.dev` temporaire. Vérifier que le secret `RP_URL_SITE` des fonctions vaut `https://radiologichub.com` (liens des e-mails ; les anciens liens en `.html` restent valables, redirigés avec leurs paramètres). Les sessions déjà ouvertes sont conservées (même domaine).
 6. **Rendre le dépôt privé** (au plus tôt une semaine après la bascule, une fois tout vérifié) : *Settings → General → Danger Zone → Change visibility → Private*. Conséquences : GitHub Pages s'arrête (le site reste servi par Cloudflare, qui garde l'accès au dépôt) ; Claude Code continue de fonctionner ; GitHub Actions : 2 000 minutes gratuites par mois ; **les environnements protégés de GitHub ne sont plus disponibles en offre gratuite** (voir « Sécurité GitHub »).
+
+## Bascule DNS sans perturber Brevo ni Supabase (préparée le 30/10/2026, non réalisée)
+
+Les enregistrements Brevo (domaine authentifié le 30/10/2026) sont chez **Spaceship**. Lors du passage des serveurs DNS à Cloudflare, Cloudflare **devine** les enregistrements à importer : il peut **oublier** les DKIM (`brevo1._domainkey`, `brevo2._domainkey`) et `_dmarc`. Un oubli ne casse pas le site mais fait échouer l'authentification des e-mails. D'où la règle : **recopier un par un, puis comparer, avant de changer les serveurs DNS.**
+
+1. Spaceship → domaine → DNS : faire une **capture d'écran** de la liste complète (c'est la sauvegarde et le retour arrière).
+2. Cloudflare → *Add a domain* `radiologichub.com` (*Free*) → à l'écran de revue des enregistrements, pour **chaque** ligne de la capture, vérifier qu'elle existe à l'identique (type, nom, valeur) ; ajouter à la main les manquantes. À conserver obligatoirement :
+   | Type | Nom | Rôle | Réglage Cloudflare |
+   |---|---|---|---|
+   | CNAME | `brevo1._domainkey` | DKIM Brevo 1 | **DNS only** (nuage gris) |
+   | CNAME | `brevo2._domainkey` | DKIM Brevo 2 | **DNS only** |
+   | TXT | `@` (racine) | `brevo-code:…` (vérification Brevo) et SPF éventuel `v=spf1 …` | texte recopié exactement, guillemets compris |
+   | TXT | `_dmarc` | DMARC | recopié exactement |
+   | MX | `@` | réception d'e-mails, s'il y en a | identique |
+   | A / AAAA `@`, CNAME `www` | site actuel (GitHub Pages) | **DNS only** jusqu'à l'étape 4.4 |
+   Supprimer de Cloudflare toute ligne **absente** de la capture (souvent des A/CNAME ajoutés « par défaut »).
+3. Seulement ensuite : Spaceship → *Nameservers* → les deux serveurs Cloudflare. Rien d'autre ne change chez Spaceship (ne rien y supprimer pendant au moins une semaine).
+4. Après « Active » : Brevo → *Domains* → `radiologichub.com` doit rester **authentifié** (sinon : comparer DKIM/DMARC à la capture). Claude peut aussi comparer automatiquement les réponses DNS avant / après si l'accès réseau est autorisé.
+5. Supabase Auth n'utilise pas le DNS du domaine (ses URL de retour sont des adresses de pages) : rien à changer à ce moment ; les *Redirect URLs* se règlent à l'étape 5.
+
+Retour arrière : Spaceship → *Nameservers* → serveurs Spaceship par défaut (leurs enregistrements, dont Brevo, sont intacts).
 
 ## Retour arrière
 
@@ -90,6 +111,7 @@ Ordre impératif : rien n'est basculé tant que l'étape précédente n'est pas 
 - **Branches anciennes** : une vingtaine sur GitHub (dont `apercu/`, `partage/`, `feature/`) ; leur suppression demande l'autorisation de l'auteur (non faite).
 
 ## À vérifier
+- 30/10/2026 : projet Cloudflare `radiologic-hub` créé par l'auteur. **Site déployé non testé** : l'environnement Claude Code bloque `radiologic-hub.pages.dev`, `radiologichub.com` et `*.supabase.co`. Une fois ces domaines autorisés : `RH_URL_CIBLE=https://radiologic-hub.pages.dev RH_URL_REFERENCE=https://radiologichub.com npm run test:publication`.
 - Après l'étape 2 : la première construction Cloudflare réussit (journal : « Vérification réussie »).
 - Après l'étape 4 : connexion Google et lien magique (Remplacements, Communauté, Bibliothèque), liens « réponse en un clic » d'un e-mail réel, `www` redirigé, `http` → `https`.
 - Défaut **préexistant** relevé par le test (non lié à la publication) : `radioanatomie/territoires-arteriels.html` déborde horizontalement à 390 px.

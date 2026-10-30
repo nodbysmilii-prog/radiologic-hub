@@ -142,9 +142,13 @@ const existeDansDepot = p => { try { return fs.statSync(path.join(RACINE, decode
   const publies = lister(DIST);
   const pages = publies.filter(f => f.endsWith('.html') && !f.startsWith('dicom/ohif/') && f !== '404.html').sort();
 
-  const srv = (await emulateurCloudflare(8790 + Math.floor(Math.random() * 100))) || (await serveurSimple());
+  // RH_URL_CIBLE=https://radiologic-hub.pages.dev : teste le site réellement déployé (lecture seule, aucune donnée créée).
+  const cible = (process.env.RH_URL_CIBLE || '').replace(/\/$/, '');
+  const srv = cible ? { base: cible, cloudflare: true, distant: true, proc: { kill: () => {} } }
+    : (await emulateurCloudflare(8790 + Math.floor(Math.random() * 100))) || (await serveurSimple());
   const BASE = srv.base;
-  console.log(`Site publié servi par ${srv.cloudflare ? 'l\'émulateur Cloudflare Pages (wrangler)' : 'le serveur local de secours'} : ${BASE}`);
+  if (srv.distant) console.log(`Site DÉPLOYÉ testé : ${BASE} (référence : ${process.env.RH_URL_REFERENCE || 'dépôt local'})`);
+  else console.log(`Site publié servi par ${srv.cloudflare ? 'l\'émulateur Cloudflare Pages (wrangler)' : 'le serveur local de secours'} : ${BASE}`);
   const b = await chromium.launch();
   const externesBloques = new Set(), toleres = new Set(), appelsSupabase = [];
 
@@ -155,7 +159,8 @@ const existeDansDepot = p => { try { return fs.statSync(path.join(RACINE, decode
   };
   async function ouvrir(appareil, { connecte = false, base = BASE } = {}) {
     const ctx = await b.newContext({ ...APPAREILS[appareil], acceptDownloads: true });
-    const simule = await simulerSupabase(ctx, connecte, appelsSupabase);
+    // Site déployé, visiteur : vrai Supabase en lecture seule (aucune connexion, aucune écriture) ; compte de test : simulé.
+    const simule = srv.distant && !connecte ? true : await simulerSupabase(ctx, connecte, appelsSupabase);
     const p = await ctx.newPage();
     p.erreurs = [];
     p.on('pageerror', e => p.erreurs.push(`erreur JS : ${e.message}`));
@@ -181,7 +186,8 @@ const existeDansDepot = p => { try { return fs.statSync(path.join(RACINE, decode
   /* ---------- 1. Toutes les pages publiées, ordinateur et téléphone, comparées au dépôt actuel ---------- */
   // Même balayage sur le dépôt tel quel (comme GitHub Pages aujourd'hui) : un défaut présent des deux côtés
   // est préexistant ; un défaut propre à la publication est une RÉGRESSION.
-  const reference = await serveurSimple(RACINE, false);
+  // Référence : RH_URL_REFERENCE (ex. https://radiologichub.com, GitHub Pages) ou le dépôt local.
+  const reference = process.env.RH_URL_REFERENCE ? { base: process.env.RH_URL_REFERENCE.replace(/\/$/, ''), proc: { kill: () => {} } } : await serveurSimple(RACINE, false);
   async function balayer(base, appareil, captures) {
     const { ctx, p } = await ouvrir(appareil, { base });
     const defauts = new Map();
@@ -304,7 +310,7 @@ const existeDansDepot = p => { try { return fs.statSync(path.join(RACINE, decode
       await ctx.close();
     }
   }
-  ok('Supabase : seules des requêtes simulées ont été faites (aucune vers le vrai projet)', appelsSupabase.length > 0, `${appelsSupabase.length} requêtes interceptées`);
+  ok('Supabase : compte de test uniquement simulé (aucune connexion au vrai projet)', appelsSupabase.length > 0, `${appelsSupabase.length} requêtes interceptées`);
 
   /* ---------- 4. Fichiers non publiés : 404 par adresse directe ---------- */
   const publiesSet = new Set(publies);
