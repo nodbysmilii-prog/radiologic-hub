@@ -304,7 +304,7 @@ const existeDansDepot = p => { try { return fs.statSync(path.join(RACINE, decode
 
       await charger(p, '/remplacements-reponse.html?j=jeton-de-test');
       const rep = await p.evaluate(() => ({ url: location.pathname + location.search, texte: document.querySelector('main').innerText.slice(0, 200) }));
-      ok(`${appareil} ${qui} : page de réponse aux e-mails (paramètres conservés, erreur affichée proprement)`, rep.url === '/remplacements-reponse?j=jeton-de-test' && /fonction simulée|Erreur/.test(rep.texte), JSON.stringify(rep));
+      ok(`${appareil} ${qui} : page de réponse aux e-mails (paramètres conservés, erreur affichée proprement)`, rep.url === '/remplacements-reponse?j=jeton-de-test' && (srv.distant && !connecte ? /Lien inactif|n'est pas reconnu/i : /fonction simulée|Erreur/).test(rep.texte), JSON.stringify(rep));
 
       ok(`${appareil} ${qui} : modules Supabase sans erreur JS ni ressource manquante`, !p.erreurs.length, p.erreurs.join(' ; '));
       await ctx.close();
@@ -339,8 +339,8 @@ const existeDansDepot = p => { try { return fs.statSync(path.join(RACINE, decode
     ok('en-têtes de sécurité (nosniff, cadre interdit, HSTS, permissions)', e.get('x-content-type-options') === 'nosniff' && /frame-ancestors 'self'/.test(e.get('content-security-policy') || '')
       && e.get('x-frame-options') === 'SAMEORIGIN' && /max-age=/.test(e.get('strict-transport-security') || '') && /microphone=\(self\)/.test(e.get('permissions-policy') || ''), [...e].map(x => x.join(': ')).join(' | '));
     const r = (await tete('/remplacements-reponse?j=abc')).headers;
-    ok('page de réponse : jeton jamais transmis (Referrer-Policy no-referrer) ni indexé', r.get('referrer-policy') === 'no-referrer' && r.get('x-robots-tag') === 'noindex', `${r.get('referrer-policy')} / ${r.get('x-robots-tag')}`);
-    ok('administration de la bibliothèque non indexée', (await tete('/bibliotheque-admin')).headers.get('x-robots-tag') === 'noindex');
+    ok('page de réponse : jeton jamais transmis (Referrer-Policy no-referrer) ni indexé', r.get('referrer-policy') === 'no-referrer' && /noindex/.test(r.get('x-robots-tag') || ''), `${r.get('referrer-policy')} / ${r.get('x-robots-tag')}`);
+    ok('administration de la bibliothèque non indexée', /noindex/.test((await tete('/bibliotheque-admin')).headers.get('x-robots-tag') || ''));
   } else ok('en-têtes et _redirects : non vérifiés (émulateur Cloudflare indisponible)', true);
 
   await b.close();
