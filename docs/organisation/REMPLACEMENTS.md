@@ -21,6 +21,8 @@ Fichiers : `remplacements.html`, `remplacements-reponse.html`, `remplacements/` 
 - Juridique : `mentions-legales.html` (crochets), INPDP + transfert hors Tunisie, validation de `modeles/contrat.md`.
 
 ## Prochaine tâche importante
+Relire et fusionner `claude/exploitation-supabase` (workflows compatibles dépôt privé), puis lancer `diagnostic`.
+
 Relire et fusionner les trois corrections, puis redéployer les fonctions. Ensuite : mettre en service la planification (étape 7 réécrite de `remplacements/INSTALLATION.md`), puis Brevo et passage à `brevo` (étapes 3 et 4).
 
 Améliorations ergonomiques relevées par la phase A (non faites) : vue « Mon agenda » pour le remplaçant et « Planning » pour la clinique, en-tête allégé et onglets visibles sur mobile, calendrier de demande ouvert sur le premier mois utile, liens plus grands.
@@ -34,9 +36,10 @@ Plus tard : WhatsApp/SMS, export comptable, notation des remplacements.
 - **Planification** : pg_cron et pg_net activés ; migration Vault **non confirmée** ; aucune tâche Cron connue ; `RP_TACHES_SECRET` conservé jusqu'à vérification.
 - **Brevo** : compte gratuit créé, vérification SMS bloquée (assistance contactée) ; rester en `EMAIL_FOURNISSEUR=journal`.
 - **Workflow « Exploitation Supabase »** (branche `claude/exploitation-supabase`, à fusionner) : `diagnostic` en lecture seule ; autres actions désactivées.
+- **Compatibilité dépôt privé (30/10/2026, même branche)** : les deux workflows (« Exploitation Supabase », « Déployer les fonctions Supabase ») tournent en dépôt privé gratuit — secret au niveau du dépôt, lancement manuel, propriétaire, branche principale ; environnement `supabase-production` exigé et vérifié seulement si le dépôt est public (sauté sinon). En privé, la protection repose sur « seuls l'auteur et Claude ont le droit d'écrire ». Tests : 17 (`tests/exploitation-supabase.test.js`).
 
 ### Étapes restantes (chacune avec autorisation explicite)
-1. Créer et protéger l'environnement `supabase-production` (relecteur requis, sans contournement par les administrateurs, branche principale seule), y placer `SUPABASE_ACCESS_TOKEN` (idéalement un nouveau jeton à droits limités et expiration courte) et retirer le secret du dépôt ; puis fusionner le workflow (les deux workflows refusent de s'exécuter sans cette protection).
+1. `SUPABASE_ACCESS_TOKEN` **au niveau du dépôt** (idéalement un nouveau jeton à droits limités et expiration courte). Tant que le dépôt est public : créer et protéger l'environnement `supabase-production` (relecteur requis, sans contournement par les administrateurs, branche principale seule, sans secret) — sinon les deux workflows refusent ; une fois le dépôt privé, il n'est plus consulté. Vérifier que seuls l'auteur (et Claude) ont le droit d'écrire. Puis fusionner la branche.
 2. Lancer `diagnostic` et relire le rapport.
 3. Sauvegarde `pg_dump` récente (idéalement : essai de restauration en local).
 4. Migration Vault puis `verification-planification.sql` (colonnes `_oui` à vrai, `_non` à faux).

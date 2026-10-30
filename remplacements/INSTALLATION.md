@@ -127,7 +127,7 @@ supabase functions deploy rp-taches
 
 `supabase/config.toml` règle déjà la vérification de connexion (`rp-lien` et `rp-taches` sont accessibles sans connexion : liens à usage unique et en-tête secret).
 
-**Sans Terminal, depuis GitHub** : créer un jeton sur supabase.com (*Account → Access Tokens → Generate new token*), l'ajouter au dépôt GitHub comme secret `SUPABASE_ACCESS_TOKEN` (*Settings → Secrets and variables → Actions → New repository secret*), puis *Actions → « Déployer les fonctions Supabase » → Run workflow* (`.github/workflows/deployer-fonctions.yml`, lancement manuel uniquement).
+**Sans Terminal, depuis GitHub** : créer un jeton sur supabase.com (*Account → Access Tokens → Generate new token*), l'ajouter au dépôt GitHub comme secret `SUPABASE_ACCESS_TOKEN` (*Settings → Secrets and variables → Actions → New repository secret*), puis *Actions → « Déployer les fonctions Supabase » → Run workflow* (`.github/workflows/deployer-fonctions.yml`, lancement manuel uniquement, par le propriétaire, sur la branche principale ; règles détaillées à l'étape 6 bis).
 
 À refaire après toute modification de `remplacements/noyau/`, de `supabase/functions/_shared/reseau.ts` ou des modèles d'e-mails / de contrat.
 
@@ -135,7 +135,7 @@ La Communauté n'a pas de fonction serveur propre : tout passe par la base (droi
 
 ## 6 bis. Exploitation depuis GitHub (diagnostic en lecture seule)
 
-*Actions → « Exploitation Supabase » → Run workflow* (branche principale) → `diagnostic` (`.github/workflows/exploitation-supabase.yml`, script `scripts/exploitation-supabase.js`). Le rapport s'affiche dans le **résumé de l'exécution**. **Le dépôt étant public, ce résumé et les journaux sont publics** : le rapport ne contient que des oui / non, des versions et des dates, **aucune information sur les utilisateurs** (ni comptes, ni données), aucun secret, aucune réponse brute.
+*Actions → « Exploitation Supabase » → Run workflow* (branche principale) → `diagnostic` (`.github/workflows/exploitation-supabase.yml`, script `scripts/exploitation-supabase.js`). Le rapport s'affiche dans le **résumé de l'exécution**. **Tant que le dépôt est public, ce résumé et les journaux sont publics** : le rapport ne contient que des oui / non, des versions et des dates, **aucune information sur les utilisateurs** (ni comptes, ni données), aucun secret, aucune réponse brute.
 
 - projet actif ; **fonctions déployées** (état, version, date, vérification de connexion) et fichiers modifiés depuis le dernier déploiement réussi de « Déployer les fonctions Supabase » (donc à redéployer) ;
 - **secrets** : présence de `RP_URL_SITE`, `RP_SECRET`, `RP_ADMIN_EMAILS`, `EMAIL_FOURNISSEUR`, `RP_TACHES_SECRET`, `RP_ORIGINE`, `BREVO_API_KEY`… sans aucune valeur ; `RP_URL_SITE = https://radiologichub.com` et `EMAIL_FOURNISSEUR = journal` vérifiés par comparaison d'empreintes ;
@@ -143,13 +143,31 @@ La Communauté n'a pas de fonction serveur propre : tout passe par la base (droi
 - **base** (requête fixe `supabase/sql/diagnostic.sql`, envoyée en lecture seule) : migrations appliquées, extensions `pg_cron`, `pg_net`, `supabase_vault`, objets et droits de la planification Vault, tâches Cron (nom, fréquence, passage par Vault ; secret en clair signalé sans être montré), statuts des dernières exécutions ;
 - **extérieur** : `radiologichub.com` en ligne, redirection de l'ancienne adresse en conservant les liens de réponse, CORS des trois fonctions.
 
-**Préalable obligatoire — environnement protégé** (*Settings → Environments → New environment* `supabase-production`) :
+**Secret** : `SUPABASE_ACCESS_TOKEN` **au niveau du dépôt** (*Settings → Secrets and variables → Actions → Repository secrets*). C'est le seul emplacement disponible pour un dépôt privé en offre GitHub gratuite ; ne pas le placer uniquement dans un environnement (il deviendrait inaccessible au passage en privé).
+
+**Contrôles communs** aux deux workflows (« Exploitation Supabase » et « Déployer les fonctions Supabase »), faits par une tâche de contrôle **sans secret ni code du dépôt**, avant tout accès au secret :
+- lancement **manuel** uniquement (*Run workflow*, aucun déclenchement automatique) ;
+- par le **propriétaire du dépôt** (celui qui lance et celui qui relance) ;
+- sur la **branche principale** `claude/radiologichub-website-ss89g9` ;
+- opération autorisée (`diagnostic` seulement pour « Exploitation Supabase ») ;
+- une seule opération Supabase à la fois, actions épinglées par empreinte, `permissions` minimales (lecture), secret donné à **une seule étape**.
+
+**Selon la visibilité du dépôt** (lue dans l'événement GitHub ; valeur inconnue → refus) :
+
+| Dépôt | Environnement `supabase-production` | Sur quoi repose la protection |
+|---|---|---|
+| **Public** (aujourd'hui) | **Exigé et vérifié** par l'API avant tout accès au secret : relecteur obligatoire, sans contournement par les administrateurs, branche principale seule. La tâche qui utilise le secret attend l'approbation du relecteur. | Contrôles communs + validation humaine dans l'environnement |
+| **Privé, offre gratuite** (après l'étape 6 de `docs/organisation/PUBLICATION.md`) | **Non disponible** chez GitHub (environnements, secrets d'environnement et relecteurs obligatoires demandent une offre payante, voire Enterprise pour les relecteurs). Le contrôle d'environnement est **sauté sans bloquer** (message « Dépôt privé » dans le journal) et la tâche s'exécute sans environnement. | Contrôles communs + **« seuls l'auteur et Claude ont le droit d'écrire dans le dépôt »** |
+
+Conséquence en dépôt privé : toute personne ayant le droit d'écriture pourrait modifier un workflow pour lire le secret du dépôt. À vérifier régulièrement : *Settings → Collaborators* ne contient **que l'auteur** (Claude Code écrit par l'application GitHub autorisée par l'auteur) ; *Settings → GitHub Apps* : aucune autre application n'a le droit d'écrire (Cloudflare Pages : lecture seule) ; jeton Supabase à droits limités et expiration courte (ci-dessous), à révoquer immédiatement en cas de doute.
+
+**Tant que le dépôt est public — préparer l'environnement** (*Settings → Environments → New environment* `supabase-production`) :
 1. *Required reviewers* : vous (validation humaine avant chaque exécution) ;
 2. **décocher** *Allow administrators to bypass configured protection rules* ;
 3. *Deployment branches and tags* → *Selected branches and tags* → uniquement `claude/radiologichub-website-ss89g9` ;
-4. *Environment secrets* : y créer `SUPABASE_ACCESS_TOKEN`, puis **supprimer le secret du même nom au niveau du dépôt** (*Settings → Secrets and variables → Actions*). Tant qu'il reste au niveau du dépôt, tout workflow lancé par une personne ayant le droit d'écriture, depuis n'importe quelle branche, peut l'utiliser.
+4. ne pas y mettre de secret : `SUPABASE_ACCESS_TOKEN` reste au niveau du dépôt (la tâche qui utilise l'environnement le lit aussi).
 
-Les deux workflows (« Exploitation Supabase » et « Déployer les fonctions Supabase ») vérifient les points 1 à 3 **avant** tout accès au secret (tâche de contrôle sans secret ni code du dépôt) et refusent sinon ; ils ne s'exécutent que lancés à la main par le propriétaire, sur la branche principale ; une seule opération Supabase à la fois ; actions épinglées ; secret donné à une seule étape ; jeton GitHub limité à la lecture.
+Sans cet environnement correctement protégé, les deux workflows refusent de s'exécuter tant que le dépôt est public. Après le passage en privé, l'environnement peut rester tel quel ou être supprimé : il n'est plus consulté.
 
 **Jeton Supabase à droits limités (recommandé)** : les jetons personnels de Supabase peuvent être limités à une organisation, à un projet et à des droits précis (lecture ou lecture-écriture par ressource), avec une date d'expiration (un an au plus). Les anciens jetons à accès complet portent la mention « Legacy » : si `SUPABASE_ACCESS_TOKEN` en est un, il donne tous les droits sur **tout le compte** (tous les projets, secrets, bases, suppression de projet) — c'est le risque principal en cas de fuite. À faire : créer un jeton depuis le préréglage **No access**, limité au projet `wdbczcwnaxfnoioyukgr`, avec seulement : projet (lecture), Edge Functions (lecture-écriture, pour le déploiement), secrets des Edge Functions (lecture : noms et empreintes), configuration d'authentification (lecture), base de données (lecture) ; expiration courte (90 jours par exemple) ; puis révoquer l'ancien. Ne pas partir du préréglage *Read-only*, qui inclut les secrets comme les clés d'API. Les noms exacts des droits sont à vérifier dans le tableau de bord ; si l'exécution d'une requête SQL exige plus que la lecture, le diagnostic l'indiquera (« droits insuffisants ») sans rien modifier. À terme : un jeton par usage (diagnostic en lecture seule, déploiement des fonctions).
 

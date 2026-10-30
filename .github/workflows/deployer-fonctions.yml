@@ -1,9 +1,11 @@
 # RadiologicHub — déploie les fonctions serveur Supabase (rp-agent, rp-lien, rp-taches).
 # Lancement manuel uniquement : GitHub → Actions → « Déployer les fonctions Supabase » → Run workflow
-# (branche principale, propriétaire du dépôt, après approbation dans l'environnement protégé
-# « supabase-production » ; mêmes règles que le workflow « Exploitation Supabase »).
-# Prérequis : secret SUPABASE_ACCESS_TOKEN (supabase.com → Account → Access Tokens), de préférence
-# dans l'environnement « supabase-production ».
+# (branche principale, propriétaire du dépôt ; mêmes règles que le workflow « Exploitation Supabase »).
+# Dépôt PUBLIC : après approbation dans l'environnement protégé « supabase-production » (vérifié).
+# Dépôt PRIVÉ en offre gratuite : pas d'environnement GitHub ; la protection repose sur « seuls l'auteur
+# et Claude ont le droit d'écrire dans le dépôt ».
+# Prérequis : secret SUPABASE_ACCESS_TOKEN (supabase.com → Account → Access Tokens) AU NIVEAU DU DÉPÔT
+# (Settings → Secrets and variables → Actions).
 # Les secrets des fonctions (RP_SECRET, EMAIL_FOURNISSEUR…) se règlent dans Supabase, pas ici.
 name: Déployer les fonctions Supabase
 
@@ -19,19 +21,23 @@ concurrency:
 
 jobs:
   controle:
-    name: Contrôle (branche, auteur, environnement protégé)
+    name: Contrôle (branche, auteur, environnement protégé si dépôt public)
     runs-on: ubuntu-24.04
     timeout-minutes: 2
     permissions:
-      actions: read      # lire les règles de protection de l'environnement
+      actions: read      # lire les règles de protection de l'environnement (aucun secret, aucun code du dépôt)
+    outputs:
+      environnement: ${{ steps.verification.outputs.environnement }}
     steps:
       - name: Refuser toute exécution non autorisée
+        id: verification
         env:
           REF: ${{ github.ref }}
           ACTEUR: ${{ github.actor }}
           DECLENCHEUR: ${{ github.triggering_actor }}
           PROPRIETAIRE: ${{ github.repository_owner }}
           DEPOT: ${{ github.repository }}
+          VISIBILITE: ${{ github.event.repository.visibility }}
           GH_TOKEN: ${{ github.token }}
           BRANCHE: claude/radiologichub-website-ss89g9
           ENVIRONNEMENT: supabase-production
@@ -40,6 +46,18 @@ jobs:
           refus() { echo "::error::$1"; exit 1; }
           [ "$REF" = "refs/heads/$BRANCHE" ] || refus "Déploiement refusé : seule la branche principale est autorisée."
           { [ "$ACTEUR" = "$PROPRIETAIRE" ] && [ "$DECLENCHEUR" = "$PROPRIETAIRE" ]; } || refus "Déploiement refusé : réservé au propriétaire du dépôt."
+          # Dépôt privé (offre gratuite) : pas d'environnement GitHub ; la protection repose sur le
+          # lancement manuel, le propriétaire, la branche principale et le droit d'écriture réservé
+          # à l'auteur (et à Claude). Dépôt public : environnement protégé exigé et vérifié.
+          case "$VISIBILITE" in
+            private)
+              echo "environnement=" >> "$GITHUB_OUTPUT"
+              echo "::notice::Dépôt privé : environnement GitHub indisponible en offre gratuite, contrôle d'environnement non applicable. Protection : lancement manuel, propriétaire, branche principale, droit d'écriture réservé à l'auteur."
+              echo "Contrôle réussi (dépôt privé) : branche principale, propriétaire."
+              exit 0 ;;
+            public) ;;
+            *) refus "Visibilité du dépôt inconnue : exécution refusée." ;;
+          esac
           api() { curl -sS -o "$2" -w '%{http_code}' --max-time 20 -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" "https://api.github.com/repos/$DEPOT/environments/$ENVIRONNEMENT$1" || echo 000; }
           code=$(api "" env.json)
           [ "$code" = "200" ] || refus "Environnement « $ENVIRONNEMENT » absent ou illisible (code $code) : le créer et le protéger (Settings → Environments)."
@@ -55,7 +73,8 @@ jobs:
           branches=$(jq -r '[.branch_policies[]? | .name] | sort | join(",")' branches.json)
           rm -f branches.json
           [ "$branches" = "$BRANCHE" ] || refus "Environnement « $ENVIRONNEMENT » : seule la branche principale doit être autorisée."
-          echo "Contrôle réussi : branche principale, propriétaire, environnement protégé."
+          echo "environnement=$ENVIRONNEMENT" >> "$GITHUB_OUTPUT"
+          echo "Contrôle réussi (dépôt public) : branche principale, propriétaire, environnement protégé."
 
   deployer:
     name: Déployer rp-agent, rp-lien, rp-taches
@@ -64,9 +83,12 @@ jobs:
       github.ref == 'refs/heads/claude/radiologichub-website-ss89g9'
       && github.actor == github.repository_owner
       && github.triggering_actor == github.repository_owner
+      && (github.event.repository.visibility == 'private'
+      || needs.controle.outputs.environnement == 'supabase-production')
     runs-on: ubuntu-24.04
     timeout-minutes: 15
-    environment: supabase-production
+    # Dépôt public : environnement protégé ; dépôt privé (offre gratuite) : nom vide = aucun environnement.
+    environment: ${{ needs.controle.outputs.environnement }}
     permissions:
       contents: read
     env:
