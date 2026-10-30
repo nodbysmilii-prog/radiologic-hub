@@ -36,7 +36,7 @@ Plus tard : WhatsApp/SMS, export comptable, notation des remplacements.
 - **Workflow « Exploitation Supabase »** (branche `claude/exploitation-supabase`, à fusionner) : `diagnostic` en lecture seule ; autres actions désactivées.
 
 ### Étapes restantes (chacune avec autorisation explicite)
-1. Créer et protéger l'environnement `supabase-production` (relecteur requis, sans contournement par les administrateurs, branche principale seule), y placer `SUPABASE_ACCESS_TOKEN` (idéalement un nouveau jeton à droits limités et expiration courte) et retirer le secret du dépôt ; puis fusionner le workflow (les deux workflows refusent de s'exécuter sans cette protection).
+1. Fusionner les workflows (PR « workflows compatibles dépôt privé », 30/10/2026 : plus besoin d'environnement protégé ; lancement manuel par le propriétaire, branche principale, confirmation `DEPLOYER` pour déployer) ; `SUPABASE_ACCESS_TOKEN` reste un secret du dépôt, idéalement remplacé par un jeton à droits limités et expiration courte.
 2. Lancer `diagnostic` et relire le rapport.
 3. Sauvegarde `pg_dump` récente (idéalement : essai de restauration en local).
 4. Migration Vault puis `verification-planification.sql` (colonnes `_oui` à vrai, `_non` à faux).

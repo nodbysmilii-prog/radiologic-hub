@@ -32,7 +32,7 @@ try {
   const d = lancer();
   verifier('s\'exécute dans une transaction en lecture seule', !!d);
   verifier('toutes les migrations du dépôt sont reconnues comme appliquées', Object.values(d.migrations).every(Boolean), JSON.stringify(d.migrations));
-  verifier('8 migrations contrôlées, une par fichier du dépôt', Object.keys(d.migrations).length === fs.readdirSync(path.join(racine, 'supabase', 'migrations')).length);
+  verifier('migrations contrôlées : une par fichier du dépôt', Object.keys(d.migrations).length === fs.readdirSync(path.join(racine, 'supabase', 'migrations')).length);
   verifier('Vault : secret rp_taches_secret et fonctions présents', d.vault.secret_rp_taches_secret === true && d.vault.fonction_verification && d.vault.fonction_appel);
   verifier('droits attendus (vérification réservée à service_role, appel fermé à tous)', d.droits.verification_par_service_role === true && !d.droits.verification_par_anon && !d.droits.verification_par_authenticated && !d.droits.appel_par_anon && !d.droits.appel_par_service_role && !d.droits.vault_lisible_par_utilisateurs && !d.droits.file_pg_net_lisible_par_utilisateurs, JSON.stringify(d.droits));
   verifier('tâches Cron : noms, fréquences, passage par Vault ; secret en clair signalé sans le montrer', d.cron.length === 2 && d.cron[0].via_vault === true && d.cron[1].secret_en_clair === true && d.cron[1].via_vault === false);
