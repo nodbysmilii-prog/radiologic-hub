@@ -183,7 +183,7 @@ test('menu principal et pied de page : entrée « Radioanatomie » sur toutes le
   const parcourirDossier = d => {
     for (const f of fs.readdirSync(path.join(RACINE, d), { withFileTypes: true })) {
       const rel = path.join(d, f.name);
-      if (f.isDirectory()) { if (!['node_modules', 'vendor', '.git', 'assets-sources'].includes(f.name)) parcourirDossier(rel); }
+      if (f.isDirectory()) { if (!['node_modules', 'vendor', '.git', 'assets-sources', 'dist'].includes(f.name)) parcourirDossier(rel); }
       else if (f.name.endsWith('.html')) pages.push(rel);
     }
   };

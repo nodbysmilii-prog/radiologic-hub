@@ -16,20 +16,22 @@
 | Communauté | `COMMUNAUTE.md` | `communaute.html`, `reseau/` |
 | Fiches rapides | `FICHES.md` | `fiches-rapides.html`, `fiches/`, `cas/` |
 | Radioanatomie, bibliothèque, masterclass, structure | `AUTRES_MODULES.md` | `radioanatomie/`, `espace-dicom*`, `bibliotheque*`, `cours/`, `index.html` |
+| Publication, hébergement, sécurité, abonnements | `PUBLICATION.md` | `scripts/publication/`, `.github/workflows/`, `404.html`, `supabase/migrations/…_abonnements.sql` |
 
 ## Priorités actuelles (d'après le README)
 1. **Mise en service Remplacements + Communauté** (Supabase déjà créé, fonctions déployées le 27/10/2026) : planification, Brevo, administrateur, Google OAuth, temps réel, migration du fil.
-2. **Démarches juridiques** : mentions légales, conditions de la Communauté, INPDP, contrat.
-3. **Validation par l'auteur** de la refonte ergonomique (branche `claude/refonte-ergonomie`, pas en ligne) et de `finition.css`.
-4. **Relectures médicales en attente** (classifications du 24/10, comptes rendus du 08/10, fiches récentes).
-5. Dictée vocale : **en pause** depuis le 23/10/2026 (demande de l'auteur).
+2. **Protection du dépôt et des contenus** (préparée le 29/10/2026, branche `claude/bold-planck-b0m279`) : publication par liste blanche, Cloudflare Pages, puis dépôt privé — étapes à autoriser dans `PUBLICATION.md`.
+3. **Démarches juridiques** : mentions légales, conditions de la Communauté, INPDP, contrat.
+4. **Validation par l'auteur** de la refonte ergonomique (branche `claude/refonte-ergonomie`, pas en ligne) et de `finition.css`.
+5. **Relectures médicales en attente** (classifications du 24/10, comptes rendus du 08/10, fiches récentes).
+6. Dictée vocale : **en pause** depuis le 23/10/2026 (demande de l'auteur).
 
 ## Vue d'ensemble de l'existant
-- Site statique (HTML/CSS/JS, GitHub Pages) + Supabase pour Remplacements et Communauté ; tests Node dans `tests/`.
+- Site statique (HTML/CSS/JS ; en ligne sur GitHub Pages, Cloudflare Pages préparé ; seul `dist/`, construit par liste blanche, est destiné à la publication) + Supabase pour Remplacements et Communauté ; tests Node dans `tests/`.
 - ~34 entrées dans `fiches/` (digestif, neuro, thorax, uro, ostéo-articulaire, cardio, ORL…), cas cliniques dans `cas/`.
 - Éditeur de comptes rendus (42 modèles types, « Écrire en vrac », dictée, assistant documentaire), calculateurs/classifications, suivi oncologique.
 - Espaces radioanatomie, DICOM (en développement), bibliothèque d'articles libres, cours d'échoanatomie.
 
 ## Points à vérifier (transversal)
 - Branches non encore en ligne : `claude/refonte-ergonomie`, `feature/espace-dicom`, `apercu/espace-dicom`.
-- Le nom de domaine `www.radiologichub.com` n'est pas acheté.
+- `www.radiologichub.com` est un sous-domaine de `radiologichub.com` (déjà acheté chez Spaceship) : rien à acheter, il se règle dans le DNS (voir `PUBLICATION.md`, étape 4).

@@ -6,3 +6,9 @@ __pycache__/
 
 # Captures des vérifications dans le navigateur (npm run test:navigateur)
 tests/navigateur/captures/
+
+# Site public généré par npm run publication (scripts/publication/construire.js), jamais versionné
+dist/
+
+# État local de l'émulateur Cloudflare Pages (wrangler), si lancé depuis le dépôt
+.wrangler/
