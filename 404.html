@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Page introuvable — RadiologicHub</title>
+  <!-- Page servie pour toute adresse inexistante, à n'importe quelle profondeur : liens absolus (« / »). -->
+  <link rel="icon" type="image/svg+xml" href="/assets/emblem.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css?v=20261022235000">
+  <style>
+    .introuvable { min-height: 100vh; display: grid; place-items: center; padding: 32px 16px; text-align: center; }
+    .introuvable-carte { max-width: 560px; }
+    .introuvable img { width: 72px; height: auto; }
+    .introuvable h1 { margin: 18px 0 10px; font-size: clamp(1.6rem, 4vw, 2.2rem); }
+    .introuvable p { color: var(--muted); }
+    .introuvable-liens { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 24px; }
+  </style>
+</head>
+<body>
+  <main class="introuvable">
+    <div class="introuvable-carte">
+      <a href="/" aria-label="RadiologicHub — accueil"><img src="/assets/emblem.svg" alt="" width="72" height="65"></a>
+      <p class="marker-tag">Erreur 404</p>
+      <h1>Page <span class="hl-red">introuvable</span></h1>
+      <p>Cette adresse n'existe pas ou n'est plus disponible. Les rubriques de RadiologicHub restent accessibles depuis l'accueil.</p>
+      <div class="introuvable-liens">
+        <a class="btn btn-ink" href="/">Accueil</a>
+        <a class="btn btn-outline" href="/comptes-rendus.html">Comptes rendus</a>
+        <a class="btn btn-outline" href="/fiches-rapides.html">Fiches rapides</a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

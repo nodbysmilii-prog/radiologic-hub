@@ -1,0 +1,9 @@
+# RadiologicHub — redirections de Cloudflare Pages (copié à la racine de dist/ par
+# scripts/publication/construire.js). Syntaxe : https://developers.cloudflare.com/pages/configuration/redirects/
+# Les adresses « page.html » restent valables (Cloudflare les sert aussi sous « page »).
+# La redirection www.radiologichub.com → radiologichub.com se règle dans Cloudflare (règle de redirection
+# de la zone), pas ici : ce fichier ne gère pas les noms de domaine.
+
+# Pages supprimées le 12/10/2026 (anciens liens partagés)
+/cours-admin.html          /                  301
+/cours/ischio-jambiers.html /fiches-rapides.html 301
