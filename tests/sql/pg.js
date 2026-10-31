@@ -36,7 +36,9 @@ function demarrer() {
   }
   const admin = sql => { const r = psql(sql); if (r.erreur) throw new Error(r.erreur); return r.sortie; };
   admin(fs.readFileSync(path.join(__dirname, 'supabase-simule.sql'), 'utf8'));
-  for (const f of fs.readdirSync(path.join(racine, 'supabase', 'migrations')).sort()) admin(fs.readFileSync(path.join(racine, 'supabase', 'migrations', f), 'utf8'));
+  // RH_MIGRATIONS=préfixe1,préfixe2 : n'appliquer que ces migrations (ex. reproduire l'état de la production)
+  const seulement = (process.env.RH_MIGRATIONS || '').split(',').filter(Boolean);
+  for (const f of fs.readdirSync(path.join(racine, 'supabase', 'migrations')).sort().filter(f => !seulement.length || seulement.some(p => f.startsWith(p)))) admin(fs.readFileSync(path.join(racine, 'supabase', 'migrations', f), 'utf8'));
   // RH_SQL_APRES=fichier.sql[,autre.sql] : scripts appliqués après les migrations (ex. correctif de droits à valider)
   for (const f of (process.env.RH_SQL_APRES || '').split(',').filter(Boolean)) admin(fs.readFileSync(path.resolve(racine, f), 'utf8'));
   const arreter = () => {
