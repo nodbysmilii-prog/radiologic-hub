@@ -6,8 +6,8 @@ Préparé, non appliqué. Base : commit 6039d39402aefe6b856278ff5b295efbc556eefa
 
 `supabase/sql/securisation-prelancement.sql` est un script explicite, hors du dossier des migrations automatiques. Il ne doit être exécuté qu'après autorisation distincte, sauvegarde des ACL et relecture du diff par rapport à la base à cet instant.
 
-- Retire SELECT sur `net.http_request_queue` et `net._http_response` à PUBLIC/anon/authenticated. Ne change ni fonctions net, ni schéma net, ni secrets, ni tâches Cron.
-- Retire EXECUTE à PUBLIC/anon sur les fonctions `public` dont le nom commence par rp_, rs_, bib_, ab_ ou dc_. Aucune fonction d'extension ou autre fonction publique n'est visée.
+- Retire SELECT au niveau table et colonnes sur `net.http_request_queue` et `net._http_response` à PUBLIC/anon/authenticated. Ne change ni fonctions net, ni schéma net, ni secrets, ni tâches Cron.
+- Retire EXECUTE à PUBLIC/anon sur les signatures applicatives explicitement inventoriées dans le script. Aucune fonction d'extension ou autre fonction publique n'est visée.
 - Aucun GRANT ajouté. Contrôles par **signature exacte** des RPC membres et service nécessaires lorsqu'elles existent : si un droit utile manque, le lot est annulé pour examen.
 - Les GRANT des tables/colonnes publiques (Bibliothèque et Cours) ne sont pas modifiés. Les points d'entrée HTTP rp-lien/rp-agent/rp-taches ne sont pas supprimés. Les RPC de ces modules sont réservées à authenticated/service_role dans la référence du dépôt ; aucun besoin légitime d'EXECUTE anon n'a été trouvé dans le code examiné.
 - Détecte un droit excessif encore effectif par héritage, et annule la transaction entière.
@@ -64,3 +64,9 @@ Les interfaces examinées utilisent Google OAuth et lien magique, pas de parcour
 6. Garder GitHub public et Spaceship intact pendant le retour arrière. GitHub privé et nouveau déploiement de validation : autorisations distinctes après stabilisation. DNSSEC Cloudflare : nouveau DS seulement, sur accord séparé.
 
 Retour arrière soumis à autorisation : restaurer les quatre A GitHub `185.199.108.153` à `185.199.111.153` et WWW vers `nodbysmilii-prog.github.io` en DNS-only, sans toucher à Brevo ; ou retour aux NS Spaceship après traitement préalable d'un éventuel DS Cloudflare. Un retour DNS n'annule pas une migration SQL. Pour revenir sur les ACL, utiliser leur sauvegarde exacte, ne pas réouvrir globalement les droits à PUBLIC.
+
+## Revue complémentaire ciblée
+
+Compatibilité avec c10dfb5 : aucun changement Supabase, workflows ou code Auth depuis la base du patch. Seul conflit documentaire README résolu en conservant les deux entrées. Les retraits EXECUTE sont désormais bornés à des signatures exactes connues : une nouvelle fonction publique ou une surcharge inconnue reste inchangée. Les tests incluent ces deux cas et les grants de colonnes pg_net. Ce correctif ne revendique pas de fermer toutes les futures fonctions anonymes.
+
+Réexamen Auth : les deux URL sans extension Communauté/Remplacements sont préventives et ne sont pas produites par les fonctions retour actuelles. Le minimum fonctionnel certain est d’ajouter bibliotheque et bibliotheque-admin, avec et sans .html (quatre URL). Les deux autres ajouts peuvent rester optionnels ; conserver leurs variantes .html déjà autorisées. Aucun changement appliqué.

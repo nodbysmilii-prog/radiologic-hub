@@ -7,26 +7,93 @@ BEGIN;
 -- Ces tables peuvent contenir les en-têtes de requêtes HTTP, donc un secret.
 -- Garder les droits postgres / service_role et les fonctions net inchangés.
 DO $$
-DECLARE t text;
+DECLARE t text; colonnes text;
 BEGIN
   FOREACH t IN ARRAY ARRAY['net.http_request_queue', 'net._http_response'] LOOP
     IF to_regclass(t) IS NOT NULL THEN
       EXECUTE format('REVOKE SELECT ON TABLE %s FROM PUBLIC, anon, authenticated', t);
+      SELECT string_agg(quote_ident(attname), ', ' ORDER BY attnum) INTO colonnes
+        FROM pg_attribute WHERE attrelid=to_regclass(t) AND attnum>0 AND NOT attisdropped;
+      IF colonnes IS NOT NULL THEN
+        EXECUTE format('REVOKE SELECT (%s) ON TABLE %s FROM PUBLIC, anon, authenticated', colonnes, t);
+      END IF;
     END IF;
   END LOOP;
 END $$;
 
--- Réduire les droits des seules fonctions applicatives déjà présentes.
--- Les fonctions d'extensions (ex. rls_auto_enable) ne sont pas concernées.
+-- Signatures applicatives connues du dépôt revu : ne pas toucher aux
+-- surcharges inconnues, nouvelles fonctions publiques ni fonctions d'extension.
 DO $$
-DECLARE f record;
+DECLARE signature text;
 BEGIN
-  FOR f IN SELECT p.oid::regprocedure AS signature
-    FROM pg_proc p JOIN pg_namespace n ON n.oid = p.pronamespace
-    WHERE n.nspname = 'public' AND p.prokind = 'f'
-      AND p.proname ~ '^(rp_|rs_|bib_|ab_|dc_)'
-  LOOP
-    EXECUTE format('REVOKE EXECUTE ON FUNCTION %s FROM PUBLIC, anon', f.signature);
+  FOREACH signature IN ARRAY ARRAY[
+    'public.ab_est_abonne()',
+    'public.ab_maj_le()',
+    'public.bib_avant_ecriture()',
+    'public.dc_droits(uuid)',
+    'public.dc_droits_de(uuid,uuid)',
+    'public.dc_droits_etude(text)',
+    'public.dc_est_admin_de(uuid)',
+    'public.dc_est_radiologue(uuid)',
+    'public.dc_est_resident(uuid)',
+    'public.dc_examens_avant_ecriture()',
+    'public.dc_expertises_avant_ecriture()',
+    'public.dc_journal_pas_de_vidage()',
+    'public.dc_journal_protege()',
+    'public.dc_mon_espace()',
+    'public.dc_peut_importer(uuid)',
+    'public.dc_peut_importer_de(uuid,uuid)',
+    'public.dc_peut_valider_resident(uuid)',
+    'public.dc_reglages_maj_le()',
+    'public.dc_residents_avant_ecriture()',
+    'public.dc_role()',
+    'public.dc_role_de(uuid)',
+    'public.dc_role_structure_de(uuid,uuid)',
+    'public.rp_a_recu(uuid)',
+    'public.rp_a_recu_de(uuid)',
+    'public.rp_accepter_invitations()',
+    'public.rp_compteurs(uuid[])',
+    'public.rp_est_admin()',
+    'public.rp_est_membre(uuid)',
+    'public.rp_est_responsable(uuid)',
+    'public.rp_membre_meme_structure(uuid)',
+    'public.rp_nouvel_utilisateur()',
+    'public.rp_proteger_profil()',
+    'public.rp_proteger_validation()',
+    'public.rp_statistiques()',
+    'public.rp_structure_creee()',
+    'public.rp_taches_secret_valide(text)',
+    'public.rp_voit_remplacant(uuid)',
+    'public.rs_autre(uuid)',
+    'public.rs_autre_de(uuid,uuid)',
+    'public.rs_bloque(uuid,uuid)',
+    'public.rs_compter()',
+    'public.rs_est_membre_actif()',
+    'public.rs_evenement()',
+    'public.rs_mes_conversations()',
+    'public.rs_message_envoye()',
+    'public.rs_message_supprime()',
+    'public.rs_missions_ouvertes()',
+    'public.rs_notifier(uuid,text,uuid,uuid)',
+    'public.rs_ouvrir_conversation(uuid)',
+    'public.rs_participe(uuid)',
+    'public.rs_participe_dossier(text)',
+    'public.rs_peut_publier(uuid)',
+    'public.rs_proteger_cas()',
+    'public.rs_proteger_commentaire()',
+    'public.rs_proteger_membre()',
+    'public.rs_proteger_message()',
+    'public.rs_rappels_messages(interval)',
+    'public.rs_remplacant_valide(uuid)',
+    'public.rs_signalement_recu()',
+    'public.rs_supprimer_mon_compte()'
+  ] LOOP
+    IF to_regprocedure(signature) IS NOT NULL THEN
+      EXECUTE format('REVOKE EXECUTE ON FUNCTION %s FROM PUBLIC, anon', to_regprocedure(signature));
+      IF has_function_privilege('anon',to_regprocedure(signature),'EXECUTE') THEN
+        RAISE EXCEPTION 'Droit anon persistant sur % ; lot annulé', signature;
+      END IF;
+    END IF;
   END LOOP;
 END $$;
 
@@ -73,16 +140,10 @@ DECLARE t text;
 BEGIN
   FOREACH t IN ARRAY ARRAY['net.http_request_queue', 'net._http_response'] LOOP
     IF to_regclass(t) IS NOT NULL AND (
-      has_table_privilege('anon', to_regclass(t), 'SELECT') OR
-      has_table_privilege('authenticated', to_regclass(t), 'SELECT')) THEN
+      has_any_column_privilege('anon', to_regclass(t), 'SELECT') OR
+      has_any_column_privilege('authenticated', to_regclass(t), 'SELECT')) THEN
       RAISE EXCEPTION 'Droit de lecture pg_net persistant : % (héritage à examiner)', t;
     END IF;
   END LOOP;
-  IF EXISTS (SELECT 1 FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace
-      WHERE n.nspname='public' AND p.prokind='f'
-        AND p.proname ~ '^(rp_|rs_|bib_|ab_|dc_)'
-        AND has_function_privilege('anon',p.oid,'EXECUTE')) THEN
-    RAISE EXCEPTION 'Droit anon persistant sur une fonction applicative';
-  END IF;
 END $$;
 COMMIT;
