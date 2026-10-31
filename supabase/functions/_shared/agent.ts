@@ -28,6 +28,7 @@ import './noyau/moteur.js';
 import { MODELES } from './modeles.js';
 import { creerDepotSupabase } from './depot-supabase.ts';
 import { transportEmail } from './transport.ts';
+import { VERSION } from './version.ts';
 
 export const RH = (globalThis as any).RHRemplacements;
 const env = (k: string, d = '') => Deno.env.get(k) ?? d;
@@ -62,6 +63,8 @@ export const CORS = {
   'access-control-allow-origin': env('RP_ORIGINE', '*'),
   'access-control-allow-headers': 'authorization, x-client-info, apikey, content-type, x-rp-secret',
   'access-control-allow-methods': 'POST, OPTIONS',
+  'access-control-expose-headers': 'x-rp-version',
+  'x-rp-version': VERSION,   // empreinte du code déployé (scripts/preparer-backend.js), lue par le diagnostic
 };
 export const reponse = (corps: unknown, statut = 200) => new Response(JSON.stringify(corps), { status: statut, headers: { ...CORS, 'content-type': 'application/json; charset=utf-8' } });
 export const erreur = (message: string, statut = 400, code = 'invalide') => reponse({ ok: false, erreur: message, code }, statut);

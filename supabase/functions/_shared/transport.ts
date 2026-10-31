@@ -9,6 +9,8 @@
 // signature et l'appeler selon les préférences du destinataire.
 // =====================================================================
 
+import { masquerEmail } from './outils.mjs';
+
 export type Message = {
   de: { email: string; nom: string };
   a: { email: string; nom?: string };
@@ -53,5 +55,6 @@ export function transportEmail(): (m: Message) => Promise<Resultat> {
   const f = (Deno.env.get('EMAIL_FOURNISSEUR') || 'journal').toLowerCase();
   if (f === 'brevo') return brevo;
   if (f === 'resend') return resend;
-  return async (m: Message) => { console.log(`[e-mail non envoyé] ${m.a.email} — ${m.objet}`); return { ok: true, id: 'journal' }; };
+  // Mode essai : rien n'est envoyé ; le journal ne garde pas l'adresse complète du destinataire.
+  return async (m: Message) => { console.log(`[e-mail non envoyé] ${masquerEmail(m.a.email)} — ${m.modele || 'message'}`); return { ok: true, id: 'journal' }; };
 }

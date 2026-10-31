@@ -82,3 +82,6 @@ jobs:
           for f in rp-agent rp-lien rp-taches; do
             npx --yes supabase@2.120.0 functions deploy "$f" --project-ref "$PROJET" --use-api
           done
+      # Sans secret : chaque fonction répond, accepte le site (CORS) et sert la version du dépôt (x-rp-version).
+      - name: Contrôle de santé après déploiement (sans secret)
+        run: node scripts/sante-fonctions.js

@@ -5,14 +5,16 @@
 // =====================================================================
 // deno-lint-ignore-file no-explicit-any
 import { CORS, creerAgentServeur, erreur, reponse, utilisateur } from '../_shared/agent.ts';
+import { lireCorps } from '../_shared/outils.mjs';
 
 Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: CORS });
   if (req.method !== 'POST') return erreur('Méthode non autorisée.', 405);
   const u = await utilisateur(req);
   if (!u) return erreur('Connexion requise.', 401, 'connexion');
+  const c: any = await lireCorps(req);
+  if (!c || typeof c.action !== 'string') return erreur('Requête invalide.');
   const { agent, db } = creerAgentServeur();
-  const c: any = await req.json().catch(() => ({}));
 
   const estAdmin = async () => ((await db.from('rp_admins').select('email')).data || []).some((a: any) => a.email.toLowerCase() === u.email);
   const estMembre = async (sid: string) => !!(await db.from('rp_membres').select('profil_id').eq('structure_id', sid).eq('profil_id', u.id).maybeSingle()).data;
