@@ -74,30 +74,28 @@ for (const f of pretes) {
     }
     // accès libre : aucune connexion, aucun appel à Supabase ou au réseau social
     assert.doesNotMatch(h, /supabase|reseau\/|auth\.js|signInWith|localStorage\.setItem\('rh-token/i);
-    // mention de droits et date visibles
-    assert.match(h, /© Radiologic Hub — Tous droits réservés/);
-    assert.match(h, /Fiche gratuite, sans inscription/);
+    // mention de droits et date, discrètes (style existant « md-source »)
+    assert.match(h, /<p class="md-source">© Radiologic Hub — Tous droits réservés/);
+    assert.match(h, new RegExp(`Mise à jour le <time datetime="${date}">`));
   });
 }
 
-test('fiche « Masses hépatiques solides » : références vérifiées, passerelle, liens internes', () => {
+test('fiche « Masses hépatiques solides » : références, liens internes, présentation inchangée', () => {
   const h = lire('fiches/masses-hepatiques.html');
   for (const doi of ['10.1148/radiol.2018181494', '10.1016/j.jhep.2016.04.001', '10.1016/j.jhep.2018.03.019']) {
     assert.match(h, new RegExp(`href="https://doi\\.org/${doi.replace(/[./]/g, '\\$&')}"`), doi);
   }
-  // année visible, lectures complémentaires et non sources du cours
-  assert.match(h, /<li><b>2018<\/b> — Chernyak/);
-  assert.match(h, /<li><b>2016<\/b> — European/);
-  assert.match(h, /<li><b>2018<\/b> — European/);
-  assert.match(h, /Lectures complémentaires publiées en 2016 et 2018/);
-  assert.match(h, /Ce ne sont pas les sources originales du cours/);
-  assert.match(h, /<aside class="fp-suite"/);
+  // références discrètes : années visibles, lectures complémentaires et non sources du cours
+  assert.match(h, /Lectures complémentaires \(ne sont pas les sources originales du cours\)/);
+  assert.match(h, /Chernyak V et al\., <i>Radiology<\/i> <b>2018<\/b>/);
+  assert.match(h, /EASL, <i>J Hepatol<\/i> <b>2016<\/b>/);
+  assert.match(h, /EASL, <i>J Hepatol<\/i> <b>2018<\/b>/);
   assert.match(h, /comptes-rendus\.html#modele=tdm-abdo-pelvienne-injectee/);
-  // le modèle visé existe vraiment dans l'éditeur
-  assert.match(lire('cr-data.js'), /id: 'tdm-abdo-pelvienne-injectee'/);
+  assert.match(lire('cr-data.js'), /id: 'tdm-abdo-pelvienne-injectee'/);   // le modèle visé existe
   assert.match(h, /href="adenocarcinome-pancreas\.html"/);
   assert.match(h, /href="irm-cancer-rectum\.html"/);
-  // la passerelle n'annonce ni prix ni abonnement tant que l'offre n'est pas décidée
-  const suite = h.match(/<aside class="fp-suite"[\s\S]*?<\/aside>/)[0];
-  assert.doesNotMatch(suite, /abonn|premium|payant|€|prix|tarif/i);
+  // aucun nouvel élément visuel : ni encadré, ni section, ni feuille de style supplémentaire
+  assert.doesNotMatch(h, /fp-edition|fp-suite|fp-voir|fp-refs|fiche-publique\.css|id="references"/);
+  // pas d'offre ni de prix dans le contenu de la fiche (le pied de page du site, commun, est hors sujet)
+  assert.doesNotMatch(h.match(/<main>[\s\S]*<\/main>/)[0], /abonnez|premium|payant|tarif/i);
 });

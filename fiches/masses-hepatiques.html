@@ -35,7 +35,6 @@
   <link rel="stylesheet" href="../schemas/eu-tirads.css?v=20261026230000">
   <link rel="stylesheet" href="../schemas/mediastin.css?v=20261027100000">
   <link rel="stylesheet" href="../schemas/masses-hepatiques.css?v=20261031120000">
-  <link rel="stylesheet" href="../schemas/fiche-publique.css?v=20261031150000">
   <script type="application/ld+json">
 [
   {
@@ -164,12 +163,6 @@
         <h1>Masses <span class="hl-navy">hépatiques</span> solides</h1>
         <p class="fiche-sub">Principales étiologies de l'adulte — fiche condensée. Une <b>carte des 12 lésions</b>, un <b>calculateur LI-RADS</b>, la liste des <b>cinq critères de l'HNF</b>, la <b>classification de Bismuth et Corlette</b> sur un schéma, un <b>tableau final filtrable</b> et une <b>conduite à tenir</b> étape par étape devant une lésion hyperéchogène.</p>
 
-        <ul class="fp-edition" aria-label="Édition">
-          <li class="fp-gratuit">Fiche gratuite, sans inscription</li>
-          <li>Publié par <b>Radiologic Hub</b></li>
-          <li>Mise à jour le <time datetime="2026-10-31">31 octobre 2026</time></li>
-        </ul>
-
         <div class="legend" role="group" aria-label="Code couleur — cliquez pour isoler une catégorie">
           <span class="legend-label">Code couleur :</span>
           <button class="chip k-tech" data-k="tech" aria-pressed="false">Technique</button>
@@ -205,7 +198,6 @@
           <li><a href="#reconnaissance" style="--c: var(--amber)"><b>V</b>Tableau final de reconnaissance</a></li>
           <li><a href="#cat" style="--c: var(--teal)"><b>VI</b>CAT : lésion hyperéchogène</a></li>
           <li><a href="#testez-vous" style="--c: var(--ink)"><b>?</b>Testez-vous</a></li>
-          <li><a href="#references" style="--c: var(--slate)"><b>·</b>Références et voir aussi</a></li>
         </ol>
       </aside>
 
@@ -485,9 +477,9 @@
               <h4 class="mh-sous" id="lirads">LI-RADS</h4>
               <ul>
                 <li>S'applique aux patients cirrhotiques ou à risque de CHC, en TDM/IRM injectée ; <mark class="k-ddx">ne s'applique pas au foie sain</mark>.</li>
-                <li><b>Critères majeurs :</b> <mark class="k-key">Taille</mark>, <mark class="k-key">Rehaussement artériel</mark>, <mark class="k-key">Wash-out</mark>, <mark class="k-key">Capsule</mark> et <mark class="k-key">Croissance significative</mark>.</li>
+                <li><b>Critères majeurs :</b> <mark class="k-key">Taille</mark>, <mark class="k-key">Rehaussement artériel</mark>, <mark class="k-key">Wash-out</mark>, <mark class="k-key">Capsule</mark> et <mark class="k-key">Croissance seuil</mark>.</li>
                 <li>Mesure du grand axe, de marge externe à marge externe, capsule incluse et trouble perfusionnel exclu.</li>
-                <li><b>Croissance significative :</b> <mark class="k-key">≥ 50 % en ≤ 6 mois ; ≥ 100 % si intervalle &gt; 6 mois ; ou nouvelle lésion ≥ 10 mm</mark>.</li>
+                <li><b>Croissance seuil (LI-RADS v2018) :</b> <mark class="k-key">augmentation de taille ≥ 50 % en ≤ 6 mois</mark>.</li>
                 <li><mark class="k-sign">Contexte validé + lésion &gt; 1 cm + hypervascularisation + wash-out = diagnostic non invasif de CHC</mark>. En cas d'aspect non typique : biopsie/discussion.</li>
               </ul>
 
@@ -507,7 +499,7 @@
                     <legend>Critères majeurs</legend>
                     <label><input type="checkbox" data-crit="capsule"> Capsule se rehaussant</label>
                     <label><input type="checkbox" data-crit="washout"> Lavage (wash-out) non périphérique</label>
-                    <label><input type="checkbox" data-crit="croissance"> Croissance supérieure au seuil de progression</label>
+                    <label><input type="checkbox" data-crit="croissance"> Croissance seuil (≥ 50 % en ≤ 6 mois)</label>
                   </fieldset>
                   <button type="button" class="btn btn-outline btn-sm" id="mh-lirads-reset">Réinitialiser</button>
                 </form>
@@ -527,7 +519,7 @@
                       </tbody>
                     </table>
                   </div>
-                  <p class="ftable-cap" style="margin: 6px 0 0">HRPA = hyperrehaussement à la phase artérielle. Critères majeurs : capsule se rehaussant, lavage (wash-out) non périphérique, croissance supérieure au seuil de progression. De 10 à 19 mm avec HRPA non périphérique : capsule seule = LR-4 ; wash-out non périphérique ou croissance seuil = LR-5. À 20 mm ou plus avec HRPA non périphérique : HRPA seule = LR-4 ; HRPA et au moins un critère majeur = LR-5.</p>
+                  <p class="ftable-cap" style="margin: 6px 0 0">HRPA = hyperrehaussement à la phase artérielle. Critères majeurs : capsule se rehaussant, lavage (wash-out) non périphérique, croissance seuil (≥ 50 % en ≤ 6 mois). De 10 à 19 mm avec HRPA non périphérique : capsule seule = LR-4 ; wash-out non périphérique ou croissance seuil = LR-5. À 20 mm ou plus avec HRPA non périphérique : HRPA seule = LR-4 ; HRPA et au moins un critère majeur = LR-5.</p>
                 </div>
               </div>
 
@@ -843,35 +835,11 @@
               <span class="flip-face flip-back"><p><b>Non</b>flux lent de l'hémangiome, mais aussi lésion peu vascularisée.</p></span></span></button>
           </div>
           <p class="md-source">D'après la fiche condensée de l'auteur « Masses hépatiques solides — principales étiologies de l'adulte » (source au dépôt privé), lexique inchangé. Schéma de l'arbre biliaire (Bismuth et Corlette) : dessin pédagogique réalisé pour le site, proportions schématiques ; pas d'images de patients.</p>
-          <p class="fp-mention">© Radiologic Hub — Tous droits réservés. Textes, schémas et outils originaux ; les ressources de tiers éventuelles restent soumises à leurs licences et à leurs crédits. Fiche pédagogique destinée aux professionnels de santé : elle ne remplace ni le jugement clinique ni les recommandations en vigueur.</p>
+          <p class="md-source">© Radiologic Hub — Tous droits réservés. Contenus originaux ; ressources de tiers sous leurs licences et crédits. Fiche pédagogique destinée aux professionnels de santé. Mise à jour le <time datetime="2026-10-31">31 octobre 2026</time>.</p>
+          <p class="md-source">Lectures complémentaires (ne sont pas les sources originales du cours) : Chernyak V et al., <i>Radiology</i> <b>2018</b>, <a href="https://doi.org/10.1148/radiol.2018181494" rel="noopener" target="_blank">LI-RADS v2018</a> ; EASL, <i>J Hepatol</i> <b>2016</b>, <a href="https://doi.org/10.1016/j.jhep.2016.04.001" rel="noopener" target="_blank">tumeurs bénignes du foie</a> ; EASL, <i>J Hepatol</i> <b>2018</b>, <a href="https://doi.org/10.1016/j.jhep.2018.03.019" rel="noopener" target="_blank">carcinome hépatocellulaire</a>.</p>
+          <p class="md-source">Voir aussi : <a href="adenocarcinome-pancreas.html">adénocarcinome du pancréas</a>, <a href="irm-cancer-rectum.html">IRM du cancer du rectum</a> ; rédiger le compte rendu : <a href="../comptes-rendus.html#modele=tdm-abdo-pelvienne-injectee">modèle TDM abdomino-pelvienne injectée</a>, <a href="../comptes-rendus.html">outil LI-RADS de l'éditeur</a>.</p>
         </section>
 
-        <!-- Références -->
-        <section class="fsec" id="references" style="--c: var(--slate)">
-          <h2 class="fsec-title"><span class="fnum">·</span>Références et voir aussi</h2>
-          <h3 class="marker-sub">Pour approfondir</h3>
-          <ol class="fp-refs">
-            <li><b>2018</b> — Chernyak V, Fowler KJ, Kamaya A, et al. Liver Imaging Reporting and Data System (LI-RADS) Version 2018: Imaging of Hepatocellular Carcinoma in At-Risk Patients. Radiology. 2018;289(3):816-830. DOI : <a href="https://doi.org/10.1148/radiol.2018181494" rel="noopener" target="_blank">10.1148/radiol.2018181494</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/30251931/" rel="noopener" target="_blank">PubMed 30251931</a></li>
-            <li><b>2016</b> — European Association for the Study of the Liver (EASL). EASL Clinical Practice Guidelines on the management of benign liver tumours. J Hepatol. 2016;65(2):386-398. DOI : <a href="https://doi.org/10.1016/j.jhep.2016.04.001" rel="noopener" target="_blank">10.1016/j.jhep.2016.04.001</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/27085809/" rel="noopener" target="_blank">PubMed 27085809</a></li>
-            <li><b>2018</b> — European Association for the Study of the Liver (EASL). EASL Clinical Practice Guidelines: Management of hepatocellular carcinoma. J Hepatol. 2018;69(1):182-236. DOI : <a href="https://doi.org/10.1016/j.jhep.2018.03.019" rel="noopener" target="_blank">10.1016/j.jhep.2018.03.019</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/29628281/" rel="noopener" target="_blank">PubMed 29628281</a></li>
-          </ol>
-          <p class="fp-note">Lectures complémentaires publiées en 2016 et 2018, vérifiées dans PubMed. Ce ne sont pas les sources originales du cours de l'auteur, qui ne sont pas citées ici ; le contenu de la fiche suit le cours de l'auteur.</p>
-          <h3 class="marker-sub">Voir aussi</h3>
-          <ul class="fp-voir">
-            <li><a href="adenocarcinome-pancreas.html" style="--c: var(--amber)">Adénocarcinome du pancréas<small>Métastases hépatiques, bilan d'extension</small></a></li>
-            <li><a href="irm-cancer-rectum.html" style="--c: var(--rose)">IRM du cancer du rectum<small>Primitif colorectal : bilan avant les métastases</small></a></li>
-            <li><a href="../fiches-rapides.html#digestif" style="--c: var(--green)">Toutes les fiches Digestif<small>Colites, occlusion, ischémie, pancréas…</small></a></li>
-          </ul>
-        </section>
-
-        <aside class="fp-suite" aria-labelledby="suite-titre">
-          <h2 id="suite-titre">Du diagnostic au compte rendu</h2>
-          <p>Une fois la lésion caractérisée, rédigez le compte rendu sans repartir de zéro.</p>
-          <ul>
-            <li><a href="../comptes-rendus.html#modele=tdm-abdo-pelvienne-injectee">Modèle de compte rendu : TDM abdomino-pelvienne injectée</a><small>À compléter avec la lésion hépatique décrite.</small></li>
-            <li><a href="../comptes-rendus.html">Éditeur de comptes rendus Radiologic Hub</a><small>Avec l'outil LI-RADS TDM / IRM (v2018) pour classer un nodule sur foie à risque.</small></li>
-          </ul>
-        </aside>
 
       </div>
     </div>

@@ -33,11 +33,11 @@
   };
 
   /* Critères majeurs (note du tableau) : capsule se rehaussant, lavage (wash-out) non périphérique,
-     croissance supérieure au seuil de progression. */
+     croissance seuil (LI-RADS v2018 : augmentation de taille ≥ 50 % en ≤ 6 mois). */
   const CRITERES_MAJEURS = [
     { id: 'capsule', label: 'Capsule se rehaussant' },
     { id: 'washout', label: 'Lavage (wash-out) non périphérique' },
-    { id: 'croissance', label: 'Croissance supérieure au seuil de progression' },
+    { id: 'croissance', label: 'Croissance seuil (≥ 50 % en ≤ 6 mois)' },
   ];
 
   /* Conditions d'application (texte de la fiche, repris par le calculateur) */

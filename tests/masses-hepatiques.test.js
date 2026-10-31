@@ -93,10 +93,15 @@ test('LI-RADS : conditions d\'application et critères de croissance seuil', () 
   assert.match(HTML, /TDM\/IRM injectée/);
   // la croissance seuil est un critère majeur à part entière, comme le wash-out et la capsule
   assert.deepEqual(R.CRITERES_MAJEURS.map(c => c.id), ['capsule', 'washout', 'croissance']);
-  assert.match(R.CRITERES_MAJEURS[2].label, /Croissance supérieure au seuil/);
-  assert.match(HTML, /<input type="checkbox" data-crit="croissance"> Croissance supérieure au seuil de progression/);
-  // seuil de croissance de la fiche : ≥ 50 % en ≤ 6 mois (même seuil que l'éditeur)
-  assert.match(HTML, /≥ 50 % en ≤ 6 mois/);
+  // croissance seuil LI-RADS v2018 : augmentation de taille ≥ 50 % en ≤ 6 mois, et rien d'autre
+  assert.match(HTML, /<li><b>Croissance seuil \(LI-RADS v2018\) :<\/b> <mark class="k-key">augmentation de taille ≥ 50 % en ≤ 6 mois<\/mark>\.<\/li>/);
+  assert.match(HTML, /data-crit="croissance"> Croissance seuil \(≥ 50 % en ≤ 6 mois\)<\/label>/);
+  // les anciens critères v2017 ne sont plus présentés comme croissance seuil
+  assert.doesNotMatch(HTML, /≥ 100 %|nouvelle lésion ≥ 10 mm|intervalle &gt; 6 mois|intervalle > 6 mois|Croissance significative|seuil de progression/);
+  const { DEFS } = require('../regles/classifications.js');
+  const editeur = DEFS.find(d => d.id === 'lirads');
+  const champ = editeur.champs(editeur.init()).find(c => c.f === 'croissance');
+  assert.equal(R.CRITERES_MAJEURS[2].label, champ.label, 'même libellé dans la fiche et dans l\'éditeur');
 });
 
 test('LI-RADS : la fiche et l\'éditeur de comptes rendus donnent la même catégorie dans tous les cas', () => {

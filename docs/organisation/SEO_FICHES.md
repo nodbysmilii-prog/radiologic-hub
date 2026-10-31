@@ -21,19 +21,17 @@
 | **Titres** | Un seul H1 (nom de la pathologie) ; H2 = grandes parties ; H3/H4 sans niveau sauté. | HTML |
 | **Open Graph / Twitter** | `og:title/description/url/image` (1200 × 630), `twitter:card=summary_large_image`. Image : `assets/fiches/<fiche>/og.png`. | `<head>` |
 | **Données structurées** | JSON-LD `MedicalWebPage` (auteur et éditeur = Radiologic Hub, `isAccessibleForFree`, dates, `citation`) + `BreadcrumbList` identique au fil d'Ariane. | `<script type="application/ld+json">` |
-| **Édition visible** | Ligne `ul.fp-edition` : « Fiche gratuite, sans inscription · Publié par Radiologic Hub · Mise à jour le … » (`<time datetime>`). La date = `article:modified_time` = JSON-LD. **Mettre la date à jour à chaque modification de fond.** | sous le sous-titre |
-| **Références** | Section « Références et voir aussi » : 2 à 4 références **générales** vérifiées dans PubMed (DOI + PMID), précisées « proposées en complément » tant que l'auteur ne confirme pas qu'elles sont sa source. | `section#references` |
-| **Liens internes** | « Voir aussi » : 2 à 4 fiches **réellement liées** par le contenu (pas de lien décoratif) + l'index de la spécialité ; liens dans le texte quand une notion est traitée ailleurs. | `ul.fp-voir` |
-| **Passerelle vers les outils** | Encadré discret `aside.fp-suite` en fin de fiche (voir ci-dessous). | après les références |
-| **Mention de droits** | « © Radiologic Hub — Tous droits réservés. Textes, schémas et outils originaux ; les ressources de tiers restent sous leurs licences et crédits » + avertissement « fiche pédagogique destinée aux professionnels de santé ». Mêmes mots en commentaire en tête des fichiers propres. | `p.fp-mention` |
+| **Références** | Une ligne discrète en bas de fiche (style existant `md-source`) : 2 à 4 **lectures complémentaires** vérifiées dans PubMed, **année en évidence**, précisées « ne sont pas les sources originales du cours ». | fin de fiche |
+| **Liens internes** | Une ligne « Voir aussi » en texte simple (même style) : 2 à 4 fiches **réellement liées** par le contenu, et, si pertinent, le modèle de compte rendu ou l'outil correspondant (sans prix ni mot « abonnement »). | fin de fiche |
+| **Mention de droits et date** | Une ligne discrète (`md-source`) : « © Radiologic Hub — Tous droits réservés. Contenus originaux ; ressources de tiers sous leurs licences et crédits. Fiche pédagogique destinée aux professionnels de santé. Mise à jour le <time> ». La date = `article:modified_time` = JSON-LD ; **la mettre à jour à chaque modification de fond.** Mêmes mots en commentaire en tête des fichiers propres. | fin de fiche |
 | **Téléphone** | `viewport`, aucune barre de défilement horizontale à 390 px, tableaux dans `.ftable-wrap`. | test Playwright |
 | **Sitemap / index** | Carte dans `fiches-rapides.html` → `npm run sitemap` → `python3 scripts/indexer_fiches.py` (assistant) → `npm test`. | racine |
 
-Styles communs : `schemas/fiche-publique.css` (préfixe `fp-`, à lier dans chaque fiche). Suivi : `npm run seo:rapport` liste les fiches qui n'ont pas encore leur SEO (état au 31/10/2026 : 1 sur 26).
+**Aucun nouvel élément visuel** : la présentation de la fiche reste celle de la charte ; le SEO est technique (en-tête, données structurées, sitemap) et éditorial (une ou deux lignes discrètes en bas de fiche). Suivi : `npm run seo:rapport` liste les fiches qui n'ont pas encore leur SEO.
 
 ## Passerelles vers les outils (utiles, discrètes, sans prix)
 
-Règles : un encadré en **fin** de fiche, 1 à 3 liens, titre sobre (« Du diagnostic au compte rendu »), une phrase d'explication, **aucun prix, aucun mot « premium / abonnement »** tant que l'offre n'est pas décidée par l'auteur (le test l'impose). Les liens visent des outils **qui existent** : modèle de compte rendu (`comptes-rendus.html#modele=<id>`), outil de classification de l'éditeur, calculateur.
+Règles : un lien en texte simple dans la ligne « Voir aussi » de fin de fiche, **aucun encadré, aucun prix, aucun mot « premium / abonnement »** tant que l'offre n'est pas décidée par l'auteur. Les liens visent des outils **qui existent** : modèle de compte rendu (`comptes-rendus.html#modele=<id>`), outil de classification de l'éditeur, calculateur.
 
 | Fiche | Passerelle proposée | Vérifié dans le code |
 |---|---|---|
@@ -57,13 +55,13 @@ Règles : un encadré en **fin** de fiche, 1 à 3 liens, titre sobre (« Du diag
 ## Ordre de déploiement sur les autres fiches (proposition)
 
 1. Fiches déjà relues par l'auteur et sans point en suspens (voir `FICHES.md`), de la spécialité qui a le plus de requêtes (Digestif, Thorax).
-2. Une fiche = une petite PR : en-tête SEO, `fp-edition`, références vérifiées, voir aussi, passerelle, carte du sitemap, test vert. Pas de refonte du contenu.
+2. Une fiche = une petite PR : en-tête SEO, lignes discrètes de fin de fiche (droits, références, voir aussi), carte du sitemap, test vert. Pas de refonte du contenu.
 3. Suivre `npm run seo:rapport` jusqu'à 26 / 26.
 
 ## Décisions de l'auteur du 31/10/2026 (fiche « Masses hépatiques »)
 
 - **Auteur affiché** : **« Radiologic Hub » provisoirement** ; l'identification des auteurs et relecteurs sera définie plus tard (rien n'est inventé en attendant).
 - **Références** : les 3 références vérifiées sont **conservées comme lectures complémentaires**, avec leur **année en évidence** (2018, 2016, 2018) et la mention qu'elles **ne sont pas les sources originales du cours**.
-- **Design** : l'identité visuelle de Radiologic Hub est conservée ; les changements SEO restent techniques et éditoriaux (aucun composant, couleur ni animation existants modifiés ; les seuls ajouts visibles sont la ligne d'édition, les références, « Voir aussi » et l'encadré de fin, avec les couleurs et le style existants).
+- **Design** : l'identité visuelle de Radiologic Hub est conservée, **aucun nouvel élément visuel** (retiré le 31/10/2026 : ligne d'édition, cartes « Voir aussi », encadré de fin, section Références) ; seules subsistent quelques lignes de texte discrètes en bas de fiche.
 - **Adresse absolue** : `canonical`, `og:url`, JSON-LD et sitemap exigent des adresses complètes ; elles sont centralisées dans `scripts/seo/sitemap.js` (constante `BASE`) et vérifiées par `tests/seo-fiches.test.js`, sans écrire l'adresse ailleurs dans le code du site.
 - Reste à faire par l'auteur : propriété Google Search Console + sitemap ; titre SEO et description reformulables.
