@@ -118,7 +118,7 @@
   DEFS.push({
     id: 'lirads', groupe: 'Abdomen et digestif', titre: 'LI-RADS TDM / IRM (v2018)', chip: 'LI-RADS', sub: 'nodule hépatique (patient à risque)',
     cles: ['lirads'], suggere: /lirads|li-rads|cirrho|chc|carcinome hepato/,
-    aide: 'Patient à risque de CHC uniquement. Hyperartérialisation non périphérique (APHE), taille, critères majeurs (wash-out non périphérique, capsule rehaussée, croissance seuil). Les critères accessoires font monter ou descendre d\'une catégorie (sans passer en LR-5).',
+    aide: 'Patient à risque de CHC uniquement. Hyperartérialisation non périphérique (APHE), taille, critères majeurs (wash-out non périphérique, capsule rehaussée, croissance seuil). Les critères accessoires font monter ou descendre d\'une catégorie (sans passer en LR-5 et sans déclasser un LR-5).',
     init: () => ({ directe: '', aphe: '', taille: '', washout: false, capsule: false, croissance: false, accessoire: '' }),
     champs: st => [
       { f: 'directe', label: 'Catégorie directe', type: 'sel', large: true, options: [['', 'Non : appliquer l\'algorithme'], ['NC', 'LR-NC : non classable (examen dégradé ou incomplet)'], ['1', 'LR-1 : certainement bénin'], ['2', 'LR-2 : probablement bénin'], ['M', 'LR-M : probablement ou certainement malin, non spécifique de CHC (cible…)'], ['TIV', 'LR-TIV : tumeur dans une veine']] },
@@ -128,7 +128,7 @@
         { f: 'washout', label: 'Wash-out non périphérique', type: 'chk' },
         { f: 'capsule', label: 'Capsule rehaussée', type: 'chk' },
         { f: 'croissance', label: 'Croissance seuil (≥ 50 % en ≤ 6 mois)', type: 'chk' },
-        { f: 'accessoire', label: 'Critères accessoires', type: 'sel', large: true, options: [['', 'Aucun / non retenus'], ['plus', 'En faveur de la malignité (+1, sans dépasser LR-4)'], ['moins', 'En faveur de la bénignité (−1)']] },
+        { f: 'accessoire', label: 'Critères accessoires', type: 'sel', large: true, options: [['', 'Aucun / non retenus'], ['plus', 'En faveur de la malignité (+1, sans dépasser LR-4)'], ['moins', 'En faveur de la bénignité (−1, sans déclasser un LR-5)']] },
       ]),
     ],
     calcul(st) {
@@ -146,7 +146,7 @@
       else c = n >= 1 ? 5 : 4;
       const base = c;
       if (st.accessoire === 'plus' && c < 4) c += 1;
-      if (st.accessoire === 'moins' && c > 1) c -= 1;
+      if (st.accessoire === 'moins' && c > 1 && base < 5) c -= 1;   // un LR-5 n'est jamais déclassé par les critères accessoires
       const crit = [st.washout && 'wash-out non périphérique', st.capsule && 'capsule rehaussée', st.croissance && 'croissance seuil'].filter(Boolean);
       const motif = `${st.aphe === 'oui' ? 'hyperartérialisation non périphérique' : 'pas d\'hyperartérialisation'}, ${fr(T, 0)} mm${crit.length ? ', ' + liste(crit) : ', sans autre critère majeur'}${c !== base ? ` ; critères accessoires (LR-${base} → LR-${c})` : ''}`;
       return sortie(c, motif);

@@ -85,6 +85,7 @@ Règle permanente pour toute fiche rapide qui intègre de l'anatomie 3D.
 | Pancréas | `public/models/pancreas/` | `fiches/pancreas/pancreas-3d.js` | Pancréatite aiguë |
 | Rocher | `public/models/rocher/` | `fiches/cholesteatome/rocher-3d.js` | Cholestéatome |
 | Base du crâne, cavum | `public/models/cavum/` | `fiches/cavum/cavum-3d.js` | Cancer du cavum |
+| Foie (8 segments de Couinaud, vaisseaux, vésicule) | `public/models/foie/` | `fiches/digestif/foie-3d.js` (câblage : `foie-3d-fiche.js`) | Masses hépatiques |
 | Coude, patte d'oie (muscles, tendons, nerfs) | `public/models/coude/`, `public/models/patte-oie/` | `cours/visionneuse.js` (générique, réglages par groupe) via `cours/coude-3d.js`, `cas/patte-oie-3d.js` | Cours d'échoanatomie, cas clinique |
 
 Cette liste est un point de départ : vérifier `public/models/`, `scripts/` et le README pour les ajouts récents.
@@ -136,3 +137,11 @@ Séparer **règles**, **présentation** et **câblage** :
 - [ ] Règles dans `regles/`, tests passants (`node --test tests/<fiche>.test.js`).
 - [ ] `?v=` mis à jour, `README.md` (historique, date, « Fiches disponibles »), `fiches-rapides.html` (carte de l'index) et `docs/organisation/FICHES.md` mis à jour dans le même commit.
 - [ ] Points médicaux douteux listés pour l'auteur.
+
+## 8. Fiches publiques, référencement et offre (décision du 31/10/2026)
+
+- **Toutes les fiches rapides sont gratuites, publiques et lisibles sans inscription** : aucun contenu de fiche n'est masqué par JavaScript, aucune connexion n'est demandée.
+- Chaque fiche suit la méthode de référencement de `SEO_FICHES.md` (titre et description spécifiques, canonical, titres H1 à H4 cohérents, JSON-LD, Open Graph, date de mise à jour visible, références vérifiées, liens internes, passerelle discrète vers l'outil correspondant, mention « © Radiologic Hub — Tous droits réservés »). Modèle : `fiches/masses-hepatiques.html`.
+- Les passerelles vers les outils ne mentionnent ni prix ni « abonnement » tant que l'offre n'est pas décidée ; le statut gratuit / premium de chaque module est suivi dans `OFFRE_FREEMIUM.md` et **ne change jamais automatiquement**.
+- Pas d'obfuscation du JavaScript. Un contenu premium se protège côté serveur (Supabase), jamais dans une fiche.
+

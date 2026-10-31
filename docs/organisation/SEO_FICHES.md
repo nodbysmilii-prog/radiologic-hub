@@ -1,0 +1,67 @@
+# Référencement (SEO) des fiches rapides — méthode réutilisable
+
+> Décision de l'auteur (31/10/2026) : **toutes les fiches rapides sont gratuites, publiques et lisibles sans inscription** ; elles sont le principal canal d'acquisition de visiteurs (Google). Cette méthode s'applique fiche par fiche ; **seule « Masses hépatiques solides » est faite** (modèle de référence). À lire avec `CHARTE_FICHES.md` (pédagogie) et `OFFRE_FREEMIUM.md` (gratuit / premium).
+
+## Principes
+
+- **Accès libre** : aucune connexion, aucun script Supabase, aucun contenu masqué par JavaScript dans une fiche (le test `tests/seo-fiches.test.js` le vérifie).
+- **Le contenu médical ne change pas** pour le SEO : titres, descriptions et liens s'ajoutent autour ; on ne réécrit rien sans validation de l'auteur.
+- **Pas d'obfuscation du JavaScript** : aucune protection réelle, elle complique les modifications. La protection est juridique (mention de droits) et, pour le premium, côté serveur (`OFFRE_FREEMIUM.md`).
+- **Rien d'inventé** : références vérifiées dans PubMed (DOI), dates tenues à jour à la main, aucun nom d'auteur ou de relecteur écrit sans que l'auteur le fournisse.
+
+## Liste de contrôle par fiche (modèle : `fiches/masses-hepatiques.html`)
+
+| Élément | Règle | Où |
+|---|---|---|
+| **URL** | Claire et descriptive, en minuscules, avec tirets : `fiches/<pathologie>.html`. Ne pas renommer une fiche déjà indexée (sinon redirection 301 dans `scripts/publication/cloudflare/_redirects`). | nom du fichier |
+| **Titre SEO** | 20 à 70 caractères, spécifique à la pathologie, finit par « \| Radiologic Hub ». Ex. « Masses hépatiques solides : TDM, IRM et LI-RADS \| Radiologic Hub ». | `<title>` |
+| **Meta-description** | 70 à 160 caractères : ce que le lecteur trouve (modalités, entités, outils) + « gratuite ». | `<meta name="description">` |
+| **Canonical** | Adresse complète en `https://radiologichub.com/fiches/<fichier>.html` (même forme que le sitemap). | `<link rel="canonical">` |
+| **Robots** | `index, follow, max-image-preview:large`. Jamais `noindex` sur une fiche. | `<meta name="robots">` |
+| **Titres** | Un seul H1 (nom de la pathologie) ; H2 = grandes parties ; H3/H4 sans niveau sauté. | HTML |
+| **Open Graph / Twitter** | `og:title/description/url/image` (1200 × 630), `twitter:card=summary_large_image`. Image : `assets/fiches/<fiche>/og.png`. | `<head>` |
+| **Données structurées** | JSON-LD `MedicalWebPage` (auteur et éditeur = Radiologic Hub, `isAccessibleForFree`, dates, `citation`) + `BreadcrumbList` identique au fil d'Ariane. | `<script type="application/ld+json">` |
+| **Références** | Une ligne discrète en bas de fiche (style existant `md-source`) : 2 à 4 **lectures complémentaires** vérifiées dans PubMed, **année en évidence**, précisées « ne sont pas les sources originales du cours ». | fin de fiche |
+| **Liens internes** | Une ligne « Voir aussi » en texte simple (même style) : 2 à 4 fiches **réellement liées** par le contenu, et, si pertinent, le modèle de compte rendu ou l'outil correspondant (sans prix ni mot « abonnement »). | fin de fiche |
+| **Mention de droits et date** | Une ligne discrète (`md-source`) : « © Radiologic Hub — Tous droits réservés. Contenus originaux ; ressources de tiers sous leurs licences et crédits. Fiche pédagogique destinée aux professionnels de santé. Mise à jour le <time> ». La date = `article:modified_time` = JSON-LD ; **la mettre à jour à chaque modification de fond.** Mêmes mots en commentaire en tête des fichiers propres. | fin de fiche |
+| **Téléphone** | `viewport`, aucune barre de défilement horizontale à 390 px, tableaux dans `.ftable-wrap`. | test Playwright |
+| **Sitemap / index** | Carte dans `fiches-rapides.html` → `npm run sitemap` → `python3 scripts/indexer_fiches.py` (assistant) → `npm test`. | racine |
+
+**Aucun nouvel élément visuel** : la présentation de la fiche reste celle de la charte ; le SEO est technique (en-tête, données structurées, sitemap) et éditorial (une ou deux lignes discrètes en bas de fiche). Suivi : `npm run seo:rapport` liste les fiches qui n'ont pas encore leur SEO.
+
+## Passerelles vers les outils (utiles, discrètes, sans prix)
+
+Règles : un lien en texte simple dans la ligne « Voir aussi » de fin de fiche, **aucun encadré, aucun prix, aucun mot « premium / abonnement »** tant que l'offre n'est pas décidée par l'auteur. Les liens visent des outils **qui existent** : modèle de compte rendu (`comptes-rendus.html#modele=<id>`), outil de classification de l'éditeur, calculateur.
+
+| Fiche | Passerelle proposée | Vérifié dans le code |
+|---|---|---|
+| Masses hépatiques solides | `#modele=tdm-abdo-pelvienne-injectee` ; outil **LI-RADS v2018** de l'éditeur | oui (`cr-data.js`, `regles/classifications.js`) — **fait** |
+| Pancréatite aiguë, adénocarcinome du pancréas | `#modele=tdm-abdo-pelvienne-injectee` ; outil « Pancréatite aiguë : Balthazar, CTSI » | oui |
+| Occlusion, ischémie mésentérique, colites | `#modele=tdm-abdo-pelvienne-injectee` | oui |
+| Maladie de Crohn | `#modele=entero-tdm` | oui |
+| Masses rénales kystiques | `outils/bosniak.html` ; `#modele=uroscanner` | oui |
+| IRM de la prostate (2 fiches) | `#modele=irm-prostate-multiparametrique` | oui |
+| EU-TIRADS | `#modele=echo-cervicale` | oui |
+| Nodule pulmonaire, amylose, médiastin | `#modele=tdm-thorax-injectee` | oui (outil Fleischner : à vérifier) |
+| Autres fiches | à définir fiche par fiche, après vérification du modèle ou de l'outil visé | — |
+
+## Sitemap, robots.txt, canonical
+
+- `robots.txt` : tout est explorable, déclare le sitemap. **Ne pas** y mettre `Disallow` pour une page à ne pas indexer : le robot ne verrait plus l'en-tête `noindex` (cas de `remplacements-reponse.html`, géré par `_headers`).
+- `sitemap.xml` : généré (`npm run sitemap`) depuis les cartes de `fiches-rapides.html` ; `<lastmod>` = date `article:modified_time` de la fiche (aucune date inventée). Publié via la liste blanche (`robots.txt`, `sitemap.xml` ajoutés à `FICHIERS`).
+- **Forme des adresses** : `.html` aujourd'hui (GitHub Pages). Si **Cloudflare Pages** devient l'hébergeur, il redirige `/page.html` vers `/page` : passer `SANS_EXTENSION` à `true` dans `scripts/seo/sitemap.js` **et** aligner les `canonical`, `og:url` et JSON-LD des fiches (le test signale tout désaccord). Après la bascule : déclarer le sitemap dans Google Search Console.
+- À faire par l'auteur (hors dépôt) : créer la propriété `radiologichub.com` dans **Google Search Console**, y soumettre `https://radiologichub.com/sitemap.xml`, puis demander l'indexation de la fiche.
+
+## Ordre de déploiement sur les autres fiches (proposition)
+
+1. Fiches déjà relues par l'auteur et sans point en suspens (voir `FICHES.md`), de la spécialité qui a le plus de requêtes (Digestif, Thorax).
+2. Une fiche = une petite PR : en-tête SEO, lignes discrètes de fin de fiche (droits, références, voir aussi), carte du sitemap, test vert. Pas de refonte du contenu.
+3. Suivre `npm run seo:rapport` jusqu'à 26 / 26.
+
+## Décisions de l'auteur du 31/10/2026 (fiche « Masses hépatiques »)
+
+- **Auteur affiché** : **« Radiologic Hub » provisoirement** ; l'identification des auteurs et relecteurs sera définie plus tard (rien n'est inventé en attendant).
+- **Références** : les 3 références vérifiées sont **conservées comme lectures complémentaires**, avec leur **année en évidence** (2018, 2016, 2018) et la mention qu'elles **ne sont pas les sources originales du cours**.
+- **Design** : l'identité visuelle de Radiologic Hub est conservée, **aucun nouvel élément visuel** (retiré le 31/10/2026 : ligne d'édition, cartes « Voir aussi », encadré de fin, section Références) ; seules subsistent quelques lignes de texte discrètes en bas de fiche.
+- **Adresse absolue** : `canonical`, `og:url`, JSON-LD et sitemap exigent des adresses complètes ; elles sont centralisées dans `scripts/seo/sitemap.js` (constante `BASE`) et vérifiées par `tests/seo-fiches.test.js`, sans écrire l'adresse ailleurs dans le code du site.
+- Reste à faire par l'auteur : propriété Google Search Console + sitemap ; titre SEO et description reformulables.

@@ -8,6 +8,8 @@
     "publication:verifier": "node scripts/publication/verifier.js",
     "test:sql": "node tests/sql/rls.js && node tests/sql/planification.js && node tests/sql/diagnostic.js && node tests/sql/rls-reseau.js && node tests/sql/rls-bibliotheque.js && node tests/sql/rls-cours.js && node tests/sql/rls-dicom.js && node tests/sql/droits.js && node tests/sql/rls-abonnements.js",
     "test:integration": "node tests/sql/integration.js",
+    "sitemap": "node scripts/seo/sitemap.js",
+    "seo:rapport": "node scripts/seo/sitemap.js --rapport",
     "backend:preparer": "node scripts/preparer-backend.js",
     "test:bib-reel": "node tests/bibliotheque-reel.js",
     "test:navigateur": "node tests/navigateur/refonte.js",

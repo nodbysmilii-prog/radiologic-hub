@@ -1,9 +1,9 @@
-/* © RadiologicHub — tous droits réservés. Reproduction, copie ou réutilisation interdites sans autorisation écrite de l'auteur. */
+/* © Radiologic Hub — Tous droits réservés. Contenus originaux ; ressources tierces sous leurs licences. */
 /* =========================================================
    RadiologicHub — fiche « Masses hépatiques solides » (fiches/masses-hepatiques.html) :
    données et petits calculs repris de la fiche condensée de l'auteur (lexique inchangé)
    ---------------------------------------------------------
-   • lirads(...)        : tableau « Critères LR-3 / LR-4 / LR-5 selon taille et HRPA » ;
+   • lirads(...)        : tableau ACR CT/MRI LI-RADS v2018 (taille, HRPA, critères majeurs) ;
    • CATEGORIES_LIRADS  : LR-NC à LR-TIV et conduite à retenir (LR-1 à LR-5) ;
    • hnf(...)           : « HNF typique : cinq critères majeurs » ;
    • CONTEXTES          : étape 2 de la CAT devant une lésion focale hyperéchogène ;
@@ -33,18 +33,25 @@
   };
 
   /* Critères majeurs (note du tableau) : capsule se rehaussant, lavage (wash-out) non périphérique,
-     croissance supérieure au seuil de progression. */
+     croissance seuil (LI-RADS v2018 : augmentation de taille ≥ 50 % en ≤ 6 mois). */
   const CRITERES_MAJEURS = [
     { id: 'capsule', label: 'Capsule se rehaussant' },
     { id: 'washout', label: 'Lavage (wash-out) non périphérique' },
-    { id: 'croissance', label: 'Croissance supérieure au seuil de progression' },
+    { id: 'croissance', label: 'Croissance seuil (≥ 50 % en ≤ 6 mois)' },
   ];
 
-  /* Colonnes du tableau : pas de HRPA (< 20, ≥ 20) ; HRPA non périphérique (< 10, 10-19, ≥ 20) ;
-     lignes : aucun critère majeur, un critère majeur, ≥ deux critères majeurs. */
+  /* Conditions d'application (texte de la fiche, repris par le calculateur) */
+  const CONDITIONS = 'S\'applique aux patients cirrhotiques ou à risque de CHC, en TDM/IRM injectée ; ne s\'applique pas au foie sain.';
+
+  /* Tableau ACR CT/MRI LI-RADS v2018 (corrigé le 31/10/2026 à la demande de l'auteur).
+     Colonnes : pas de HRPA (< 20, ≥ 20 mm) ; HRPA non périphérique (< 10, 10-19, ≥ 20 mm).
+     Lignes (index) : 0 aucun critère majeur ; 1 un critère majeur = capsule rehaussée seule ;
+     2 un critère majeur = wash-out non périphérique ou croissance seuil ; 3 deux critères majeurs ou plus.
+     À 10-19 mm avec HRPA, la capsule seule donne LR-4 ; le wash-out ou la croissance donnent LR-5.
+     À ≥ 20 mm avec HRPA, HRPA seule : LR-4 ; HRPA + au moins un critère majeur : LR-5. */
   const TABLE_LIRADS = {
-    sans: { '<20': ['LR-3', 'LR-3', 'LR-4'], '>=20': ['LR-3', 'LR-4', 'LR-4'] },
-    hrpa: { '<10': ['LR-3', 'LR-4', 'LR-4'], '10-19': ['LR-3', 'LR-4', 'LR-5'], '>=20': ['LR-4', 'LR-4 à LR-5*', 'LR-5'] },
+    sans: { '<20': ['LR-3', 'LR-3', 'LR-3', 'LR-4'], '>=20': ['LR-3', 'LR-4', 'LR-4', 'LR-4'] },
+    hrpa: { '<10': ['LR-3', 'LR-4', 'LR-4', 'LR-4'], '10-19': ['LR-3', 'LR-4', 'LR-5', 'LR-5'], '>=20': ['LR-4', 'LR-5', 'LR-5', 'LR-5'] },
   };
 
   function colonne(taille, hrpa) {
@@ -56,19 +63,13 @@
   function lirads(taille, hrpa, criteres) {
     const t = num(taille);
     if (t === null || t <= 0) return null;
-    const coches = (criteres || []).filter(c => CRITERES_MAJEURS.some(m => m.id === c));
-    const n = new Set(coches).size;
+    const coches = [...new Set((criteres || []).filter(c => CRITERES_MAJEURS.some(m => m.id === c)))];
+    const n = coches.length;
     const col = colonne(t, !!hrpa);
-    const ligne = Math.min(n, 2);
-    let cat = TABLE_LIRADS[hrpa ? 'hrpa' : 'sans'][col][ligne];
-    // * LR-5 si un critère de croissance significative est associé, sinon LR-4
-    let note = '';
-    if (cat === 'LR-4 à LR-5*') {
-      cat = coches.includes('croissance') ? 'LR-5' : 'LR-4';
-      note = 'LR-5 si un critère de croissance significative est associé, sinon LR-4.';
-    }
+    const ligne = n === 0 ? 0 : n >= 2 ? 3 : coches[0] === 'capsule' ? 1 : 2;
+    const cat = TABLE_LIRADS[hrpa ? 'hrpa' : 'sans'][col][ligne];
     return {
-      categorie: cat, colonne: col, criteresMajeurs: n, note,
+      categorie: cat, colonne: col, ligne, criteresMajeurs: n,
       sens: CATEGORIES_LIRADS[cat].sens, retenir: CATEGORIES_LIRADS[cat].retenir, niveau: CATEGORIES_LIRADS[cat].niveau,
     };
   }
@@ -116,10 +117,33 @@
     IV: { titre: 'Type IV', texte: 'Extension bilatérale aux canaux secondaires droit et gauche, ou tumeur multicentrique.', atteint: ['chc', 'convergence', 'droit', 'gauche'] },
   };
 
+  /* ---------- Foie en 3D : segments de Couinaud et pseudolésions (modèle Z-Anatomy) ---------- */
+  const SEGMENTS_FOIE = {
+    I: { nom: 'Segment I', lobe: 'Lobe caudé', texte: 'Lobe caudé : en arrière, entre la veine porte et la veine cave inférieure.', couleur: '#8d6e63' },
+    II: { nom: 'Segment II', lobe: 'Foie gauche', texte: 'Segment latéral gauche, postérieur (supérieur).', couleur: '#3c67b8' },
+    III: { nom: 'Segment III', lobe: 'Foie gauche', texte: 'Segment latéral gauche, antérieur (inférieur).', couleur: '#2a9d8f' },
+    IV: { nom: 'Segment IV', lobe: 'Foie gauche', texte: 'Segment médial gauche (lobe carré) : entre la fissure du ligament rond (ligament falciforme) et la fosse de la vésicule biliaire.', couleur: '#f2ab2f' },
+    V: { nom: 'Segment V', lobe: 'Foie droit', texte: 'Foie droit, secteur antérieur, partie inférieure.', couleur: '#d4174a' },
+    VI: { nom: 'Segment VI', lobe: 'Foie droit', texte: 'Foie droit, secteur postérieur, partie inférieure.', couleur: '#7b5ea7' },
+    VII: { nom: 'Segment VII', lobe: 'Foie droit', texte: 'Foie droit, secteur postérieur, partie supérieure.', couleur: '#548c6c' },
+    VIII: { nom: 'Segment VIII', lobe: 'Foie droit', texte: 'Foie droit, secteur antérieur, partie supérieure.', couleur: '#276a8c' },
+  };
+  /* Pseudolésions dont le siège est précisé par la fiche (tableau « Vraie masse ou pseudolésion ? » et
+     étape 1 de la CAT). Les textes sont ceux de la fiche ; aucun autre siège n'est ajouté. */
+  const PATHOLOGIES_FOIE = {
+    steatose: { nom: 'Stéatose focale', segments: ['IV'], reperes: ['fosse-vesicule', 'ligament-rond'], couleur: '#c4560f',
+      siege: 'Segment IV, lit vésiculaire, péri-falciforme',
+      texte: 'Segment IV, lit vésiculaire, péri-falciforme ; forme géographique ; aucun effet de masse ; vaisseaux traversants ; chute du signal en opposition de phase.' },
+    epargne: { nom: 'Épargne focale', segments: ['IV'], reperes: [], couleur: '#6b0d8c',
+      siege: 'Souvent segment IV, autour d\'une veine gastrique gauche',
+      texte: 'Zone non stéatosique dans un foie gras ; pas de chute en opposition de phase ; pseudo-nodule, souvent segment IV autour d\'une veine gastrique gauche.' },
+  };
+  const REPERES_FOIE = { 'fosse-vesicule': 'Lit vésiculaire (fosse de la vésicule biliaire)', 'ligament-rond': 'Péri-falciforme (fissure du ligament rond)' };
+
   /* ---------- Tableau final de reconnaissance ---------- */
   const CATEGORIES = { benigne: 'Tumeur bénigne', primitive: 'Tumeur maligne primitive', secondaire: 'Tumeur maligne secondaire', vasculaire: 'Tumeur vasculaire maligne rare' };
   const LESIONS = {
-    hemangiome: { nom: 'Hémangiome', categorie: 'benigne', terrain: 'Foie sain ; très hyperT2', signe: 'Mottes périphériques, centripète, parallèle au sang, sans wash-out.' },
+    hemangiome: { nom: 'Hémangiome', categorie: 'benigne', terrain: 'Foie sain ; très hyperT2', signe: 'Mottes périphériques, centripète, parallèle à l\'aorte, sans wash-out.' },
     hnf: { nom: 'HNF', categorie: 'benigne', terrain: 'Femme jeune ; cicatrice hyperT2', signe: 'Artériel homogène, iso portal, cicatrice tardive, sans capsule.' },
     adenome: { nom: 'Adénome', categorie: 'benigne', terrain: 'Contraception ; hétérogène', signe: 'Graisse/sang, artériel ± wash-out, capsule, risque hémorragique.' },
     aml: { nom: 'Angiomyolipome', categorie: 'benigne', terrain: 'Femme ; graisse macroscopique', signe: 'Triple composante graisseuse/solide/vasculaire ; vaisseaux centraux.' },
@@ -135,7 +159,7 @@
   const CAS = [
     { texte: 'Femme sous contraception, foie sain. Lésion hétérogène (graisse, sang), hyperrehaussement artériel hétérogène, capsule possible. Douleur aiguë et hématome sous-capsulaire.', rep: 'adenome', pourquoi: 'Adénome : contraception, hétérogénéité, graisse/sang, capsule possible ; risques : hémorragie, rupture et transformation en CHC.' },
     { texte: 'Femme jeune, foie sain. Lésion homogène, hyperrehaussement artériel intense, précoce et homogène, iso au temps portal ; cicatrice centrale hyperT2 rehaussée tardivement ; ni capsule ni wash-out.', rep: 'hnf', pourquoi: 'HNF : rehaussement artériel intense sans lavage, cicatrice centrale hyperT2 rehaussée tardivement, sans capsule ni adénopathie.' },
-    { texte: 'Foie sain. Rehaussement en mottes périphériques, progressif, centripète, parallèle au pool sanguin ; hyperT2 franc ; pas de wash-out.', rep: 'hemangiome', pourquoi: 'Hémangiome : les mottes périphériques, le parallélisme avec le pool sanguin, l\'hyperT2 franc et l\'absence de wash-out sécurisent le diagnostic.' },
+    { texte: 'Foie sain. Rehaussement en mottes périphériques, progressif, centripète, parallèle à l\'aorte ; hyperT2 franc ; pas de wash-out.', rep: 'hemangiome', pourquoi: 'Hémangiome : les mottes périphériques, le parallélisme avec l\'aorte, l\'hyperT2 franc et l\'absence de wash-out sécurisent le diagnostic.' },
     { texte: 'Cirrhose. Hyperrehaussement artériel non périphérique, wash-out portal/tardif, capsule tardive ; thrombose portale tumorale.', rep: 'chc', pourquoi: 'CHC : aspect typique = hyperrehaussement artériel non périphérique + wash-out + capsule tardive ; la thrombose portale tumorale est très évocatrice.' },
     { texte: 'Sujet jeune, foie non cirrhotique. Grosse masse unique, lobulée, bien limitée, AFP normale ; cicatrice centrale fibreuse hypoT2 calcifiée ; adénopathies.', rep: 'fibrolamellaire', pourquoi: 'CHC fibrolamellaire : cicatrice centrale hypoT2, souvent calcifiée ; DD principal : HNF, homogène avec cicatrice hyperT2, sans capsule ni adénopathie.' },
     { texte: 'Sujet autour de 60 ans. Masse périphérique volumineuse, lobulée, non encapsulée ; rétraction capsulaire, dilatation biliaire segmentaire, engainement des branches portes ; rehaussement progressif tardif.', rep: 'cholangio', pourquoi: 'Cholangiocarcinome intrahépatique : rétraction capsulaire, engainement vasculaire (et non extension endoluminale), dilatation biliaire segmentaire, rehaussement fibreux progressif tardif.' },
@@ -144,5 +168,5 @@
     { texte: 'Femme. Masse hyperéchogène hétérogène avec flux artériel ; graisse macroscopique, hypersignal T1 supprimé en FatSat sans chute spécifique IP/OP, vaisseaux centraux.', rep: 'aml', pourquoi: 'Angiomyolipome : tumeur à triple composante (graisse, vaisseaux, muscle lisse) ; graisse macroscopique, hypervascularisation persistante, vaisseaux centraux.' },
   ];
 
-  return { lirads, CATEGORIES_LIRADS, CRITERES_MAJEURS, TABLE_LIRADS, CRITERES_HNF, hnf, CONTEXTES, BISMUTH, CATEGORIES, LESIONS, CHOIX, CAS };
+  return { SEGMENTS_FOIE, PATHOLOGIES_FOIE, REPERES_FOIE, lirads, CONDITIONS, CATEGORIES_LIRADS, CRITERES_MAJEURS, TABLE_LIRADS, CRITERES_HNF, hnf, CONTEXTES, BISMUTH, CATEGORIES, LESIONS, CHOIX, CAS };
 });

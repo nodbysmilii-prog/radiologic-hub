@@ -1,0 +1,6 @@
+# Radiologic Hub — robots.txt
+# Tout le site public peut être exploré ; les fiches rapides sont volontairement gratuites et indexables.
+User-agent: *
+Allow: /
+
+Sitemap: https://radiologichub.com/sitemap.xml

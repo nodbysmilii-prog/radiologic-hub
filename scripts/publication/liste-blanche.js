@@ -14,7 +14,7 @@
 
 /* Fichiers de la racine publiés (pages, styles et scripts communs). */
 const FICHIERS = [
-  'index.html', '404.html', 'mentions-legales.html',
+  'index.html', '404.html', 'mentions-legales.html', 'robots.txt', 'sitemap.xml',
   'comptes-rendus.html', 'suivi-oncologique.html', 'fiches-rapides.html',
   'bibliotheque.html', 'bibliotheque-admin.html',
   'communaute.html', 'remplacements.html', 'remplacements-reponse.html',

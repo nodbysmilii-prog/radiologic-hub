@@ -1,10 +1,10 @@
-/* © RadiologicHub — tous droits réservés. Reproduction, copie ou réutilisation interdites sans autorisation écrite de l'auteur. */
+/* © Radiologic Hub — Tous droits réservés. Contenus originaux ; ressources tierces sous leurs licences. */
 /* =========================================================
    RadiologicHub — fiche « Masses hépatiques solides »
    ---------------------------------------------------------
    • onglets scoped (temps de la TDM, aspects des métastases) ;
    • HNF typique : cinq critères à cocher, jauge, hépatopathie sous-jacente ;
-   • calculateur LI-RADS : taille + HRPA + critères majeurs → case du tableau allumée ;
+   • calculateur LI-RADS (ACR v2018) : taille + HRPA + critères majeurs → case du tableau allumée ;
    • classification de Bismuth et Corlette : schéma SVG de l'arbre biliaire ;
    • tableaux comparatifs : mise en avant d'une colonne ;
    • tableau final : filtre par catégorie ;
@@ -56,7 +56,7 @@
   const lr = $('#mh-lirads');
   if (lr) {
     const res = $('#mh-lirads-res');
-    const rappel = ' S\'applique aux patients cirrhotiques ou à risque de CHC, en TDM/IRM injectée ; ne s\'applique pas au foie sain.';
+    const rappel = R.CONDITIONS;
     const maj = () => {
       const taille = $('input[name="taille"]', lr).value;
       const hrpa = $('input[name="hrpa"]:checked', lr).value === 'oui';
@@ -64,10 +64,10 @@
       const r = R.lirads(taille, hrpa, crit);
       $$('#mh-lr-grille td.is-actif').forEach(td => td.classList.remove('is-actif'));
       if (!r) { verdict(res, '', '', 'Saisissez la taille de la lésion (en mm) : la case correspondante du tableau s\'allume.'); return; }
-      const cell = $(`#mh-lr-grille td[data-h="${hrpa ? 'hrpa' : 'sans'}"][data-col="${r.colonne}"][data-l="${Math.min(r.criteresMajeurs, 2)}"]`);
+      const cell = $(`#mh-lr-grille td[data-h="${hrpa ? 'hrpa' : 'sans'}"][data-col="${r.colonne}"][data-l="${r.ligne}"]`);
       if (cell) cell.classList.add('is-actif');
       const retenir = r.retenir ? `À retenir : ${r.retenir}.` : '';
-      verdict(res, `${r.categorie} — ${r.sens}`, r.niveau, [retenir, r.note, rappel].filter(Boolean).join(' '));
+      verdict(res, `${r.categorie} — ${r.sens}`, r.niveau, [retenir, rappel].filter(Boolean).join(' '));
     };
     lr.addEventListener('input', maj); lr.addEventListener('change', maj);
     $('#mh-lirads-reset').addEventListener('click', () => {
