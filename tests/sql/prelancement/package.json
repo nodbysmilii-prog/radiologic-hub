@@ -1,0 +1,10 @@
+{
+  "name": "radiologic-hub-prelancement-tests",
+  "private": true,
+  "scripts": {
+    "test": "node test.cjs"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.3.14"
+  }
+}
