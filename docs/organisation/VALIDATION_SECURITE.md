@@ -54,3 +54,32 @@ Bascule DNS faite et stable (une semaine), site servi par Cloudflare, connexion 
 
 ## Conditions avant l'ouverture des abonnements
 Décision des contenus premium et rédaction de contenu nouveau (jamais public) ; migrations `abonnements` + `abonnements_acces` appliquées ; interface branchée sur `abonnements/acces.js` ; tests réels avec comptes abonné / non abonné / expiré ; paiement et facturation choisis ; CGV, mentions légales, INPDP ; dépôt privé.
+
+## Ordre de fusion des PR (préparé le 31/10/2026)
+#105 (diagnostic) → #104 (migrations ; contient déjà #105) → #107 (cette documentation ; contient déjà #104) : chaque fusion est sans conflit si cet ordre est respecté. #106 (fondation premium) reste séparée et n'est branchée sur aucune page ; conflit README trivial à résoudre au moment voulu. **Aucune de ces PR ne modifie Supabase** : elles ajoutent des fichiers SQL non exécutés, un diagnostic en lecture seule, des tests et de la documentation.
+
+## Procédure regroupée : finaliser Supabase (une autorisation par étape)
+| Étape | Action | Qui | Contrôle après |
+|---|---|---|---|
+| S1 | Diagnostic étendu (après fusion #105) | Claude (lecture seule) | Alertes de sécurité triées ; réglages Auth et SMTP relevés |
+| S2 | *Edge Functions → Secrets* : `RP_URL_SITE` = `https://radiologichub.com` | Auteur | Diagnostic : « RP_URL_SITE = https://radiologichub.com : oui » |
+| S3 | *Authentication → URL Configuration* : ajouter `https://radiologichub.com/bibliotheque`, `/bibliotheque.html`, `/bibliotheque-admin`, `/bibliotheque-admin.html` (rien d'autre) | Auteur | Diagnostic : 4 lignes ✓, aucune adresse avec `*` |
+| S4 | Migration `20261027120000_communaute_fil.sql` (SQL Editor, *Run without RLS* si proposé) | Auteur | Diagnostic : appliquée, `exécutables par anon (0)` |
+| S5 | Migration `20261029120000_planification_vault.sql` | Auteur | Diagnostic : Vault ✓, droits ✓ |
+| S6 | Redéploiement des fonctions (Actions → « Déployer les fonctions Supabase » → `DEPLOYER`) | Claude après accord | Diagnostic : 0 fichier à redéployer |
+| S7 | `supabase/sql/planification.sql` (tâche Cron) | Auteur | Diagnostic : tâche via Vault, exécutions « succeeded » |
+| S8 | Tests connectés réels : un compte de test fourni par l'auteur (Remplacements, Communauté, Bibliothèque) ; aucune donnée réelle créée par Claude | Auteur + Claude | Parcours réussis |
+| S9 | Après 24-48 h sans erreur : supprimer le secret `RP_TACHES_SECRET` | Auteur | Diagnostic |
+Plus tard : `abonnements` (+ #106) au lancement du premium ; `espace_dicom` quand le serveur DICOM existera ; `EMAIL_FOURNISSEUR=brevo` quand les e-mails réels seront voulus.
+
+## Bascule Cloudflare : vérifications préalables (après le 01/11/2026 00:05 UTC)
+1. Capture d'écran du DNS chez Spaceship (9 enregistrements, dont DKIM `brevo1`/`brevo2`, TXT `brevo-code`, `_dmarc`).
+2. Aucun enregistrement DS au registre (DNSSEC désactivé, ancien DS retiré) : à confirmer par l'auteur dans Spaceship, ou par Claude si `cloudflare-dns.com` est autorisé dans le réseau de la session.
+3. Dans Cloudflare, comparer ligne à ligne avec la capture ; DKIM et site en *DNS only* ; supprimer toute ligne absente de la capture.
+4. Site Cloudflare sain : déjà validé (59/59, 31/10) ; S2-S3 faits de préférence avant.
+5. Bascule : nameservers Cloudflare chez Spaceship → « Active » → *Pages → Custom domains* racine + `www` → règle `www` → racine → Brevo toujours authentifié → test réel sur `radiologichub.com` (Claude).
+Retour arrière : nameservers Spaceship par défaut (enregistrements intacts), voir `PUBLICATION.md`.
+
+## Passage du dépôt en privé (au plus tôt une semaine après la bascule)
+Préalables : site servi par Cloudflare sans incident ; connexion testée sur `radiologichub.com` ; adresses `…github.io/radiologic-hub/…` retirées de l'Auth ; plus aucune PR d'une autre session en attente de publication sur GitHub Pages.
+Action : *Settings → General → Danger Zone → Change visibility → Private* (auteur). Contrôles par Claude juste après : construction Cloudflare réussie au commit suivant, workflow « Vérifier le site » vert, diagnostic Supabase lancé avec succès, sessions Claude Code fonctionnelles. Effets attendus : GitHub Pages s'arrête (déjà remplacé), 2 000 minutes Actions/mois.
