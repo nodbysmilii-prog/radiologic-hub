@@ -23,6 +23,6 @@
 
 ## Mémoire commune du projet (plusieurs conversations indépendantes)
 
-- Le dossier `docs/organisation/` contient l'état du projet (`ETAT_PROJET.md`) et un fichier de suivi par module : `REMPLACEMENTS.md`, `COMPTES_RENDUS.md`, `CALCULATEURS.md`, `COMMUNAUTE.md`, `FICHES.md`, `AUTRES_MODULES.md`, `PUBLICATION.md` (publication, hébergement, sécurité).
+- Le dossier `docs/organisation/` contient l'état du projet (`ETAT_PROJET.md`) et un fichier de suivi par module : `REMPLACEMENTS.md`, `COMPTES_RENDUS.md`, `CALCULATEURS.md`, `COMMUNAUTE.md`, `FICHES.md`, `AUTRES_MODULES.md`, `PUBLICATION.md` (publication, hébergement, sécurité), `VALIDATION_SECURITE.md` (référence unique : statut de chaque chantier de sécurité et d'infrastructure, à tenir à jour).
 - **Au début d'une session, lire uniquement le fichier du module concerné** (pas les autres, pas tout le README ni toutes les fiches).
 - **Après chaque tâche terminée, mettre à jour l'avancement de ce module** (sections « Réalisé », « À vérifier », « Prochaine tâche importante »), dans le même commit que le README.
