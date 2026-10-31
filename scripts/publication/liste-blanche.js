@@ -26,7 +26,7 @@ const FICHIERS = [
 /* Dossiers publiés en entier (sauf EXCLUSIONS ci-dessous). */
 const DOSSIERS = [
   'assets', 'fiches', 'cas', 'cours', 'radioanatomie', 'outils', 'regles', 'schemas', 'suivi',
-  'dictee', 'assistant', 'vendor', 'public', 'dicom', 'bibliotheque', 'reseau', 'remplacements',
+  'dictee', 'assistant', 'vendor', 'public', 'dicom', 'bibliotheque', 'reseau', 'remplacements', 'abonnements',
 ];
 
 /* Exceptions explicites : fichiers publiés bien qu'un motif d'exclusion les vise. */
