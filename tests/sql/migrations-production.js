@@ -21,6 +21,7 @@ const PRODUCTION = ['20261008120000', '20261009090000', '20261012090000', '20261
 const MANQUANTES = ['20261031130000_search_path_profil', '20261027120000_communaute_fil', '20261029120000_planification_vault', '20261030090000_abonnements', '20261014090000_espace_dicom'];
 process.env.RH_MIGRATIONS = PRODUCTION.join(',');
 const { demarrer, racine } = require('./pg.js');
+const { comparerDroits } = require('../../scripts/exploitation-supabase.js');
 
 const lire = (...p) => fs.readFileSync(path.join(racine, ...p), 'utf8');
 const DIAG = lire('supabase', 'sql', 'diagnostic.sql').replace(/;\s*$/, '');
@@ -76,6 +77,18 @@ try {
     const d = diagnostic();
     sain(d, 'réapplication');
     assert.deepEqual(d.securisation.fonctions_sans_search_path, []);
+  });
+  verifier('contrôle des droits du diagnostic (droits par défaut de Supabase, cas le plus défavorable) : rien en trop pour les visiteurs ni PUBLIC, et aucun objet des 5 migrations en trop pour les membres', () => {
+    const c = comparerDroits(diagnostic().droits_lignes, lire('tests', 'sql', 'droits-attendus.txt'));
+    if (process.env.RH_DETAIL) console.log(JSON.stringify(c, null, 1));
+    assert.equal(c.illisibles, 0);
+    assert.deepEqual(c.enTrop.filter(l => / · (?:anon|PUBLIC)(?: :|$)/.test(l)), [], 'droit en trop pour anon ou PUBLIC');
+    const nouveaux = new Set(MANQUANTES.flatMap(m => [...lire('supabase', 'migrations', `${m}.sql`).matchAll(/create (?:or replace )?(?:function|table if not exists) public\.(\w+)/g)].map(x => x[1])));
+    assert.ok(nouveaux.size > 20, `objets des migrations reconnus : ${nouveaux.size}`);
+    assert.deepEqual(c.enTrop.filter(l => nouveaux.has(l.split(/[ (]/)[0])), [], 'objet des nouvelles migrations avec un droit en trop');
+    // Les autres écarts viennent des droits réaccordés en bloc aux migrations déjà en production (cas fictif) :
+    // c'est ce que le diagnostic réel vérifie sur la base de production (ligne « droits accordés en trop »).
+    assert.ok(c.enTrop.every(l => / · authenticated(?: :|$)/.test(l)));
   });
   verifier('rp_proteger_profil avec search_path vide : l\'e-mail et l\'identifiant d\'un profil restent protégés', () => {
     const u = admin("insert into auth.users (email) values ('profil.fictif@exemple.tn') returning id");
