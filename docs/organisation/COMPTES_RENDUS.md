@@ -3,6 +3,7 @@
 Fichiers : `comptes-rendus.html`, `cr.js`, `cr.css`, `cr-data.js` (42 modèles types), `cr-tools.js/.css`, `cr-vrac.js`, `regles/vrac.js`, `dictee/` (`lexique.js`, `corrections.js`, `traitement.js`), `assistant/` (`synonymes.js`), `tests/vrac.test.js`, `tests/dictee.test.js`. README : « Comptes rendus types… », tableaux « règles apprises » et « erreurs de dictée ».
 
 ## Réalisé
+- Charte de conception `CHARTE_COMPTES_RENDUS.md` (29/10/2026) : à lire avant toute modification importante du module.
 - Éditeur avec bibliothèque de modèles, phrases automatiques, choix `[a / b]` pour tout signe non noté.
 - « Écrire en vrac » : règles générales apprises des retours de l'auteur (liste permanente au README).
 - Assistant documentaire (fiches liées, 100 % local), indexation par `scripts/indexer_fiches.py`.

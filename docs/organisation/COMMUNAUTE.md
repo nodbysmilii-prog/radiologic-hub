@@ -16,3 +16,6 @@ Fichiers : `communaute.html`, `reseau/` (`noyau/regles.js`, `noyau/confidentiali
 Exécuter la migration du fil puis configurer Google OAuth et le temps réel (`remplacements/INSTALLATION.md`, étapes 4, 4 bis, 10).
 
 Plus tard : SMS de vérification, purge automatique, groupes, notifications push, import Instagram.
+
+## Charte
+`CHARTE_COMMUNAUTE.md` (29/10/2026) : architecture, conventions, fil unifié avec Remplacements (source unique `rp_demandes`), MVP, feuille de route en 20 petites tâches. Commencer par la phase A (mise en service).

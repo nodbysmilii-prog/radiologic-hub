@@ -85,12 +85,19 @@
         return { ok: false, erreur: String((e && e.message) || e) };
       }
     }
-    /* Destinataires côté structure : e-mail de la structure + auteur de la demande */
+    /* Une adresse = une personne : comparaison sans espaces ni majuscules, doublons écartés */
+    const normEmail = e => String(e || '').trim().toLowerCase();
+    const ajouterDestinataire = (liste, dest) => {
+      const email = normEmail(dest.email);
+      if (email && !liste.some(x => normEmail(x.email) === email)) liste.push({ ...dest, email: String(dest.email).trim() });
+      return liste;
+    };
+    /* Destinataires côté structure : e-mail de la structure + auteur de la demande (une seule fois si c'est la même adresse) */
     async function destinatairesStructure(s, d) {
-      const liste = [{ email: s.email, nom: s.contact_nom || s.nom, structure_id: s.id }];
+      const liste = ajouterDestinataire([], { email: s.email, nom: s.contact_nom || s.nom, structure_id: s.id });
       if (d && d.cree_par) {
         const p = await depot.profils.get(d.cree_par);
-        if (p && p.email && p.email.toLowerCase() !== String(s.email).toLowerCase()) liste.push({ email: p.email, nom: `${p.prenom} ${p.nom}`, profil_id: p.id });
+        if (p) ajouterDestinataire(liste, { email: p.email, nom: `${p.prenom} ${p.nom}`, profil_id: p.id });
       }
       return liste;
     }
@@ -142,6 +149,14 @@
       const dispos = await disposPour(ids, d.dates);
       const missions = await depot.demandes.confirmeesPour(ids);
       return candidats.filter(r => REG.compatible({ ...r, desinscrit: r.profil && r.profil.desinscrit }, d, s, dispos[r.id] || {}, missions.filter(m => m.remplacant_id === r.id)).ok);
+    }
+    /* Un remplaçant qui s'est dit disponible l'est-il toujours (inscription, dates cochées, aucune autre
+       mission confirmée sur ces dates) ? La désinscription des e-mails ne retire pas sa réponse. */
+    async function toujoursCompatible(d, s, r) {
+      if (!r) return false;
+      const dispos = await disposPour([r.id], d.dates);
+      const missions = (await depot.demandes.confirmeesPour([r.id])).filter(m => m.remplacant_id === r.id);
+      return REG.compatible({ ...r, desinscrit: false }, d, s, dispos[r.id] || {}, missions).ok;
     }
 
     /* Envoie la demande aux remplaçants compatibles pas encore contactés (idempotent) */
@@ -202,14 +217,14 @@
       const s = await depot.structures.get(d.structure_id);
       if (s.attribution_auto) {
         const res = await choisir(d.id, p.remplacant_id, AGENT);
-        return { ok: true, etat: res.ok ? 'retenu' : 'interesse' };
+        return { ok: true, etat: res.ok ? 'retenu' : res.raison === 'non_disponible' ? 'expiree' : 'interesse' };
       }
       await signalerInteresses(d, s, p.remplacant_id);
       return { ok: true, etat: 'interesse' };
     }
 
-    /* E-mail à la structure : liste des remplaçants disponibles, chacun avec son bouton « Choisir » */
-    async function signalerInteresses(d, s, nouveauId) {
+    /* Remplaçants disponibles d'une demande, chacun avec son lien « Choisir » (favoris en tête) */
+    async function listeInteresses(d, s, nouveauId) {
       const props = (await depot.propositions.parDemande(d.id)).filter(x => x.etat === 'interesse');
       const favoris = new Set(await depot.favoris.parStructure(s.id));
       const interesses = [];
@@ -218,7 +233,11 @@
         const choix = await creerJeton({ action: 'choisir', demande_id: d.id, proposition_id: x.id, partie: 'structure', profil_id: null, expire_le: REG.debut(d).toISOString() });
         interesses.push({ ...RECAP.remplacant(r, r.profil), favori: favoris.has(r.id), nouveau: r.id === nouveauId, lien_choisir: lienJeton(choix) });
       }
-      interesses.sort((a, b) => Number(b.favori) - Number(a.favori));
+      return interesses.sort((a, b) => Number(b.favori) - Number(a.favori));
+    }
+    /* E-mail à la structure : liste des remplaçants disponibles, chacun avec son bouton « Choisir » */
+    async function signalerInteresses(d, s, nouveauId) {
+      const interesses = await listeInteresses(d, s, nouveauId);
       const nouveau = interesses.find(i => i.nouveau);
       await envoyerStructure(s, d, 'interesse', { demande: RECAP.demande(d, s), nouveau, interesses, nombre: interesses.length, lien_demande: lienEspace(`/demande/${d.id}`) });
     }
@@ -231,15 +250,33 @@
       const props = await depot.propositions.parDemande(d.id);
       const p = props.find(x => x.remplacant_id === remplacantId);
       if (!p || p.etat !== 'interesse') return { ok: false, raison: 'non_disponible' };
+      const s = await depot.structures.get(d.structure_id);
+      // avant toute attribution : toujours disponible à ces dates et sans autre mission confirmée qui chevauche
+      if (!(await toujoursCompatible(d, s, await depot.remplacants.get(remplacantId)))) {
+        await depot.propositions.maj(p.id, { etat: 'expiree' });
+        await depot.jetons.invalider({ proposition_id: p.id, quand: iso() });
+        await journal('choix_impossible', acteur, 'proposition', p.id, { demande_id: d.id, remplacant_id: remplacantId });
+        return { ok: false, raison: 'non_disponible' };
+      }
       const auto = acteur && acteur.role === 'agent';
       const d2 = await depot.demandes.maj(d.id, {
         etat: 'pourvue', remplacant_id: remplacantId, pourvue_le: iso(), attribution: auto ? 'auto' : 'manuelle',
         rappel_le: null, realisation_demandee_le: null, realisation_remplacant: null, realisation_structure: null,
       }, { siEtat: 'publiee' });
       if (!d2) return { ok: false, raison: 'pourvu' };                     // quelqu'un a été retenu entre-temps
+      // Deux structures retiennent le même remplaçant au même moment pour des dates qui se chevauchent :
+      // seule la première mission enregistrée (puis le plus petit identifiant) est gardée, l'autre revient en ligne.
+      const rang = m => `${m.pourvue_le || ''}|${m.id}`;
+      const rivales = (await depot.demandes.confirmeesPour([remplacantId])).filter(m => m.id !== d2.id && m.remplacant_id === remplacantId && REG.conflits(d2, [m]).length);
+      if (rivales.some(m => rang(m) < rang(d2))) {
+        await depot.demandes.maj(d.id, { etat: 'publiee', remplacant_id: null, pourvue_le: null, attribution: null }, { siEtat: 'pourvue' });
+        await depot.propositions.maj(p.id, { etat: 'expiree' });
+        await depot.jetons.invalider({ proposition_id: p.id, quand: iso() });
+        await journal('choix_impossible', acteur, 'proposition', p.id, { demande_id: d.id, remplacant_id: remplacantId, raison: 'mission_concurrente' });
+        return { ok: false, raison: 'non_disponible' };
+      }
       await depot.propositions.maj(p.id, { etat: 'retenu', choisi_le: iso() });
       await depot.jetons.invalider({ demande_id: d.id, actions: ['choisir', 'disponible', 'indisponible'], quand: iso() });
-      const s = await depot.structures.get(d.structure_id);
       for (const x of props.filter(y => y.id !== p.id)) {
         if (x.etat === 'interesse') {
           await depot.propositions.maj(x.id, { etat: 'pourvu_autre' });
@@ -248,8 +285,23 @@
         } else if (x.etat === 'envoyee') await depot.propositions.maj(x.id, { etat: 'expiree' });
       }
       await journal('choix', acteur, 'demande', d.id, { remplacant_id: remplacantId, attribution: auto ? 'auto' : 'manuelle' });
+      await fermerChevauchements(d2, remplacantId);
       await confirmer(d2, s, await depot.remplacants.get(remplacantId));
       return { ok: true };
+    }
+
+    /* Le remplaçant retenu n'apparaît plus « disponible » pour d'autres demandes en ligne aux mêmes dates */
+    async function fermerChevauchements(mission, remplacantId) {
+      const closes = [];
+      for (const x of await depot.propositions.parRemplacant(remplacantId)) {
+        if (x.demande_id === mission.id || !['envoyee', 'interesse'].includes(x.etat)) continue;
+        const autre = await depot.demandes.get(x.demande_id);
+        if (!autre || autre.etat !== 'publiee' || !REG.conflits(autre, [mission]).length) continue;
+        await depot.propositions.maj(x.id, { etat: 'expiree' });
+        await depot.jetons.invalider({ proposition_id: x.id, quand: iso() });
+        closes.push(x.id);
+      }
+      if (closes.length) await journal('propositions_closes', AGENT, 'demande', mission.id, { remplacant_id: remplacantId, propositions: closes });
     }
 
     /* Confirmations aux deux parties : récapitulatif, coordonnées, .ics, contrat, lien d'annulation */
@@ -278,9 +330,7 @@
       const motif = String(o.motif || '').slice(0, 500);
       await journal('annulation', acteur, 'demande', d.id, { partie, remplacant_id: d.remplacant_id, definitif, motif });
       const rc = RECAP.demande(d, s);
-      if (partie === 'remplacant') {
-        await envoyerStructure(s, d, 'annulation', { demande: rc, par: 'le remplaçant', remplacant: RECAP.remplacant(r, r.profil), motif, remise: true, pour_structure: true });
-      } else {
+      if (partie !== 'remplacant') {
         await envoyerRemplacant(r, 'annulation', { demande: rc, par: 'la structure', motif, remise: false, pour_structure: false }, { pieces_jointes: [pieceIcs(d, s, r, true)] });
       }
       if (definitif) {
@@ -291,18 +341,33 @@
       const d2 = await depot.demandes.maj(d.id, { etat: 'publiee', remplacant_id: null, publiee_le: iso(), relancee_le: null, remise_le: iso(), exclus }, { siEtat: 'pourvue' });
       if (!d2) return { ok: false, raison: 'deja_annule' };
       await journal('remise_en_ligne', AGENT, 'demande', d.id);
-      // les remplaçants déjà intéressés, ou restés sans réponse, reçoivent de nouveau la proposition
+      // Ceux qui s'étaient déclarés disponibles le restent (s'ils sont toujours compatibles et sans autre mission
+      // ces jours-là) : la structure peut choisir aussitôt, sans attribution automatique. Ceux restés sans
+      // réponse reçoivent de nouveau la proposition.
       const anciens = (await depot.propositions.parDemande(d.id)).filter(x => !exclus.includes(x.remplacant_id) && ['pourvu_autre', 'expiree'].includes(x.etat));
       const rs = [];
       for (const x of anciens) rs.push(await depot.remplacants.get(x.remplacant_id));
       const encore = new Set((await compatibles(d2, s, rs)).map(x => x.id));
+      const volontaires = [];
       for (const x of anciens) {
+        const rx = rs.find(y => y && y.id === x.remplacant_id);
+        if (x.reponse === 'disponible') {
+          if (!(await toujoursCompatible(d2, s, rx))) continue;
+          await depot.propositions.maj(x.id, { etat: 'interesse' });
+          volontaires.push(x.remplacant_id);
+          continue;
+        }
         if (!encore.has(x.remplacant_id)) continue;
         await depot.propositions.maj(x.id, { etat: 'envoyee', reponse: null, repondu_le: null, envoyee_le: iso() });
-        await envoyerProposition(d2, s, rs.find(y => y.id === x.remplacant_id), x, 'remise');
+        await envoyerProposition(d2, s, rx, x, 'remise');
+      }
+      if (volontaires.length) await journal('volontaires_conserves', AGENT, 'demande', d.id, { remplacants: volontaires });
+      if (partie === 'remplacant') {
+        const disponibles = volontaires.length ? await listeInteresses(d2, s, null) : [];
+        await envoyerStructure(s, d, 'annulation', { demande: rc, par: 'le remplaçant', remplacant: RECAP.remplacant(r, r.profil), motif, remise: true, pour_structure: true, disponibles, nombre_disponibles: disponibles.length, lien_demande: lienEspace(`/demande/${d.id}`) });
       }
       await selectionner(d.id);
-      return { ok: true, remise: true };
+      return { ok: true, remise: true, volontaires: volontaires.length };
     }
 
     /* La structure retire une demande (en recherche ou pourvue) */
@@ -414,10 +479,10 @@
       }
       const s = await depot.structures.get(id);
       if (!s) return null;
-      const dest = [{ email: s.email, nom: s.contact_nom || s.nom, structure_id: s.id }];
+      const dest = ajouterDestinataire([], { email: s.email, nom: s.contact_nom || s.nom, structure_id: s.id });
       for (const m of await depot.membres.parStructure(s.id)) {
         const p = await depot.profils.get(m.profil_id);
-        if (p && p.email && !dest.some(x => x.email.toLowerCase() === p.email.toLowerCase())) dest.push({ email: p.email, nom: `${p.prenom} ${p.nom}`, profil_id: p.id });
+        if (p) ajouterDestinataire(dest, { email: p.email, nom: `${p.prenom} ${p.nom}`, profil_id: p.id });
       }
       return { s, nom: s.nom, destinataires: dest };
     }

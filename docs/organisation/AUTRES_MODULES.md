@@ -3,11 +3,14 @@
 ## Radioanatomie (`radioanatomie/`, `espace-dicom*`, `dicom/`)
 - Réalisé : espace en ligne depuis le 17/10/2026 (IRM cérébrale IBC, genou, TDM thorax, radiographies thoraciques, cavum) ; Espace DICOM en développement (branche `feature/espace-dicom`).
 - À vérifier : relecture des structures posées à la main (genou 47, thorax 10, radios 32 points, cavum 13) ; IRM cérébrale complète étape 3 en attente de validation ; DICOM : VPS, sous-domaine, migration `20261014090000_espace_dicom.sql`, spectroscopie GE.
-- Prochaine tâche : validation de l'IRM cérébrale étape 3 par l'auteur.
+- Réalisé (29/10/2026) : charte de conception `CHARTE_RADIOANATOMIE.md` (moteurs `atlas-coupes`, `planche`, `visionneuse`, formats, validation, limites, feuille de route § 12).
+- À vérifier : relecture de la charte par l'auteur (palette commune, 3D, mode « trouver »).
+- Prochaine tâche : validation de l'IRM cérébrale étape 3 par l'auteur ; côté code, tâche 1 de la feuille de route (textes en dur d'`atlas-coupes.js`).
 
 ## Bibliothèque (`bibliotheque.html`, `bibliotheque/`, `bibliotheque-admin.html`)
 - Réalisé : annuaire d'articles libres (liens + résumé français), thèmes, recherche, filtres.
-- À vérifier : tags, niveaux, Essentiels d'exemple ; objectif 50 à 100 articles dont 10 Essentiels.
+- Réalisé (29/10/2026) : charte `CHARTE_BIBLIOTHEQUE.md` (classement spécialité → thème → article, références, accès/licences, résumés originaux, recherche, composants, validation, présent vs prévu). Aucun article ni code modifié.
+- À vérifier : tags, niveaux, Essentiels d'exemple ; objectif 50 à 100 articles dont 10 Essentiels ; relecture de la charte par l'auteur (§ 12 : licences acceptées, preprints, format des résumés, procédure de retrait).
 - Prochaine tâche : étapes 3 à 6 (file « À valider », veille hebdomadaire, liens croisés, liens morts).
 
 ## Masterclass / cours (`index.html`, `cours/`, `cours-admin.html`)

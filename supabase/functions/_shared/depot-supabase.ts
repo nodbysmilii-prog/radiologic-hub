@@ -63,6 +63,7 @@ export function creerDepotSupabase(db: SupabaseClient) {
     propositions: {
       get: (id: string) => get('rp_propositions', id),
       parDemande: async (id: string) => ok(await t('rp_propositions').select('*').eq('demande_id', id)),
+      parRemplacant: async (id: string) => ok(await t('rp_propositions').select('*').eq('remplacant_id', id)),
       ajouter: async (p: Record<string, unknown>) => ok(await t('rp_propositions').insert(p).select().single()),
       maj: maj('rp_propositions'),
     },

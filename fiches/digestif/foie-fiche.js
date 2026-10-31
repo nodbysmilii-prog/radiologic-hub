@@ -1,3 +1,4 @@
+/* © RadiologicHub — tous droits réservés. Reproduction, copie ou réutilisation interdites sans autorisation écrite de l'auteur. */
 /* =========================================================
    RadiologicHub — fiche « Masses hépatiques solides »
    ---------------------------------------------------------

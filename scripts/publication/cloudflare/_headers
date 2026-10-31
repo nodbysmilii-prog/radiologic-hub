@@ -1,0 +1,26 @@
+# RadiologicHub — en-têtes HTTP de Cloudflare Pages (copié à la racine de dist/ par
+# scripts/publication/construire.js). Syntaxe : https://developers.cloudflare.com/pages/configuration/headers/
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: frame-ancestors 'self'; base-uri 'self'; object-src 'none'
+  Permissions-Policy: camera=(), geolocation=(), payment=(), usb=(), microphone=(self), fullscreen=(self), clipboard-write=(self)
+  Strict-Transport-Security: max-age=15552000
+
+# Liens « réponse en un clic » des e-mails (jeton dans l'adresse) : jamais transmis à un autre site, jamais indexés
+/remplacements-reponse*
+  ! Referrer-Policy
+  Referrer-Policy: no-referrer
+  X-Robots-Tag: noindex
+
+# Pages d'administration et page d'erreur : jamais indexées
+/bibliotheque-admin*
+  X-Robots-Tag: noindex
+/404*
+  X-Robots-Tag: noindex
+
+# Adresse technique *.pages.dev : le site officiel reste https://radiologichub.com
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex

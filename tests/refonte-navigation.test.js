@@ -15,7 +15,7 @@ const pages = [];
 (function parcourir(d) {
   for (const f of fs.readdirSync(path.join(R, d), { withFileTypes: true })) {
     const rel = path.join(d, f.name);
-    if (f.isDirectory()) { if (!['node_modules', 'vendor', '.git', 'assets-sources', 'public'].includes(f.name)) parcourir(rel); }
+    if (f.isDirectory()) { if (!['node_modules', 'vendor', '.git', 'assets-sources', 'public', 'dist'].includes(f.name)) parcourir(rel); }
     else if (f.name.endsWith('.html') && lire(rel).includes('id="main-nav"')) pages.push(rel.replace(/\\/g, '/').replace(/^\.\//, ''));
   }
 })('.');
@@ -67,10 +67,10 @@ test('accueil : la plateforme au premier écran, masterclass dans leur partie, a
   assert.match(html, /<a href="cas\/index\.html" class="btn btn-outline">Explorer un cas clinique<\/a>/);
   for (const id of ['top', 'outils', 'cas-du-jour', 'fiche-flash', 'fiches', 'masterclass', 'format', 'programme', 'tarifs', 'faq', 'inscription'])
     assert.equal((html.match(new RegExp(`id="${id}"`, 'g')) || []).length, 1, `#${id}`);
-  // accès rapides : quatre rubriques de travail, puis le réseau signalé en démonstration
+  // accès rapides : quatre rubriques de travail, puis le réseau signalé « mise en service en cours » (Supabase branché, e-mails pas encore actifs)
   const acces = [...html.matchAll(/<a class="acces-carte" href="([^"]+)"/g)].map(m => m[1]);
   assert.deepEqual(acces, ['comptes-rendus.html', 'fiches-rapides.html', 'radioanatomie/index.html', 'bibliotheque.html', 'communaute.html', 'remplacements.html']);
-  assert.equal((html.match(/class="acces-statut">Démonstration/g) || []).length, 2);
+  assert.equal((html.match(/class="acces-statut">Mise en service en cours/g) || []).length, 2);
   // l'accès rapide précède les masterclass, qui gardent programme, tarifs et inscription
   const bloc = html.indexOf('id="bloc-masterclass"');
   assert.ok(html.indexOf('id="outils"') < bloc);

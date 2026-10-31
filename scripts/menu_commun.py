@@ -18,7 +18,7 @@ import os, re, sys
 
 RACINE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 V_NAVIGATION = '20261022235000'
-IGNORES = {'node_modules', 'vendor', '.git', 'assets-sources', 'public'}
+IGNORES = {'node_modules', 'vendor', '.git', 'assets-sources', 'public', 'dist'}  # dist : copie publiée (npm run publication)
 
 # (clé, adresse depuis la racine, intitulé)
 RUBRIQUES = [
