@@ -71,7 +71,7 @@
   }
   async function essayer(f, succes) {
     try { const r = await f(); if (succes) toast(typeof succes === 'function' ? succes(r) : succes); return r; }
-    catch (e) { toast(e.message || 'Une erreur est survenue.', 'ko'); return null; }
+    catch (e) { toast(C ? C.messageErreur(e) : (e.message || 'Une erreur est survenue.'), 'ko'); return null; }
   }
 
   /* Messagerie de la Communauté (même compte) : disponible en production seulement */
@@ -872,12 +872,13 @@
       return;
     }
     const b = e.target.closest('[data-act]');
-    if (b && ACTIONS[b.dataset.act]) { e.preventDefault(); ACTIONS[b.dataset.act](b, e); }
+    if (b && ACTIONS[b.dataset.act]) { e.preventDefault(); if (C && b.tagName === 'BUTTON') C.verrouiller(b, () => ACTIONS[b.dataset.act](b, e)); else ACTIONS[b.dataset.act](b, e); }
   });
   document.addEventListener('click', e => { const b = e.target.closest('#rp-barre [data-act]'); if (b && ACTIONS[b.dataset.act]) ACTIONS[b.dataset.act](b, e); });
   app.addEventListener('submit', e => {
     const f = e.target.closest('[data-form]');
-    if (f && FORMULAIRES[f.dataset.form]) { e.preventDefault(); FORMULAIRES[f.dataset.form](f); }
+    // Un seul envoi à la fois (double clic, touche Entrée répétée) : formulaire verrouillé pendant l'opération.
+    if (f && FORMULAIRES[f.dataset.form]) { e.preventDefault(); if (C) C.verrouiller(f, () => FORMULAIRES[f.dataset.form](f)); else FORMULAIRES[f.dataset.form](f); }
   });
   app.addEventListener('input', e => { const f = e.target.closest('[data-form="demande"]'); if (f) majBrouillon(f); });
   app.addEventListener('change', async e => {

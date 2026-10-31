@@ -16,7 +16,9 @@
    4. session expirée (jeton de rafraîchissement refusé) : retour au mode
       visiteur avec le message « session expirée », à l'ouverture comme
       en cours d'utilisation ;
-   5. déconnexion : session effacée, aucun message d'expiration.
+   5. déconnexion : session effacée, aucun message d'expiration ;
+   6. envoi du lien en échec (perte de connexion, trop de demandes) : message
+      en français ; triple envoi rapide du formulaire → un seul lien demandé.
    Lancer : npm run test:connexion
    Option : RH_SUPABASE_JS=<chemin de supabase.js UMD 2.45.4> (sinon node_modules).
    ========================================================= */
@@ -78,7 +80,7 @@ const APPAREILS = {
   telephone: { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true },
 };
 let appareil = 'ordinateur';
-async function contexte(b, { connecte = false, expiresAt = 4102444800, rafraichissementRefuse = false } = {}) {
+async function contexte(b, { connecte = false, expiresAt = 4102444800, rafraichissementRefuse = false, otp = null } = {}) {
   const ctx = await b.newContext(APPAREILS[appareil]);
   const journal = [];
   await ctx.route(/cdn\.jsdelivr\.net\/npm\/@supabase\/supabase-js@[\d.]+\/dist\/umd\/supabase\.min\.js/, r => r.fulfill({ path: JS, contentType: 'text/javascript' }));
@@ -91,7 +93,12 @@ async function contexte(b, { connecte = false, expiresAt = 4102444800, rafraichi
     if (m === 'OPTIONS') return r.fulfill({ status: 204, headers: { 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': '*' } });
     journal.push({ m, chemin: u.pathname, requete: u.search, corps: req.postData() || '' });
     if (u.pathname === '/auth/v1/authorize') return r.fulfill({ status: 200, contentType: 'text/html', body: '<p>Google (simulé)</p>' });
-    if (u.pathname === '/auth/v1/otp') return json(r, {});
+    if (u.pathname === '/auth/v1/otp') {
+      if (otp === 'reseau') return r.abort('internetdisconnected');
+      if (otp === 429) return json(r, { code: 429, error_code: 'over_email_send_rate_limit', msg: 'email rate limit exceeded' }, 429);
+      if (otp === 'lent') await attendre(1500);
+      return json(r, {});
+    }
     if (u.pathname === '/auth/v1/logout') { enLigne = false; return r.fulfill({ status: 204, headers: { 'access-control-allow-origin': '*' } }); }
     if (u.pathname === '/auth/v1/token') {
       if (rafraichissementRefuse) return json(r, { error: 'invalid_grant', error_description: 'Invalid Refresh Token: Refresh Token Not Found' }, 400);
@@ -214,6 +221,31 @@ const texte = p => p.evaluate(() => document.body.innerText);
         await p.waitForFunction(() => /session a expiré/.test(document.body.innerText), null, { timeout: 45000 }).catch(() => {});
         const t = await texte(p);
         ok(`${nom} : session perdue en cours d'utilisation, message « session expirée » et mode visiteur`, connecteAvant && /session a expiré/.test(t) && await M.visiteur(p), `connecté avant : ${connecteAvant} ; ${t.slice(0, 200)}`);
+        await ctx.close();
+      }
+
+      /* 6. Erreurs d'envoi du lien et double soumission */
+      for (const [cas, attendu] of [['reseau', /Connexion impossible/], [429, /Trop de demandes|patientez/]]) {
+        const { ctx, p } = await contexte(b, { otp: cas });
+        await p.goto(`${srv.base}/${M.page}`); await pret(p);
+        if (M.versConnexion) { await p.evaluate(h => { location.hash = h; }, M.versConnexion); await attendre(500); }
+        await p.waitForSelector(`${M.formulaire} input`, { timeout: 15000 }).catch(() => {});
+        await p.fill(`${M.formulaire} input[type="email"], ${M.formulaire} input[name="email"]`, 'compte.fictif@exemple.invalid');
+        await p.click(`${M.formulaire} button[type="submit"]`); await attendre(1200);
+        const t = await texte(p);
+        ok(`${nom} : envoi du lien en échec (${cas === 'reseau' ? 'perte de connexion' : 'trop de demandes'}), message compréhensible en français`, attendu.test(t) && !/Failed to fetch|rate limit/i.test(t), t.slice(0, 200));
+        await ctx.close();
+      }
+      {
+        const { ctx, p, journal } = await contexte(b, { otp: 'lent' });
+        await p.goto(`${srv.base}/${M.page}`); await pret(p);
+        if (M.versConnexion) { await p.evaluate(h => { location.hash = h; }, M.versConnexion); await attendre(500); }
+        await p.waitForSelector(`${M.formulaire} input`, { timeout: 15000 }).catch(() => {});
+        await p.fill(`${M.formulaire} input[type="email"], ${M.formulaire} input[name="email"]`, 'compte.fictif@exemple.invalid');
+        await p.evaluate(sel => { const f = document.querySelector(sel); f.requestSubmit(); f.requestSubmit(); f.requestSubmit(); }, M.formulaire);
+        await attendre(2500);
+        const n = journal.filter(j => j.chemin === '/auth/v1/otp').length;
+        ok(`${nom} : triple envoi rapide du formulaire → un seul lien demandé`, n === 1, `${n} demandes`);
         await ctx.close();
       }
 

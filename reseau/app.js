@@ -37,7 +37,7 @@
   const erreurs = l => (l.length ? `<ul class="rs-erreurs" role="alert">${l.map(e => `<li>${esc(e)}</li>`).join('')}</ul>` : '');
   async function essayer(f, succes) {
     try { const r = await f(); if (succes) toast(typeof succes === 'function' ? succes(r) : succes); return r; }
-    catch (e) { console.error(e); toast(e.message || 'Une erreur est survenue.', 'ko'); return undefined; }
+    catch (e) { console.error(e); toast(CX ? CX.messageErreur(e) : (e.message || 'Une erreur est survenue.'), 'ko'); return undefined; }
   }
 
   /* =======================================================
@@ -823,9 +823,10 @@
     const menu = document.querySelector('.rs-compte[open]');
     if (menu && (!menu.contains(e.target) || e.target.closest('.rs-compte-item'))) menu.open = false;
     const b = e.target.closest('[data-act]');
-    if (b && ACTIONS[b.dataset.act] && (app.contains(b) || nav.contains(b) || barre.contains(b))) { if (b.tagName !== 'A' || b.dataset.act !== 'retour') e.preventDefault(); ACTIONS[b.dataset.act](b, e); }
+    if (b && ACTIONS[b.dataset.act] && (app.contains(b) || nav.contains(b) || barre.contains(b))) { if (b.tagName !== 'A' || b.dataset.act !== 'retour') e.preventDefault(); if (CX && b.tagName === 'BUTTON') CX.verrouiller(b, () => ACTIONS[b.dataset.act](b, e)); else ACTIONS[b.dataset.act](b, e); }
   });
-  app.addEventListener('submit', e => { const f = e.target.closest('[data-form]'); if (f && FORMULAIRES[f.dataset.form]) { e.preventDefault(); FORMULAIRES[f.dataset.form](f); } });
+  // Un seul envoi à la fois (double clic, touche Entrée répétée) : formulaire verrouillé pendant l'opération.
+  app.addEventListener('submit', e => { const f = e.target.closest('[data-form]'); if (f && FORMULAIRES[f.dataset.form]) { e.preventDefault(); if (CX) CX.verrouiller(f, () => FORMULAIRES[f.dataset.form](f)); else FORMULAIRES[f.dataset.form](f); } });
   app.addEventListener('input', e => {
     const f = e.target.closest('[data-form="publier"]');
     if (f) majBrouillon(f);
