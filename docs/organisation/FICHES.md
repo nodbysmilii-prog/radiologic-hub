@@ -15,7 +15,7 @@ Fichiers : `fiches-rapides.html`, `fiches/` (~34 entrées), `cas/`, `fiche.css`,
 - Cas bilingues (hernie d'Amyand) et « Le menton qui s'endort ».
 - **Masses hépatiques** : tableau LI-RADS à confirmer (version de référence ; HRPA périphérique non prévu) ; **schéma de Bismuth et Corlette** à valider anatomiquement (dessin schématique, pas l'image du PDF) ; cas et cartes reformulés à relire ; PDF source rangé dans le dépôt privé (`sources/masses-hepatiques/`).
 
-- **LI-RADS** : tableau corrigé le 31/10/2026 (ACR CT/MRI v2018) ; croissance seuil = augmentation de taille ≥ 50 % en ≤ 6 mois ; fiche, calculateur et éditeur concordent (tests exhaustifs). Critères accessoires de l'éditeur et phrase « diagnostic non invasif de CHC » vérifiés : aucune erreur confirmée, rien modifié.
+- **LI-RADS** : fiche, calculateur et éditeur concordent (ACR v2018, tests exhaustifs) ; croissance seuil = ≥ 50 % en ≤ 6 mois ; le 31/10/2026 : un LR-5 n'est plus déclassé par les critères accessoires (éditeur) et la phrase du diagnostic non invasif de CHC est reformulée (fiche).
 - **SEO** : auteur affiché « Radiologic Hub » provisoirement (identification à définir) ; 3 références conservées comme lectures complémentaires (année en évidence) ; Google Search Console à créer.
 
 ## Prochaine tâche importante

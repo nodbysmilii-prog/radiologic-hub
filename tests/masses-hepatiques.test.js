@@ -86,6 +86,23 @@ test('LI-RADS : le tableau affiché dans la fiche est identique aux règles', ()
   assert.doesNotMatch(HTML, /LR-4 à LR-5|sinon LR-4/);
 });
 
+test('LI-RADS : diagnostic non invasif de CHC = LR-5, formulation cohérente avec le tableau', () => {
+  const L = (t, c) => R.lirads(t, true, c).categorie;
+  // 10-19 mm : wash-out ou croissance seuil → LR-5 ; la capsule seule → LR-4
+  assert.equal(L(10, ['washout']), 'LR-5'); assert.equal(L(19, ['croissance']), 'LR-5'); assert.equal(L(15, ['capsule']), 'LR-4');
+  // ≥ 20 mm : au moins un autre critère majeur → LR-5 ; HRPA seule → LR-4
+  for (const c of ['capsule', 'washout', 'croissance']) assert.equal(L(20, [c]), 'LR-5');
+  assert.equal(L(20, []), 'LR-4');
+  // < 10 mm : jamais LR-5 ; sans HRPA : jamais LR-5
+  assert.ok(['LR-3', 'LR-4'].includes(L(9, ['capsule', 'washout', 'croissance'])));
+  assert.equal(R.lirads(40, false, ['capsule', 'washout', 'croissance']).categorie, 'LR-4');
+  // la phrase de la fiche énonce ces conditions, plus l'ancienne formule imprécise
+  assert.match(HTML, /Diagnostic non invasif de CHC = LR-5<\/mark> \(contexte à risque validé, lésion ≥ 10 mm avec HRPA non périphérique\)/);
+  assert.match(HTML, /de 10 à 19 mm, <mark class="k-sign">wash-out non périphérique ou croissance seuil<\/mark> \(la capsule seule donne LR-4\)/);
+  assert.match(HTML, /à partir de 20 mm, <mark class="k-sign">au moins un autre critère majeur<\/mark>/);
+  assert.doesNotMatch(HTML, /lésion &gt; 1 cm \+ hypervascularisation/);
+});
+
 test('LI-RADS : conditions d\'application et critères de croissance seuil', () => {
   assert.equal(R.CONDITIONS, 'S\'applique aux patients cirrhotiques ou à risque de CHC, en TDM/IRM injectée ; ne s\'applique pas au foie sain.');
   assert.ok(HTML.includes(R.CONDITIONS.replace(' ; ne s\'applique pas au foie sain.', '')), 'la fiche rappelle la population concernée');

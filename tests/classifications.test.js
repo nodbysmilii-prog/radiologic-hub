@@ -54,7 +54,7 @@ test('LI-RADS v2018 : tableau des critères majeurs', () => {
   assert.equal(L('oui', 15), 'LR-3'); assert.equal(L('oui', 15, { capsule: true }), 'LR-4'); assert.equal(L('oui', 15, { washout: true }), 'LR-5'); assert.equal(L('oui', 15, { croissance: true }), 'LR-5');
   assert.equal(L('oui', 25), 'LR-4'); assert.equal(L('oui', 25, { capsule: true }), 'LR-5');
   assert.equal(L('oui', 15, { capsule: true, accessoire: 'plus' }), 'LR-4', 'les critères accessoires ne font pas passer en LR-5');
-  assert.equal(L('oui', 25, { washout: true, accessoire: 'moins' }), 'LR-4');
+  assert.equal(L('oui', 25, { washout: true, accessoire: 'moins' }), 'LR-5', 'un LR-5 n\'est pas déclassé');
   assert.equal(run('lirads', { directe: 'M' }).badge, 'LR-M');
 });
 
@@ -106,6 +106,17 @@ test('LI-RADS v2018 (éditeur) : règles de l\'auteur, croissance seuil, bornes,
   assert.equal(run('lirads', { aphe: 'oui' }).texte, '');
   // catégories directes
   for (const [d, badge] of [['NC', 'LR-NC'], ['1', 'LR-1'], ['2', 'LR-2'], ['3', 'LR-3'], ['4', 'LR-4'], ['5', 'LR-5'], ['M', 'LR-M'], ['TIV', 'LR-TIV']]) assert.equal(run('lirads', { directe: d }).badge, badge);
+  // critères accessoires : un LR-5 n'est jamais déclassé ; LR-4 → LR-3 et LR-3 → LR-2 restent possibles
+  for (const t of LR_TAILLES['hrpa 10-19'].concat(LR_TAILLES['hrpa >=20'])) {
+    for (const cle of ['W', 'G', 'CW', 'CG', 'WG', 'CWG']) {
+      const st = { aphe: 'oui', taille: String(t), capsule: cle.includes('C'), washout: cle.includes('W'), croissance: cle.includes('G') };
+      assert.equal(run('lirads', { ...st, accessoire: 'moins' }).badge, 'LR-5', `LR-5 conservé : ${t} mm, ${cle}`);
+      assert.equal(run('lirads', { ...st, accessoire: 'plus' }).badge, 'LR-5');
+    }
+  }
+  assert.equal(L('oui', 25, { accessoire: 'moins' }), 'LR-3');            // LR-4 → LR-3
+  assert.equal(L('oui', 15, { accessoire: 'moins' }), 'LR-2');            // LR-3 → LR-2
+  assert.equal(L('oui', 25, { accessoire: 'plus' }), 'LR-4');             // pas de passage en LR-5
   // les critères accessoires : jamais de passage en LR-5 par « en faveur de la malignité »
   assert.equal(L('oui', 15, { capsule: true, accessoire: 'plus' }), 'LR-4');
   assert.equal(L('non', 15, { accessoire: 'plus' }), 'LR-4');
@@ -115,6 +126,7 @@ test('LI-RADS v2018 (éditeur) : conditions d\'application affichées', () => {
   const d = D.lirads;
   assert.match(d.aide, /Patient à risque de CHC uniquement/);
   assert.match(d.aide, /\(wash-out non périphérique, capsule rehaussée, croissance seuil\)/);
+  assert.match(d.aide, /sans déclasser un LR-5/);
   assert.match(d.titre, /v2018/);
   // l'éditeur ne propose cet outil que pour un contexte de foie à risque (cirrhose, CHC)
   assert.ok(d.suggere.test('cirrhose') && d.suggere.test('chc') && d.suggere.test('lirads'));
