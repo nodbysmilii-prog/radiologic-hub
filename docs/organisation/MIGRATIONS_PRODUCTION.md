@@ -1,11 +1,12 @@
 # Migrations absentes de la production — procédure (préparée le 31/10/2026, NON appliquée)
 
-État réel (diagnostic du 31/10/2026) : appliquées `remplacements`, `reseau`, `droits_explicites`, `bibliotheque`, `cours` + sécurisation v2. **Absentes** : `communaute_fil`, `planification_vault`, `abonnements`, `espace_dicom`.
+État réel (diagnostic du 31/10/2026) : appliquées `remplacements`, `reseau`, `droits_explicites`, `bibliotheque`, `cours` + sécurisation v2. **Absentes** : `search_path_profil` (correctif ajouté le 31/10, lot Authentification), `communaute_fil`, `planification_vault`, `abonnements`, `espace_dicom`.
 
 Vérifié par `tests/sql/migrations-production.js` (dans `npm run test:sql`) sur une base qui reproduit la production (5 migrations, droits par défaut de Supabase y compris pour les futures fonctions, pg_net à `supabase_admin`, sécurisation v2) : chaque migration s'applique, est reconnue par le diagnostic, **n'ouvre aucune fonction à anon**, garde les droits des membres et du serveur, reste compatible avec la sécurisation v2 (relançable), se réapplique sans effet, et son retour arrière rend l'état exact.
 
 | Ordre | Migration (fichier à coller dans *SQL Editor*) | Utilité | Prérequis / coordination | Retour arrière |
 |---|---|---|---|---|
+| 0 | `supabase/migrations/20261031130000_search_path_profil.sql` | Correctif de l'alerte `function_search_path_mutable` : `rp_proteger_profil` avec `search_path = ''` (recommandation Supabase), sans changement de comportement | Aucun (une ligne) ; lot 1 « Authentification » | `supabase/sql/retour/20261031130000_search_path_profil.sql` |
 | 1 | `supabase/migrations/20261027120000_communaute_fil.sql` | Annonces de remplacement dans le fil, « Demander un avis » (aujourd'hui en erreur pour un membre) | Aucun ; contrainte compatible avec les cas existants (déjà 1 à 10 images) | `supabase/sql/retour/20261027120000_communaute_fil.sql` (refusé si des demandes d'avis existent) |
 | 2 | `supabase/migrations/20261029120000_planification_vault.sql` | Mot de passe de `rp-taches` dans le Vault | **Coordonnée** : migration → redéploiement des fonctions (workflow, confirmation `DEPLOYER`) → `supabase/sql/planification.sql` (Cron) → contrôle → suppression de `RP_TACHES_SECRET` après 24-48 h | `supabase/sql/retour/20261029120000_planification_vault.sql` (refusé si la tâche Cron existe) |
 | 3 | `supabase/migrations/20261030090000_abonnements.sql` | Abonnements, contenus réservés, stockage privé `premium` | Seulement quand la protection premium sera branchée | `supabase/sql/retour/20261030090000_abonnements.sql` (refusé si un abonnement existe) |
