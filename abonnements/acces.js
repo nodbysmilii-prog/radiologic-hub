@@ -4,7 +4,9 @@
    Pas encore branché sur une page. Toute la vérification est faite par la
    base (ab_lire_contenu, droits par ligne, stockage privé « premium ») :
    ce fichier ne fait que demander et afficher une erreur claire.
-   • estAbonne()      → true / false (false si non connecté) ;
+   • estAbonne()      → true / false (false si non connecté), null si le
+                        service ne répond pas (afficher « indisponible »,
+                        jamais « réservé aux abonnés » à un abonné) ;
    • lire(id)         → { id, module, titre, contenu, version }, gardé en
                         mémoire de la page seulement (rien dans le navigateur
                         après fermeture) ;
@@ -18,7 +20,7 @@
   else racine.RHPremium = fabrique();
 }(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
-  const CODES = { '28000': 'connexion', '42501': 'abonnement', '54000': 'limite' };
+  const CODES = { '28000': 'connexion', '42501': 'abonnement', '54000': 'limite', P0002: 'introuvable' };
   const MESSAGES = {
     connexion: 'Connectez-vous pour accéder à ce contenu.',
     abonnement: 'Ce contenu est réservé aux abonnés.',
@@ -35,7 +37,7 @@
     return {
       async estAbonne() {
         if (!(await session())) return false;
-        try { const { data, error } = await sb.rpc('ab_est_abonne'); return !error && data === true; } catch (e) { return false; }
+        try { const { data, error } = await sb.rpc('ab_est_abonne'); return error ? null : data === true; } catch (e) { return null; }
       },
       async lire(id) {
         if (memoire.has(id)) return memoire.get(id);

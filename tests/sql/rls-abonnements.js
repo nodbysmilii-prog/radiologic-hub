@@ -47,7 +47,9 @@ try {
 
   verifier('contenus réservés : abonné en cours et administrateur seulement', () => {
     valeur(ADM, `insert into ab_contenus (id, module, titre, contenu) values ('cr-exemple', 'comptes-rendus', 'Modèle réservé', '{"texte": "fictif"}')`);
-    assert.equal(valeur(ABO, 'select count(*) from ab_contenus'), '1');
+    // après 20261031120000_abonnements_acces (porte unique) : l'abonné lit par ab_lire_contenu, plus la table
+    assert.equal(valeur(ABO, 'select count(*) from ab_contenus'), '0');
+    assert.equal(valeur(ABO, "select count(*) from ab_lire_contenu('cr-exemple')"), '1');
     assert.equal(valeur(ADM, 'select count(*) from ab_contenus'), '1');
     assert.equal(valeur(U, 'select count(*) from ab_contenus'), '0');
     assert.equal(valeur(EXP, 'select count(*) from ab_contenus'), '0');

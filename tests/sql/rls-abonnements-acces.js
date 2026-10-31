@@ -46,6 +46,19 @@ try {
     assert.match(lire(ABO).erreur || '', /trop de lectures/);
     assert.equal(lire(ADM).sortie, 'Modèle fictif:1');
   });
+  verifier('porte unique : un abonné ne lit plus la table directement (pas d\'extraction en bloc hors plafond ni journal)', () => {
+    assert.equal(valeur(ABO, 'select count(*) from ab_contenus'), '0');
+    assert.equal(valeur(ADM, 'select count(*) from ab_contenus'), '1');
+    assert.equal(valeur(U, 'select count(*) from ab_contenus'), '0');
+  });
+  verifier('identifiant invalide : « introuvable », rien de journalisé', () => {
+    const avant = admin('select count(*) from ab_journal');
+    for (const id of ["'../../etc'", "repeat('a', 81)", "''"]) assert.match(comme(ABO, `select * from ab_lire_contenu(${id})`).erreur || '', /contenu introuvable/, id);
+    assert.equal(admin('select count(*) from ab_journal'), avant);
+  });
+  verifier('séquence du journal fermée aux visiteurs et aux membres', () => {
+    assert.equal(admin("select has_sequence_privilege('anon', 'public.ab_journal_id_seq', 'USAGE') or has_sequence_privilege('authenticated', 'public.ab_journal_id_seq', 'USAGE')"), 'f');
+  });
   verifier('version incrémentée à chaque modification du contenu', () => {
     admin(`update ab_contenus set contenu = '{"texte": "fictif v2"}' where id = 'cr-fictif'`);
     assert.equal(admin("select version from ab_contenus where id = 'cr-fictif'"), '2');

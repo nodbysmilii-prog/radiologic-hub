@@ -46,6 +46,13 @@ test('abonné : contenu servi une fois puis gardé en mémoire de page ; oublier
   assert.equal(sb.appels.filter(a => a === 'ab_lire_contenu').length, 2);
 });
 
+test('service indisponible : estAbonne() rend null (« inconnu »), jamais « non abonné »', async () => {
+  assert.equal(await P.creer(faux({ rpc: { ab_est_abonne: new Error('réseau') } })).estAbonne(), null);
+  assert.equal(await P.creer(faux({ rpc: { ab_est_abonne: { data: null, error: { message: 'Service Unavailable' } } } })).estAbonne(), null);
+  assert.equal(await P.creer(faux({ rpc: { ab_est_abonne: { data: false, error: null } } })).estAbonne(), false);
+  await assert.rejects(P.creer(faux({ rpc: { ab_lire_contenu: { data: null, error: { code: 'P0002', message: 'contenu introuvable' } } } })).lire('../x'), e => e.code === 'introuvable');
+});
+
 test('fichiers : URL signée de 5 minutes du stockage « premium » ; refus traduit', async () => {
   const sb = faux();
   assert.equal(await P.creer(sb).urlFichier('atlas/a.jpg'), 'https://exemple/signee');

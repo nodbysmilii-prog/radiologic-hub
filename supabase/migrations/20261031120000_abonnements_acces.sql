@@ -11,6 +11,10 @@
 --   patient), lisible par l'administrateur seulement ;
 -- • version de chaque contenu (incrémentée à chaque modification).
 -- Le contrôle est fait par la base : un bouton masqué ne protège rien.
+-- • PORTE UNIQUE : la lecture directe de ab_contenus par les abonnés est
+--   retirée (sinon « select * from ab_contenus » contournerait le plafond
+--   et le journal en extrayant tout d'un coup) ; seul l'administrateur lit
+--   la table, les abonnés passent par ab_lire_contenu.
 -- =====================================================================
 
 alter table public.ab_contenus add column if not exists version integer not null default 1;
@@ -32,6 +36,9 @@ create table if not exists public.ab_journal (
   lu_le timestamptz not null default now()
 );
 create index if not exists ab_journal_membre_date on public.ab_journal (membre_id, lu_le desc);
+
+-- Porte unique : plus de lecture directe de la table par les abonnés (règle ab_contenus_admin conservée).
+drop policy if exists ab_contenus_abonnes on public.ab_contenus;
 alter table public.ab_journal enable row level security;
 drop policy if exists ab_journal_admin on public.ab_journal;
 create policy ab_journal_admin on public.ab_journal for select to authenticated using (rp_est_admin());
@@ -43,6 +50,8 @@ language plpgsql security definer set search_path = public as $$
 declare moi uuid := auth.uid(); admin boolean := rp_est_admin();
 begin
   if moi is null then raise exception 'connexion requise' using errcode = '28000'; end if;
+  -- identifiant de la forme des contenus (ab_contenus.id) : rien d'autre n'est journalisé
+  if identifiant is null or identifiant !~ '^[a-z0-9-]{1,80}$' then raise exception 'contenu introuvable' using errcode = 'P0002'; end if;
   if not admin and not ab_est_abonne() then raise exception 'abonnement requis' using errcode = '42501'; end if;
   if not admin and (select count(*) from ab_journal j where j.membre_id = moi and j.lu_le > now() - interval '1 hour') >= 120 then
     raise exception 'trop de lectures, réessayez plus tard' using errcode = '54000';
@@ -53,6 +62,8 @@ end $$;
 
 -- ---------- Droits explicites (exposition automatique désactivée) ----------
 revoke all on public.ab_journal from anon, authenticated;
+-- Séquence de l'identifiant (colonne identity) : les droits par défaut de Supabase l'ouvriraient aux visiteurs.
+revoke all on sequence public.ab_journal_id_seq from public, anon, authenticated;
 grant select on public.ab_journal to authenticated;          -- filtré : administrateur seulement
 grant all on public.ab_journal to service_role;
 revoke execute on function public.ab_lire_contenu(text) from public, anon;
