@@ -71,6 +71,35 @@ Tous sont câblés par `fiche.js` **par classe ou attribut `data-*`** : on réut
 19. **Tableau de seuils + note de contexte** (`table.ftable`, colonnes Mesure / Normale / Seuil, seuil en `mark.k-key`) suivi d'une note `.p-note` qui donne la source et le contexte d'application (ex. seuils AAOS, patient < 65 ans). Toute valeur seuil porte sa source.
 20. **Numérotation des sections** : sections numérotées en chiffres romains pour les parties du raisonnement, `·` pour les rappels ajoutés (introduction, physiopathologie, 3D de rappel), `?` pour « Testez-vous » (occlusion, ischémie, poignet).
 
+## 3 bis. Anatomie 3D : conserver et réutiliser l'existant
+
+Règle permanente pour toute fiche rapide qui intègre de l'anatomie 3D.
+
+**Inventaire à consulter avant tout travail** (Three.js 0.170.0 figé dans `vendor/three-0.170.0/`, modèles `.glb` + `.json` dans `public/models/<sujet>/` avec leur `LICENSE`, exports reproductibles par `scripts/export_*.py` depuis `assets-sources/`) :
+
+| Sujet | Modèle | Visionneuse (module ES) | Utilisé par |
+|---|---|---|---|
+| Côlon (segments, paroi en couches) | `public/models/colon/` | `fiches/digestif/colon-3d.js` (`creerCadre`, `creerParoi`) | Colites |
+| Main et poignet | `public/models/main/` | `fiches/poignet/poignet-3d.js` | Radius distal |
+| Médiastin (Heitzman / Felson) | `public/models/mediastin/` | `fiches/mediastin/mediastin-3d.js` | Masses médiastinales |
+| Pancréas | `public/models/pancreas/` | `fiches/pancreas/pancreas-3d.js` | Pancréatite aiguë |
+| Rocher | `public/models/rocher/` | `fiches/cholesteatome/rocher-3d.js` | Cholestéatome |
+| Base du crâne, cavum | `public/models/cavum/` | `fiches/cavum/cavum-3d.js` | Cancer du cavum |
+| Coude, patte d'oie (muscles, tendons, nerfs) | `public/models/coude/`, `public/models/patte-oie/` | `cours/visionneuse.js` (générique, réglages par groupe) via `cours/coude-3d.js`, `cas/patte-oie-3d.js` | Cours d'échoanatomie, cas clinique |
+
+Cette liste est un point de départ : vérifier `public/models/`, `scripts/` et le README pour les ajouts récents.
+
+**Règles**
+
+1. **Réutiliser avant de créer.** Avant tout nouveau modèle, vérifier dans l'inventaire ci-dessus si le sujet (ou une région qui le contient) existe déjà : un modèle existant peut souvent être **réutilisé tel quel**, avec ses structures nommées dans son `.json`, ou une nouvelle vue/un nouveau réglage au sein de la même visionneuse. Pour les muscles, tendons, nerfs, vaisseaux d'un membre, partir de `cours/visionneuse.js` (réglages par groupe), pas d'une nouvelle visionneuse.
+2. **Ne jamais remplacer un modèle anatomique existant et validé sans l'accord de l'auteur.** Toute modification d'un `.glb`/`.json` existant, de ses couleurs de familles, de ses segments ou de son repère passe par une demande explicite. Une amélioration se propose à côté (nouveau fichier ou option) ; elle ne remplace pas.
+3. **Interactions attendues, dans l'esprit des visionneuses existantes** quand elles apportent une réelle valeur pédagogique : rotation, zoom et déplacement (OrbitControls) ; structures **sélectionnables** (clic sur le modèle, sur son étiquette ou dans une liste), les autres s'estompent ; survol = nom ; **légendes** en français ; groupes de structures colorés par famille et affichables ou non ; transparence réglable d'une structure qui cache les autres ; **mode pédagogique** (ce qu'il faut regarder, parcours, atteinte qui allume ses segments, plan de coupe type « sonde » ou volumes translucides) ; repère et orientation indiqués (`+Y haut, +Z avant du patient…` en tête du module). Ne pas empiler d'options : celles qui n'aident pas la compréhension de la fiche ne sont pas ajoutées.
+4. **Même mécanique de chargement** : module ES chargé à l'arrivée à l'écran sur ordinateur, au clic sur « Voir en 3D » sur téléphone ; message d'attente `.c3d-attente`, rendu à la demande, mise en page `c3d-*` / `r3d-*` (`fiche.css`, `schemas/<fiche>.css`), `prefers-reduced-motion` respecté, texte d'accessibilité. Boutons « voir en 3D » dans le texte pilotant la visionneuse.
+5. **Fidélité anatomique.** Privilégier un modèle anatomique réel (Z-Anatomy, CC BY-SA 4.0, dérivé de BodyParts3D, ou modèle équivalent sous licence compatible) plutôt qu'un dessin approximatif. Ce qui est **schématique** (ex. volumes des espaces profonds du cavum, paroi colique, enveloppes de compartiments) est **annoncé comme tel** dans la fiche (« proportions schématiques ») ; ce qui n'est pas modélisé est signalé (ex. rectum absent du pack colique).
+6. **Signaler l'exactitude à vérifier.** Pour tout élément dont l'exactitude anatomique n'est pas certaine (nommage d'une structure, limite d'un segment, couleur-famille, côté droit/gauche, ancre d'étiquette, découpage de compartiments), l'écrire dans « À vérifier » de `docs/organisation/FICHES.md` et le dire à l'auteur dans le compte rendu de la tâche. Ne pas trancher seul, ne pas corriger en silence.
+7. **Le texte médical qui accompagne la 3D** (rapports, ce qu'il faut regarder) vient de l'auteur et reste dans `regles/` / la fiche, avec son test ; la visionneuse ne fait qu'afficher.
+8. **Licences et fichiers lourds** : les packs tiers restent dans `assets-sources/` (ignoré par git, retéléchargés par script à version figée) ; seuls les exports dérivés vont dans `public/models/<sujet>/` avec leur `LICENSE`. Crédit « © Z-Anatomy · CC BY-SA » visible dans la visionneuse (`.c3d-attrib`) et dans la source de la fiche. Un nouvel export a son script `scripts/export_<sujet>.py`.
+
 ## 4. Architecture du code d'une fiche
 
 Séparer **règles**, **présentation** et **câblage** :
@@ -100,6 +129,7 @@ Séparer **règles**, **présentation** et **câblage** :
 
 ## 7. Avant de livrer une fiche (liste de contrôle courte)
 
+- [ ] Si 3D : inventaire de §3 bis consulté, modèle existant réutilisé, aucun modèle validé remplacé, points d'exactitude à vérifier signalés.
 - [ ] Plan clair, sommaire, sections numérotées, `k-*` utilisé avec parcimonie.
 - [ ] Chaque interaction apporte quelque chose ; sinon la retirer.
 - [ ] Lisible sur téléphone et à l'impression ; accessible (`aria-*`, `alt`, clavier sur les boutons).
