@@ -123,3 +123,8 @@ Retour arrière : Spaceship → *Nameservers* → serveurs Spaceship par défaut
 - Étapes 1 à 3 (autorisation de l'auteur), puis vérification automatique de l'adresse `*.pages.dev`.
 - Adapter les workflows de `claude/exploitation-supabase` au dépôt privé (voir ci-dessus) avant l'étape 6.
 - Choix des premiers contenus réservés aux abonnés.
+
+
+## 31/10/2026 — correctif préalable à examiner (non appliqué)
+
+Voir [SECURISATION_PRELANCEMENT.md](SECURISATION_PRELANCEMENT.md). Correctif explicite dans `supabase/sql/securisation-prelancement.sql` (hors migrations automatiques) ; tests isolés dans `tests/sql/prelancement`. Aucun GRANT ajouté, lot annulé si un droit membre/service nécessaire manque ou si un accès excessif persiste par héritage. Auth, DNS, DNSSEC, secrets, visibilité GitHub et production inchangés.

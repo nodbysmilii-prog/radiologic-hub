@@ -37,6 +37,8 @@ function demarrer() {
   const admin = sql => { const r = psql(sql); if (r.erreur) throw new Error(r.erreur); return r.sortie; };
   admin(fs.readFileSync(path.join(__dirname, 'supabase-simule.sql'), 'utf8'));
   for (const f of fs.readdirSync(path.join(racine, 'supabase', 'migrations')).sort()) admin(fs.readFileSync(path.join(racine, 'supabase', 'migrations', f), 'utf8'));
+  // RH_SQL_APRES=fichier.sql[,autre.sql] : scripts appliqués après les migrations (ex. correctif de droits à valider)
+  for (const f of (process.env.RH_SQL_APRES || '').split(',').filter(Boolean)) admin(fs.readFileSync(path.resolve(racine, f), 'utf8'));
   const arreter = () => {
     try { enPostgres('pg_ctl', ['-D', dossier, '-m', 'fast', 'stop']); } catch (e) { /* déjà arrêté */ }
     fs.rmSync(dossier, { recursive: true, force: true });
