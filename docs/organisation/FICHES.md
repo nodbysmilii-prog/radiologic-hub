@@ -11,7 +11,7 @@ Fichiers : `fiches-rapides.html`, `fiches/` (~34 entrées), `cas/`, `fiche.css`,
 - Fiche AVC hémorragique (points à trancher), Crohn (préparation entéro-IRM), rectum (légendes), amylose (légendes), otospongiose (clichés), myocardite (relecture), radius distal (nomenclature).
 - Images manquantes : pancréas, Crohn.
 - Cas bilingues (hernie d'Amyand) et « Le menton qui s'endort ».
-- **Masses hépatiques** : tableau LI-RADS à confirmer (version de référence ; HRPA périphérique non prévu) ; **schéma de Bismuth et Corlette** à valider anatomiquement (dessin schématique, pas l'image du PDF) ; cas et cartes reformulés à relire ; PDF source à ranger dans le dépôt privé.
+- **Masses hépatiques** : tableau LI-RADS à confirmer (version de référence ; HRPA périphérique non prévu) ; **schéma de Bismuth et Corlette** à valider anatomiquement (dessin schématique, pas l'image du PDF) ; cas et cartes reformulés à relire ; PDF source rangé dans le dépôt privé (`sources/masses-hepatiques/`).
 
 ## Prochaine tâche importante
 Relecture par l'auteur de l'AVC hémorragique puis publication ; relecture de la fiche Masses hépatiques solides (points ci-dessus). Spécialités à alimenter : Traumato, Pédiatrie, Imagerie de la femme.
