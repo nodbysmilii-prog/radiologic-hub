@@ -20,7 +20,8 @@ select jsonb_build_object(
     '20261014090000_espace_dicom', to_regclass('public.dc_examens') is not null,
     '20261027120000_communaute_fil', to_regproc('public.rs_missions_ouvertes') is not null,
     '20261029120000_planification_vault', to_regprocedure('public.rp_taches_secret_valide(text)') is not null and to_regprocedure('rp_prive.appeler_taches(text)') is not null,
-    '20261030090000_abonnements', to_regclass('public.ab_abonnements') is not null and to_regprocedure('public.ab_est_abonne()') is not null
+    '20261030090000_abonnements', to_regclass('public.ab_abonnements') is not null and to_regprocedure('public.ab_est_abonne()') is not null,
+    '20261031120000_abonnements_acces', to_regprocedure('public.ab_lire_contenu(text)') is not null
   ),
   'historique_migrations', case when to_regclass('supabase_migrations.schema_migrations') is null then null
     else (xpath('/row/j/text()', query_to_xml('select coalesce(jsonb_agg(version order by version), ''[]'')::text as j from supabase_migrations.schema_migrations', false, true, '')))[1]::text::jsonb end,
