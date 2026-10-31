@@ -121,9 +121,10 @@ test('pas de faux positif : sigles courts, mots généraux, occlusion artériell
   assert.equal(sugg('Le rein droit est normal.').length, 0);
 });
 
-test('aucune fiche : CHC / LI-RADS sans fiche publiée → aucune suggestion', () => {
-  assert.equal(sugg('CHC LI-RADS 5 du segment VII').length, 0);
-  assert.equal(sugg('Hépatocarcinome').length, 0);
+test('CHC / LI-RADS → fiche « Masses hépatiques solides » ; fiche inexistante ignorée', () => {
+  assert.equal(p('CHC LI-RADS 5 du segment VII').fiche, 'masses-hepatiques');
+  assert.equal(p('Hépatocarcinome').fiche, 'masses-hepatiques');
+  assert.equal(sugg('Foie de taille normale.').length, 0);   // « foie » seul est un mot faible
   // un terme dont la fiche n'existe pas est ignoré, sans erreur
   const m = M.creer(INDEX, { 'fiche-inexistante': { forts: ['CHC'] } });
   assert.equal(m.analyser('CHC').suggestions.length, 0);

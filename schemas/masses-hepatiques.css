@@ -1,0 +1,135 @@
+/* =========================================================
+   RadiologicHub — fiche « Masses hépatiques solides » (préfixe mh-)
+   S'appuie sur fiche.css et, comme les autres fiches, sur cholesteatome.css (ch-onglets, ch-verdict),
+   eu-tirads.css (ti-cas, ti-score) et mediastin.css (md-compare, md-puces)
+   ========================================================= */
+
+/* Couleurs des catégories de tumeurs (code de la fiche de l'auteur) */
+.fsec, .mh-carte, .mh-filtres, .mh-final { --mh-benigne: #1f8a5b; --mh-primitive: #a8172d; --mh-secondaire: #c4780f; --mh-vasculaire: #6b0d8c; }
+.mh-benigne { --c: var(--mh-benigne); }
+.mh-primitive { --c: var(--mh-primitive); }
+.mh-secondaire { --c: var(--mh-secondaire); }
+.mh-vasculaire { --c: var(--mh-vasculaire); }
+
+/* Carte des 12 lésions : un clic mène à la lésion */
+.mh-legende { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 4px 0 12px; padding: 0; list-style: none; font-size: .78rem; font-weight: 800; }
+.mh-legende li { display: inline-flex; align-items: center; gap: 6px; }
+.mh-legende i { width: 14px; height: 14px; border-radius: 4px; background: var(--c); }
+.mh-carte { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 10px; margin: 0 0 18px; padding: 0; list-style: none; }
+.mh-carte a { min-width: 0; overflow-wrap: anywhere; hyphens: auto; display: flex; align-items: center; gap: 8px; height: 100%; padding: 9px 10px; border: 3px solid var(--c); border-radius: 14px; background: color-mix(in srgb, var(--c) 8%, #fff); color: var(--ink); font-size: .8rem; font-weight: 800; line-height: 1.25; text-decoration: none; transition: transform .2s, background .2s; }
+.mh-carte a:hover, .mh-carte a:focus-visible { transform: translateY(-3px); background: color-mix(in srgb, var(--c) 18%, #fff); }
+.mh-carte b { flex: 0 0 auto; display: grid; place-items: center; width: 1.9em; height: 1.9em; border-radius: 50%; background: var(--c); color: #fff; font-size: .78rem; }
+
+/* Sections-lésions : en-tête coloré par catégorie */
+.mh-les { margin: 22px 0 0; border: 4px solid var(--c); border-radius: 18px; overflow: hidden; background: #fff; }
+.mh-les > h3 { margin: 0; padding: 10px 16px; background: var(--c); color: #fff; font-size: 1rem; font-weight: 900; }
+.mh-les > h3 small { margin-left: 8px; font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; opacity: .85; }
+.mh-corps { padding: 12px 16px 6px; }
+.mh-corps > p, .mh-corps > ul { margin: 0 0 10px; }
+.mh-corps ul { padding-left: 1.15em; display: grid; gap: 5px; }
+.mh-les .ftable-wrap { margin: 6px 0 14px; box-shadow: none; border-width: 3px; }
+.mh-sous { margin: 14px 0 6px; font-size: .74rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: var(--c); }
+.mh-partie { margin: 34px 0 6px; font-size: 1.15rem; font-weight: 900; }
+.mh-partie.mh-benigne, .mh-partie.mh-primitive, .mh-partie.mh-secondaire, .mh-partie.mh-vasculaire { color: var(--c); }
+
+/* Onglets (portée limitée à leur bloc) */
+.mh-bloc .ch-onglets { margin-bottom: 10px; }
+.mh-panneau[hidden] { display: none; }
+.mh-panneau { padding: 12px 14px; border: 3px solid var(--c, var(--ink)); border-radius: 14px; background: color-mix(in srgb, var(--c, var(--ink)) 6%, #fff); font-size: .88rem; }
+.mh-panneau > :first-child { margin-top: 0; } .mh-panneau > :last-child { margin-bottom: 0; }
+.mh-panneau ul { margin: 6px 0 0; padding-left: 1.15em; display: grid; gap: 5px; }
+.mh-panneau h4 { margin: 0 0 6px; font-size: .95rem; color: var(--c, var(--ink)); }
+
+/* Temps de la TDM : frise */
+.mh-frise { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 0 0 10px; padding: 0; list-style: none; position: relative; }
+.mh-frise::before { content: ''; position: absolute; left: 6%; right: 6%; top: 20px; height: 6px; border-radius: 3px; background: linear-gradient(90deg, #8a8a94, #c8102e, #5b2a86, #3c67b8); opacity: .5; }
+.mh-frise button { position: relative; width: 100%; display: grid; justify-items: center; gap: 6px; padding: 0 4px; border: 0; background: none; font: inherit; cursor: pointer; }
+.mh-frise .mh-pt { width: 34px; height: 34px; border-radius: 50%; border: 4px solid var(--c); background: #fff; display: grid; place-items: center; font-weight: 900; font-size: .8rem; color: var(--c); transition: transform .2s, background .2s, color .2s; }
+.mh-frise button[aria-selected="true"] .mh-pt { background: var(--c); color: #fff; transform: scale(1.18); }
+.mh-frise .mh-nom { font-size: .78rem; font-weight: 900; }
+.mh-frise .mh-tps { font-size: .7rem; font-weight: 700; color: var(--muted); }
+
+/* Définitions strictes de la sémiologie */
+.mh-defs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.mh-def { padding: 12px 14px; border: 3px solid var(--c); border-radius: 14px; background: color-mix(in srgb, var(--c) 7%, #fff); font-size: .86rem; }
+.mh-def h3 { margin: 0 0 6px; font-size: .95rem; color: var(--c); }
+.mh-def p { margin: 0; }
+
+/* Tableaux comparatifs : colonne mise en avant */
+.mh-cmpbar { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 10px; }
+.mh-cmpbar button { padding: 6px 14px; border: 3px solid var(--ink); border-radius: 999px; background: #fff; font: inherit; font-size: .8rem; font-weight: 800; cursor: pointer; }
+.mh-cmpbar button.is-active { background: var(--ink); color: #fff; }
+.mh-cmp .c-a, .mh-cmp .c-b { transition: opacity .25s; }
+.mh-cmp[data-show="a"] .c-b, .mh-cmp[data-show="b"] .c-a { opacity: .18; }
+
+/* Calculateur LI-RADS */
+.mh-calc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 16px; align-items: start; margin: 8px 0 16px; }
+.mh-calc fieldset { margin: 0 0 10px; padding: 10px 12px; border: 3px solid var(--ink); border-radius: 14px; background: #fff; }
+.mh-calc legend { padding: 0 6px; font-size: .72rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+.mh-calc label { display: flex; align-items: center; gap: 8px; margin: 5px 0; font-size: .84rem; font-weight: 700; }
+.mh-calc input[type="text"] { width: 5.5em; padding: 5px 8px; border: 2px solid rgba(17, 17, 20, .25); border-radius: 10px; font: inherit; }
+.mh-calc-res { position: sticky; top: 90px; }
+.mh-lr-grille td.is-actif { outline: 4px solid var(--ink); outline-offset: -4px; box-shadow: inset 0 0 0 999px rgba(255, 255, 255, .0); font-weight: 900; }
+.mh-lr-grille td { text-align: center; white-space: nowrap; padding: 10px 6px; }
+.mh-lr-3 { background: #fdeeb4; } .mh-lr-4 { background: #f8d3a8; } .mh-lr-5 { background: #f4bcbc; }
+.mh-lr-etiq { display: inline-block; min-width: 4.2em; padding: 4px 10px; border-radius: 999px; font-weight: 900; text-align: center; }
+.mh-lr-etiq.lr-1 { background: #a8d8bd; } .mh-lr-etiq.lr-2 { background: #cfeedd; } .mh-lr-etiq.lr-3 { background: #fdeeb4; }
+.mh-lr-etiq.lr-4 { background: #f8d3a8; } .mh-lr-etiq.lr-5 { background: #f4bcbc; } .mh-lr-etiq.lr-m { background: #d98a85; } .mh-lr-etiq.lr-tiv, .mh-lr-etiq.lr-nc { background: #d9d9de; }
+
+/* HNF typique : cinq critères */
+.mh-hnf { margin: 10px 0 14px; padding: 12px 14px; border: 3px solid var(--ink); border-radius: 14px; background: #fff; }
+.mh-hnf label { display: flex; align-items: flex-start; gap: 8px; margin: 6px 0; font-size: .86rem; font-weight: 700; }
+.mh-hnf .mh-jauge { display: flex; gap: 5px; margin: 8px 0; }
+.mh-hnf .mh-jauge i { flex: 1; height: 8px; border-radius: 4px; background: #dcdce2; transition: background .25s; }
+.mh-hnf .mh-jauge i.is-on { background: var(--mh-benigne); }
+.mh-hnf.is-hepatopathie .mh-jauge i.is-on { background: var(--mh-primitive); }
+
+/* Bismuth et Corlette */
+.mh-bismuth { display: grid; grid-template-columns: minmax(200px, 300px) minmax(0, 1fr); gap: 18px; align-items: center; margin: 8px 0 14px; }
+.mh-bismuth figure { margin: 0; padding: 10px; border: 3px solid var(--ink); border-radius: 14px; background: #fff; }
+.mh-bismuth svg { display: block; width: 100%; height: auto; }
+.mh-bismuth .mh-canal { fill: none; stroke: #8fb89c; stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; }
+.mh-bismuth .mh-canal.is-tumeur { stroke: #c8102e; }
+.mh-bismuth .mh-noeud { fill: #8fb89c; } .mh-bismuth .mh-noeud.is-tumeur { fill: #c8102e; }
+.mh-bismuth text { font: 800 11px var(--font); fill: #55545f; }
+.mh-bismuth .mh-note { margin: 6px 0 0; font-size: .7rem; color: var(--muted); }
+
+/* Tableau final : filtre par catégorie */
+.mh-filtres { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 12px; }
+.mh-filtres button { padding: 7px 14px; border: 3px solid var(--c, var(--ink)); border-radius: 999px; background: #fff; font: inherit; font-size: .8rem; font-weight: 800; cursor: pointer; }
+.mh-filtres button[aria-pressed="true"] { background: var(--c, var(--ink)); color: #fff; }
+.mh-final tbody tr td:first-child { border-left: 8px solid var(--c); font-weight: 900; }
+.mh-final tbody tr:nth-child(n) td { background: color-mix(in srgb, var(--c) 8%, #fff); }
+.mh-final tr[hidden] { display: none; }
+.mh-final a { color: inherit; }
+
+/* CAT devant une lésion hyperéchogène */
+.mh-etapes { counter-reset: e; display: grid; gap: 12px; margin: 8px 0 0; padding: 0; list-style: none; }
+.mh-etape { counter-increment: e; position: relative; padding: 12px 16px 12px 58px; border: 3px solid var(--c); border-radius: 14px; background: color-mix(in srgb, var(--c) 6%, #fff); font-size: .88rem; }
+.mh-etape::before { content: counter(e); position: absolute; left: 14px; top: 12px; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--c); color: #fff; font-weight: 900; }
+.mh-etape h3 { margin: 0 0 6px; font-size: .98rem; color: var(--c); }
+.mh-etape p { margin: 0 0 6px; } .mh-etape ul { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
+.mh-contextes { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 0; }
+.mh-contextes button { padding: 7px 12px; border: 3px solid var(--ink); border-radius: 12px; background: #fff; font: inherit; font-size: .8rem; font-weight: 800; cursor: pointer; }
+.mh-contextes button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+
+.mh-cas.ti-cas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.mh-cas .ti-cas-choix { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.mh-cas .ti-cas-choix button { min-width: 0; padding: 5px 2px; font-size: .66rem; }
+#exploration .marker-sub, #testez-vous .marker-sub { margin-top: 26px; }
+.mh-flash { animation: mh-flash 1.2s ease-out; }
+@keyframes mh-flash { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--c) 60%, transparent); } 100% { box-shadow: 0 0 0 18px transparent; } }
+
+@media (max-width: 900px) {
+  .mh-calc, .mh-bismuth { grid-template-columns: 1fr; }
+  .mh-calc-res { position: static; }
+  .mh-defs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .mh-defs { grid-template-columns: minmax(0, 1fr); }
+  .mh-frise .mh-tps { display: none; }
+  .mh-cas.ti-cas { grid-template-columns: minmax(0, 1fr); }
+  .mh-etape { padding-left: 52px; }
+}
+@media (prefers-reduced-motion: reduce) { .mh-flash, .mh-cmp .c-a, .mh-cmp .c-b, .mh-carte a, .mh-frise .mh-pt { animation: none; transition: none; } }
+@media print { .mh-calc-res { position: static; } .mh-les, .mh-etape { break-inside: avoid; } .mh-panneau[hidden] { display: block; } }
