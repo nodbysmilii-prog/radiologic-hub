@@ -20,7 +20,7 @@ Fichiers : `fiches-rapides.html`, `fiches/` (~34 entrées), `cas/`, `fiche.css`,
 - **LI-RADS** : fiche, calculateur et éditeur concordent (ACR v2018, tests exhaustifs) ; croissance seuil = ≥ 50 % en ≤ 6 mois ; le 31/10/2026 : un LR-5 n'est plus déclassé par les critères accessoires (éditeur) et la phrase du diagnostic non invasif de CHC est reformulée (fiche).
 - **SEO** : auteur affiché « Radiologic Hub » provisoirement (identification à définir) ; 3 références conservées comme lectures complémentaires (année en évidence) ; Google Search Console à créer.
 
-- **Foie en 3D** : segment IV non subdivisé en IVa / IVb (pack) ; vaisseaux sans branches segmentaires ; descriptions de position des segments à relire ; seules la stéatose et l'épargne focales ont un siège dans la fiche (autres pathologies : à fournir par l'auteur).
+- **Foie en 3D** : segment IV non subdivisé en IVa / IVb (pack) ; branches portales et veines hépatiques en tracé schématique (hors pack) à valider ; descriptions de position des segments à relire ; seules la stéatose et l'épargne focales ont un siège dans la fiche (autres pathologies : à fournir par l'auteur).
 
 ## Prochaine tâche importante
 Relecture par l'auteur de l'AVC hémorragique puis publication ; **SEO des autres fiches, une PR par fiche** (`SEO_FICHES.md`) ; relecture de la fiche Masses hépatiques solides (points ci-dessus). Spécialités à alimenter : Traumato, Pédiatrie, Imagerie de la femme.

@@ -258,7 +258,7 @@
         <!-- Le foie en 3D -->
         <section class="fsec" id="foie-3d-section" style="--c: var(--amber)">
           <h2 class="fsec-title"><span class="fnum">·</span>Le foie en 3D : segments et pseudolésions</h2>
-          <p class="fintro">Rappel ajouté à la fiche. Touchez un segment de Couinaud, ou choisissez une pseudolésion pour voir où elle siège le plus souvent d'après la fiche.</p>
+          <p class="fintro">Rappel ajouté à la fiche. Touchez un segment de Couinaud, ou choisissez une pseudolésion pour voir où elle siège le plus souvent d'après la fiche. Les branches portales et les trois veines hépatiques sont un tracé schématique (teintes claires), construit d'après les limites des segments.</p>
           <div class="c3d r3d fo3d" id="foie-3d" data-modeles="../public/models/foie/">
             <div class="c3d-barre" role="toolbar" aria-label="Segments et pseudolésions">
               <span class="r3d-barre-titre">Segments</span>
@@ -277,7 +277,7 @@
             <div class="c3d-cadre">
               <div class="c3d-vue">
                 <div class="c3d-scene" id="fo3d-scene"></div>
-                <a class="c3d-attrib" href="https://www.z-anatomy.com/" rel="noopener" target="_blank" title="Anatomie : Z-Anatomy (CC BY-SA 4.0, dérivé de BodyParts3D). Segments du pack repris tels quels ; le segment IV n'est pas subdivisé en IVa / IVb ; vaisseaux : tronc de la veine porte et convergence des veines hépatiques, sans branches.">© Z-Anatomy · CC BY-SA</a>
+                <a class="c3d-attrib" href="https://www.z-anatomy.com/" rel="noopener" target="_blank" title="Anatomie : Z-Anatomy (CC BY-SA 4.0, dérivé de BodyParts3D). Segments du pack repris tels quels ; le segment IV n'est pas subdivisé en IVa / IVb ; vaisseaux du pack : tronc de la veine porte, convergence des veines hépatiques, VCI ; branches portales et veines hépatiques : tracé schématique construit d'après les limites des segments.">© Z-Anatomy · CC BY-SA</a>
               </div>
               <aside class="c3d-panneau" aria-label="Réglages de la vue 3D">
                 <p class="c3d-titre">Vues</p>
@@ -291,11 +291,14 @@
                 </div>
                 <p class="c3d-titre">Afficher</p>
                 <label class="r3d-reglage"><span>opaque</span><input type="range" id="fo3d-transparence" min="0" max="85" value="0" aria-label="Transparence du foie"><span>transparent</span></label>
-                <label class="r3d-reglage"><input type="checkbox" id="fo3d-vaisseaux" checked> veine porte, veines hépatiques, VCI</label>
+                <label class="r3d-reglage"><input type="checkbox" id="fo3d-vaisseaux" checked> tronc porte, convergence des veines hépatiques, VCI</label>
+                <label class="r3d-reglage"><input type="checkbox" id="fo3d-schema" checked> branches portales et veines hépatiques (schématiques)</label>
                 <label class="r3d-reglage"><input type="checkbox" id="fo3d-vesicule" checked> vésicule biliaire</label>
                 <ul class="fo3d-legende">
-                  <li style="--c: #5b2a86">veine porte (tronc)</li>
-                  <li style="--c: #3c67b8">veines hépatiques, veine cave inférieure</li>
+                  <li style="--c: #5b2a86">veine porte : tronc (modèle)</li>
+                  <li style="--c: #9a7bd0">branches portales droite et gauche (schématiques)</li>
+                  <li style="--c: #3c67b8">convergence des veines hépatiques, VCI (modèle)</li>
+                  <li style="--c: #6f9bf0">veines hépatiques droite, moyenne, gauche (schématiques)</li>
                   <li style="--c: #3f9b4a">vésicule biliaire</li>
                 </ul>
               </aside>

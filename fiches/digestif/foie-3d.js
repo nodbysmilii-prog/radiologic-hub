@@ -7,7 +7,9 @@
    • les 8 segments de Couinaud du pack, colorés, sélectionnables (clic sur le modèle ou boutons) ;
    • pseudolésions de la fiche (stéatose focale, épargne focale) : le segment concerné est mis en
      avant et les repères de la fiche (lit vésiculaire, péri-falciforme) sont marqués ;
-   • transparence du foie réglable pour voir la veine porte, les veines hépatiques et la VCI ;
+   • transparence du foie réglable pour voir la veine porte, les veines hépatiques et la VCI (pack) et
+     les branches portales et les trois veines hépatiques, en TRACÉ SCHÉMATIQUE (hors pack, construit
+     d'après les limites des segments par scripts/export_foie.py) ;
    • vues : de face, de dessus, de dessous, de dos, côté droit, oblique ; rendu à la demande.
    ========================================================= */
 import * as THREE from 'three';
@@ -17,6 +19,8 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 
 const FAMILLES = {
   bile: { color: 0x3f9b4a, op: 0.95 }, porte: { color: 0x5b2a86, op: 1 }, veine: { color: 0x3c67b8, op: 1 },
+  // tracé schématique (hors pack) : teintes plus claires
+  'porte-schema': { color: 0x9a7bd0, op: 1 }, 'veine-schema': { color: 0x6f9bf0, op: 1 },
 };
 
 export async function creerFoie(conteneur, { base, segments, pathologies, onProgression = () => {} }) {
@@ -59,7 +63,7 @@ export async function creerFoie(conteneur, { base, segments, pathologies, onProg
   const reperes = new THREE.Group(); scene.add(reperes);
   const reperesInfos = Object.fromEntries((donnees.reperes || []).map(r => [r.id, r]));
 
-  const etat = { segment: null, pathologie: null, transparence: 0, vaisseaux: true, vesicule: true };
+  const etat = { segment: null, pathologie: null, transparence: 0, vaisseaux: true, schema: true, vesicule: true };
   function appliquer() {
     const patho = etat.pathologie ? pathologies[etat.pathologie] : null;
     const actifs = new Set(patho ? patho.segments : etat.segment ? [etat.segment] : []);
@@ -75,6 +79,7 @@ export async function creerFoie(conteneur, { base, segments, pathologies, onProg
         m.transparent = m.opacity < 1; m.depthWrite = m.opacity >= 1;
         o.renderOrder = choisi ? 2 : 0;
       } else if (info.cat === 'bile') o.visible = etat.vesicule;
+      else if (info.schematique) o.visible = etat.schema;
       else o.visible = etat.vaisseaux;
     }
     reperes.clear();
@@ -159,6 +164,7 @@ export async function creerFoie(conteneur, { base, segments, pathologies, onProg
     donnees, objets, infos, vue, choisirSegment, choisirPathologie,
     transparence(v) { etat.transparence = +v; appliquer(); },
     vaisseaux(v) { etat.vaisseaux = !!v; appliquer(); },
+    schema(v) { etat.schema = !!v; appliquer(); },
     vesicule(v) { etat.vesicule = !!v; appliquer(); },
     etat: () => ({ ...etat }), camera, scene, demander,
   };

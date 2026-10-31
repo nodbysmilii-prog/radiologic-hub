@@ -1,7 +1,7 @@
 {
  "source": "Z-Anatomy (CC BY-SA 4.0), commit 2b6cf98a8ca012571ecb252e5c077b42a21b3b61, dérivé de BodyParts3D (CC BY-SA 2.1 JP)",
  "repere": "centré sur le foie, ×10 (1 unité = 10 cm), +Y haut, +Z avant du patient, +X gauche du patient",
- "limites": "segments de Couinaud du pack Z-Anatomy repris tels quels ; le segment IV n'est pas subdivisé en IVa / IVb ; vaisseaux : courbes du pack (tronc de la veine porte, convergence des veines hépatiques), sans branches segmentaires",
+ "limites": "segments de Couinaud du pack Z-Anatomy repris tels quels ; le segment IV n'est pas subdivisé en IVa / IVb ; vaisseaux du pack : tronc de la veine porte, convergence des veines hépatiques, VCI ; branches portales et trois veines hépatiques : TRACÉ SCHÉMATIQUE construit par scripts/export_foie.py d'après les limites des segments (pas du pack)",
  "structures": [
   {
    "id": "segment-I",
@@ -130,6 +130,61 @@
     -0.73,
     -0.0
    ]
+  },
+  {
+   "id": "veine-hepatique-droite",
+   "nom": "Veine hépatique droite (schématique)",
+   "cat": "veine-schema",
+   "schematique": true,
+   "centre": [
+    -0.563,
+    0.102,
+    0.043
+   ]
+  },
+  {
+   "id": "veine-hepatique-moyenne",
+   "nom": "Veine hépatique moyenne (schématique)",
+   "cat": "veine-schema",
+   "schematique": true,
+   "centre": [
+    -0.251,
+    0.235,
+    0.353
+   ]
+  },
+  {
+   "id": "veine-hepatique-gauche",
+   "nom": "Veine hépatique gauche (schématique)",
+   "cat": "veine-schema",
+   "schematique": true,
+   "centre": [
+    0.338,
+    0.427,
+    0.435
+   ]
+  },
+  {
+   "id": "branche-portale-droite",
+   "nom": "Branche portale droite et ses divisions (schématique)",
+   "cat": "porte-schema",
+   "schematique": true,
+   "centre": [
+    -0.453,
+    0.147,
+    -0.002
+   ]
+  },
+  {
+   "id": "branche-portale-gauche",
+   "nom": "Branche portale gauche et ses divisions (schématique)",
+   "cat": "porte-schema",
+   "schematique": true,
+   "centre": [
+    0.19,
+    0.306,
+    0.266
+   ]
   }
  ],
  "reperes": [
@@ -174,6 +229,6 @@
    ]
   }
  ],
- "empreinte": "a8ffa198c52e",
- "octets": 156352
+ "empreinte": "c2f6600947b7",
+ "octets": 195800
 }

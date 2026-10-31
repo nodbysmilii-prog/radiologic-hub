@@ -31,7 +31,8 @@ if (bloc && R) {
       info.innerHTML = `<h4>${echapper(p.nom)}</h4><p><b>Siège :</b> ${echapper(p.siege)}.</p><p>${echapper(p.texte)}</p>` +
         (p.reperes.length ? `<p>Repères marqués sur le foie : ${p.reperes.map(r => echapper(R.REPERES_FOIE[r].toLowerCase())).join(', ')}.</p>` : '');
     } else if (detail.structure) {
-      info.style.setProperty('--c', '#888'); info.innerHTML = `<h4>${echapper(detail.structure.nom)}</h4>`;
+      info.style.setProperty('--c', '#888'); info.innerHTML = `<h4>${echapper(detail.structure.nom)}</h4>` +
+        (detail.structure.schematique ? '<p>Tracé schématique construit d\'après les limites des segments du modèle : ce n\'est pas un vaisseau du pack Z-Anatomy.</p>' : '');
     } else { info.style.removeProperty('--c'); info.innerHTML = AIDE; }
   }
 
@@ -65,5 +66,6 @@ if (bloc && R) {
   $$('[data-vue]', bloc).forEach(b => b.addEventListener('click', async () => { const v = await charger(); if (v) v.vue(b.dataset.vue); }));
   $('#fo3d-transparence').addEventListener('input', e => { if (api) api.transparence(e.target.value / 100); });
   $('#fo3d-vaisseaux').addEventListener('change', e => { if (api) api.vaisseaux(e.target.checked); });
+  $('#fo3d-schema').addEventListener('change', e => { if (api) api.schema(e.target.checked); });
   $('#fo3d-vesicule').addEventListener('change', e => { if (api) api.vesicule(e.target.checked); });
 }

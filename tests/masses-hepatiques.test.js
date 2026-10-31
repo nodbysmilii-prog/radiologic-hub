@@ -234,3 +234,27 @@ test('foie en 3D : pseudolésions = texte de la fiche, boutons et scripts prése
   for (const f of ['foie-3d.js', 'foie-3d-fiche.js']) assert.ok(fs.existsSync(path.join(RACINE, 'fiches', 'digestif', f)), f);
   assert.ok(fs.existsSync(path.join(RACINE, 'scripts', 'export_foie.py')));
 });
+
+test('foie en 3D : branches portales et veines hépatiques schématiques, bien situées et signalées', () => {
+  const M = JSON.parse(fs.readFileSync(path.join(RACINE, 'public', 'models', 'foie', 'foie.json'), 'utf8'));
+  const par = id => M.structures.find(s => s.id === id);
+  const schema = ['veine-hepatique-droite', 'veine-hepatique-moyenne', 'veine-hepatique-gauche', 'branche-portale-droite', 'branche-portale-gauche'];
+  for (const id of schema) {
+    const v = par(id);
+    assert.ok(v, id);
+    assert.equal(v.schematique, true, `${id} marqué schématique`);
+    assert.match(v.nom, /\(schématique\)/, `${id} nommé « schématique »`);
+  }
+  // les vaisseaux du pack ne sont pas marqués schématiques
+  for (const id of ['veine-porte', 'veines-hepatiques', 'vci', 'vesicule']) assert.ok(!par(id).schematique, id);
+  // position : veine hépatique droite dans le foie droit, moyenne près de la fissure principale, gauche à gauche
+  const x = id => par(id).centre[0];
+  assert.ok(x('veine-hepatique-droite') < x('veine-hepatique-moyenne') && x('veine-hepatique-moyenne') < x('veine-hepatique-gauche'), 'ordre droite, moyenne, gauche');
+  assert.ok(x('veine-hepatique-droite') < -0.3 && x('veine-hepatique-gauche') > 0.1);
+  assert.ok(x('branche-portale-droite') < 0 && x('branche-portale-gauche') > 0, 'branches portales droite et gauche');
+  assert.match(M.limites, /TRACÉ SCHÉMATIQUE/);
+  // la page le dit, et propose de les masquer
+  assert.match(HTML, /branches portales et veines hépatiques \(schématiques\)/);
+  assert.match(HTML, /id="fo3d-schema"/);
+  assert.match(HTML, /tracé schématique \(teintes claires\)/);
+});
