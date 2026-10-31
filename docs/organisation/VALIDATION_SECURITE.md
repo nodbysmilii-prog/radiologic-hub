@@ -1,6 +1,6 @@
 # Validation sécurité et infrastructure — RÉFÉRENCE UNIQUE
 
-> Mis à jour le 31/10/2026 (fin d'après-midi, UTC). À lire en premier pour reprendre le chantier technique. Statuts : **VALIDÉ** (preuve réelle), **PRÊT** (préparé et testé, en attente de fusion), **À VALIDER** (autorisation de l'auteur nécessaire), **BLOQUÉ** (obstacle), **À FAIRE**. Un test simulé ne vaut jamais « VALIDÉ ».
+> Mis à jour le 31/10/2026 (soir, UTC) : lot 1 « Authentification » préparé. À lire en premier pour reprendre le chantier technique. Statuts : **VALIDÉ** (preuve réelle), **PRÊT** (préparé et testé, en attente de fusion), **À VALIDER** (autorisation de l'auteur nécessaire), **BLOQUÉ** (obstacle), **À FAIRE**. Un test simulé ne vaut jamais « VALIDÉ ».
 > Détails : `PUBLICATION.md` (hébergement, publication), `SECURISATION_PRELANCEMENT.md` (droits), `MIGRATIONS_PRODUCTION.md` (PR #104), `PROTECTION_PREMIUM.md` / `OFFRE_FREEMIUM.md` (PR #100).
 
 ## Tableau de bord
@@ -62,7 +62,7 @@ Décision des contenus premium et rédaction de contenu nouveau (jamais public) 
 | Étape | Action | Qui | Contrôle après |
 |---|---|---|---|
 | S1 | Diagnostic étendu (après fusion #105) | Claude (lecture seule) | Alertes de sécurité triées ; réglages Auth et SMTP relevés |
-| S1 bis | Correctif `alter function public.rp_proteger_profil() set search_path = public;` (alerte `function_search_path_mutable`) — à préparer en PR avec test | Claude puis auteur | Diagnostic : alerte disparue |
+| S1 bis | Migration `20261031130000_search_path_profil.sql` : `rp_proteger_profil` avec `search_path = ''` (recommandation Supabase ; alerte `function_search_path_mutable`) — **préparée et testée** (lot 1 ci-dessous) | Auteur (SQL Editor) | Diagnostic : migration appliquée, « fonctions sans search_path fixé : aucune », alerte disparue |
 | S1 ter | *Authentication → Emails → SMTP Settings* : SMTP personnalisé Brevo (clé SMTP) | Auteur | Diagnostic : « SMTP personnalisé : oui » |
 | S2 | *Edge Functions → Secrets* : `RP_URL_SITE` = `https://radiologichub.com` | Auteur | Diagnostic : « RP_URL_SITE = https://radiologichub.com : oui » |
 | S3 | *Authentication → URL Configuration* : ajouter `https://radiologichub.com/bibliotheque`, `/bibliotheque.html`, `/bibliotheque-admin`, `/bibliotheque-admin.html` (rien d'autre) | Auteur | Diagnostic : 4 lignes ✓, aucune adresse avec `*` |
@@ -73,6 +73,22 @@ Décision des contenus premium et rédaction de contenu nouveau (jamais public) 
 | S8 | Tests connectés réels : un compte de test fourni par l'auteur (Remplacements, Communauté, Bibliothèque) ; aucune donnée réelle créée par Claude | Auteur + Claude | Parcours réussis |
 | S9 | Après 24-48 h sans erreur : supprimer le secret `RP_TACHES_SECRET` | Auteur | Diagnostic |
 Plus tard : `abonnements` (+ #106) au lancement du premium ; `espace_dicom` quand le serveur DICOM existera ; `EMAIL_FOURNISSEUR=brevo` quand les e-mails réels seront voulus.
+
+## Lot 1 — Authentification (préparé le 31/10/2026 ; à exécuter puis tester avant le lot 2)
+Tout se fait dans le **tableau de bord Supabase** (projet `wdbczcwnaxfnoioyukgr`) par l'auteur : aucune clé ne passe par la conversation, GitHub ou le dépôt. Claude lance le diagnostic (lecture seule) avant et après chaque étape.
+
+| Étape | Où | Paramètres exacts | Contrôle (diagnostic) |
+|---|---|---|---|
+| 1a | Brevo → *Senders, Domains & Dedicated IPs* | Domaine `radiologichub.com` « Authenticated » (déjà fait) ; l'adresse d'expédition choisie figure dans *Senders* (ex. `remplacements@radiologichub.com`, déjà utilisée par les fonctions) | — |
+| 1b | Brevo → *SMTP & API* → onglet *SMTP* | Relever l'**identifiant SMTP** (forme `…@smtp-brevo.com`) ; *Generate a new SMTP key*, nom « Supabase Auth » ; la copier **directement** dans Supabase (1c), nulle part ailleurs | — |
+| 1c | Supabase → *Authentication → Emails → SMTP Settings* → *Enable custom SMTP* | Sender email : l'adresse de 1a · Sender name : `RadiologicHub` · Host : `smtp-relay.brevo.com` · Port : `587` · Minimum interval : `60` s (défaut) · Username : identifiant de 1b · Password : clé SMTP de 1b → *Save* | « SMTP personnalisé : oui », serveur Brevo, port 587, adresse sur `radiologichub.com`, identifiant et clé renseignés |
+| 1d | Supabase → *Authentication → Rate Limits* | Envoi d'e-mails : **30 par heure** (valeur par défaut avec SMTP personnalisé ; Brevo gratuit = 300 e-mails/jour) ; rien d'autre | « limite d'envoi : 30 par heure » |
+| 2 | Supabase → *Edge Functions → Secrets* | `RP_URL_SITE` = `https://radiologichub.com` (sans `/` final) ; ne toucher à aucun autre secret ; pas de redéploiement nécessaire | « RP_URL_SITE = https://radiologichub.com : oui » |
+| 3 | Supabase → *Authentication → URL Configuration → Redirect URLs* → *Add URL* (4 fois) | `https://radiologichub.com/bibliotheque` · `https://radiologichub.com/bibliotheque.html` · `https://radiologichub.com/bibliotheque-admin` · `https://radiologichub.com/bibliotheque-admin.html` ; ne rien retirer ; **Site URL inchangée** (`https://radiologichub.com`) ; aucun `*` | 4 lignes ✓, « autres adresses : aucune » |
+| 4 | Supabase → *SQL Editor* | Coller `supabase/migrations/20261031130000_search_path_profil.sql` (une ligne : `alter function public.rp_proteger_profil() set search_path = '';`) → *Run* ; retour arrière : `supabase/sql/retour/20261031130000_search_path_profil.sql` | Migration appliquée ; « fonctions sans search_path fixé : aucune » ; alerte `function_search_path_mutable` absente ; `exécutables par anon (0)` |
+| 5 | Navigateur (auteur) | Comptes **fictifs** : alias de la boîte de l'auteur (`…+rh-test1@…`, `…+rh-test2@…`), aucune donnée de patient. Sur `https://radiologichub.com/remplacements.html`, `/communaute.html`, `/bibliotheque.html` : demander le lien de connexion → reçu en moins de 2 min, expéditeur `RadiologicHub <adresse de 1a>`, pas en indésirables, « Afficher l'original » : SPF, DKIM et DMARC **PASS** → le lien ramène sur la même page, connecté ; déconnexion ; 2e compte idem. Puis supprimer les comptes de test (*Authentication → Users*) | Claude : diagnostic final ; l'auteur indique seulement « reçu / PASS / connecté » (aucune adresse ni contenu d'e-mail dans la conversation) |
+
+Ordre : fusion de la PR du lot (aucun effet sur Supabase) → diagnostic → 1 → 2 → 3 → 4 → diagnostic → 5. Retour arrière : 1c *Disable custom SMTP* ; 2 remettre l'ancienne valeur (inconnue de Claude : la noter avant) ; 3 supprimer les 4 adresses ; 4 fichier de retour.
 
 ## Bascule Cloudflare : vérifications préalables (après le 01/11/2026 00:05 UTC)
 1. Capture d'écran du DNS chez Spaceship (9 enregistrements, dont DKIM `brevo1`/`brevo2`, TXT `brevo-code`, `_dmarc`).

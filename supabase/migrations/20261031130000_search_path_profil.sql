@@ -1,0 +1,15 @@
+-- =====================================================================
+-- RadiologicHub — correctif de sécurité : search_path de rp_proteger_profil
+-- ---------------------------------------------------------------------
+-- Alerte Supabase « function_search_path_mutable » (Security Advisor) sur
+-- public.rp_proteger_profil() : sans search_path fixé, la fonction
+-- résoudrait les noms selon le chemin de la session appelante.
+-- Recommandation Supabase : search_path VIDE (''), tous les objets étant
+-- nommés avec leur schéma. C'est le cas ici : auth.role() est qualifié,
+-- coalesce() appartient à pg_catalog (toujours consulté en premier).
+-- Aucun changement de comportement : la fonction (déclencheur sur
+-- public.profils) garde l'identifiant, et pour tout autre rôle que
+-- service_role l'e-mail et la date de création.
+-- Idempotent. Retour arrière : supabase/sql/retour/20261031130000_search_path_profil.sql
+-- =====================================================================
+alter function public.rp_proteger_profil() set search_path = '';

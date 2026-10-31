@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 /* =========================================================
-   Les 4 migrations absentes de la production, appliquées sur une base
+   Les 5 migrations absentes de la production, appliquées sur une base
    PostgreSQL locale qui REPRODUIT LA PRODUCTION du 31/10/2026 (données
    fictives ; npm run test:sql) :
    • seules les 5 migrations présentes en production, droits par défaut de
      Supabase (EXECUTE accordé à anon, aussi pour les futures fonctions),
      files pg_net à supabase_admin, puis sécurisation v2 appliquée ;
-   • ordre recommandé : fil Communauté → planification (Vault) →
-     abonnements → Espace DICOM ; après chacune : migration reconnue par le
+   • ordre recommandé : search_path de rp_proteger_profil → fil
+     Communauté → planification (Vault) → abonnements → Espace DICOM ; après chacune : migration reconnue par le
      diagnostic, AUCUNE fonction exécutable par anon (même avec les droits
      par défaut), fonctions des membres et du serveur présentes, sécurisation
      v2 relançable ;
@@ -18,7 +18,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const PRODUCTION = ['20261008120000', '20261009090000', '20261012090000', '20261012120000', '20261012180000'];
-const MANQUANTES = ['20261027120000_communaute_fil', '20261029120000_planification_vault', '20261030090000_abonnements', '20261014090000_espace_dicom'];
+const MANQUANTES = ['20261031130000_search_path_profil', '20261027120000_communaute_fil', '20261029120000_planification_vault', '20261030090000_abonnements', '20261014090000_espace_dicom'];
 process.env.RH_MIGRATIONS = PRODUCTION.join(',');
 const { demarrer, racine } = require('./pg.js');
 
@@ -56,6 +56,8 @@ try {
   verifier('état de départ = production (5 migrations, 0 fonction visée pour anon, sauvegarde présente)', () => {
     MANQUANTES.forEach(m => assert.equal(depart.migrations[m], false, m));
     assert.equal(depart.securisation.sauvegarde_des_droits_presente, true);
+    // comme l'alerte function_search_path_mutable du Security Advisor (diagnostic du 31/10)
+    assert.deepEqual(depart.securisation.fonctions_sans_search_path, ['rp_proteger_profil']);
     sain(depart, 'départ');
   });
 
@@ -69,9 +71,18 @@ try {
       sain(diagnostic(), `${m} + sécurisation`);
     });
   }
-  verifier('les 4 migrations réappliquées : sans effet (idempotentes)', () => {
+  verifier('les 5 migrations réappliquées : sans effet (idempotentes) ; plus aucune fonction sans search_path', () => {
     MANQUANTES.forEach(m => admin(lire('supabase', 'migrations', `${m}.sql`)));
-    sain(diagnostic(), 'réapplication');
+    const d = diagnostic();
+    sain(d, 'réapplication');
+    assert.deepEqual(d.securisation.fonctions_sans_search_path, []);
+  });
+  verifier('rp_proteger_profil avec search_path vide : l\'e-mail et l\'identifiant d\'un profil restent protégés', () => {
+    const u = admin("insert into auth.users (email) values ('profil.fictif@exemple.tn') returning id");
+    admin(`insert into profils (id, email, nom) values ('${u}', 'profil.fictif@exemple.tn', 'Fictif') on conflict (id) do nothing`);
+    const r = psql(`update profils set nom = 'Modifié', email = 'pirate@exemple.tn' where id = '${u}'`, { utilisateur: { id: u, email: 'profil.fictif@exemple.tn' }, role: 'authenticated' });
+    assert.equal(r.erreur || '', '');
+    assert.equal(admin(`select nom || ' ' || email from profils where id = '${u}'`), 'Modifié profil.fictif@exemple.tn');
   });
 
   for (const m of [...MANQUANTES].reverse()) {

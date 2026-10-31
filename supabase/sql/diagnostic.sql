@@ -20,7 +20,8 @@ select jsonb_build_object(
     '20261014090000_espace_dicom', to_regclass('public.dc_examens') is not null,
     '20261027120000_communaute_fil', to_regproc('public.rs_missions_ouvertes') is not null,
     '20261029120000_planification_vault', to_regprocedure('public.rp_taches_secret_valide(text)') is not null and to_regprocedure('rp_prive.appeler_taches(text)') is not null,
-    '20261030090000_abonnements', to_regclass('public.ab_abonnements') is not null and to_regprocedure('public.ab_est_abonne()') is not null
+    '20261030090000_abonnements', to_regclass('public.ab_abonnements') is not null and to_regprocedure('public.ab_est_abonne()') is not null,
+    '20261031130000_search_path_profil', coalesce((select 'search_path=""' = any(proconfig) from pg_proc where oid = to_regprocedure('public.rp_proteger_profil()')), false)
   ),
   'historique_migrations', case when to_regclass('supabase_migrations.schema_migrations') is null then null
     else (xpath('/row/j/text()', query_to_xml('select coalesce(jsonb_agg(version order by version), ''[]'')::text as j from supabase_migrations.schema_migrations', false, true, '')))[1]::text::jsonb end,
@@ -65,6 +66,11 @@ select jsonb_build_object(
         where n.nspname = 'public' and has_function_privilege('anon', p.oid, 'execute')
           and not exists (select 1 from pg_depend d where d.objid = p.oid and d.deptype = 'e')
           and not exists (select 1 from visees where to_regprocedure(visees.s) = p.oid) order by p.proname limit 20) p),
+      -- alerte Supabase function_search_path_mutable : fonctions du schéma public sans search_path fixé (noms seulement)
+      'fonctions_sans_search_path', (select coalesce(jsonb_agg(p.proname order by p.proname), '[]'::jsonb) from (select p.proname from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+        where n.nspname = 'public' and p.prokind = 'f'
+          and not exists (select 1 from pg_depend d where d.objid = p.oid and d.deptype = 'e')
+          and not exists (select 1 from unnest(coalesce(p.proconfig, '{}')) c where c like 'search_path=%') order by p.proname limit 20) p),
       'sauvegarde_des_droits_presente', to_regclass('securite_sauvegarde.droits_20261031') is not null
     )
   ),
