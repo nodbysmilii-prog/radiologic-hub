@@ -1,0 +1,47 @@
+# RadiologicHub — contrôle du site EN LIGNE après une publication Cloudflare Pages, en lecture seule
+# (scripts/publication/controle-en-ligne.js) : pages en ligne, fichiers internes en 404, redirections,
+# en-têtes de sécurité, version en ligne = version du commit déployé.
+# Déclenchement : à la main (adresse au choix parmi celles du site), ou automatiquement quand Cloudflare
+# Pages signale un déploiement réussi (événement « deployment_status »). Aucun secret, aucune écriture.
+# En cas d'échec : retour arrière dans Cloudflare (docs/organisation/PUBLICATION.md, « Retour arrière »).
+name: Contrôler la publication
+
+on:
+  workflow_dispatch:
+    inputs:
+      adresse:
+        description: "Adresse à contrôler"
+        type: choice
+        default: https://radiologic-hub.pages.dev
+        options:
+          - https://radiologic-hub.pages.dev
+          - https://radiologichub.com
+  deployment_status:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: controle-publication
+  cancel-in-progress: true
+
+jobs:
+  controler:
+    name: Site en ligne conforme au dépôt
+    if: github.event_name == 'workflow_dispatch' || github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.deployment.sha || github.sha }}
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+      # Adresse lue par le script dans une variable (jamais insérée dans la commande) et limitée aux adresses du site.
+      - name: Contrôle du site en ligne
+        env:
+          ADRESSE_CHOISIE: ${{ inputs.adresse }}
+          ADRESSE_DEPLOIEMENT: ${{ github.event.deployment_status.environment_url || github.event.deployment_status.target_url }}
+        run: node scripts/publication/controle-en-ligne.js --depuis-environnement

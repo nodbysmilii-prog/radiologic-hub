@@ -90,6 +90,9 @@ Les enregistrements Brevo (domaine authentifié le 30/10/2026) sont chez **Space
 
 Retour arrière : Spaceship → *Nameservers* → serveurs Spaceship par défaut (leurs enregistrements, dont Brevo, sont intacts).
 
+## Contrôle après chaque publication (31/10/2026)
+`scripts/publication/controle-en-ligne.js` (lecture seule, sans secret), lancé par le workflow **« Contrôler la publication »** : automatiquement quand Cloudflare Pages signale un déploiement réussi (`deployment_status`), ou à la main (adresse `radiologic-hub.pages.dev` ou `radiologichub.com`). Vérifie : les pages de la racine en ligne (200) ; **chaque fichier interne du dépôt en 404** ; les redirections (`.html` → sans `.html` en 308 avec paramètres conservés, pages supprimées en 301) ; les en-têtes de sécurité, `no-referrer` et `noindex` de la page de réponse, `noindex` de l'administration ; la page 404 ; **la version en ligne identique au commit déployé** (fichiers témoins comparés à la construction locale de `dist/`). Seules les adresses du site sont acceptées. Premier contrôle réel (31/10, `radiologic-hub.pages.dev`) : **10/10**, 755 fichiers internes en 404. En cas d'échec : retour arrière ci-dessous. Test : `tests/controle-en-ligne.test.js`.
+
 ## Retour arrière
 
 | Situation | Retour arrière (immédiat) |
