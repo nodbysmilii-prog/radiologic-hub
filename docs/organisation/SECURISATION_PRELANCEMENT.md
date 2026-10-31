@@ -70,3 +70,11 @@ Retour arrière soumis à autorisation : restaurer les quatre A GitHub `185.199.
 Compatibilité avec c10dfb5 : aucun changement Supabase, workflows ou code Auth depuis la base du patch. Seul conflit documentaire README résolu en conservant les deux entrées. Les retraits EXECUTE sont désormais bornés à des signatures exactes connues : une nouvelle fonction publique ou une surcharge inconnue reste inchangée. Les tests incluent ces deux cas et les grants de colonnes pg_net. Ce correctif ne revendique pas de fermer toutes les futures fonctions anonymes.
 
 Réexamen Auth : les deux URL sans extension Communauté/Remplacements sont préventives et ne sont pas produites par les fonctions retour actuelles. Le minimum fonctionnel certain est d’ajouter bibliotheque et bibliotheque-admin, avec et sans .html (quatre URL). Les deux autres ajouts peuvent rester optionnels ; conserver leurs variantes .html déjà autorisées. Aucun changement appliqué.
+
+## Reprise par Claude Code (31/10/2026)
+
+Patch v2 appliqué tel quel (`git am`, 2 commits, empreintes SHA-256 du transfert vérifiées, SQL identique à la copie de revue) sur la branche principale `c10dfb5`. Vérifications ajoutées, **sans modifier le script** :
+- `tests/sql/prelancement-compat.js` (dans `npm run test:sql`) : PostgreSQL 16 local, simulation Supabase, **toutes les migrations du dépôt**, droits d'exécution accordés par défaut à anon comme sur Supabase avant correctif → script validé et relançable ; 60 fonctions listées sur 60 présentes ; anon n'en exécute plus aucune ; membres connectés et `service_role` conservent celles qu'utilisent le site et les fonctions serveur ; lectures publiques (cours, colonnes publiques de la bibliothèque) intactes.
+- Toutes les suites SQL existantes repassent avec le correctif appliqué : `RH_SQL_APRES=supabase/sql/securisation-prelancement.sql npm run test:sql`.
+- Appels du site : toutes les RPC visées (`rp_est_admin`, `rp_compteurs`, `rp_statistiques`, `rs_*`…) ne sont appelées qu'après connexion ; aucune règle d'accès destinée à anon n'utilise ces fonctions ; fonctions serveur : seulement `rp_taches_secret_valide` et `rs_rappels_messages` (service_role, conservées).
+- Fonctions du dépôt hors liste : `cours_images_avant_ecriture`, `cours_maj_le`, `cours_validations_avant_ecriture` (déclencheurs, déjà fermés à anon par leur migration).
