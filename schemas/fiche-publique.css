@@ -1,0 +1,27 @@
+/* © Radiologic Hub — Tous droits réservés.
+   Éléments communs aux fiches rapides publiques (SEO) : ligne d'édition, références, passerelle
+   vers les outils. Voir docs/organisation/SEO_FICHES.md. Préfixe fp-. */
+.fp-edition { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin: 14px 0 0; padding: 0; list-style: none; font-size: .78rem; font-weight: 700; color: var(--muted); }
+.fp-edition li { display: inline-flex; align-items: center; gap: 6px; }
+.fp-edition li + li::before { content: '·'; margin-right: 8px; opacity: .6; }
+.fp-edition .fp-gratuit { padding: 3px 12px; border: 3px solid var(--ink); border-radius: 999px; background: #fff; color: var(--ink); font-weight: 900; }
+.fp-edition .fp-gratuit::before { content: none; }
+
+.fp-refs { margin: 0 0 14px; padding-left: 1.2em; display: grid; gap: 8px; font-size: .86rem; }
+.fp-refs a { overflow-wrap: anywhere; }
+.fp-note { margin: 8px 0 0; font-size: .78rem; color: var(--muted); }
+.fp-note + .marker-sub { margin-top: 28px; }
+.fp-voir { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+.fp-voir a { display: block; height: 100%; padding: 10px 14px; border: 3px solid var(--c, var(--ink)); border-radius: 14px; background: color-mix(in srgb, var(--c, var(--ink)) 6%, #fff); color: var(--ink); font-size: .84rem; font-weight: 800; text-decoration: none; transition: transform .2s; }
+.fp-voir a:hover, .fp-voir a:focus-visible { transform: translateY(-3px); }
+.fp-voir small { display: block; margin-top: 3px; font-size: .72rem; font-weight: 600; color: var(--muted); }
+
+/* Passerelle discrète vers les outils professionnels */
+.fp-suite { margin: 34px 0 0; padding: 16px 20px; border: 3px dashed color-mix(in srgb, var(--ink) 35%, transparent); border-radius: 18px; background: #fff; }
+.fp-suite h2 { margin: 0 0 6px; font-size: 1.02rem; font-weight: 900; }
+.fp-suite p { margin: 0 0 10px; font-size: .88rem; color: var(--muted); }
+.fp-suite ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.fp-suite li a { font-weight: 800; }
+.fp-suite li small { display: block; font-size: .76rem; font-weight: 600; color: var(--muted); }
+.fp-mention { margin: 14px 0 0; font-size: .74rem; color: var(--muted); }
+@media print { .fp-suite { display: none; } }
