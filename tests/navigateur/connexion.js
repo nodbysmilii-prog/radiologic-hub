@@ -6,6 +6,7 @@
    Supabase SIMULÉ : compte fictif, aucun appel au vrai projet, aucun
    e-mail envoyé, aucune donnée réelle.
    Pour Remplacements, Communauté et administration de la Bibliothèque :
+   Ordinateur (1280 px) et téléphone (390 px).
    1. lien de connexion (e-mail) et Google : adresse de retour EXACTE
       demandée à Supabase = page en .html (une seule adresse autorisée
       par page, valable sur GitHub Pages et Cloudflare Pages) ;
@@ -72,8 +73,13 @@ function serveur(dist) {
 }
 
 /* ---------- Supabase simulé ---------- */
+const APPAREILS = {
+  ordinateur: { viewport: { width: 1280, height: 900 } },
+  telephone: { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true },
+};
+let appareil = 'ordinateur';
 async function contexte(b, { connecte = false, expiresAt = 4102444800, rafraichissementRefuse = false } = {}) {
-  const ctx = await b.newContext({ viewport: { width: 1280, height: 900 } });
+  const ctx = await b.newContext(APPAREILS[appareil]);
   const journal = [];
   await ctx.route(/cdn\.jsdelivr\.net\/npm\/@supabase\/supabase-js@[\d.]+\/dist\/umd\/supabase\.min\.js/, r => r.fulfill({ path: JS, contentType: 'text/javascript' }));
   await ctx.route(/^https:\/\/(fonts\.googleapis|fonts\.gstatic|cdn\.jsdelivr|cdnjs\.cloudflare|unpkg)\./, r => (/supabase-js/.test(r.request().url()) ? r.fallback() : r.fulfill({ status: 200, body: '' })));
@@ -119,7 +125,7 @@ const MODULES = [
   { nom: 'Remplacements', page: 'remplacements', app: '#rp-app', vue: '#/admin', formulaire: '[data-form="connexion"]', bouton: '[data-act="google"]',
     visiteur: async p => /se connecter/i.test(await p.$eval('#rp-barre', e => e.innerText)), connecte: async p => /déconnexion/i.test(await p.$eval('#rp-barre', e => e.innerText)), versConnexion: '#/connexion' },
   { nom: 'Communauté', page: 'communaute', app: '#rs-app', vue: '#/messages', formulaire: '[data-form="connexion"]', bouton: '[data-act="google"]',
-    visiteur: async p => !!(await p.$('a[href="#/connexion"]')), connecte: async p => !!(await p.$('[data-act="deconnexion"]:visible')), versConnexion: '#/connexion' },
+    visiteur: async p => !!(await p.$('a[href="#/connexion"]')), connecte: async p => !!(await p.$('details.rs-compte')), versConnexion: '#/connexion' },
   { nom: 'Administration de la Bibliothèque', page: 'bibliotheque-admin', app: '#bib-admin', vue: null, formulaire: '#bib-lien', bouton: '#bib-google',
     visiteur: async p => !!(await p.$('#bib-lien')), connecte: async p => /se déconnecter/i.test(await p.$eval('#bib-session', e => e.innerText).catch(() => '')), versConnexion: '' },
 ];
@@ -133,7 +139,8 @@ const texte = p => p.evaluate(() => document.body.innerText);
   const srv = await serveur(dist);
   const b = await chromium.launch();
   try {
-    for (const M of MODULES.filter(m => !SEULEMENT || m.page === SEULEMENT)) {
+    for (appareil of (process.env.RH_APPAREIL ? [process.env.RH_APPAREIL] : Object.keys(APPAREILS))) for (const M of MODULES.filter(m => !SEULEMENT || m.page === SEULEMENT)) {
+      const nom = `${appareil} · ${M.nom}`;
       const attendu = `${srv.base}/${M.page}.html`;
       /* 1. Adresse de retour exacte, page ouverte sans .html (Cloudflare) et avec .html (redirigée) */
       for (const adresse of [`/${M.page}`, `/${M.page}.html`]) {
@@ -147,8 +154,8 @@ const texte = p => p.evaluate(() => document.body.innerText);
         await attendre(800);
         const otp = journal.find(j => j.chemin === '/auth/v1/otp');
         const retour = otp && new URLSearchParams(otp.requete).get('redirect_to');
-        ok(`${M.nom} (${adresse}) : lien e-mail demandé avec l'adresse de retour exacte ${M.page}.html`, retour === attendu, retour);
-        ok(`${M.nom} (${adresse}) : création de compte autorisée par le lien (confirmation par e-mail)`, otp && JSON.parse(otp.corps).create_user === true, otp && otp.corps);
+        ok(`${nom} (${adresse}) : lien e-mail demandé avec l'adresse de retour exacte ${M.page}.html`, retour === attendu, retour);
+        ok(`${nom} (${adresse}) : création de compte autorisée par le lien (confirmation par e-mail)`, otp && JSON.parse(otp.corps).create_user === true, otp && otp.corps);
         await ctx.close();
       }
       {
@@ -157,7 +164,7 @@ const texte = p => p.evaluate(() => document.body.innerText);
         if (M.versConnexion) { await p.evaluate(h => { location.hash = h; }, M.versConnexion); await attendre(500); }
         await Promise.all([p.waitForURL(/\/auth\/v1\/authorize/, { timeout: 8000 }).catch(() => {}), p.click(M.bouton)]);
         const g = journal.find(j => j.chemin === '/auth/v1/authorize');
-        ok(`${M.nom} : Google avec la même adresse de retour`, g && new URLSearchParams(g.requete).get('redirect_to') === attendu, g && g.requete);
+        ok(`${nom} : Google avec la même adresse de retour`, g && new URLSearchParams(g.requete).get('redirect_to') === attendu, g && g.requete);
         await ctx.close();
       }
 
@@ -174,9 +181,9 @@ const texte = p => p.evaluate(() => document.body.innerText);
         await p.goto(`${srv.base}/${M.page}.html#access_token=${JWT}&expires_at=${exp}&expires_in=3600&refresh_token=r&token_type=bearer&type=magiclink`);
         await pret(p); await attendre(600);
         const etat = await p.evaluate(cle => ({ hash: location.hash, chemin: location.pathname, session: !!localStorage.getItem(cle) }), CLE_SESSION);
-        ok(`${M.nom} : retour du lien, session ouverte et adresse nettoyée (jeton absent de l'adresse)`, etat.session && !/access_token/.test(etat.hash) && await M.connecte(p), JSON.stringify(etat));
-        if (M.vue) ok(`${M.nom} : vue demandée avant la connexion retrouvée (${M.vue})`, etat.hash === M.vue, etat.hash);
-        ok(`${M.nom} : retour du lien sans erreur JavaScript`, !p.erreurs.length, p.erreurs.join(' ; '));
+        ok(`${nom} : retour du lien, session ouverte et adresse nettoyée (jeton absent de l'adresse)`, etat.session && !/access_token/.test(etat.hash) && await M.connecte(p), JSON.stringify(etat));
+        if (M.vue) ok(`${nom} : vue demandée avant la connexion retrouvée (${M.vue})`, etat.hash === M.vue, etat.hash);
+        ok(`${nom} : retour du lien sans erreur JavaScript`, !p.erreurs.length, p.erreurs.join(' ; '));
         await ctx.close();
       }
 
@@ -186,8 +193,8 @@ const texte = p => p.evaluate(() => document.body.innerText);
         await p.goto(`${srv.base}/${M.page}.html#error=access_denied&error_code=otp_expired&error_description=Email+link+is+invalid+or+has+expired`);
         await pret(p); await attendre(600);
         const t = await texte(p), hash = await p.evaluate(() => location.hash);
-        ok(`${M.nom} : lien expiré, message en français`, /lien de connexion a expiré ou a déjà été utilisé/.test(t), t.slice(0, 300));
-        ok(`${M.nom} : lien expiré, page utilisable (formulaire affiché, plus de « Chargement… », adresse nettoyée)`, !/Chargement…/.test(await p.$eval(M.app, e => e.innerText).catch(() => 'Chargement…')) && !/error/.test(hash) && await M.visiteur(p), hash);
+        ok(`${nom} : lien expiré, message en français`, /lien de connexion a expiré ou a déjà été utilisé/.test(t), t.slice(0, 300));
+        ok(`${nom} : lien expiré, page utilisable (formulaire affiché, plus de « Chargement… », adresse nettoyée)`, !/Chargement…/.test(await p.$eval(M.app, e => e.innerText).catch(() => 'Chargement…')) && !/error/.test(hash) && await M.visiteur(p), hash);
         await ctx.close();
       }
 
@@ -196,7 +203,7 @@ const texte = p => p.evaluate(() => document.body.innerText);
         const { ctx, p } = await contexte(b, { connecte: true, expiresAt: Math.round(Date.now() / 1000) - 60, rafraichissementRefuse: true });
         await p.goto(`${srv.base}/${M.page}`); await pret(p); await attendre(600);
         const etat = await p.evaluate(cle => !!localStorage.getItem(cle), CLE_SESSION);
-        ok(`${M.nom} : session expirée à l'ouverture, mode visiteur et session effacée`, !etat && await M.visiteur(p), `session conservée : ${etat}`);
+        ok(`${nom} : session expirée à l'ouverture, mode visiteur et session effacée`, !etat && await M.visiteur(p), `session conservée : ${etat}`);
         await ctx.close();
       }
       /* 4b. Session qui expire pendant l'utilisation : message et mode visiteur */
@@ -206,7 +213,7 @@ const texte = p => p.evaluate(() => document.body.innerText);
         const connecteAvant = await M.connecte(p);
         await p.waitForFunction(() => /session a expiré/.test(document.body.innerText), null, { timeout: 45000 }).catch(() => {});
         const t = await texte(p);
-        ok(`${M.nom} : session perdue en cours d'utilisation, message « session expirée » et mode visiteur`, connecteAvant && /session a expiré/.test(t) && await M.visiteur(p), `connecté avant : ${connecteAvant} ; ${t.slice(0, 200)}`);
+        ok(`${nom} : session perdue en cours d'utilisation, message « session expirée » et mode visiteur`, connecteAvant && /session a expiré/.test(t) && await M.visiteur(p), `connecté avant : ${connecteAvant} ; ${t.slice(0, 200)}`);
         await ctx.close();
       }
 
@@ -215,10 +222,12 @@ const texte = p => p.evaluate(() => document.body.innerText);
         const { ctx, p, journal } = await contexte(b, { connecte: true });
         await p.goto(`${srv.base}/${M.page}`); await pret(p);
         const avant = await M.connecte(p);
-        await p.click('[data-act="deconnexion"]:visible, #bib-sortie'); await pret(p); await attendre(600);
+        const bouton = await p.$('[data-act="deconnexion"]:visible, #bib-sortie');
+        if (bouton) await bouton.click(); else { await p.click('details.rs-compte > summary'); await p.click('.rs-compte-menu [data-act="deconnexion"]'); }
+        await pret(p); await attendre(600);
         const etat = await p.evaluate(cle => !!localStorage.getItem(cle), CLE_SESSION);
         const t = await texte(p);
-        ok(`${M.nom} : déconnexion (appel à Supabase, session effacée, mode visiteur, aucun message d'expiration)`, avant && journal.some(j => j.chemin === '/auth/v1/logout') && !etat && await M.visiteur(p) && !/session a expiré/.test(t), `connecté avant : ${avant} ; session : ${etat}`);
+        ok(`${nom} : déconnexion (appel à Supabase, session effacée, mode visiteur, aucun message d'expiration)`, avant && journal.some(j => j.chemin === '/auth/v1/logout') && !etat && await M.visiteur(p) && !/session a expiré/.test(t), `connecté avant : ${avant} ; session : ${etat}`);
         await ctx.close();
       }
     }
