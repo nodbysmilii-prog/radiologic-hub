@@ -117,6 +117,29 @@
     IV: { titre: 'Type IV', texte: 'Extension bilatérale aux canaux secondaires droit et gauche, ou tumeur multicentrique.', atteint: ['chc', 'convergence', 'droit', 'gauche'] },
   };
 
+  /* ---------- Foie en 3D : segments de Couinaud et pseudolésions (modèle Z-Anatomy) ---------- */
+  const SEGMENTS_FOIE = {
+    I: { nom: 'Segment I', lobe: 'Lobe caudé', texte: 'Lobe caudé : en arrière, entre la veine porte et la veine cave inférieure.', couleur: '#8d6e63' },
+    II: { nom: 'Segment II', lobe: 'Foie gauche', texte: 'Segment latéral gauche, postérieur (supérieur).', couleur: '#3c67b8' },
+    III: { nom: 'Segment III', lobe: 'Foie gauche', texte: 'Segment latéral gauche, antérieur (inférieur).', couleur: '#2a9d8f' },
+    IV: { nom: 'Segment IV', lobe: 'Foie gauche', texte: 'Segment médial gauche (lobe carré) : entre la fissure du ligament rond (ligament falciforme) et la fosse de la vésicule biliaire.', couleur: '#f2ab2f' },
+    V: { nom: 'Segment V', lobe: 'Foie droit', texte: 'Foie droit, secteur antérieur, partie inférieure.', couleur: '#d4174a' },
+    VI: { nom: 'Segment VI', lobe: 'Foie droit', texte: 'Foie droit, secteur postérieur, partie inférieure.', couleur: '#7b5ea7' },
+    VII: { nom: 'Segment VII', lobe: 'Foie droit', texte: 'Foie droit, secteur postérieur, partie supérieure.', couleur: '#548c6c' },
+    VIII: { nom: 'Segment VIII', lobe: 'Foie droit', texte: 'Foie droit, secteur antérieur, partie supérieure.', couleur: '#276a8c' },
+  };
+  /* Pseudolésions dont le siège est précisé par la fiche (tableau « Vraie masse ou pseudolésion ? » et
+     étape 1 de la CAT). Les textes sont ceux de la fiche ; aucun autre siège n'est ajouté. */
+  const PATHOLOGIES_FOIE = {
+    steatose: { nom: 'Stéatose focale', segments: ['IV'], reperes: ['fosse-vesicule', 'ligament-rond'], couleur: '#c4560f',
+      siege: 'Segment IV, lit vésiculaire, péri-falciforme',
+      texte: 'Segment IV, lit vésiculaire, péri-falciforme ; forme géographique ; aucun effet de masse ; vaisseaux traversants ; chute du signal en opposition de phase.' },
+    epargne: { nom: 'Épargne focale', segments: ['IV'], reperes: [], couleur: '#6b0d8c',
+      siege: 'Souvent segment IV, autour d\'une veine gastrique gauche',
+      texte: 'Zone non stéatosique dans un foie gras ; pas de chute en opposition de phase ; pseudo-nodule, souvent segment IV autour d\'une veine gastrique gauche.' },
+  };
+  const REPERES_FOIE = { 'fosse-vesicule': 'Lit vésiculaire (fosse de la vésicule biliaire)', 'ligament-rond': 'Péri-falciforme (fissure du ligament rond)' };
+
   /* ---------- Tableau final de reconnaissance ---------- */
   const CATEGORIES = { benigne: 'Tumeur bénigne', primitive: 'Tumeur maligne primitive', secondaire: 'Tumeur maligne secondaire', vasculaire: 'Tumeur vasculaire maligne rare' };
   const LESIONS = {
@@ -145,5 +168,5 @@
     { texte: 'Femme. Masse hyperéchogène hétérogène avec flux artériel ; graisse macroscopique, hypersignal T1 supprimé en FatSat sans chute spécifique IP/OP, vaisseaux centraux.', rep: 'aml', pourquoi: 'Angiomyolipome : tumeur à triple composante (graisse, vaisseaux, muscle lisse) ; graisse macroscopique, hypervascularisation persistante, vaisseaux centraux.' },
   ];
 
-  return { lirads, CONDITIONS, CATEGORIES_LIRADS, CRITERES_MAJEURS, TABLE_LIRADS, CRITERES_HNF, hnf, CONTEXTES, BISMUTH, CATEGORIES, LESIONS, CHOIX, CAS };
+  return { SEGMENTS_FOIE, PATHOLOGIES_FOIE, REPERES_FOIE, lirads, CONDITIONS, CATEGORIES_LIRADS, CRITERES_MAJEURS, TABLE_LIRADS, CRITERES_HNF, hnf, CONTEXTES, BISMUTH, CATEGORIES, LESIONS, CHOIX, CAS };
 });

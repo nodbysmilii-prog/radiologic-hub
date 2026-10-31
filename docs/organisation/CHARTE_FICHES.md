@@ -85,6 +85,7 @@ Règle permanente pour toute fiche rapide qui intègre de l'anatomie 3D.
 | Pancréas | `public/models/pancreas/` | `fiches/pancreas/pancreas-3d.js` | Pancréatite aiguë |
 | Rocher | `public/models/rocher/` | `fiches/cholesteatome/rocher-3d.js` | Cholestéatome |
 | Base du crâne, cavum | `public/models/cavum/` | `fiches/cavum/cavum-3d.js` | Cancer du cavum |
+| Foie (8 segments de Couinaud, vaisseaux, vésicule) | `public/models/foie/` | `fiches/digestif/foie-3d.js` (câblage : `foie-3d-fiche.js`) | Masses hépatiques |
 | Coude, patte d'oie (muscles, tendons, nerfs) | `public/models/coude/`, `public/models/patte-oie/` | `cours/visionneuse.js` (générique, réglages par groupe) via `cours/coude-3d.js`, `cas/patte-oie-3d.js` | Cours d'échoanatomie, cas clinique |
 
 Cette liste est un point de départ : vérifier `public/models/`, `scripts/` et le README pour les ajouts récents.

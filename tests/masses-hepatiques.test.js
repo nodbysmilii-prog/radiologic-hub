@@ -192,3 +192,45 @@ test('fiche : sections, code couleur, carte de l\'index, scripts', () => {
   assert.match(HTML, /digestif\/foie-fiche\.js\?v=/);
   assert.match(fs.readFileSync(path.join(RACINE, 'fiches-rapides.html'), 'utf8'), /<a class="fiche-card" data-spe="digestif" href="fiches\/masses-hepatiques\.html"/);
 });
+
+test('foie en 3D : modèle Z-Anatomy, 8 segments, orientation cohérente avec les descriptions', () => {
+  const dossier = path.join(RACINE, 'public', 'models', 'foie');
+  const M = JSON.parse(fs.readFileSync(path.join(dossier, 'foie.json'), 'utf8'));
+  assert.ok(fs.statSync(path.join(dossier, 'foie.glb')).size > 50000);
+  assert.ok(fs.existsSync(path.join(dossier, 'LICENSE-Z-Anatomy.txt')));
+  assert.match(M.source, /Z-Anatomy \(CC BY-SA 4\.0\)/);
+  const c = Object.fromEntries(M.structures.filter(s => s.segment).map(s => [s.segment, s.centre]));   // [x gauche+, y haut, z avant]
+  assert.deepEqual(Object.keys(c).sort(), ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII']);
+  assert.deepEqual(Object.keys(R.SEGMENTS_FOIE).sort(), Object.keys(c).sort());
+  // foie droit à droite du patient (x < 0), foie gauche à gauche (x > 0)
+  for (const s of ['V', 'VI', 'VII', 'VIII']) assert.ok(c[s][0] < 0, `${s} à droite`);
+  for (const s of ['II', 'III']) assert.ok(c[s][0] > 0, `${s} à gauche`);
+  // supérieur / inférieur et antérieur / postérieur, comme les textes de regles/masses-hepatiques.js
+  assert.ok(c.VIII[1] > c.V[1] && c.VII[1] > c.VI[1], 'VII et VIII au-dessus de VI et V');
+  assert.ok(c.V[2] > c.VI[2] && c.VIII[2] > c.VII[2], 'V et VIII en avant de VI et VII');
+  assert.ok(c.II[1] > c.III[1] && c.III[2] > c.II[2], 'II au-dessus et en arrière de III');
+  assert.ok(c.IV[0] > c.V[0] && c.IV[0] < c.III[0], 'IV entre le foie droit et III');
+  assert.ok(c.I[2] < c.IV[2], 'I en arrière de IV');
+  // repères de la fiche (étiquettes du pack) : lit vésiculaire à droite, fissure du ligament rond en avant
+  const rep = Object.fromEntries(M.reperes.map(r => [r.id, r.position]));
+  assert.ok(rep['fosse-vesicule'][0] < 0 && rep['ligament-rond'][2] > 0.2);
+  for (const id of Object.keys(R.REPERES_FOIE)) assert.ok(rep[id], id);
+  for (const id of ['veine-porte', 'veines-hepatiques', 'vci', 'vesicule']) assert.ok(M.structures.some(s => s.id === id), id);
+});
+
+test('foie en 3D : pseudolésions = texte de la fiche, boutons et scripts présents', () => {
+  const sans = R.PATHOLOGIES_FOIE;
+  assert.deepEqual(Object.keys(sans), ['steatose', 'epargne']);
+  for (const [k, p] of Object.entries(sans)) {
+    p.segments.forEach(s => assert.ok(R.SEGMENTS_FOIE[s], s));
+    p.reperes.forEach(r => assert.ok(R.REPERES_FOIE[r], r));
+    assert.match(HTML, new RegExp(`data-patho="${k}"`), k);
+    assert.ok(HTML.replace(/&gt;/g, '>').includes(p.texte.replace(/\\'/g, '\'')), `texte de ${k} identique à la fiche`);
+  }
+  assert.equal(sans.steatose.segments.join(), 'IV'); assert.equal(sans.epargne.segments.join(), 'IV');
+  for (const s of Object.keys(R.SEGMENTS_FOIE)) assert.match(HTML, new RegExp(`data-seg="${s}"`), s);
+  assert.match(HTML, /<script type="importmap">/);
+  assert.match(HTML, /digestif\/foie-3d-fiche\.js\?v=/);
+  for (const f of ['foie-3d.js', 'foie-3d-fiche.js']) assert.ok(fs.existsSync(path.join(RACINE, 'fiches', 'digestif', f)), f);
+  assert.ok(fs.existsSync(path.join(RACINE, 'scripts', 'export_foie.py')));
+});

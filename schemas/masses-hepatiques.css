@@ -121,6 +121,15 @@
 .mh-flash { animation: mh-flash 1.2s ease-out; }
 @keyframes mh-flash { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--c) 60%, transparent); } 100% { box-shadow: 0 0 0 18px transparent; } }
 
+/* Foie en 3D */
+.fo3d-legende { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: .72rem; }
+.fo3d-legende li { display: flex; gap: 6px; align-items: center; }
+.fo3d-legende li::before { content: ""; width: 12px; height: 12px; border-radius: 3px; background: var(--c); }
+.fo3d .md3d-info h4 { margin: 0 0 6px; font-size: 1rem; display: flex; gap: 8px; align-items: center; }
+.fo3d .md3d-info h4::before { content: ""; width: 14px; height: 14px; border-radius: 4px; background: var(--c, #888); }
+.fo3d .md3d-info h4 small { font-size: .7rem; font-weight: 700; color: var(--muted); }
+.fo3d .c3d-voie[aria-pressed="true"] { background: var(--c); color: #fff; }
+
 @media (max-width: 900px) {
   .mh-calc, .mh-bismuth { grid-template-columns: 1fr; }
   .mh-calc-res { position: static; }

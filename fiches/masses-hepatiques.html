@@ -31,10 +31,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Michroma&family=Permanent+Marker&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css?v=20261022235000">
   <link rel="stylesheet" href="../fiche.css?v=20261012150000">
+  <link rel="stylesheet" href="../schemas/cavum.css?v=20261024100000">
   <link rel="stylesheet" href="../schemas/cholesteatome.css?v=20261026200000">
   <link rel="stylesheet" href="../schemas/eu-tirads.css?v=20261026230000">
   <link rel="stylesheet" href="../schemas/mediastin.css?v=20261027100000">
   <link rel="stylesheet" href="../schemas/masses-hepatiques.css?v=20261031120000">
+  <script type="importmap">{ "imports": { "three": "../vendor/three-0.170.0/three.module.min.js", "three/addons/": "../vendor/three-0.170.0/addons/" } }</script>
   <script type="application/ld+json">
 [
   {
@@ -189,6 +191,7 @@
         <ol>
           <li><a href="#introduction" style="--c: var(--ink)"><b>·</b>Objectifs et démarche</a></li>
           <li><a href="#pseudolesions" style="--c: var(--purple)"><b>·</b>Vraie masse ou pseudolésion ?</a></li>
+          <li><a href="#foie-3d-section" style="--c: var(--amber)"><b>·</b>Le foie en 3D</a></li>
           <li><a href="#exploration" style="--c: var(--blue)"><b>·</b>Protocole d'exploration</a></li>
           <li><a href="#semiologie" style="--c: var(--steel)"><b>·</b>Sémiologie transversale</a></li>
           <li><a href="#benignes" style="--c: var(--green)"><b>I</b>Tumeurs bénignes</a></li>
@@ -249,6 +252,55 @@
                 <tr><td class="rh">Trouble perfusionnel</td><td>Hyperrehaussement artériel géographique ; aucun effet de masse ; homogénéisation portale ; cause vasculaire, biliaire ou inflammatoire.</td></tr>
               </tbody>
             </table>
+          </div>
+        </section>
+
+        <!-- Le foie en 3D -->
+        <section class="fsec" id="foie-3d-section" style="--c: var(--amber)">
+          <h2 class="fsec-title"><span class="fnum">·</span>Le foie en 3D : segments et pseudolésions</h2>
+          <p class="fintro">Rappel ajouté à la fiche. Touchez un segment de Couinaud, ou choisissez une pseudolésion pour voir où elle siège le plus souvent d'après la fiche.</p>
+          <div class="c3d r3d fo3d" id="foie-3d" data-modeles="../public/models/foie/">
+            <div class="c3d-barre" role="toolbar" aria-label="Segments et pseudolésions">
+              <span class="r3d-barre-titre">Segments</span>
+              <button type="button" class="c3d-voie" data-seg="I" aria-pressed="false" style="--c: #8d6e63">I</button>
+              <button type="button" class="c3d-voie" data-seg="II" aria-pressed="false" style="--c: #3c67b8">II</button>
+              <button type="button" class="c3d-voie" data-seg="III" aria-pressed="false" style="--c: #2a9d8f">III</button>
+              <button type="button" class="c3d-voie" data-seg="IV" aria-pressed="false" style="--c: #f2ab2f">IV</button>
+              <button type="button" class="c3d-voie" data-seg="V" aria-pressed="false" style="--c: #d4174a">V</button>
+              <button type="button" class="c3d-voie" data-seg="VI" aria-pressed="false" style="--c: #7b5ea7">VI</button>
+              <button type="button" class="c3d-voie" data-seg="VII" aria-pressed="false" style="--c: #548c6c">VII</button>
+              <button type="button" class="c3d-voie" data-seg="VIII" aria-pressed="false" style="--c: #276a8c">VIII</button>
+              <span class="r3d-barre-titre">Pseudolésions</span>
+              <button type="button" class="c3d-voie" data-patho="steatose" aria-pressed="false" style="--c: #c4560f">Stéatose focale</button>
+              <button type="button" class="c3d-voie" data-patho="epargne" aria-pressed="false" style="--c: #6b0d8c">Épargne focale</button>
+            </div>
+            <div class="c3d-cadre">
+              <div class="c3d-vue">
+                <div class="c3d-scene" id="fo3d-scene"></div>
+                <a class="c3d-attrib" href="https://www.z-anatomy.com/" rel="noopener" target="_blank" title="Anatomie : Z-Anatomy (CC BY-SA 4.0, dérivé de BodyParts3D). Segments du pack repris tels quels ; le segment IV n'est pas subdivisé en IVa / IVb ; vaisseaux : tronc de la veine porte et convergence des veines hépatiques, sans branches.">© Z-Anatomy · CC BY-SA</a>
+              </div>
+              <aside class="c3d-panneau" aria-label="Réglages de la vue 3D">
+                <p class="c3d-titre">Vues</p>
+                <div class="c3d-vues">
+                  <button type="button" data-vue="face">De face</button>
+                  <button type="button" data-vue="dessus">De dessus</button>
+                  <button type="button" data-vue="dessous">De dessous</button>
+                  <button type="button" data-vue="dos">De dos</button>
+                  <button type="button" data-vue="droit">Côté droit</button>
+                  <button type="button" data-vue="oblique">Oblique</button>
+                </div>
+                <p class="c3d-titre">Afficher</p>
+                <label class="r3d-reglage"><span>opaque</span><input type="range" id="fo3d-transparence" min="0" max="85" value="0" aria-label="Transparence du foie"><span>transparent</span></label>
+                <label class="r3d-reglage"><input type="checkbox" id="fo3d-vaisseaux" checked> veine porte, veines hépatiques, VCI</label>
+                <label class="r3d-reglage"><input type="checkbox" id="fo3d-vesicule" checked> vésicule biliaire</label>
+                <ul class="fo3d-legende">
+                  <li style="--c: #5b2a86">veine porte (tronc)</li>
+                  <li style="--c: #3c67b8">veines hépatiques, veine cave inférieure</li>
+                  <li style="--c: #3f9b4a">vésicule biliaire</li>
+                </ul>
+              </aside>
+            </div>
+            <div class="r3d-info md3d-info" id="fo3d-info" aria-live="polite"><p class="md-aide">Touchez un segment ou choisissez une pseudolésion : son siège le plus fréquent (d'après la fiche) s'affiche ici.</p></div>
           </div>
         </section>
 
@@ -896,5 +948,6 @@
   <script src="../fiche.js?v=20261022235000"></script>
   <script src="../regles/masses-hepatiques.js?v=20261031120000"></script>
   <script src="digestif/foie-fiche.js?v=20261031120000"></script>
+  <script type="module" src="digestif/foie-3d-fiche.js?v=20261031180000"></script>
 </body>
 </html>

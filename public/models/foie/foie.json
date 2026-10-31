@@ -1,0 +1,179 @@
+{
+ "source": "Z-Anatomy (CC BY-SA 4.0), commit 2b6cf98a8ca012571ecb252e5c077b42a21b3b61, dérivé de BodyParts3D (CC BY-SA 2.1 JP)",
+ "repere": "centré sur le foie, ×10 (1 unité = 10 cm), +Y haut, +Z avant du patient, +X gauche du patient",
+ "limites": "segments de Couinaud du pack Z-Anatomy repris tels quels ; le segment IV n'est pas subdivisé en IVa / IVb ; vaisseaux : courbes du pack (tronc de la veine porte, convergence des veines hépatiques), sans branches segmentaires",
+ "structures": [
+  {
+   "id": "segment-I",
+   "nom": "Segment postérieur (I), lobe caudé",
+   "cat": "segment",
+   "segment": "I",
+   "centre": [
+    -0.007,
+    0.253,
+    0.023
+   ]
+  },
+  {
+   "id": "segment-II",
+   "nom": "Segment postérolatéral gauche (II)",
+   "cat": "segment",
+   "segment": "II",
+   "centre": [
+    0.497,
+    0.463,
+    0.302
+   ]
+  },
+  {
+   "id": "segment-III",
+   "nom": "Segment antérolatéral gauche (III)",
+   "cat": "segment",
+   "segment": "III",
+   "centre": [
+    0.348,
+    0.204,
+    0.472
+   ]
+  },
+  {
+   "id": "segment-IV",
+   "nom": "Segment médial gauche (IV)",
+   "cat": "segment",
+   "segment": "IV",
+   "centre": [
+    -0.061,
+    0.184,
+    0.346
+   ]
+  },
+  {
+   "id": "segment-V",
+   "nom": "Segment antéromédial droit (V)",
+   "cat": "segment",
+   "segment": "V",
+   "centre": [
+    -0.434,
+    -0.174,
+    0.27
+   ]
+  },
+  {
+   "id": "segment-VI",
+   "nom": "Segment antérolatéral droit (VI)",
+   "cat": "segment",
+   "segment": "VI",
+   "centre": [
+    -0.648,
+    -0.296,
+    -0.094
+   ]
+  },
+  {
+   "id": "segment-VII",
+   "nom": "Segment postérolatéral droit (VII)",
+   "cat": "segment",
+   "segment": "VII",
+   "centre": [
+    -0.578,
+    0.206,
+    -0.262
+   ]
+  },
+  {
+   "id": "segment-VIII",
+   "nom": "Segment postéromédial droit (VIII)",
+   "cat": "segment",
+   "segment": "VIII",
+   "centre": [
+    -0.392,
+    0.37,
+    0.112
+   ]
+  },
+  {
+   "id": "vesicule",
+   "nom": "Vésicule biliaire",
+   "cat": "bile",
+   "centre": [
+    -0.368,
+    -0.402,
+    0.334
+   ]
+  },
+  {
+   "id": "veine-porte",
+   "nom": "Veine porte (tronc)",
+   "cat": "porte",
+   "centre": [
+    0.055,
+    -0.029,
+    0.079
+   ]
+  },
+  {
+   "id": "veines-hepatiques",
+   "nom": "Veines hépatiques",
+   "cat": "veine",
+   "centre": [
+    -0.002,
+    0.662,
+    0.0
+   ]
+  },
+  {
+   "id": "vci",
+   "nom": "Veine cave inférieure",
+   "cat": "veine",
+   "centre": [
+    0.021,
+    -0.73,
+    -0.0
+   ]
+  }
+ ],
+ "reperes": [
+  {
+   "id": "ligament-rond",
+   "nom": "Fissure du ligament rond (ligament falciforme)",
+   "ecart_mm": 13.0,
+   "position": [
+    0.137,
+    -0.172,
+    0.412
+   ]
+  },
+  {
+   "id": "ligament-veineux",
+   "nom": "Fissure du ligament veineux",
+   "ecart_mm": 20.9,
+   "position": [
+    0.195,
+    0.234,
+    -0.297
+   ]
+  },
+  {
+   "id": "fosse-vesicule",
+   "nom": "Fosse de la vésicule biliaire (lit vésiculaire)",
+   "ecart_mm": 10.0,
+   "position": [
+    -0.291,
+    -0.363,
+    0.104
+   ]
+  },
+  {
+   "id": "aire-nue",
+   "nom": "Aire nue du foie",
+   "ecart_mm": 19.1,
+   "position": [
+    -0.37,
+    0.526,
+    -0.363
+   ]
+  }
+ ],
+ "empreinte": "a8ffa198c52e",
+ "octets": 156352
+}
