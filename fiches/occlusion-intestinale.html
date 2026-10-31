@@ -227,7 +227,7 @@
           <form class="md-outil oi-dose" id="oi-dose" onsubmit="return false">
             <p class="ti-outil-titre">Produit de contraste</p>
             <p><mark class="k-tech">1,5 à 2cc/kg ; débit 2-4cc/s</mark></p>
-            <label class="np-taille">Poids : <output id="oi-poids-val">70</output> kg<input type="range" name="poids" min="30" max="130" value="70"></label>
+            <label class="np-taille">Poids : <output id="oi-poids-val">70</output> kg<input type="range" name="poids" min="30" max="130" value="70" aria-label="Poids (kg)"></label>
             <p class="ch-verdict k-key" id="oi-dose-res" aria-live="polite"><b></b><span></span></p>
           </form>
         </section>
@@ -246,7 +246,7 @@
               <button type="button" data-seg="grele" aria-pressed="true">Grêle</button>
               <button type="button" data-seg="colon" aria-pressed="false">Côlon</button>
             </div>
-            <label class="np-taille">Diamètre : <output id="oi-mm">30</output> mm<input type="range" name="mm" min="10" max="100" value="30"></label>
+            <label class="np-taille">Diamètre : <output id="oi-mm">30</output> mm<input type="range" name="mm" min="10" max="100" value="30" aria-label="Diamètre (mm)"></label>
             <div class="oi-regle" aria-hidden="true"><i id="oi-regle-seuil"></i><b id="oi-regle-val"></b></div>
             <p class="ch-verdict" id="oi-mesure-res" aria-live="polite"><b></b><span></span></p>
           </form>
