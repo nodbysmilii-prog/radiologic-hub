@@ -58,6 +58,69 @@ test('LI-RADS v2018 : tableau des critères majeurs', () => {
   assert.equal(run('lirads', { directe: 'M' }).badge, 'LR-M');
 });
 
+/* LI-RADS CT/MRI v2018 : référence validée par l'auteur le 31/10/2026, écrite à part du code.
+   Clés : A = aucun critère majeur, C = capsule, W = wash-out non périphérique, G = croissance seuil. */
+const LR_REF = {
+  'sans <20':   { A: 3, C: 3, W: 3, G: 3, CW: 4, CG: 4, WG: 4, CWG: 4 },
+  'sans >=20':  { A: 3, C: 4, W: 4, G: 4, CW: 4, CG: 4, WG: 4, CWG: 4 },
+  'hrpa <10':   { A: 3, C: 4, W: 4, G: 4, CW: 4, CG: 4, WG: 4, CWG: 4 },
+  'hrpa 10-19': { A: 3, C: 4, W: 5, G: 5, CW: 5, CG: 5, WG: 5, CWG: 5 },   // capsule seule : LR-4 ; wash-out ou croissance : LR-5
+  'hrpa >=20':  { A: 4, C: 5, W: 5, G: 5, CW: 5, CG: 5, WG: 5, CWG: 5 },   // HRPA seule : LR-4 ; + au moins un critère majeur : LR-5
+};
+const LR_TAILLES = { 'sans <20': [1, 9, 15, 19.9], 'sans >=20': [20, 25, 80], 'hrpa <10': [1, 5, 9.9], 'hrpa 10-19': [10, 15, 19.9], 'hrpa >=20': [20, 25, 80] };
+
+test('LI-RADS v2018 (éditeur) : toutes les combinaisons taille × HRPA × critères majeurs', () => {
+  let n = 0;
+  for (const [col, lignes] of Object.entries(LR_REF)) {
+    for (const t of LR_TAILLES[col]) {
+      for (const [cle, attendu] of Object.entries(lignes)) {
+        const st = { aphe: col.startsWith('hrpa') ? 'oui' : 'non', taille: String(t), capsule: cle.includes('C'), washout: cle.includes('W'), croissance: cle.includes('G') };
+        assert.equal(run('lirads', st).badge, `LR-${attendu}`, `${col}, ${t} mm, ${cle}`);
+        n++;
+      }
+    }
+  }
+  assert.equal(n, 8 * 16);
+});
+
+test('LI-RADS v2018 (éditeur) : règles de l\'auteur, croissance seuil, bornes, entrées incomplètes', () => {
+  const L = (aphe, taille, x = {}) => run('lirads', { aphe, taille: String(taille), ...x }).badge;
+  // 10-19 mm, HRPA non périphérique
+  assert.equal(L('oui', 15, { capsule: true }), 'LR-4');
+  assert.equal(L('oui', 15, { washout: true }), 'LR-5');
+  assert.equal(L('oui', 15, { croissance: true }), 'LR-5');
+  assert.equal(L('oui', 15, { capsule: true, croissance: true }), 'LR-5');
+  assert.equal(L('oui', 15, { washout: true, croissance: true, capsule: true }), 'LR-5');
+  // ≥ 20 mm, HRPA non périphérique
+  assert.equal(L('oui', 25), 'LR-4');
+  assert.equal(L('oui', 25, { croissance: true }), 'LR-5');
+  // bornes : 10 mm = tranche 10-19 ; 20 mm = tranche ≥ 20 ; 9,9 mm = tranche < 10
+  assert.equal(L('oui', 9.9, { washout: true }), 'LR-4');
+  assert.equal(L('oui', 10, { washout: true }), 'LR-5');
+  assert.equal(L('oui', 19.9, { capsule: true }), 'LR-4');
+  assert.equal(L('oui', 20, { capsule: true }), 'LR-5');
+  // virgule décimale acceptée
+  assert.equal(L('oui', '19,5', { capsule: true }), 'LR-4');
+  // sans HRPA ou taille : aucun résultat (pas de catégorie devinée)
+  assert.equal(run('lirads', { taille: '15' }).texte, '');
+  assert.equal(run('lirads', { aphe: 'oui' }).texte, '');
+  // catégories directes
+  for (const [d, badge] of [['NC', 'LR-NC'], ['1', 'LR-1'], ['2', 'LR-2'], ['3', 'LR-3'], ['4', 'LR-4'], ['5', 'LR-5'], ['M', 'LR-M'], ['TIV', 'LR-TIV']]) assert.equal(run('lirads', { directe: d }).badge, badge);
+  // les critères accessoires : jamais de passage en LR-5 par « en faveur de la malignité »
+  assert.equal(L('oui', 15, { capsule: true, accessoire: 'plus' }), 'LR-4');
+  assert.equal(L('non', 15, { accessoire: 'plus' }), 'LR-4');
+});
+
+test('LI-RADS v2018 (éditeur) : conditions d\'application affichées', () => {
+  const d = D.lirads;
+  assert.match(d.aide, /Patient à risque de CHC uniquement/);
+  assert.match(d.aide, /\(wash-out non périphérique, capsule rehaussée, croissance seuil\)/);
+  assert.match(d.titre, /v2018/);
+  // l'éditeur ne propose cet outil que pour un contexte de foie à risque (cirrhose, CHC)
+  assert.ok(d.suggere.test('cirrhose') && d.suggere.test('chc') && d.suggere.test('lirads'));
+  assert.ok(!d.suggere.test('hemangiome typique sur foie sain'));
+});
+
 test('Neuro : Fisher modifié, Fazekas, Scheltens', () => {
   assert.equal(run('fisher', { g: '4' }).conclusion, 'Hémorragie sous-arachnoïdienne, Fisher modifié 4.');
   const f = run('fazekas', { pv: '2', sbp: '1' });

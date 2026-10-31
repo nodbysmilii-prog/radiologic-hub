@@ -1,5 +1,7 @@
 # Offre gratuite / premium (freemium) — état des lieux et protection réelle
 
+> **Détail du problème des 43 modèles publics et stratégie de protection serveur : `PROTECTION_PREMIUM.md`.**
+>
 > Suivi créé le 31/10/2026 à la demande de l'auteur. **Rien n'est basculé** : aucun module n'a changé de statut, rien n'a été appliqué à Supabase, aucune configuration DNS touchée. Ce document dit **où en est chaque module aujourd'hui**, ce que l'auteur a décidé, ce qui reste à décider, et **comment protéger réellement** un contenu premium. À lire avec `PUBLICATION.md` (liste blanche, Cloudflare, étapes) et `SEO_FICHES.md`.
 
 ## Décisions de l'auteur (31/10/2026)

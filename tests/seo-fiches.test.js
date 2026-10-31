@@ -85,6 +85,12 @@ test('fiche « Masses hépatiques solides » : références vérifiées, passere
   for (const doi of ['10.1148/radiol.2018181494', '10.1016/j.jhep.2016.04.001', '10.1016/j.jhep.2018.03.019']) {
     assert.match(h, new RegExp(`href="https://doi\\.org/${doi.replace(/[./]/g, '\\$&')}"`), doi);
   }
+  // année visible, lectures complémentaires et non sources du cours
+  assert.match(h, /<li><b>2018<\/b> — Chernyak/);
+  assert.match(h, /<li><b>2016<\/b> — European/);
+  assert.match(h, /<li><b>2018<\/b> — European/);
+  assert.match(h, /Lectures complémentaires publiées en 2016 et 2018/);
+  assert.match(h, /Ce ne sont pas les sources originales du cours/);
   assert.match(h, /<aside class="fp-suite"/);
   assert.match(h, /comptes-rendus\.html#modele=tdm-abdo-pelvienne-injectee/);
   // le modèle visé existe vraiment dans l'éditeur

@@ -3,7 +3,7 @@
    RadiologicHub — fiche « Masses hépatiques solides » (fiches/masses-hepatiques.html) :
    données et petits calculs repris de la fiche condensée de l'auteur (lexique inchangé)
    ---------------------------------------------------------
-   • lirads(...)        : tableau « Critères LR-3 / LR-4 / LR-5 selon taille et HRPA » ;
+   • lirads(...)        : tableau ACR CT/MRI LI-RADS v2018 (taille, HRPA, critères majeurs) ;
    • CATEGORIES_LIRADS  : LR-NC à LR-TIV et conduite à retenir (LR-1 à LR-5) ;
    • hnf(...)           : « HNF typique : cinq critères majeurs » ;
    • CONTEXTES          : étape 2 de la CAT devant une lésion focale hyperéchogène ;
@@ -40,11 +40,18 @@
     { id: 'croissance', label: 'Croissance supérieure au seuil de progression' },
   ];
 
-  /* Colonnes du tableau : pas de HRPA (< 20, ≥ 20) ; HRPA non périphérique (< 10, 10-19, ≥ 20) ;
-     lignes : aucun critère majeur, un critère majeur, ≥ deux critères majeurs. */
+  /* Conditions d'application (texte de la fiche, repris par le calculateur) */
+  const CONDITIONS = 'S\'applique aux patients cirrhotiques ou à risque de CHC, en TDM/IRM injectée ; ne s\'applique pas au foie sain.';
+
+  /* Tableau ACR CT/MRI LI-RADS v2018 (corrigé le 31/10/2026 à la demande de l'auteur).
+     Colonnes : pas de HRPA (< 20, ≥ 20 mm) ; HRPA non périphérique (< 10, 10-19, ≥ 20 mm).
+     Lignes (index) : 0 aucun critère majeur ; 1 un critère majeur = capsule rehaussée seule ;
+     2 un critère majeur = wash-out non périphérique ou croissance seuil ; 3 deux critères majeurs ou plus.
+     À 10-19 mm avec HRPA, la capsule seule donne LR-4 ; le wash-out ou la croissance donnent LR-5.
+     À ≥ 20 mm avec HRPA, HRPA seule : LR-4 ; HRPA + au moins un critère majeur : LR-5. */
   const TABLE_LIRADS = {
-    sans: { '<20': ['LR-3', 'LR-3', 'LR-4'], '>=20': ['LR-3', 'LR-4', 'LR-4'] },
-    hrpa: { '<10': ['LR-3', 'LR-4', 'LR-4'], '10-19': ['LR-3', 'LR-4', 'LR-5'], '>=20': ['LR-4', 'LR-4 à LR-5*', 'LR-5'] },
+    sans: { '<20': ['LR-3', 'LR-3', 'LR-3', 'LR-4'], '>=20': ['LR-3', 'LR-4', 'LR-4', 'LR-4'] },
+    hrpa: { '<10': ['LR-3', 'LR-4', 'LR-4', 'LR-4'], '10-19': ['LR-3', 'LR-4', 'LR-5', 'LR-5'], '>=20': ['LR-4', 'LR-5', 'LR-5', 'LR-5'] },
   };
 
   function colonne(taille, hrpa) {
@@ -56,19 +63,13 @@
   function lirads(taille, hrpa, criteres) {
     const t = num(taille);
     if (t === null || t <= 0) return null;
-    const coches = (criteres || []).filter(c => CRITERES_MAJEURS.some(m => m.id === c));
-    const n = new Set(coches).size;
+    const coches = [...new Set((criteres || []).filter(c => CRITERES_MAJEURS.some(m => m.id === c)))];
+    const n = coches.length;
     const col = colonne(t, !!hrpa);
-    const ligne = Math.min(n, 2);
-    let cat = TABLE_LIRADS[hrpa ? 'hrpa' : 'sans'][col][ligne];
-    // * LR-5 si un critère de croissance significative est associé, sinon LR-4
-    let note = '';
-    if (cat === 'LR-4 à LR-5*') {
-      cat = coches.includes('croissance') ? 'LR-5' : 'LR-4';
-      note = 'LR-5 si un critère de croissance significative est associé, sinon LR-4.';
-    }
+    const ligne = n === 0 ? 0 : n >= 2 ? 3 : coches[0] === 'capsule' ? 1 : 2;
+    const cat = TABLE_LIRADS[hrpa ? 'hrpa' : 'sans'][col][ligne];
     return {
-      categorie: cat, colonne: col, criteresMajeurs: n, note,
+      categorie: cat, colonne: col, ligne, criteresMajeurs: n,
       sens: CATEGORIES_LIRADS[cat].sens, retenir: CATEGORIES_LIRADS[cat].retenir, niveau: CATEGORIES_LIRADS[cat].niveau,
     };
   }
@@ -144,5 +145,5 @@
     { texte: 'Femme. Masse hyperéchogène hétérogène avec flux artériel ; graisse macroscopique, hypersignal T1 supprimé en FatSat sans chute spécifique IP/OP, vaisseaux centraux.', rep: 'aml', pourquoi: 'Angiomyolipome : tumeur à triple composante (graisse, vaisseaux, muscle lisse) ; graisse macroscopique, hypervascularisation persistante, vaisseaux centraux.' },
   ];
 
-  return { lirads, CATEGORIES_LIRADS, CRITERES_MAJEURS, TABLE_LIRADS, CRITERES_HNF, hnf, CONTEXTES, BISMUTH, CATEGORIES, LESIONS, CHOIX, CAS };
+  return { lirads, CONDITIONS, CATEGORIES_LIRADS, CRITERES_MAJEURS, TABLE_LIRADS, CRITERES_HNF, hnf, CONTEXTES, BISMUTH, CATEGORIES, LESIONS, CHOIX, CAS };
 });

@@ -60,8 +60,10 @@ Règles : un encadré en **fin** de fiche, 1 à 3 liens, titre sobre (« Du diag
 2. Une fiche = une petite PR : en-tête SEO, `fp-edition`, références vérifiées, voir aussi, passerelle, carte du sitemap, test vert. Pas de refonte du contenu.
 3. Suivre `npm run seo:rapport` jusqu'à 26 / 26.
 
-## À valider par l'auteur (fiche « Masses hépatiques »)
+## Décisions de l'auteur du 31/10/2026 (fiche « Masses hépatiques »)
 
-- **Nom et titres de l'auteur / relecteur** à afficher (identification éditoriale) : aujourd'hui « Radiologic Hub » seulement, rien d'inventé.
-- Les 3 **références** (LI-RADS v2018, EASL tumeurs bénignes 2016, EASL CHC 2018) : confirmer qu'elles conviennent comme lectures complémentaires, ou fournir les sources réelles du cours.
-- Le titre SEO et la description (reformulables).
+- **Auteur affiché** : **« Radiologic Hub » provisoirement** ; l'identification des auteurs et relecteurs sera définie plus tard (rien n'est inventé en attendant).
+- **Références** : les 3 références vérifiées sont **conservées comme lectures complémentaires**, avec leur **année en évidence** (2018, 2016, 2018) et la mention qu'elles **ne sont pas les sources originales du cours**.
+- **Design** : l'identité visuelle de Radiologic Hub est conservée ; les changements SEO restent techniques et éditoriaux (aucun composant, couleur ni animation existants modifiés ; les seuls ajouts visibles sont la ligne d'édition, les références, « Voir aussi » et l'encadré de fin, avec les couleurs et le style existants).
+- **Adresse absolue** : `canonical`, `og:url`, JSON-LD et sitemap exigent des adresses complètes ; elles sont centralisées dans `scripts/seo/sitemap.js` (constante `BASE`) et vérifiées par `tests/seo-fiches.test.js`, sans écrire l'adresse ailleurs dans le code du site.
+- Reste à faire par l'auteur : propriété Google Search Console + sitemap ; titre SEO et description reformulables.
