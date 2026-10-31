@@ -1,10 +1,10 @@
--- FICHIER À COLLER DANS SUPABASE (SQL Editor) APRÈS AUTORISATION : sauvegarde des droits, puis correctif.
--- Assemblé : securisation-sauvegarde.sql + securisation-prelancement.sql (vérifié par tests/sql/securisation-application.js).
+-- FICHIER À COLLER DANS SUPABASE (SQL Editor) APRÈS AUTORISATION : sauvegarde des droits, puis retrait des droits anon sur les fonctions.
+-- Assemblé : securisation-sauvegarde.sql + securisation-fonctions.sql (vérifié par tests/sql/securisation-application.js). Remplace securisation-a-appliquer.sql (v1), qui échouait sur pg_net.
 -- =====================================================================
 -- Sécurisation avant lancement — SAUVEGARDE des droits actuels
 -- ---------------------------------------------------------------------
--- À exécuter juste AVANT supabase/sql/securisation-prelancement.sql (c'est
--- le début de securisation-a-appliquer.sql). Ne retire ni n'accorde aucun
+-- À exécuter juste AVANT supabase/sql/securisation-fonctions.sql (c'est
+-- le début de securisation-a-appliquer-v2.sql). Ne retire ni n'accorde aucun
 -- droit : copie les droits actuels des 60 fonctions visées et des deux files
 -- pg_net dans securite_sauvegarde.droits_20261031 (schéma fermé aux
 -- visiteurs et aux membres). Relançable : la première sauvegarde est gardée.
@@ -37,28 +37,22 @@ JOIN pg_class c ON c.oid = to_regclass(t)
 ON CONFLICT (objet) DO NOTHING;
 COMMIT;
 
--- PRÉPARÉ UNIQUEMENT : ne pas exécuter sans autorisation de production.
--- Corrige les écarts de grants constatés le 31/10/2026.
--- Ne crée pas de secret, fonction métier, tâche Cron ou nouvelle table.
--- Transaction atomique ; relançable. Sauvegarder les ACL avant application.
+-- =====================================================================
+-- Sécurisation avant lancement — FONCTIONS SEULEMENT (version corrigée du 31/10/2026)
+-- ---------------------------------------------------------------------
+-- Reprend À L'IDENTIQUE la partie « fonctions » de securisation-prelancement.sql
+-- (PR #101) : retrait d'EXECUTE à PUBLIC et anon sur les signatures connues,
+-- aucun GRANT ajouté, annulation complète si un droit membre ou serveur manque.
+-- La partie pg_net est RETIRÉE : sur Supabase hébergé, les droits des files
+-- pg_net sont accordés à PUBLIC par supabase_admin (propriétaire) ; le rôle
+-- postgres de l'éditeur SQL ne peut pas les retirer (« no privileges could be
+-- revoked »), et les retirer casserait pg_net (documentation Supabase :
+-- « Revoking access to pg_net objects has no effect »). Protection de pg_net :
+-- schéma net jamais exposé par l'API et aucun secret durable dans les en-têtes
+-- (contrôlés par le diagnostic).
+-- Transaction atomique ; relançable.
+-- =====================================================================
 BEGIN;
-
--- Ces tables peuvent contenir les en-têtes de requêtes HTTP, donc un secret.
--- Garder les droits postgres / service_role et les fonctions net inchangés.
-DO $$
-DECLARE t text; colonnes text;
-BEGIN
-  FOREACH t IN ARRAY ARRAY['net.http_request_queue', 'net._http_response'] LOOP
-    IF to_regclass(t) IS NOT NULL THEN
-      EXECUTE format('REVOKE SELECT ON TABLE %s FROM PUBLIC, anon, authenticated', t);
-      SELECT string_agg(quote_ident(attname), ', ' ORDER BY attnum) INTO colonnes
-        FROM pg_attribute WHERE attrelid=to_regclass(t) AND attnum>0 AND NOT attisdropped;
-      IF colonnes IS NOT NULL THEN
-        EXECUTE format('REVOKE SELECT (%s) ON TABLE %s FROM PUBLIC, anon, authenticated', colonnes, t);
-      END IF;
-    END IF;
-  END LOOP;
-END $$;
 
 -- Signatures applicatives connues du dépôt revu : ne pas toucher aux
 -- surcharges inconnues, nouvelles fonctions publiques ni fonctions d'extension.
@@ -169,19 +163,6 @@ BEGIN
     IF to_regprocedure(signature) IS NOT NULL AND NOT
       has_function_privilege('service_role', to_regprocedure(signature), 'EXECUTE') THEN
       RAISE EXCEPTION 'Droit service nécessaire absent : % ; lot annulé', signature;
-    END IF;
-  END LOOP;
-END $$;
-
--- Refuser le commit si un droit retiré persiste par héritage.
-DO $$
-DECLARE t text;
-BEGIN
-  FOREACH t IN ARRAY ARRAY['net.http_request_queue', 'net._http_response'] LOOP
-    IF to_regclass(t) IS NOT NULL AND (
-      has_any_column_privilege('anon', to_regclass(t), 'SELECT') OR
-      has_any_column_privilege('authenticated', to_regclass(t), 'SELECT')) THEN
-      RAISE EXCEPTION 'Droit de lecture pg_net persistant : % (héritage à examiner)', t;
     END IF;
   END LOOP;
 END $$;

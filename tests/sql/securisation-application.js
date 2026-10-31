@@ -3,8 +3,11 @@
    Application de la sécurisation avant lancement, cycle complet sur un
    PostgreSQL local reproduisant la production (droits par défaut de
    Supabase, files pg_net lisibles ; données fictives ; npm run test:sql) :
-   diagnostic avant → sauvegarde + correctif (securisation-a-appliquer.sql)
-   → diagnostic après → retour arrière exact → réapplication.
+   diagnostic avant → sauvegarde + fonctions (securisation-a-appliquer-v2.sql)
+   → diagnostic après → retour arrière exact → réapplication. Les files
+   pg_net sont reproduites comme sur Supabase hébergé (propriétaire
+   supabase_admin, droits accordés à PUBLIC) : le script ne doit pas y
+   toucher (leurs droits ne sont pas modifiables par le rôle postgres).
    Vérifie aussi que le fichier à appliquer est exactement la sauvegarde
    suivie du correctif revu, et que les listes du diagnostic sont celles
    du correctif.
@@ -15,8 +18,8 @@ const path = require('node:path');
 const { demarrer, racine } = require('./pg.js');
 
 const lire = f => fs.readFileSync(path.join(racine, 'supabase', 'sql', f), 'utf8');
-const CORRECTIF = lire('securisation-prelancement.sql'), SAUVEGARDE = lire('securisation-sauvegarde.sql');
-const A_APPLIQUER = lire('securisation-a-appliquer.sql'), RETOUR = lire('securisation-retour-arriere.sql');
+const CORRECTIF = lire('securisation-prelancement.sql'), FONCTIONS = lire('securisation-fonctions.sql'), SAUVEGARDE = lire('securisation-sauvegarde.sql');
+const A_APPLIQUER = lire('securisation-a-appliquer-v2.sql'), RETOUR = lire('securisation-retour-arriere.sql');
 const DIAG = lire('diagnostic.sql').replace(/;\s*$/, '');
 
 const pg = demarrer();
@@ -30,8 +33,11 @@ const droit = (role, sig) => admin(`select has_function_privilege('${role}', to_
 
 try {
   console.log('Sécurisation avant lancement : sauvegarde, application, retour arrière :');
-  verifier('fichier à appliquer = sauvegarde puis correctif revu, à l\'identique', () => {
-    assert.ok(A_APPLIQUER.endsWith(`${SAUVEGARDE}\n${CORRECTIF}`));
+  verifier('fichier à appliquer = sauvegarde puis partie « fonctions » du correctif revu (#101), à l\'identique, sans pg_net', () => {
+    assert.ok(A_APPLIQUER.endsWith(`${SAUVEGARDE}\n${FONCTIONS}`));
+    const i = CORRECTIF.indexOf('-- Signatures applicatives connues'), j = CORRECTIF.indexOf('-- Refuser le commit');
+    assert.ok(FONCTIONS.includes(CORRECTIF.slice(i, j).trimEnd()));
+    assert.doesNotMatch(FONCTIONS.replace(/^--.*$/gm, ''), /\bnet\./);
     assert.equal(A_APPLIQUER.split('\n').slice(0, 2).every(l => l.startsWith('--')), true);
   });
   verifier('listes du diagnostic et de la sauvegarde identiques à celles du correctif', () => {
@@ -48,7 +54,10 @@ try {
     for f in select p.oid::regprocedure from pg_proc p join pg_namespace n on n.oid = p.pronamespace where n.nspname = 'public' loop
       execute format('grant execute on function %s to anon, authenticated, service_role', f);
     end loop; end $$;
-    grant select on net.http_request_queue to anon, authenticated;`);
+    create role supabase_admin; alter schema net owner to supabase_admin; alter table net.http_request_queue owner to supabase_admin;
+    set role supabase_admin; grant all on net.http_request_queue to public; reset role;`);
+  const aclNet = () => admin("select relacl::text from pg_class where oid = 'net.http_request_queue'::regclass");
+  const aclAvant = aclNet();
   const avant = diagnostic();
   verifier('diagnostic avant : faille pg_net et fonctions exécutables par anon détectées, aucune sauvegarde', () => {
     assert.equal(avant.pg_net_lisible_par_anon, true);
@@ -60,10 +69,9 @@ try {
 
   admin(A_APPLIQUER);
   const apres = diagnostic();
-  verifier('après application : sauvegarde présente, pg_net fermé, plus aucune fonction visée pour anon, membres et service intacts', () => {
+  verifier('après application : sauvegarde présente, plus aucune fonction visée pour anon, membres et service intacts, pg_net intact', () => {
     assert.equal(apres.sauvegarde_des_droits_presente, true);
-    assert.equal(apres.pg_net_lisible_par_anon, false);
-    assert.equal(apres.pg_net_lisible_par_authenticated, false);
+    assert.equal(aclNet(), aclAvant, 'droits pg_net inchangés (gérés par Supabase)');
     assert.equal(apres.nombre_executables_par_anon, 0);
     assert.deepEqual(apres.membres_sans_droit, []);
     assert.deepEqual(apres.service_sans_droit, []);
@@ -78,8 +86,8 @@ try {
 
   admin(RETOUR);
   const retour = diagnostic();
-  verifier('retour arrière : droits d\'avant restaurés exactement (pg_net et fonctions)', () => {
-    assert.equal(retour.pg_net_lisible_par_anon, true);
+  verifier('retour arrière : droits d\'avant restaurés exactement (fonctions), pg_net inchangé', () => {
+    assert.equal(aclNet(), aclAvant);
     assert.equal(retour.nombre_executables_par_anon, avant.nombre_executables_par_anon);
     assert.equal(droit('anon', 'public.rp_est_admin()'), 't');
   });
@@ -87,7 +95,6 @@ try {
     admin(A_APPLIQUER);
     const d = diagnostic();
     assert.equal(d.nombre_executables_par_anon, 0);
-    assert.equal(d.pg_net_lisible_par_anon, false);
   });
   verifier('le diagnostic reste accepté par le contrôle « lecture seule » du workflow', () => {
     require(path.join(racine, 'scripts', 'exploitation-supabase.js')).verifierSqlLectureSeule(lire('diagnostic.sql'));
