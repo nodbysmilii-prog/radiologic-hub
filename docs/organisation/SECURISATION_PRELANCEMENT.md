@@ -85,10 +85,18 @@ Patch v2 appliqué tel quel (`git am`, 2 commits, empreintes SHA-256 du transfer
 
 Fichiers (`supabase/sql/`) :
 - `securisation-sauvegarde.sql` : copie les droits actuels des 60 fonctions et des 2 files `pg_net` dans `securite_sauvegarde.droits_20261031` (schéma fermé à anon et authenticated) ; ne change aucun droit.
-- `securisation-a-appliquer.sql` : **le seul fichier à exécuter**, = sauvegarde puis correctif revu (PR #101) à l'identique.
+- `securisation-a-appliquer.sql` (v1, retiré, voir plus bas) : sauvegarde puis correctif revu (PR #101) ; remplacé par `securisation-a-appliquer-v2.sql`.
 - `securisation-retour-arriere.sql` : réaccorde exactement les droits retirés, d'après la sauvegarde, et rien d'autre.
 - `diagnostic.sql`, section `securisation` (lecture seule) : nombre de fonctions visées présentes, celles exécutables par anon, fonctions des membres ou du serveur sans droit, files `pg_net` lisibles, autres fonctions publiques exécutables par anon (nombre), sauvegarde présente.
 
 Cycle vérifié sur PostgreSQL 16 reproduisant la production (`tests/sql/securisation-application.js`) : diagnostic avant → application → diagnostic après → retour arrière exact → réapplication.
 
 Procédure (une autorisation, une action) : 1) Claude lance le diagnostic (lecture seule) et compare avec les attentes ; 2) l'auteur colle `securisation-a-appliquer.sql` dans *Supabase → SQL Editor → New query → Run* ; 3) Claude relance le diagnostic : attendu `pg_net` non lisible, 0 fonction visée pour anon, aucune fonction des membres ou du serveur sans droit, sauvegarde présente ; 4) tests du site (Cloudflare, visiteur réel ; compte de test si disponible). Retour arrière : coller `securisation-retour-arriere.sql`, puis diagnostic.
+
+## Échec de la v1 en production et correction (31/10/2026)
+
+Exécution de `securisation-a-appliquer.sql` (v1) par l'auteur : `ERROR P0001 : Droit de lecture pg_net persistant : net.http_request_queue (héritage à examiner)`. Diagnostic en lecture seule juste après : **transaction annulée** (les 33 fonctions restent exécutables par anon, aucun droit changé) ; **sauvegarde présente** (transaction séparée, validée).
+
+Cause (documentation Supabase « Revoking access to pg_net objects has no effect ») : ni héritage ni droit direct de `postgres` ; les files pg_net appartiennent à `supabase_admin`, qui accorde leurs droits à **PUBLIC**. Un rôle ne peut retirer que les droits qu'il a lui-même accordés : le `REVOKE` lancé par `postgres` (SQL Editor) n'a rien retiré (« no privileges could be revoked »), et la vérification finale a annulé le lot comme prévu. Retirer ces droits casserait pg_net et Supabase ne permet pas de les modifier projet par projet.
+
+Correction (v2) : `securisation-a-appliquer-v2.sql` = même sauvegarde (relançable, la sauvegarde d'origine est conservée) + `securisation-fonctions.sql`, partie « fonctions » du correctif #101 **à l'identique**, sans pg_net. Lors de l'essai v1, cette partie s'est exécutée en production sans erreur avant l'annulation finale : `postgres` peut bien retirer ces droits. Protection de pg_net : le schéma `net` ne doit jamais être exposé par l'API (contrôlé par le diagnostic, nouvelle section « API de données ») et aucun secret durable ne doit passer dans les en-têtes d'une requête pg_net (point à garder pour la planification Vault : son mot de passe transite par la file le temps de l'envoi). `securisation-a-appliquer.sql` (v1) est retiré du dépôt ; `securisation-prelancement.sql` reste comme référence de la revue.

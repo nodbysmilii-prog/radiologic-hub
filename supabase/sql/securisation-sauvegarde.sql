@@ -1,8 +1,8 @@
 -- =====================================================================
 -- Sécurisation avant lancement — SAUVEGARDE des droits actuels
 -- ---------------------------------------------------------------------
--- À exécuter juste AVANT supabase/sql/securisation-prelancement.sql (c'est
--- le début de securisation-a-appliquer.sql). Ne retire ni n'accorde aucun
+-- À exécuter juste AVANT supabase/sql/securisation-fonctions.sql (c'est
+-- le début de securisation-a-appliquer-v2.sql). Ne retire ni n'accorde aucun
 -- droit : copie les droits actuels des 60 fonctions visées et des deux files
 -- pg_net dans securite_sauvegarde.droits_20261031 (schéma fermé aux
 -- visiteurs et aux membres). Relançable : la première sauvegarde est gardée.
