@@ -61,6 +61,10 @@ select jsonb_build_object(
         where n.nspname = 'public' and has_function_privilege('anon', p.oid, 'execute')
           and not exists (select 1 from pg_depend d where d.objid = p.oid and d.deptype = 'e')
           and not exists (select 1 from visees where to_regprocedure(visees.s) = p.oid)),
+      'autres_fonctions_executables_par_anon', (select coalesce(jsonb_agg(p.proname order by p.proname), '[]'::jsonb) from (select p.proname from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+        where n.nspname = 'public' and has_function_privilege('anon', p.oid, 'execute')
+          and not exists (select 1 from pg_depend d where d.objid = p.oid and d.deptype = 'e')
+          and not exists (select 1 from visees where to_regprocedure(visees.s) = p.oid) order by p.proname limit 20) p),
       'sauvegarde_des_droits_presente', to_regclass('securite_sauvegarde.droits_20261031') is not null
     )
   ),
