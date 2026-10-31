@@ -173,7 +173,7 @@
               <div class="md-seg" role="radiogroup" aria-label="Excavation"><span>Excav.</span>
                 <label><input type="radio" name="excavation" value="" checked> aucune</label><label><input type="radio" name="excavation" value="fine"> paroi fine</label><label><input type="radio" name="excavation" value="epaisse"> paroi &gt; 15 mm</label></div>
               <div class="np-coches"><label class="md-coche"><input type="checkbox" name="graisse"> graisse &lt; -40 UH</label><label class="md-coche"><input type="checkbox" name="bronchogramme"> bronchogramme / clartés</label></div>
-              <label class="np-taille">Taille : <output id="np-at-taille">12</output> mm<input type="range" name="taille" min="4" max="30" value="12"></label>
+              <label class="np-taille">Taille : <output id="np-at-taille">12</output> mm<input type="range" name="taille" min="4" max="30" value="12" aria-label="Taille (mm)"></label>
               <ul class="np-args" id="np-at-args" aria-live="polite"></ul>
               <p class="md-aide">À retenir : aucun signe isolé ne suffit. L'orientation repose sur la combinaison du contexte, de la densité, des contours, du contenu, de la taille et surtout de l'évolution.</p>
             </form>
@@ -325,8 +325,8 @@
             <p class="ti-outil-titre">Votre nodule</p>
             <div class="md-seg" role="radiogroup" aria-label="Type"><span>Type</span>
               <label><input type="radio" name="type" value="solide" checked> solide</label><label><input type="radio" name="type" value="verre"> verre dépoli pur</label><label><input type="radio" name="type" value="mixte"> mixte</label></div>
-            <label class="np-taille">Taille : <output id="np-fl-taille">7</output> mm<input type="range" name="taille" min="3" max="30" value="7"></label>
-            <label class="np-taille" id="np-fl-solide-l" hidden>Composante solide : <output id="np-fl-solide">3</output> mm<input type="range" name="solide" min="1" max="20" value="3"></label>
+            <label class="np-taille">Taille : <output id="np-fl-taille">7</output> mm<input type="range" name="taille" min="3" max="30" value="7" aria-label="Taille (mm)"></label>
+            <label class="np-taille" id="np-fl-solide-l" hidden>Composante solide : <output id="np-fl-solide">3</output> mm<input type="range" name="solide" min="1" max="20" value="3" aria-label="Composante solide (mm)"></label>
             <div class="md-seg" role="radiogroup" aria-label="Nombre"><span>Nombre</span>
               <label><input type="radio" name="multiples" value="" checked> unique</label><label><input type="radio" name="multiples" value="1"> multiples</label></div>
             <div class="md-seg" role="radiogroup" aria-label="Risque"><span>Risque</span>

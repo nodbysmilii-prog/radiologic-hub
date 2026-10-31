@@ -120,7 +120,7 @@
 .ra-aide ul { margin: 0; padding-left: 1.1em; font-size: .9rem; }
 .ra-aide li { margin: .3em 0; }
 .ra-aide kbd { display: inline-block; min-width: 1.6em; padding: 0 5px; border: 1.5px solid var(--ink); border-radius: 6px; background: #fff; font: 800 .74rem var(--font); text-align: center; }
-.ra-credits { font-size: .86rem; line-height: 1.55; }
+.ra-credits { font-size: .86rem; line-height: 1.55; overflow-wrap: anywhere; }   /* chemins et adresses longs : pas de débordement sur téléphone */
 .ra-credits p { margin: 0 0 .7em; }
 
 @media (max-width: 960px) {

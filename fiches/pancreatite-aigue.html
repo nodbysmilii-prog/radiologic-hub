@@ -213,7 +213,7 @@
           <form class="md-outil pa-moment" id="pa-moment" onsubmit="return false">
             <p class="ti-outil-titre">Indications : quand faire le scanner ?</p>
             <div class="np-coches"><label class="md-coche"><input type="checkbox" name="doute"> <mark class="k-sign">Persistance d'un doute diagnostique</mark></label><label class="md-coche"><input type="checkbox" name="grave"> <mark class="k-sign">Tableau clinique et biologique grave d'emblée</mark></label></div>
-            <label class="np-taille">Délai depuis le début : <output id="pa-h">24</output> h<input type="range" name="heures" min="0" max="240" step="6" value="24"></label>
+            <label class="np-taille">Délai depuis le début : <output id="pa-h">24</output> h<input type="range" name="heures" min="0" max="240" step="6" value="24" aria-label="Délai depuis le début (h)"></label>
             <div class="pa-jours" aria-hidden="true"><span style="--a: 0%; --b: 20%; --c: #fde2e4">&lt; 48 h</span><span style="--a: 20%; --b: 30%; --c: #fff1d6">48-72 h</span><span style="--a: 30%; --b: 50%; --c: #ddf3ea">≥ 72 h</span><span style="--a: 50%; --b: 70%; --c: #b6e3c9">5-7 j</span><span style="--a: 70%; --b: 100%; --c: #ececf0">&gt; 7 j</span><i id="pa-h-curseur"></i></div>
             <p class="ch-verdict" id="pa-moment-res" aria-live="polite"><b></b><span></span></p>
             <ul class="md-puces pa-pourquoi"><li><mark class="k-key">Meilleure évaluation de la nécrose après ce délai.</mark></li><li><mark class="k-key">Pas de corrélation entre les anomalies morphologiques / gravité clinique à la phase précoce.</mark></li><li><mark class="k-key">Le TTT d'éventuelles collections ne se fera pas durant les 48-72 premières heures.</mark></li></ul>
@@ -228,7 +228,7 @@
           <form class="md-outil im-dose" id="pa-dose" onsubmit="return false">
             <p class="ti-outil-titre">Injection PDC</p>
             <p><mark class="k-sign">Injection PDC (1.5-2cc/kg) Débit (3-4cc/s)</mark></p>
-            <label class="np-taille">Poids : <output id="pa-poids">70</output> kg<input type="range" name="poids" min="30" max="130" value="70"></label>
+            <label class="np-taille">Poids : <output id="pa-poids">70</output> kg<input type="range" name="poids" min="30" max="130" value="70" aria-label="Poids (kg)"></label>
             <p class="ch-verdict k-key" id="pa-dose-res" aria-live="polite"><b></b><span></span></p>
           </form>
           <h3 class="ch-h3">4. IRM</h3>

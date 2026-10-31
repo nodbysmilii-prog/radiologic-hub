@@ -130,7 +130,7 @@
           <form class="md-outil im-dose" id="im-dose" onsubmit="return false">
             <p class="ti-outil-titre">Produit de contraste</p>
             <p><mark class="k-tech">débit de 3-4 mL/s ; 2 mL/kg jusqu'à 150 mL de produit de contraste iodé</mark></p>
-            <label class="np-taille">Poids : <output id="im-poids-val">70</output> kg<input type="range" name="poids" min="30" max="130" value="70"></label>
+            <label class="np-taille">Poids : <output id="im-poids-val">70</output> kg<input type="range" name="poids" min="30" max="130" value="70" aria-label="Poids (kg)"></label>
             <p class="ch-verdict k-key" id="im-dose-res" aria-live="polite"><b></b><span></span></p>
           </form>
 
@@ -203,7 +203,7 @@
             <figure class="np-fig im-clair" id="im-ams-svg"></figure>
             <form class="im-ams-outil" id="im-ams" onsubmit="return false">
               <p class="ti-outil-titre">Où est l'occlusion ? (orientation étiologique)</p>
-              <label class="np-taille">Distance à l'ostium de l'AMS : <output id="im-cm">0</output> cm<input type="range" name="cm" min="0" max="15" step="0.5" value="0"></label>
+              <label class="np-taille">Distance à l'ostium de l'AMS : <output id="im-cm">0</output> cm<input type="range" name="cm" min="0" max="15" step="0.5" value="0" aria-label="Distance à l'ostium de l'AMS (cm)"></label>
               <label class="md-coche"><input type="checkbox" name="calcif"> calcifications pariétales (coupes sans injection)</label>
               <p class="ch-verdict" id="im-ams-res" aria-live="polite"><b></b><span></span></p>
               <ul class="md-puces im-ams-regles">
