@@ -42,9 +42,16 @@
   const statutBadge = s => `<span class="bib-badge is-statut">${esc(STATUTS[s] || s)}</span>`;
 
   /* ---------- Connexion ---------- */
-  async function demarrer() {
+  async function demarrer(message) {
     if (api.mode === 'demo') $('#bib-demo').hidden = false;
     try { await api.pret; } catch (e) { zone.innerHTML = msg('is-erreur', esc(e.message)); return; }
+    // Lien expiré ou déjà utilisé, connexion annulée (connexion.js) ; session perdue : message au-dessus du formulaire.
+    const C = window.RHConnexion;
+    message = message || (C && C.erreurRetour());
+    if (api.surSessionPerdue && !demarrer.ecoute) {
+      demarrer.ecoute = true;
+      api.surSessionPerdue(() => { $('#bib-session').innerHTML = ''; demarrer(C ? C.SESSION_EXPIREE : 'Session expirée.'); });
+    }
     const session = await api.session();
     if (!session) {
       zone.innerHTML = `<div class="bib-carte"><h2>Connexion de l'administrateur</h2>
@@ -52,7 +59,7 @@
         <div class="bib-actions"><button class="btn btn-ink" type="button" id="bib-google">Continuer avec Google</button></div>
         <form id="bib-lien" class="bib-actions"><label class="sr-only" for="bib-email">Adresse e-mail</label>
           <input type="email" id="bib-email" required placeholder="votre.adresse@exemple.com" autocomplete="email">
-          <button class="btn btn-outline" type="submit">Recevoir un lien de connexion</button></form><div id="bib-co-msg"></div></div>`;
+          <button class="btn btn-outline" type="submit">Recevoir un lien de connexion</button></form><div id="bib-co-msg">${message ? msg('is-erreur', esc(message)) : ''}</div></div>`;
       $('#bib-google').addEventListener('click', () => api.connexionGoogle().catch(e => { $('#bib-co-msg').innerHTML = msg('is-erreur', esc(e.message)); }));
       $('#bib-lien').addEventListener('submit', async e => {
         e.preventDefault();
