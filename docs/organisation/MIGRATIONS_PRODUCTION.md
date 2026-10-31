@@ -12,6 +12,20 @@ Vérifié par `tests/sql/migrations-production.js` (dans `npm run test:sql`) sur
 | 3 | `supabase/migrations/20261030090000_abonnements.sql` | Abonnements, contenus réservés, stockage privé `premium` | Seulement quand la protection premium sera branchée | `supabase/sql/retour/20261030090000_abonnements.sql` (refusé si un abonnement existe) |
 | 4 | `supabase/migrations/20261014090000_espace_dicom.sql` | Espace DICOM | Seulement quand le serveur DICOM existera (aujourd'hui en démonstration) | `supabase/sql/retour/20261014090000_espace_dicom.sql` (refusé si des examens existent) |
 
-Pour chaque migration (une autorisation par migration) : 1) diagnostic en lecture seule (Claude) ; 2) l'auteur colle le fichier, *Run* (choisir *Run without RLS* si Supabase le propose : les tables créées ont déjà leurs règles d'accès) ; 3) diagnostic : migration « appliquée », `exécutables par anon (0)`, aucune fonction des membres ou du serveur sans droit ; 4) test du site (Cloudflare) ; en cas de problème : coller le retour arrière.
+## Scripts d'application contrôlée (31/10/2026, à utiliser à la place des fichiers bruts)
+`supabase/sql/appliquer/<migration>.sql`, générés par `node scripts/supabase/assembler-application.js` (ne jamais les modifier à la main). **Une seule transaction** : prérequis (migrations et extensions nécessaires) → migration à l'identique → contrôles de sécurité ; au moindre écart, **tout est annulé** et le message dit pourquoi :
+- migration reconnue (même test que le diagnostic) ;
+- aucune fonction du schéma public exécutable par les visiteurs (hors `rls_auto_enable`, de Supabase) ;
+- toutes les tables avec RLS ; aucun droit d'écriture des visiteurs sur une table ou une séquence ;
+- toute fonction `SECURITY DEFINER` avec un `search_path` fixé.
+
+Vérifié par `tests/sql/application-migrations.js` (dans `npm run test:sql`) sur une base qui reproduit la production **avec les droits par défaut de Supabase** (fonctions, tables et séquences futures ouvertes à anon, authenticated, service_role) : prérequis absent → refus sans rien créer ; fonction ouverte aux visiteurs, table sans RLS ou écriture des visiteurs → migration **entièrement annulée** ; application réussie dans l'ordre conseillé et dans l'ordre inverse (aucune dépendance cachée entre les 5) ; relance sans effet (secret du Vault inchangé) ; retour arrière puis réapplication.
+
+**Défaut corrigé** par ce travail : avec les droits par défaut de Supabase, la migration `espace_dicom` laissait la séquence `dc_journal_id_seq` ouverte aux visiteurs (`USAGE`, `UPDATE` : faire avancer le compteur). Ajout de `revoke all on sequence public.dc_journal_id_seq from public, anon, authenticated` (colonne identity : aucun droit nécessaire pour insérer). Les autres migrations n'ont ni séquence ni droit par défaut restant.
+
+**Nouveau contrôle du diagnostic** : les droits réels de la production (tables, colonnes, fonctions du schéma public) sont comparés à la référence testée `tests/sql/droits-attendus.txt` : « droits accordés en trop aux visiteurs, aux membres ou à PUBLIC » doit valoir **0** (les droits en plus pour `service_role`, la clé serveur, sont seulement comptés). Sur une base reproduisant le pire cas (droits par défaut réaccordés à toutes les fonctions existantes), aucun objet des 5 migrations n'apparaît en trop. **À lancer avant la première application** : si des écarts apparaissent sur les migrations déjà en production, les traiter d'abord.
+
+## Procédure (une autorisation par migration)
+Pour chaque migration (une autorisation par migration) : 1) diagnostic en lecture seule (Claude) ; 2) l'auteur colle le **script d'application** `supabase/sql/appliquer/<migration>.sql` (sinon le fichier brut), *Run* (choisir *Run without RLS* si Supabase le propose : les tables créées ont déjà leurs règles d'accès) ; 3) diagnostic : migration « appliquée », `exécutables par anon (0)`, aucune fonction des membres ou du serveur sans droit, « droits accordés en trop : 0 » ; 4) test du site (Cloudflare) ; en cas de problème : coller le retour arrière.
 
 Sauvegarde : ces migrations ajoutent des objets sans modifier de données existantes (sauf la colonne `rs_cas.type`, ajoutée avec la valeur « cas ») ; la sauvegarde des droits `securite_sauvegarde.droits_20261031` reste en place. Sauvegarde des données : voir `VALIDATION_SECURITE.md`, chantier « Sauvegardes ».

@@ -79,5 +79,27 @@ select jsonb_build_object(
   'cron_dernieres_executions', case when to_regclass('cron.job_run_details') is null or to_regclass('cron.job') is null then null
     else (xpath('/row/j/text()', query_to_xml('select coalesce(jsonb_agg(status order by start_time desc), ''[]'')::text as j from (select d.status, d.start_time from cron.job_run_details d join cron.job c on c.jobid = d.jobid where c.jobname = ''rp-taches'' order by d.start_time desc limit 5) t', false, true, '')))[1]::text::jsonb end,
   'pg_net_derniers_codes', case when to_regclass('net._http_response') is null then null
-    else (xpath('/row/j/text()', query_to_xml('select coalesce(jsonb_agg(status_code order by created desc), ''[]'')::text as j from (select status_code, created from net._http_response order by created desc limit 5) t', false, true, '')))[1]::text::jsonb end
+    else (xpath('/row/j/text()', query_to_xml('select coalesce(jsonb_agg(status_code order by created desc), ''[]'')::text as j from (select status_code, created from net._http_response order by created desc limit 5) t', false, true, '')))[1]::text::jsonb end,
+  -- Droits accordés dans le schéma public, au format de tests/sql/droits-attendus.txt (noms techniques seulement),
+  -- comparés par scripts/exploitation-supabase.js à la référence testée : tout droit en trop est signalé.
+  'droits_lignes', (
+    with roles as (select oid, rolname from pg_roles where rolname in ('anon', 'authenticated', 'service_role')),
+    t as (
+      select c.relname as t, r.rolname as r, array_agg(distinct a.privilege_type order by a.privilege_type) filter (where a.privilege_type <> 'MAINTAIN') as p
+      from pg_class c join pg_namespace n on n.oid = c.relnamespace, aclexplode(c.relacl) a join roles r on r.oid = a.grantee
+      where n.nspname = 'public' and c.relkind in ('r', 'v', 'p') group by 1, 2),
+    col as (
+      select c.relname as t, r.rolname as r, a.privilege_type as p, string_agg(att.attname, ', ' order by att.attname) as cols
+      from pg_attribute att join pg_class c on c.oid = att.attrelid join pg_namespace n on n.oid = c.relnamespace, aclexplode(att.attacl) a join roles r on r.oid = a.grantee
+      where n.nspname = 'public' and att.attacl is not null group by 1, 2, 3),
+    f as (
+      select p.proname || '(' || pg_get_function_identity_arguments(p.oid) || ')' as f, string_agg(case when a.grantee = 0 then 'PUBLIC' else r.rolname end, ', ' order by case when a.grantee = 0 then 'PUBLIC' else r.rolname end) as rs
+      from pg_proc p join pg_namespace n on n.oid = p.pronamespace, aclexplode(p.proacl) a left join roles r on r.oid = a.grantee
+      where n.nspname = 'public' and a.privilege_type = 'EXECUTE' and (a.grantee = 0 or r.oid is not null)
+        and not exists (select 1 from pg_depend d where d.objid = p.oid and d.deptype = 'e') group by 1)
+    select coalesce(jsonb_agg(l), '[]'::jsonb) from (
+      select t || ' · ' || r || ' : ' || case when cardinality(p) = 7 then 'tous les droits' else array_to_string(p, ', ') end as l from t
+      union all select col.t || ' · ' || col.r || ' : ' || col.p || ' (' || col.cols || ')' from col where not exists (select 1 from t where t.t = col.t and t.r = col.r and col.p = any(t.p))
+      union all select f || ' · ' || rs from f) x
+  )
 ) as diagnostic;

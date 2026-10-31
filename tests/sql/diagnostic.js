@@ -38,8 +38,11 @@ try {
   verifier('tâches Cron : noms, fréquences, passage par Vault ; secret en clair signalé sans le montrer', d.cron.length === 2 && d.cron[0].via_vault === true && d.cron[1].secret_en_clair === true && d.cron[1].via_vault === false);
   verifier('dernières exécutions de rp-taches (statuts seulement)', JSON.stringify(d.cron_dernieres_executions) === '["succeeded","failed"]');
   verifier('historique des migrations absent : null, sans erreur', d.historique_migrations === null);
-  verifier('aucune information sur les utilisateurs (ni comptes, ni données)', JSON.stringify(Object.keys(d).sort()) === JSON.stringify(['cron', 'cron_dernieres_executions', 'droits', 'extensions', 'historique_migrations', 'migrations', 'pg_net_derniers_codes', 'securisation', 'vault']), Object.keys(d).join(', '));
-  const texte = JSON.stringify(d);
+  verifier('aucune information sur les utilisateurs (ni comptes, ni données)', JSON.stringify(Object.keys(d).sort()) === JSON.stringify(['cron', 'cron_dernieres_executions', 'droits', 'droits_lignes', 'extensions', 'historique_migrations', 'migrations', 'pg_net_derniers_codes', 'securisation', 'vault']), Object.keys(d).join(', '));
+  const { comparerDroits } = require('../../scripts/exploitation-supabase.js');
+  const cmp = comparerDroits(d.droits_lignes, fs.readFileSync(path.join(racine, 'tests', 'sql', 'droits-attendus.txt'), 'utf8'));
+  verifier('droits du schéma public : lignes techniques seulement, identiques à droits-attendus.txt (même résultat que tests/sql/droits.js)', cmp.illisibles === 0 && !cmp.enTrop.length && !cmp.serveur.length && cmp.absentes === 0, JSON.stringify(cmp).slice(0, 300));
+  const texte = JSON.stringify({ ...d, droits_lignes: undefined });
   verifier('aucune donnée personnelle ni secret dans le résultat', !/personne\.fictive|MOT-DE-PASSE|@|select |x-rp-secret/i.test(texte), texte.slice(0, 300));
 
   // base partiellement installée : objets absents → faux ou null, jamais d'erreur

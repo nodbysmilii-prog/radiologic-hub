@@ -416,6 +416,9 @@ create policy dc_journal_lecture on public.dc_journal for select to authenticate
 -- ---------- Droits explicites (exposition automatique désactivée) ----------
 revoke all on public.dc_reglages, public.dc_residents, public.dc_examens, public.dc_partages,
   public.dc_expertises, public.dc_passerelles, public.dc_journal from anon, authenticated;
+-- Séquence de l'identifiant du journal (colonne identity : aucun droit nécessaire pour insérer) ; sur
+-- Supabase, les droits par défaut l'ouvriraient aux visiteurs (USAGE, UPDATE) : retirés.
+revoke all on sequence public.dc_journal_id_seq from public, anon, authenticated;
 grant select on public.dc_reglages to authenticated;
 grant update (conservation_jours, journal_jours, envoi_max_mo) on public.dc_reglages to authenticated;
 grant select, insert, update, delete on public.dc_residents to authenticated;
