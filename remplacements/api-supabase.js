@@ -24,6 +24,7 @@
   });
   const ok = r => { if (r.error) throw new Error(r.error.message); return r.data; };
   const uid = async () => { const { data } = await sb.auth.getSession(); return data.session && data.session.user.id; };
+  let sortieDemandee = false, sessionPerdue = null;
   const retour = () => `${location.origin}${location.pathname.replace(/[^/]*$/, '')}remplacements.html`;
   async function invoquer(nom, body) {
     const { data, error } = await sb.functions.invoke(nom, { body });
@@ -64,7 +65,13 @@
   const api = {
     mode: 'supabase',
     /* bibliothèque chargée seulement si Supabase est la source choisie (api.js) */
-    get pret() { return demarrage || (demarrage = charger().then(() => { sb = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, { auth: { persistSession: true, detectSessionInUrl: true } }); })); },
+    get pret() {
+      return demarrage || (demarrage = charger().then(() => {
+        sb = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, { auth: { persistSession: true, detectSessionInUrl: true } });
+        // Session perdue sans déconnexion demandée (jeton de rafraîchissement expiré ou révoqué) : la page est prévenue.
+        sb.auth.onAuthStateChange(e => { if (e === 'SIGNED_OUT' && !sortieDemandee && sessionPerdue) sessionPerdue(); sortieDemandee = false; });
+      }));
+    },
 
     async session() {
       const id = await uid();
@@ -86,7 +93,8 @@
       ok(await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: retour(), queryParams: { prompt: 'select_account' } } }));
       return { ok: true, redirection: true };
     },
-    async deconnexion() { await sb.auth.signOut(); },
+    async deconnexion() { sortieDemandee = true; await sb.auth.signOut(); },
+    surSessionPerdue(f) { sessionPerdue = f; },
     /* Au retour du lien magique : crée l'inscription préparée avant la connexion */
     async finaliserInscription() {
       const { data } = await sb.auth.getSession();

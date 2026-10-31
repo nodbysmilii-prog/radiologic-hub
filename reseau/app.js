@@ -23,6 +23,10 @@
   const vue = { onglet: 'tous', specialite: '', q: '', liste: [], fin: false, conv: null, brouillon: null, nonLus: { messages: 0, notifications: 0 }, rechercheOnglet: 'membres' };
   const casCache = new Map(), urlsCache = new Map();
   let arreterEcoute = null;
+  // Vue demandée avant connexion (ex. lien « messages » d'un e-mail), retrouvée au retour du lien (connexion.js)
+  const CX = window.RHConnexion, CLE_VUE = 'rh-communaute-vue-apres-connexion';
+  let vueDemandee = null;
+  const memoriserVue = () => { if (CX) CX.memoriserVue(CLE_VUE, vueDemandee); };
 
   const peutPublier = () => !!S && !!S.membre && RG.peutPublier(S.membre, S.remplacantValide);
   const specialite = k => RG.SPECIALITES[k] || RG.SPECIALITES.autre;
@@ -33,7 +37,7 @@
   const erreurs = l => (l.length ? `<ul class="rs-erreurs" role="alert">${l.map(e => `<li>${esc(e)}</li>`).join('')}</ul>` : '');
   async function essayer(f, succes) {
     try { const r = await f(); if (succes) toast(typeof succes === 'function' ? succes(r) : succes); return r; }
-    catch (e) { console.error(e); toast(e.message || 'Une erreur est survenue.', 'ko'); return undefined; }
+    catch (e) { console.error(e); toast(CX ? CX.messageErreur(e) : (e.message || 'Une erreur est survenue.'), 'ko'); return undefined; }
   }
 
   /* =======================================================
@@ -585,6 +589,7 @@
     let h = location.hash || '#/';
     if (h !== '#' && !h.startsWith('#/')) return;                // retour de connexion (#access_token=…)
     const sansAncre = h.replace(/(#\/[^#]*)#.*/, '$1');
+    if (!S) vueDemandee = /^#\/(connexion|bienvenue)?$/.test(sansAncre) ? (sansAncre === '#/' ? null : vueDemandee) : sansAncre;
     if (S && !S.membre && !/^#\/(bienvenue|connexion)$/.test(sansAncre)) { location.replace('#/bienvenue'); return; }
     const route = ROUTES.find(([re]) => re.test(sansAncre)) || ROUTES[0];
     const n = ++jeton;
@@ -640,7 +645,7 @@
   const lienCas = id => `${location.href.replace(/#.*$/, '')}#/cas/${id}`;
 
   const ACTIONS = {
-    async google() { const r = await essayer(() => api.connexionGoogle()); if (r && r.demo) { await rafraichir(); location.hash = S && S.membre ? '#/' : '#/bienvenue'; } },
+    async google() { memoriserVue(); const r = await essayer(() => api.connexionGoogle()); if (r && r.demo) { await rafraichir(); location.hash = S && S.membre ? '#/' : '#/bienvenue'; } },
     async deconnexion() { await api.deconnexion(); if (arreterEcoute) arreterEcoute(); S = null; location.hash = '#/'; afficher(); rendreCote(); },
     onglet(b) { vue.onglet = b.dataset.onglet; afficher(); },
     specialite(b) { vue.specialite = b.dataset.spe; afficher(); },
@@ -737,6 +742,7 @@
     async connexion(f) {
       const email = f.elements.email.value.trim();
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return toast('Adresse e-mail invalide.', 'ko');
+      memoriserVue();
       const r = await essayer(() => api.connexionEmail(email));
       if (!r) return;
       if (r.demo) { await rafraichir(); location.hash = S && S.membre ? '#/' : '#/bienvenue'; return; }
@@ -817,9 +823,10 @@
     const menu = document.querySelector('.rs-compte[open]');
     if (menu && (!menu.contains(e.target) || e.target.closest('.rs-compte-item'))) menu.open = false;
     const b = e.target.closest('[data-act]');
-    if (b && ACTIONS[b.dataset.act] && (app.contains(b) || nav.contains(b) || barre.contains(b))) { if (b.tagName !== 'A' || b.dataset.act !== 'retour') e.preventDefault(); ACTIONS[b.dataset.act](b, e); }
+    if (b && ACTIONS[b.dataset.act] && (app.contains(b) || nav.contains(b) || barre.contains(b))) { if (b.tagName !== 'A' || b.dataset.act !== 'retour') e.preventDefault(); if (CX && b.tagName === 'BUTTON') CX.verrouiller(b, () => ACTIONS[b.dataset.act](b, e)); else ACTIONS[b.dataset.act](b, e); }
   });
-  app.addEventListener('submit', e => { const f = e.target.closest('[data-form]'); if (f && FORMULAIRES[f.dataset.form]) { e.preventDefault(); FORMULAIRES[f.dataset.form](f); } });
+  // Un seul envoi à la fois (double clic, touche Entrée répétée) : formulaire verrouillé pendant l'opération.
+  app.addEventListener('submit', e => { const f = e.target.closest('[data-form]'); if (f && FORMULAIRES[f.dataset.form]) { e.preventDefault(); if (CX) CX.verrouiller(f, () => FORMULAIRES[f.dataset.form](f)); else FORMULAIRES[f.dataset.form](f); } });
   app.addEventListener('input', e => {
     const f = e.target.closest('[data-form="publier"]');
     if (f) majBrouillon(f);
@@ -870,17 +877,23 @@
   async function rafraichir() { S = await api.session(); rendreNav(); }
   if (!app.querySelector('[data-attente]')) app.innerHTML = '<p class="rs-chargement" role="status">Chargement de la communauté…</p>';
   // Retour d'une connexion refusée (Google ou lien e-mail) : message lisible, puis adresse nettoyée.
-  const parametres = new URLSearchParams(location.search + '&' + location.hash.replace(/^#\/?/, ''));
-  const erreurConnexion = parametres.get('error_description') || parametres.get('error');
-  if (erreurConnexion) {
-    app.insertAdjacentHTML('beforebegin', `<p class="rs-alerte-connexion" role="alert"><b>La connexion n'a pas abouti.</b> ${esc(erreurConnexion)}. Réessayez, ou connectez-vous par lien e-mail.</p>`);
-    history.replaceState(null, '', location.pathname);
-  }
+  const erreurConnexion = CX && CX.erreurRetour();
+  if (erreurConnexion) app.insertAdjacentHTML('beforebegin', `<p class="rs-alerte-connexion" role="alert"><b>La connexion n'a pas abouti.</b> ${esc(erreurConnexion)}</p>`);
   // Jamais d'attente sans fin : au-delà de 20 s, on affiche l'erreur et un lien pour réessayer.
   const delai = (promesse, ms) => Promise.race([promesse, new Promise((_, refus) => setTimeout(() => refus(new Error('le service ne répond pas')), ms))]);
   try { await delai(api.pret, 20000); await delai(rafraichir(), 20000); }
   catch (e) { console.error(e); app.innerHTML = vide(`Service indisponible : ${esc(e.message)}.`, '<a class="btn btn-ink" href="communaute.html">Réessayer</a>'); return; }
   if (S && /access_token|type=magiclink|error_description/.test(location.hash)) location.replace(S.membre ? '#/' : '#/bienvenue');
+  // Retour du lien de connexion : la vue demandée avant (si le profil existe déjà), une seule fois.
+  const vueApresConnexion = S && CX ? CX.reprendreVue(CLE_VUE) : null;
+  if (vueApresConnexion && S.membre) location.replace(vueApresConnexion);
+  // Session perdue (jeton expiré ou révoqué, autre appareil) : page remise en mode visiteur, avec un message.
+  if (api.surSessionPerdue) api.surSessionPerdue(() => {
+    if (!S) return;
+    if (arreterEcoute) arreterEcoute();
+    S = null; toast(CX ? CX.SESSION_EXPIREE : 'Session expirée.', 'ko');
+    location.hash = '#/connexion'; afficher(); rendreCote();
+  });
   window.RHRs.rafraichir = async () => { await rafraichir(); demarrerEcoute(); vue.brouillon = null; afficher(); rendreCote(); majBadges(); };
   demarrerEcoute();
   afficher();

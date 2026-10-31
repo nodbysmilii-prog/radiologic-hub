@@ -33,13 +33,17 @@
     }
     return r.data;
   };
-  const retour = () => `${location.origin}${location.pathname}`;
+  // Adresse de retour toujours en .html (acceptée par GitHub Pages et, redirigée vers l'adresse sans .html, par Cloudflare Pages) :
+  // une seule adresse autorisée dans Supabase par page, comme pour les Remplacements et la Communauté.
+  const retour = () => `${location.origin}${location.pathname.replace(/(?:\.html)?$/, '.html')}`;
+  let sortieDemandee = false, sessionPerdue = null;
 
   B.apiSupabase = {
     mode: 'supabase',
     get pret() {
       return demarrage || (demarrage = charger().then(() => {
         sb = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, { auth: { persistSession: true, detectSessionInUrl: true } });
+        sb.auth.onAuthStateChange(e => { if (e === 'SIGNED_OUT' && !sortieDemandee && sessionPerdue) sessionPerdue(); sortieDemandee = false; });
       }));
     },
     async articlesPublies() {
@@ -56,7 +60,8 @@
     async estAdmin() { await this.pret; return !!ok(await sb.rpc('rp_est_admin')); },
     async connexionGoogle() { await this.pret; ok(await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: retour() } })); },
     async connexionEmail(email) { await this.pret; ok(await sb.auth.signInWithOtp({ email: String(email).trim(), options: { emailRedirectTo: retour(), shouldCreateUser: true } })); },
-    async deconnexion() { await this.pret; await sb.auth.signOut(); },
+    async deconnexion() { await this.pret; sortieDemandee = true; await sb.auth.signOut(); },
+    surSessionPerdue(f) { sessionPerdue = f; },
     async tousLesArticles() {
       await this.pret;
       return ok(await sb.from('bib_articles').select(`${ADMIN}, ${THEMES}`).order('cree_le', { ascending: false }));

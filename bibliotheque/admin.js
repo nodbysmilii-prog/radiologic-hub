@@ -15,6 +15,8 @@
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const zone = $('#bib-admin');
+  // Erreur technique → message en français (connexion.js) ; message du site conservé
+  const lisible = e => (window.RHConnexion ? window.RHConnexion.messageErreur(e) : (e && e.message) || 'Une erreur est survenue.');
   if (!zone || !B.api || !CFG) return;
   const api = B.api;
   const STATUTS = { a_valider: 'À valider', publie: 'Publié', rejete: 'Rejeté' };
@@ -42,9 +44,16 @@
   const statutBadge = s => `<span class="bib-badge is-statut">${esc(STATUTS[s] || s)}</span>`;
 
   /* ---------- Connexion ---------- */
-  async function demarrer() {
+  async function demarrer(message) {
     if (api.mode === 'demo') $('#bib-demo').hidden = false;
-    try { await api.pret; } catch (e) { zone.innerHTML = msg('is-erreur', esc(e.message)); return; }
+    try { await api.pret; } catch (e) { zone.innerHTML = msg('is-erreur', esc(lisible(e))); return; }
+    // Lien expiré ou déjà utilisé, connexion annulée (connexion.js) ; session perdue : message au-dessus du formulaire.
+    const C = window.RHConnexion;
+    message = message || (C && C.erreurRetour());
+    if (api.surSessionPerdue && !demarrer.ecoute) {
+      demarrer.ecoute = true;
+      api.surSessionPerdue(() => { $('#bib-session').innerHTML = ''; demarrer(C ? C.SESSION_EXPIREE : 'Session expirée.'); });
+    }
     const session = await api.session();
     if (!session) {
       zone.innerHTML = `<div class="bib-carte"><h2>Connexion de l'administrateur</h2>
@@ -52,12 +61,15 @@
         <div class="bib-actions"><button class="btn btn-ink" type="button" id="bib-google">Continuer avec Google</button></div>
         <form id="bib-lien" class="bib-actions"><label class="sr-only" for="bib-email">Adresse e-mail</label>
           <input type="email" id="bib-email" required placeholder="votre.adresse@exemple.com" autocomplete="email">
-          <button class="btn btn-outline" type="submit">Recevoir un lien de connexion</button></form><div id="bib-co-msg"></div></div>`;
-      $('#bib-google').addEventListener('click', () => api.connexionGoogle().catch(e => { $('#bib-co-msg').innerHTML = msg('is-erreur', esc(e.message)); }));
-      $('#bib-lien').addEventListener('submit', async e => {
+          <button class="btn btn-outline" type="submit">Recevoir un lien de connexion</button></form><div id="bib-co-msg">${message ? msg('is-erreur', esc(message)) : ''}</div></div>`;
+      $('#bib-google').addEventListener('click', () => api.connexionGoogle().catch(e => { $('#bib-co-msg').innerHTML = msg('is-erreur', esc(lisible(e))); }));
+      $('#bib-lien').addEventListener('submit', e => {
         e.preventDefault();
-        try { await api.connexionEmail($('#bib-email').value); $('#bib-co-msg').innerHTML = msg('is-ok', 'Lien envoyé : ouvrez-le depuis votre messagerie.'); }
-        catch (er) { $('#bib-co-msg').innerHTML = msg('is-erreur', esc(er.message)); }
+        const envoyer = async () => {
+          try { await api.connexionEmail($('#bib-email').value); $('#bib-co-msg').innerHTML = msg('is-ok', 'Lien envoyé : ouvrez-le depuis votre messagerie.'); }
+          catch (er) { $('#bib-co-msg').innerHTML = msg('is-erreur', esc(lisible(er))); }
+        };
+        if (window.RHConnexion) window.RHConnexion.verrouiller(e.currentTarget, envoyer); else envoyer();
       });
       return;
     }
@@ -116,7 +128,7 @@
       if (valides.length === 1 && !invalides.length) await importerUn(valides[0]);
       else await importerPlusieurs(texte);
     } catch (e) {
-      zoneMsg.innerHTML = msg('is-erreur', esc(e.message));
+      zoneMsg.innerHTML = msg('is-erreur', esc(lisible(e)));
     } finally {
       const b = $('#bib-importer'); if (b) b.disabled = false;
     }
@@ -257,10 +269,12 @@
     if (sup) sup.addEventListener('click', async () => {
       if (!confirm('Supprimer définitivement cet article de la bibliothèque ?')) return;
       try { await api.supprimer(a.id); await recharger(); enEdition = null; onglet = 'articles'; rendre(); }
-      catch (e) { $('#bib-fiche-msg').innerHTML = msg('is-erreur', esc(e.message)); }
+      catch (e) { $('#bib-fiche-msg').innerHTML = msg('is-erreur', esc(lisible(e))); }
     });
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
+    // Un seul enregistrement à la fois (double clic) : formulaire verrouillé pendant l'envoi (connexion.js)
+    const unSeul = f => (window.RHConnexion ? window.RHConnexion.verrouiller(form, f) : f());
+    form.addEventListener('submit', e => { e.preventDefault(); unSeul(enregistrerFiche); });
+    async function enregistrerFiche() {
       const article = lireFiche(form, a);
       const erreurs = K.validerArticle(article, CFG);
       if (erreurs.length) { $('#bib-fiche-msg').innerHTML = msg('is-erreur', `<ul>${erreurs.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`); return; }
@@ -272,8 +286,8 @@
         filtreStatut = 'tous';
         rendre();
         $('#bib-vue').insertAdjacentHTML('afterbegin', msg('is-ok', `Enregistré : « ${esc(article.titre)} » (${esc(STATUTS[article.statut])}).`));
-      } catch (er) { $('#bib-fiche-msg').innerHTML = msg('is-erreur', esc(er.message)); }
-    });
+      } catch (er) { $('#bib-fiche-msg').innerHTML = msg('is-erreur', esc(lisible(er))); }
+    }
   }
 
   function lireFiche(form, avant) {
@@ -306,5 +320,5 @@
     rendre();
   });
 
-  demarrer().catch(e => { zone.innerHTML = msg('is-erreur', esc(e.message)); });
+  demarrer().catch(e => { zone.innerHTML = msg('is-erreur', esc(lisible(e))); });
 })();

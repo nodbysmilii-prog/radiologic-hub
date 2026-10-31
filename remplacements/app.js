@@ -22,6 +22,10 @@
   const mem = { lire: (k, d) => { try { return JSON.parse(localStorage.getItem(`rh-rp-${k}`)) ?? d; } catch (e) { return d; } }, ecrire: (k, v) => { try { localStorage.setItem(`rh-rp-${k}`, JSON.stringify(v)); } catch (e) { /* rien */ } } };
 
   let S = null;                                               // session : { profil, remplacant, structures, admin }
+  // Vue demandée avant connexion (ex. lien « administration » d'un e-mail), retrouvée au retour du lien (connexion.js)
+  const C = window.RHConnexion, CLE_VUE = 'rh-remplacements-vue-apres-connexion';
+  let vueDemandee = null;
+  const memoriserVue = () => { if (C) C.memoriserVue(CLE_VUE, vueDemandee); };
   const vue = { role: mem.lire('role', null), mois: null, pinceau: 'journee', brouillon: null, moisDemande: null };
 
   /* ---------- Petits composants ---------- */
@@ -67,7 +71,7 @@
   }
   async function essayer(f, succes) {
     try { const r = await f(); if (succes) toast(typeof succes === 'function' ? succes(r) : succes); return r; }
-    catch (e) { toast(e.message || 'Une erreur est survenue.', 'ko'); return null; }
+    catch (e) { toast(C ? C.messageErreur(e) : (e.message || 'Une erreur est survenue.'), 'ko'); return null; }
   }
 
   /* Messagerie de la Communauté (même compte) : disponible en production seulement */
@@ -620,6 +624,7 @@
   async function afficher() {
     const h = location.hash || '#/';
     if (h && !h.startsWith('#/') && h !== '#') return;                 // ex. retour du lien magique (#access_token=…)
+    if (!S) vueDemandee = /^#\/(connexion|inscription\/[\w-]+)?$/.test(h) || h === '#' ? (h === '#/' || h === '#' ? null : vueDemandee) : h;
     const route = ROUTES.find(([re]) => re.test(h)) || ROUTES[0];
     const n = ++jeton;
     app.setAttribute('aria-busy', 'true');
@@ -641,6 +646,7 @@
     async connexion(f) {
       const email = f.elements.email.value.trim();
       if (!REF.emailValide(email)) { toast('Adresse e-mail invalide.', 'ko'); return; }
+      memoriserVue();
       const r = await essayer(() => api.connexion(email));
       if (!r) return;
       if (r.demo) { await rafraichir(); location.hash = '#/espace'; return; }
@@ -730,7 +736,7 @@
   const motif = () => ($('#f-motif') || {}).value || '';
   const ACTIONS = {
     async deconnexion() { await api.deconnexion(); S = null; barre(); location.hash = '#/'; },
-    async google() { await essayer(() => api.connexionGoogle()); },
+    async google() { memoriserVue(); await essayer(() => api.connexionGoogle()); },
     role(b) { vue.role = b.dataset.role; mem.ecrire('role', vue.role); location.hash = '#/espace'; afficher(); },
     async repondre(b) {
       b.disabled = true;
@@ -866,12 +872,13 @@
       return;
     }
     const b = e.target.closest('[data-act]');
-    if (b && ACTIONS[b.dataset.act]) { e.preventDefault(); ACTIONS[b.dataset.act](b, e); }
+    if (b && ACTIONS[b.dataset.act]) { e.preventDefault(); if (C && b.tagName === 'BUTTON') C.verrouiller(b, () => ACTIONS[b.dataset.act](b, e)); else ACTIONS[b.dataset.act](b, e); }
   });
   document.addEventListener('click', e => { const b = e.target.closest('#rp-barre [data-act]'); if (b && ACTIONS[b.dataset.act]) ACTIONS[b.dataset.act](b, e); });
   app.addEventListener('submit', e => {
     const f = e.target.closest('[data-form]');
-    if (f && FORMULAIRES[f.dataset.form]) { e.preventDefault(); FORMULAIRES[f.dataset.form](f); }
+    // Un seul envoi à la fois (double clic, touche Entrée répétée) : formulaire verrouillé pendant l'opération.
+    if (f && FORMULAIRES[f.dataset.form]) { e.preventDefault(); if (C) C.verrouiller(f, () => FORMULAIRES[f.dataset.form](f)); else FORMULAIRES[f.dataset.form](f); }
   });
   app.addEventListener('input', e => { const f = e.target.closest('[data-form="demande"]'); if (f) majBrouillon(f); });
   app.addEventListener('change', async e => {
@@ -888,10 +895,22 @@
   /* ---------- Démarrage ---------- */
   app.innerHTML = '<p class="rp-chargement">Chargement…</p>';
   try { await api.pret; } catch (e) { app.innerHTML = vide(`Service indisponible : ${esc(e.message)}`); return; }
+  // Lien expiré ou déjà utilisé, connexion annulée : message lisible et adresse nettoyée (sinon la page restait sur « Chargement… »).
+  const erreurConnexion = C && C.erreurRetour();
+  if (erreurConnexion) { toast(erreurConnexion, 'ko'); location.hash = '#/connexion'; }
   const finalisee = await api.finaliserInscription().catch(e => { toast(e.message, 'ko'); return null; });
   try { await rafraichir(); } catch (e) { app.innerHTML = vide(`Service indisponible : ${esc(e.message)}`); return; }
   if (finalisee) { toast("Inscription envoyée : elle sera examinée par l'administrateur."); location.hash = '#/espace'; }
   else if (S && /access_token|type=magiclink/.test(location.hash)) location.hash = '#/espace';
+  // Retour du lien de connexion : la vue demandée avant, une seule fois.
+  const vueApresConnexion = S && C ? C.reprendreVue(CLE_VUE) : null;
+  if (vueApresConnexion && !finalisee) location.hash = vueApresConnexion;
+  // Session perdue (jeton expiré ou révoqué, autre appareil) : page remise en mode visiteur, avec un message.
+  if (api.surSessionPerdue) api.surSessionPerdue(async () => {
+    if (!S) return;
+    S = null; cacheDemandes.sid = null; toast(C ? C.SESSION_EXPIREE : 'Session expirée.', 'ko');
+    await rafraichir().catch(() => {}); location.hash = '#/connexion'; afficher();
+  });
   window.RHRp.rafraichir = async () => { cacheDemandes.sid = null; await rafraichir(); afficher(); };
   window.addEventListener('hashchange', () => { window.scrollTo({ top: 0 }); afficher(); });   // seulement une fois le service prêt
   afficher();
