@@ -6,6 +6,7 @@ Fichiers : `communaute.html`, `reseau/` (`noyau/regles.js`, `noyau/confidentiali
 - Connexion Google/lien e-mail, profils, vérification, cas anonymisés (métadonnées retirées, masquage, alerte d'identité), j'aime, commentaires, abonnements, messagerie temps réel, modération, suppression de compte.
 - Mode démonstration (données fictives).
 - Projet Supabase (Francfort), migrations 1 à 5, `config.js` renseigné (27/10/2026).
+- Connexion (31/10/2026, PR en attente) : retour sur la vue demandée avant le lien, message en français si le lien a expiré ou a déjà servi, mode visiteur et message si la session se perd ; `connexion.js` commun, test `npm run test:connexion`. Procédure Auth : `VALIDATION_SECURITE.md`, lot 1.
 
 ## À vérifier
 - Migration `20261027120000_communaute_fil.sql` à exécuter (demandes d'avis, remplacements dans le fil).

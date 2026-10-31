@@ -14,7 +14,8 @@
     "test:assistant": "node tests/navigateur/assistant.js",
     "test:dicom": "node espace-dicom/tests/integration.js",
     "visionneuse": "node espace-dicom/visionneuse/installer-ohif.js",
-    "test:publication": "node tests/navigateur/publication.js"
+    "test:publication": "node tests/navigateur/publication.js",
+    "test:connexion": "node tests/navigateur/connexion.js"
   },
   "engines": {
     "node": ">=18"

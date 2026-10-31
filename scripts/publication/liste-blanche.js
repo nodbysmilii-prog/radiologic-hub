@@ -20,7 +20,7 @@ const FICHIERS = [
   'communaute.html', 'remplacements.html', 'remplacements-reponse.html',
   'espace-dicom.html', 'espace-dicom-visionneuse.html',
   'styles.css', 'finition.css', 'fiche.css', 'cr.css', 'cr-tools.css', 'suivi.css', 'quiz-tableau.css',
-  'navigation.js', 'script.js', 'fiche.js', 'cr.js', 'cr-data.js', 'cr-tools.js', 'cr-vrac.js', 'suivi.js', 'quiz-tableau.js',
+  'navigation.js', 'connexion.js', 'script.js', 'fiche.js', 'cr.js', 'cr-data.js', 'cr-tools.js', 'cr-vrac.js', 'suivi.js', 'quiz-tableau.js',
 ];
 
 /* Dossiers publiés en entier (sauf EXCLUSIONS ci-dessous). */

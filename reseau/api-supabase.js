@@ -23,6 +23,7 @@
     document.head.appendChild(s);
   });
   const ok = r => { if (r.error) throw new Error(r.error.message); return r.data; };
+  let sortieDemandee = false, sessionPerdue = null;
   const retour = () => `${location.origin}${location.pathname.replace(/[^/]*$/, '')}communaute.html`;
   const uid = async () => { if (moi) return moi; const { data } = await sb.auth.getSession(); moi = data.session ? data.session.user.id : null; return moi; };
   const nouvelId = () => (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(36).slice(2));
@@ -58,7 +59,8 @@
     get pret() {
       return demarrage || (demarrage = charger().then(() => {
         sb = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, { auth: { persistSession: true, detectSessionInUrl: true } });
-        sb.auth.onAuthStateChange((_e, s) => { moi = s ? s.user.id : null; });
+        // Session perdue sans déconnexion demandée (jeton de rafraîchissement expiré ou révoqué) : la page est prévenue.
+        sb.auth.onAuthStateChange((e, s) => { moi = s ? s.user.id : null; if (e === 'SIGNED_OUT' && !sortieDemandee && sessionPerdue) sessionPerdue(); sortieDemandee = false; });
       }));
     },
 
@@ -84,7 +86,8 @@
       ok(await sb.auth.signInWithOtp({ email: String(email).trim(), options: { emailRedirectTo: retour(), shouldCreateUser: true } }));
       return { ok: true, lienEnvoye: true };
     },
-    async deconnexion() { await sb.auth.signOut(); moi = null; },
+    async deconnexion() { sortieDemandee = true; await sb.auth.signOut(); moi = null; },
+    surSessionPerdue(f) { sessionPerdue = f; },
 
     /* ---------- Profil ---------- */
     async creerProfil(d) {
